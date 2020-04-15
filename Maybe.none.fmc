@@ -1,0 +1,3 @@
+Maybe.none: <A: Type> -> Maybe(A)
+  <>
+  <> (none) () none

@@ -1,0 +1,2 @@
+Nat.32: Nat
+  Nat.succ(Nat.31)

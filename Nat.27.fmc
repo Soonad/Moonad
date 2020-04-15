@@ -1,0 +1,2 @@
+Nat.27: Nat
+  Nat.succ(Nat.26)

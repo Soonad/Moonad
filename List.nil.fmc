@@ -1,0 +1,3 @@
+List.nil: <A: Type> -> List(A)
+  <A>
+  <> (nil) () nil

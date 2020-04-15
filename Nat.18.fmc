@@ -1,0 +1,2 @@
+Nat.18: Nat
+  Nat.succ(Nat.17)

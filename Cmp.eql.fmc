@@ -1,0 +1,2 @@
+Cmp.eql: Cmp
+  <> (ltn) (eql) (gtn) eql

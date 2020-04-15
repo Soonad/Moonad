@@ -1,0 +1,3 @@
+// "{"
+LSIG: String
+  String.cons(Char.lbrace)(String.nil)

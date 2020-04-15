@@ -1,0 +1,2 @@
+Nat.8: Nat
+  Nat.succ(Nat.7)

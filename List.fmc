@@ -1,0 +1,6 @@
+List: (A: Type) -> Type
+  (A)
+  list<P: (x: List(A)) -> Type> ->
+  (nil: P(List.nil<A>)) ->
+  (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) ->
+  P(list)

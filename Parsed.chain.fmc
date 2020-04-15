@@ -1,0 +1,10 @@
+Parsed.chain
+  : <A: Type> ->
+    <B: Type> ->
+    (x: Parsed(A)) ->
+    (f: String -> A -> Parsed(B)) ->
+    Parsed(B)
+  <A> <B> (x) (f)
+  x<() Parsed(B)>
+  | Parsed.none<B>;
+  | (value) value<() Parsed(B)>(f);

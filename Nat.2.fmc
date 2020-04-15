@@ -1,0 +1,2 @@
+Nat.2: Nat
+  Nat.succ(Nat.1)

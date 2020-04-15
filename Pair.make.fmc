@@ -1,0 +1,4 @@
+Pair.make: <A: Type> -> <B: Type> -> A -> B -> Pair(A)(B)
+  <> <> (a) (b)
+  <> (pair)
+  pair(a)(b)

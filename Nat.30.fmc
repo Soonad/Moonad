@@ -1,0 +1,2 @@
+Nat.30: Nat
+  Nat.succ(Nat.29)

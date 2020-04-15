@@ -1,0 +1,3 @@
+// '2'
+Char.2: Char
+  Char.ascii(Bit.0)(Bit.0)(Bit.1)(Bit.1)(Bit.0)(Bit.0)(Bit.1)(Bit.0)

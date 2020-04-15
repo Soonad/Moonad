@@ -1,0 +1,3 @@
+List.cons: <A: Type> -> (:A) -> (:List(A)) -> List(A)
+  <A> (head) (tail)
+  <> () (cons) cons(head)(tail)
