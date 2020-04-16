@@ -1,0 +1,3 @@
+List.bind: <A: Type> -> <B: Type> -> List(A) -> (A -> List(B)) -> List(B)
+  <A> <B> (xs) (f)
+  List.join<A>(List.map<A><List(B)>(f)(xs))

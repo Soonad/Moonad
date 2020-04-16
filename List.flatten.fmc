@@ -1,4 +1,4 @@
-List.flatten : <A: Type> -> List(List(A)) -> List(A)
+List.flatten: <A: Type> -> List(List(A)) -> List(A)
   <A> (as)
   as<() List(A)>
   | List.nil<A>;
