@@ -1,2 +1,2 @@
 Cmp.gtn: Cmp
-  <> (ltn) (eql) (gtn) gtn
+  <P> (ltn) (eql) (gtn) gtn

@@ -1,2 +1,2 @@
-Function.const : <A : Type> -> (x : A) -> (y : A) -> A
+Function.const: <A: Type> -> (x: A) -> (y: A) -> A
   <A> (x) (y) x

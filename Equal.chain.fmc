@@ -1,10 +1,10 @@
-Equal.chain :
-  <A : Type> ->
-  <a : A> ->
-  <b : A> ->
-  <c : A> -> 
-  (d : Equal(A)(a)(b)) ->
-  (e : Equal(A)(b)(c)) ->
+Equal.chain:
+  <A: Type> ->
+  <a: A> ->
+  <b: A> ->
+  <c: A> -> 
+  (d: Equal(A)(a)(b)) ->
+  (e: Equal(A)(b)(c)) ->
   Equal(A)(a)(c)
 
   <A> <a> <b> <c> (d) (e)
