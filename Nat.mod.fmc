@@ -1,0 +1,2 @@
+Nat.mod: Nat -> Nat -> Nat
+  (n) (m) Pair.snd<Nat><Nat>(Nat.div_mod(n)(m))
