@@ -1,0 +1,16 @@
+Parsed.dfs: String -> Defs -> Parsed(Defs)
+  (code) (file)
+  let vars = List.nil<String>
+  let next = 
+    Parsed.chain<String><Defs>(Parsed.nam(Parsed.next(code))(Bool.false)) | (code) (name)
+    Parsed.chain<String><Defs>(Parsed.str(Parsed.next(code))(COLO))       | (code) (skip)
+    Parsed.chain<Term  ><Defs>(Parsed.trm(Parsed.next(code))(vars))       | (code) (type)
+    Parsed.chain<Term  ><Defs>(Parsed.trm(Parsed.next(code))(vars))       | (code) (term)
+    let defn = Pair.make<Term><Term>(type)(term)
+    let file = Map.insert<Def>(String.to_bits(name))(defn)(file)
+    //let file = insert<Def>(string_to_bits(name))(pair<Term><Term>(typ)(typ))(file)
+    Parsed.some<Defs>(code)(file);;;;
+  next<() Parsed(Defs)>
+  | Parsed.some<Defs>(code)(file);
+  | (p) p<() Parsed(Defs)> | (code) (file)
+  Parsed.dfs(code)(file);;

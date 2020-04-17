@@ -1,0 +1,58 @@
+Term.stringify.go : List(String) -> Term -> String
+  (vars) (term)
+  let go     = Term.stringify.go
+  let cons   = List.cons<String>
+  let space  = String.cons(Char.space)(String.nil)
+  let single = List.single<String>
+
+  let nest = 
+    ((b) (s)
+    b<() String>
+    | String.concat(LT)(String.concat(s)(GT));
+    | String.concat(LPAR)(String.concat(s)(RPAR));
+    ) :: Bool -> String -> String
+
+  let sp =
+    ((s) String.flatten(cons(SPAC)(cons(s)(single(SPAC))))
+    ) :: String -> String
+
+  let ERR = 
+    ( String.cons(Char.hash)
+    | String.cons(Char.upper_e)
+    | String.cons(Char.upper_r)
+    | String.cons(Char.upper_r)
+    | String.nil;;;;
+    ) :: String
+  term<() String>
+  | () (indx) 
+    let res = List.find<String>(vars)(() (i) Nat.eql(indx)(i))
+    res<() String>(ERR)((x) Pair.fst<String><Nat>(x));
+  | () (nam) nam;
+  | () TYPS;
+  | () (e) (s) (n) (h) (b)
+    let body = go(cons(n)(cons(s)(vars)))(b)
+    let head = nest(e)(String.flatten(cons(n)(cons(sp(COLO))(single(go(cons(s)(vars))(h))))))
+    String.flatten(cons(s)(cons(head)(cons(sp(ARR0))(single(body)))));
+  | () (e) (n) (b)
+    let head = nest(e)(n)
+    let body = go(cons(n)(vars))(b)
+    String.flatten(cons(head)(cons(space)(single(body))));
+  | () (e) (f) (a)
+    let fref = go(vars)(f)
+    let fpar = nest(Bool.false)(fref)
+    let func =
+      f<() String>
+      | () () fref;
+      | () () fref;
+      | () fpar;
+      | () () () () () () fref;
+      | () () () () fpar;
+      | () () () () fpar;
+      | () () () () fpar;
+      | () () () () fpar;
+    let argm = nest(e)(go(vars)(a))
+    String.flatten(cons(func)(single(argm)));
+  | () (n) (x) (b)
+    String.flatten(cons(LETS)(cons(n)(cons(sp(EQLS))(single(go(cons(n)(vars))(b))))));
+  | () () (x) (t)
+    String.flatten(cons(go(vars)(x))(cons(sp(COLS))(single(go(vars)(t)))));

@@ -1,4 +1,4 @@
-normalize: Term -> Defs -> Term
+Term.normalize: Term -> Defs -> Term
   (term) (defs)
   let hterm = Term.to_hterm(term)(List.nil<HTerm>)(Nat.zero)
   let hterm = HTerm.normalize(hterm)(defs)

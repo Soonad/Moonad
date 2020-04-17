@@ -1,0 +1,2 @@
+Defs.parse: String -> Parsed(Defs)
+  (code) Parsed.dfs(code)(Map.empty<Def>)

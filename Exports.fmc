@@ -1,0 +1,5 @@
+Exports: Type
+  <P: Type> ->
+  (export: <A: Type> -> (x: A) -> (xs: P) -> P) ->
+  (module: P) ->
+  P
