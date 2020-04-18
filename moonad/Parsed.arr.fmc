@@ -1,0 +1,7 @@
+Parsed.arr: String -> Term -> List(String) -> Parsed(Term)
+  (code) (bind) (vars)
+  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(ARR0)) | (code) (skip)
+  let vars = List.cons<String>(String.nil)(List.cons<String>(String.nil)(vars))
+  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars)) | (code) (body)
+  let term = Term.all(Bool.false)(String.nil)(String.nil)(Term.shift(bind)(Nat.1)(Nat.0))(body)
+  Parsed.some<Term>(code)(term);;

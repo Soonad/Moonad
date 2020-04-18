@@ -1,0 +1,5 @@
+The: (A: Type) -> (x: A) -> Type
+  (A) (x)
+  the<P: (x: A) -> The(A)(x) -> Type> ->
+  (term: (x: A) -> P(x)(The.term<A>(x))) ->
+  P(x)(the)

@@ -1,0 +1,3 @@
+Nat.succ: Nat -> Nat
+  (n)
+  <> (z) (s) s(n)

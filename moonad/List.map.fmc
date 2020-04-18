@@ -1,0 +1,6 @@
+List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
+  <A> <B> (fn) (list)
+  list<() List(B)>
+  | List.nil<B>;
+  | (list.head) (list.tail)
+    List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail));

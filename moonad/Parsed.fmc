@@ -1,0 +1,2 @@
+Parsed: (A: Type) -> Type
+  (A) Maybe(Pair(String)(A))

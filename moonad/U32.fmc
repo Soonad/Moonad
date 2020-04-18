@@ -1,0 +1,4 @@
+U32: Type //prim//
+  u32<P: U32 -> Type> ->
+  (make: (a: Word(Nat.32)) -> P(U32.make(a))) ->
+  P(u32)

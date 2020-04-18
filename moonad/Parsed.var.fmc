@@ -1,0 +1,6 @@
+Parsed.var: String -> List(String) -> Parsed(Term)
+  (code) (vars)
+  Parsed.chain<String><Term>(Parsed.nam(Parsed.next(code))(Bool.false)) | (code) (name)
+  List.find<String>(vars)((x) (i) String.eql(x)(name))<() Parsed(Term)>
+  | Parsed.some<Term>(code)(Term.ref(name));
+  | (value) Parsed.some<Term>(code)(Term.var(Pair.snd<String><Nat>(value)));;

@@ -1,0 +1,2 @@
+Parsed.none: <A: Type> -> Parsed(A)
+  <A> Maybe.none<Pair(String)(A)>

@@ -1,0 +1,7 @@
+Word: Nat -> Type
+  (size)
+  word<P: (size: Nat) -> Word(size) -> Type> ->
+  (we: P(Nat.zero)(Word.nil)) ->
+  (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.0<size>(pred))) ->
+  (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.1<size>(pred))) ->
+  P(size)(word)

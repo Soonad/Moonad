@@ -1,0 +1,4 @@
+HTerm.var: Nat -> Bool -> HTerm
+  (indx) (posi)
+  <> (hvar) () () () () ()
+  hvar(indx)(posi)

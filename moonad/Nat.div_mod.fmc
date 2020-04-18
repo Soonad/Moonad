@@ -1,0 +1,2 @@
+Nat.div_mod: Nat -> Nat -> Pair(Nat)(Nat)
+  (n) (m) Nat.div_mod.aux(n)(m)(Nat.zero)

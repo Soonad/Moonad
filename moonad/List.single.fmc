@@ -1,0 +1,2 @@
+List.single : <A : Type> -> (x : A) -> List(A)
+  <A> (x) List.cons<A>(x)(List.nil<A>)

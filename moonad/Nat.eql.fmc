@@ -1,0 +1,2 @@
+Nat.eql: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)

@@ -1,0 +1,39 @@
+Term.subst: Term -> Term -> Nat -> Term
+  (term) (val) (dep)
+  term<() Term>
+  | (hash) (indx)
+    Nat.cmp(indx)(dep)<() Term>
+    | Term.var(indx);
+    | val;
+    | Term.var(Nat.pred(indx));;
+  | (hash) (name)
+    Term.ref(name);
+  | (hash)
+    Term.typ;
+  | (hash) (eras) (self) (name) (bind) (body)
+    let eras = eras
+    let self = self
+    let name = name
+    let bind = Term.subst(bind)(Term.shift(val)(Nat.1)(Nat.0))(Nat.succ(dep))
+    let body = Term.subst(body)(Term.shift(val)(Nat.2)(Nat.0))(Nat.succ(Nat.succ(dep)))
+    Term.all(eras)(self)(name)(bind)(body);
+  | (hash) (eras) (name) (body)
+    let eras = eras
+    let name = name
+    let body = Term.subst(body)(Term.shift(val)(Nat.1)(Nat.0))(Nat.succ(dep))
+    Term.lam(eras)(name)(body);
+  | (hash) (eras) (func) (argm)
+    let eras = eras
+    let func = Term.subst(func)(val)(dep)
+    let argm = Term.subst(argm)(val)(dep)
+    Term.app(eras)(func)(argm);
+  | (hash) (name) (expr) (body)
+    let name = name
+    let expr = Term.subst(expr)(val)(dep)
+    let body = Term.subst(expr)(Term.shift(val)(Nat.1)(Nat.0))(Nat.succ(dep))
+    Term.lat(name)(expr)(body);
+  | (hash) (done) (expr) (type)
+    let done = done
+    let expr = Term.subst(expr)(val)(dep)
+    let type = Term.subst(expr)(val)(dep)
+    Term.ann(done)(expr)(type);

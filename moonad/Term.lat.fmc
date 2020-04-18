@@ -1,0 +1,4 @@
+Term.lat: String -> Term -> Term -> Term
+  (name) (expr) (body)
+  <> () () () () () () (lat) ()
+  lat(U32.0)(name)(expr)(body)

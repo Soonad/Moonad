@@ -1,0 +1,9 @@
+Parsed.opt: String -> Pair(String)(String) -> Parsed(Bool)
+  (code) (opts)
+  opts<() Parsed(Bool)>
+  | (ch0) (ch1)
+    Parsed.str(code)(ch1)<() Parsed(Bool)>
+    | Parsed.str(code)(ch0)<() Parsed(Bool)>
+      | Parsed.none<Bool>;
+      | (got) got<() Parsed(Bool)>((code) (skip) Parsed.some<Bool>(code)(Bool.true));;
+    | (got) got<() Parsed(Bool)>((code) (skip) Parsed.some<Bool>(code)(Bool.false));;

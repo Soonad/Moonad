@@ -1,0 +1,8 @@
+Parsed.first_valid: <A: Type> -> List(Maybe(A)) -> Maybe(A)
+  <A> (list)
+  list<() Maybe(A)>
+  | Maybe.none<A>;
+  | (head) (tail)
+    head<() Maybe(A)>
+    | Parsed.first_valid<A>(tail);
+    | (value) Maybe.some<A>(value);;

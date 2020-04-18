@@ -1,0 +1,9 @@
+Bool.and: Bool -> Bool -> Bool //prim//
+  (a) (b)
+  a<() Bool>
+  | b<() Bool>
+    | Bool.true;
+    | Bool.false;;
+  | b<() Bool>
+    | Bool.false;
+    | Bool.false;;

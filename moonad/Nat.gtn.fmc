@@ -1,0 +1,2 @@
+Nat.gtn: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)

@@ -1,0 +1,3 @@
+The.term: <A: Type> -> (x: A) -> The(A)(x)
+  <A> (x)
+  <P> (term) term(x)

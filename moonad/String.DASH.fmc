@@ -1,0 +1,3 @@
+// "-"
+DASH: String
+  String.cons(Char.dash)(String.nil)

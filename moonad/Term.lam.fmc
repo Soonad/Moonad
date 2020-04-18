@@ -1,0 +1,4 @@
+Term.lam: Bool -> String -> Term -> Term
+  (eras) (name) (body)
+  <> () () () () (lam) () () ()
+  lam(U32.0)(eras)(name)(body)

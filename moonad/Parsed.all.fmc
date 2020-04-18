@@ -1,0 +1,13 @@
+Parsed.all: String -> List(String) -> Parsed(Term)
+  (code) (vars)
+  Parsed.chain<String><Term>(Parsed.nam(Parsed.next(code))(Bool.true)) | (code) (self)
+  Parsed.chain<Bool  ><Term>(Parsed.opt(            code )(OPEN))      | (code) (eras)
+  Parsed.chain<String><Term>(Parsed.nam(Parsed.next(code))(Bool.true)) | (code) (name)
+  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(COLO))      | (code) (skip)
+  let vars = List.cons<String>(self)(vars)
+  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))      | (code) (bind)
+  Parsed.chain<Bool  ><Term>(Parsed.opt(Parsed.next(code))(CLOS))      | (code) (skip)
+  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(ARR0))      | (code) (skip)
+  let vars = List.cons<String>(name)(vars)
+  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))      | (code) (body)
+  Parsed.some<Term>(code)(Term.all(eras)(self)(name)(bind)(body));;;;;;;;

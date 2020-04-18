@@ -1,0 +1,2 @@
+Double: Type
+  Word(Nat.double(Nat.32))

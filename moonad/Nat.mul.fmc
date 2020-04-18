@@ -1,0 +1,5 @@
+Nat.mul: Nat -> Nat -> Nat //prim//
+  (n) (m)
+  n<() Nat>
+  | Nat.zero;
+  | (n.pred) Nat.add(m)(Nat.mul(n.pred)(m));

@@ -1,0 +1,7 @@
+// "main"
+MAIN: String
+  String.cons(Char.m) |
+  String.cons(Char.a) |
+  String.cons(Char.i) |
+  String.cons(Char.n) |
+  String.nil;;;;

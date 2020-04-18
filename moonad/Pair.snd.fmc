@@ -1,0 +1,3 @@
+Pair.snd: <A: Type> -> <B: Type> -> Pair(A)(B) -> B
+  <A> <B> (pair)
+  pair<() B>((a) (b) b)

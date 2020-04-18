@@ -1,0 +1,5 @@
+Nat: Type //prim//
+  nat<P: Nat -> Type> ->
+  (zero: P(Nat.zero)) ->
+  (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+  P(nat)

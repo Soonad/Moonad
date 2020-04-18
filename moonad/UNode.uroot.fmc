@@ -1,0 +1,3 @@
+UNode.uroot: Nat -> UNode
+  (rank)
+  <> (uroot) () uroot(rank)

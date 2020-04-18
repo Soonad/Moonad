@@ -1,0 +1,8 @@
+List.drop: <A: Type> -> Nat -> List(A) -> List(A)
+  <A> (n) (list)
+  n<() List(A)>
+  | list;
+  | (pred)
+    list<() List(A)>
+    | List.nil<A>;
+    | (head) (tail) List.drop<A>(pred)(tail);;

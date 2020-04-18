@@ -1,0 +1,22 @@
+UFind.union: UFind -> Bits -> Bits -> Maybe(UFind)
+  (uf) (path1) (path2)
+  let m = UFind.ufind<Maybe(UFind)>(uf)(path1)(
+    (root_path1) (rank1)
+    UFind.ufind<UFind>(uf)(path2)(
+      (root_path2) (rank2)
+      Bits.equal(root_path1)(root_path2)<() UFind>
+      | uf;
+      | Nat.cmp(rank1)(rank2)<() UFind>
+        | let uf = Map.insert<UNode>(root_path1)(UNode.ulink(root_path2))(uf)
+          uf;
+        | let uf = Map.insert<UNode>(root_path1)(UNode.ulink(root_path2))(uf)
+          let uf = Map.insert<UNode>(root_path2)(UNode.uroot(Nat.succ(rank2)))(uf)
+          uf;
+        | let uf = Map.insert<UNode>(root_path1)(UNode.uroot(rank2))(uf)
+          let uf = Map.insert<UNode>(root_path2)(UNode.ulink(root_path1))(uf)
+          uf;;
+      )
+    )
+    m<() Maybe(UFind)>
+    | Maybe.none<UFind>;
+    | (m.val) m.val;

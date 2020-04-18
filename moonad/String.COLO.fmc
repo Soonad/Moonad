@@ -1,0 +1,3 @@
+// ":"
+COLO: String
+  String.cons(Char.colon)(String.nil)

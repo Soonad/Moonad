@@ -1,0 +1,14 @@
+Equal.apply:
+  <A: Type> ->
+  <B: A -> Type> -> 
+  (a: A) ->
+  (b: A) ->
+  (f: (x: A) -> B(x)) ->
+  (e: Equal(A)(a)(b)) ->
+  Equal(B(a))(f(a))(Equal.rewrite<A><b><a>(Equal.mirror<A><a><b>(e))<B>(f(b)))
+
+  <A> <B> (a) (b) (f) (e)
+  e<(e.b) (e) Equal(B(a))(f(a))(
+      Equal.rewrite<A><e.b><a>(Equal.mirror<A><a><e.b>(e))<B>(f(e.b))
+    )>
+  | Equal.to<B(a)><f(a)>;
