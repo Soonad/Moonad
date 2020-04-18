@@ -1,0 +1,10 @@
+Parser.Reply.eaten_error :
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser.State(S)(E) ->
+  Parser.Error(E) ->
+  Parser.Reply(S)(E)(A)
+
+  <S> <E> <A> (state) (error)
+  <P> () () () (eaten_error) eaten_error(state)(error)

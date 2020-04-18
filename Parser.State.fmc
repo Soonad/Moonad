@@ -1,0 +1,11 @@
+Parser.State: Type -> Type -> Type
+  (S) (E)
+  parser_state<P: Parser.State(S)(E) -> Type> ->
+  (make: (input: String) ->
+         (index: Nat)    ->
+         (error: List(Parser.Error(E))) ->
+         (state: S)      ->
+         P(Parser.State.make<S><E>(input)(index)(error)(state))
+  ) ->
+  P(parser_state)
+

@@ -1,0 +1,9 @@
+Parser.Error.trivial:
+  <E: Type> ->
+  Nat ->
+  Maybe(Parser.Error.Item) ->
+  List(Parser.Error.Item) ->
+  Parser.Error(E)
+
+  <E> (position) (unexpect) (expected)
+  <P> (trivial) () trivial(position)(unexpect)(expected)

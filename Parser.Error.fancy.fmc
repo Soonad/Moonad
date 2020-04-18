@@ -1,0 +1,8 @@
+Parser.Error.fancy:
+  <E: Type> ->
+  Nat ->
+  List(Parser.Error.Fancy(E)) ->
+  Parser.Error(E)
+
+  <E> (position) (messages)
+  <P> () (fancy) fancy(position)(messages)

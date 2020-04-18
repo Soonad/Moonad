@@ -1,0 +1,14 @@
+Parser.run :
+  <S : Type> ->
+  <E : Type> ->
+  <A: Type> ->
+  Parser(S)(E)(A) ->
+  Parser.State(S)(E) ->
+  Parser.Reply(S)(E)(A)
+
+  <S> <E> <A> (p) (s)
+  p<Parser.Reply(S)(E)(A)>(s)
+  | Parser.Reply.empty_value<S><E><A>;
+  | Parser.Reply.empty_error<S><E><A>;
+  | Parser.Reply.eaten_value<S><E><A>;
+  | Parser.Reply.eaten_error<S><E><A>;

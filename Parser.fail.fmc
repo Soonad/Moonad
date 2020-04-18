@@ -1,0 +1,13 @@
+Parser.fail:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  String ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (msg)
+  <X> (s) () (empty_error) () ()
+  s<() X>
+  | () (index) () ()
+    let e = List.single<Parser.Error.Fancy(E)>(Parser.Error.Fancy.fail<E>(msg))
+    empty_error(s)(Parser.Error.fancy<E>(index)(e));

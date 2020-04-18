@@ -1,0 +1,6 @@
+NonEmpty: (A: Type) -> Type
+  (A)
+  non_empty<P: (x: NonEmpty(A)) -> Type> ->
+  (end:  (value: A) -> P(NonEmpty.end<A>(value))) ->
+  (cons: (head: A) -> (tail: NonEmpty(A)) -> P(NonEmpty.cons<A>(head)(tail))) ->
+  P(non_empty)

@@ -1,0 +1,24 @@
+Parser.Reply : Type -> Type -> Type -> Type
+  (S) (E) (A)
+  parser_reply<P: Parser.Reply(S)(E)(A) -> Type> ->
+  (empty_value:
+    (state: Parser.State(S)(E)) ->
+    (value: A)    ->
+    P(Parser.Reply.empty_value<S><E><A>(state)(value))
+  ) ->
+  (empty_error:
+    (state: Parser.State(S)(E)) ->
+    (error: Parser.Error(E))    ->
+    P(Parser.Reply.empty_error<S><E><A>(state)(error))
+  ) ->
+  (eaten_value:
+    (state: Parser.State(S)(E)) ->
+    (value: A)    ->
+    P(Parser.Reply.eaten_value<S><E><A>(state)(value))
+  ) ->
+  (eaten_error:
+    (state: Parser.State(S)(E)) ->
+    (error: Parser.Error(E))    ->
+    P(Parser.Reply.eaten_error<S><E><A>(state)(error))
+  ) ->
+  P(parser_reply)

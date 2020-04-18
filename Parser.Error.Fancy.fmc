@@ -1,0 +1,7 @@
+Parser.Error.Fancy : Type -> Type
+  (E)
+  parser.error.fancy<P: Parser.Error.Fancy(E) -> Type> ->
+  (fail:   (msg: String) -> P(Parser.Error.Fancy.fail<E>(msg))) ->
+  (indent: (x: Nat) -> (y: Nat) -> P(Parser.Error.Fancy.indent<E>(x)(y))) ->
+  (custom: (err: E) -> P(Parser.Error.Fancy.custom<E>(err))) ->
+  P(parser.error.fancy)

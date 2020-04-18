@@ -1,0 +1,13 @@
+Parser : (S : Type) -> (E : Type) -> (A: Type) -> Type
+  (S) (E) (A)
+    <B : Type> ->
+    Parser.State(S)(E) ->
+    (Parser.State(S)(E) -> A -> B) ->
+    (Parser.State(S)(E) -> Parser.Error(E) -> B) ->
+    (Parser.State(S)(E) -> A -> B) ->
+    (Parser.State(S)(E) -> Parser.Error(E) -> B) ->
+    B
+
+
+
+

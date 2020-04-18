@@ -1,0 +1,16 @@
+Parser.Error : Type -> Type
+  (E)
+  parser.error<P: Parser.Error(E) -> Type> ->
+  (trivial:
+    (position: Nat) ->
+    (unexpect: Maybe(Parser.Error.Item)) ->
+    (expected: List(Parser.Error.Item))  ->
+    P(Parser.Error.trivial<E>(position)(unexpect)(expected))
+  ) ->
+  (fancy:
+    (position: Nat) ->
+    (messages: List(Parser.Error.Fancy(E))) ->
+    P(Parser.Error.fancy<E>(position)(messages))
+  ) ->
+  P(parser.error)
+
