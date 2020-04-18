@@ -1,10 +1,8 @@
-UFind.ufind: <B: Type> -> UFind -> Bits -> (Bits -> Nat -> B) -> Maybe(B)
+UFind.ufind: <B: Type> -> UFind -> Bits -> (UFind -> Bits -> Nat -> B) -> B
   <B> (uf) (path) (k)
-  let found = Map.lookup<UNode>(path)(uf)
-  found<() Maybe(B)>
-  | Maybe.none<B>;
-  | (found.val)
-    let node = found.val
-    node<() Maybe(B)>
-    | (node.rank)   Maybe.some<B>(k(path)(node.rank));
+  let found = Map.lookup_with<UNode>(path)(UNode.uroot(Nat.zero))(uf)
+  found<() B>
+  | (node) (uf)
+    node<() B>
+    | (node.rank) k(uf)(path)(node.rank);
     | (node.parent) UFind.ufind<B>(uf)(node.parent)(k);;
