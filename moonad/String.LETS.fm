@@ -1,0 +1,3 @@
+// "let "
+LETS: String
+  String.cons(Char.l)(String.cons(Char.e)(String.cons(Char.t)(String.cons(Char.space)(String.nil))))

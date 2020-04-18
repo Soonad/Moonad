@@ -1,2 +1,2 @@
 Nat.12: Nat
-  Nat.succ(Nat.11)
+  Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))

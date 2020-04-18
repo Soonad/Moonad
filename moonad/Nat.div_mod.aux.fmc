@@ -4,4 +4,3 @@ Nat.div_mod.aux: Nat -> Nat -> Nat -> Pair(Nat)(Nat)
   p<() Pair(Nat)(Nat)>
   | (p.value) Nat.div_mod.aux(p.value)(m)(Nat.succ(d));
   | (p.value) Pair.make<Nat><Nat>(d)(n);
-

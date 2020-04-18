@@ -3,4 +3,3 @@ The: (A: Type) -> (x: A) -> Type
   the<P: (x: A) -> The(A)(x) -> Type> ->
   (term: (x: A) -> P(x)(The.term<A>(x))) ->
   P(x)(the)
-

@@ -1,0 +1,4 @@
+JSON.number: Double -> JSON
+  (x)
+  <P> () () (number) () () ()
+  number(x)

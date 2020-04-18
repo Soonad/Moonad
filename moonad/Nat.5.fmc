@@ -1,2 +1,2 @@
 Nat.5: Nat
-  Nat.succ(Nat.4)
+  Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))

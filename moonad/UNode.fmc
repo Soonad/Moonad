@@ -3,4 +3,3 @@ UNode: Type
   (uroot: (rank: Nat) -> P(UNode.uroot(rank))) ->
   (ulink: (parent: Bits) -> P(UNode.ulink(parent))) ->
   P(unode_value)
-

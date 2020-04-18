@@ -1,0 +1,13 @@
+Parsed.pst: String -> Term -> List(String) -> Parsed(Term)
+  (code) (term) (vars)
+  let post_parse = Parsed.first_valid<Pair(String)(Term)>(
+    List.cons<Parsed(Term)>(Parsed.app(code)(term)(vars))(
+    List.cons<Parsed(Term)>(Parsed.pip(code)(term)(vars))(
+    List.cons<Parsed(Term)>(Parsed.arr(code)(term)(vars))(
+    List.cons<Parsed(Term)>(Parsed.ann(code)(term)(vars))(
+    List.nil<Parsed(Term)>)))))
+  post_parse<() Parsed(Term)>
+  | Parsed.some<Term>(code)(term);
+  | (value)
+    value<() Parsed(Term)>
+    | (code) (term) Parsed.pst(code)(term)(vars);;

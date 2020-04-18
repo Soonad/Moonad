@@ -1,2 +1,2 @@
 Nat.8: Nat
-  Nat.succ(Nat.7)
+  Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))

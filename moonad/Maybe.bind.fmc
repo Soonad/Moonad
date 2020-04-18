@@ -3,4 +3,3 @@ Maybe.bind: <A: Type> -> <B: Type> -> Maybe(A) -> (A -> Maybe(B)) -> Maybe(B)
   m<() Maybe(B)>
   | Maybe.none<B>;
   | (m.val) f(m.val);
-

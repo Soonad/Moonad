@@ -1,0 +1,5 @@
+Equal: (A: Type) -> A -> A -> Type
+  (A) (a) (b)
+  equal<P: (b: A) -> Equal(A)(a)(b) -> Type> ->
+  (to: P(a)(Equal.to<A><a>)) ->
+  P(b)(equal)

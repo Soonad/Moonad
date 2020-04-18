@@ -8,4 +8,3 @@ Parsed.nam.aux: String -> Pair(String)(String)
     | Parsed.nam.aux(tail)<() Pair(String)(String)>
       | (code) (rest) ret(code)(String.cons(head)(rest));;
     | ret(code)(String.nil);;
-

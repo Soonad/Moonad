@@ -1,0 +1,3 @@
+// ":"
+SEMI: String
+  String.cons(Char.semi)(String.nil)

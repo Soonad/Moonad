@@ -1,0 +1,9 @@
+JSON : Type
+  json<P: JSON -> Type> ->
+  (null:   P(JSON.null)) ->
+  (bool:   (x: Bool) -> P(JSON.bool(x))) ->
+  (number: (x: Double) -> P(JSON.number(x))) ->
+  (string: (x: String) -> P(JSON.string(x))) ->
+  (array:  (x: List(JSON)) -> P(JSON.array(x))) ->
+  (object: (x: List(Pair(String)(JSON))) -> P(JSON.object(x))) ->
+  P(json)

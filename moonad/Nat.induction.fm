@@ -1,0 +1,9 @@
+Nat.induction:
+  (n: Nat) ->
+  <P: Nat -> Type> ->
+  P(Nat.zero) ->
+  ((n:Nat) -> P(n) -> P(Nat.succ(n))) ->
+  P(n)
+
+  (n) <P> (z) (s)
+  n<P>(z)((pred) s(pred)(Nat.induction(pred)<P>(z)(s)))

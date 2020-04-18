@@ -1,0 +1,4 @@
+U32.to_bits: U32 -> Bits
+  (a)
+  a<() Bits> | (a_val)
+  Word.to_bits<Nat.32>(a_val);

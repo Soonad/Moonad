@@ -1,0 +1,5 @@
+List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
+  <A> (as) (xs)
+  as<() List(A)>
+  | xs;
+  | (head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs));

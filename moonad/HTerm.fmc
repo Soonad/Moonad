@@ -22,4 +22,3 @@ HTerm: Type
     (argm: HTerm) ->
     P(HTerm.app(func)(argm))) ->
   P(hterm)
-

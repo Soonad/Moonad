@@ -1,0 +1,4 @@
+Term.ann: Bool -> Term -> Term -> Term
+  (done) (expr) (type)
+  <> () () () () () () () (ann)
+  ann(U32.0)(done)(expr)(type)

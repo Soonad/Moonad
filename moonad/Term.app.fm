@@ -1,0 +1,4 @@
+Term.app: Bool -> Term -> Term -> Term
+  (eras) (func) (argm)
+  <> () () () () () (app) () ()
+  app(U32.0)(eras)(func)(argm)

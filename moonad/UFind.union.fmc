@@ -20,4 +20,3 @@ UFind.union: UFind -> Bits -> Bits -> Maybe(UFind)
     m<() Maybe(UFind)>
     | Maybe.none<UFind>;
     | (m.val) m.val;
-

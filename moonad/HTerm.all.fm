@@ -1,0 +1,4 @@
+HTerm.all: Bool -> (HTerm -> HTerm) -> (HTerm -> HTerm -> HTerm) -> HTerm
+  (eras) (bind) (body)
+  <> () () () (hall) () ()
+  hall(eras)(bind)(body)

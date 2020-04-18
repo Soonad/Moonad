@@ -59,4 +59,3 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
       ;
     ;
   ;(rec)(cpy)(map)
-

@@ -1,0 +1,6 @@
+String.concat: String -> String -> String
+  (as) (bs)
+  as<() String>
+  | bs;
+  | (head) (tail)
+    String.cons(head)(String.concat(tail)(bs));

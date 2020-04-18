@@ -1,0 +1,4 @@
+JSON.array: List(JSON) -> JSON
+  (x)
+  <P> () () () () (array) ()
+  array(x)

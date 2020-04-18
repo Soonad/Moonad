@@ -8,4 +8,3 @@ Nat.cmp: Nat -> Nat -> Cmp
     b<() Cmp>
     | Cmp.gtn;
     | (b.pred) Nat.cmp(a.pred)(b.pred);;
-

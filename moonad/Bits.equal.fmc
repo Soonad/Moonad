@@ -16,4 +16,3 @@ Bits.equal: Bits -> Bits -> Bool
     | () Bool.false;
     | (bs2.pred) Bits.equal(bs1.pred)(bs2.pred);
   ;
-

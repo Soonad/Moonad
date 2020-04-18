@@ -28,4 +28,3 @@ HTerm.reduce: HTerm -> Defs -> HTerm
       HTerm.reduce(func.body(term.argm))(defs);
     | (func.func) (func.argm)
       HTerm.app(HTerm.app(func.func)(func.argm))(HTerm.reduce(term.argm)(defs));;
-

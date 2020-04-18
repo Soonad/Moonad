@@ -9,4 +9,3 @@ Function.curry:
 
   <A> <B> <C> (f) (x) (y)
   f(Pair.make<A><B>(x)(y))
-

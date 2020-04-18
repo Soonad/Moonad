@@ -9,4 +9,3 @@ Function.uncurry :
   <A> <B> <C> (f) (p)
   p<() C>
   | (p.fst) (p.snd) f(p.fst)(p.snd);
-

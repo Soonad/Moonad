@@ -6,4 +6,3 @@ Parsed.lam: String -> List(String) -> Parsed(Term)
   let vars = List.cons<String>(name)(vars)
   Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))      | (code) (body)
   Parsed.some<Term>(code)(Term.lam(eras)(name)(body));;;;
-

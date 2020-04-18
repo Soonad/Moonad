@@ -1,0 +1,15 @@
+// "Hello, world!"
+HELLO_WORLD: String
+  String.cons(Char.upper_h) |
+  String.cons(Char.e) |
+  String.cons(Char.l) |
+  String.cons(Char.l) |
+  String.cons(Char.o) |
+  String.cons(Char.space) |
+  String.cons(Char.w) |
+  String.cons(Char.o) |
+  String.cons(Char.r) |
+  String.cons(Char.l) |
+  String.cons(Char.d) |
+  String.cons(Char.excl) |
+  String.nil;;;;;;;;;;;;

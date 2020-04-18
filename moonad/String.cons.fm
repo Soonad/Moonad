@@ -1,0 +1,3 @@
+String.cons: Char -> String -> String
+  (head) (tail)
+  <> () (cons) cons(head)(tail)

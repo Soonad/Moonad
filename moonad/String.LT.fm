@@ -1,0 +1,3 @@
+// "<"
+LT: String
+  String.cons(Char.lt)(String.nil)

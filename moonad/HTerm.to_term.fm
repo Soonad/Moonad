@@ -1,0 +1,27 @@
+HTerm.to_term: HTerm -> Nat -> Term
+  (hterm) (depth)
+  hterm<() Term>
+  | (indx) (posi)
+    posi<() Term>
+    | Term.var(Nat.sub(Nat.sub(depth)(indx))(Nat.1));
+    | Term.var(Nat.sub(Nat.add(depth)(indx))(Nat.1));;
+  | (name)
+    Term.ref(name);
+  | Term.typ;
+  | (eras) (bind) (body)
+    let eras = eras
+    let self = Nat.to_string(depth) // TODO
+    let name = Nat.to_string(Nat.succ(depth)) // TODO
+    let bind = HTerm.to_term(bind(HTerm.var(depth)(Bool.true)))(Nat.succ(depth))
+    let body = HTerm.to_term(body(HTerm.var(depth)(Bool.true))(HTerm.var(Nat.succ(depth))(Bool.true)))(Nat.succ(Nat.succ(depth)))
+    Term.all(eras)(self)(name)(bind)(body);
+  | (body)
+    let eras = Bool.false
+    let name = Nat.to_string(depth) // TODO
+    let body = HTerm.to_term(body(HTerm.var(depth)(Bool.true)))(Nat.succ(depth))
+    Term.lam(eras)(name)(body);
+  | (func) (argm)
+    let eras = Bool.false
+    let func = HTerm.to_term(func)(depth)
+    let argm = HTerm.to_term(argm)(depth)
+    Term.app(eras)(func)(argm);
