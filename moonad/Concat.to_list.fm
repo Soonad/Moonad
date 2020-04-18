@@ -1,2 +1,0 @@
-Concat.to_list: <A: Type> -> (xs: Concat(A)) -> List(A)
-  <A> (xs) xs(List.nil<A>)

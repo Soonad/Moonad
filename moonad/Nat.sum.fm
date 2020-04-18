@@ -1,2 +1,0 @@
-Nat.sum: Nat -> Nat
-  (n) Nat.sum.go(n)(Nat.zero)

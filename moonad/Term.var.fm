@@ -1,4 +1,0 @@
-Term.var: Nat -> Term
-  (indx)
-  <> (var) () () () () () () ()
-  var(U32.0)(indx)

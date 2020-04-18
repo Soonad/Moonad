@@ -1,6 +1,0 @@
-Nat.to_string: Nat -> String
-  (n)
-  n<() String>
-  | String.cons(Char.z)(String.nil);
-  | (n.pred) String.cons(Char.s)(Nat.to_string(n.pred));
-

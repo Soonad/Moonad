@@ -1,2 +1,0 @@
-Nat.lte: Nat -> Nat -> Bool
-  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)

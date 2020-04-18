@@ -1,3 +1,0 @@
-Word.cmp: <size: Nat> -> Word(size) -> Word(size) -> Cmp
-  <size> (a) (b)
-  Word.cmp.aux<size>(a)(b)(Cmp.eql)

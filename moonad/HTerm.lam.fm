@@ -1,4 +1,0 @@
-HTerm.lam: (HTerm -> HTerm) -> HTerm
-  (body)
-  <> () () () () (hlam) ()
-  hlam(body)

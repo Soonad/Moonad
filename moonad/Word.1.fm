@@ -1,3 +1,0 @@
-Word.1: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
-  <size> (wo) <P> (we) (w0) (w1)
-  w1<size>(wo)

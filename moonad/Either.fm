@@ -1,7 +1,0 @@
-Either : (A : Type) -> (B : Type) -> Type
-  (A) (B)
-  either<P: Either(A)(B) -> Type> ->
-  (left: (x: A) -> P(Either.left<A><B>(x))) ->
-  (right: (x: B) -> P(Either.right<A><B>(x))) ->
-  P(either)
-

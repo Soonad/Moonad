@@ -1,3 +1,0 @@
-// "->"
-ARR0: String
-  String.cons(Char.dash)(String.cons(Char.gt)(String.nil))

@@ -1,6 +1,0 @@
-String.flatten: List(String) -> String
-  (as)
-  as<() String>
-  | String.nil;
-  | (head) (tail)
-    String.concat(head)(String.flatten(tail));

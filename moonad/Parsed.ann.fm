@@ -1,5 +1,0 @@
-Parsed.ann: String -> Term -> List(String) -> Parsed(Term)
-  (code) (expr) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(COLS)) | (code) (skip)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars)) | (code) (type)
-  Parsed.some<Term>(code)(Term.ann(Bool.false)(expr)(type));;

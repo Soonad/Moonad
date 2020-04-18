@@ -1,3 +1,0 @@
-// 'O'
-Char.upper_o: Char
-  Char.ascii(Bit.0)(Bit.1)(Bit.0)(Bit.0)(Bit.1)(Bit.1)(Bit.1)(Bit.1)

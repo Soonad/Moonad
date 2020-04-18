@@ -1,4 +1,0 @@
-JSON.string: String -> JSON
-  (x)
-  <P> () () () (string) () ()
-  string(x)

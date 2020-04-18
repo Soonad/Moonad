@@ -1,3 +1,0 @@
-// ">"
-GT: String
-  String.cons(Char.gt)(String.nil)

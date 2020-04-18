@@ -1,3 +1,0 @@
-// Type
-TYPS: String
-  String.cons(Char.upper_t)(String.cons(Char.y)(String.cons(Char.p)(String.cons(Char.e)(String.nil))))

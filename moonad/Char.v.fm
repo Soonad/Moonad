@@ -1,3 +1,0 @@
-// 'v'
-Char.v: Char
-  Char.ascii(Bit.0)(Bit.1)(Bit.1)(Bit.1)(Bit.0)(Bit.1)(Bit.1)(Bit.0)

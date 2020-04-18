@@ -1,3 +1,0 @@
-Not : (P : Type) -> Type
-  (P)
-  P -> Empty

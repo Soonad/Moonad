@@ -1,3 +1,0 @@
-// 'Y'
-Char.upper_y: Char
-  Char.ascii(Bit.0)(Bit.1)(Bit.0)(Bit.1)(Bit.1)(Bit.0)(Bit.0)(Bit.1)

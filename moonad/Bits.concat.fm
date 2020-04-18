@@ -1,6 +1,0 @@
-Bits.concat: Bits -> Bits -> Bits
-  (a) (b)
-  a<() Bits>
-  | b;
-  | (a.pred) Bits.0(Bits.concat(a.pred)(b));
-  | (a.pred) Bits.1(Bits.concat(a.pred)(b));

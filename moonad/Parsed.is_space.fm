@@ -1,6 +1,0 @@
-Parsed.is_space: Char -> Bool
-  (c)
-    let is_spc = U32.eql(c)(Char.space)
-    let is_tab = U32.eql(c)(Char.ht)
-    let is_lin = U32.eql(c)(Char.lf)
-    Bool.or(is_spc)(Bool.or(is_tab)(is_lin))

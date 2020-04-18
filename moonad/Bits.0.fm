@@ -1,2 +1,0 @@
-Bits.0: (bs: Bits) -> Bits
-  (bs) <P> (be) (b0) (b1) b0(bs)

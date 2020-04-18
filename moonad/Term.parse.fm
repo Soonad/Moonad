@@ -1,2 +1,0 @@
-Term.parse: String -> Parsed(Term)
-  (code) Parsed.trm(code)(List.nil<String>)

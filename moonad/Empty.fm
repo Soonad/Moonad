@@ -1,3 +1,0 @@
-Empty: Type
-  empty<P: Empty -> Type> ->
-  P(empty)

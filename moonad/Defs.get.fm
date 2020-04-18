@@ -1,3 +1,0 @@
-Defs.get: Defs -> String -> Maybe(Def)
-  (file) (name)
-  Map.lookup<Def>(String.to_bits(name))(file)

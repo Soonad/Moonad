@@ -1,8 +1,0 @@
-List.all: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list)
-  list<() Bool>
-  | Bool.true;
-  | (head) (tail)
-    cond(head)<() Bool>
-    | List.all<A>(cond)(tail);
-    | Bool.false;;

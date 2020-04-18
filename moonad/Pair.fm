@@ -1,5 +1,0 @@
-Pair: Type -> Type -> Type
-  (A) (B)
-  pair<P: Pair(A)(B) -> Type> ->
-  (make: (a: A) -> (b: B) -> P(Pair.make<A><B>(a)(b))) ->
-  P(pair)

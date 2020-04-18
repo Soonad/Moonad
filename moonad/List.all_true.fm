@@ -1,2 +1,0 @@
-List.all_true: List(Bool) -> Bool
-  (list) List.all<Bool>((x) x)(list)

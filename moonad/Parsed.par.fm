@@ -1,6 +1,0 @@
-Parsed.par: String -> List(String) -> Parsed(Term)
-  (code) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(LPAR)) | (code) (skip)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars)) | (code) (term)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(RPAR)) | (code) (skip)
-  Parsed.some<Term>(code)(term);;;

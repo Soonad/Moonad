@@ -1,7 +1,0 @@
-Parsed.is_name: Char -> Bool
-  (c)
-    let is_num = Bool.and(U32.gte(c)(Char.0))(U32.lte(c)(Char.9))
-    let is_low = Bool.and(U32.gte(c)(Char.a))(U32.lte(c)(Char.z))
-    let is_upp = Bool.and(U32.gte(c)(Char.upper_a))(U32.lte(c)(Char.upper_z))
-    let is_und = U32.eql(c)(Char.lowbar)
-    Bool.or(is_num)(Bool.or(is_low)(Bool.or(is_upp)(is_und)))

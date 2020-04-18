@@ -1,6 +1,0 @@
-Word.to_bits: <size: Nat> -> Word(size) -> Bits
-  <size> (a)
-  a<() () Bits>
-  | Bits.nil;
-  | <size> (pred) Bits.0(Word.to_bits<size>(pred));
-  | <size> (pred) Bits.1(Word.to_bits<size>(pred));

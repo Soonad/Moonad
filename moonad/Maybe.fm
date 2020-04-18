@@ -1,6 +1,0 @@
-Maybe: Type -> Type
-  (A)
-  maybe<P: Maybe(A) -> Type> ->
-  (none: P(Maybe.none<A>)) ->
-  (some: (value: A) -> P(Maybe.some<A>(value))) ->
-  P(maybe)

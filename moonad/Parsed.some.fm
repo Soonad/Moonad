@@ -1,3 +1,0 @@
-Parsed.some: <A: Type> -> String -> A -> Parsed(A)
-  <A> (code) (val)
-  Maybe.some<Pair(String)(A)>(Pair.make<String><A>(code)(val))

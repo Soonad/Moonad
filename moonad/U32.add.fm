@@ -1,5 +1,0 @@
-U32.add: U32 -> U32 -> U32
-  (a) (b)
-  a<() U32> | (a_val)
-  b<() U32> | (b_val)
-  U32.make(Word.add<Nat.32>(a_val)(b_val));;
