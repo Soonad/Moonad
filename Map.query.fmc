@@ -1,6 +1,6 @@
-query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
+Map.query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
   <A> (cpy) (bits) (map)
-  let rec = query<A>
+  let rec = Map.query<A>
   bits<() ((A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)))
            -> (A -> Pair(A)(A)) -> Map(A) -> Pair(Map(A))(Maybe(A))>
   | (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>
