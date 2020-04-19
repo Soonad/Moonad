@@ -5,12 +5,12 @@ Parser.Error : Type -> Type
     (position: Nat) ->
     (unexpect: Maybe(Parser.Error.Item)) ->
     (expected: List(Parser.Error.Item))  ->
-    P(Parser.Error.trivial<E>(position)(unexpect)(expected))
+    P(Parser.Error.make_trivial<E>(position)(unexpect)(expected))
   ) ->
   (fancy:
     (position: Nat) ->
     (messages: List(Parser.Error.Fancy(E))) ->
-    P(Parser.Error.fancy<E>(position)(messages))
+    P(Parser.Error.make_fancy<E>(position)(messages))
   ) ->
   P(parser.error)
 

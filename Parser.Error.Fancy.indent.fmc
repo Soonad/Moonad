@@ -1,3 +1,0 @@
-Parser.Error.Fancy.indent: <E: Type> -> Nat -> Nat -> Parser.Error.Fancy(E)
-  <E> (x) (y)
-  <P> () (indent) () indent(x)(y)

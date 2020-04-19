@@ -10,4 +10,4 @@ Parser.fail:
   s<() X>
   | () (index) () ()
     let e = List.single<Parser.Error.Fancy(E)>(Parser.Error.Fancy.fail<E>(msg))
-    empty_error(s)(Parser.Error.fancy<E>(index)(e));
+    empty_error(s)(Parser.Error.make_fancy<E>(index)(e));
