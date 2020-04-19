@@ -1,17 +1,17 @@
 UFind.union: UFind -> Bits -> Bits -> UFind
   (uf) (path1) (path2)
-  UFind.ufind<UFind>(uf)(path1)(
+  UFind.find<UFind>(uf)(path1)(
     (uf) (root_path1) (rank1)
-    UFind.ufind<UFind>(uf)(path2)(
+    UFind.find<UFind>(uf)(path2)(
       (uf) (root_path2) (rank2)
       Bits.equal(root_path1)(root_path2)<() UFind>
       | uf;
       | Nat.cmp(rank1)(rank2)<() UFind>
-        | let uf = Map.insert<UNode>(root_path1)(UNode.ulink(root_path2))(uf)
+        | let uf = Map.insert<UNode>(root_path1)(UNode.link(root_path2))(uf)
           uf;
-        | let uf = Map.insert<UNode>(root_path1)(UNode.ulink(root_path2))(uf)
-          let uf = Map.insert<UNode>(root_path2)(UNode.uroot(Nat.succ(rank2)))(uf)
+        | let uf = Map.insert<UNode>(root_path1)(UNode.link(root_path2))(uf)
+          let uf = Map.insert<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf)
           uf;
-        | let uf = Map.insert<UNode>(root_path1)(UNode.uroot(rank2))(uf)
-          let uf = Map.insert<UNode>(root_path2)(UNode.ulink(root_path1))(uf)
+        | let uf = Map.insert<UNode>(root_path1)(UNode.root(rank2))(uf)
+          let uf = Map.insert<UNode>(root_path2)(UNode.link(root_path1))(uf)
           uf;;))

@@ -1,0 +1,3 @@
+UNode.link: Bits -> UNode
+  (parent)
+  <> () (link) link(parent)
