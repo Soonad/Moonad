@@ -1,0 +1,2 @@
+Term.bind_free_vars: Term -> Nat -> Term
+  (term) (initial_depth) Term.bind_free_vars.aux(term)(Nat.zero)(initial_depth)
