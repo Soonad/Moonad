@@ -1,4 +1,4 @@
-Parser.Error.trivial:
+Parser.Error.make_trivial:
   <E: Type> ->
   Nat ->
   Maybe(Parser.Error.Item) ->

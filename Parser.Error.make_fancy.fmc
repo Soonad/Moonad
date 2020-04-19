@@ -1,4 +1,4 @@
-Parser.Error.fancy:
+Parser.Error.make_fancy:
   <E: Type> ->
   Nat ->
   List(Parser.Error.Fancy(E)) ->
