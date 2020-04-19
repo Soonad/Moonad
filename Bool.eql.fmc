@@ -1,0 +1,9 @@
+Bool.eql: Bool -> Bool -> Bool
+  (a) (b)
+  a<() Bool>
+  | b<() Bool>
+    | Bool.true;
+    | Bool.false;;
+  | b<() Bool>
+    | Bool.false;
+    | Bool.true;;

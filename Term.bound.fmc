@@ -1,0 +1,2 @@
+Term.bound: Nat -> Term
+  (indx) Term.ref(String.cons(Char.percnt)(Nat.to_string(indx)))

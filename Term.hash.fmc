@@ -1,0 +1,11 @@
+Term.hash: Term -> U32
+  (term)
+  term<() U32>
+  | (hash) () hash;
+  | (hash) () hash;
+  | (hash) hash;
+  | (hash) () () () () () hash;
+  | (hash) () () () hash;
+  | (hash) () () () hash;
+  | (hash) () () () hash;
+  | (hash) () () () hash;

@@ -1,2 +1,0 @@
-UFind.uempty : UFind
-  Map.empty<UNode>
