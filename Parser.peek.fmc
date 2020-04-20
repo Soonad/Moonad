@@ -1,0 +1,14 @@
+Parser.peek:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser(S)(E)(A) ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (p)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  p<X>(s1)
+  | (s2) (a) empty_value(s1)(a);
+  | empty_error;
+  | (s2) (a) empty_value(s1)(a);
+  | eaten_error;

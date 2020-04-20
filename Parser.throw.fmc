@@ -1,0 +1,11 @@
+Parser.throw :
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser.Error(E) ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (e)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  eaten_error(s1)(e)
+
