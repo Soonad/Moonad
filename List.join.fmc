@@ -1,5 +1,0 @@
-List.join: <A: Type> -> List(List(A)) -> List(A)
-  <A> (xs)
-  xs<() List(A)>
-  | List.nil<A>;
-  | (head) (tail) List.concat<A>(head)(List.join<A>(tail));
