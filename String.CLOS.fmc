@@ -1,3 +1,0 @@
-// [")","}']
-CLOS: Pair(String)(String)
-  Pair.new<String><String>(GT)(RPAR)

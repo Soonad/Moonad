@@ -1,3 +1,0 @@
-// "|"
-PIPE: String
- String.cons(Char.vert)(String.nil)

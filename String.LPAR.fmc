@@ -1,3 +1,0 @@
-// "("
-LPAR: String
-  String.cons(Char.lpar)(String.nil)

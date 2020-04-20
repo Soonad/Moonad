@@ -1,3 +1,0 @@
-// "::"
-COLS: String
-  String.cons(Char.colon)(String.cons(Char.colon)(String.nil))

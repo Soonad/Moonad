@@ -1,3 +1,0 @@
-// "="
-EQLS: String
-  String.cons(Char.equals)(String.nil)
