@@ -1,5 +1,5 @@
 // a <= b
-U16.lte: U16 -> U16 -> Bool
+U16.lte: U16 -> U16 -> Bool //prim//
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
