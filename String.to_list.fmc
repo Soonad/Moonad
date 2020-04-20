@@ -1,0 +1,6 @@
+String.to_list: String -> List(Char)
+  (str)
+  str<() List(Char)>
+  | List.nil<Char>;
+  | (str.head) (str.tail)
+    List.cons<Char>(str.head)(String.to_list(str.tail));

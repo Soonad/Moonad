@@ -1,23 +1,26 @@
-//Parser.tokens:
-//  <S: Type> ->
-//  <E: Type> ->
-//  <A: Type> ->
-//  String    ->
-//  Parser(S)(E)(A)
-//
-//  <S> <E> <A> (str)
-//  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-//  s1<() X> | (input) (index) (error) (state)
-//  let len = List.length<Char>(str)
-//  List.take<Char>(len)(input)<() X>
-//  | let unex = Maybe.some<Parser.Error.Item>(Parser.Error.Item.end_of_input)
-//    empty_error(s1)(Parser.Error.make_trivial<E>(Nat.zero)(unex)(es));
-//  | (c) (cs)
-//    f(c)<() X>
-//    | let item = Parser.Error.Item.tokens(NonEmpty.end<Char>(c))
-//      let unex = Maybe.some<Parser.Error.Item>(item)
-//      empty_error(s1)(Parser.Error.make_trivial<E>(index)(unex)(es));
-//    | (x)
-//      let s2 = Parser.State.make<S><E>(cs)(Nat.succ(index))(error)(state)
-//      eaten_value(s2)(x);;;
-//
+Parser.tokens:
+  <S: Type> ->
+  <E: Type> ->
+  String    ->
+  Parser(S)(E)(String)
+
+  <S> <E> (str)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  s1<() X> | (input) (index) (error) (state)
+  let len = String.length(str)
+  String.chunk(len)(input)<() X>
+  | let unex = Maybe.some<Parser.Error.Item>(Parser.Error.Item.end_of_input)
+    let exp  = List.single<Parser.Error.Item>(Parser.Error.Item.label(str))
+    empty_error(s1)(Parser.Error.make_trivial<E>(Nat.zero)(unex)(exp));
+  | (x)
+    let rest = String.drop(len)(input)
+    let s2 = Parser.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state)
+    String.eql(str)(x)<() X>
+    | str<() X>
+      | empty_value(s2)(str);
+      | () () eaten_value(s2)(str);;
+    | let labl = Parser.Error.Item.label(x)
+      let unex = Maybe.some<Parser.Error.Item>(labl)
+      let exp  = List.single<Parser.Error.Item>(labl)
+      empty_error(s1)(Parser.Error.make_trivial<E>(index)(unex)(exp));;;
+
