@@ -1,0 +1,14 @@
+Parser.run_default:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser(S)(E)(A) ->
+  String ->
+  S ->
+  Either(Parser.Error(E))(A)
+
+  <S> <E> <A> (p) (str) (s)
+  Parser.Reply.to_either<S><E><A>
+  | Parser.run<S><E><A>(p)(Parser.State.default<S><E>(str)(s));
+
+
