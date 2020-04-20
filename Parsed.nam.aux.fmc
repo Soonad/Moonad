@@ -1,6 +1,6 @@
 Parsed.nam.aux: String -> Pair(String)(String)
   (code)
-  let ret = Pair.make<String><String>
+  let ret = Pair.new<String><String>
   code<() Pair(String)(String)>
   | ret(code)(String.nil);
   | (head) (tail)

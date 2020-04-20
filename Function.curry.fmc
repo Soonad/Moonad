@@ -8,4 +8,4 @@ Function.curry:
   C
 
   <A> <B> <C> (f) (x) (y)
-  f(Pair.make<A><B>(x)(y))
+  f(Pair.new<A><B>(x)(y))

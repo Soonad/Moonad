@@ -6,7 +6,7 @@ Parsed.dfs: String -> Defs -> Parsed(Defs)
     Parsed.chain<String><Defs>(Parsed.str(Parsed.next(code))(COLO))       | (code) (skip)
     Parsed.chain<Term  ><Defs>(Parsed.trm(Parsed.next(code))(vars))       | (code) (type)
     Parsed.chain<Term  ><Defs>(Parsed.trm(Parsed.next(code))(vars))       | (code) (term)
-    let defn = Pair.make<Term><Term>(type)(term)
+    let defn = Pair.new<Term><Term>(type)(term)
     let file = Map.insert<Def>(String.to_bits(name))(defn)(file)
     //let file = insert<Def>(string_to_bits(name))(pair<Term><Term>(typ)(typ))(file)
     Parsed.some<Defs>(code)(file);;;;

@@ -24,4 +24,4 @@ hello : IO(Unit)
   IO.log<Unit>(your_name)   | ()
   IO.inp<Unit>              | (name)
   IO.log<Unit>(greet(name)) | ()
-  IO.end<Unit>(Unit.make);;;
+  IO.end<Unit>(Unit.new);;;

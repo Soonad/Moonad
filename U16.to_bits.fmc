@@ -1,0 +1,4 @@
+U16.to_bits: U16 -> Bits
+  (a)
+  a<() Bits> | (a_val)
+  Word.to_bits<Nat.16>(a_val);
