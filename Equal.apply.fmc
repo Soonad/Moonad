@@ -12,5 +12,3 @@ Equal.apply:
       Equal.rewrite<A><e.b><a>(Equal.mirror<A><a><e.b>(e))<B>(f(e.b))
     )>
   | Equal.to<B(a)><f(a)>;
-
-

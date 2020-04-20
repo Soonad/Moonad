@@ -1,2 +1,2 @@
-Unit.make : Unit
+Unit.new : Unit
   <P> (make) make

@@ -1,5 +1,5 @@
 // a == b
-U32.eql: U32 -> U32 -> Bool
+U32.eql: U32 -> U32 -> Bool //prim//
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)

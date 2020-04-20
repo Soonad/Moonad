@@ -8,4 +8,4 @@ String.eql: String -> String -> Bool
     b<() Bool>
     | Bool.false;
     | (b.head) (b.tail)
-      Bool.and(U32.eql(a.head)(b.head))(String.eql(a.tail)(b.tail));;
+      Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail));;

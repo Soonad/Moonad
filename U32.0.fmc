@@ -1,5 +1,5 @@
 U32.0: U32
-  U32.make(
+  U32.new(
     Word.0<Nat.31>(Word.0<Nat.30>(Word.0<Nat.29>(Word.0<Nat.28>(
     Word.0<Nat.27>(Word.0<Nat.26>(Word.0<Nat.25>(Word.0<Nat.24>(
     Word.0<Nat.23>(Word.0<Nat.22>(Word.0<Nat.21>(Word.0<Nat.20>(

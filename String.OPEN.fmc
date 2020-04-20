@@ -1,3 +1,3 @@
 // ["(","{"]
 OPEN: Pair(String)(String)
-  Pair.make<String><String>(LT)(LPAR)
+  Pair.new<String><String>(LT)(LPAR)

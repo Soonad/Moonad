@@ -4,5 +4,5 @@ List.find.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A
   | Maybe.none<Pair(A)(Nat)>;
   | (head) (tail)
     cond(head)(indx)<() Maybe(Pair(A)(Nat))>
-    | Maybe.some<Pair(A)(Nat)>(Pair.make<A><Nat>(head)(indx));
+    | Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx));
     | List.find.aux<A>(tail)(cond)(Nat.succ(indx));;
