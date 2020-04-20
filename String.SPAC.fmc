@@ -1,3 +1,0 @@
-// " "
-SPAC: String
-  String.cons(Char.space)(String.nil)

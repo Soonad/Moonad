@@ -1,0 +1,6 @@
+String.length: String -> Nat
+  (str)
+  str<() Nat>
+  | Nat.zero;
+  | (head) (tail)
+    Nat.succ(String.length(tail));

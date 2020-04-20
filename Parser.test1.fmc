@@ -3,7 +3,7 @@ Parser.test1 : Either(Parser.Error(Unit))(Char)
   | Parser.token<Unit><Unit><Char>
     | Maybe.some<Char>;
     | List.nil<Parser.Error.Item>;;
-  | SEMI;
+  | ";";
   | Unit.new;
 
 

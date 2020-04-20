@@ -1,5 +1,7 @@
 Parsed.lam: String -> List(String) -> Parsed(Term)
   (code) (vars)
+  let OPEN = Pair.new<String><String>("<")("(")
+  let CLOS = Pair.new<String><String>(">")(")")
   Parsed.chain<Bool  ><Term>(Parsed.opt(Parsed.next(code))(OPEN))      | (code) (eras)
   Parsed.chain<String><Term>(Parsed.nam(Parsed.next(code))(Bool.true)) | (code) (name)
   Parsed.chain<Bool  ><Term>(Parsed.opt(Parsed.next(code))(CLOS))      | (code) (skip)

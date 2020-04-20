@@ -1,3 +1,0 @@
-// "}"
-RSIG: String
-  String.cons(Char.rbrace)(String.nil)

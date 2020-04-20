@@ -1,0 +1,10 @@
+String.chunk: Nat -> String -> Maybe(String)
+  (n) (list)
+  n<() Maybe(String)>
+  | Maybe.some<String>(String.nil);
+  | (pred)
+    list<() Maybe(String)>
+    | Maybe.none<String>;
+    | (head) (tail)
+      Maybe.bind<String><String> | String.chunk(pred)(tail);
+      | (x) Maybe.some<String>(String.cons(head)(x));;;

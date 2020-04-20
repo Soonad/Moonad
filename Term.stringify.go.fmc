@@ -8,12 +8,12 @@ Term.stringify.go : List(String) -> Term -> String
   let nest = 
     ((b) (s)
     b<() String>
-    | String.concat(LT)(String.concat(s)(GT));
-    | String.concat(LPAR)(String.concat(s)(RPAR));
+    | String.concat("<")(String.concat(s)(">"));
+    | String.concat("(")(String.concat(s)(")"));
     ) :: Bool -> String -> String
 
   let sp =
-    ((s) String.flatten(cons(SPAC)(cons(s)(single(SPAC))))
+    ((s) String.flatten(cons(" ")(cons(s)(single(" "))))
     ) :: String -> String
 
   let ERR = 
@@ -28,11 +28,11 @@ Term.stringify.go : List(String) -> Term -> String
     let res = List.find<String>(vars)(() (i) Nat.eql(indx)(i))
     res<() String>(ERR)((x) Pair.fst<String><Nat>(x));
   | () (nam) nam;
-  | () TYPS;
+  | () "Type";
   | () (e) (s) (n) (h) (b)
     let body = go(cons(n)(cons(s)(vars)))(b)
-    let head = nest(e)(String.flatten(cons(n)(cons(sp(COLO))(single(go(cons(s)(vars))(h))))))
-    String.flatten(cons(s)(cons(head)(cons(sp(ARR0))(single(body)))));
+    let head = nest(e)(String.flatten(cons(n)(cons(sp(":"))(single(go(cons(s)(vars))(h))))))
+    String.flatten(cons(s)(cons(head)(cons(sp("->"))(single(body)))));
   | () (e) (n) (b)
     let head = nest(e)(n)
     let body = go(cons(n)(vars))(b)
@@ -53,6 +53,6 @@ Term.stringify.go : List(String) -> Term -> String
     let argm = nest(e)(go(vars)(a))
     String.flatten(cons(func)(single(argm)));
   | () (n) (x) (b)
-    String.flatten(cons(LETS)(cons(n)(cons(sp(EQLS))(single(go(cons(n)(vars))(b))))));
+    String.flatten(cons("let")(cons(n)(cons(sp("="))(single(go(cons(n)(vars))(b))))));
   | () () (x) (t)
-    String.flatten(cons(go(vars)(x))(cons(sp(COLS))(single(go(vars)(t)))));
+    String.flatten(cons(go(vars)(x))(cons(sp("::"))(single(go(vars)(t)))));
