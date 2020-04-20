@@ -1,0 +1,14 @@
+Parser.Reply.to_either:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser.Reply(S)(E)(A) ->
+  Either(Parser.Error(E))(A)
+
+  <S> <E> <A> (reply)
+  reply<() Either(Parser.Error(E))(A)>
+  | () (a) Either.right<Parser.Error(E)><A>(a);
+  | () (e) Either.left<Parser.Error(E)><A>(e);
+  | () (a) Either.right<Parser.Error(E)><A>(a);
+  | () (e) Either.left<Parser.Error(E)><A>(e);
+

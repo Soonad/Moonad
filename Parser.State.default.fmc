@@ -1,0 +1,9 @@
+Parser.State.default:
+  <S: Type> ->
+  <E: Type> ->
+  String ->
+  S ->
+  Parser.State(S)(E)
+
+  <S> <E> (input) (state)
+  <P> (make) make(input)(Nat.zero)(List.nil<Parser.Error(E)>)(state)

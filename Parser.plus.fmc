@@ -1,0 +1,25 @@
+Parser.plus:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser(S)(E)(A) ->
+  Parser(S)(E)(A) ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (p) (q)
+
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  p<X>(s1)
+  | empty_value;
+  | (s2) (p.err) q<X>(s1)
+    | empty_value;
+    | (s3) (q.err) empty_error
+      | Parser.State.longest_match<S><E>(s2)(s3);
+      | Parser.Error.merge<E>(p.err)(q.err);;
+    | eaten_value;
+    | (s3) (q.err) eaten_error
+      | Parser.State.longest_match<S><E>(s2)(s3);
+      | Parser.Error.merge<E>(p.err)(q.err);;;
+  | eaten_value;
+  | eaten_error;
+

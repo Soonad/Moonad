@@ -1,0 +1,42 @@
+Parser.Error.merge:
+  <E: Type> ->
+  Parser.Error(E) ->
+  Parser.Error(E) ->
+  Parser.Error(E)
+
+  <E> (x) (y)
+  let x.index = Parser.Error.index<E>(x)
+  let y.index = Parser.Error.index<E>(y)
+  Nat.cmp(x.index)(y.index)<() Parser.Error(E)>
+  | y;
+  | x<() Parser.Error(E)> 
+    |{-trivial-} (x.pos) (x.unx) (x.exp)
+      y<() Parser.Error(E)>
+      |{-trivial-} (y.pos) (y.unx) (y.exp)
+        Parser.Error.make_trivial<E>(x.pos)
+        | x.unx<() Maybe(Parser.Error.Item)> | y.unx; | () x.unx;; // TODO: Ord
+        | List.concat<Parser.Error.Item>(x.exp)(y.exp);;
+      |{-fancy-}   (y.pos) (y.msg) y;;
+    |{-fancy-} (x.pos) (x.msg)
+      y<() Parser.Error(E)>
+      |{-trivial-} (y.pos) (y.unx) (y.exp) x;
+      |{-fancy-}   (y.pos) (y.msg)
+        Parser.Error.make_fancy<E>(x.pos)
+        | List.concat<Parser.Error.Fancy(E)>(x.msg)(y.msg);;;;
+  | x;
+
+
+
+  //x;;
+  //x.msg<() Parser.Error(A)>
+  //| y.msg<() Parser.Error(A)>
+  //  | Nat.cmp(x.pos)(y.pos)<() Parser.Error(A)> | y; | x; | x;;
+  //  | (y.msg.head) (y.msg.tail) y;;
+  //| (x.msg.head) (x.msg.tail) 
+  //  y.msg<() Parser.Error(A)>
+  //  | x;
+  //  | (y.msg.head) (y.msg.tail) Nat.cmp(x.pos)(y.pos)<() Parser.Error(A)>
+  //    | y;
+  //    | let msg = List.concat<Parser.Message(A)>(x.msg)(y.msg)
+  //      Parser.Error.make<A>(x.pos)(msg);
+  //    | x;;;;;
