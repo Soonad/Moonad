@@ -10,4 +10,4 @@ List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
       | (x) Maybe.some<List(A)>(List.cons<A>(head)(x));;;
 
 List.chunk.test: Maybe(List(Unit))
-  List.chunk<Unit>(Nat.1)(List.single<Unit>(Unit.make))
+  List.chunk<Unit>(Nat.1)(List.single<Unit>(Unit.new))
