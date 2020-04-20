@@ -1,0 +1,27 @@
+hello : IO(Unit)
+  let your_name =
+    String.cons(Char.upper_y) |
+    String.cons(Char.o)       |
+    String.cons(Char.u)       |
+    String.cons(Char.space)   |
+    String.cons(Char.n)       |
+    String.cons(Char.a)       |
+    String.cons(Char.m)       |
+    String.cons(Char.e)       |
+    String.cons(Char.quest)   |
+    String.nil;;;;;;;;;
+
+  let greet = ((name)
+    String.cons(Char.upper_h) |
+    String.cons(Char.e)       |
+    String.cons(Char.l)       |
+    String.cons(Char.l)       |
+    String.cons(Char.o)       |
+    String.cons(Char.comma)   |
+    String.cons(Char.space)   |
+    name;;;;;;;) :: String -> String
+
+  IO.log<Unit>(your_name)   | ()
+  IO.inp<Unit>              | (name)
+  IO.log<Unit>(greet(name)) | ()
+  IO.end<Unit>(Unit.make);;;
