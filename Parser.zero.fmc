@@ -1,0 +1,16 @@
+Parser.zero:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parser.Error(E) ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (e)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  s1<() X> | () (index) () ()
+  let e = Parser.Error.make_trivial<E>
+          | index;
+          | Maybe.none<Parser.Error.Item>;
+          | List.nil<Parser.Error.Item>;
+  empty_error(s1)(e);
+

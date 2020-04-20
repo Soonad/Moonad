@@ -1,0 +1,15 @@
+Parser.State.longest_match:
+  <S: Type> ->
+  <E: Type> ->
+  Parser.State(S)(E) ->
+  Parser.State(S)(E) ->
+  Parser.State(S)(E)
+
+  <S> <E> (x) (y)
+  x<() Parser.State(S)(E)> | (x.input) (x.index) (x.error) (x.state)
+  y<() Parser.State(S)(E)> | (y.input) (y.index) (y.error) (y.state)
+  Nat.cmp(x.index)(y.index)<() Parser.State(S)(E)>
+  | y;
+  | x;
+  | x;;;
+
