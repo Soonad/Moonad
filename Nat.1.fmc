@@ -1,2 +1,2 @@
 Nat.1: Nat
-  Nat.succ(Nat.zero)
+  Nat.succ(Nat.0)

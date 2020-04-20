@@ -1,0 +1,2 @@
+Nat.45: Nat
+  Nat.succ(Nat.44)

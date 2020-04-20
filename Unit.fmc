@@ -1,4 +1,4 @@
-Unit: Type
+Unit : Type //prim//
   unit<P: Unit -> Type> ->
-  (make : P(Unit.make)) ->
+  P(Unit.make) ->
   P(unit)

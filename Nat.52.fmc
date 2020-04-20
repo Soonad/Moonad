@@ -1,0 +1,2 @@
+Nat.52: Nat
+  Nat.succ(Nat.51)

@@ -1,11 +1,10 @@
-Function.flip: 
-  <A: Type> ->
-  <B: Type> ->
-  <C: Type> ->
-  (f: A -> B -> C) ->
-  (x: A) ->
-  (y: B) ->
-  C
-
-  <A> <B> <C> (f) (x) (y)
-  f(y)(x)
+Function.flip
+  : <A: Type> ->
+    <B: Type> ->
+    <C: Type> ->
+    (f: A -> B -> C) ->
+    (y: B) ->
+    (x: A) ->
+    C
+  <A> <B> <C> (f) (y) (x)
+  f(x)(y)

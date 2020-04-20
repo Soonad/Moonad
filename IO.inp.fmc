@@ -1,0 +1,4 @@
+IO.inp: <A: Type> -> (String -> IO(A)) -> IO(A)
+  <A> (nxt)
+  <P> () () (inp)
+  inp(nxt)
