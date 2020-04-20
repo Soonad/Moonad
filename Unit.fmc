@@ -1,0 +1,4 @@
+Unit: Type
+  unit<P: Unit -> Type> ->
+  (make : P(Unit.make)) ->
+  P(unit)
