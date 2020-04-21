@@ -1,0 +1,9 @@
+List.filter : <A: Type> -> (A -> Bool) -> List(A) -> List(A)
+  <A> (cond) (list)
+  list<() List(A)>
+  | List.nil<A>;
+  | (list.head) (list.tail)
+    cond(list.head)<() List(A) -> List(A)>
+    | (t) t;
+    | (t) List.cons<A>(list.head)(t);
+    | List.filter<A>(cond)(list.tail);;
