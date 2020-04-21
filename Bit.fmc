@@ -1,4 +1,7 @@
-// A single Bit:
+// A single Bit.
+// T Bit
+// | Bit.0
+// | Bit.1
 Bit : Type
   bit<P: Bit -> Type> ->
   P(Bit.0) ->

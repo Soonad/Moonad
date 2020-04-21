@@ -4,10 +4,10 @@ Parsed.drop_comment: String -> String
   // Removes "// ... \n"
   let code = 
     let fst2 = String.take(Nat.2)(code)
-    let sla2 = String.cons(Char.sol)(String.cons(Char.sol)(String.nil))
+    let sla2 = String.cons(Char.parse("/"))(String.cons(Char.parse("/"))(String.nil))
     String.eql(fst2)(sla2)<() String>
     | let code = String.drop(Nat.2)(code)
-      let code = Parsed.drop_while((x) Bool.not(U16.eql(Char.lf)(x)))(code)
+      let code = Parsed.drop_while((x) Bool.not(U16.eql(Char.newline)(x)))(code)
       code;
     | code;
   code

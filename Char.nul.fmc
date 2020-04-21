@@ -1,3 +1,0 @@
-// NUL
-Char.nul: Char
-  Char.ascii(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)

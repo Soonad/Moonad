@@ -1,9 +1,10 @@
+// Are both booleans equal?
 Bool.eql: Bool -> Bool -> Bool
   (a) (b)
   a<() Bool>
   | b<() Bool>
     | Bool.true;
     | Bool.false;;
-  | b<() Bool>
+  | b<(x) Bool>
     | Bool.false;
     | Bool.true;;

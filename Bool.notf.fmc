@@ -1,3 +1,4 @@
+// Boolean negation, fusible.
 Bool.notf: Bool -> Bool
   (a)
   <P> (t) (f)

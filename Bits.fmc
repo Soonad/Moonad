@@ -1,3 +1,7 @@
+// A sequence of bits.
+// T Bits
+// | b0(pred: Bits)
+// | b1(pred: Bits)
 Bits: Type
   bits<P: Bits -> Type> ->
   (be: P(Bits.nil)) ->

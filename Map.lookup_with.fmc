@@ -29,4 +29,4 @@ Map.lookup_with: <A: Type> -> Bits -> A -> Map(A) -> Pair(A)(Map(A))
       let p = Map.lookup_with<A>(bits.pred)(val)(map.rgt)
       p<() Pair(A)(Map(A))>
       | (p.a) (p.b) 
-        Pair.new<A><Map(A)>(p.a)(Map.multi<A>(map.val)(map.lft)(p.b));;;;
+        Pair.new<A><Map(A)>(p.a)(Map.multi<A>(map.val)(map.lft)(p.b));;;

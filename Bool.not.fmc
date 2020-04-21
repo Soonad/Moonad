@@ -1,3 +1,4 @@
+// Boolean negation.
 Bool.not: Bool -> Bool //prim//
   (a)
   a<() Bool>

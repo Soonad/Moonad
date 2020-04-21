@@ -1,4 +1,0 @@
-Char.ascii: Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Char
-  (b0) (b1) (b2) (b3) (b4) (b5) (b6) (b7)
-  let o = Bit.0
-  Char.new(o)(o)(o)(o)(o)(o)(o)(o)(b0)(b1)(b2)(b3)(b4)(b5)(b6)(b7)

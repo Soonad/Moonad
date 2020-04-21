@@ -1,6 +1,5 @@
 Parsed.is_space: Char -> Bool
   (c)
-    let is_spc = U16.eql(c)(Char.space)
-    let is_tab = U16.eql(c)(Char.ht)
-    let is_lin = U16.eql(c)(Char.lf)
-    Bool.or(is_spc)(Bool.or(is_tab)(is_lin))
+    let is_spc = U16.eql(c)(Char.parse(" "))
+    let is_lin = U16.eql(c)(Char.newline)
+    Bool.or(is_spc)(is_lin)

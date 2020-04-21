@@ -1,3 +1,7 @@
+// Booleans.
+// T Bool
+// | true
+// | false
 Bool: Type //prim//
   bool<P: Bool -> Type> ->
   P(Bool.true) ->

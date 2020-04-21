@@ -1,3 +1,4 @@
+// Is any of the bools true?
 Bool.or: Bool -> Bool -> Bool //prim//
   (a) (b)
   a<() Bool>

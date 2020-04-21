@@ -1,3 +1,0 @@
-// 'J'
-Char.upper_j: Char
-  Char.ascii(Bit.0)(Bit.1)(Bit.0)(Bit.0)(Bit.1)(Bit.0)(Bit.1)(Bit.0)

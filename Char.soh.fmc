@@ -1,3 +1,0 @@
-// SOH
-Char.soh: Char
-  Char.ascii(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.0)(Bit.1)

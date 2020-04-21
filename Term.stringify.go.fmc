@@ -2,7 +2,7 @@ Term.stringify.go : List(String) -> Term -> String
   (vars) (term)
   let go     = Term.stringify.go
   let cons   = List.cons<String>
-  let space  = String.cons(Char.space)(String.nil)
+  let space  = String.cons(Char.parse(" "))(String.nil)
   let single = List.single<String>
 
   let nest = 
@@ -17,10 +17,10 @@ Term.stringify.go : List(String) -> Term -> String
     ) :: String -> String
 
   let ERR = 
-    ( String.cons(Char.hash)
-    | String.cons(Char.upper_e)
-    | String.cons(Char.upper_r)
-    | String.cons(Char.upper_r)
+    ( String.cons(Char.parse("#"))
+    | String.cons(Char.parse("E"))
+    | String.cons(Char.parse("R"))
+    | String.cons(Char.parse("R"))
     | String.nil;;;;
     ) :: String
   term<() String>
