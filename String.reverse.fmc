@@ -1,0 +1,2 @@
+String.reverse: String -> String
+  (str) String.reverse.go(str)(String.nil)

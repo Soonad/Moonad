@@ -1,0 +1,3 @@
+Nat.to_base: Nat -> Nat -> List(Nat)
+  (base) (nat)
+  Nat.to_base.go(base)(nat)(List.nil<Nat>)

@@ -1,0 +1,6 @@
+String.to_stringifier : String -> Stringifier
+  (str)
+  str<() Stringifier>
+  | (x) x;
+  | (str.head) (str.tail)
+    (x) String.cons(str.head)(String.to_stringifier(str.tail)(x));

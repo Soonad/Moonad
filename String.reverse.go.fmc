@@ -1,0 +1,6 @@
+String.reverse.go: String -> String -> String
+  (str) (res)
+  str<() String>
+  | res;
+  | (str.head) (str.tail)
+    String.reverse.go(str.tail)(String.cons(str.head)(res));

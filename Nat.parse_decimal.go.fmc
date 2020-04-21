@@ -1,0 +1,9 @@
+// TODO: error on misformatted Nat
+Nat.parse_decimal.go: String -> Nat -> Nat //loop//
+  (str) (res)
+  str<() Nat>
+  | res;
+  | (str.head) (str.tail)
+    let dig = Nat.sub(U16.to_nat(str.head))(Nat.48)
+    let res = Nat.add(dig)(Nat.mul(Nat.10)(res))
+    Nat.parse_decimal.go(str.tail)(res);

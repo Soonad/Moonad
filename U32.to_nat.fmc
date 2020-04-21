@@ -1,0 +1,4 @@
+U32.to_nat: U32 -> Nat //prim//
+  (a)
+  a<() Nat> | (a_val)
+  Word.to_nat<Nat.32>(a_val);

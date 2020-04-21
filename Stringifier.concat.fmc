@@ -1,0 +1,3 @@
+// A concatenation string.
+Stringifier.concat : Stringifier -> Stringifier -> Stringifier
+  (a) (b) (x) a(b(x))

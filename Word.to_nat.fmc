@@ -1,0 +1,3 @@
+Word.to_nat: <size: Nat> -> Word(size) -> Nat
+  <size> (word)
+  Word.to_nat.go<size>(word)(Nat.1)
