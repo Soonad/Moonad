@@ -1,3 +1,4 @@
+// Comparisons
 Cmp : Type
   cmp<P: Cmp -> Type> ->
   P(Cmp.ltn) ->

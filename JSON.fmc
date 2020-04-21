@@ -1,3 +1,4 @@
+// JavaScript Object Notation.
 JSON : Type
   json<P: JSON -> Type> ->
   (null:   P(JSON.null)) ->

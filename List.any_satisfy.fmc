@@ -1,3 +1,4 @@
+// Do any element satisfy a condition?
 List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
   <A> (cond) (list)
   list<() Bool>

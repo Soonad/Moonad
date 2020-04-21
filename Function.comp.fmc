@@ -1,3 +1,4 @@
+// Dependent function composition.
 Function.comp: 
   <A: Type> ->
   <B: Type> ->

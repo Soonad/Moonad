@@ -1,3 +1,4 @@
+// `Function(A, (x) B(x))` is a complex way to write `(x: A) -> B(x)` I guess.
 Function: (A: Type) -> (B: A -> Type) -> Type
   (A) (B)
   (x: A) -> B(x)

@@ -1,3 +1,5 @@
+// The IO type allows representing side-effective computations.
+// You can run a term of type `IO(Unit)` using `fmcio my_term`.
 IO: Type -> Type
   (A)
   io<P : IO(A) -> Type> ->

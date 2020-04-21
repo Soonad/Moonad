@@ -1,3 +1,6 @@
+// The Equal datatype.
+// T Equal<A, x: A>(b: A)
+// | Equal.to : Equal(A, a, a)
 Equal: (A: Type) -> A -> A -> Type
   (A) (a) (b)
   equal<P: (b: A) -> Equal(A)(a)(b) -> Type> ->

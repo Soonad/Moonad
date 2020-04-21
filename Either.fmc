@@ -1,3 +1,7 @@
+// A container for either a value of type A or a value of type B.
+// T Either<A, B>
+// | left(x: A)
+// | right(x: B)
 Either : (A : Type) -> (B : Type) -> Type
   (A) (B)
   either<P: Either(A)(B) -> Type> ->

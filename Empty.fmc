@@ -1,3 +1,5 @@
+// The empty datatype.
+// T Empty
 Empty: Type
   empty<P: Empty -> Type> ->
   P(empty)

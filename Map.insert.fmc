@@ -1,3 +1,5 @@
+// Inserts a (key,val) pair in a map.
+// Example: Map.insert<Nat>(my_key)(my_val)(my_map)
 Map.insert: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
   <A> (bits) (val) (map)
   bits<() Map(A)>

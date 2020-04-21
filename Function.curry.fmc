@@ -1,3 +1,4 @@
+// Converts a function that receives a pair into a function of 2 arguments.
 Function.curry:
   <A: Type> ->
   <B: Type> ->

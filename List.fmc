@@ -1,3 +1,7 @@
+// The polymorphic List type can hold a number of elements.
+// T List<A>
+// | nil
+// | cons(head: A, tail: List(A))
 List: (A: Type) -> Type
   (A)
   list<P: (x: List(A)) -> Type> ->

@@ -1,3 +1,4 @@
+// Applies a function to all elements of the list.
 List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
   <A> <B> (fn) (list)
   list<() List(B)>

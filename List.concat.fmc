@@ -1,3 +1,4 @@
+// Concatenates two lists.
 List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
   <A> (as) (bs)
   as<() List(A)>

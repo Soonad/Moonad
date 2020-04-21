@@ -1,3 +1,4 @@
+// Returns the first elements of a list, discards the rest.
 List.take: <A: Type> -> Nat -> List(A) -> List(A)
   <A> (n) (list)
   list<() List(A)>

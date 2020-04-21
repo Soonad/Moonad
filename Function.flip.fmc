@@ -1,3 +1,4 @@
+// Flips the two first arguments of a function.
 Function.flip
   : <A: Type> ->
     <B: Type> ->

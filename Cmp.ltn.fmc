@@ -1,2 +1,3 @@
+// <=
 Cmp.ltn: Cmp
   <P> (ltn) (eql) (gtn) ltn

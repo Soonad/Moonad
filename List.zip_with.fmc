@@ -1,3 +1,4 @@
+// Given two lists `xs` and `ys`, applies `f(xs[i],ys[i])` for all `i`.
 List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> (A -> B -> C) -> List(A) -> List(B) -> List(C)
   <A> <B> <C> (fn) (as) (bs)
   as<() List(C)>

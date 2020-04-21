@@ -1,3 +1,4 @@
+// Creates a character from 16 bits.
 Char.new
   : Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit ->
     Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit ->

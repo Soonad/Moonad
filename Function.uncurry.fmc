@@ -1,3 +1,4 @@
+// Converts a function from 2 arguments to a function that receives a pair.
 Function.uncurry :
   <A: Type> ->
   <B: Type> ->
