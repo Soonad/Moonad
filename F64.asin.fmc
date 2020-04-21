@@ -1,0 +1,3 @@
+// Arcsine function.
+F64.asin: F64 -> F64 //prim//
+  F64.asin

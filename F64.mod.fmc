@@ -1,0 +1,3 @@
+// Modulus of two 64-bit floats.
+F64.mod: F64 -> F64 -> F64 //prim//
+  F64.mod

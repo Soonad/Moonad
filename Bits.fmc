@@ -2,7 +2,7 @@
 // T Bits
 // | b0(pred: Bits)
 // | b1(pred: Bits)
-Bits: Type
+Bits: Type //prim//
   bits<P: Bits -> Type> ->
   (be: P(Bits.nil)) ->
   (b0: (pred: Bits) -> P(Bits.0(pred))) ->

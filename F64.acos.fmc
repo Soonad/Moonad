@@ -1,0 +1,3 @@
+// Arccos function.
+F64.acos: F64 -> F64 //prim//
+  F64.acos

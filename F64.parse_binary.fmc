@@ -1,0 +1,2 @@
+F64.parse_binary: String -> F64
+  (str) F64.new(Word.from_bits(Nat.64)(Bits.from_string(str)))

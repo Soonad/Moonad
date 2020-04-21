@@ -1,0 +1,3 @@
+// Logarithm function.
+F64.log: F64 -> F64 //prim//
+  F64.log

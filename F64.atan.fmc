@@ -1,0 +1,3 @@
+// Arctan function.
+F64.atan: F64 -> F64 -> F64 //prim//
+  F64.atan

@@ -1,0 +1,5 @@
+// TODO An IEEE-754 compliant 64-bit floating point.
+F64: Type //prim//
+  f64<P: F64 -> Type> ->
+  (new: (a: Word(Nat.64)) -> P(F64.new(a))) ->
+  P(f64)

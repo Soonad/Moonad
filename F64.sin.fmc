@@ -1,0 +1,3 @@
+// Sine function.
+F64.sin: F64 -> F64 //prim//
+  F64.sin

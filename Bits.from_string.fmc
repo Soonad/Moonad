@@ -1,0 +1,9 @@
+Bits.from_string: String -> Bits
+  (str)
+  str<() Bits>
+  | Bits.nil;
+  | (str.head) (str.tail)
+    U16.eql(str.head)(Char.parse("1"))<() Unit -> Bits>
+    | () Bits.1(Bits.from_string(str.tail));
+    | () Bits.0(Bits.from_string(str.tail));
+    | Unit.new;;
