@@ -1,0 +1,13 @@
+String.take_while.aux:
+  (Char -> Bool) ->
+  String ->
+  String ->
+  Pair(String)(String)
+
+  (f) (str) (res)
+  res<() Pair(String)(String)>
+  | Pair.new<String><String>(str)(String.nil);
+  | (head) (tail)
+    f(head)<() Pair(String)(String)>
+    | String.take_while.aux(f)(String.cons(head)(str))(tail);
+    | Pair.new<String><String>(str)(res);;

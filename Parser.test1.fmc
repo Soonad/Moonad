@@ -1,9 +1,15 @@
-Parser.test1 : Either(Parser.Error(Unit))(Char)
-  Parser.run_default<Unit><Unit><Char>
-  | Parser.token<Unit><Unit><Char>
-    | Maybe.some<Char>;
-    | List.nil<Parser.Error.Item>;;
-  | ";";
-  | Unit.new;
+Parser.test1 : String
+  let v = Parser.run<Unit><Unit><String>
+    | Parser.tokens<Unit><Unit>("a");
+    | Parser.State.default<Unit><Unit>
+      //| "a";
+      | "b";
+      | Unit.new;;
+
+  v<(t) Parser.type(Unit)(Unit)(String)(t)>
+  | () (x) x;
+  | () (e) The.term<Parser.Error(Unit)>(e);
+  | () (x) x;
+  | () (e) The.term<Parser.Error(Unit)>(e);
 
 

@@ -17,7 +17,7 @@ Parser.plus:
       | Parser.State.longest_match<S><E>(s2)(s3);
       | Parser.Error.merge<E>(p.err)(q.err);;
     | eaten_value;
-    | (s3) (q.err) eaten_error
+    | (s3) (q.err) empty_error
       | Parser.State.longest_match<S><E>(s2)(s3);
       | Parser.Error.merge<E>(p.err)(q.err);;;
   | eaten_value;

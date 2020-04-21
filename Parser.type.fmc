@@ -1,0 +1,13 @@
+Parser.type :
+  (S: Type) ->
+  (E: Type) ->
+  (A: Type) ->
+  Parser.Reply(S)(E)(A) ->
+  Type
+
+  (S) (E) (A) (reply) 
+  reply<() Type>
+  | () () A;
+  | () (e) The(Parser.Error(E))(e);
+  | () () A;
+  | () (e) The(Parser.Error(E))(e);

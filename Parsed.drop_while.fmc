@@ -1,5 +1,4 @@
-Parsed.drop_while: (Char -> Bool) -> String -> String
-  (cond) (code)
+Parsed.drop_while: (Char -> Bool) -> String -> String (cond) (code)
   code<() String>
   | String.nil;
   | (head) (tail)

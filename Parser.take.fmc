@@ -1,0 +1,21 @@
+Parser.take:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  String    ->
+  Nat ->
+  Parser(S)(E)(String)
+
+  <S> <E> <A> (err) (n)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) ()
+  s1<() X> | (input) (index) (error) (state)
+  String.take_n(n)(input)<() X> 
+  | empty_error(s1) | Parser.Error.make_trivial<E>
+    | index;
+    | Maybe.some<Parser.Error.Item>(Parser.Error.Item.end_of_input);
+    | List.single<Parser.Error.Item>(Parser.Error.Item.label(err));;;
+  | (p) p<() X> | (took) (rest)
+    let s2  = Parser.State.make<S><E>(rest)(Nat.add(index)(n))(error)(state)
+    eaten_value(s2)(took);;;
+
+
