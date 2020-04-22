@@ -1,2 +1,2 @@
-ParserS : Type -> Type
+Parse : Type -> Type
   (A) Parser(Unit)(Unit)(A)

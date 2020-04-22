@@ -1,0 +1,4 @@
+Parse.bind: <A: Type> -> <B: Type> -> Parse(A) -> (A -> Parse(B)) -> Parse(B)
+  <A> <B> (pa) (pf)
+  Parser.bind<Unit><Unit><A><B>(pa)(pf)
+

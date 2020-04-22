@@ -1,0 +1,4 @@
+Parse.type: (A: Type) -> Parse.Reply(A) -> Type
+  (A) (reply)
+  Parser.type(Unit)(Unit)(A)(reply)
+

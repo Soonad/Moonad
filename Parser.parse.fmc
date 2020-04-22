@@ -1,0 +1,16 @@
+Parser.parse:
+  <S : Type> ->
+  <E : Type> ->
+  <A: Type> ->
+  (p: Parser(S)(E)(A)) ->
+  (s: Parser.State(S)(E)) ->
+  Parser.type(S)(E)(A)(Parser.run<S><E><A>(p)(s))
+
+  <S> <E> <A> (p) (s)
+  Parser.run<S><E><A>(p)(s)<(t) Parser.type(S)(E)(A)(t)>
+  | () (x) x;
+  | () (e) The.term<Parser.Error(E)>(e);
+  | () (x) x;
+  | () (e) The.term<Parser.Error(E)>(e);
+
+
