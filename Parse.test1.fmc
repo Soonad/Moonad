@@ -1,6 +1,6 @@
 Parse.test1 : String
   Parse.parse<String>
-    | Parser.tokens<Unit><Unit>("a");
+    | Parse.tokens("a");
     | "a";
 
 
