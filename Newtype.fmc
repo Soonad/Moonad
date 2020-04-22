@@ -1,0 +1,5 @@
+Newtype: (A: Type) -> (tag: String) -> Type
+  (A) (tag)
+  newtype<P: (tag: String) -> Newtype(A)(tag) -> Type> ->
+  (val: (x: A) -> P(tag)(Newtype.val<A><tag>(x))) ->
+  P(tag)(newtype)

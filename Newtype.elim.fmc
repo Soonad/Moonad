@@ -1,0 +1,4 @@
+Newtype.elim: <A: Type> -> <tag: String> -> (n: Newtype(A)(tag)) -> A
+  <A> <tag> (n)
+  n<() () A>
+  | (x) x;
