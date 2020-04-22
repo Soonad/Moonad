@@ -1,3 +1,13 @@
+// When a parser branches and tries different possible options on its input
+// we need some way to combine the errors that each branch generates.
+// Because branches that consume more input are better than those that do less
+// the errors from farther along the input are more useful.
+// Thus to merge errors we compare positions and throw away the earlier error.
+// If both errors occur at the same place though, we prefer fancy errors.
+// If both errors are fancy at the same place, we merge the messages.
+// If both errors are trivial at the same place, we merge the expected items.
+// (We also try to prefer the presence of an unexpected token over its absence)
+
 Parser.Error.merge:
   <E: Type> ->
   Parser.Error(E) ->
@@ -25,18 +35,3 @@ Parser.Error.merge:
         | List.concat<Parser.Error.Fancy(E)>(x.msg)(y.msg);;;;
   | x;
 
-
-
-  //x;;
-  //x.msg<() Parser.Error(A)>
-  //| y.msg<() Parser.Error(A)>
-  //  | Nat.cmp(x.pos)(y.pos)<() Parser.Error(A)> | y; | x; | x;;
-  //  | (y.msg.head) (y.msg.tail) y;;
-  //| (x.msg.head) (x.msg.tail) 
-  //  y.msg<() Parser.Error(A)>
-  //  | x;
-  //  | (y.msg.head) (y.msg.tail) Nat.cmp(x.pos)(y.pos)<() Parser.Error(A)>
-  //    | y;
-  //    | let msg = List.concat<Parser.Message(A)>(x.msg)(y.msg)
-  //      Parser.Error.make<A>(x.pos)(msg);
-  //    | x;;;;;

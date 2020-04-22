@@ -1,3 +1,5 @@
+// Take a number of characters, error with a custom label if we hit end of input
+
 Parser.take:
   <S: Type> ->
   <E: Type> ->

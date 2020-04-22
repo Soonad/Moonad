@@ -1,3 +1,4 @@
+// a parser is an applicative
 Parser.ap:
   <S: Type> ->
   <E: Type> ->

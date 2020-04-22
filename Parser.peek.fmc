@@ -1,3 +1,6 @@
+// we can look ahead in the input stream and not consume any input
+// if the parser succeeds
+
 Parser.peek:
   <S: Type> ->
   <E: Type> ->

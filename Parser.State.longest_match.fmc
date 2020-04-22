@@ -1,3 +1,5 @@
+// We compare two states and return the one farthest from the start of the input
+
 Parser.State.longest_match:
   <S: Type> ->
   <E: Type> ->

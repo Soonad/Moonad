@@ -1,14 +1,11 @@
+// an example of how to use a dependently typed parser
+
 Parser.test1 : String
-  let v = Parser.run<Unit><Unit><String>
+  Parser.parse<Unit><Unit><String>
     | Parser.tokens<Unit><Unit>("a");
     | Parser.State.default<Unit><Unit>
       | "a";
       | Unit.new;;
 
-  v<(t) Parser.type(Unit)(Unit)(String)(t)>
-  | () (x) x;
-  | () (e) The.term<Parser.Error(Unit)>(e);
-  | () (x) x;
-  | () (e) The.term<Parser.Error(Unit)>(e);
 
 

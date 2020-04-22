@@ -1,3 +1,6 @@
+// We can make a parser from any generic function
+// that can process parser states into parser replies
+
 Parser.make:
   <S: Type> ->
   <E: Type> ->

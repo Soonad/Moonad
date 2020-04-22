@@ -1,3 +1,5 @@
+// try to apply a parser, if it fails, it consumes no input
+
 Parser.try :
   <S: Type> ->
   <E: Type> ->

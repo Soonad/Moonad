@@ -1,3 +1,4 @@
+// A parser is a functor
 Parser.map:
   <S: Type> ->
   <E: Type> ->

@@ -1,3 +1,4 @@
+// match a literal string
 Parser.tokens:
   <S: Type> ->
   <E: Type> ->

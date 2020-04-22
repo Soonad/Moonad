@@ -1,3 +1,9 @@
+// A parser reply represents the four possible outputs for a parser
+// - empty_value when the parser returns a value and input was not consumed
+// - empty_error when the parser throws an error and input was not consumed
+// - eaten_value when the parser returns a value and input was consumed
+// - eaten_error when the parser throws an error and input was consumed
+
 Parser.Reply : Type -> Type -> Type -> Type
   (S) (E) (A)
   parser_reply<P: Parser.Reply(S)(E)(A) -> Type> ->

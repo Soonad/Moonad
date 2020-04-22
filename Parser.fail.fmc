@@ -1,3 +1,5 @@
+// Throw a custom error message
+
 Parser.fail:
   <S: Type> ->
   <E: Type> ->

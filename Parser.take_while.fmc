@@ -1,3 +1,4 @@
+// take characters while a condition is true (can return no characters)
 Parser.take_while:
   <S: Type> ->
   <E: Type> ->

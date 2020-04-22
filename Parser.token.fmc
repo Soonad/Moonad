@@ -1,3 +1,6 @@
+// parse a single character with a validator function 
+// and a list of expected tokens
+
 Parser.token:
   <S: Type> ->
   <E: Type> ->

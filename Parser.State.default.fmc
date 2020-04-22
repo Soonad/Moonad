@@ -1,3 +1,4 @@
+// by default, a parser state has its index at zero and no errors
 Parser.State.default:
   <S: Type> ->
   <E: Type> ->
