@@ -1,0 +1,2 @@
+Parse.eof : Parse(Unit)
+  Parser.eof<Unit><Unit>
