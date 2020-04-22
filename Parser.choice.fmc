@@ -1,0 +1,11 @@
+Parser.choice:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  List(Parser(S)(E)(A)) ->
+  Parser(S)(E)(A)
+
+  <S> <E> <A> (ps)
+  ps<() Parser(S)(E)(A)>
+  | Parser.zero<S><E><A>;
+  | (head) (tail) Parser.plus<S><E><A>(head)(Parser.choice<S><E><A>(tail));

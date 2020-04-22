@@ -2,10 +2,9 @@ Parser.zero:
   <S: Type> ->
   <E: Type> ->
   <A: Type> ->
-  Parser.Error(E) ->
   Parser(S)(E)(A)
 
-  <S> <E> <A> (e)
+  <S> <E> <A>
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   s1<() X> | () (index) () ()
   let e = Parser.Error.make_trivial<E>

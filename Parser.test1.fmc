@@ -2,8 +2,7 @@ Parser.test1 : String
   let v = Parser.run<Unit><Unit><String>
     | Parser.tokens<Unit><Unit>("a");
     | Parser.State.default<Unit><Unit>
-      //| "a";
-      | "b";
+      | "a";
       | Unit.new;;
 
   v<(t) Parser.type(Unit)(Unit)(String)(t)>
