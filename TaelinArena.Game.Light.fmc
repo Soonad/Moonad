@@ -1,0 +1,19 @@
+// T Light
+// | light(pos: V3, rad: Number, rng: Number, sub: V3, add: V3)
+
+Light : Type
+  light<P: Light -> Type> -> 
+  (new_light: 
+    (pos: Bits) -> 
+    (rad: F64) -> 
+    (rng: F64) -> 
+    (sub: Bits) -> 
+    (add : Bits) -> 
+    P(Light.new_light(pos)(rad)(rng)(sub)(add)) ) ->
+  P(light)
+
+Light.new_light: Bits -> F64 -> F64 -> Bits -> Bits -> Light
+  (pos) (rad) (rng) (sub) (add)
+  <P> (new_light)
+  new_light(pos)(rad)(rng)(sub)(add)
+
