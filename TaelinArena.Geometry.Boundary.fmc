@@ -1,0 +1,5 @@
+Boundary : Type 
+  boundary<P: Boundary -> Type> ->
+  (new: (pts: List(V3)) -> P(Boundary.new(pts))) ->
+  P(boundary)
+  

@@ -1,0 +1,5 @@
+Boundary.new: List(V3) -> Boundary
+  (pts)
+  <P> (new)
+  new(pts)
+  

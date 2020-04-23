@@ -1,0 +1,5 @@
+Line.new: V3 -> V3 -> Line 
+  (pos) (dir)
+  <P> (new)
+  new(pos)(dir)
+  

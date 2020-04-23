@@ -1,0 +1,6 @@
+Segment.new: V3 -> V3 -> Segment
+  (a) (b)
+  <P> (new)
+  new(a)(b)
+
+   
