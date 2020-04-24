@@ -1,3 +1,5 @@
+// attach a label to a parser that shows in the un/expected error items
+
 Parser.label :
   <S: Type> ->
   <E: Type> ->

@@ -1,3 +1,6 @@
+// A fancy error is where the parser author preempts the internal error system
+// and instead returns a failure message or a value of custom error type E
+
 Parser.Error.Fancy : Type -> Type
   (E)
   parser.error.fancy<P: Parser.Error.Fancy(E) -> Type> ->

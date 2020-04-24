@@ -1,0 +1,5 @@
+Hitbox.pbox: List(V3) -> Hitbox
+  (pts)
+  <P> (nbox) (cbox) (pbox)
+  pbox(pts)
+  

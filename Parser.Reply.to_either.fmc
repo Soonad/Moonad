@@ -1,3 +1,5 @@
+// We can collapse a parser reply to an Either by throwing away consumption info
+
 Parser.Reply.to_either:
   <S: Type> ->
   <E: Type> ->

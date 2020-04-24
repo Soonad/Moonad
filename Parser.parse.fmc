@@ -1,3 +1,7 @@
+// with dependent types, we can reason that a successful parser returns an A
+// and an unsuccessful parser returns a lifted Parser.Error(E) value
+// (`The` lifts the Parser.Error into a type so we can see it at compile time)
+
 Parser.parse:
   <S : Type> ->
   <E : Type> ->

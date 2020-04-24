@@ -1,3 +1,6 @@
+// We can turn any value into a parser that returns that value
+// without consuming any input.
+
 Parser.pure:
   <S: Type> ->
   <E: Type> ->

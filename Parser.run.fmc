@@ -1,3 +1,8 @@
+// Running a parser is applying it to a Parser.State and
+// the four possible Parser.Reply constructors
+// This sets `B` from the `Parser` definition as Parser.Reply
+// which terminates the chain of continuations
+
 Parser.run :
   <S : Type> ->
   <E : Type> ->

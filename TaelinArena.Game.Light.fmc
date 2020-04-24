@@ -1,0 +1,16 @@
+// Formality
+// ---------
+// T Light
+// | light(pos: V3, rad: Number, rng: Number, sub: V3, add: V3)
+
+Light : Type
+  light<P: Light -> Type> -> 
+  (new: 
+    (pos: V3) -> 
+    (rad: F64) -> 
+    (rng: F64) -> 
+    (sub: V3) -> 
+    (add: V3) -> 
+    P(Light.new(pos)(rad)(rng)(sub)(add)) ) ->
+  P(light)
+

@@ -1,3 +1,4 @@
+// a parser is a monad
 Parser.bind:
   <S: Type> ->
   <E: Type> ->

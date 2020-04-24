@@ -1,3 +1,4 @@
+// we can run a parser on a default state and either get an error or a value
 Parser.run_default:
   <S: Type> ->
   <E: Type> ->

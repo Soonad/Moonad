@@ -1,3 +1,5 @@
+// throw a parse error while consuming no input
+
 Parser.throw :
   <S: Type> ->
   <E: Type> ->
@@ -7,5 +9,5 @@ Parser.throw :
 
   <S> <E> <A> (e)
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-  eaten_error(s1)(e)
+  empty_error(s1)(e)
 

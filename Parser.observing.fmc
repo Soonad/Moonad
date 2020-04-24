@@ -1,3 +1,4 @@
+// We can observe an error so that we can try to handle it
 Parser.observing:
   <S: Type> ->
   <E: Type> ->

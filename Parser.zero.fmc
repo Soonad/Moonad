@@ -1,3 +1,4 @@
+// an empty parser that always fails consuming no input and showing no error
 Parser.zero:
   <S: Type> ->
   <E: Type> ->

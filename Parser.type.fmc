@@ -1,3 +1,5 @@
+// A dependent type of parser reply for use by Parser.parse
+
 Parser.type :
   (S: Type) ->
   (E: Type) ->

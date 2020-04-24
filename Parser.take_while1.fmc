@@ -1,3 +1,5 @@
+// take at least one character while a condition is true
+
 Parser.take_while1:
   <S: Type> ->
   <E: Type> ->

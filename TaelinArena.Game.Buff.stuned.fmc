@@ -1,0 +1,5 @@
+Buff.stuned: F64 -> Buff 
+  (dur)
+  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
+  stuned(dur)
+  
