@@ -1,4 +1,4 @@
 // The empty list.
 List.nil: <A: Type> -> List(A)
   <A>
-  <P> (nil) (cons) nil
+  <P> (_prim.list.nil) (_prim.list.cons) _prim.list.nil

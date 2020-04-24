@@ -1,4 +1,4 @@
 Unit : Type //prim//
-  unit<P: Unit -> Type> ->
-  P(Unit.new) ->
-  P(unit)
+  _prim.unit<P: Unit -> Type> ->
+  (_prim.unit.new: P(Unit.new)) ->
+  P(_prim.unit)
