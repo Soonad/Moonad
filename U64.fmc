@@ -1,0 +1,4 @@
+U64: Type //prim//
+  u64<P: U64 -> Type> ->
+  (make: (a: Word(Nat.64)) -> P(U64.new(a))) ->
+  P(u64)
