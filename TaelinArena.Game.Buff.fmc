@@ -1,3 +1,13 @@
+// Formality
+// ---------
+// T Buff
+// | shielded(dur: Number, val: Number) // shields are hit before hp
+// | slowed(dur: Number, val: Number) // slow down
+// | hasted(dur: Number, val: Number) // speed up
+// | silenced(dur: Number) 
+// | rooted(dur: Number)
+// | stuned(dur: Number)
+
 Buff : Type
   buff<P: Buff -> Type > -> 
   (shielded: (dur: F64) -> (val: F64) -> P(Buff.shielded(dur)(val)) ) -> 

@@ -1,3 +1,18 @@
+// Formality
+// ---------
+// T Effect
+// | heal(lif: Number)
+// | damage(dmg: Number)
+// | repulse(mag: Number)
+// | impulse(mag: Number, dir: V3)
+// | slow(dur: Number, val: Number)
+// | haste(dur: Number, val: Number)
+// | shield(dur: Number, val: Number)
+// | silence(dur: Number)
+// | root(dur: Number)
+// | stun(dur: Number)
+// | teleport(to_pos: V3, all: Number)
+
 Effect : Type 
   effect<P: Effect -> Type> -> 
   (heal: (lif: F64) -> P(Effect.heal(lif)) ) ->

@@ -1,3 +1,10 @@
+// Formality
+// ---------
+// T Hitbox
+// | nbox
+// | cbox(rad: Number)
+// | pbox(pts: List(V3))
+
 Hitbox : Type
   hitbox<P: Hitbox -> Type> ->
   (nbox: P(Hitbox.nbox)) -> 
