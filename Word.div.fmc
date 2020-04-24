@@ -1,0 +1,3 @@
+// TODO word division
+Word.div: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.div

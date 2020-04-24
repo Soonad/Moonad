@@ -1,0 +1,3 @@
+// TODO bitwise OR between two words
+Word.or: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.or
