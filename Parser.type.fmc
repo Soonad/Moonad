@@ -10,6 +10,6 @@ Parser.type :
   (S) (E) (A) (reply) 
   reply<() Type>
   | () () A;
-  | () (e) The(Parser.Error(E))(e);
+  | () (e) Show(Parser.Error.show<E>(e));
   | () () A;
-  | () (e) The(Parser.Error(E))(e);
+  | () (e) Show(Parser.Error.show<E>(e));

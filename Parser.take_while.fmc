@@ -2,11 +2,10 @@
 Parser.take_while:
   <S: Type> ->
   <E: Type> ->
-  <A: Type> ->
   (Char -> Bool) ->
   Parser(S)(E)(String)
 
-  <S> <E> <A> (f)
+  <S> <E> (f)
   <X> (s1) (empty_value) (empty_error) (eaten_value) ()
   s1<() X> | (input) (index) (error) (state)
   String.take_while(f)(input)<() X> | (took) (rest)
