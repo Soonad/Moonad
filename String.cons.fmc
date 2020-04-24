@@ -1,3 +1,3 @@
 String.cons: Char -> String -> String
   (head) (tail)
-  <> () (cons) cons(head)(tail)
+  <P> (_prim.string.nil) (_prim.string.cons) _prim.string.cons(head)(tail)

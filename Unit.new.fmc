@@ -1,2 +1,2 @@
 Unit.new : Unit
-  <P> (new) new
+  <P> (_prim.unit.new) _prim.unit.new

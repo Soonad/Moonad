@@ -1,2 +1,2 @@
 String.nil: String
-  <> (nil) () nil
+  <P> (_prim.string.nil) (_prim.string.cons) _prim.string.nil

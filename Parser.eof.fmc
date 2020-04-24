@@ -1,3 +1,4 @@
+// parse the end of the input
 Parser.eof : <S: Type> -> <E: Type> -> Parser(S)(E)(Unit)
   <S> <E>
 

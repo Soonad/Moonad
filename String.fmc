@@ -1,5 +1,6 @@
 String: Type //prim//
-  string<P: String -> Type> ->
-  (nil: P(String.nil)) ->
-  (cons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) ->
-  P(string)
+  _prim.string<P: String -> Type> ->
+  (_prim.string.nil: P(String.nil)) ->
+  (_prim.string.cons:
+    (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) ->
+  P(_prim.string)
