@@ -1,0 +1,3 @@
+// Square root function.
+F64.sqrt: F64 -> F64 //prim//
+  F64.sqrt

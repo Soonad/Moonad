@@ -1,0 +1,4 @@
+// Power function
+F64.pow: F64 -> F64 -> F64 //prim//
+  F64.pow
+  

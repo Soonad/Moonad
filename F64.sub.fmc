@@ -1,3 +1,3 @@
-// Divides two 64-bit floats.
+// Subtracts two 64-bit floats.
 F64.sub: F64 -> F64 -> F64 //prim//
   F64.sub
