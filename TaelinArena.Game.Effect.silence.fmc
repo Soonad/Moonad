@@ -1,0 +1,5 @@
+Effect.silence: F64 -> Effect
+  (dur)
+  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
+  silence(dur)
+  

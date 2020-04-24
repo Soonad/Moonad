@@ -1,0 +1,5 @@
+Effect.shield: F64 -> F64 -> Effect
+  (dur) (val)
+  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
+  shield(dur)(val)
+  

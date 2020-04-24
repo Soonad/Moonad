@@ -1,11 +1,3 @@
-// T Buff
-// | shielded(dur: Number, val: Number) // shields are hit before hp
-// | slowed(dur: Number, val: Number) // slow down
-// | hasted(dur: Number, val: Number) // speed up
-// | silenced(dur: Number) 
-// | rooted(dur: Number)
-// | stuned(dur: Number)
-
 Buff : Type
   buff<P: Buff -> Type > -> 
   (shielded: (dur: F64) -> (val: F64) -> P(Buff.shielded(dur)(val)) ) -> 
@@ -16,35 +8,5 @@ Buff : Type
   (stuned: (dur: F64) -> P(Buff.stuned(dur)) ) -> 
   P(buff)
 
-
-Buff.shielded: F64 -> F64 -> Buff 
-  (dur) (val)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  shielded(dur)(val)
-
-Buff.slowed: F64 -> F64 -> Buff 
-  (dur) (val)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  slowed(dur)(val)
-
-Buff.hasted: F64 -> F64 -> Buff 
-  (dur) (val)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  hasted(dur)(val)
-
-Buff.silenced: F64 -> Buff 
-  (dur)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  silenced(dur)
-
-Buff.rooted: F64 -> Buff 
-  (dur)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  rooted(dur)
-
-Buff.stuned: F64 -> Buff 
-  (dur)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  stuned(dur)
 
 

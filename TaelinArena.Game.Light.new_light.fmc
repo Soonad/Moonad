@@ -1,0 +1,5 @@
+Light.new_light: V3 -> F64 -> F64 -> V3 -> V3 -> Light
+  (pos) (rad) (rng) (sub) (add)
+  <P> (new_light)
+  new_light(pos)(rad)(rng)(sub)(add)
+  

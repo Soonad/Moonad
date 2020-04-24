@@ -1,0 +1,5 @@
+V3: Type
+  v3<P: V3 -> Type> ->
+  (new: (x: F64) -> (y: F64) -> (z: F64) -> P(V3.new(x)(y)(z))) ->
+  P(v3)
+

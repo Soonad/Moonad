@@ -1,41 +1,6 @@
-
-ModelId : Type
-  F64
-
-ActionId : Type
-  F64
-
-SideId : Type
-  F64
-
-// T Hitbox
-// | nbox
-// | cbox(rad: Number)
-// | pbox(pts: List(V3))
-
-// TODO:  FIX BITS
 Hitbox : Type
   hitbox<P: Hitbox -> Type> ->
   (nbox: P(Hitbox.nbox)) -> 
   (cbox: (rad: F64) -> P(Hitbox.cbox(rad))) -> 
-  (pbox: (pts: List(Bits)) -> P(Hitbox.pbox(pts))) -> 
+  (pbox: (pts: List(V3)) -> P(Hitbox.pbox(pts))) -> 
   P(hitbox)
-
-
-Hitbox.nbox: Hitbox
-  <P> (nbox) (cbox) (pbox)
-  nbox
-
-Hitbox.cbox: F64 -> Hitbox
-  (rad)
-  <P> (nbox) (cbox) (pbox)
-  cbox(rad)
-
-Hitbox.pbox: List(Bits) -> Hitbox
-  (pts)
-  <P> (nbox) (cbox) (pbox)
-  pbox(pts)
-  
-
-
-

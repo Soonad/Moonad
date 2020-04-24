@@ -1,0 +1,4 @@
+Hit.new_hit: List(Effect) -> V3 -> V3 -> Hitbox -> Hit
+  (eff) (pos) (dir) (box)
+  <P> (new_hit)
+  new_hit(eff)(pos)(dir)(box)

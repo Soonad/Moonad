@@ -1,19 +1,9 @@
-// T Hit
-// | hit(eff: List(Effect), pos: V3, dir: V3, box: Hitbox)
-
 Hit : Type
   hit<P: Hit -> Type> ->
   (new_hit: 
     (eff: List(Effect)) -> 
-    (pos: Bits) -> 
-    (dir: Bits) -> 
+    (pos: V3) -> 
+    (dir: V3) -> 
     (box: Hitbox) -> 
     P(Hit.new_hit(eff)(pos)(dir)(box)) ) ->
   P(hit) 
-
-Hit.new_hit: List(Effect) -> Bits -> Bits -> Hitbox -> Hit
-  (eff) (pos) (dir) (box)
-  <P> (new_hit)
-  new_hit(eff)(pos)(dir)(box)
-  
-

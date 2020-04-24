@@ -1,85 +1,18 @@
-// T Effect
-// | heal(lif: Number)
-// | damage(dmg: Number)
-// | repulse(mag: Number)
-// | impulse(mag: Number, dir: V3)
-// | slow(dur: Number, val: Number)
-// | haste(dur: Number, val: Number)
-// | shield(dur: Number, val: Number)
-// | silence(dur: Number)
-// | root(dur: Number)
-// | stun(dur: Number)
-// | teleport(to_pos: V3, all: Number)
-
 Effect : Type 
   effect<P: Effect -> Type> -> 
   (heal: (lif: F64) -> P(Effect.heal(lif)) ) ->
   (damage: (dmg: F64) -> P(Effect.damage(dmg)) ) ->
   (repulse: (mag: F64) -> P(Effect.repulse(mag)) ) ->
-  (impulse: (mag: F64) -> (dir: Bits) -> P(Effect.impulse(mag)(dir)) ) ->
+  (impulse: (mag: F64) -> (dir: V3) -> P(Effect.impulse(mag)(dir)) ) ->
   (slow: (dur: F64) -> (val: F64) -> P(Effect.slow(dur)(val)) ) ->
   (haste: (dur: F64) -> (val: F64) -> P(Effect.haste(dur)(val)) ) ->
   (shield: (dur: F64) -> (val: F64) -> P(Effect.shield(dur)(val)) ) ->
   (silence: (dur: F64) -> P(Effect.silence(dur)) ) ->
   (root: (dur: F64) -> P(Effect.root(dur)) ) ->
   (stun: (dur: F64) -> P(Effect.stun(dur)) ) ->
-  (teleport: (to_pos: Bits) -> (all: F64) -> P(Effect.teleport(to_pos)(all)) ) ->
+  (teleport: (to_pos: V3) -> (all: F64) -> P(Effect.teleport(to_pos)(all)) ) ->
   P(effect)
-
-Effect.heal: F64 -> Effect
-  (lif)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  heal(lif)
-
-Effect.damage: F64 -> Effect
-  (dmg) 
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  damage(dmg)
-
-Effect.repulse: F64 -> Effect
-  (mag)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  repulse(mag)
-
-Effect.impulse: F64 -> Bits -> Effect
-  (mag) (dir)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  impulse(mag)(dir)
-
-Effect.slow: F64 -> F64 -> Effect
-  (dur) (val)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  slow(dur)(val)
-
-Effect.haste: F64 -> F64 -> Effect
-  (dur) (val)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  haste(dur)(val)
-
-Effect.shield: F64 -> F64 -> Effect
-  (dur) (val)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  shield(dur)(val)
-
-Effect.silence: F64 -> Effect
-  (dur)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  silence(dur)
-
-Effect.root: F64 -> Effect
-  (dur)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  root(dur)
-
-Effect.stun: F64 -> Effect
-  (dur)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  stun(dur)
-
-Effect.teleport: Bits -> F64 -> Effect
-  (to_pos) (all)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  teleport(to_pos)(all)
+  
 
 
 
