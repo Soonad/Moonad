@@ -1,0 +1,3 @@
+Word.parse_hex: (size: Nat) -> String -> Word(size)
+  (size) (str)
+  Word.from_bits(size)(Bits.parse_hex(str))
