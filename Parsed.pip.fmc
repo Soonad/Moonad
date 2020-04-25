@@ -1,6 +1,0 @@
-Parsed.pip: String -> Term -> List(String) -> Parsed(Term)
-  (code) (func) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("|"))  | (code) (skip)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars)) | (code) (argm)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))(";"))  | (code) (skip)
-  Parsed.some<Term>(code)(Term.app(Bool.false)(func)(argm));;;

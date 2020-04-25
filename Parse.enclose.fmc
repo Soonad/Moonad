@@ -1,0 +1,7 @@
+Parse.enclose: <A: Type> -> Parse(A) -> Parse(Pair(Bool)(A))
+  <A> (p)
+  Parse.bind<Bool><Pair(Bool)(A)>(Parse.open) | (eras)
+  Parse.bind<A><Pair(Bool)(A)>(p) | (x)
+  Parse.then<String><Pair(Bool)(A)>
+  | eras<() Parse(String)>(Parse.tokens(">"))(Parse.tokens(")"));
+  | Parse.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;

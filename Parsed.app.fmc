@@ -1,8 +1,0 @@
-Parsed.app: String -> Term -> List(String) -> Parsed(Term)
-  (code) (func) (vars)
-  let OPEN = Pair.new<String><String>("<")("(")
-  let CLOS = Pair.new<String><String>(">")(")")
-  Parsed.chain<Bool><Term>(Parsed.opt(            code )(OPEN)) | (code) (eras)
-  Parsed.chain<Term><Term>(Parsed.trm(Parsed.next(code))(vars)) | (code) (argm)
-  Parsed.chain<Bool><Term>(Parsed.opt(Parsed.next(code))(CLOS)) | (code) (skip)
-  Parsed.some<Term>(code)(Term.app(eras)(func)(argm));;;

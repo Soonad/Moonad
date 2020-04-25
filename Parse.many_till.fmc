@@ -1,0 +1,8 @@
+Parse.many_till: <A: Type> -> <B: Type> -> Parse(A) -> Parse(B) -> Parse(List(A))
+  <A> <B> (p) (q)
+  Parse.plus<List(A)>
+  | Parse.then<B><List(A)>(q)(Parse.pure<List(A)>(List.nil<A>));
+  | Parse.bind<A><List(A)>(p) | (x)
+    Parse.bind<List(A)><List(A)>(Parse.many_till<A><B>(p)(q)) | (xs)
+    Parse.pure<List(A)>(List.cons<A>(x)(xs));;;
+

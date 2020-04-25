@@ -1,5 +1,0 @@
-Parsed.is_space: Char -> Bool
-  (c)
-    let is_spc = U16.eql(c)(Char.parse(" "))
-    let is_lin = U16.eql(c)(Char.newline)
-    Bool.or(is_spc)(is_lin)

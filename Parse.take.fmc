@@ -1,0 +1,3 @@
+Parse.take: <A: Type> -> String -> Nat -> Parse(String)
+  <A> (err) (n)
+  Parser.take<Unit><Unit><A>(err)(n)

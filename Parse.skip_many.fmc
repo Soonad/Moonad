@@ -1,0 +1,4 @@
+Parse.skip_many: <A: Type> -> Parse(A) -> Parse(Unit)
+  <A> (p)
+  Parser.skip_many<Unit><Unit><A>(p)
+

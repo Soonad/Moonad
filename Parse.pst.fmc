@@ -1,0 +1,13 @@
+Parse.pst: Term -> List(String) -> Parse(Term)
+  (term) (vars)
+  Parse.bind<Maybe(Term)><Term>
+  | Parse.optional<Term> |
+    Parse.choice<Term> |
+    List.cons<Parse(Term)>(Parse.try<Term>(Parse.app(term)(vars))) |
+    List.cons<Parse(Term)>(Parse.try<Term>(Parse.pip(term)(vars))) |
+    List.cons<Parse(Term)>(Parse.try<Term>(Parse.arr(term)(vars))) |
+    List.cons<Parse(Term)>(Parse.try<Term>(Parse.ann(term)(vars))) |
+    List.nil<Parse(Term)>;;;;;;;
+  | (maybe_term) maybe_term<() Parse(Term)>
+    | Parse.pure<Term>(term);
+    | (new_term) Parse.pst(new_term)(vars);;

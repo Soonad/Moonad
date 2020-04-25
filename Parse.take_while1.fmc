@@ -1,0 +1,2 @@
+Parse.take_while1: String -> (Char -> Bool) -> Parse(String)
+  (err) (f) Parser.take_while1<Unit><Unit>(err)(f)

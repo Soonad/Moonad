@@ -1,0 +1,3 @@
+Term.parse.test: Term
+  Term.parse | "self(a : A) -> B";
+

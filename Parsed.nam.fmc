@@ -1,7 +1,0 @@
-Parsed.nam: String -> Bool -> Maybe(Pair(String)(String))
-  (code) (allow_empty)
-  Parsed.nam.aux(code)<() Parsed(String)>
-  | (code) (name)
-    Bool.or(allow_empty)(Bool.not(String.is_empty(name)))<() Parsed(String)>
-    | Parsed.some<String>(code)(name);
-    | Parsed.none<String>;;

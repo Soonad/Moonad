@@ -8,5 +8,5 @@ String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
   | (head) (tail)
     n<() Maybe(Pair(String)(String))>
     | Maybe.some<Pair(String)(String)>
-      | Pair.new<String><String>(str)(String.nil);;
+      | Pair.new<String><String>(str)(res);;
     | (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);;

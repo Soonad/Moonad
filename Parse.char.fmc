@@ -1,0 +1,2 @@
+Parse.char : Char -> Parse(Char)
+  (c) Parser.char<Unit><Unit>(c)

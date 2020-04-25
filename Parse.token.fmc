@@ -1,0 +1,12 @@
+// parse a single character with a validator function 
+// and a list of expected tokens
+
+Parse.token:
+  <A: Type> ->
+  (Char -> Maybe(A)) ->
+  List(Parser.Error.Item) ->
+  Parse(A)
+
+  <A> (f) (es)
+  Parser.token<Unit><Unit><A>(f)(es)
+

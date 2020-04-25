@@ -1,0 +1,5 @@
+Parse.app: Term -> List(String) -> Parse(Term)
+  (func) (vars)
+  Parse.bind<Pair(Bool)(Term)><Term>(Parse.enclose<Term>(Parse.trm(vars))) | (x)
+  x<() Parse(Term)> | (eras) (argm)
+  Parse.pure<Term>(Term.app(eras)(func)(argm));;

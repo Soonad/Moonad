@@ -1,0 +1,7 @@
+Parse.space : Parse(Unit)
+  Parse.skip_many<Unit> | Parse.choice<Unit> |
+  List.cons<Parse(Unit)>(Parse.whitespace)   |
+  List.cons<Parse(Unit)>(Parse.line_comment) |
+  List.cons<Parse(Unit)>(Parse.block_comment)|
+  List.nil<Parse(Unit)>;;;;;
+

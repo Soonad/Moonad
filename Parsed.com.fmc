@@ -1,7 +1,0 @@
-Parsed.com: String -> List(String) -> Parsed(Term)
-  (code) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("-"))       | (code) (skip)
-  Parsed.chain<String><Term>(Parsed.nam(            code )(Bool.false)) | (code) (name)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("-"))       | (code) (skip)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))       | (code) (term)
-  Parsed.some<Term>(code)(term);;;;

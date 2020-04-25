@@ -1,0 +1,9 @@
+Parse.lam: List(String) -> Parse(Term)
+  (vars)
+  Parse.bind<Pair(Bool)(String)><Term>
+  | Parse.enclose<String>(Parse.nam(Bool.true));
+  | (x) x<() Parse(Term)> | (eras) (n)
+  Parse.then<Unit><Term>(Parse.space) |
+  Parse.bind<Term><Term>(Parse.trm(List.cons<String>(n)(vars))) | (body)
+  Parse.pure<Term>(Term.lam(eras)(n)(body));;;;
+

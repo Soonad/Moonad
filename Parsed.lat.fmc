@@ -1,9 +1,0 @@
-Parsed.lat: String -> List(String) -> Parsed(Term)
-  (code) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("let"))       | (code) (skip)
-  Parsed.chain<String><Term>(Parsed.nam(Parsed.next(code))(Bool.false)) | (code) (name)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("="))       | (code) (skip)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))       | (code) (expr)
-  let vars = List.cons<String>(name)(vars)
-  Parsed.chain<Term  ><Term>(Parsed.trm(Parsed.next(code))(vars))       | (code) (body)
-  Parsed.some<Term>(code)(Term.lat(name)(expr)(body));;;;;
