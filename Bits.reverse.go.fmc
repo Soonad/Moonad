@@ -1,0 +1,6 @@
+Bits.reverse.go: Bits -> Bits -> Bits
+  (as) (res)
+  as<() Bits>
+  | res;
+  | (as.pred) Bits.reverse.go(as.pred)(Bits.0(res));
+  | (as.pred) Bits.reverse.go(as.pred)(Bits.1(res));
