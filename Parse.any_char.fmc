@@ -1,0 +1,2 @@
+Parse.any_char : Parse(Char)
+  Parser.any_char<Unit><Unit>

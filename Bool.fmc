@@ -3,7 +3,7 @@
 // | true
 // | false
 Bool: Type //prim//
-  _prim.bool<P: Bool -> Type> ->
-  (_prim.bool.true  : P(Bool.true)) ->
-  (_prim.bool.false : P(Bool.false)) ->
-  P(_prim.bool)
+  bool<P: Bool -> Type> ->
+  (true  : P(Bool.true)) ->
+  (false : P(Bool.false)) ->
+  P(bool)

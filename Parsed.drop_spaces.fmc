@@ -1,2 +1,0 @@
-Parsed.drop_spaces: String -> String
-  Parsed.drop_while(Parsed.is_space)

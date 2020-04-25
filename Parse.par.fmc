@@ -1,0 +1,7 @@
+Parse.par: List(String) -> Parse(Term)
+  (vars)
+  Parse.then<String><Term>(Parse.symbol("(")) |
+  Parse.bind<Term  ><Term>(Parse.trm(vars))   |  (term)
+  Parse.then<Unit  ><Term>(Parse.space)       |
+  Parse.then<String><Term>(Parse.tokens(")")) |
+  Parse.pure<Term>(term);;;;

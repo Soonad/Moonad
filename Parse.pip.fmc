@@ -1,0 +1,8 @@
+Parse.pip: Term -> List(String) -> Parse(Term)
+  (func) (vars)
+  Parse.then<Unit><Term>(Parse.space) |
+  Parse.then<String><Term>(Parse.symbol("|")) |
+  Parse.bind<Term><Term>(Parse.trm(vars)) | (x)
+  Parse.then<Unit><Term>(Parse.space) |
+  Parse.then<String><Term>(Parse.tokens(";")) |
+  Parse.pure<Term>(Term.app(Bool.false)(func)(x));;;;;

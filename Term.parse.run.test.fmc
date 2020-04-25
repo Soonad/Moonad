@@ -1,0 +1,5 @@
+Term.parse.run.test : Parse.Reply(Term)
+  Parse.run<Term>(Parse.lat(List.nil<String>))
+  | Parse.State.default
+  | "self(a : A) -> B";;
+

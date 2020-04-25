@@ -1,0 +1,6 @@
+Parse.nam: Bool -> Parse(String)
+  (allow_empty)
+  allow_empty<() Parse(String)>
+  | Parse.take_while(Parse.is_name);
+  | Parse.take_while1("name")(Parse.is_name);
+

@@ -1,7 +1,0 @@
-Parsed.is_name: Char -> Bool
-  (c)
-    let is_num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9")))
-    let is_low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z")))
-    let is_upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z")))
-    let is_und = U16.eql(c)(Char.parse("_"))
-    Bool.or(is_num)(Bool.or(is_low)(Bool.or(is_upp)(is_und)))

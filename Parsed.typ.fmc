@@ -1,4 +1,0 @@
-Parsed.typ: String -> List(String) -> Parsed(Term)
-  (code) (vars)
-  Parsed.chain<String><Term>(Parsed.str(Parsed.next(code))("Type")) | (code) (skip)
-  Parsed.some<Term>(code)(Term.typ);

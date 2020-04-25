@@ -1,0 +1,5 @@
+Parse.block_comment: Parse(Unit)
+  Parse.then<String><Unit>(Parse.tokens("/*")) |
+  Parse.then<List(Char)><Unit>
+  | Parse.many_till<Char><String>(Parse.any_char)(Parse.tokens("*/"));
+  | Parse.pure<Unit>(Unit.new);;
