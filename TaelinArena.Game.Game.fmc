@@ -1,0 +1,9 @@
+// Formality
+// ---------
+// T Game
+// | game(stage : List(Thing))
+
+Game : Type
+  game<P: Game -> Type> -> 
+  (new: (stage: List(Thing)) -> P(Game.new(stage)) ) ->
+  P(game)
