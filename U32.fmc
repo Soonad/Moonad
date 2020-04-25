@@ -1,4 +1,4 @@
 U32: Type //prim//
-  _prim.u32<P: U32 -> Type> ->
-  (_prim.u32.new: (a: Word(Nat.32)) -> P(U32.new(a))) ->
-  P(_prim.u32)
+  u32<P: U32 -> Type> ->
+  (new: (a: Word(Nat.32)) -> P(U32.new(a))) ->
+  P(u32)

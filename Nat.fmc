@@ -1,5 +1,5 @@
 Nat: Type //prim//
-  _prim.nat<P: Nat -> Type> ->
-  (_prim.nat.zero: P(Nat.zero)) ->
-  (_prim.nat.succ: (pred: Nat) -> P(Nat.succ(pred))) ->
-  P(_prim.nat)
+  nat<P: Nat -> Type> ->
+  (zero: P(Nat.zero)) ->
+  (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+  P(nat)

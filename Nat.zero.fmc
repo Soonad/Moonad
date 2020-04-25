@@ -1,2 +1,2 @@
 Nat.zero: Nat
-  <P> (_prim.nat.zero) (_prim.nat.succ) _prim.nat.zero
+  <P> (z) (s) z
