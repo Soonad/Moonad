@@ -1,12 +1,2 @@
 Bits.parse_hex: String -> Bits
-  (str)
-  str<() Bits>
-  | Bits.nil;
-  | (str.head) (str.tail)
-    Char.hex_value(str.head)<() Bits>
-    | Bits.nil;
-    | (value) 
-      let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
-      let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000)
-      let btail = Bits.parse_hex(str.tail)
-      Bits.concat(bhead)(btail);;
+  (str) Bits.parse_hex.go(str)(Bits.nil)

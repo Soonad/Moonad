@@ -1,4 +1,4 @@
-U16.and: U16 -> U16 -> U16
+U16.and: U16 -> U16 -> U16 //prim//
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
