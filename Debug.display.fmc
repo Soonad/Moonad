@@ -1,0 +1,2 @@
+Debug.display: String -> Debug
+  (str) <P> (Debug.display) Debug.display(str)
