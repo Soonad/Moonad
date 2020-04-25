@@ -1,0 +1,5 @@
+U16.mul: U16 -> U16 -> U16 //prim//
+  (a) (b)
+  a<() U16> | (a_val)
+  b<() U16> | (b_val)
+  U16.new(Word.mul<Nat.16>(a_val)(b_val));;
