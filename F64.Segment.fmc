@@ -1,0 +1,7 @@
+Segment : Type 
+  segment<P: Segment -> Type> ->
+  (new: (a: V3) -> (b: V3) -> P(Segment.new(a)(b))) -> 
+  P(segment)
+
+
+   

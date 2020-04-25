@@ -1,0 +1,52 @@
+F64.V3.circle_line_intersection: Circle -> Line -> Maybe(Pair(V3)(V3))
+  F64.V3.circle_line_intersection
+//   (c) (l)
+//   c<() Maybe(Pair(V3)(V3))> | (c.pos) (c.rad)
+//   l<() Maybe(Pair(V3)(V3))> | (l.pos) (l.dir)
+//   c.pos<() Maybe(Pair(V3)(V3))> | (cx) (cy) (cz)
+//   l.pos<() Maybe(Pair(V3)(V3))> | (l.pos.x) (l.pos.y) (l.pos.z)
+//   l.dir<() Maybe(Pair(V3)(V3))> | (dx) (dy) (dz)
+//   let x1 = F64.sub(l.pos.x)(cx)
+//   let y1 = F64.sub(l.pos.y)(cy)
+//   let x2 = F64.sub(F64.add(l.pos.x)(dx))(cx)
+//   let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy)
+//   let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1))
+//   let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd))
+//   ;;;;;
+
+
+// circle_line_intersection(circle: Circle, line: Line)
+// : Maybe(Pair(V3,V3))
+//   case circle |circle
+//   case line |line
+//   case circle.pos |v3
+//   case line.pos |v3
+//   case line.dir |v3
+//   let cx = circle.pos.x
+//   let cy = circle.pos.y
+//   let dx = line.dir.x
+//   let dy = line.dir.y
+//   let x1 = line.pos.x - cx
+//   let y1 = line.pos.y - cy
+//   let x2 = (line.pos.x + dx) - cx
+//   let y2 = (line.pos.y + dy) - cy
+//   let dd = (x1 * y2) - (x2 * y1)
+//   let de = (circle.rad * circle.rad) - (dd * dd) 
+//   if (de < 0) || (de === 0) then
+//     none(_)
+//   else
+//     let sx = if dy < 0 then 0 - dx else dx
+//     let sy = if dy < 0 then 0 - dy else dy
+//     let px = sx * (de ** 0.5)
+//     let py = sy * (de ** 0.5)
+//     let qx = dd * dy
+//     let qy = (0 - dd) * dx
+//     let ax = qx - px
+//     let ay = qy - py
+//     let bx = qx + px
+//     let by = qy + py
+//     let ux = ax + cx
+//     let uy = ay + cy
+//     let vx = bx + cx
+//     let vy = by + cy
+//     some(_ pair(__ v3(ux,uy,0), v3(vx,vy,0)))

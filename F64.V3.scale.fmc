@@ -1,0 +1,7 @@
+V3.scale: F64 -> V3 -> V3 
+  (k) (v)
+  v<() V3> | (v.x) (v.y) (v.z)
+  let new_x = F64.mul(k)(v.x)
+  let new_y = F64.mul(k)(v.y)
+  let new_z = F64.mul(k)(v.z)
+  V3.new(new_x)(new_y)(new_z);

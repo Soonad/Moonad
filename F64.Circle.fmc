@@ -1,0 +1,5 @@
+Circle : Type 
+  circle<P: Circle -> Type> -> 
+  (new: (pos: V3) -> (rad: F64) -> P(Circle.new(pos)(rad))) ->
+  P(circle)
+  
