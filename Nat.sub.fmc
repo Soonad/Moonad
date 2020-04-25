@@ -2,4 +2,7 @@ Nat.sub: Nat -> Nat -> Nat //prim//
   (n) (m)
   m<() Nat>
   | n;
-  | (m.pred) Nat.sub(Nat.pred(n))(m.pred);
+  | (m.pred) 
+    n<() Nat>
+    | Nat.zero; 
+    | (n.pred) Nat.sub(n.pred)(m.pred);;

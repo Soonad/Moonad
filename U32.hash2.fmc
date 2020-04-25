@@ -1,0 +1,4 @@
+U32.hash2: U32 -> U32 -> U32
+  (a) (b)
+  U64.mix(U32.concat(a)(b))<() U32>
+  | (w64) U32.new(Word.drop<Nat.32>(Nat.32)(w64));
