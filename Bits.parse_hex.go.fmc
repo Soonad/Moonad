@@ -1,0 +1,13 @@
+Bits.parse_hex.go: String -> Bits -> Bits //loop//
+  (str) (res)
+  str<() Bits>
+  | res;
+  | (str.head) (str.tail)
+    Char.hex_value(str.head)<() Bits>
+    | res;
+    | (value) 
+      let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
+      let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000)
+      Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))
+    ;
+  ;
