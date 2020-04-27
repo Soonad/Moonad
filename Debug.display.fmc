@@ -1,0 +1,3 @@
+Debug.display: (x: String) -> Debug
+  (x)
+  <P> (Debug.display) Debug.display(x)
