@@ -1,0 +1,5 @@
+U32.concat: U32 -> U32 -> U64
+  (a) (b)
+  a<() U64> | (a_val)
+  b<() U64> | (b_val)
+  U64.new(Word.concat<Nat.32><Nat.32>(a_val)(b_val));;

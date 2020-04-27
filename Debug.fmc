@@ -1,4 +1,4 @@
 Debug: Type
   debug<P: Debug -> Type> ->
-  (display: (x: String) -> P(Debug.display(x))) ->
+  (Debug.display: (str: String) -> P(Debug.display(str))) ->
   P(debug)
