@@ -1,0 +1,7 @@
+// Appends element to the end of the list.
+List.append: <A: Type> -> List(A) -> A -> List(A)
+  <A> (as) (a)
+  as<() List(A)>
+  | List.single<A>(a);
+  | (head) (tail)
+    List.cons<A>(head)(List.append<A>(tail)(a));
