@@ -1,4 +1,4 @@
-Boundary.new: List(V3) -> Boundary
+F64.Boundary.new: List(V3) -> F64.Boundary
   (pts)
   <P> (new)
   new(pts)

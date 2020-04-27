@@ -1,5 +1,5 @@
-Circle : Type 
-  circle<P: Circle -> Type> -> 
-  (new: (pos: V3) -> (rad: F64) -> P(Circle.new(pos)(rad))) ->
+F64.Circle : Type 
+  circle<P: F64.Circle -> Type> -> 
+  (new: (pos: V3) -> (rad: F64) -> P(F64.Circle.new(pos)(rad))) ->
   P(circle)
   

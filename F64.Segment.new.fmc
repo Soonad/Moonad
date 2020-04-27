@@ -1,4 +1,4 @@
-Segment.new: V3 -> V3 -> Segment
+F64.Segment.new: V3 -> V3 -> F64.Segment
   (a) (b)
   <P> (new)
   new(a)(b)
