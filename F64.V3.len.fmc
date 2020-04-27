@@ -1,7 +1,7 @@
 V3.len: V3 -> F64
   (v)
   v<() F64> | (v.x) (v.y) (v.z)
-  let sqr  = 0 
+  let sqr  = F64.0
   let sqr  = F64.add(sqr)(F64.mul(v.x)(v.x))
   let sqr  = F64.add(sqr)(F64.mul(v.y)(v.y))
   let sqr  = F64.add(sqr)(F64.mul(v.z)(v.z))
