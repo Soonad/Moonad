@@ -1,5 +1,0 @@
-Sigma: (A: Type) -> (B: A -> Type) -> Type
-  (A) (B)
-  sigma<P: Sigma(A)(B) -> Type> ->
-  (make: (a: A) -> (b: B(a)) -> P(Sigma.make<A><B>(a)(b))) ->
-  P(sigma)
