@@ -1,0 +1,27 @@
+Core.to_bits.go: Core -> Nat -> Bits -> Bits
+  (term) (dep)
+  term<() Bits -> Bits>
+  | (indx) (name) (x) Bits.0(Bits.0(Bits.0(Bits.concat(Nat.to_bits(indx))(x))));
+  | (name) (x) Bits.0(Bits.0(Bits.1(Bits.concat(String.to_bits(name))(x))));
+  | (x) Bits.0(Bits.1(Bits.0(x)));
+  | (eras) (self) (name) (bind) (body) (x)
+    let bind = Core.to_bits.go(bind)(dep)
+    let body = Core.to_bits.go
+      | body(Core.var(dep)(""))(Core.var(Nat.succ(dep))(""));
+      | Nat.succ(Nat.succ(dep));
+    Bits.0(Bits.1(Bits.1(bind(body(x)))));
+  | (eras) (name) (body) (x)
+    let body = Core.to_bits.go(body(Core.var(dep)("")))(Nat.succ(dep))
+    Bits.1(Bits.0(Bits.0(body(x))));
+  | (eras) (func) (argm) (x)
+    let func = Core.to_bits.go(func)(dep)
+    let argm = Core.to_bits.go(argm)(dep)
+    Bits.1(Bits.0(Bits.1(func(argm(x)))));
+  | (name) (expr) (body) (x)
+    let expr = Core.to_bits.go(expr)(dep)
+    let body = Core.to_bits.go(body(Core.var(dep)("")))(Nat.succ(dep))
+    Bits.1(Bits.1(Bits.0(expr(body(x)))));
+  | (done) (expr) (type) (x)
+    let expr = Core.to_bits.go(expr)(dep)
+    let type = Core.to_bits.go(type)(dep)
+    Bits.1(Bits.1(Bits.1(expr(type(x)))));

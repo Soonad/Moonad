@@ -1,0 +1,4 @@
+Core.all: Bool -> String -> String -> Core -> (Core -> Core -> Core) -> Core
+  (eras) (self) (name) (bind) (body)
+  <> () () () (all) () () () ()
+  all(eras)(self)(name)(bind)(body)

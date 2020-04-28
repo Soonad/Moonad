@@ -1,0 +1,4 @@
+Core.var: Nat -> String -> Core
+  (indx) (name)
+  <> (var) () () () () () () ()
+  var(indx)(name)

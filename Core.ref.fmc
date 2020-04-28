@@ -1,0 +1,4 @@
+Core.ref: String -> Core
+  (name)
+  <> () (ref) () () () () () ()
+  ref(name)

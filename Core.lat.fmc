@@ -1,0 +1,4 @@
+Core.lat: String -> Core -> (Core -> Core) -> Core
+  (name) (expr) (body)
+  <> () () () () () () (lat) ()
+  lat(name)(expr)(body)
