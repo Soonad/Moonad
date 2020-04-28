@@ -1,4 +1,4 @@
-set_thing_vel: (thi: Thing) -> (new_vel: V3) -> Thing
+set_thing_vel: (thi: Thing) -> (new_vel: F64.V3) -> Thing
   (thi) (new_vel)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

@@ -1,4 +1,4 @@
-set_thing_pad: (thi: Thing) -> (new_pad: V3) -> Thing
+set_thing_pad: (thi: Thing) -> (new_pad: F64.V3) -> Thing
   (thi) (new_pad)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

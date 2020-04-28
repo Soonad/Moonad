@@ -1,4 +1,4 @@
-set_thing_dir: (thi: Thing) -> (new_dir: V3) -> Thing
+set_thing_dir: (thi: Thing) -> (new_dir: F64.V3) -> Thing
   (thi) (new_dir)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

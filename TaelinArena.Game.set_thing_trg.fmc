@@ -1,4 +1,4 @@
-set_thing_trg: (thi: Thing) -> (new_trg: V3) -> Thing
+set_thing_trg: (thi: Thing) -> (new_trg: F64.V3) -> Thing
   (thi) (new_trg)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

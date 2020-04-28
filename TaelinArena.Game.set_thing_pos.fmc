@@ -1,4 +1,4 @@
-set_thing_pos: (thi: Thing) -> (new_pos: V3) -> Thing
+set_thing_pos: (thi: Thing) -> (new_pos: F64.V3) -> Thing
   (thi) (new_pos)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

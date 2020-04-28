@@ -1,6 +1,6 @@
 Thing.new: TxFunction -> PlayerId -> ModelId -> ActionId -> SideId -> 
-           Map(F64) -> String -> List(Light) -> F64 -> V3 -> F64 -> F64 ->
-           V3 -> V3 -> V3 -> V3 -> Hitbox -> F64 -> F64 -> F64 -> V3 ->
+           Map(F64) -> String -> List(Light) -> F64 -> F64.V3 -> F64 -> F64 ->
+           F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> Hitbox -> F64 -> F64 -> F64 -> F64.V3 ->
            List(Buff) -> List(Thing) -> List(Hit) -> Bool -> Bool -> Thing
   (fun) (pid) (mid) (act) (sid) (stt) (nam) (lit) (tik) (pos) (mov) (bst) (pad) 
   (dir) (trg) (vel) (box) (wei) (mph) (dmg) (knk) (buf) (chi) (hit) (rst) (die)

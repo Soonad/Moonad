@@ -1,4 +1,4 @@
-set_thing_knk: (thi: Thing) -> (new_knk: V3) -> Thing
+set_thing_knk: (thi: Thing) -> (new_knk: F64.V3) -> Thing
   (thi) (new_knk)
   thi<() Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
