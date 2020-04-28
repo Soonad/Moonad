@@ -1,2 +1,2 @@
-UFind.empty : UFind
-  Map.empty<UNode>
+UFind.new : UFind
+  Map.new<UNode>

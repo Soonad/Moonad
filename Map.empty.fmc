@@ -1,4 +1,0 @@
-Map.empty: <A: Type> -> Map(A)
-  <>
-  <> (empty) ()
-  empty

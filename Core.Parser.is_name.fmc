@@ -1,0 +1,2 @@
+Core.Parser.is_name: Char -> Bool
+  

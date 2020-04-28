@@ -1,2 +1,2 @@
 UFind.new_node: UFind -> Bits -> UFind
-  (uf) (path) Map.insert<UNode>(path)(UNode.root(Nat.zero))(uf)
+  (uf) (path) Map.set<UNode>(path)(UNode.root(Nat.zero))(uf)

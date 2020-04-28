@@ -7,11 +7,11 @@ UFind.union: UFind -> Bits -> Bits -> UFind
       Bits.equal(root_path1)(root_path2)<() UFind>
       | uf;
       | Nat.cmp(rank1)(rank2)<() UFind>
-        | let uf = Map.insert<UNode>(root_path1)(UNode.link(root_path2))(uf)
+        | let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
           uf;
-        | let uf = Map.insert<UNode>(root_path1)(UNode.link(root_path2))(uf)
-          let uf = Map.insert<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf)
+        | let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
+          let uf = Map.set<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf)
           uf;
-        | let uf = Map.insert<UNode>(root_path1)(UNode.root(rank2))(uf)
-          let uf = Map.insert<UNode>(root_path2)(UNode.link(root_path1))(uf)
+        | let uf = Map.set<UNode>(root_path1)(UNode.root(rank2))(uf)
+          let uf = Map.set<UNode>(root_path2)(UNode.link(root_path1))(uf)
           uf;;))

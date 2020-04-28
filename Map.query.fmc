@@ -4,7 +4,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
   bits<() ((A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)))
            -> (A -> Pair(A)(A)) -> Map(A) -> Pair(Map(A))(Maybe(A))>
   | (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>
-    | let map = Map.empty<A>
+    | let map = Map.new<A>
       let val = Maybe.none<A>
       Pair.new<Map(A)><Maybe(A)>(map)(val)
     ;
@@ -12,7 +12,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
       let mval = map.val
       mval<() Map(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>
       | (map.lft) (map.rgt)
-        let map = Map.multi<A>(Maybe.none<A>)(map.lft)(map.rgt)
+        let map = Map.tie<A>(Maybe.none<A>)(map.lft)(map.rgt)
         let val = Maybe.none<A>
         Pair.new<Map(A)><Maybe(A)>(map)(val)
       ;
@@ -20,7 +20,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
         let p = cpy(mval.value)
         p<() Pair(Map(A))(Maybe(A))>
         | (p.fst) (p.snd)
-          let map = Map.multi<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt)
+          let map = Map.tie<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt)
           let val = Maybe.some<A>(p.snd)
           Pair.new<Map(A)><Maybe(A)>(map)(val)
         ;
@@ -29,7 +29,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
   ;
   | (bits.pred) (rec) (cpy) (map)
     map<() Pair(Map(A))(Maybe(A))>
-    | let map = Map.empty<A>
+    | let map = Map.new<A>
       let val = Maybe.none<A>
       Pair.new<Map(A)><Maybe(A)>(map)(val)
     ;
@@ -37,7 +37,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
       let p = rec(cpy)(bits.pred)(map.lft)
       p<() Pair(Map(A))(Maybe(A))>
       | (p.fst) (p.snd)
-        let map = Map.multi<A>(map.val)(p.fst)(map.rgt)
+        let map = Map.tie<A>(map.val)(p.fst)(map.rgt)
         let val = p.snd
         Pair.new<Map(A)><Maybe(A)>(map)(val)
       ;
@@ -45,7 +45,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
   ;
   | (bits.pred) (rec) (cpy) (map)
     map<() Pair(Map(A))(Maybe(A))>
-    | let map = Map.empty<A>
+    | let map = Map.new<A>
       let val = Maybe.none<A>
       Pair.new<Map(A)><Maybe(A)>(map)(val)
     ;
@@ -53,7 +53,7 @@ query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)
       let p = rec(cpy)(bits.pred)(map.rgt)
       p<() Pair(Map(A))(Maybe(A))>
       | (p.fst) (p.snd)
-        let map = Map.multi<A>(map.val)(map.lft)(p.fst)
+        let map = Map.tie<A>(map.val)(map.lft)(p.fst)
         let val = p.snd
         Pair.new<Map(A)><Maybe(A)>(map)(val)
       ;
