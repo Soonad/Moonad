@@ -26,11 +26,11 @@ Core: Type
     (func: Core) ->
     (argm: Core) ->
     P(Core.app(eras)(func)(argm))) ->
-  (lat:
+  (let:
     (name: String) ->
     (expr: Core) ->
     (body: Core -> Core) ->
-    P(Core.lat(name)(expr)(body))) ->
+    P(Core.let(name)(expr)(body))) ->
   (ann:
     (done: Bool) ->
     (expr: Core) ->

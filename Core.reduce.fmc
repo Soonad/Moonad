@@ -28,7 +28,7 @@ Core.reduce: Core -> Core.Defs -> Core
       | (feras) (ffunc) (fargm)
         Core.app(eras)(Core.app(feras)(ffunc)(fargm));
       | (fname) (fexpr) (fbody)
-        Core.app(eras)(Core.lat(fname)(fexpr)(fbody));
+        Core.app(eras)(Core.let(fname)(fexpr)(fbody));
       | (fdone) (fexpr) (ftype)
         Core.app(eras)(Core.ann(fdone)(fexpr)(ftype));
       | argm;;;

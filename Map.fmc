@@ -1,15 +1,15 @@
 // A Map from bitstrings to values.
 // T Map<A>
-// | empty
-// | multi(val: Maybe(A), lft: Map(A), rgt: Map(A))
+// | new
+// | tie(val: Maybe(A), lft: Map(A), rgt: Map(A))
 Map: (A: Type) -> Type
   (A)
   map<P: Map(A) -> Type> ->
-  (empty:
-    P(Map.empty<A>)) ->
-  (multi:
+  (new:
+    P(Map.new<A>)) ->
+  (tie:
     (val: Maybe(A)) ->
     (lft: Map(A)) ->
     (rgt: Map(A)) ->
-    P(Map.multi<A>(val)(lft)(rgt))) ->
+    P(Map.tie<A>(val)(lft)(rgt))) ->
   P(map)
