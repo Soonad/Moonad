@@ -1,4 +1,0 @@
-HTerm.app: HTerm -> HTerm -> HTerm
-  (func) (argm)
-  <> () () () () () (happ)
-  happ(func)(argm)

@@ -1,0 +1,5 @@
+Command.new: PlayerId -> Input -> Command
+  (pid) (inp)
+  <P> (new)
+  new(pid)(inp)
+  

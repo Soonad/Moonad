@@ -1,3 +1,0 @@
-Parse.zero: <A: Type> -> Parse(A)
-  <A> Parser.zero<Unit><Unit><A>
-

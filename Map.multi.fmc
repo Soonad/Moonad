@@ -1,4 +1,0 @@
-Map.multi: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
-  <> (val) (lft) (rgt)
-  <> () (multi)
-  multi(val)(lft)(rgt)

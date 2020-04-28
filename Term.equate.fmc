@@ -1,2 +1,0 @@
-Term.equate: UFind -> Term -> Term -> UFind
-  (uf) (t) (s) UFind.union(uf)(U32.to_bits(Term.hash(t)))(U32.to_bits(Term.hash(s)))

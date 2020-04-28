@@ -1,5 +1,0 @@
-Term.equal: Term -> Term -> Defs -> Nat -> Pair(UFind)(Bool)
-  (a) (b) (defs) (dep) 
-  let uf = UFind.empty
-  let tris = List.single<<B: Type> -> (Term -> Term -> Nat -> B) -> B>(<> (f) f(a)(b)(dep))
-  Term.equal.aux(uf)(defs)(tris)

@@ -1,3 +1,0 @@
-Defs.get_term: Defs -> String -> Maybe(Term)
-  (defs) (name)
-  Maybe.map<Def><Term>(Pair.snd<Term><Term>)(Defs.get(defs)(name))

@@ -1,0 +1,7 @@
+Core.test: String
+  let lam = Core.lam(Bool.false)
+  let app = Core.app(Bool.false)
+  let fn0 = lam("f")|(f) lam("x")|(x) app(f)(app(f)(x));;
+  let fn1 = lam("g")|(g) lam("y")|(y) app(g)(app(g)(y));;
+  let fun = app(fn0)(fn1)
+  Core.stringify(Core.normalize(fun)(Core.Defs.empty))

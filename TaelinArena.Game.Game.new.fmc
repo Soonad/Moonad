@@ -1,0 +1,4 @@
+Game.new: List(Thing) -> Game
+  (stage)
+  <P> (new)
+  new(stage)

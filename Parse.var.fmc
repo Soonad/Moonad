@@ -1,6 +1,0 @@
-Parse.var: List(String) -> Parse(Term)
-  (vars)
-  Parse.bind<String><Term>(Parse.nam(Bool.false)) | (name)
-  List.find<String>(vars)((x) (i) String.eql(x)(name))<() Parse(Term)>
-  | Parse.pure<Term>(Term.ref(name));
-  | (value) Parse.pure<Term>(Term.var(Pair.snd<String><Nat>(value)));;

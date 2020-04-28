@@ -1,2 +1,0 @@
-Term.stringify : Term -> String
-  (t) Term.stringify.go(List.nil<String>)(t)

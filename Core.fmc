@@ -1,0 +1,39 @@
+Core: Type
+  core<P: Core -> Type> ->
+  (var:
+    (indx: Nat) ->
+    (name: String) ->
+    P(Core.var(indx)(name))) ->
+  (ref:
+    (name: String) ->
+    P(Core.ref(name))) ->
+  (typ:
+    P(Core.typ)) ->
+  (all:
+    (eras: Bool) ->
+    (self: String) ->
+    (name: String) ->
+    (bind: Core) ->
+    (body: Core -> Core -> Core) ->
+    P(Core.all(eras)(self)(name)(bind)(body))) ->
+  (lam:
+    (eras: Bool) ->
+    (name: String) ->
+    (body: Core -> Core) ->
+    P(Core.lam(eras)(name)(body))) ->
+  (app:
+    (eras: Bool) ->
+    (func: Core) ->
+    (argm: Core) ->
+    P(Core.app(eras)(func)(argm))) ->
+  (let:
+    (name: String) ->
+    (expr: Core) ->
+    (body: Core -> Core) ->
+    P(Core.let(name)(expr)(body))) ->
+  (ann:
+    (done: Bool) ->
+    (expr: Core) ->
+    (type: Core) ->
+    P(Core.ann(done)(expr)(type))) ->
+  P(core)

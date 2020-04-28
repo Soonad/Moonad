@@ -1,0 +1,19 @@
+// Inserts a (key,val) pair in a map.
+// Example: Map.get<Nat>(my_key)(my_val)(my_map)
+Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
+  <A> (bits) (val) (map)
+  bits<() Map(A)>
+  | map<() Map(A)>
+    | Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>);
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt);;
+  | (bits.pred)
+    map<() Map(A)>
+    | Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>);
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt);;
+  | (bits.pred)
+    map<() Map(A)>
+    | Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>));
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt));;
