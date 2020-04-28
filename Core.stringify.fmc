@@ -1,0 +1,2 @@
+Core.stringify: Core -> String
+  (term) Core.stringify.go(term)("")

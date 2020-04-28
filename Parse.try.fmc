@@ -1,3 +1,0 @@
-Parse.try : <A: Type> -> Parse(A) -> Parse(A)
-  <A> (p)
-  Parser.try<Unit><Unit><A>(p)

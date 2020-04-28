@@ -1,0 +1,9 @@
+List.find_last.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx) (res)
+  list<() Maybe(Pair(A)(Nat))>
+  | res;
+  | (head) (tail)
+    let res = cond(head)(indx)<() Maybe(Pair(A)(Nat))>
+      | Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx));
+      | res;
+    List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res);

@@ -1,0 +1,5 @@
+Nat.to_bits: Nat -> Bits
+  (n)
+  n<() Bits>
+  | Bits.0(Bits.nil);
+  | (n.pred) Bits.1(Nat.to_bits(n.pred));

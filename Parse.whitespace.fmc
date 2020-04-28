@@ -1,4 +1,0 @@
-Parse.whitespace: Parse(Unit)
-  Parse.then<String><Unit>(Parse.take_while1("whitespace")(Parse.is_space)) |
-  Parse.pure<Unit>(Unit.new);
-

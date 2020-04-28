@@ -1,0 +1,4 @@
+Core.app: Bool -> Core -> Core -> Core
+  (eras) (func) (argm)
+  <> () () () () () (app) () ()
+  app(eras)(func)(argm)

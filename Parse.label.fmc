@@ -1,3 +1,0 @@
-Parse.label : <A: Type> -> String -> Parse(A) -> Parse(A)
-  <A> (label) (p)
-  Parser.label<Unit><Unit><A>(label)(p)

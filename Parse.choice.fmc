@@ -1,3 +1,0 @@
-Parse.choice: <A: Type> -> List(Parse(A)) -> Parse(A)
-  <A> (ps)
-  Parser.choice<Unit><Unit><A>(ps)

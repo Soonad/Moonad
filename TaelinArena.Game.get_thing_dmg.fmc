@@ -1,0 +1,9 @@
+get_thing_dmg: (thi: Thing) -> F64
+  (thi)
+  thi<() F64>
+  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
+    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
+    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mph) (thi.dmg) (thi.knk) 
+    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
+  thi.dmg;
+  

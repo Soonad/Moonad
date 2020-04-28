@@ -14,7 +14,7 @@ F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
   let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd)
   let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff))
   let t = F64.div(t)(l)
-  let t = F64.max(F64.0)(F64.min(1)(t))
+  let t = F64.max(F64.0)(F64.min(F64.1)(t))
   let d = F64.0
   let t_times_ba_x_diff = F64.mul(t)(ba_x_diff)
   let t_times_ba_y_diff = F64.mul(t)(ba_y_diff)

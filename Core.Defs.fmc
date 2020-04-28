@@ -1,0 +1,2 @@
+Core.Defs: Type
+  Map(Pair(Core)(Core))

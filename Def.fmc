@@ -1,2 +1,0 @@
-Def: Type
-  Pair(Term)(Term)

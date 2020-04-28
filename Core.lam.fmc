@@ -1,0 +1,4 @@
+Core.lam: Bool -> String -> (Core -> Core) -> Core
+  (eras) (name) (body)
+  <> () () () () (lam) () () ()
+  lam(eras)(name)(body)

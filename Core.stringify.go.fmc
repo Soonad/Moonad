@@ -1,0 +1,49 @@
+// TODO this is a WIP
+Core.stringify.go: Core -> Stringifier
+  (term)
+  let lit = String.to_stringifier
+  term<() Stringifier>
+  | (indx) (name) (x) lit(name)(x);
+  | (name) (x) lit(name)(x);
+  | (x) lit("Type")(x);
+  | (eras) (self) (name) (bind) (body) (x)
+    let body = body(Core.var(Nat.zero)(self))(Core.var(Nat.zero)(name));
+    let self = lit(self)
+    let lpar = lit("(")
+    let name = lit(name)
+    let colo = lit(": ")
+    let bind = Core.stringify.go(bind)
+    let rpar = lit(")")
+    let body = Core.stringify.go(body)
+    self(lpar(name(colo(bind(rpar(body(x)))))));
+  | (eras) (name) (body) (x)
+    let body = body(Core.var(Nat.zero)(name))
+    let lpar = lit("(")
+    let name = lit(name)
+    let rpar = lit(")")
+    let spac = lit(" ")
+    let body = Core.stringify.go(body)
+    lpar(name(rpar(spac(body(x)))));
+  | (eras) (func) (argm) (x)
+    let wrap = Bool.or(Core.is_lam(func))(Core.is_all(func))
+    let inif = wrap<() Stringifier>(lit("("))(lit(""))
+    let func = Core.stringify.go(func)
+    let endf = wrap<() Stringifier>(lit(")"))(lit(""))
+    let lpar = lit("(")
+    let argm = Core.stringify.go(argm)
+    let rpar = lit(")")
+    inif(func(endf(lpar(argm(rpar(x))))));
+  | (name) (expr) (body) (x)
+    let body = body(Core.var(Nat.zero)(name))
+    let lets = lit("let ")
+    let name = lit(name)
+    let eqls = lit(" = ")
+    let expr = Core.stringify.go(expr)
+    let spac = lit("; ")
+    let body = Core.stringify.go(body)
+    lets(name(eqls(expr(spac(body(x))))));
+  | (done) (expr) (type) (x)
+    let expr = Core.stringify.go(expr)
+    let colo = lit(" :: ")
+    let type = Core.stringify.go(type)
+    expr(colo(type(x)));

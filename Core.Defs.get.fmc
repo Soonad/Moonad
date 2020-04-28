@@ -1,0 +1,3 @@
+Core.Defs.get: Core.Defs -> String -> Maybe(Pair(Core)(Core))
+  (defs) (name)
+  Map.lookup<Pair(Core)(Core)>(String.to_bits(name))(defs)

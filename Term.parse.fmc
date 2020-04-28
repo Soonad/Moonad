@@ -1,6 +1,0 @@
-Term.parse:
-  (code: String) ->
-  Parse.type(Term)
-  | Parse.run<Term>(Parse.trm(List.nil<String>))(Parse.State.default(code));
-
-  (code) Parse.parse<Term>(Parse.trm(List.nil<String>))(code)

@@ -1,4 +1,0 @@
-Term.all: Bool -> String -> String -> Term -> Term -> Term
-  (eras) (self) (name) (bind) (body)
-  <> () () () (all) () () () ()
-  all(U32.0)(eras)(self)(name)(bind)(body)

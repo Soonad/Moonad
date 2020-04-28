@@ -1,4 +1,0 @@
-Parse.open: Parse(Bool)
-  Parse.plus<Bool>
-  | Parse.then<String><Bool>(Parse.symbol("("))(Parse.pure<Bool>(Bool.false));
-  | Parse.then<String><Bool>(Parse.symbol("<"))(Parse.pure<Bool>(Bool.true));
