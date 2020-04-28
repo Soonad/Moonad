@@ -1,0 +1,5 @@
+Sigma: (A: Type) -> (B: A -> Type) -> Type
+  (A) (B)
+  sigma<P: Sigma(A)(B) -> Type> ->
+  (new: (a: A) -> (b: B(a)) -> P(Sigma.new<A><B>(a)(b))) ->
+  P(sigma)

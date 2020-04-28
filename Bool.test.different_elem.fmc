@@ -2,5 +2,5 @@
 Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
   (a)
   a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>
-  | Subset.make<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>;
-  | Subset.make<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>;
+  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>;
+  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>;

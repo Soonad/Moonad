@@ -1,5 +1,5 @@
 Subset: (A: Type) -> (B: A -> Type) -> Type
   (A) (B)
   subset<P: Subset(A)(B) -> Type> ->
-  (make: (a: A) -> <b: B(a)> -> P(Subset.make<A><B>(a)<b>)) ->
+  (new: (a: A) -> <b: B(a)> -> P(Subset.new<A><B>(a)<b>)) ->
   P(subset)
