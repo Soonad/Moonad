@@ -1,4 +1,4 @@
-F64.Circle.new: V3 -> F64 -> F64.Circle
+F64.Circle.new: F64.V3 -> F64 -> F64.Circle
   (pos) (rad)
   <P> (new)
   new(pos)(rad)

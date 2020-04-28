@@ -1,8 +1,8 @@
 // Rotates a vector on the x-y plane around an arbitrary point
-F64.V3.rotate: F64 -> V3 -> V3 -> V3
+F64.V3.rotate: F64 -> F64.V3 -> F64.V3 -> F64.V3
   (a) (v) (p)
-  v<() V3> | (v.x) (v.y) (v.z)
-  p<() V3> | (p.x) (p.y) (p.z)
+  v<() F64.V3> | (v.x) (v.y) (v.z)
+  p<() F64.V3> | (p.x) (p.y) (p.z)
   let rad = F64.mul(a)(F64.div(F64.pi)(F64.180))
   let sin = F64.sin(rad)
   let cos = F64.cos(rad)
@@ -14,4 +14,4 @@ F64.V3.rotate: F64 -> V3 -> V3 -> V3
   let y_diff_times_sin = F64.mul(y_diff)(sin)
   let new_x = F64.sub(F64.add(p.x)(x_diff_times_cos))(y_diff_times_sin)
   let new_y = F64.add(F64.add(p.y)(x_diff_times_sin))(y_diff_times_cos)
-  V3.new(new_x)(new_y)(v.z);;
+  F64.V3.new(new_x)(new_y)(v.z);;

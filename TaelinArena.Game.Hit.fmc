@@ -7,8 +7,8 @@ Hit : Type
   hit<P: Hit -> Type> ->
   (new: 
     (eff: List(Effect)) -> 
-    (pos: V3) -> 
-    (dir: V3) -> 
+    (pos: F64.V3) -> 
+    (dir: F64.V3) -> 
     (box: Hitbox) -> 
     P(Hit.new(eff)(pos)(dir)(box))) ->
   P(hit) 

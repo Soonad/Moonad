@@ -1,4 +1,4 @@
-Light.new: V3 -> F64 -> F64 -> V3 -> V3 -> Light
+Light.new: F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> Light
   (pos) (rad) (rng) (sub) (add)
   <P> (new)
   new(pos)(rad)(rng)(sub)(add)

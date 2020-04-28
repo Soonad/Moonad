@@ -9,5 +9,5 @@ Hitbox : Type
   hitbox<P: Hitbox -> Type> ->
   (nbox: P(Hitbox.nbox)) -> 
   (cbox: (rad: F64) -> P(Hitbox.cbox(rad))) -> 
-  (pbox: (pts: List(V3)) -> P(Hitbox.pbox(pts))) -> 
+  (pbox: (pts: List(F64.V3)) -> P(Hitbox.pbox(pts))) -> 
   P(hitbox)

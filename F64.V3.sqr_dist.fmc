@@ -1,4 +1,4 @@
-V3.sqr_dist: V3 -> V3 -> F64 
+F64.V3.sqr_dist: F64.V3 -> F64.V3 -> F64 
   (a) (b)
   a<() F64> | (a.x) (a.y) (a.z)
   b<() F64> | (b.x) (b.y) (b.z)
