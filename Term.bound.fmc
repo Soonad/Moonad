@@ -1,2 +1,0 @@
-Term.bound: Nat -> Term
-  (indx) Term.ref(String.cons(Char.parse("%"))(Nat.to_string(indx)))
