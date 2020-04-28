@@ -1,3 +1,0 @@
-Parse.typ: Parse(Term)
-  Parse.bind<String><Term>(Parse.tokens("Type")) | ()
-  Parse.pure<Term>(Term.typ);

@@ -1,6 +1,0 @@
-Parse.ann: Term -> List(String) -> Parse(Term)
-  (expr) (vars)
-  Parse.then<Unit><Term>(Parse.space)          |
-  Parse.then<String><Term>(Parse.symbol("::")) |
-  Parse.bind<Term  ><Term>(Parse.trm(vars))    |  (type)
-  Parse.pure<Term>(Term.ann(Bool.false)(expr)(type));;;

@@ -1,2 +1,0 @@
-Parse.State.default: String -> Parse.State
-  (input) Parser.State.default<Unit><Unit>(input)(Unit.new)
