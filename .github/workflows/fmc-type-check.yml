@@ -23,11 +23,7 @@ jobs:
     - name: Install formality-core
       run: npm i t-check-test # TODO: update to formality-core
     
-    - name: Type check
-      id: check_type
-      run: node node_modules/t-check-test/bin/fmc.js
-    
     - name: Type check --github
       id: check_type_github
-      run: node node_modules/t-check-test/bin/fmc.js --github
+      run: node node_modules/t-check-test/bin/fmc.js --github  # TODO: update to formality-core
           
