@@ -1,4 +1,4 @@
-Buff.rooted: F64 -> Buff 
+TaelinArena.Game.Buff.rooted: F64 -> TaelinArena.Game.Buff 
   (dur)
   <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
   rooted(dur)

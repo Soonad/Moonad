@@ -5,9 +5,9 @@
 // | cbox(rad: Number)
 // | pbox(pts: List(V3))
 
-Hitbox : Type
-  hitbox<P: Hitbox -> Type> ->
-  (nbox: P(Hitbox.nbox)) -> 
-  (cbox: (rad: F64) -> P(Hitbox.cbox(rad))) -> 
-  (pbox: (pts: List(F64.V3)) -> P(Hitbox.pbox(pts))) -> 
+TaelinArena.Game.Hitbox : Type
+  hitbox<P: TaelinArena.Game.Hitbox -> Type> ->
+  (nbox: P(TaelinArena.Game.Hitbox.nbox)) -> 
+  (cbox: (rad: F64) -> P(TaelinArena.Game.Hitbox.cbox(rad))) -> 
+  (pbox: (pts: List(F64.V3)) -> P(TaelinArena.Game.Hitbox.pbox(pts))) -> 
   P(hitbox)

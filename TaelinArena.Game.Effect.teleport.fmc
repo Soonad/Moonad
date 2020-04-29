@@ -1,4 +1,4 @@
-Effect.teleport: F64.V3 -> F64 -> Effect
+TaelinArena.Game.Effect.teleport: F64.V3 -> F64 -> TaelinArena.Game.Effect
   (to_pos) (all)
   <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
   teleport(to_pos)(all)

@@ -1,0 +1,5 @@
+TaelinArena.Game.Input.key4: F64.V3 -> TaelinArena.Game.Input
+  (pos)
+  <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg)
+  key4(pos)
+  

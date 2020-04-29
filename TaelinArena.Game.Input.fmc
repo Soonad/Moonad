@@ -10,15 +10,15 @@
 // | key5(pos: V3) // shift down
 // | cmsg(txt: String) // chat message
 
-Input : Type
-  input<P: Input -> Type> ->
-  (sdir: (dir: F64.V3) -> P(Input.sdir(dir)) ) ->
-  (key0: (pos: F64.V3) -> P(Input.key0(pos)) ) ->
-  (key1: (pos: F64.V3) -> P(Input.key1(pos)) ) ->
-  (key2: (pos: F64.V3) -> P(Input.key2(pos)) ) ->
-  (key3: (pos: F64.V3) -> P(Input.key3(pos)) ) ->
-  (key4: (pos: F64.V3) -> P(Input.key4(pos)) ) ->
-  (key5: (pos: F64.V3) -> P(Input.key5(pos)) ) ->
-  (cmsg: (txt: String) -> P(Input.cmsg(txt)) ) ->
+TaelinArena.Game.Input : Type
+  input<P: TaelinArena.Game.Input -> Type> ->
+  (sdir: (dir: F64.V3) -> P(TaelinArena.Game.Input.sdir(dir)) ) ->
+  (key0: (pos: F64.V3) -> P(TaelinArena.Game.Input.key0(pos)) ) ->
+  (key1: (pos: F64.V3) -> P(TaelinArena.Game.Input.key1(pos)) ) ->
+  (key2: (pos: F64.V3) -> P(TaelinArena.Game.Input.key2(pos)) ) ->
+  (key3: (pos: F64.V3) -> P(TaelinArena.Game.Input.key3(pos)) ) ->
+  (key4: (pos: F64.V3) -> P(TaelinArena.Game.Input.key4(pos)) ) ->
+  (key5: (pos: F64.V3) -> P(TaelinArena.Game.Input.key5(pos)) ) ->
+  (cmsg: (txt: String) -> P(TaelinArena.Game.Input.cmsg(txt)) ) ->
   P(input)
   

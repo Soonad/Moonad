@@ -1,4 +1,4 @@
-get_thing_die: (thi: Thing) -> Bool
+TaelinArena.Game.get_thing_die: (thi: TaelinArena.Game.Thing) -> Bool
   (thi)
   thi<() Bool>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

@@ -1,4 +1,4 @@
-get_thing_tik: (thi: Thing) -> F64
+TaelinArena.Game.get_thing_tik: (thi: TaelinArena.Game.Thing) -> F64
   (thi)
   thi<() F64>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

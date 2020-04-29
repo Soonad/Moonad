@@ -1,4 +1,4 @@
-get_thing_pos: (thi: Thing) -> F64.V3
+TaelinArena.Game.get_thing_pos: (thi: TaelinArena.Game.Thing) -> F64.V3
   (thi)
   thi<() F64.V3>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

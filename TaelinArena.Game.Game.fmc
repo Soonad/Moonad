@@ -3,7 +3,9 @@
 // T Game
 // | game(stage : List(Thing))
 
-Game : Type
-  game<P: Game -> Type> -> 
-  (new: (stage: List(Thing)) -> P(Game.new(stage)) ) ->
+TaelinArena.Game.Game : Type
+  game<P: TaelinArena.Game.Game -> Type> -> 
+  (new: 
+    (stage: List(TaelinArena.Game.Thing)) -> 
+    P(TaelinArena.Game.Game.new(stage)) ) ->
   P(game)
