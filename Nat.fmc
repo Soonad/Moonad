@@ -1,4 +1,4 @@
-Nat: Type //prim//
+Nat: Type //noprim//
   nat<P: Nat -> Type> ->
   (zero: P(Nat.zero)) ->
   (succ: (pred: Nat) -> P(Nat.succ(pred))) ->

@@ -1,16 +1,2 @@
-// try to apply a parser, if it fails, it consumes no input
-
-Parser.try :
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parser(S)(E)(A) ->
-  Parser(S)(E)(A)
-
-  <S> <E> <A> (p)
-  <X> (s1) (empty_value) (empty_error) (eaten_value) ()
-  p<X>(s1)
-  | empty_value;
-  | (s2) (e) empty_error(s1)(e);
-  | eaten_value;
-  | (s2) (e) empty_error(s1)(e);
+Parser.try : <A: Type> -> Parser(A) -> Parser(A)
+  <A> (p) Parsec.try<Unit><Unit><A>(p)

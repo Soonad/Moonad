@@ -1,12 +1,2 @@
-Parser.optional:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parser(S)(E)(A) ->
-  Parser(S)(E)(Maybe(A))
-
-  <S> <E> <A> (p)
-  Parser.plus<S><E><Maybe(A)>
-  | Parser.map<S><E><A><Maybe(A)>(Maybe.some<A>)(p);
-  | Parser.pure<S><E><Maybe(A)>(Maybe.none<A>);
-
+Parser.optional: <A: Type> -> Parser(A) -> Parser(Maybe(A))
+  <A> (p) Parsec.optional<Unit><Unit><A>(p)

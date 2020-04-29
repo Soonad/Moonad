@@ -1,3 +1,0 @@
-Parser.Error.Fancy.fail: <E: Type> -> String -> Parser.Error.Fancy(E)
-  <E> (msg)
-  <P> (fail) () fail(msg)

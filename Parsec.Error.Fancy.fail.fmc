@@ -1,0 +1,3 @@
+Parsec.Error.Fancy.fail: <E: Type> -> String -> Parsec.Error.Fancy(E)
+  <E> (msg)
+  <P> (fail) () fail(msg)

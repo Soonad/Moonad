@@ -1,5 +1,0 @@
-Parser.Error.show: <E : Type> -> Parser.Error(E) -> String
-  <E> (e) 
-  e<() String>
-  | (position) (unexpect) (expected) "trivial";
-  | (position) (messages) "fancy";

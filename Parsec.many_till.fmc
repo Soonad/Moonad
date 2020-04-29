@@ -1,0 +1,15 @@
+Parsec.many_till:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  <B: Type> ->
+  Parsec(S)(E)(A) ->
+  Parsec(S)(E)(B) ->
+  Parsec(S)(E)(List(A))
+  <S> <E> <A> <B> (p) (q)
+  Parsec.plus<S><E><List(A)>
+  | Parsec.then<S><E><B><List(A)>(q)(Parsec.pure<S><E><List(A)>(List.nil<A>));
+  | Parsec.bind<S><E><A><List(A)>(p) | (x)
+    Parsec.bind<S><E><List(A)><List(A)>(Parsec.many_till<S><E><A><B>(p)(q))
+    | (xs) Parsec.pure<S><E><List(A)>(List.cons<A>(x)(xs));;;
+

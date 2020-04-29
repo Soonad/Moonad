@@ -1,0 +1,10 @@
+Parsec.Reply.eaten_value :
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parsec.State(S)(E) ->
+  A ->
+  Parsec.Reply(S)(E)(A)
+
+  <S> <E> <A> (state) (value)
+  <P> () () (eaten_value) () eaten_value(state)(value)

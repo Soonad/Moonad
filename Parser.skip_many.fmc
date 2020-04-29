@@ -1,11 +1,4 @@
-Parser.skip_many:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parser(S)(E)(A) ->
-  Parser(S)(E)(Unit)
-  <S> <E> <A> (p)
-  Parser.plus<S><E><Unit>
-  | Parser.then<S><E><A><Unit>(p)(Parser.skip_many<S><E><A>(p));
-  | Parser.pure<S><E><Unit>(Unit.new);
+Parser.skip_many: <A: Type> -> Parser(A) -> Parser(Unit)
+  <A> (p)
+  Parsec.skip_many<Unit><Unit><A>(p)
 

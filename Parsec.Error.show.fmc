@@ -1,0 +1,9 @@
+Parsec.Error.show: <E : Type> ->
+  (E -> String) ->
+  Parsec.Error(E) ->
+  String
+
+  <E> (f) (e)
+  e<() String>
+  | (position) (unexpect) (expected) "trivial";
+  | (position) (messages) "fancy";

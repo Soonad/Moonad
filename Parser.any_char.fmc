@@ -1,4 +1,2 @@
-Parser.any_char : <S: Type> -> <E: Type> -> Parser(S)(E)(Char)
-  <S> <E>
-  Parser.token<S><E><Char>(Maybe.some<Char>)
-  | List.single<Parser.Error.Item>(Parser.Error.Item.label("any char"));
+Parser.any_char : Parser(Char)
+  Parsec.any_char<Unit><Unit>
