@@ -1,0 +1,2 @@
+Core.Parser: (A: Type) -> Type
+  (A) Either(String)(Pair(String)(A))
