@@ -11,7 +11,7 @@ F64.V3.circle_line_intersection: F64.Circle -> F64.Line -> Maybe(Pair(F64.V3)(F6
   let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy)
   let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1))
   let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd))
-  F64.lte(de)(0)<() Maybe(Pair(F64.V3)(F64.V3))>
+  F64.lte(de)(F64.0)<() Maybe(Pair(F64.V3)(F64.V3))>
   | Maybe.none<Pair(F64.V3)(F64.V3)>;
   | let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(0)(dx))(dx)
     let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(0)(dy))(dy)
