@@ -15,7 +15,7 @@ F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F6
     let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd)
     let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos))
     let ds = F64.V3.sqr_dist(hp)(a.pos)
-    let cmp_res = F64.from_bool(F64.gtn(dt)(0)) 
+    let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)) 
     F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)
     ;;;; 
      
