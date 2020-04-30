@@ -1,0 +1,13 @@
+Core.Read.txt: String -> Core.Read(Unit)
+  (str) (code)
+  str<() Core.Read.Reply(Unit)>
+  | Core.Read.done<Unit>(Unit.new)(code);
+  | (str.head) (str.tail)
+    code<() Core.Read.Reply(Unit)>
+    | Core.Read.fail<Unit>;
+    | (code.head) (code.tail)
+      U16.eql(str.head)(code.head)<() Core.Read.Reply(Unit)>
+      | Core.Read.txt(str.tail)(code.tail);
+      | Core.Read.fail<Unit>;
+    ;
+  ;

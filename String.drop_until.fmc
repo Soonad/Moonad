@@ -1,0 +1,2 @@
+String.drop_until: (Char -> Bool) -> String -> String
+  (cond) String.drop_while((c) Bool.not(cond(c)))
