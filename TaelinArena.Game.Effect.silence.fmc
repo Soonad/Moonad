@@ -1,4 +1,4 @@
-Effect.silence: F64 -> Effect
+TaelinArena.Game.Effect.silence: F64 -> TaelinArena.Game.Effect
   (dur)
   <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
   silence(dur)

@@ -1,3 +1,3 @@
-PlayerId : Type
+TaelinArena.Game.PlayerId : Type
   F64
   

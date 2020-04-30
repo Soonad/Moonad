@@ -1,6 +1,9 @@
-get_thing_fun: (thi: Thing) -> TxFunction
+TaelinArena.Game.get_thing_fun: 
+  (thi: TaelinArena.Game.Thing) -> 
+  TaelinArena.Game.TxFunction
+
   (thi)
-  thi<() TxFunction>
+  thi<() TaelinArena.Game.TxFunction>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mph) (thi.dmg) (thi.knk) 

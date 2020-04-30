@@ -1,4 +1,4 @@
-V3.len: V3 -> F64
+F64.V3.len: F64.V3 -> F64
   (v)
   v<() F64> | (v.x) (v.y) (v.z)
   let sqr  = F64.0

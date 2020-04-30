@@ -1,11 +1,15 @@
-set_thing_act: (thi: Thing) -> (new_act: ActionId) -> Thing
+TaelinArena.Game.set_thing_act: 
+  (thi: TaelinArena.Game.Thing) -> 
+  (new_act: TaelinArena.Game.ActionId) -> 
+  TaelinArena.Game.Thing
+  
   (thi) (new_act)
-  thi<() Thing> 
+  thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mph) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Thing.new
+    TaelinArena.Game.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
