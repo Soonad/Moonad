@@ -1,19 +1,19 @@
-Var : Type
+Research.Var : Type
   Pair(Char)(Nat)
 
-Var.new : Char -> Nat -> Var
+Research.Var.new : Char -> Nat -> Research.Var
   Pair.new<Char><Nat>
 
-Ctx : Type
-  List(Var)
+Research.Ctx : Type
+  List(Research.Var)
 
-Ctx.nil : Ctx
-  List.nil<Var>
+Research.Ctx.nil : Research.Ctx
+  List.nil<Research.Var>
 
-Ctx.ext : Char -> Nat -> Ctx -> Ctx
-  (nam) (x) List.cons<Var>(Var.new(nam)(x))
+Research.Ctx.ext : Char -> Nat -> Research.Ctx -> Research.Ctx
+  (nam) (x) List.cons<Research.Var>(Research.Var.new(nam)(x))
 
-Ctx.get : Char -> Ctx -> Maybe(Nat)
+Research.Ctx.get : Char -> Research.Ctx -> Maybe(Nat)
   (chr) (ctx)
   ctx<() Maybe(Nat)>
   | Maybe.none<Nat>;
@@ -22,43 +22,43 @@ Ctx.get : Char -> Ctx -> Maybe(Nat)
     | (nam) (var)
       U16.eql(nam)(chr)<() Maybe(Nat)>
       | Maybe.some<Nat>(var);
-      | Ctx.get(chr)(t);;;
+      | Research.Ctx.get(chr)(t);;;
 
-parse_fun.filt : String -> String
+Research.parse_fun.filt : String -> String
   String.filter((c) Bool.or
     | U16.eql(c)(Char.parse("λ"));
     | U16.eql(c)(Char.parse("."));)
 
-parse_fun.typ0 : String -> Ctx -> Type
+Research.parse_fun.typ0 : String -> Research.Ctx -> Type
   (str) (ctx)
   str<() Type>
   | Unit;
-  | (nam) (nxt) parse_fun.typ1(nam)(nxt)(ctx);
+  | (nam) (nxt) Research.parse_fun.typ1(nam)(nxt)(ctx);
 
-parse_fun.typ1 : Char -> String -> Ctx -> Type
+Research.parse_fun.typ1 : Char -> String -> Research.Ctx -> Type
   (nam) (nxt) (ctx)
   nxt<() Type>
   | Nat;
-  | (h) (t) (x: Nat) -> parse_fun.typ0(String.cons(h)(t))(Ctx.ext(nam)(x)(ctx));
+  | (h) (t) (x: Nat) -> Research.parse_fun.typ0(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx));
 
-parse_fun.term : (str:String) -> (ctx:Ctx) -> parse_fun.typ0(str)(ctx)
+Research.parse_fun.term : (str:String) -> (ctx:Research.Ctx) -> Research.parse_fun.typ0(str)(ctx)
   (str) (ctx)
-  str<(str) parse_fun.typ0(str)(ctx)>
+  str<(str) Research.parse_fun.typ0(str)(ctx)>
   | Unit.new;
   | (nam) (nxt)
-    nxt<(str) parse_fun.typ1(nam)(str)(ctx)>
-    | Ctx.get(nam)(ctx)<() Nat>
+    nxt<(str) Research.parse_fun.typ1(nam)(str)(ctx)>
+    | Research.Ctx.get(nam)(ctx)<() Nat>
       | Nat.zero;
       | (n) n;;
-    | (h) (t) (x) parse_fun.term(String.cons(h)(t))(Ctx.ext(nam)(x)(ctx));;
+    | (h) (t) (x) Research.parse_fun.term(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx));;
 
-fun : (str:String) -> parse_fun.typ0(parse_fun.filt(str))(Ctx.nil)
-  (str) parse_fun.term(parse_fun.filt(str))(Ctx.nil)
+Research.fun : (str:String) -> Research.parse_fun.typ0(Research.parse_fun.filt(str))(Research.Ctx.nil)
+  (str) Research.parse_fun.term(Research.parse_fun.filt(str))(Research.Ctx.nil)
 
-crazy: Nat -> Nat -> Nat -> Nat
-  fun("λx.λy.λz.y")
+Research.crazy: Nat -> Nat -> Nat -> Nat
+  Research.fun("λx.λy.λz.y")
 
-it_works: Equal(Nat)(Nat.1)(crazy(Nat.0)(Nat.1)(Nat.2))
+Research.it_works: Equal(Nat)(Nat.1)(Research.crazy(Nat.0)(Nat.1)(Nat.2))
   Equal.to<Nat><Nat.1>
   
   
