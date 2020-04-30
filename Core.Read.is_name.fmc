@@ -1,0 +1,2 @@
+Core.Read.is_name: Char -> Bool
+  (chr) Set.get(U16.to_bits(chr))(Core.Read.is_name.set)
