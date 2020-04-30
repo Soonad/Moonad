@@ -1,5 +1,5 @@
 // Squared distance between a point and a segment
-F64.V3.point_segment_sqrdist: V3 -> Segment -> F64
+F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
   (p) (s)
   p<() F64> | (p.x) (p.y) (p.z)
   s<() F64> | (a) (b)

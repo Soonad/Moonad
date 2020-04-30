@@ -1,0 +1,12 @@
+// Returns the position at a given distance towards targ_dir
+// at_dist(self: Thing, dist: Number)
+//   case self |thing
+//   let dir = targ_dir(self)
+//   let pos = add_v3(self.pos, scale_v3(dist, dir))
+//   pos
+TaelinArena.Game.at_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
+  (self) (dist)
+  let dir = TaelinArena.Game.targ_dir(self)
+  let pos = TaelinArena.Game.get_thing_pos(self)
+  F64.V3.add(pos)(F64.V3.scale(dist)(dir)) 
+  

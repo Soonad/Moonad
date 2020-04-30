@@ -1,4 +1,4 @@
-get_thing_stt: (thi: Thing) -> Map(F64)
+TaelinArena.Game.get_thing_stt: (thi: TaelinArena.Game.Thing) -> Map(F64)
   (thi)
   thi<() Map(F64)>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

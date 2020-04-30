@@ -1,4 +1,10 @@
-Hit.new: List(Effect) -> V3 -> V3 -> Hitbox -> Hit
+TaelinArena.Game.Hit.new: 
+  List(TaelinArena.Game.Effect) -> 
+  F64.V3 -> 
+  F64.V3 -> 
+  TaelinArena.Game.Hitbox -> 
+  TaelinArena.Game.Hit
+  
   (eff) (pos) (dir) (box)
   <P> (new)
   new(eff)(pos)(dir)(box)

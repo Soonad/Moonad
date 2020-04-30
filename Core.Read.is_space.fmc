@@ -1,4 +1,4 @@
-Core.Parser.is_space: Char -> Bool
+Core.Read.is_space: Char -> Bool
   (chr)
   Bool.or
   | U16.eql(chr)(' ');

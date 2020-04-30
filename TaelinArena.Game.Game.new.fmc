@@ -1,4 +1,4 @@
-Game.new: List(Thing) -> Game
+TaelinArena.Game.Game.new: List(TaelinArena.Game.Thing) -> TaelinArena.Game.Game
   (stage)
   <P> (new)
   new(stage)

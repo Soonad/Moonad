@@ -1,0 +1,3 @@
+F64.lte: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+  

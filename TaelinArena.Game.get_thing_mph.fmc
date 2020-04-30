@@ -1,4 +1,4 @@
-get_thing_mph: (thi: Thing) -> F64
+TaelinArena.Game.get_thing_mph: (thi: TaelinArena.Game.Thing) -> F64
   (thi)
   thi<() F64>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
