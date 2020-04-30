@@ -1,5 +1,5 @@
-Boundary : Type 
-  boundary<P: Boundary -> Type> ->
-  (new: (pts: List(V3)) -> P(Boundary.new(pts))) ->
+F64.Boundary : Type 
+  boundary<P: F64.Boundary -> Type> ->
+  (new: (pts: List(F64.V3)) -> P(F64.Boundary.new(pts))) ->
   P(boundary)
   

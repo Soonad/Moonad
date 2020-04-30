@@ -29,36 +29,36 @@
 //   rst : Bool,        // should this reset to idle
 //   die : Bool)        // should this be removed?
 
-Thing : Type 
-  thing<P: Thing -> Type> ->
+TaelinArena.Game.Thing : Type 
+  thing<P: TaelinArena.Game.Thing -> Type> ->
   (new: 
-    (fun: TxFunction) ->
-    (pid: PlayerId) -> 
-    (mid: ModelId) ->
-    (act: ActionId) ->
-    (sid: SideId) ->
+    (fun: TaelinArena.Game.TxFunction) ->
+    (pid: TaelinArena.Game.PlayerId) -> 
+    (mid: TaelinArena.Game.ModelId) ->
+    (act: TaelinArena.Game.ActionId) ->
+    (sid: TaelinArena.Game.SideId) ->
     (stt: Map(F64)) -> 
     (nam: String) ->
-    (lit: List(Light)) ->
+    (lit: List(TaelinArena.Game.Light)) ->
     (tik: F64) ->
-    (pos: V3) ->
+    (pos: F64.V3) ->
     (mov: F64) -> 
     (bst: F64) ->
-    (pad: V3) ->
-    (dir: V3) ->
-    (trg: V3) ->
-    (vel: V3) ->
-    (box: Hitbox) ->
+    (pad: F64.V3) ->
+    (dir: F64.V3) ->
+    (trg: F64.V3) ->
+    (vel: F64.V3) ->
+    (box: TaelinArena.Game.Hitbox) ->
     (wei: F64) ->
     (mph: F64) ->
     (dmg: F64) ->
-    (knk: V3) ->
-    (buf: List(Buff)) ->
-    (chi: List(Thing)) -> 
-    (hit: List(Hit)) ->
+    (knk: F64.V3) ->
+    (buf: List(TaelinArena.Game.Buff)) ->
+    (chi: List(TaelinArena.Game.Thing)) -> 
+    (hit: List(TaelinArena.Game.Hit)) ->
     (rst: Bool) -> 
     (die: Bool) -> 
-    P(Thing.new
+    P(TaelinArena.Game.Thing.new
     | fun; 
     | pid;
     | mid;
