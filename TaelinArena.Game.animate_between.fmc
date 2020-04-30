@@ -48,24 +48,22 @@ animate_between:
   let self.act = TaelinArena.Game.get_thing_act(self)
   let self.dir = TaelinArena.Game.get_thing_dir(self)
 
-  F64.if<() TaelinArena.Game.Thing>(F64.is_between(from)(til)(self_tik))
-  | 
-    let set_bst = TaelinArena.Game.set_thing_bst(boost)
+  Bool.if<TaelinArena.Game.Thing>(F64.is_between(from)(til)(self.tik))
+  | let set_bst = TaelinArena.Game.set_thing_bst(self)(boost)
 
     let set_dir = 
-      TaelinArena.Game.set_thing_dir|
-        let pad_len = F64.V3(self.pad)
+      TaelinArena.Game.set_thing_dir(self)
+      | let pad_len = F64.V3.len(self.pad)
         Bool.if<F64.V3>(Bool.and(F64.ltn(F64.0)(self.act))(F64.eql(pad_len)(F64.0)))
-        | F64.if<F64.V3>(F64.ltn(0)(pad_len))
+        | TaelinArena.Game.targ_dir(self);
+        | Bool.if<F64.V3>(F64.ltn(F64.0)(pad_len))
           | F64.V3.norm(self.pad);
           | self.dir;;
-        | TaelinArena.Game.targ_dir(self);
       ;
 
-
-    let set_mid = TaelinArena.Game.Thing.set_thing_mid|
-      let duration = F64.sub(til)(from)
-      let curr_tik = F64.sub(tik)(from)
+    let set_mid = TaelinArena.Game.set_thing_mid(self)
+    | let duration = F64.sub(til)(from)
+      let curr_tik = F64.sub(self.tik)(from)
       let curr_tim = F64.div(curr_tik)(duration)
       F64.add(model)(F64.mod(F64.floor(F64.mul(curr_tim)(count)))(count))
     ;
