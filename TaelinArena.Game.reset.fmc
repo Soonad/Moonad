@@ -7,7 +7,7 @@
 //     self <= thing(rst = true)
 //   else
 //     self
-TaelinArena.Game.reset.fmc: 
+TaelinArena.Game.reset: 
   TaelinArena.Game.Thing -> 
   F64 -> 
   TaelinArena.Game.Thing

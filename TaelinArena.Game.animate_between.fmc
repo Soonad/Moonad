@@ -5,36 +5,8 @@
 // - count: total count of models on the animation
 // - from: frame to start animating
 // - til: last frame to animate
-//
-// animate_between(
-//   self  : Thing,
-//   boost : Number,
-//   model : Number,
-//   count : Number,
-//   from  : Number,
-//   til   : Number
-//   ) : Thing
-//   case self |thing
-//   if is_between(from, til, self.tik) then
-//     self <= thing(
-//       bst = boost,
-//       dir =
-//         let pad_len = len_v3(pad)
-//         if (act > 0) && (pad_len === 0) then
-//           targ_dir(self)
-//         else if pad_len > 0 then
-//           norm_v3(pad)
-//         else
-//           dir,
-//       mid =
-//         let duration = til - from
-//         let curr_tik = tik - from
-//         let curr_tim = curr_tik \ duration
-//         model + (floor(curr_tim * count) % count))
-//   else
-//     self
 
-animate_between: 
+TaelinArena.Game.animate_between: 
   (self: TaelinArena.Game.Thing) -> 
   (boost: F64) -> 
   (model: F64) -> 
@@ -70,3 +42,30 @@ animate_between:
     self;
   | self;
   
+// animate_between(
+//   self  : Thing,
+//   boost : Number,
+//   model : Number,
+//   count : Number,
+//   from  : Number,
+//   til   : Number
+//   ) : Thing
+//   case self |thing
+//   if is_between(from, til, self.tik) then
+//     self <= thing(
+//       bst = boost,
+//       dir =
+//         let pad_len = len_v3(pad)
+//         if (act > 0) && (pad_len === 0) then
+//           targ_dir(self)
+//         else if pad_len > 0 then
+//           norm_v3(pad)
+//         else
+//           dir,
+//       mid =
+//         let duration = til - from
+//         let curr_tik = tik - from
+//         let curr_tim = curr_tik \ duration
+//         model + (floor(curr_tim * count) % count))
+//   else
+//     self
