@@ -6,5 +6,5 @@ List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
   | (head) (tail)
     cond(head)<() Maybe(A)>
     | Maybe.some<A>(head);
-    | List.seek<A>(cond)(tail);;
+    | List.find<A>(cond)(tail);;
 
