@@ -1,0 +1,11 @@
+F64.V3.polygon_to_segments.nil: Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)
+  F64.V3.polygon_to_segments.nil
+  // (pt_a) (pt_0)
+  // pt_0<() List(F64.V3)> 
+  // | List.nil<F64.Segment>; 
+  // | (some_1)
+  //   pt_a<() List(F64.V3)>
+  //   | List.nil<F64.Segment>;
+  //   | (some_2)
+  //     let p0 = F64.V3.polygon_to_segments.transfor
+  

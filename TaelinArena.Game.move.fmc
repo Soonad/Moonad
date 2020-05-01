@@ -1,0 +1,11 @@
+// Sets the position
+// move(self: Thing, to_pos: V3)
+//   self <= thing(pos = to_pos)
+TaelinArena.Game.move.fmc: 
+  TaelinArena.Game.Thing -> 
+  F64.V3 -> 
+  TaelinArena.Game.Thing
+
+  (self) (to_pos)
+  TaelinArena.Game.set_thing_pos(self)(to_pos)
+  

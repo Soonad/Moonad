@@ -1,4 +1,4 @@
-V3.eql: V3 -> V3 -> Bool
+F64.V3.eql: F64.V3 -> F64.V3 -> Bool
   (a) (b)
   a<() Bool> | (a.x) (a.y) (a.z)
   b<() Bool> | (b.x) (b.y) (b.z)

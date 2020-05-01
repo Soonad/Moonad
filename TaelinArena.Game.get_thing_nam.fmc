@@ -1,4 +1,4 @@
-get_thing_nam: (thi: Thing) -> String
+TaelinArena.Game.get_thing_nam: (thi: TaelinArena.Game.Thing) -> String
   (thi)
   thi<() String>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

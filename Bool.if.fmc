@@ -1,0 +1,7 @@
+Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A
+  <A> (x) (ct) (cf)
+  let bool = Bool.eql(x)(Bool.false)
+  bool<() A>
+  | cf;
+  | ct;
+  

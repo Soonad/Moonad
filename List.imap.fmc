@@ -1,0 +1,8 @@
+List.imap: <A: Type> -> <B: Type> -> (Nat -> A -> B) -> List(A) -> List(B)
+  <A> <B> (fn) (list)
+  list<() List(B)>
+  | List.nil<B>;
+  | (list.head) (list.tail)
+    List.cons<B>(fn(Nat.zero)(list.head))
+    | List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail);
+  ;

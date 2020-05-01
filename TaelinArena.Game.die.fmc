@@ -1,0 +1,17 @@
+// Dies at given tick
+// die(
+//   self   : Thing,
+//   at_tik : Number)
+//     case self |thing
+//     if self.tik > (at_tik - 1) then
+//       self <= thing(die = true)
+//     else
+//       self
+TaelinArena.Game.die: TaelinArena.Game.Thing -> F64 -> TaelinArena.Game.Thing 
+  (self) (at_tik)
+  let curr_tik = TaelinArena.Game.get_thing_tik(self)
+  let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1))
+  should_die<() TaelinArena.Game.Thing>
+  | TaelinArena.Game.set_thing_die(self)(Bool.true);
+  | self;  
+  

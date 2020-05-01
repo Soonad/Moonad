@@ -1,0 +1,28 @@
+Core.Read.next: String -> String
+  (str)
+  String.drop_while(Core.Read.is_space)(str)<() String>
+  | String.nil;
+  | (str.head) (str.tail)
+    // Drops single-line comments
+    U16.eql('/')(str.head)<() String -> String>
+    | (str.tail)
+      Core.Read.next
+      | String.tail
+      | String.drop_until(U16.eql(Char.newline))
+      | str.tail;;;
+    ;
+    // Drops multi-line comments
+    | (str.tail)
+      U16.eql('#')(str.head)<() String -> String>
+      | (str.tail)
+        Core.Read.next
+        | String.tail
+        | String.drop_until(U16.eql('#'))
+        | str.tail;;;
+      ;
+      // Halts
+      | (str.tail) String.cons(str.head)(str.tail);
+      | str.tail;
+    ;
+    | str.tail;
+  ;

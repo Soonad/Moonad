@@ -1,0 +1,46 @@
+F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F64) 
+  (a) (d) (b)
+  a<() Maybe(F64)> | (a.pos) (a.rad)
+  b<() Maybe(F64)> | (b.pos) (b.rad)
+  let r = a.rad 
+  let c = F64.Circle.new(b.pos)(F64.add(a.rad)(b.rad))
+  let l = F64.Line.new(a.pos)(F64.V3.norm(d))
+  let p = F64.V3.circle_line_intersection(c)(l)
+  p<() Maybe(F64)>
+  | Maybe.none<F64>;
+  | (some_pair)
+    some_pair<() Maybe(F64)> | (fst) (snd)
+    let d0 = F64.V3.sqr_dist(a.pos)(fst)
+    let d1 = F64.V3.sqr_dist(a.pos)(snd)
+    let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd)
+    let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos))
+    let ds = F64.V3.sqr_dist(hp)(a.pos)
+    let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)) 
+    F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)
+    ;;;; 
+     
+  
+
+
+// circle_to_circle_hit_dist(a: Circle, d: V3, b: Circle)
+// : Maybe(Number)
+//   case a |circle
+//   case b |circle
+//   let r = a.rad
+//   let c = circle(b.pos, a.rad + b.rad)
+//   let l = line(a.pos, norm_v3(d))
+//   let p = circle_line_intersection(c, l)
+//   case p
+//   | none => none(_)
+//   | some =>
+//     case p.value as p |pair
+//     let d0 = sqrdist_v3(a.pos, p.fst)
+//     let d1 = sqrdist_v3(a.pos, p.snd)
+//     let hp = if d0 < d1 then p.fst else p.snd
+//     let dt = dot_v3(d, sub_v3(hp, a.pos))
+//     let ds = sqrdist_v3(hp, a.pos)
+//     if dt > 0 then
+//       some(_ ds ** 0.5)
+//     else
+//       none(_)
+

@@ -1,0 +1,9 @@
+// Return true if "a" is less than "b"
+F64.V3.ltn: F64.V3 -> F64.V3 -> Bool 
+  (a) (b)
+  let len_a = F64.V3.len(a)
+  let len_b = F64.V3.len(b)
+  Bool.if<Bool>(F64.ltn(len_a)(len_b)) // F64 -> F64 -> Bool
+  | Bool.true;
+  | Bool.false;
+  
