@@ -1,2 +1,2 @@
-Core.Read.trm: Core.Read(Core)
+Core.Read.trm: Core.Read(Core.Ctx -> Core)
   Core.Read.trm

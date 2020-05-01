@@ -1,7 +1,7 @@
 Core.Read.var: Core.Read(Core)
-  Core.Read.var
-  //Core.Read.seek<Text><Core>(Core.Read.wrd)         | (name)
-  //List.find(co
+  Core.Read.seek<Text><Core>(Core.Read.wrd) | (name)
+  Core.Read.done<Core>(Core.var(Nat.0)(""));
+  //List.find<String>(list)((x) (i) String.equal
 
 
 
