@@ -1,0 +1,13 @@
+Core.Read.var: Core.Read(Core)
+  Core.Read.var
+  //Core.Read.seek<Text><Core>(Core.Read.wrd)         | (name)
+  //List.find(co
+
+
+
+
+  //Core.Read.seek<Unit><Core>(Core.Read.txt("="))    | ()
+  //Core.Read.bind<Core><Core>(Core.Read.trm)         | (expr)
+  //Core.Read.seek<Bool><Core>(Core.Read.opt(";"))    | ()
+  //Core.Read.bind<Core><Core>(Core.Read.trm)         | (body)
+  //Core.Read.done<Core>(Core.let(name)(expr)((x) body));;;;;;

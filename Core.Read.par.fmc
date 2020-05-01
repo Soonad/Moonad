@@ -1,0 +1,5 @@
+Core.Read.par: Core.Read(Core)
+  Core.Read.seek<Unit><Core>(Core.Read.txt("(")) | (skip)
+  Core.Read.bind<Core><Core>(Core.Read.trm)      | (term)
+  Core.Read.seek<Unit><Core>(Core.Read.txt(")")) | (skip)
+  Core.Read.done<Core>(term);;;

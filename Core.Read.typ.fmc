@@ -1,0 +1,3 @@
+Core.Read.typ: Core.Read(Core)
+  Core.Read.seek<Unit><Core>(Core.Read.txt("Type")) | ()
+  Core.Read.done<Core>(Core.typ);
