@@ -1,0 +1,9 @@
+TaelinArena.Game.get_thing_by_pid.cond:
+  TaelinArena.Game.PlayerId ->
+  TaelinArena.Game.Thing ->
+  Bool
+
+  (pid) (thi)
+  let thi.pid = TaelinArena.Game.get_thing_pid(thi)
+  F64.eql(pid)(thi.pid)
+  
