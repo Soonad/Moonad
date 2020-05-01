@@ -1,0 +1,50 @@
+// Avoid problems with "ghost frame after blink"
+// - self: thing to be animated
+// - boost: speed multiplier (0 = no move, 1 = normal spd)
+// - model_atk: id of the main model of the animation
+// - model_idle: idle000 of the character
+// - count: total count of models on the animation
+// - from: frame to start animating
+// - til: last frame to animate
+
+TaelinArena.Game.animate_with_blink:
+  (self: TaelinArena.Game.Thing) -> 
+  (boost: F64) -> 
+  (model_atk: F64) -> 
+  (model_idle: F64) -> 
+  (count: F64) -> 
+  (from: F64) -> 
+  (til: F64) -> 
+  TaelinArena.Game.Thing
+  (self) (boost) (model_atk) (model_idle) (count) (from) (til)
+  let self = TaelinArena.Game.animate_between
+    | self;
+    | boost;
+    | model_atk;
+    | count;
+    | from;
+    | til;
+  let self = TaelinArena.Game.animate_between
+    | self;
+    | boost;
+    | model_idle;
+    | F64.1;
+    | til;
+    | F64.add(til)(F64.1);
+  let self = TaelinArena.Game.reset(self)(til)
+  self
+
+// animate_with_blink(
+//   self       : Thing,
+//   boost      : Number,
+//   model_atk  : Number,
+//   model_idle : Number,
+//   count      : Number,
+//   from       : Number,
+//   til        : Number
+//   ) : Thing
+//   case self | thing
+//     let self = animate_between(self, boost, model_atk, count, from, til)
+//     let self = animate_between(self, boost, model_idle, 1, til, til + 1)
+//     let self = reset(self, til)
+//     self
