@@ -1,8 +1,8 @@
-TaelinArena.Game.cast:
-  TaelinArena.Game.Thing     ->
-  F64                        ->
-  List(TaelinArena.Game.Hit) ->  
-  TaelinArena.Game.Thing
+TaelinArena.Game.cast
+  : TaelinArena.Game.Thing     ->
+    F64                        ->
+    List(TaelinArena.Game.Hit) ->  
+    TaelinArena.Game.Thing
 
   (self) (at_tik) (do_hit)
   let curr_tik = TaelinArena.Game.get_thing_tik(self)

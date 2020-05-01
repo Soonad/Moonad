@@ -1,13 +1,12 @@
 // Spawns another thing
 // - self: thing that will create another thing
 // - at_tik: number of the tik when thing will be created
-// - at_pos: position on which thing will be created
 // - thing: thing that will be created
-TaelinArena.Game.spawn:
-  TaelinArena.Game.Thing       ->
-  F64                          ->
-  List(TaelinArena.Game.Thing) ->
-  TaelinArena.Game.Thing
+TaelinArena.Game.spawn
+  : TaelinArena.Game.Thing       ->
+    F64                          ->
+    List(TaelinArena.Game.Thing) ->
+    TaelinArena.Game.Thing
 
   (self) (at_tik) (children)
   let curr_tik = TaelinArena.Game.get_thing_tik(self)
