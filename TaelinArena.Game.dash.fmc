@@ -1,0 +1,46 @@
+// Performs a dash between certain frames
+// - self: thing that will dash
+// - speed: dash speed in voxels/frame
+// - from_tik: number of the tik it will start the dash
+// - til_tik: number of the tik it will stop the dash
+//  dash(
+//   self     : Thing,
+//   speed    : Number,
+//   from_tik : Number,
+//   til_tik  : Number)
+//   case self |thing 
+//   let  rooted = is_rooted(self)
+//   case rooted 
+//   | true =>  self  
+//   | false => self <= thing(vel =
+//       if is_between(from_tik, til_tik, tik) then 
+//         scale_v3(speed, lookat_v3(pos, trg, dir))
+//       else
+//         v3(0,0,0))
+
+TaelinArena.Game.dash: 
+  (self: TaelinArena.Game.Thing) ->
+  (speed: F64) ->
+  (from_tik: F64) ->
+  (til_tik: F64) ->
+  TaelinArena.Game.Thing
+  (self) (speed) (from_tik) (til_tik)
+  let rooted = TaelinArena.Game.is_rooted(self)
+  let self.tik = TaelinArena.Game.get_thing_tik(self)
+  Bool.if<TaelinArena.Game.Thing>(rooted)
+  | self;
+  | let is_between_tik = 
+      F64.is_between
+      | from_tik;
+      | til_tik;
+      | self.tik;
+    let new_vel = 
+      Bool.if<F64.V3>(is_between_tik)
+      | let self.pos = TaelinArena.Game.get_thing_pos(self)
+        let self.trg = TaelinArena.Game.get_thing_trg(self)
+        let self.dir = TaelinArena.Game.get_thing_dir(self)
+        F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir));
+      | F64.V3.new(F64.0)(F64.0)(F64.0);
+    TaelinArena.Game.set_thing_vel(self)(new_vel);
+
+

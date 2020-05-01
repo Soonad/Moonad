@@ -1,0 +1,11 @@
+TaelinArena.Game.map_stage: 
+  (TaelinArena.Game.Thing -> TaelinArena.Game.Thing) ->
+  TaelinArena.Game.Game -> 
+  TaelinArena.Game.Game
+
+  (fn) (gm)
+  gm<() TaelinArena.Game.Game> | (gm.stage)
+  let new_stage = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>
+  |fn;
+  |gm.stage;
+  TaelinArena.Game.Game.new(new_stage);
