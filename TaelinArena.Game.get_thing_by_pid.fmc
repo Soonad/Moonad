@@ -5,6 +5,6 @@ TaelinArena.Game.get_thing_by_pid:
 
   (pid) (gm)
   gm<() Maybe(TaelinArena.Game.Thing)> | (gm.stage)
-  List.seek<TaelinArena.Game.Thing>
+  List.find<TaelinArena.Game.Thing>
   |TaelinArena.Game.get_thing_by_pid.cond(pid);
   |gm.stage;;
