@@ -1,5 +1,5 @@
 F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
-  (pos) (pnt) (dir)
+  (pos) (dir) (pnt)
   pnt<() F64.V3> | (pnt.x) (pnt.y) (pnt.z)
   dir<() F64.V3> | (dir.x) (dir.y) (dir.z)
   let a = F64.atan(dir.y)(dir.x)
