@@ -1,0 +1,12 @@
+TaelinArena.Game.with_thing.effect: 
+  TaelinArena.Game.PlayerId ->
+  (TaelinArena.Game.Thing -> TaelinArena.Game.Thing) ->
+  TaelinArena.Game.Thing    -> 
+  TaelinArena.Game.Thing
+  
+  (pid) (fn) (thi)
+  let thi.pid = TaelinArena.Game.get_thing_pid(thi)
+  F64.eql(pid)(thi.pid)<() TaelinArena.Game.Thing>
+  | fn(thi);
+  | thi;
+  
