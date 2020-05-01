@@ -7,7 +7,6 @@ TaelinArena.Game.spawn
     F64                          ->
     List(TaelinArena.Game.Thing) ->
     TaelinArena.Game.Thing
-
   (self) (at_tik) (children)
   let curr_tik = TaelinArena.Game.get_thing_tik(self)
   F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>

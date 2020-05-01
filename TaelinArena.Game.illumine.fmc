@@ -5,7 +5,6 @@ TaelinArena.Game.illumine
     F64                          ->
     List(TaelinArena.Game.Light) -> 
     TaelinArena.Game.Thing
-
   (self) (from_tik) (to_tik) (lights)
   let curr_tik = TaelinArena.Game.get_thing_tik(self)
   F64.is_between(from_tik)(to_tik)(curr_tik)<() TaelinArena.Game.Thing>
