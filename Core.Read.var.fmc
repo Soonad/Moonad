@@ -1,13 +1,12 @@
-Core.Read.var: Core.Read(Core)
-  Core.Read.seek<Text><Core>(Core.Read.wrd) | (name)
-  Core.Read.done<Core>(Core.var(Nat.0)(""));
-  //List.find<String>(list)((x) (i) String.equal
-
-
-
-
-  //Core.Read.seek<Unit><Core>(Core.Read.txt("="))    | ()
-  //Core.Read.bind<Core><Core>(Core.Read.trm)         | (expr)
-  //Core.Read.seek<Bool><Core>(Core.Read.opt(";"))    | ()
-  //Core.Read.bind<Core><Core>(Core.Read.trm)         | (body)
-  //Core.Read.done<Core>(Core.let(name)(expr)((x) body));;;;;;
+Core.Read.var: Core.Read(Core.Bind)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam) | (name)
+  Core.Read.done<Core.Bind>                      | (ctx)
+  let find_var
+    = ((var) var<() Bool>((var_name) () String.eql(name)(var_name)))
+    :: Pair(String)(Core) -> Bool
+  let found_var
+    = List.seek<Pair(String)(Core)>(find_var)(ctx)
+  found_var<() Core>
+  | Core.ref(name);
+  | (var) var<() Core>((name) (term) term);
+  ;;

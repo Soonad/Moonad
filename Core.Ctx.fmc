@@ -1,0 +1,2 @@
+Core.Ctx: Type
+  List(Pair(String)(Core))

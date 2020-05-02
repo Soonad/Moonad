@@ -1,5 +1,5 @@
 Core.Read.lam: Core.Read(Core.Bind)
-  Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<")) | (eras)
+  Core.Read.seek<Bool><Core.Bind>(Core.Read.one("(")("<")) | (eras)
   Core.Read.seek<Text><Core.Bind>(Core.Read.nam)           | (name)
   Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">")) | ()
   Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)      | (body)

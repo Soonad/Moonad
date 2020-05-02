@@ -1,0 +1,9 @@
+Core.Read.app: Core.Bind -> Core.Read(Core.Bind)
+  (func)
+  Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<")) | (eras)
+  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)      | (argm)
+  Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">")) | ()
+  Core.Read.done<Core.Bind>                                | (ctx)
+  Core.app(eras)(func(ctx))(argm(ctx))
+  ;;;;
+
