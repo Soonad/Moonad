@@ -1,0 +1,4 @@
+Core.parse
+  : (s : String) ->
+    Parser.type(Core)(Parser.run_default<Core>(Core.Parser.core)(s))
+  (s) Parser.parse<Core>(Core.Parser.core)(s)

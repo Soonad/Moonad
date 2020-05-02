@@ -1,0 +1,2 @@
+Core.Parser.test : Core
+  Core.parse("a")
