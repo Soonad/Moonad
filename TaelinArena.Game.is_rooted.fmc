@@ -24,7 +24,7 @@ TaelinArena.Game.is_rooted: (self: TaelinArena.Game.Thing) -> Bool
     | (buff.dur) Bool.true; // rooted
     | (buff.dur) Bool.true; // stuned
   ) :: TaelinArena.Game.Buff -> Bool
-  let found_buf = List.seek<TaelinArena.Game.Buff>
+  let found_buf = List.find<TaelinArena.Game.Buff>
     | is_rooted_buff;
     | self.buf;
   found_buf<() Bool>
