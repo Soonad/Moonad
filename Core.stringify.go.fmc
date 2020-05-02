@@ -3,11 +3,13 @@ Core.stringify.go: Core -> Stringifier
   (term)
   let lit = String.to_stringifier
   term<() Stringifier>
-  | (indx) (name) (x) lit(name)(x);
+  | (name) (indx) (flip) (x) lit(name)(x);
   | (name) (x) lit(name)(x);
   | (x) lit("Type")(x);
   | (eras) (self) (name) (bind) (body) (x)
-    let body = body(Core.var(Nat.zero)(self))(Core.var(Nat.zero)(name));
+    let svar = Core.var(self)(Nat.zero)(Bool.false)
+    let nvar = Core.var(name)(Nat.zero)(Bool.false)
+    let body = body(svar)(nvar);
     let self = lit(self)
     let lpar = lit("(")
     let name = lit(name)
@@ -17,7 +19,8 @@ Core.stringify.go: Core -> Stringifier
     let body = Core.stringify.go(body)
     self(lpar(name(colo(bind(rpar(body(x)))))));
   | (eras) (name) (body) (x)
-    let body = body(Core.var(Nat.zero)(name))
+    let nvar = Core.var(name)(Nat.zero)(Bool.false)
+    let body = body(nvar)
     let lpar = lit("(")
     let name = lit(name)
     let rpar = lit(")")
@@ -34,7 +37,8 @@ Core.stringify.go: Core -> Stringifier
     let rpar = lit(")")
     inif(func(endf(lpar(argm(rpar(x))))));
   | (name) (expr) (body) (x)
-    let body = body(Core.var(Nat.zero)(name))
+    let nvar = Core.var(name)(Nat.zero)(Bool.false)
+    let body = body(nvar)
     let lets = lit("let ")
     let name = lit(name)
     let eqls = lit(" = ")
