@@ -1,0 +1,4 @@
+// Finds the first element that satisfies a condition and its index.
+List.ifind: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond)
+  List.ifind.aux<A>(list)(cond)(Nat.zero)

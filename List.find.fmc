@@ -1,4 +1,10 @@
-// Finds the first element that satisfies a condition and its index.
-List.find: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond)
-  List.find.aux<A>(list)(cond)(Nat.zero)
+//Finds the first occurrence that satisfies a condition
+List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
+  <A> (cond) (xs)
+  xs<() Maybe(A)>
+  | Maybe.none<A>;
+  | (head) (tail)
+    cond(head)<() Maybe(A)>
+    | Maybe.some<A>(head);
+    | List.find<A>(cond)(tail);;
+

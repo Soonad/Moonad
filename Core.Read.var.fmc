@@ -5,7 +5,7 @@ Core.Read.var: Core.Read(Core.Bind)
     = ((var) var<() Bool>((var_name) () String.eql(name)(var_name)))
     :: Pair(String)(Core) -> Bool
   let found_var
-    = List.seek<Pair(String)(Core)>(find_var)(ctx)
+    = List.find<Pair(String)(Core)>(find_var)(ctx)
   found_var<() Core>
   | Core.ref(name);
   | (var) var<() Core>((name) (term) term);
