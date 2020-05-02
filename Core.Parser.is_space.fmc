@@ -1,0 +1,6 @@
+Core.Parser.is_space: Char -> Bool
+  (c)
+  let spc = U16.eql(c)(Char.parse(" "))
+  let lin = U16.eql(c)(Char.newline)
+  let tab = U16.eql(c)(Char.tab)
+  Bool.or(spc)(Bool.or(lin)(tab))

@@ -1,0 +1,5 @@
+Core.Parser.block_comment: Parser(Unit)
+  Parser.then<String><Unit>(Parser.tokens("#")) |
+  Parser.then<List(Char)><Unit>
+  | Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#"));
+  | Parser.pure<Unit>(Unit.new);;
