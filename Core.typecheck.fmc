@@ -1,0 +1,2 @@
+Core.typecheck: Core -> Core -> Core.Defs -> Nat -> Either(String)(Core)
+  Core.typecheck
