@@ -1,0 +1,31 @@
+// Blinks (teleports) to another position
+// - self: thing that will blink
+// - at_tik: number of the tik on which the blink happens
+// - to_pos: position where the thing will blink to
+
+TaelinArena.Game.blink:
+  (self: TaelinArena.Game.Thing) ->
+  (at_tik: F64) ->
+  (to_pos: F64.V3) ->
+  TaelinArena.Game.Thing
+  (self) (at_tik) (to_pos)
+  let rooted = TaelinArena.Game.is_rooted(self)
+  let self.tik = TaelinArena.Game.get_thing_tik(self)
+  let self.pos = TaelinArena.Game.get_thing_pos(self)
+  rooted<() TaelinArena.Game.Thing>
+  | self;
+  | let new_pos = Bool.if<F64.V3>(F64.eql(self.tik)(at_tik))
+    | to_pos;
+    | self.pos;
+    TaelinArena.Game.set_thing_pos(self)(new_pos); 
+
+// blink(
+//   self   : Thing,
+//   at_tik : Number,
+//   to_pos : V3)
+//   case self |thing 
+//   let rooted = is_rooted(self)
+//   case rooted 
+//   | true => self 
+//   | false => self <= thing(
+//     pos = if tik === at_tik then to_pos else pos)

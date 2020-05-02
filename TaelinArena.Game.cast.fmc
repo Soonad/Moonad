@@ -1,0 +1,20 @@
+TaelinArena.Game.cast
+  : TaelinArena.Game.Thing     ->
+    F64                        ->
+    List(TaelinArena.Game.Hit) ->  
+    TaelinArena.Game.Thing
+  (self) (at_tik) (do_hit)
+  let curr_tik = TaelinArena.Game.get_thing_tik(self)
+  F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>
+  | TaelinArena.Game.set_thing_hit(self)(do_hit);
+  | self;
+  
+// cast(
+//   self   : Thing,
+//   at_tik : Number,
+//   do_hit : List(Hit))
+//   case self |thing
+//   if self.tik === at_tik then
+//     self <= thing(hit = do_hit)
+//   else
+//     self

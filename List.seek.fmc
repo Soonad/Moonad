@@ -1,0 +1,10 @@
+//Seeks the first occurrence that satisfies a condition
+List.seek: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
+  <A> (cond) (xs)
+  xs<() Maybe(A)>
+  | Maybe.none<A>;
+  | (head) (tail)
+    cond(head)<() Maybe(A)>
+    | Maybe.some<A>(head);
+    | List.seek<A>(cond)(tail);;
+
