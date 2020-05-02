@@ -1,0 +1,15 @@
+// We can observe an error so that we can try to handle it
+Parsec.observing:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parsec(S)(E)(A) ->
+  Parsec(S)(E)(Either(Parsec.Error(E))(A))
+
+  <S> <E> <A> (p)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  p<X>(s1)
+  | (s2) (x) empty_value(s2)(Either.right<Parsec.Error(E)><A>(x));
+  | (s2) (e) empty_value(s2)(Either.left<Parsec.Error(E)><A>(e));
+  | (s2) (x) eaten_value(s2)(Either.right<Parsec.Error(E)><A>(x));
+  | (s2) (e) eaten_value(s2)(Either.left<Parsec.Error(E)><A>(e));

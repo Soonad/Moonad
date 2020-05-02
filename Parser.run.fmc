@@ -1,20 +1,3 @@
-// Running a parser is applying it to a Parser.State and
-// the four possible Parser.Reply constructors
-// This sets `B` from the `Parser` definition as Parser.Reply
-// which terminates the chain of continuations
-
-Parser.run :
-  <S : Type> ->
-  <E : Type> ->
-  <A: Type> ->
-  Parser(S)(E)(A) ->
-  Parser.State(S)(E) ->
-  Parser.Reply(S)(E)(A)
-
-  <S> <E> <A> (p) (s)
-  p<Parser.Reply(S)(E)(A)>(s)
-  | Parser.Reply.empty_value<S><E><A>;
-  | Parser.Reply.empty_error<S><E><A>;
-  | Parser.Reply.eaten_value<S><E><A>;
-  | Parser.Reply.eaten_error<S><E><A>;
-
+Parser.run: <A: Type> -> Parser(A) -> Parser.State -> Parser.Reply(A)
+  <A> (p) (s)
+  Parsec.run<Unit><Unit><A>(p)(s)

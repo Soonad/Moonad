@@ -1,0 +1,7 @@
+Nat.show: Nat -> Nat -> String
+  (n) (base) Nat.show.aux(n)(base)("")
+
+Nat.show.test : Debug
+  let a = Nat.parse_decimal("16")
+  let b = Nat.parse_decimal("16")
+  Debug.display(Nat.show(a)(b))

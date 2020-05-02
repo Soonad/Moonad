@@ -1,14 +1,2 @@
-// parse the end of the input
-Parser.eof : <S: Type> -> <E: Type> -> Parser(S)(E)(Unit)
-  <S> <E>
-
-  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-  s1<() X> | (input) (index) (error) (state)
-  input<() X>
-  | empty_value(s1)(Unit.new);
-  | (head) ()
-    empty_error(s1) | Parser.Error.make_trivial<E>
-    | index;
-    | Maybe.some<Parser.Error.Item>
-      | Parser.Error.Item.tokens(NonEmpty.end<Char>(head));;
-    | List.single<Parser.Error.Item>(Parser.Error.Item.end_of_input);;;;
+Parser.eof : Parser(Unit)
+  Parsec.eof<Unit><Unit>

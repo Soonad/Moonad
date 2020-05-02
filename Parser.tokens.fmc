@@ -1,27 +1,3 @@
-// match a literal string
-Parser.tokens:
-  <S: Type> ->
-  <E: Type> ->
-  String    ->
-  Parser(S)(E)(String)
-
-  <S> <E> (str)
-  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-  s1<() X> | (input) (index) (error) (state)
-  let len = String.length(str)
-  String.take_n(len)(input)<() X>
-  | let unex = Maybe.some<Parser.Error.Item>(Parser.Error.Item.end_of_input)
-    let expe = List.single<Parser.Error.Item>(Parser.Error.Item.label(str))
-    empty_error(s1)(Parser.Error.make_trivial<E>(Nat.zero)(unex)(expe));
-  | (p) p<() X> | (took) (rest)
-    let s2 = Parser.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state)
-    String.eql(str)(took)<() X>
-    | str<() X>
-      | empty_value(s2)(str);
-      | () () eaten_value(s2)(str);;
-    | let unex_label = Parser.Error.Item.label(took)
-      let expe_label = Parser.Error.Item.label(str)
-      let unex = Maybe.some<Parser.Error.Item>(unex_label)
-      let expe = List.single<Parser.Error.Item>(expe_label)
-      empty_error(s1)(Parser.Error.make_trivial<E>(index)(unex)(expe));;;;
+Parser.tokens: String -> Parser(String)
+  (str) Parsec.tokens<Unit><Unit>(str)
 

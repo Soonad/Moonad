@@ -1,16 +1,3 @@
-// an empty parser that always fails consuming no input and showing no error
-Parser.zero:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parser(S)(E)(A)
-
-  <S> <E> <A>
-  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-  s1<() X> | () (index) () ()
-  let e = Parser.Error.make_trivial<E>
-          | index;
-          | Maybe.none<Parser.Error.Item>;
-          | List.nil<Parser.Error.Item>;
-  empty_error(s1)(e);
+Parser.zero: <A: Type> -> Parser(A)
+  <A> Parsec.zero<Unit><Unit><A>
 

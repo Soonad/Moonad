@@ -1,0 +1,9 @@
+Parsec.Error.make_trivial:
+  <E: Type> ->
+  Nat ->
+  Maybe(Parsec.Error.Item) ->
+  List(Parsec.Error.Item) ->
+  Parsec.Error(E)
+
+  <E> (position) (unexpect) (expected)
+  <P> (trivial) () trivial(position)(unexpect)(expected)

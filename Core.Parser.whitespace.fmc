@@ -1,0 +1,5 @@
+Core.Parser.whitespace: Parser(Unit)
+  Parser.then<String><Unit>
+  | Parser.take_while1("whitespace")(Core.Parser.is_space);
+  | Parser.pure<Unit>(Unit.new);
+

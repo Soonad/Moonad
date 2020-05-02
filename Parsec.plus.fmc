@@ -1,0 +1,29 @@
+// We can combine two parsers by trying to apply the first one and,
+// if it fails consuming no input, we apply the second one.
+// If the second one fails, we merge the states and errors
+// (merging always favors the state and error farthest along the input).
+Parsec.plus:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  Parsec(S)(E)(A) ->
+  Parsec(S)(E)(A) ->
+  Parsec(S)(E)(A)
+
+  <S> <E> <A> (p) (q)
+
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  p<X>(s1)
+  | empty_value;
+  | (s2) (p.err) q<X>(s1)
+    | empty_value;
+    | (s3) (q.err) empty_error
+      | Parsec.State.longest_match<S><E>(s2)(s3);
+      | Parsec.Error.merge<E>(p.err)(q.err);;
+    | eaten_value;
+    | (s3) (q.err) empty_error
+      | Parsec.State.longest_match<S><E>(s2)(s3);
+      | Parsec.Error.merge<E>(p.err)(q.err);;;
+  | eaten_value;
+  | eaten_error;
+
