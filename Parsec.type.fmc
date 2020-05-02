@@ -11,6 +11,6 @@ Parsec.type :
   (S) (E) (A) (E.show) (reply) 
   reply<() Type>
   | () () A;
-  | () (e) The(String)(Parsec.Error.show<E>(E.show)(e));
+  | () (e) The(Debug)(Debug.display(Parsec.Error.show<E>(E.show)(e)));
   | () () A;
-  | () (e) The(String)(Parsec.Error.show<E>(E.show)(e));
+  | () (e) The(Debug)(Debug.display(Parsec.Error.show<E>(E.show)(e)));
