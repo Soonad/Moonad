@@ -1,0 +1,7 @@
+Core.Read.wrd: Core.Read(String)
+  Core.Read.bind<String><String>(Core.Read.nam)
+  | (nam) (code) String.is_empty(nam)<() Core.Read.Reply(String)>
+    | Core.Read.fail<String>;
+    | Core.Read.done<String>(nam)(code);
+  ;
+

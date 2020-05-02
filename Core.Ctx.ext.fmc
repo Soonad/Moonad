@@ -1,3 +1,2 @@
-Core.Ctx.ext : String -> Core -> Core.Ctx -> Core.Ctx
-  (n) (t) (cs) List.cons<Pair(String)(Core)>(Pair.new<String><Core>(n)(t))(cs)
-
+Core.Ctx.ext: String -> Core -> Core.Ctx -> Core.Ctx
+  (str) (trm) List.cons<Pair(String)(Core)>(Pair.new<String><Core>(str)(trm))

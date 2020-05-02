@@ -1,0 +1,9 @@
+Core.Read.pip: Core.Bind -> Core.Read(Core.Bind)
+  (func)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("|")) | (eras)
+  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm) | (argm)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(";")) | ()
+  Core.Read.done<Core.Bind>                           | (ctx)
+  Core.app(Bool.false)(func(ctx))(argm(ctx))
+  ;;;;
+

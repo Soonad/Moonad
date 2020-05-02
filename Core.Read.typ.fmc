@@ -1,0 +1,5 @@
+Core.Read.typ: Core.Read(Core.Bind)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("Type")) | ()
+  Core.Read.done<Core.Bind>                              | (ctx)
+  Core.typ
+  ;;
