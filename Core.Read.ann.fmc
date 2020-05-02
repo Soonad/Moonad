@@ -1,0 +1,7 @@
+Core.Read.ann: Core.Bind -> Core.Read(Core.Bind)
+  (expr)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("::")) | ()
+  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)  | (type)
+  Core.Read.done<Core.Bind>                            | (ctx)
+  Core.ann(Bool.false)(expr(ctx))(type(ctx))
+  ;;;

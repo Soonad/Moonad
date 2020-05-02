@@ -1,0 +1,2 @@
+Debug.test : Debug
+  Debug.display("foobar")

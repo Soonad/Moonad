@@ -1,9 +1,10 @@
 Core: Type
   core<P: Core -> Type> ->
   (var:
+    (name: String) -> 
     (indx: Nat) ->
-    (name: String) ->
-    P(Core.var(indx)(name))) ->
+    (flip: Bool) ->
+    P(Core.var(name)(indx)(flip))) ->
   (ref:
     (name: String) ->
     P(Core.ref(name))) ->

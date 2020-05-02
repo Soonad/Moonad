@@ -1,0 +1,14 @@
+Core.Read.nam: Core.Read(String)
+  (code)
+  code<() Core.Read.Reply(String)>
+  | Core.Read.done<String>(String.nil)(String.nil);
+  | (code.head) (code.tail)
+    Core.Read.is_name(code.head)<() Core.Read.Reply(String)>
+    | Core.Read.nam(code.tail)<() Core.Read.Reply(String)>
+      | Core.Read.fail<String>;
+      | (got) got<() Core.Read.Reply(String)>
+        | (str) Core.Read.done<String>(String.cons(code.head)(str));
+      ;
+    ;
+    | Core.Read.done<String>(String.nil)(code);
+  ;

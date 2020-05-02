@@ -1,0 +1,5 @@
+Core.parse: String -> Core
+  (code)
+  Core.Read.trm(code)<() Core>
+  | Core.ref("<error>");
+  | (got) got<() Core>((term) () term(Core.Ctx.nil));

@@ -1,0 +1,17 @@
+// A parser state contains 5 things
+// - the remaining string input to parse
+// - the index that the remaining input began at when we started parsing
+// - a list of errors we've accumulated at our current index
+// - a custom state value that the user can embed into the parser if they like
+
+Parsec.State: Type -> Type -> Type
+  (S) (E)
+  parser_state<P: Parsec.State(S)(E) -> Type> ->
+  (make: (input: String) ->
+         (index: Nat)    ->
+         (error: List(Parsec.Error(E))) ->
+         (state: S)      ->
+         P(Parsec.State.make<S><E>(input)(index)(error)(state))
+  ) ->
+  P(parser_state)
+

@@ -1,0 +1,7 @@
+Core.Read.opt: String -> Core.Read(Bool)
+  (str) (code)
+  Core.Read.txt(str)(code)<() Core.Read.Reply(Bool)>
+  | Core.Read.done<Bool>(Bool.false)(code);
+  | (got) got<() Core.Read.Reply(Bool)>
+    | () (code) Core.Read.done<Bool>(Bool.true)(code);
+  ;

@@ -1,0 +1,8 @@
+List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx)
+  list<() Maybe(Pair(A)(Nat))>
+  | Maybe.none<Pair(A)(Nat)>;
+  | (head) (tail)
+    cond(head)(indx)<() Maybe(Pair(A)(Nat))>
+    | Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx));
+    | List.ifind.aux<A>(tail)(cond)(Nat.succ(indx));;

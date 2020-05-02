@@ -1,0 +1,12 @@
+Core.Parser.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  (bind)
+  Parser.then<Unit  ><C>(Core.Parser.space)        |
+  Parser.then<String><C>(Core.Parser.symbol("->")) |
+  Parser.bind<C     ><C>(Core.Parser.trm)          | (body)
+  Parser.pure<C>
+  | (ctx)
+    let tbind = bind(ctx)
+    let tbody = ((s) (x) body(Core.Ctx.ext("")(x)(Core.Ctx.ext("")(s)(ctx))))
+              :: Core -> Core -> Core
+    Core.all(Bool.false)("")("")(tbind)(tbody);;;;

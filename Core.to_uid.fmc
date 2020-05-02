@@ -1,0 +1,2 @@
+Core.to_uid: Core -> Bits
+  (term) Core.to_bits.go(term)(Nat.0)(Bool.true)(Bits.nil)

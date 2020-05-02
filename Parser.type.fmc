@@ -1,15 +1,3 @@
-// A dependent type of parser reply for use by Parser.parse
+Parser.type: (A: Type) -> Parser.Reply(A) -> Type
+  (A) (reply) Parsec.type(Unit)(Unit)(A)(Unit.show)(reply)
 
-Parser.type :
-  (S: Type) ->
-  (E: Type) ->
-  (A: Type) ->
-  Parser.Reply(S)(E)(A) ->
-  Type
-
-  (S) (E) (A) (reply) 
-  reply<() Type>
-  | () () A;
-  | () (e) Show(Parser.Error.show<E>(e));
-  | () () A;
-  | () (e) Show(Parser.Error.show<E>(e));

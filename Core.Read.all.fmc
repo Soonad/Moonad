@@ -1,0 +1,14 @@
+Core.Read.all: Core.Read(Core.Bind)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam)           | (self)
+  Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<")) | (eras)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam)           | (name)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(":"))      | ()
+  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)      | (bind)
+  Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">")) | ()
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))     | ()
+  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)      | (body)
+  Core.Read.done<Core.Bind>                                | (ctx)
+  Core.all(eras)(self)(name)
+  | bind(ctx);
+  | (s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx)));
+  ;;;;;;;;;

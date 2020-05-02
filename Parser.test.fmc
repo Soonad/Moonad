@@ -1,0 +1,7 @@
+Parser.test : String
+  Parser.parse<String>
+  | Parser.tokens("a");
+  | "a";
+
+
+
