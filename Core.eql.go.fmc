@@ -1,0 +1,91 @@
+Core.eql.go: Core -> Core -> Core.Defs -> Set -> Nat -> Bool
+  (a) (b) (defs) (eql) (dep)
+  let a = Core.reduce(a)(defs)
+  let b = Core.reduce(b)(defs) 
+  let x = Core.to_uid(a)
+  let y = Core.to_uid(b)
+  let h = Bits.concat(x)(y)
+  Bool.or(Bits.eql(x)(y))(Set.get(h)(eql))<() Bool>
+  | Bool.true;
+  | let eql = Set.set(h)(eql)
+    a<() Bool>
+    |#var# () () () Bool.false;
+    |#ref# (a.name) Bool.false;
+    |#typ# Bool.false;
+    |#all# (a.eras) (a.self) (a.name) (a.bind) (a.body)
+      b<() Bool>
+      |#var# () () () Bool.false;
+      |#ref# () Bool.false;
+      |#typ# Bool.false;
+      |#all# (b.eras) (b.self) (b.name) (b.bind) (b.body)
+        let s_vari = Core.var("")(dep)(Bool.false)
+        let n_vari = Core.var("")(Nat.succ(dep))(Bool.false)
+        let a_body = a.body(s_vari)(n_vari)
+        let b_body = b.body(s_vari)(n_vari)
+        let e_eras = Bool.eql(a.eras)(b.eras)
+        let e_self = String.eql(a.self)(b.self)
+        let e_bind = Core.eql.go(a.bind)(b.bind)(defs)(eql)(dep)
+        let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep)
+        Bool.and(e_eras)(Bool.and(e_self)(Bool.and(e_bind)(e_body)));
+      |#lam# () () () Bool.false;
+      |#app# () () () Bool.false;
+      |#let# () () () Bool.false;
+      |#ann# () () () Bool.false;;
+    |#lam# (a.eras) (a.name) (a.body)
+      b<() Bool>
+      |#var# () () () Bool.false;
+      |#ref# () Bool.false;
+      |#typ# Bool.false;
+      |#all# () () () () () Bool.false;
+      |#lam# (b.eras) (b.name) (b.body)
+        let n_vari = Core.var("")(dep)(Bool.false)
+        let a_body = a.body(n_vari)
+        let b_body = b.body(n_vari)
+        let e_eras = Bool.eql(a.eras)(b.eras)
+        let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep)
+        Bool.and(e_eras)(e_body);
+      |#app# () () () Bool.false;
+      |#let# () () () Bool.false;
+      |#ann# () () () Bool.false;;
+    |#app# (a.eras) (a.func) (a.argm)
+      b<() Bool>
+      |#var# () () () Bool.false;
+      |#ref# () Bool.false;
+      |#typ# Bool.false;
+      |#all# () () () () () Bool.false;
+      |#lam# () () () Bool.false;
+      |#app# (b.eras) (b.func) (b.argm)
+        let e_eras = Bool.eql(a.eras)(b.eras)
+        let e_func = Core.eql.go(a.func)(b.func)(defs)(eql)(dep)
+        let e_argm = Core.eql.go(a.argm)(b.argm)(defs)(eql)(dep)
+        Bool.and(e_eras)(Bool.and(e_func)(e_argm));
+      |#let# () () () Bool.false;
+      |#ann# () () () Bool.false;;
+    |#let# (a.name) (a.expr) (a.body)
+      b<() Bool>
+      |#var# () () () Bool.false;
+      |#ref# () Bool.false;
+      |#typ# Bool.false;
+      |#all# () () () () () Bool.false;
+      |#lam# () () () Bool.false;
+      |#app# () () () Bool.false;
+      |#let# (b.name) (b.expr) (b.body)
+        let n_vari = Core.var("")(dep)(Bool.false)
+        let a_body = a.body(n_vari)
+        let b_body = b.body(n_vari)
+        let e_expr = Core.eql.go(a.expr)(b.expr)(defs)(eql)(dep)
+        let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep)
+        Bool.eql(e_expr)(e_body);
+      |#ann# () () () Bool.false;;
+    |#ann# (a.done) (a.expr) (a.type)
+      b<() Bool>
+      |#var# () () () Bool.false;
+      |#ref# () Bool.false;
+      |#typ# Bool.false;
+      |#all# () () () () () Bool.false;
+      |#lam# () () () Bool.false;
+      |#app# () () () Bool.false;
+      |#let# () () () Bool.false;
+      |#ann# (b.done) (b.expr) (b.type)
+        let e_expr = Core.eql.go(a.expr)(b.expr)(defs)(eql)(dep)
+        e_expr;;;

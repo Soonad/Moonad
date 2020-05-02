@@ -1,0 +1,2 @@
+Core.Def : Type
+  Pair(Core)(Core)

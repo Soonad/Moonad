@@ -4,7 +4,7 @@ UFind.union: UFind -> Bits -> Bits -> UFind
     (uf) (root_path1) (rank1)
     UFind.find<UFind>(uf)(path2)(
       (uf) (root_path2) (rank2)
-      Bits.equal(root_path1)(root_path2)<() UFind>
+      Bits.eql(root_path1)(root_path2)<() UFind>
       | uf;
       | Nat.cmp(rank1)(rank2)<() UFind>
         | let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)

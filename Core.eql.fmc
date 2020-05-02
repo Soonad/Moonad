@@ -1,0 +1,3 @@
+Core.eql: Core -> Core -> Core.Defs -> Bool
+  (a) (b) (defs)
+  Core.eql.go(a)(b)(defs)(Set.new)(Nat.zero)
