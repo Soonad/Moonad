@@ -1,0 +1,8 @@
+Core.Parser.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  (func)
+  Parser.bind<Pair(Bool)(C)><C>
+  | Core.Parser.enclose<C>(Core.Parser.trm);
+  | (x) x<() Parser(C)> | (eras) (argm)
+  Parser.pure<C>
+  | (ctx) Core.app(eras)(func(ctx))(argm(ctx));;;

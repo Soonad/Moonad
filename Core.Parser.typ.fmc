@@ -1,0 +1,3 @@
+Core.Parser.typ: Parser(Core.Ctx -> Core)
+  Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type")) |
+  Parser.pure<Core.Ctx -> Core>((ctx) Core.typ);

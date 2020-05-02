@@ -1,0 +1,13 @@
+Research.core_in_core: String
+  let defs = Core.parse_defs("
+    succ: Any
+      (n) (s) (z) s(n(s)(z))
+    zero: Any
+      (s) (z) z
+    exp: Any
+      (n) (m) m(n)
+    main: Type
+      exp(succ(succ(zero)))(succ(succ(zero)))
+  ")
+  let main = Core.Defs.term(defs)("main")
+  Core.stringify(Core.normalize(main)(defs))

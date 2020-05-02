@@ -1,0 +1,18 @@
+Bits.eql: Bits -> Bits -> Bool
+  (bs1)
+  bs1<() Bits -> Bool>
+  | (bs2) bs2<() Bool>
+    | Bool.true;
+    | () Bool.false;
+    | () Bool.false;
+  ;
+  | (bs1.pred) (bs2) bs2<() Bool>
+    | Bool.false;
+    | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
+    | () Bool.false;
+  ;
+  | (bs1.pred) (bs2) bs2<() Bool>
+    | Bool.false;
+    | () Bool.false;
+    | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
+  ;

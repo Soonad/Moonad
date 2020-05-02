@@ -1,0 +1,7 @@
+Core.Parser.par: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  Parser.then<String><C>(Core.Parser.symbol("(")) |
+  Parser.bind<C     ><C>(Core.Parser.trm)         |  (term)
+  Parser.then<Unit  ><C>(Core.Parser.space)       |
+  Parser.then<String><C>(Parser.tokens(")"))      |
+  Parser.pure<C>(term);;;;

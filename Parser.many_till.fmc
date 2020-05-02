@@ -1,15 +1,8 @@
-Parser.many_till:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  <B: Type> ->
-  Parser(S)(E)(A) ->
-  Parser(S)(E)(B) ->
-  Parser(S)(E)(List(A))
-  <S> <E> <A> <B> (p) (q)
-  Parser.plus<S><E><List(A)>
-  | Parser.then<S><E><B><List(A)>(q)(Parser.pure<S><E><List(A)>(List.nil<A>));
-  | Parser.bind<S><E><A><List(A)>(p) | (x)
-    Parser.bind<S><E><List(A)><List(A)>(Parser.many_till<S><E><A><B>(p)(q))
-    | (xs) Parser.pure<S><E><List(A)>(List.cons<A>(x)(xs));;;
+Parser.many_till: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(List(A))
+  <A> <B> (p) (q)
+  Parser.plus<List(A)>
+  | Parser.then<B><List(A)>(q)(Parser.pure<List(A)>(List.nil<A>));
+  | Parser.bind<A><List(A)>(p) | (x)
+    Parser.bind<List(A)><List(A)>(Parser.many_till<A><B>(p)(q)) | (xs)
+    Parser.pure<List(A)>(List.cons<A>(x)(xs));;;
 

@@ -1,0 +1,30 @@
+// take at least one character while a condition is true
+
+Parsec.take_while1:
+  <S: Type> ->
+  <E: Type> ->
+  String    ->
+  (Char -> Bool) ->
+  Parsec(S)(E)(String)
+
+  <S> <E> (err) (f)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) ()
+  s1<() X> | (input) (index) (error) (state)
+  String.take_while(f)(input)<() X> | (took) (rest)
+  let len = String.length(took)
+  let s2  = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state)
+  took<() X>
+  | input<() X>
+    | empty_error(s2) | Parsec.Error.make_trivial<E>
+      | index;
+      | Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input);
+      | List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err));;;
+    | (head) ()
+      empty_error(s2) | Parsec.Error.make_trivial<E>
+      | index;
+      | Maybe.some<Parsec.Error.Item>
+        | Parsec.Error.Item.tokens(NonEmpty.end<Char>(head));;
+      | List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err));;;;
+  | () () eaten_value(s2)(took);;;
+
+

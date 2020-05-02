@@ -1,0 +1,23 @@
+// A parser is a continuation that says
+// For custom State type S, custom Error type E, and return type A,
+// For all possible continuation types B (i.e. all possible parser compositions)
+// We take a Parsec.State with custom state and errors 
+// and run one of four possible continuation functions on it
+// - empty_value (EOK) processes a state and a  value when no input was consumed
+// - empty_error (EER) processes a state and an error when no input was consumed
+// - eaten_value (COK) processes a state and a  value when input was consumed
+// - eaten_error (CER) processes a state and an error when input was consumed
+
+Parsec : (S : Type) -> (E : Type) -> (A: Type) -> Type
+  (S) (E) (A)
+    <B : Type> ->
+    Parsec.State(S)(E) ->
+    (Parsec.State(S)(E) -> A -> B) ->
+    (Parsec.State(S)(E) -> Parsec.Error(E) -> B) ->
+    (Parsec.State(S)(E) -> A -> B) ->
+    (Parsec.State(S)(E) -> Parsec.Error(E) -> B) ->
+    B
+
+
+
+

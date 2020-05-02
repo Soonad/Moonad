@@ -1,0 +1,6 @@
+Core.Parser.nam: Bool -> Parser(String)
+  (allow_empty)
+  allow_empty<() Parser(String)>
+  | Parser.take_while(Core.Parser.is_name);
+  | Parser.take_while1("name")(Core.Parser.is_name);
+

@@ -1,0 +1,11 @@
+Core.Parser.var: Parser(Core.Ctx -> Core)
+  Parser.bind<String><Core.Ctx -> Core>(Core.Parser.nam(Bool.false)) | (name)
+  Parser.pure<Core.Ctx -> Core>
+  | (ctx)
+    let got =
+      List.ifind<Pair(String)(Core)>
+      | ctx;
+      | (x) (i) String.eql(Pair.fst<String><Core>(x))(name);
+    got<() Core>
+    | Core.ref(name);
+    | (x) x<() Core> | (val) () Pair.snd<String><Core>(val);;;;

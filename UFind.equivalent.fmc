@@ -4,4 +4,4 @@ UFind.equivalent: UFind -> Bits -> Bits -> Bool
     (uf) (root1) (rank1)
     UFind.find<Bool>(uf)(path2)(
       (uf) (root2) (rank2)
-      Bits.equal(root1)(root2)))
+      Bits.eql(root1)(root2)))

@@ -1,7 +1,7 @@
 Core.is_lam: Core -> Bool
   (term)
   term<() Bool>
-  | (name) (indx) Bool.false;
+  | (name) (indx) (flip) Bool.false;
   | (name) Bool.false;
   | Bool.false;
   | (eras) (self) (name) (bind) (body) Bool.false;

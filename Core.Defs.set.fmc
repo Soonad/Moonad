@@ -1,0 +1,4 @@
+Core.Defs.set: String -> Core.Def -> Core.Defs -> Core.Defs
+  (name) (val) (defs)
+  let key = String.to_bits(name)
+  Map.set<Core.Def>(key)(val)(defs)

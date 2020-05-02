@@ -1,0 +1,26 @@
+// parse a single character with a validator function 
+// and a list of expected tokens
+
+Parsec.token:
+  <S: Type> ->
+  <E: Type> ->
+  <A: Type> ->
+  (Char -> Maybe(A)) ->
+  List(Parsec.Error.Item) ->
+  Parsec(S)(E)(A)
+
+  <S> <E> <A> (f) (es)
+  <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
+  s1<() X> | (input) (index) (error) (state)
+  input<() X>
+  | let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input)
+    empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es));
+  | (c) (cs)
+    f(c)<() X>
+    | let item = Parsec.Error.Item.tokens(NonEmpty.end<Char>(c))
+      let unex = Maybe.some<Parsec.Error.Item>(item)
+      empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es));
+    | (x)
+      let s2 = Parsec.State.make<S><E>(cs)(Nat.succ(index))(error)(state)
+      eaten_value(s2)(x);;;
+

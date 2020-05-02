@@ -1,0 +1,12 @@
+Core.Read.var: Core.Read(Core.Bind)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam) | (name)
+  Core.Read.done<Core.Bind>                      | (ctx)
+  let find_var
+    = ((var) var<() Bool>((var_name) () String.eql(name)(var_name)))
+    :: Pair(String)(Core) -> Bool
+  let found_var
+    = List.find<Pair(String)(Core)>(find_var)(ctx)
+  found_var<() Core>
+  | Core.ref(name);
+  | (var) var<() Core>((name) (term) term);
+  ;;

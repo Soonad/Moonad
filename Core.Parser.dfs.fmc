@@ -1,0 +1,8 @@
+//Parse.dfs: Defs -> Parse(Defs)
+//  (file)
+//  let vars = List.nil<String>
+//  let next =
+//  next<() Parse(Defs)>
+//  | Parse.some<Defs>(file);
+//  | (p) p<() Parse(Defs)> |  (file)
+//  Parse.dfs(file);;

@@ -1,0 +1,12 @@
+Core.Parser.lam: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  Parser.bind<Pair(Bool)(String)><C>
+  | Core.Parser.enclose<String>(Core.Parser.nam(Bool.true));
+  | (x) x<() Parser(C)> | (eras) (n)
+  Parser.then<Unit><C>(Core.Parser.space) |
+  Parser.bind<C   ><C>(Core.Parser.trm)   | (body)
+  Parser.pure<C>
+  | (ctx)
+    let tbody = ((x) body(Core.Ctx.ext(n)(x)(ctx))) :: Core -> Core
+    Core.lam(eras)(n)(tbody);;;;;
+

@@ -1,0 +1,13 @@
+Core.Read.defs.go: Core.Defs -> Core.Read(Core.Defs)
+  (defs) (code)
+  Core.Read.def(code)<() Core.Read.Reply(Core.Defs)>
+  | Core.Read.done<Core.Defs>(defs)(code);
+  | (got) got<() Core.Read.Reply(Core.Defs)>
+    | (pair) (code)
+      pair<() Core.Read.Reply(Core.Defs)>
+      | (name) (def)
+        let defs = Core.Defs.set(name)(def)(defs)
+        Core.Read.defs.go(defs)(code)
+      ;
+    ;
+  ;
