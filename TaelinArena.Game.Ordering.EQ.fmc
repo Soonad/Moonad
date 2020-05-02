@@ -1,0 +1,11 @@
+// T Ordering 
+// | LT 
+// | EQ 
+// | GT 
+
+// F64.Ordering.Ordering.EQ: F64
+//   F64.1
+
+F64.Ordering.Ordering.EQ: F64.Ordering.Ordering
+  <P> (F64.Ordering.Ordering.LT) (F64.Ordering.Ordering.EQ) (F64.Ordering.Ordering.GT)
+  F64.Ordering.Ordering.EQ
