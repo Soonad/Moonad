@@ -1,4 +1,4 @@
-Core.var: Nat -> String -> Core
-  (indx) (name)
+Core.var: String -> Nat -> Bool -> Core
+  (name) (indx) (flip)
   <> (var) () () () () () () ()
-  var(indx)(name)
+  var(name)(indx)(flip)
