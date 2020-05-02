@@ -1,0 +1,23 @@
+Core.Parser.all: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  Parser.bind<String><C>(Core.Parser.nam(Bool.true)) | (self)
+  Parser.bind<Pair(Bool)(Pair(String)(C))><C>
+  | Core.Parser.enclose<Pair(String)(C)>
+    | Parser.bind<String><Pair(String)(C)>(Core.Parser.nam(Bool.true)) | (n)
+      Parser.then<Unit  ><Pair(String)(C)>(Core.Parser.space)          |
+      Parser.then<String><Pair(String)(C)>(Core.Parser.symbol(":"))    |
+      Parser.bind<C     ><Pair(String)(C)>(Core.Parser.trm)            | (t)
+      Parser.pure<Pair(String)(C)>(Pair.new<String><C>(n)(t));;;;;;
+  | (x)
+  x<() Parser(C)>                                  | (eras) (p)
+  p<() Parser(C)>                                  | (name) (bind)
+  Parser.then<Unit  ><C>(Core.Parser.space)        |
+  Parser.then<String><C>(Core.Parser.symbol("->")) |
+  Parser.bind<C     ><C>(Core.Parser.trm)          | (body)
+  Parser.pure<C>
+  | (ctx) 
+    let tbind = bind(ctx)
+    let tbody = ((s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx))))
+              :: Core -> Core -> Core
+    Core.all(eras)(self)(name)(tbind)(tbody);;;;;;;;
+

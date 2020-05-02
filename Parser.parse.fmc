@@ -1,20 +1,10 @@
-// with dependent types, we can reason that a successful parser returns an A
-// and an unsuccessful parser returns a lifted Parser.Error(E) value
-// (`The` lifts the Parser.Error into a type so we can see it at compile time)
-
 Parser.parse:
-  <S : Type> ->
-  <E : Type> ->
   <A: Type> ->
-  (p: Parser(S)(E)(A)) ->
-  (s: Parser.State(S)(E)) ->
-  Parser.type(S)(E)(A)(Parser.run<S><E><A>(p)(s))
+  (p: Parser(A)) ->
+  (s: String) ->
+  Parser.type(A)(Parser.run<A>(p)(Parser.State.default(s)))
 
-  <S> <E> <A> (p) (s)
-  Parser.run<S><E><A>(p)(s)<(t) Parser.type(S)(E)(A)(t)>
-  | () (x) x;
-  | () (e) Show.msg(Parser.Error.show<E>(e));
-  | () (x) x;
-  | () (e) Show.msg(Parser.Error.show<E>(e));
+  <A> (p) (s)
+  Parsec.parse<Unit><Unit><A>(Unit.show)(p)(Parser.State.default(s))
 
 

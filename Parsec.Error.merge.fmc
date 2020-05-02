@@ -1,0 +1,37 @@
+// When a parser branches and tries different possible options on its input
+// we need some way to combine the errors that each branch generates.
+// Because branches that consume more input are better than those that do less
+// the errors from farther along the input are more useful.
+// Thus to merge errors we compare positions and throw away the earlier error.
+// If both errors occur at the same place though, we prefer fancy errors.
+// If both errors are fancy at the same place, we merge the messages.
+// If both errors are trivial at the same place, we merge the expected items.
+// (We also try to prefer the presence of an unexpected token over its absence)
+
+Parsec.Error.merge:
+  <E: Type> ->
+  Parsec.Error(E) ->
+  Parsec.Error(E) ->
+  Parsec.Error(E)
+
+  <E> (x) (y)
+  let x.index = Parsec.Error.index<E>(x)
+  let y.index = Parsec.Error.index<E>(y)
+  Nat.cmp(x.index)(y.index)<() Parsec.Error(E)>
+  | y;
+  | x<() Parsec.Error(E)> 
+    |#trivial# (x.pos) (x.unx) (x.exp)
+      y<() Parsec.Error(E)>
+      |#trivial# (y.pos) (y.unx) (y.exp)
+        Parsec.Error.make_trivial<E>(x.pos)
+        | x.unx<() Maybe(Parsec.Error.Item)> | y.unx; | () x.unx;; // TODO: Ord
+        | List.concat<Parsec.Error.Item>(x.exp)(y.exp);;
+      |#fancy#   (y.pos) (y.msg) y;;
+    |#fancy# (x.pos) (x.msg)
+      y<() Parsec.Error(E)>
+      |#trivial# (y.pos) (y.unx) (y.exp) x;
+      |#fancy#   (y.pos) (y.msg)
+        Parsec.Error.make_fancy<E>(x.pos)
+        | List.concat<Parsec.Error.Fancy(E)>(x.msg)(y.msg);;;;
+  | x;
+

@@ -1,0 +1,3 @@
+Parsec.Error.Fancy.custom: <E: Type> -> (e: E) -> Parsec.Error.Fancy(E)
+  <E> (e)
+  <P> () (custom) custom(e)

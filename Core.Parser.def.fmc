@@ -1,0 +1,10 @@
+//Parse.def: Parse(Pair(String)(Def))
+//  Parse.bind<String><Pair(String)(Def)>(Parse.nam(Bool.false)) | (name)
+//  Parse.then<Unit  ><Pair(String)(Def)>(Parse.space)           |
+//  Parse.then<String><Pair(String)(Def)>(Parse.symbol(":"))     |
+//  let vars = List.nil<String>
+//  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (type)
+//  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (term)
+//  Parse.pure<Pair(String)(Def)>
+//  | Pair.new<String><Def>(name)(Pair.new<Term><Term>(term)(type));;;;;;
+
