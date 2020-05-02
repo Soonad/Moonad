@@ -1,3 +1,52 @@
+TaelinArena.Game.use_shields:
+  (buff: TaelinArena.Game.Buff) ->
+  (acc: Pair(F64)(List(TaelinArena.Game.Buff))) ->
+  Pair(F64)(List(TaelinArena.Game.Buff))
+  (buff) (acc)
+  acc<() Pair(F64)(List(TaelinArena.Game.Buff))> 
+  | (acc.fst) (acc.snd)
+    buff<() Pair(F64)(List(TaelinArena.Game.Buff))>
+    | (buff.dur) (buff.val) //shielded
+      Bool.if<Pair(F64)(List(TaelinArena.Game.Buff))>(F64.eql(acc.fst)(F64.0)) 
+      | acc; // no damage
+      | let compare = F64.compare_numbers(acc.fst)(buff.val)
+        compare<() Pair(F64)(List(TaelinArena.Game.Buff))>
+        | // LT
+          let remaining_shield_val = F64.sub(buff.val)(acc.fst) 
+          let remaining_buf = 
+            List.cons<TaelinArena.Game.Buff>
+            | TaelinArena.Game.Buff.shielded(buff.dur)(remaining_shield_val);
+            | acc.snd;
+          Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(remaining_buf);
+        | // EQ
+          Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(acc.snd);
+        | // GT
+          let remaining_dmg = F64.sub(acc.fst)(buff.val)
+          Pair.new<F64><List(TaelinArena.Game.Buff)>(remaining_dmg)(acc.snd);
+      ;
+  ;
+  | (buff.dur) (buff.val) 
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | acc.fst; 
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //slowed
+  | (buff.dur) (buff.val)
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | acc.fst; 
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //hasted
+  | (buff.dur)
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | acc.fst; 
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //silenced
+  | (buff.dur)
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | acc.fst; 
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // rooted
+  | (buff.dur)
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | acc.fst; 
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // stuned
+  ;
+
 // use_shields(buff: Buff, acc: Pair(Number, List(Buff))) : Pair(Number, List(Buff))
 //   case acc |pair 
 //   case buff
@@ -21,61 +70,3 @@
 //   | silenced => pair(__ acc.fst, cons(_ buff, acc.snd))
 //   | rooted   => pair(__ acc.fst, cons(_ buff, acc.snd))
 //   | stuned   => pair(__ acc.fst, cons(_ buff, acc.snd))
-
-TaelinArena.Game.use_shields:
-  (buff: TaelinArena.Game.Buff) ->
-  (acc: Pair_F64_Game.Buff) ->
-  Pair_F64_Game.Buff
-  (buff) (acc)
-  acc<() Pair_F64_Game.Buff> | (pair)
-  let acc.fst = Pair.fst<F64><List(TaelinArena.Game.Buff)>(pair)
-  let acc.snd = Pair.snd<F64><List(TaelinArena.Game.Buff)>(pair)
-  buff<() Pair_F64_Game.Buff>
-  | (buff.dur) (buff.val) //shielded
-    Bool.if<Pair_F64_Game.Buff>(F64.eql(acc.fst)(F64.0)) 
-    | acc; // no damage
-    | TaelinArena.Game.compare_numbers(acc.fst)(acc.snd)
-      | // LT
-        let remaining_shield_val = F64.sub(buff.val)(acc.fst) 
-        let remaining_buf = 
-          List.cons<TaelinArena.Game.Buff>
-          | TaelinArena.Game.Buff.shielded(buff.dur)(remaining_shield_val);
-          | acc.snd;
-        Pair.pair<F64><List(TaelinArena.Game.Buff)>(F64.0)(remaining_buf);
-      | // EQ
-        Pair.pair<F64><List(TaelinArena.Game.Buff)>(F64.0)(acc.snd);
-      | // GT
-        let remaining_dmg = F64.sub(acc.fst)(buff.val)
-        Pair.pair<F64><List(TaelinArena.Game.Buff)>(remaining_dmg)(acc.snd);
-    ;
-  ;
-  | (buff.dur) (buff.val) 
-    Pair.pair<F64><List(TaelinArena.Game.Buff)>
-    | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //slowed
-  | (buff.dur) (buff.val)
-    Pair.pair<F64><List(TaelinArena.Game.Buff)>
-    | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //hasted
-  | (buff.dur)
-    Pair.pair<F64><List(TaelinArena.Game.Buff)>
-    | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //silenced
-  | (buff.dur)
-    Pair.pair<F64><List(TaelinArena.Game.Buff)>
-    | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // rooted
-  | (buff.dur)
-    Pair.pair<F64><List(TaelinArena.Game.Buff)>
-    | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // stuned
-  ;
-
-TaelinArena.Game.compare_numbers: F64 -> F64 -> F64.Ordering
-  (a) (b)
-  Bool.if<F64>(F64.eql(a)(b))
-  | F64.Ordering.EQ;
-  | Bool.if<F64>(F64.ltn(b)(a))
-    | F64.Ordering.GT;
-    |  F64.Ordering.LT;;
-

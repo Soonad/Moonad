@@ -1,2 +1,0 @@
-Pair_F64_Game.Buff: Type
-  Pair(F64)(List(TaelinArena.Game.Buff))
