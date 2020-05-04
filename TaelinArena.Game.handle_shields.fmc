@@ -1,0 +1,32 @@
+// Checks if there are shields to be used and update it if have
+// handle_shields(hit_dmg: Number, self: Thing) : Thing 
+//   case self |thing 
+//   let init_val      = pair(__ hit_dmg, nil(_))
+//   let res           = fold(__ init_val, use_shields, self.buf) 
+//   let remaining_dmg = pair_fst(__ res) + self.dmg // Number actual damage taken
+//   let remaining_buf = pair_snd(__ res) // List(Buff)
+//   self <= thing(dmg = remaining_dmg, buf = remaining_buf)  
+
+TaelinArena.Game.handle_shields: 
+  (hit_dmg: F64) ->
+  (self: TaelinArena.Game.Thing) ->
+  TaelinArena.Game.Thing
+  (hit_dmg) (self)
+  let self.buf = TaelinArena.Game.get_thing_buf(self)
+  let self.dmg = TaelinArena.Game.get_thing_dmg(self)
+  let init_val = 
+    Pair.new<F64><List(TaelinArena.Game.Buff)>
+    | hit_dmg;
+    | List.nil<TaelinArena.Game.Buff>;
+  let res = // fold(__ init_val, use_shields, self.buf) 
+    List.fold<TaelinArena.Game.Buff><Pair(F64)(List(TaelinArena.Game.Buff))>
+    | init_val;
+    | TaelinArena.Game.use_shields;
+    | self.buf;
+  let res.fst = Pair.fst<F64><List(TaelinArena.Game.Buff)>(res)
+  let res.snd = Pair.snd<F64><List(TaelinArena.Game.Buff)>(res)
+  let remaining_dmg = F64.add(res.fst)(self.dmg) // Number actual damage taken
+  let remaining_buf = res.snd // List(Buff)
+  let self = TaelinArena.Game.set_thing_dmg(self)(remaining_dmg)
+  let self = TaelinArena.Game.set_thing_buf(self)(remaining_buf)
+  self
