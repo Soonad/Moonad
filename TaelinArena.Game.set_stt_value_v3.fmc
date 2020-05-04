@@ -1,0 +1,22 @@
+// set_stt_value_v3(self: Thing, v3: V3) : Thing
+//   case self |thing
+//   case v3 |v3
+//   // let self = self <= thing(stt=insert(_ POS_X_KEY, v3.x, self.stt))
+//   let self = set_thing_stt(self, insert(_ POS_X_KEY, v3.x, self.stt))
+//   let self = set_thing_stt(self, insert(_ POS_X_KEY, v3.y, self.stt))
+//   // let self = self <= thing(stt=insert(_ POS_Y_KEY, v3.y, self.stt))
+//   // let self = self <= thing(stt=insert(_ POS_Z_KEY, v3.z, self.stt))
+//   self
+
+TaelinArena.Game.set_stt_value_v3:  
+  (self: TaelinArena.Game.Thing) -> 
+  (v3: F64.V3) ->
+  TaelinArena.Game.Thing
+  (self) (v3)
+  let self.stt = TaelinArena.Game.get_thing_stt(self)
+  v3<() TaelinArena.Game.Thing> | (v3.x) (v3.y) (v3.z) 
+  let insert_x = Map.set<F64>(TaelinArena.Constants.POS_X_KEY)(v3.x)(self.stt)
+  let insert_y = Map.set<F64>(TaelinArena.Constants.POS_Y_KEY)(v3.y)(self.stt)
+  let self = TaelinArena.Game.set_thing_stt(self)(insert_x)
+  let self = TaelinArena.Game.set_thing_stt(self)(insert_y)
+  self;
