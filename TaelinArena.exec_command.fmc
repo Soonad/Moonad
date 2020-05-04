@@ -1,0 +1,44 @@
+TaelinArena.exec_command
+  : TaelinArena.Game.Command ->
+    TaelinArena.Game.Game    ->
+    TaelinArena.Game.Game
+  (cmd) (gm)
+  cmd<() TaelinArena.Game.Game> | (cmd.pid) (cmd.inp)
+  let fn = ( (this)
+    let inp = cmd.inp 
+    let is_silenced = TaelinArena.Game.is_silenced(this)
+    let is_stunned  = TaelinArena.Game.is_stunned(this)
+    is_stunned<() TaelinArena.Game.Thing>
+    | inp<() TaelinArena.Game.Thing> // case is_stunned true
+      | (sdir.dir) TaelinArena.Game.init_act(this)(F64.0)(sdir.dir); 
+      | (key0.pos) this;  
+      | (key1.pos) this;
+      | (key2.pos) this;
+      | (key3.pos) this;
+      | (key4.pos) this;
+      | (key5.pos) this;
+      | (cmsg.txt) this;;
+
+    | is_silenced<() TaelinArena.Game.Thing>  // case is_stunned false
+      | inp<() TaelinArena.Game.Thing> // case is_silenced true
+        | (sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir); 
+        | (key0.pos) this;  
+        | (key1.pos) this;
+        | (key2.pos) this;
+        | (key3.pos) this;
+        | (key4.pos) this;
+        | (key5.pos) this;
+        | (cmsg.txt) this;;             
+      
+      | inp<() TaelinArena.Game.Thing> // case is_silenced false
+        | (sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir); 
+        | (key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos);  
+        | (key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos);
+        | (key2.pos) TaelinArena.Game.init_act(this)(F64.3)(key2.pos);
+        | (key3.pos) TaelinArena.Game.init_act(this)(F64.4)(key3.pos);
+        | (key4.pos) TaelinArena.Game.init_act(this)(F64.5)(key4.pos);
+        | (key5.pos) TaelinArena.Game.init_act(this)(F64.6)(key5.pos);
+        | (cmsg.txt) this;;;
+  ) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  TaelinArena.Game.with_thing(cmd.pid)(fn)(gm);
+    
