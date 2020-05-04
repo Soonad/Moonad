@@ -12,9 +12,12 @@ Research.core_in_core: String
   Nat.succ: Nat -> Nat
     (n)
     <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
   ")
-  let term = Core.Defs.term(defs)("Nat.succ")
-  let type = Core.Defs.type(defs)("Nat.succ")
+  let term = Core.Defs.term(defs)("main")
+  let type = Core.Defs.type(defs)("main")
   Core.typecheck(term)(type)(defs)(Nat.zero)<() String>
   | (err) err;
   | (typ) Core.stringify(typ);
