@@ -15,7 +15,7 @@ Core.stringify.go: Core -> Stringifier
     let name = lit(name)
     let colo = lit(": ")
     let bind = Core.stringify.go(bind)
-    let rpar = lit(")")
+    let rpar = lit(") -> ")
     let body = Core.stringify.go(body)
     self(lpar(name(colo(bind(rpar(body(x)))))));
   | (eras) (name) (body) (x)

@@ -1,13 +1,18 @@
 Research.core_in_core: String
   let defs = Core.parse_defs("
-    succ: Any
-      (n) (s) (z) s(n(s)(z))
-    zero: Any
-      (s) (z) z
-    exp: Any
-      (n) (m) m(n)
-    main: Type
-      exp(succ(succ(zero)))(succ(succ(zero)))
+    main
+      : (A: Type) ->
+        (B: Type) ->
+        (aa: A -> A) ->
+        (ab: A -> B) ->
+        (ba: B -> A) ->
+        (bb: B -> B) ->
+        (a: A) ->
+        A
+      (A) (B) (aa) (ab) (ba) (bb) (a) ba(bb(bb(ab(a))))
   ")
-  let main = Core.Defs.term(defs)("main")
-  Core.stringify(Core.normalize(main)(defs))
+  let term = Core.Defs.term(defs)("main")
+  let type = Core.Defs.type(defs)("main")
+  Core.typecheck(term)(type)(defs)(Nat.zero)<() String>
+  | (err) err;
+  | (typ) Core.stringify(typ);
