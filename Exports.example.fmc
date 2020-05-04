@@ -1,0 +1,9 @@
+// Exports the basic boolean functions
+Exports.example: Exports
+  ( Exports.add<Bool>(Bool.true)
+  | Exports.add<Bool>(Bool.false)
+  | Exports.add<Bool -> Bool>(Bool.not)
+  | Exports.add<Bool -> Bool -> Bool>(Bool.and)
+  | Exports.add<Bool -> Bool -> Bool>(Bool.or)
+  | Exports.new
+  ;;;;;)
