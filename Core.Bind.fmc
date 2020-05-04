@@ -1,0 +1,2 @@
+Core.Bind: Type
+  List(Pair(String)(Core)) -> Core

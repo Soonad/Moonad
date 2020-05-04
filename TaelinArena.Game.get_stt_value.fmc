@@ -1,0 +1,7 @@
+// TODO: this is just a placeholder
+TaelinArena.Game.get_stt_value: 
+  (self: TaelinArena.Game.Thing) ->
+  (stt_key: Bits) ->
+  F64
+  (self) (stt_key)
+  F64.1

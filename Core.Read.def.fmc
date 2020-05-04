@@ -1,0 +1,12 @@
+Core.Read.def: Core.Read(Pair(String)(Core.Def))
+  Core.Read.seek<Text><Pair(String)(Core.Def)>(Core.Read.nam)      | (name)
+  Core.Read.seek<Unit><Pair(String)(Core.Def)>(Core.Read.txt(":")) | ()
+  Core.Read.seek<Core.Bind><Pair(String)(Core.Def)>(Core.Read.trm) | (type)
+  Core.Read.seek<Core.Bind><Pair(String)(Core.Def)>(Core.Read.trm) | (term)
+  let term = term(Core.Ctx.nil)
+  let type = type(Core.Ctx.nil)
+  let pair = Pair.new<Core><Core>(type)(term)
+  let pair = Pair.new<String><Core.Def>(name)(pair)
+  Core.Read.done<Pair(String)(Core.Def)>(pair)
+  ;;;;
+

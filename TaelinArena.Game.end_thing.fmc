@@ -1,0 +1,54 @@
+// Ends an animation/transformation/thing after some ticks
+// - self: thing that will end after a while
+// - tx: the new animation to use when it ends
+// - after_tiks: numbers of ticks passed until the end
+// - stt_key: the key in the stt map
+
+TaelinArena.Game.end_thing:
+  (self: TaelinArena.Game.Thing) ->
+  (tx: TaelinArena.Game.TxFunction) ->
+  (after_tiks: F64) ->
+  (stt_key: Bits) ->
+  TaelinArena.Game.Thing
+  (self) (tx) (after_tiks) (stt_key)
+  let self.stt = TaelinArena.Game.get_thing_stt(self)
+  let current_tik = Map.get<F64>(stt_key)(self.stt)
+  let empty_stt = Map.set<F64>(stt_key)(after_tiks)(self.stt)
+  current_tik<() TaelinArena.Game.Thing>
+  | TaelinArena.Game.set_thing_stt(self)(empty_stt);
+  | (current_tik.value) 
+    Bool.if<TaelinArena.Game.Thing>(F64.eql(current_tik.value)(F64.0))
+    | let self.pid = TaelinArena.Game.get_thing_pid(self)
+      let self.pos = TaelinArena.Game.get_thing_pos(self)
+      let self = TaelinArena.Game.set_thing_fun(self)(tx)
+      let self = TaelinArena.Game.set_thing_pid(self)(self.pid)
+      let self = TaelinArena.Game.set_thing_pos(self)(self.pos)
+      let self = TaelinArena.Game.set_thing_stt(self)(empty_stt)
+      self;
+    | let new_stt = 
+        Map.set<F64>
+        | stt_key;
+        | Bool.if<F64>(F64.ltn(F64.0)(current_tik.value))
+          | F64.sub(current_tik.value)(F64.1);
+          | F64.0;;
+        | self.stt;
+      TaelinArena.Game.set_thing_stt(self)(new_stt);;
+
+// end_thing(
+//   self: Thing, 
+//   tx: TxFunction, 
+//   after_tiks: Number, 
+//   stt_key: Bits
+//   ) : Thing
+//   case self |thing
+//     let current_tik = lookup(_ stt_key, self.stt)
+//     let empty_stt = insert(_ stt_key, after_tiks, self.stt)
+//     case current_tik
+//     | none => self <= thing(stt = empty_stt) // insert a new key
+//     | some =>
+//       if current_tik.value === 0 
+//       then
+//         self <= thing(fun=tx, pid=self.pid, pos=self.pos, stt=empty_stt)
+//       else 
+//         let new_stt = insert(_ stt_key, if current_tik.value > 0 then current_tik.value - 1 else 0, self.stt)
+//         self <= thing(stt = new_stt)

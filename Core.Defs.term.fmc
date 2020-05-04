@@ -1,0 +1,5 @@
+Core.Defs.term: Core.Defs -> String -> Core
+  (defs) (name)
+  Core.Defs.get_term(defs)(name)<() Core>
+  | Core.ref("<undefined>");
+  | (term) term;

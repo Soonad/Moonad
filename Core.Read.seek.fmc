@@ -1,0 +1,8 @@
+Core.Read.seek
+  : <A: Type> ->
+    <B: Type> ->
+    Core.Read(A) ->
+    (A -> Core.Read(B)) ->
+    Core.Read(B)
+  <A> <B> (ra) (rb) (code)
+  Core.Read.bind<A><B>(ra)(rb)(Core.Read.next(code))

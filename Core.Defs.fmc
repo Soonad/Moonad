@@ -1,2 +1,2 @@
 Core.Defs: Type
-  Map(Pair(Core)(Core))
+  Map(Core.Def)

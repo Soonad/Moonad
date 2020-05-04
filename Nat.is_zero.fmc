@@ -1,0 +1,5 @@
+Nat.is_zero: Nat -> Bool
+  (n)
+  n<() Bool>
+  | Bool.true;
+  | () Bool.false;

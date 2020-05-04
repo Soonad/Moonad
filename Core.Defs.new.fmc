@@ -1,0 +1,3 @@
+Core.Defs.new: Map(Pair(Core)(Core))
+  Map.new<Pair(Core)(Core)>
+  

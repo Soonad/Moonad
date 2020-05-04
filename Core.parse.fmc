@@ -1,4 +1,5 @@
-Core.parse
-  : (s : String) ->
-    Parser.type(Core)(Parser.run_default<Core>(Core.Parser.core)(s))
-  (s) Parser.parse<Core>(Core.Parser.core)(s)
+Core.parse: String -> Core
+  (code)
+  Core.Read.trm(code)<() Core>
+  | Core.ref("<error>");
+  | (got) got<() Core>((term) () term(Core.Ctx.nil));

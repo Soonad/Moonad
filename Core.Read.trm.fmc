@@ -1,0 +1,4 @@
+Core.Read.trm: Core.Read(Core.Bind)
+  Core.Read.seek<Core.Bind><Core.Bind>
+  | Core.Read.trm.base;
+  | Core.Read.trm.post;
