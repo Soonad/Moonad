@@ -1,0 +1,101 @@
+TaelinArena.collide_with
+  : F64.V3                  ->
+    F64.V3                  -> 
+    TaelinArena.Game.Hitbox ->
+    F64.V3                  ->
+    F64.V3                  -> 
+    TaelinArena.Game.Hitbox ->
+    Maybe(F64.V3)
+  TaelinArena.collide_with
+  // (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box)
+  // a_box<() Maybe(F64.V3)>
+  // | Maybe.none<F64.V3>; // case a_box of nbox 
+  // | (a_box.rad)         // case a_box of cbox 
+  //   b_box<Maybe(F64.V3)>   
+  //   | Maybe.none<F64.V3>;  // case b_box of nbox
+    
+  //   | (b_box.rad)          // case b_box of cbox
+  //     let dist = F64.V3.dist(a_pos)(b_pos)
+  //     let rad  = F64.add(a_box.rad)(b_box.rad)
+  //     let gtn_zero = F64.gtn(dist)(F64.0)
+  //     let dist_ltn_rad = F64.ltn(dist)(rad)
+  //     Bool.and(gtn_zero)(dist_ltn_rad)<() Maybe(F64.V3)> 
+  //     | let diff    = F64.V3.sub(a_pos)(b_pos) // case true
+  //       let our_dir = F64.V3.norm(diff)   
+  //       let out_vec = F64.V3.scale(F64.sub(rad)(dist))(out_dir)
+  //       Maybe.some<F64.V3>(out_vec);;
+      
+  //     | Maybe.none<F64.V3>;   // case false 
+    
+  //   | (b_box.pts)
+  //     let nil = Maybe.none<F64.Segment>   // case b_box of pbox 
+  //     let cons = ((segment) (result) 
+  //       result<() Maybe(F64.V3)>
+  //       | segment<() Maybe(F64.V3)> // case none
+  //         | (segment.a) (segment.b)
+  //           let dist = F64.V3.point_segment_dist(a_pos)(segment)
+  //           let rad = a_box.rad
+  //           F64.ltn(dist)(rad)<() Maybe(F64.V3)>
+  //           | let diff = F64.V3.sub(segment.a)(segment.b) //case true
+  //             let normd = F64.V3.norm(diff)
+  //             let our_dir = F64.V3.rot90(normd)
+  //             let out_vec = F64.V3.scale(F64.V3.sub(rad)(dist))(out_dir)
+  //             Maybe.some<F64.V3>(out_vec);;
+
+  //           | Maybe.none<F64.V3>;       //case false
+  //     ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
+  //     let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts)
+  //     List.fold<F64.Segment><Maybe(F64.V3)>(nil)(cons)(segs);
+
+  // | (a_box.pts)// case a of pbox
+  //   b_box<() Maybe(F64.V3)>
+  //   | Maybe.none<F64.V3>;  // case b_box of nbox
+
+  //   | (b_box.rad)   // case b_box of cbox
+  //     let nil = Maybe.none<F64.V3>;
+
+
+  //   | (b_box.pts)  // case b_box of pbox
+
+
+// Checks if two boxes collide, returns outwards vector
+// collide_with(
+//   a_pos: V3,
+//   a_dir: V3,
+//   a_box: Hitbox,
+//   b_pos: V3,
+//   b_dir: V3,
+//   b_box: Hitbox
+// ) : Maybe(V3)
+//   case a_box
+//   |nbox => none(_)
+//   |cbox => case b_box
+//     |nbox => none(_)
+//     |cbox =>
+//       let dst = dist_v3(a_pos, b_pos)
+//       let rad = a_box.rad + b_box.rad
+//       if (dst > 0) && (dst < rad) then
+//         let out_dir = norm_v3(sub_v3(a_pos, b_pos))
+//         let out_vec = scale_v3(rad - dst, out_dir)
+//         some(_ out_vec)
+//       else
+//         none(_)
+//     |pbox =>
+//       let nil  = none(_)
+//       let cons = (segment, result) =>
+//         case result
+//         |none =>
+//           case segment |segment
+//           let dst = point_segment_dist(a_pos, segment)
+//           let rad = a_box.rad
+//           if (dst < rad) then
+//             let out_dir = rot90_v3(norm_v3(sub_v3(segment.a,segment.b)))
+//             let out_vec = scale_v3(rad - dst, out_dir)
+//             some(_ out_vec)
+//           else
+//             none(_)
+//         |some => some(_ result.value)
+//       let segs = polygon_to_segments(b_pos, b_dir, b_box.pts)
+//       fold(Segment; Maybe(V3); nil, cons, segs)
+//   |pbox =>
+//     none(_) // TODO
