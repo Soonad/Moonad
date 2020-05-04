@@ -1,0 +1,32 @@
+// Params: a, b
+CURVE.a: Nat
+  Nat.0
+
+CURVE.b: Nat
+  Nat.7
+
+// Field over which we'll do calculations
+CURVE.P: Nat
+  let N = Nat.pow(Nat.2)(Nat.parse_decimal("256"))
+  let M = Nat.pow(Nat.2)(Nat.32)
+  Nat.sub(Nat.sub(N)(M))(Nat.parse_decimal("977"))
+
+// Subgroup order aka prime_order
+CURVE.n: Nat
+  let N = Nat.pow(Nat.2)(Nat.parse_decimal("256"))
+  Nat.sub(N)(Nat.parse_decimal("432420386565659656852420866394968145599"))
+
+// Cofactor
+CURVE.h: Nat
+  Nat.parse_decimal("1")
+
+// Base point (x, y) aka generator point
+CURVE.Gx: Nat
+  Nat.parse_decimal("55066263022277343669578718895168534326250603453777594175500187360389116729240")
+
+CURVE.Gy: Nat
+  Nat.parse_decimal("32670510020758816978083085130507043184471273380659243275938904335757337482424")
+
+// For endomorphism, see below.
+CURVE.beta: Nat
+  Nat.parse_hex("7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee")

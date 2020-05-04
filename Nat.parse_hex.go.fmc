@@ -1,0 +1,24 @@
+Nat.parse_hex.go: String -> Nat -> Nat //loop//
+  (str) (res)
+  str<() Nat>
+  | res;
+  | (str.head) (str.tail)
+    // '0' <= str.head <= '9'
+    Bool.and(U16.gte(str.head)('0'))(U16.lte(str.head)('9'))<() Nat>
+    | let dig = U16.to_nat(U16.sub(str.head)('0'))
+      let res = Nat.add(dig)(Nat.mul(Nat.16)(res))
+      Nat.parse_hex.go(str.tail)(res);
+    // 'a' <= str.head <= 'f'
+    | Bool.and(U16.gte(str.head)('a'))(U16.lte(str.head)('f'))<() Nat>
+      | let dig = Nat.add(U16.to_nat(U16.sub(str.head)('a')))(Nat.10)
+        let res = Nat.add(dig)(Nat.mul(Nat.16)(res))
+        Nat.parse_hex.go(str.tail)(res);
+      // 'A' <= str.head <= 'F'
+      | Bool.and(U16.gte(str.head)('A'))(U16.lte(str.head)('F'))<() Nat>
+        | let dig = Nat.add(U16.to_nat(U16.sub(str.head)('A')))(Nat.10)
+          let res = Nat.add(dig)(Nat.mul(Nat.16)(res))
+          Nat.parse_hex.go(str.tail)(res);
+        | res;
+      ;
+    ;
+  ;
