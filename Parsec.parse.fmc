@@ -6,16 +6,15 @@ Parsec.parse:
   <S : Type> ->
   <E : Type> ->
   <A: Type> ->
-  (E.show : E -> String) ->
   (p: Parsec(S)(E)(A)) ->
   (s: Parsec.State(S)(E)) ->
-  Parsec.type(S)(E)(A)(E.show)(Parsec.run<S><E><A>(p)(s))
+  Parsec.type(S)(E)(A)(Parsec.run<S><E><A>(p)(s))
 
-  <S> <E> <A> (E.show) (p) (s)
-  Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(E.show)(t)>
+  <S> <E> <A> (p) (s)
+  Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(t)>
   | () (x) x;
-  | () (e) The.term<Debug>(Debug.display(Parsec.Error.show<E>(E.show)(e)));
+  | () (e) e;
   | () (x) x;
-  | () (e) The.term<Debug>(Debug.display(Parsec.Error.show<E>(E.show)(e)));
+  | () (e) e;
 
 

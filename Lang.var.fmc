@@ -1,5 +1,5 @@
-Core.Parser.var: Parser(Core.Ctx -> Core)
-  Parser.bind<String><Core.Ctx -> Core>(Core.Parser.nam(Bool.false)) | (name)
+Lang.var: Parser(Core.Ctx -> Core)
+  Parser.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false)) | (name)
   Parser.pure<Core.Ctx -> Core>
   | (ctx)
     let got =

@@ -1,4 +1,4 @@
-Core.Parser.is_name: Char -> Bool
+Lang.is_name: Char -> Bool
   (c)
   let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9")))
   let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z")))
