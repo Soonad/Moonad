@@ -1,4 +1,4 @@
-Acc.foldl: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: A -> B -> B) -> (b: B) -> (a: A) -> Acc(A)(B)(stop)(a)
+Acc.foldl: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: B -> A -> B) -> (b: B) -> (a: A) -> Acc(A)(B)(stop)(a)
   <A> <B> (stop) (acc) (b) (a)
   stop(a)<(b) Equal(Bool)(b)(stop(a)) -> Acc(A)(B)(stop)(a)>
   | (eq)
@@ -10,5 +10,5 @@ Acc.foldl: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: A -> B -> B) -> 
     Equal.rewrite<Bool><Bool.false><stop(a)><
       (X) X<() Type>
       | B;
-      | (a: A) -> Acc(A)(B)(stop)(a);>(eq)((c) Acc.foldl<A><B>(stop)(acc)(acc(a)(b))(c));
+      | (a: A) -> Acc(A)(B)(stop)(a);>(eq)((c) Acc.foldl<A><B>(stop)(acc)(acc(b)(a))(c));
   | Equal.to<Bool><stop(a)>;
