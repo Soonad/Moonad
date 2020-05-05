@@ -1,0 +1,5 @@
+Variadic.foldl: <A: Type> -> <B: Type> -> (acc: B -> A -> B) -> (b: B) -> (n: Nat) -> Variadic(A)(B)(n)
+  <A> <B> (acc) (b) (n)
+  n<(n) Variadic(A)(B)(n)>
+  | b;
+  | (n.pred) (a) Variadic.foldl<A><B>(acc)(acc(b)(a))(n.pred);

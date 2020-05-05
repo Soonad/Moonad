@@ -1,0 +1,14 @@
+Acc.foldr.go: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: A -> B -> B) -> (b: B) -> (k: B -> B) -> (a: A) -> Acc(A)(B)(stop)(a)
+  <A> <B> (stop) (acc) (b) (k) (a)
+  stop(a)<(b) Equal(Bool)(b)(stop(a)) -> Acc(A)(B)(stop)(a)>
+  | (eq)
+    Equal.rewrite<Bool><Bool.true><stop(a)><
+      (X) X<() Type>
+      | B;
+      | (a: A) -> Acc(A)(B)(stop)(a);>(eq)(k(b));
+  | (eq) 
+    Equal.rewrite<Bool><Bool.false><stop(a)><
+      (X) X<() Type>
+      | B;
+      | (a: A) -> Acc(A)(B)(stop)(a);>(eq)((c) Acc.foldr.go<A><B>(stop)(acc)(b)((r) k(acc(a)(r)))(c));
+  | Equal.to<Bool><stop(a)>;

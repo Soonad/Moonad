@@ -1,0 +1,2 @@
+Acc.foldr: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: A -> B -> B) -> (b: B) -> (a: A) -> Acc(A)(B)(stop)(a)
+  <A> <B> (stop) (acc) (b) Acc.foldr.go<A><B>(stop)(acc)(b)((r) r)
