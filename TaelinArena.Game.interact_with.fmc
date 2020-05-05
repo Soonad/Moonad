@@ -4,7 +4,7 @@ TaelinArena.interact_with:
     (that: TaelinArena.Game.Thing) ->
     TaelinArena.Game.Thing
   (this) (that)
-  //Physical interactions
+  // Physical interactions
   let this.pos = TaelinArena.Game.get_thing_pos(this)
   let this.dir = TaelinArena.Game.get_thing_dir(this)
   let this.box = TaelinArena.Game.get_thing_box(this)
@@ -25,18 +25,13 @@ TaelinArena.interact_with:
     |that.box;
   let this = 
     out_vec<() TaelinArena.Game.Thing>
-    | this;           //case none
-    | (out_vec.value) //case some 
+    | this;           // none
+    | (out_vec.value) // some 
       let new_pos = F64.V3.add(this.pos)(out_vec.value)
       TaelinArena.Game.set_thing_pos(this)(new_pos);
-
   let this = 
-  //Hit by an effect
+  // Hit by an effect
   let apply_hit = ((hit) (this)
-    // let this.pos = TaelinArena.Game.get_thing_pos(this)
-    // let this.dir = TaelinArena.Game.get_thing_dir(this)
-    // let this.box = TaelinArena.Game.get_thing_box(this)
- 
     hit<() TaelinArena.Game.Thing> | (hit.eff) (hit.pos) (hit.dir) (hit.box)
       let out_vec = 
         TaelinArena.Game.collide_with
@@ -48,13 +43,88 @@ TaelinArena.interact_with:
         |hit.box;
       out_vec<() TaelinArena.Game.Thing>
       | this; // none
-      | (out_vec.value)
+      | (out_vec.value) // some
         let compare_sid = F64.eql(this.sid)(that.sid)
-        let apply_eff = ((eff) (this) // some
-        
-          this // apply_eff return
+        let apply_eff = ((eff) (this) 
+        eff<() TaelinArena.Game.Thing>
+        | (eff.lif)  //heal
+          let this.dmg = TaelinArena.Game.get_thing_dmg(this)
+          // IMPORTANT: use commented code. 
+          // The code is inverted so the puddle on debug mode could heal 
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this; // TaelinArena.Game.set_thing_dmg(this)(F64.sub(this.dmg)(eff.lif));
+          | TaelinArena.Game.set_thing_dmg(this)(F64.sub(this.dmg)(eff.lif));;
+          // this;;
+        | (eff.dmg)  //dmg
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | TaelinArena.Game.handle_shields(eff.dmg)(this);;
+        | (eff.mag)  //repulse
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let v3 = F64.V3.new(F64.1)(F64.0)(F64.0)
+            let dir = F64.V3.look_at(hit.pos)(this.pos)(v3)
+            let vec = F64.V3.scale(eff.mag)(dir)
+            TaelinArena.Game.set_thing_knk(this)(vec);;
+        | (eff.mag) (eff.dir)  //impulse
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let vec = F64.V3.scale(eff.mag)(eff.dir)
+            TaelinArena.Game.set_thing_knk(this)(vec);;
+        | (eff.dur) (eff.val)  //slow
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.slowed(eff.dur)(eff.val);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.dur) (eff.val)  //haste
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.hasted(eff.dur)(eff.val);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.dur) (eff.val) //shield
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.shielded(eff.dur)(eff.val);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.dur)  //silence
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.silenced(eff.dur);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.dur) // root
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.rooted(eff.dur);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.dur)  // stun
+          Bool.if<TaelinArena.Game.Thing>(compare_sid)
+          | this;
+          | let updated_buffs = 
+            List.cons<TaelinArena.Game.Buff> 
+            | TaelinArena.Game.Buff.stuned(eff.dur);
+            | this.buf;
+            TaelinArena.Game.set_thing_buf(this)(updated_buffs);;
+        | (eff.to_pos) (eff.all)  // teleport
+          Bool.if<TaelinArena.Game.Thing>(F64.eql(eff.all)(F64.1))
+          | TaelinArena.Game.set_thing_pos(this)(eff.to_pos);
+          | this;;
+          // apply_eff return
         ) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing 
-      
         // end out_vec case
         List.fold<TaelinArena.Game.Effect><TaelinArena.Game.Thing>
         | this;
