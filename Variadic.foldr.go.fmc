@@ -1,0 +1,5 @@
+Variadic.foldr.go: <A: Type> -> <B: Type> -> (acc: A -> B -> B) -> (b: B) -> (k: B -> B) -> (n: Nat) -> Variadic(A)(B)(n)
+  <A> <B> (acc) (b) (k) (n)
+  n<(n) Variadic(A)(B)(n)>
+  | k(b);
+  | (n.pred) (a) Variadic.foldr.go<A><B>(acc)(b)((r) k(acc(a)(r)))(n.pred);
