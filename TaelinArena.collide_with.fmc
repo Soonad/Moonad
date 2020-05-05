@@ -1,5 +1,5 @@
 // Checks if two boxes collide, returns outwards vector
-TaelinArena.Game.collide_with:
+TaelinArena.collide_with:
   (a_pos: F64.V3) ->
   (a_dir: F64.V3) ->
   (a_box: TaelinArena.Game.Hitbox) ->

@@ -16,7 +16,7 @@ TaelinArena.interact_with:
   let that.hit = TaelinArena.Game.get_thing_hit(that)
   let that.sid = TaelinArena.Game.get_thing_sid(this)
   let out_vec  = 
-    TaelinArena.Game.collide_with
+    TaelinArena.collide_with
     |this.pos;
     |this.dir;
     |this.box;
@@ -34,7 +34,7 @@ TaelinArena.interact_with:
   let apply_hit = ((hit) (this)
     hit<() TaelinArena.Game.Thing> | (hit.eff) (hit.pos) (hit.dir) (hit.box)
       let out_vec = 
-        TaelinArena.Game.collide_with
+        TaelinArena.collide_with
         |this.pos;
         |this.dir;
         |this.box;
