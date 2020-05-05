@@ -2,73 +2,74 @@ TaelinArena.interact_with
   : TaelinArena.Game.Thing ->
     TaelinArena.Game.Thing ->
     TaelinArena.Game.Thing
-  (this) (that)
-  //Physical interactions
-  let this_pos = TaelinArena.Game.get_thing_pos(this)
-  let this_dir = TaelinArena.Game.get_thing_dir(this)
-  let this_box = TaelinArena.Game.get_thing_box(this)
-  let that_pos = TaelinArena.Game.get_thing_pos(that)
-  let that_dir = TaelinArena.Game.get_thing_dir(that)
-  let that_box = TaelinArena.Game.get_thing_box(that)
-  let that_hit = TaelinArena.Game.get_thing_hit(that)
-  let out_vec  = 
-    TaelinArena.collide_with
-    |this_pos;
-    |this_dir;
-    |this_pos;
-    |that_pos;
-    |that_dir;
-    |that_box;
-  let this = 
-    out_vec<() TaelinArena.Game.Thing>
-    | this;           //case none
-    | (out_vec.value) //case some 
-      let new_pos = F64.V3.add(this_pos)(out_vec.value)
-      TaelinArena.Game.set_thing_pos(this)(new_pos);
+  TaelinArena.interact_with
+//   (this) (that)
+//   //Physical interactions
+//   let this_pos = TaelinArena.Game.get_thing_pos(this)
+//   let this_dir = TaelinArena.Game.get_thing_dir(this)
+//   let this_box = TaelinArena.Game.get_thing_box(this)
+//   let that_pos = TaelinArena.Game.get_thing_pos(that)
+//   let that_dir = TaelinArena.Game.get_thing_dir(that)
+//   let that_box = TaelinArena.Game.get_thing_box(that)
+//   let that_hit = TaelinArena.Game.get_thing_hit(that)
+//   let out_vec  = 
+//     TaelinArena.collide_with
+//     |this_pos;
+//     |this_dir;
+//     |this_pos;
+//     |that_pos;
+//     |that_dir;
+//     |that_box;
+//   let this = 
+//     out_vec<() TaelinArena.Game.Thing>
+//     | this;           //case none
+//     | (out_vec.value) //case some 
+//       let new_pos = F64.V3.add(this_pos)(out_vec.value)
+//       TaelinArena.Game.set_thing_pos(this)(new_pos);
 
-  //Hit by an effect
-  let apply_hit = ((hit) (this)
-    let this_pos = TaelinArena.Game.get_thing_pos(this)
-    let this_dir = TaelinArena.Game.get_thing_dir(this)
-    let this_box = TaelinArena.Game.get_thing_box(this)
-    let this_sid = TaelinArena.Game.get_thing_sid(this)
-    hit<() TaelinArena.Game.Thing> | (hit.eff) (hit.pos) (hit.dir) (hit.box)
-    let out_vec = 
-      TaelinArena.collide_with
-      |this_pos;
-      |this_dir;
-      |this_box;
-      |hit.pos;
-      |hit.dir;
-      |hit.box;
-    let apply_eff = ((eff) (this)
-      eff<() TaelinArena.Game.Thing>
-      | (eff.lif)              //heal
-        F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
-        | this;
-        | let this_dmg = TaelinArena.Game.get_thing_dmg(this)
-          TaelinArena.Game.set_thing_dmg(this)(F64.sub(this_dmg)(eff.lif));
+//   //Hit by an effect
+//   let apply_hit = ((hit) (this)
+//     let this_pos = TaelinArena.Game.get_thing_pos(this)
+//     let this_dir = TaelinArena.Game.get_thing_dir(this)
+//     let this_box = TaelinArena.Game.get_thing_box(this)
+//     let this_sid = TaelinArena.Game.get_thing_sid(this)
+//     hit<() TaelinArena.Game.Thing> | (hit.eff) (hit.pos) (hit.dir) (hit.box)
+//     let out_vec = 
+//       TaelinArena.collide_with
+//       |this_pos;
+//       |this_dir;
+//       |this_box;
+//       |hit.pos;
+//       |hit.dir;
+//       |hit.box;
+//     let apply_eff = ((eff) (this)
+//       eff<() TaelinArena.Game.Thing>
+//       | (eff.lif)              //heal
+//         F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
+//         | this;
+//         | let this_dmg = TaelinArena.Game.get_thing_dmg(this)
+//           TaelinArena.Game.set_thing_dmg(this)(F64.sub(this_dmg)(eff.lif));
       
-      | (eff.dmg)              //dmg
-        F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
-        | this;
-        | TaelinArena.Game.handle_shields(eff.dmg)(this);
+//       | (eff.dmg)              //dmg
+//         F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
+//         | this;
+//         | TaelinArena.Game.handle_shields(eff.dmg)(this);
 
-      | (eff.mag)              //repulse
-        F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
-        | this;
-        | let dir = F64.V3.look_at(`)
+//       | (eff.mag)              //repulse
+//         F64.eql(this_sid)(that_sid)<() TaelinArena.Game.Thing>
+//         | this;
+//         | let dir = F64.V3.look_at(`)
 
-      | (eff.mag) (eff.dir)    //impulse
-      | (eff.dur) (eff.val)    //slow
-      | (eff.dur) (eff.val)    //haste
-      | (eff.dur) (eff.val)    //shield
-      | (eff.dur)              //silence
-      | (eff.dur)              //root
-      | (eff.dur)              //stun
-      | (eff.to_pos) (eff.all) //teleport
-    ) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing 
-  ) :: TaelinArena.Game.Hit -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+//       | (eff.mag) (eff.dir)    //impulse
+//       | (eff.dur) (eff.val)    //slow
+//       | (eff.dur) (eff.val)    //haste
+//       | (eff.dur) (eff.val)    //shield
+//       | (eff.dur)              //silence
+//       | (eff.dur)              //root
+//       | (eff.dur)              //stun
+//       | (eff.to_pos) (eff.all) //teleport
+//     ) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing 
+//   ) :: TaelinArena.Game.Hit -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing
 
 // Interaction function between two things
 // interact_with(this:Thing, that:Thing): Thing

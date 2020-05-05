@@ -3,7 +3,6 @@ F64.V3.polygon_to_segments:
   F64.V3 -> 
   List(F64.V3) -> 
   List(F64.Segment)
-
   (pos) (dir) (pts)
   List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
   |F64.V3.polygon_to_segments.nil(pos)(dir);
