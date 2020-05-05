@@ -1,0 +1,13 @@
+Core.if_all: Core -> Maybe(Core.all.Tuple)
+  (term)
+  term<() Maybe(Core.all.Tuple)>
+  |#var# () () () Maybe.none<Core.all.Tuple>;
+  |#ref# () Maybe.none<Core.all.Tuple>;
+  |#typ# Maybe.none<Core.all.Tuple>;
+  |#all# (eras) (name) (self) (bind) (body)
+    Maybe.some<Core.all.Tuple>
+    | <P> (func) func(eras)(name)(self)(bind)(body);;
+  |#lam# () () () Maybe.none<Core.all.Tuple>;
+  |#app# () () () Maybe.none<Core.all.Tuple>;
+  |#let# () () () Maybe.none<Core.all.Tuple>;
+  |#ann# () () () Maybe.none<Core.all.Tuple>;

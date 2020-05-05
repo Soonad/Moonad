@@ -1,0 +1,2 @@
+Nat.addVar: (n: Nat) -> Variadic(Nat)(Nat)(n)
+  Variadic.foldr<Nat><Nat>(Nat.add)(Nat.0)

@@ -1,0 +1,2 @@
+Bool.andVar: (n: Nat) -> Variadic(Bool)(Bool)(n)
+  Variadic.foldr<Bool><Bool>(Bool.and)(Bool.true)

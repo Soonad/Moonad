@@ -1,0 +1,36 @@
+Core.typecheck: Core -> Core -> Core.Defs -> Nat -> Either(String)(Core)
+  (term) (type) (defs) (ctx)
+  let bnd = Either.bind<Text><Core><Core>
+  let err = Either.left<Text><Core>
+  let ret = Either.right<Text><Core>
+  let Ret = Either(Text)(Core)
+  term<() Ret>
+  |#var# () () ()
+    Core.typecomp(term)(type)(defs)(ctx);
+  |#ref# ()
+    Core.typecomp(term)(type)(defs)(ctx);
+  |#typ#
+    Core.typecomp(term)(type)(defs)(ctx);
+  |#all# () () () () ()
+    Core.typecomp(term)(type)(defs)(ctx);
+  |#lam# (term.eras) (term.name) (term.body)
+    let typv = Core.reduce(type)(defs)
+    Core.if_all(typv)<() Ret>
+    |#none# err("Non-function application.");
+    |#some# (got) got<Ret>
+      | (typv.eras) (typv.self) (typv.name) (typv.bind) (typv.body)
+      let self_var = Core.ann(Bool.true)(term)(type)
+      let name_var = Core.ann(Bool.true)(Core.var(term.name)(Nat.succ(ctx))(Bool.false))(typv.bind)
+      let body_typ = typv.body(self_var)(name_var)
+      let body_ctx = Nat.succ(ctx)
+      use _        = bnd(Core.typecheck(term.body(name_var))(body_typ)(defs)(body_ctx))
+      ret(type);;;
+  |#app# () () ()
+    Core.typecomp(term)(type)(defs)(ctx);
+  |#let# (term.name) (term.expr) (term.body)
+    bnd(Core.typeinfer(term.expr)(defs)(ctx)) | (expr_typ)
+    let expr_var = Core.ann(Bool.true)(term.expr)(expr_typ)
+    let body_ctx = Nat.succ(ctx)
+    Core.typecheck(term.body(expr_var))(type)(defs)(body_ctx);;
+  |#ann# () () ()
+    Core.typecomp(term)(type)(defs)(ctx);
