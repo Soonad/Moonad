@@ -1,0 +1,170 @@
+// Interaction function between two things
+TaelinArena.interact_with: 
+    (this: TaelinArena.Game.Thing) ->
+    (that: TaelinArena.Game.Thing) ->
+    TaelinArena.Game.Thing
+  (this) (that)
+  //Physical interactions
+  let this.pos = TaelinArena.Game.get_thing_pos(this)
+  let this.dir = TaelinArena.Game.get_thing_dir(this)
+  let this.box = TaelinArena.Game.get_thing_box(this)
+  let this.buf = TaelinArena.Game.get_thing_buf(this)
+  let this.sid = TaelinArena.Game.get_thing_sid(this)
+  let that.pos = TaelinArena.Game.get_thing_pos(that)
+  let that.dir = TaelinArena.Game.get_thing_dir(that)
+  let that.box = TaelinArena.Game.get_thing_box(that)
+  let that.hit = TaelinArena.Game.get_thing_hit(that)
+  let that.sid = TaelinArena.Game.get_thing_sid(this)
+  let out_vec  = 
+    TaelinArena.Game.collide_with
+    |this.pos;
+    |this.dir;
+    |this.box;
+    |that.pos;
+    |that.dir;
+    |that.box;
+  let this = 
+    out_vec<() TaelinArena.Game.Thing>
+    | this;           //case none
+    | (out_vec.value) //case some 
+      let new_pos = F64.V3.add(this.pos)(out_vec.value)
+      TaelinArena.Game.set_thing_pos(this)(new_pos);
+
+  let this = 
+  //Hit by an effect
+  let apply_hit = ((hit) (this)
+    // let this.pos = TaelinArena.Game.get_thing_pos(this)
+    // let this.dir = TaelinArena.Game.get_thing_dir(this)
+    // let this.box = TaelinArena.Game.get_thing_box(this)
+ 
+    hit<() TaelinArena.Game.Thing> | (hit.eff) (hit.pos) (hit.dir) (hit.box)
+      let out_vec = 
+        TaelinArena.Game.collide_with
+        |this.pos;
+        |this.dir;
+        |this.box;
+        |hit.pos;
+        |hit.dir;
+        |hit.box;
+      out_vec<() TaelinArena.Game.Thing>
+      | this; // none
+      | (out_vec.value)
+        let compare_sid = F64.eql(this.sid)(that.sid)
+        let apply_eff = ((eff) (this) // some
+        
+          this // apply_eff return
+        ) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing 
+      
+        // end out_vec case
+        List.fold<TaelinArena.Game.Effect><TaelinArena.Game.Thing>
+        | this;
+        | apply_eff;
+        | hit.eff;
+      ; // end some case in out_vec
+    ; // end some case in hit
+  ) :: TaelinArena.Game.Hit -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  // apply_hit return
+  List.fold<TaelinArena.Game.Hit><TaelinArena.Game.Thing>(this)(apply_hit)(that.hit)
+  // ends this
+  this
+
+// interact_with(this:Thing, that:Thing): Thing
+//   // Physical collisions
+//   let this =
+//     case this |thing
+//     case that |thing
+//     let out_vec = collide_with(
+//       this.pos, this.dir, this.box,
+//       that.pos, that.dir, that.box)
+//     case out_vec
+//     | none => this
+//     | some => this <= thing(pos = add_v3(pos,out_vec.value))
+//   // Hit by an effect
+//   let this =
+//     case that |thing
+//     let apply_hit = (hit, this) =>
+//       case hit |hit
+//       case this |thing
+//       let out_vec = collide_with(
+//         this.pos, this.dir, this.box,
+//         hit.pos, hit.dir, hit.box)
+//       case out_vec
+//       | none => this
+//       | some =>
+//         let apply_eff = (eff, this) =>
+//           case eff
+//           | heal =>
+//             // IMPORTANT: use commented code. 
+//             // I inverted this so the puddle on debug mode could heal 
+//             if this.sid === that.sid then
+//               this
+//               // this <= thing(dmg = dmg - eff.lif)
+//             else
+//               // this
+//               this <= thing(dmg = dmg - eff.lif)
+//           | damage =>
+//             if this.sid === that.sid then
+//               this
+//             else
+//             // hit shields on thing.buf before hitting hp
+//               handle_shields(eff.dmg, this)
+//           | repulse =>
+//             if this.sid === that.sid then
+//               this
+//             else
+//               let dir = lookat_v3(hit.pos, this.pos, v3(1,0,0))
+//               let vec = scale_v3(eff.mag, dir)
+//               this <= thing(knk = vec)
+//           | impulse =>
+//             if this.sid === that.sid then
+//               this
+//             else
+//               let vec = scale_v3(eff.mag, eff.dir)
+//               this <= thing(knk = vec)
+//           | slow => 
+//             if this.sid === that.sid then
+//               this 
+//             else 
+//               let updated_buffs = cons(_ slowed(eff.dur, eff.val), this.buf)
+//               this <= thing(buf = updated_buffs)
+//           | haste =>
+//             if this.sid === that.sid then
+//               this 
+//             else 
+//               let updated_buffs = cons(_ hasted(eff.dur, eff.val), this.buf)
+//               this <= thing(buf = updated_buffs) 
+//           | shield =>
+//             if this.sid === that.sid then
+//               this 
+//             else 
+//               let updated_buffs = cons(_ shielded(eff.dur, eff.val), this.buf)
+//               this <= thing(buf = updated_buffs) 
+//           | silence => 
+//             if this.sid === that.sid then
+//               this 
+//             else 
+//               let updated_buffs = cons(_ silenced(eff.dur), this.buf)
+//               this <= thing(buf = updated_buffs) 
+//           | root =>
+//             if this.sid === that.sid then
+//               this 
+//             else 
+//               let updated_buffs = cons(_ rooted(eff.dur), this.buf)
+//               this <= thing(buf = updated_buffs) 
+//           | stun => 
+//             if this.sid === that.sid then 
+//               this 
+//             else 
+//               let updated_buffs = cons(_ stuned(eff.dur), this.buf)
+//               this <= thing(buf = updated_buffs)
+//           | teleport =>
+//             if eff.all then
+//               this <= thing(pos = eff.to_pos)
+//             else 
+//               if this.sid === that.sid then
+//                 this <= thing(pos = eff.to_pos)
+//               else 
+//                 this
+//         fold(Effect; Thing; this, apply_eff, hit.eff)
+//     fold(Hit; Thing; this, apply_hit, that.hit)
+//   this

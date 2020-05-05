@@ -1,0 +1,14 @@
+TaelinArena.Game.collide_with:
+  (a_pos: F64.V3) ->
+  (a_dir: F64.V3) ->
+  (a_box: TaelinArena.Game.Hitbox) ->
+  (b_pos: F64.V3) ->
+  (b_dir: F64.V3) ->
+  (b_box: TaelinArena.Game.Hitbox) ->
+  Maybe(F64.V3)
+  // (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box)
+  // a_box<() ?>
+  // | ; // nbox
+  // | ; // cbox
+  // Maybe(F64.V3.new(0)(0)(0))
+  TaelinArena.Game.collide_with
