@@ -1,0 +1,14 @@
+// get_stt_value_v3(self: Thing) : V3
+//   case self |thing
+//   let x = get_stt_value(self, POS_X_KEY)
+//   let y = get_stt_value(self, POS_Y_KEY)
+//   // let z = get_stt_value(self, POS_Z_KEY)
+//   v3(x, y, 0)
+
+TaelinArena.Game.get_stt_value_v3:  
+  (self: TaelinArena.Game.Thing) ->
+  F64.V3
+  (self)
+  let x = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_X_KEY)
+  let y = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_Y_KEY)
+  F64.V3.new(x)(y)(F64.0)

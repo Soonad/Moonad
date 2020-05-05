@@ -1,0 +1,11 @@
+Either.bind
+  : <A: Type> ->
+    <B: Type> ->
+    <C: Type> ->
+    Either(A)(B) ->
+    (B -> Either(A)(C)) ->
+    Either(A)(C)
+  <A> <B> <C> (e) (f)
+  e<() Either(A)(C)>
+  | (val) Either.left<A><C>(val);
+  | (val) f(val);
