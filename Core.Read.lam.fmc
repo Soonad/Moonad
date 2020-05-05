@@ -1,8 +1,7 @@
 Core.Read.lam: Core.Read(Core.Bind)
-  Core.Read.seek<Bool><Core.Bind>(Core.Read.one("(")("<")) | (eras)
-  Core.Read.seek<Text><Core.Bind>(Core.Read.nam)           | (name)
-  Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">")) | ()
-  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)      | (body)
-  Core.Read.done<Core.Bind>                                | (ctx)
+  use eras = Core.Read.seek<Bool><Core.Bind>(Core.Read.one("(")("<"))
+  use name = Core.Read.seek<Text><Core.Bind>(Core.Read.nam)          
+  use skip = Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">"))
+  use body = Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)     
+  use ctx  = Core.Read.done<Core.Bind>                               
   Core.lam(eras)(name)((x) body(Core.Ctx.ext(name)(x)(ctx)))
-  ;;;;;
