@@ -1,10 +1,9 @@
 Core.Read.let: Core.Read(Core.Bind)
-  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("let ")) | (eras)
-  Core.Read.seek<Text><Core.Bind>(Core.Read.wrd)         | (name)
-  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("="))    | ()
-  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)    | (expr)
-  Core.Read.seek<Bool><Core.Bind>(Core.Read.opt(";"))    | ()
-  Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)    | (body)
-  Core.Read.done<Core.Bind>                              | (ctx)
+  use eras = Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("let "))
+  use name = Core.Read.seek<Text><Core.Bind>(Core.Read.wrd)        
+  use skip = Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("="))
+  use expr = Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)   
+  use skip = Core.Read.seek<Bool><Core.Bind>(Core.Read.opt(";"))
+  use body = Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)   
+  use ctx  = Core.Read.done<Core.Bind>                             
   Core.let(name)(expr(ctx))((x) body(Core.Ctx.ext(name)(x)(ctx)))
-  ;;;;;;;

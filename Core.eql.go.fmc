@@ -5,9 +5,9 @@ Core.eql.go: Core -> Core -> Core.Defs -> Set -> Nat -> Bool
   let x = Core.to_uid(a)
   let y = Core.to_uid(b)
   let h = Bits.concat(x)(y)
-  Bool.or(Bits.eql(x)(y))(Set.get(h)(eql))<() Bool>
-  | Bool.true;
-  | let eql = Set.set(h)(eql)
+  Bool.or(Bits.eql(x)(y))(Set.get(h)(eql))<() Unit -> Bool>
+  | () Bool.true;
+  | () let eql = Set.set(h)(eql)
     a<() Bool>
     |#var# () () () Bool.false;
     |#ref# (a.name) Bool.false;
@@ -89,3 +89,4 @@ Core.eql.go: Core -> Core -> Core.Defs -> Set -> Nat -> Bool
       |#ann# (b.done) (b.expr) (b.type)
         let e_expr = Core.eql.go(a.expr)(b.expr)(defs)(eql)(dep)
         e_expr;;;
+  | Unit.new;

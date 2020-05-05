@@ -1,15 +1,20 @@
 Research.core_in_core: String
   let defs = Core.parse_defs("
-    main
-      : (A: Type) ->
-        (B: Type) ->
-        (aa: A -> A) ->
-        (ab: A -> B) ->
-        (ba: B -> A) ->
-        (bb: B -> B) ->
-        (a: A) ->
-        A
-      (A) (B) (aa) (ab) (ba) (bb) (a) ba(bb(bb(ab(a))))
+  Nat: Type
+    nat<P: Nat -> Type> ->
+    (zero: P(Nat.zero)) ->
+    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+    P(nat)
+
+  Nat.zero: Nat
+    <P> (z) (s) z
+
+  Nat.succ: Nat -> Nat
+    (n)
+    <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
   ")
   let term = Core.Defs.term(defs)("main")
   let type = Core.Defs.type(defs)("main")

@@ -1,5 +1,6 @@
+// A list of exports is just a heterogenic list.
 Exports: Type
   <P: Type> ->
-  (export: <A: Type> -> (x: A) -> (xs: P) -> P) ->
-  (module: P) ->
+  (new: P) ->
+  (add: <A: Type> -> (x: A) -> (xs: P) -> P) ->
   P
