@@ -32,11 +32,9 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
         let this = TaelinArena.Game.set_thing_tik(this)(new_tik)
         let this = TaelinArena.Game.set_thing_lit(this)(new_lit)
         let this = TaelinArena.Game.set_thing_rst(this)(new_rst)
-        this  
-      ;
+        this;
       // case rst of false
-      | this
-      ;  
+      | this;  
 
     // Integrates position with walk vector
     let boost = TaelinArena.Game.speed_multiplier_of(this)
@@ -63,8 +61,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
       | let force = F64.max(F64.sub(knk_len)(wei))(F64.0)
         F64.V3.scale(force)(F64.V3.norm(knk));
       // case false 
-      | knk
-      ;
+      | knk;
     let this = TaelinArena.Game.set_thing_pos(this)(new_pos)
     let this = TaelinArena.Game.set_thing_knk(this)(new_knk)
 
@@ -80,8 +77,8 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
       |others;
 
     // Increments tik counter
-    let tik  = TaelinArena.Game.get_thing_tik(self)
-    let this = TaelinArena.Game.set_thing_tik(self)(F64.add(tik)(F64.1))
+    let tik  = TaelinArena.Game.get_thing_tik(this)
+    let this = TaelinArena.Game.set_thing_tik(this)(F64.add(tik)(F64.1))
 
     // Spawns children
     let this_chi = TaelinArena.Game.get_thing_chi(this)
@@ -92,7 +89,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
       List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>
       |chi_init;
       |this_chi;
-    let this = TaelinArena.Game.set_thing_chi(List.nil<TaelinArena.Game.Thing>)
+    let this = TaelinArena.Game.set_thing_chi(this)(List.nil<TaelinArena.Game.Thing>)
 
     // Keeps inside map
     let this_pos = TaelinArena.Game.get_thing_pos(this)
@@ -102,7 +99,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
     let new_x = F64.min(F64.max(F64._256)(pos_x))(F64.256)
     let new_y = F64.min(F64.max(F64._160)(pos_y))(F64.160)
     let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.256)
-    let this  = TaelinArena.Game.set_thing_pos(F64.V3.new(new_x)(new_y)(new_z))
+    let this  = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z))
 
     // Bounds HP
     let dmg = TaelinArena.Game.get_thing_dmg(this)
@@ -119,7 +116,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
 
     let die = TaelinArena.Game.get_thing_die(this)
     let xs = 
-      Bool.or(die)(dead)<() List(TaelinArena.Game.Thing)>
+      Bool.or(die)(no_hp)<() List(TaelinArena.Game.Thing)>
       | res;
       | List.cons<TaelinArena.Game.Thing>(this)(res);
 
@@ -130,14 +127,16 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
        List(TaelinArena.Game.Thing) ->
        List(TaelinArena.Game.Thing)
 
-  let thing_id = ((x) x) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  let things_id = 
+    ((x) x) :: List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing)
   let stage = gm<() List(TaelinArena.Game.Thing)> | (stage) stage;
   let stage_nil = List.nil<TaelinArena.Game.Thing>
   let new_stage = 
-    TaelinArena.fold_with_context<TaelinArena.Game.Thing><TaelinArena.Game.Thing>
+    TaelinArena.fold_with_context<TaelinArena.Game.Thing><List(TaelinArena.Game.Thing)>
     |stage_nil;
     |tick;
     |stage;
+    |things_id;
 
   TaelinArena.Game.Game.new(new_stage)
 
