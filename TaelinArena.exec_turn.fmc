@@ -17,8 +17,8 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
     let rst = TaelinArena.Game.get_thing_rst(this)
     let this = 
       rst<() TaelinArena.Game.Thing>
-      // case rst of true  
-      | let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0)
+      | #true#
+        let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0)
         let new_bst = F64.1
         let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.3)(F64.4))
         let new_act = F64.0
@@ -33,8 +33,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
         let this = TaelinArena.Game.set_thing_lit(this)(new_lit)
         let this = TaelinArena.Game.set_thing_rst(this)(new_rst)
         this;
-      // case rst of false
-      | this;  
+      | #false# this;  
 
     // Integrates position with walk vector
     let boost = TaelinArena.Game.speed_multiplier_of(this)
@@ -57,11 +56,10 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
     let knk_len = F64.V3.len(knk)
     let new_knk = 
       F64.gtn(knk_len)(F64.0)<() F64.V3>
-      // case true 
-      | let force = F64.max(F64.sub(knk_len)(wei))(F64.0)
+      | #true# 
+        let force = F64.max(F64.sub(knk_len)(wei))(F64.0)
         F64.V3.scale(force)(F64.V3.norm(knk));
-      // case false 
-      | knk;
+      | #false# knk;
     let this = TaelinArena.Game.set_thing_pos(this)(new_pos)
     let this = TaelinArena.Game.set_thing_knk(this)(new_knk)
 
