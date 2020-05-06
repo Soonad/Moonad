@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_act: 
   (thi: TaelinArena.Game.Thing) -> 
   TaelinArena.Game.ActionId
-
   (thi)
   thi<() TaelinArena.Game.ActionId>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

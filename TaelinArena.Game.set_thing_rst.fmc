@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_rst:
   (thi: TaelinArena.Game.Thing) -> 
   (new_rst: Bool) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_rst)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

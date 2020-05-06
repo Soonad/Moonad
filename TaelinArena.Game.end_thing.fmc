@@ -11,9 +11,9 @@ TaelinArena.Game.end_thing:
   (stt_key: Bits) ->
   TaelinArena.Game.Thing
   (self) (tx) (after_tiks) (stt_key)
-  let self.stt = TaelinArena.Game.get_thing_stt(self)
+  let self.stt    = TaelinArena.Game.get_thing_stt(self)
   let current_tik = Map.get<F64>(stt_key)(self.stt)
-  let empty_stt = Map.set<F64>(stt_key)(after_tiks)(self.stt)
+  let empty_stt   = Map.set<F64>(stt_key)(after_tiks)(self.stt)
   current_tik<() TaelinArena.Game.Thing>
   | TaelinArena.Game.set_thing_stt(self)(empty_stt);
   | (current_tik.value) 

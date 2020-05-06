@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_act:
   (thi: TaelinArena.Game.Thing) -> 
   (new_act: TaelinArena.Game.ActionId) -> 
   TaelinArena.Game.Thing
-  
   (thi) (new_act)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

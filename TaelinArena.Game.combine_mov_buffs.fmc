@@ -1,12 +1,12 @@
 TaelinArena.Game.combine_mov_buffs: TaelinArena.Game.Buff -> F64 -> F64
   (buff) (i)
   buff<() F64>
-  | (buff.dur) (buff.val) i;                    // shielded
-  | (buff.dur) (buff.val) F64.mul(i)(buff.val); // slowed
-  | (buff.dur) (buff.val) F64.mul(i)(buff.val); // hasted
-  | (buff.dur)            i;                    // silenced
-  | (buff.dur)            F64.0;                // rooted
-  | (buff.dur)            F64.0;                // stuned
+  | #shielded# (buff.dur) (buff.val) i;
+  | #slowed#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
+  | #hasted#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
+  | #silenced# (buff.dur)            i;
+  | #rooted#   (buff.dur)            F64.0;
+  | #stuned#   (buff.dur)            F64.0;
 
 // combine_mov_buffs(buff: Buff, i: Number) : Number
 //   case buff 

@@ -4,7 +4,6 @@ TaelinArena.Game.Hit.new:
   F64.V3 -> 
   TaelinArena.Game.Hitbox -> 
   TaelinArena.Game.Hit
-  
   (eff) (pos) (dir) (box)
   <P> (new)
   new(eff)(pos)(dir)(box)

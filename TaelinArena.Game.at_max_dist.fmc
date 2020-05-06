@@ -9,11 +9,10 @@
 
 TaelinArena.Game.at_max_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
   (self) (max_range)
-  let self_pos = TaelinArena.Game.get_thing_pos(self)
-  let self_trg = TaelinArena.Game.get_thing_trg(self)
-  
-  let dist_max = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(max_range))
-  let dist_trg = F64.V3.dist(self_pos)(self_trg)
+  let self_pos  = TaelinArena.Game.get_thing_pos(self)
+  let self_trg  = TaelinArena.Game.get_thing_trg(self)
+  let dist_max  = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(max_range))
+  let dist_trg  = F64.V3.dist(self_pos)(self_trg)
   let less_than = F64.ltn(dist_trg)(dist_max)
   F64.if<F64.V3>(F64.from_bool(less_than))
   | TaelinArena.Game.at_dist(self)(dist_trg);

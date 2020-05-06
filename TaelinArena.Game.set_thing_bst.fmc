@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_bst:
   (thi: TaelinArena.Game.Thing) -> 
   (new_bst: F64) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_bst)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

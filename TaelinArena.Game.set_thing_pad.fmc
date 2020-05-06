@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_pad:
   (thi: TaelinArena.Game.Thing) -> 
   (new_pad: F64.V3) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_pad)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

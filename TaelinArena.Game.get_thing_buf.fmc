@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_buf: 
   (thi: TaelinArena.Game.Thing) -> 
   List(TaelinArena.Game.Buff)
-
   (thi)
   thi<() List(TaelinArena.Game.Buff)>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

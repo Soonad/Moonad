@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_box:
   (thi: TaelinArena.Game.Thing) -> 
   (new_box: TaelinArena.Game.Hitbox) -> 
   TaelinArena.Game.Thing
-  
   (thi) (new_box)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

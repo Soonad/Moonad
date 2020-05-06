@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_fun:
   (thi: TaelinArena.Game.Thing) -> 
   (new_fun: TaelinArena.Game.TxFunction) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_fun)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

@@ -5,42 +5,42 @@ TaelinArena.Game.update_buff_dur:
   let self.buf = TaelinArena.Game.get_thing_buf(self)
   let fn = ( (buff) (acc)
     buff<() List(TaelinArena.Game.Buff)>
-    | (buff.dur) (buff.val) // shielded
+    | #shielded# (buff.dur) (buff.val)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 
         | TaelinArena.Game.Buff.shielded(F64.sub(buff.dur)(F64.1))(buff.val);
         | acc;;
     ; 
-    | (buff.dur) (buff.val) // slowed
+    | #slowed# (buff.dur) (buff.val)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 
         | TaelinArena.Game.Buff.slowed(F64.sub(buff.dur)(F64.1))(buff.val);
         | acc;;
     ; 
-    | (buff.dur) (buff.val) // hasted
+    | #hasted# (buff.dur) (buff.val)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 
         | TaelinArena.Game.Buff.hasted(F64.sub(buff.dur)(F64.1))(buff.val);
         | acc;;
     ; 
-    | (buff.dur) // silenced
+    | #silenced# (buff.dur)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 
         | TaelinArena.Game.Buff.silenced(F64.sub(buff.dur)(F64.1));
         | acc;;
     ; 
-    | (buff.dur) // rooted
+    | #rooted# (buff.dur)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 
         | TaelinArena.Game.Buff.rooted(F64.sub(buff.dur)(F64.1));
         | acc;;
     ; 
-    | (buff.dur) // stuned
+    | #stuned# (buff.dur)
       Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))
       | acc;
       | List.cons<TaelinArena.Game.Buff> 

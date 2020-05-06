@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_tik:
   (thi: TaelinArena.Game.Thing) -> 
   (new_tik: F64) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_tik)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

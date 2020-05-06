@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_mid:
   (thi: TaelinArena.Game.Thing) -> 
   (new_mid: TaelinArena.Game.ModelId) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_mid)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

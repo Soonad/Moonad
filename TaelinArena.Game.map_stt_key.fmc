@@ -9,7 +9,6 @@ TaelinArena.Game.map_stt_key
   | TaelinArena.Game.set_thing_stt
     |self;
     |Map.set<F64>(stt_key)(F64.0)(stt);;
-  
   | (result.value)
     TaelinArena.Game.set_thing_stt
     |self;

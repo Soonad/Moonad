@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_hit: 
   (thi: TaelinArena.Game.Thing) -> 
   List(TaelinArena.Game.Hit)
-  
   (thi)
   thi<() List(TaelinArena.Game.Hit)>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

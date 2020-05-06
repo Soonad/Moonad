@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_buf:
   (thi: TaelinArena.Game.Thing) -> 
   (new_buf: List(TaelinArena.Game.Buff)) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_buf)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

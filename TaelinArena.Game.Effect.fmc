@@ -25,7 +25,7 @@ TaelinArena.Game.Effect : Type
     (mag: F64) -> 
     P(TaelinArena.Game.Effect.repulse(mag)) ) ->
   (impulse: 
-    (mag: F64) -> 
+    (mag: F64)    -> 
     (dir: F64.V3) -> 
     P(TaelinArena.Game.Effect.impulse(mag)(dir)) ) ->
   (slow: 
@@ -51,7 +51,7 @@ TaelinArena.Game.Effect : Type
     P(TaelinArena.Game.Effect.stun(dur)) ) ->
   (teleport: 
     (to_pos: F64.V3) -> 
-    (all: F64) -> 
+    (all: F64)       -> 
     P(TaelinArena.Game.Effect.teleport(to_pos)(all)) ) ->
   P(effect)
   

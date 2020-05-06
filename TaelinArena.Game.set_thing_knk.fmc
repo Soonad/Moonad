@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_knk:
   (thi: TaelinArena.Game.Thing) -> 
   (new_knk: F64.V3) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_knk)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

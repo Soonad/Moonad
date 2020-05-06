@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_chi: 
   (thi: TaelinArena.Game.Thing) -> 
   List(TaelinArena.Game.Thing)
-
   (thi)
   thi<() List(TaelinArena.Game.Thing)>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
