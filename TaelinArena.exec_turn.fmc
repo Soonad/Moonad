@@ -89,7 +89,8 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
       List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>
       |chi_init;
       |this_chi;
-    let this = TaelinArena.Game.set_thing_chi(this)(List.nil<TaelinArena.Game.Thing>)
+    let this = 
+      TaelinArena.Game.set_thing_chi(this)(List.nil<TaelinArena.Game.Thing>)
 
     // Keeps inside map
     let this_pos = TaelinArena.Game.get_thing_pos(this)
@@ -99,7 +100,9 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
     let new_x = F64.min(F64.max(F64._256)(pos_x))(F64.256)
     let new_y = F64.min(F64.max(F64._160)(pos_y))(F64.160)
     let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.256)
-    let this  = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z))
+    let this  = TaelinArena.Game.set_thing_pos
+    |this;
+    |F64.V3.new(new_x)(new_y)(new_z);
 
     // Bounds HP
     let dmg = TaelinArena.Game.get_thing_dmg(this)
