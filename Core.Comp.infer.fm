@@ -1,5 +1,5 @@
-Core.Comp.infer: Core -> Core.Defs -> Maybe(Pair(Comp)(Core))
-  (term) (defs)
+Core.Comp.infer: Core -> Core.Defs -> Nat -> Maybe(Pair(Comp)(Core))
+  (term) (defs) (ctx)
   let Par = Pair(Comp)(Core)
   let par = Pair.new<Comp><Core>
   let bnd = Maybe.bind<Par><Par>
@@ -30,7 +30,7 @@ Core.Comp.infer: Core -> Core.Defs -> Maybe(Pair(Comp)(Core))
   |#lam# (term.eras) (term.name) (term.body)
     err;
   |#app# (term.eras) (term.func) (term.argm)
-    bnd(Core.Comp.infer(term.func)(defs)) | (func_res)
+    bnd(Core.Comp.infer(term.func)(defs)(ctx)) | (func_res)
     let func_typ = Core.reduce(typ(func_res))(defs)
     Core.if_all(func_typ)<() Ret>
     |#none# err;
@@ -38,17 +38,17 @@ Core.Comp.infer: Core -> Core.Defs -> Maybe(Pair(Comp)(Core))
       |#new# (func_typ.eras) (func_typ.self) (func_typ.name) (func_typ.bind) (func_typ.body)
         let self_var = Core.ann(Bool.true)(term.func)(func_typ)
         let name_var = Core.ann(Bool.true)(term.argm)(func_typ.bind)
-        use argm_res = bnd(Core.Comp.check(term.argm)(func_typ.bind)(defs))
+        use argm_res = bnd(Core.Comp.check(term.argm)(func_typ.bind)(defs)(ctx))
         let term_typ = func_typ.body(self_var)(name_var)
         let comp     = Comp.app(cmp(func_res))(cmp(argm_res))
         let type     = term_typ
         ret(par(comp)(type));;;;
   |#let# (term.name) (term.expr) (term.body)
-    use expr_res = bnd(Core.Comp.infer(term.expr)(defs))
+    use expr_res = bnd(Core.Comp.infer(term.expr)(defs)(ctx))
     let expr_var = Core.ann(Bool.true)(term.expr)(typ(expr_res))
-    use body_res = bnd(Core.Comp.infer(term.body(expr_var))(defs))
+    use body_res = bnd(Core.Comp.infer(term.body(expr_var))(defs)(Nat.succ(ctx)))
     let comp     = Comp.let(term.name)(cmp(expr_res))(cmp(body_res))
     let type     = typ(body_res)
     ret(par(comp)(type));
   |#ann# (term.done) (term.expr) (term.type)
-    Core.Comp.check(term.expr)(term.type)(defs);
+    Core.Comp.check(term.expr)(term.type)(defs)(ctx);

@@ -28,9 +28,9 @@ Core.typecheck: Core -> Core -> Core.Defs -> Nat -> Either(String)(Core)
   |#app# () () ()
     Core.typecomp(term)(type)(defs)(ctx);
   |#let# (term.name) (term.expr) (term.body)
-    bnd(Core.typeinfer(term.expr)(defs)(ctx)) | (expr_typ)
+    use expr_typ = bnd(Core.typeinfer(term.expr)(defs)(ctx))
     let expr_var = Core.ann(Bool.true)(term.expr)(expr_typ)
     let body_ctx = Nat.succ(ctx)
-    Core.typecheck(term.body(expr_var))(type)(defs)(body_ctx);;
+    Core.typecheck(term.body(expr_var))(type)(defs)(body_ctx);
   |#ann# () () ()
     Core.typecomp(term)(type)(defs)(ctx);
