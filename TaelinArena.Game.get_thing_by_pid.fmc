@@ -1,8 +1,7 @@
 TaelinArena.Game.get_thing_by_pid: 
   TaelinArena.Game.PlayerId ->
-  TaelinArena.Game.Game ->
+  TaelinArena.Game.Game     ->
   Maybe(TaelinArena.Game.Thing)
-
   (pid) (gm)
   gm<() Maybe(TaelinArena.Game.Thing)> | (gm.stage)
   List.find<TaelinArena.Game.Thing>

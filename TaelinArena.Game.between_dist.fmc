@@ -8,7 +8,6 @@ TaelinArena.Game.between_dist: TaelinArena.Game.Thing -> F64 -> F64 -> F64.V3
   (self) (min_range) (max_range)
   let self_pos = TaelinArena.Game.get_thing_pos(self)
   let self_trg = TaelinArena.Game.get_thing_trg(self) 
-
   let dist_trg = F64.V3.dist(self_pos)(self_trg)
   let min = F64.min(max_range)(dist_trg)
   let max = F64.max(min_range)(min)

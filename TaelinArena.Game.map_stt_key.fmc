@@ -1,0 +1,21 @@
+TaelinArena.Game.map_stt_key
+  : TaelinArena.Game.Thing ->
+    Bits                   ->
+    (F64 -> F64)           -> 
+    TaelinArena.Game.Thing
+  (self) (stt_key) (func)
+  let stt = TaelinArena.Game.get_thing_stt(self)
+  Map.get<F64>(stt_key)(stt)<() TaelinArena.Game.Thing>
+  | TaelinArena.Game.set_thing_stt
+    |self;
+    |Map.set<F64>(stt_key)(F64.0)(stt);;
+  | (result.value)
+    TaelinArena.Game.set_thing_stt
+    |self;
+    |Map.set<F64>(stt_key)(func(result.value))(stt);; 
+
+// map_stt_key(self: Thing, stt_key: Bits, func: Number -> Number) : Thing
+//   self <= thing(stt = 
+//     case lookup(_ stt_key, stt) as result
+//     | none => insert(_ stt_key, 0, stt)
+//     | some => insert(_ stt_key, func(result.value), stt))

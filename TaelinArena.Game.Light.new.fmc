@@ -5,7 +5,6 @@ TaelinArena.Game.Light.new:
   F64.V3 -> 
   F64.V3 -> 
   TaelinArena.Game.Light
-  
   (pos) (rad) (rng) (sub) (add)
   <P> (new)
   new(pos)(rad)(rng)(sub)(add)

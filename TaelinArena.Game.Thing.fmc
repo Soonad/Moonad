@@ -1,5 +1,61 @@
-// Formality
-// ---------
+TaelinArena.Game.Thing : Type 
+  thing<P: TaelinArena.Game.Thing -> Type> ->
+  (new: 
+    (fun: TaelinArena.Game.TxFunction) ->
+    (pid: TaelinArena.Game.PlayerId) -> 
+    (mid: TaelinArena.Game.ModelId) ->
+    (act: TaelinArena.Game.ActionId) ->
+    (sid: TaelinArena.Game.SideId) ->
+    (stt: Map(F64)) -> 
+    (nam: String) ->
+    (lit: List(TaelinArena.Game.Light)) ->
+    (tik: F64) ->
+    (pos: F64.V3) ->
+    (mov: F64) -> 
+    (bst: F64) ->
+    (pad: F64.V3) ->
+    (dir: F64.V3) ->
+    (trg: F64.V3) ->
+    (vel: F64.V3) ->
+    (box: TaelinArena.Game.Hitbox) ->
+    (wei: F64) ->
+    (mhp: F64) ->
+    (dmg: F64) ->
+    (knk: F64.V3) ->
+    (buf: List(TaelinArena.Game.Buff)) ->
+    (chi: List(TaelinArena.Game.Thing)) -> 
+    (hit: List(TaelinArena.Game.Hit)) ->
+    (rst: Bool) -> 
+    (die: Bool) -> 
+    P(TaelinArena.Game.Thing.new
+    | fun; 
+    | pid;
+    | mid;
+    | act;
+    | sid;
+    | stt;
+    | nam;
+    | lit;
+    | tik;
+    | pos;
+    | mov;
+    | bst;
+    | pad;
+    | dir;
+    | trg;
+    | vel;
+    | box;
+    | wei;
+    | mhp;
+    | dmg;
+    | knk;
+    | buf;
+    | chi;
+    | hit;
+    | rst;
+    | die;) ) ->
+    P(thing)
+
 // T Thing
 // | thing(
 //   fun : TxFunction,  // transaction function
@@ -28,62 +84,3 @@
 //   hit : List(Hit),   // hits done by this
 //   rst : Bool,        // should this reset to idle
 //   die : Bool)        // should this be removed?
-
-TaelinArena.Game.Thing : Type 
-  thing<P: TaelinArena.Game.Thing -> Type> ->
-  (new: 
-    (fun: TaelinArena.Game.TxFunction) ->
-    (pid: TaelinArena.Game.PlayerId) -> 
-    (mid: TaelinArena.Game.ModelId) ->
-    (act: TaelinArena.Game.ActionId) ->
-    (sid: TaelinArena.Game.SideId) ->
-    (stt: Map(F64)) -> 
-    (nam: String) ->
-    (lit: List(TaelinArena.Game.Light)) ->
-    (tik: F64) ->
-    (pos: F64.V3) ->
-    (mov: F64) -> 
-    (bst: F64) ->
-    (pad: F64.V3) ->
-    (dir: F64.V3) ->
-    (trg: F64.V3) ->
-    (vel: F64.V3) ->
-    (box: TaelinArena.Game.Hitbox) ->
-    (wei: F64) ->
-    (mph: F64) ->
-    (dmg: F64) ->
-    (knk: F64.V3) ->
-    (buf: List(TaelinArena.Game.Buff)) ->
-    (chi: List(TaelinArena.Game.Thing)) -> 
-    (hit: List(TaelinArena.Game.Hit)) ->
-    (rst: Bool) -> 
-    (die: Bool) -> 
-    P(TaelinArena.Game.Thing.new
-    | fun; 
-    | pid;
-    | mid;
-    | act;
-    | sid;
-    | stt;
-    | nam;
-    | lit;
-    | tik;
-    | pos;
-    | mov;
-    | bst;
-    | pad;
-    | dir;
-    | trg;
-    | vel;
-    | box;
-    | wei;
-    | mph;
-    | dmg;
-    | knk;
-    | buf;
-    | chi;
-    | hit;
-    | rst;
-    | die;) ) ->
-    P(thing)
-

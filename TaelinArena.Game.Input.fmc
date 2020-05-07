@@ -1,15 +1,3 @@
-// Formality
-// ---------
-// T Input
-// | sdir(dir: V3) // stick direction
-// | key0(pos: V3) // left down
-// | key1(pos: V3) // middle down
-// | key2(pos: V3) // right down
-// | key3(pos: V3) // space down
-// | key4(pos: V3) // extra down
-// | key5(pos: V3) // shift down
-// | cmsg(txt: String) // chat message
-
 TaelinArena.Game.Input : Type
   input<P: TaelinArena.Game.Input -> Type> ->
   (sdir: (dir: F64.V3) -> P(TaelinArena.Game.Input.sdir(dir)) ) ->
@@ -22,3 +10,12 @@ TaelinArena.Game.Input : Type
   (cmsg: (txt: String) -> P(TaelinArena.Game.Input.cmsg(txt)) ) ->
   P(input)
   
+// T Input
+// | sdir(dir: V3) // stick direction
+// | key0(pos: V3) // left down
+// | key1(pos: V3) // middle down
+// | key2(pos: V3) // right down
+// | key3(pos: V3) // space down
+// | key4(pos: V3) // extra down
+// | key5(pos: V3) // shift down
+// | cmsg(txt: String) // chat message
