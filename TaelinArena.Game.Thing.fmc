@@ -50,7 +50,7 @@ TaelinArena.Game.Thing : Type
     (vel: F64.V3) ->
     (box: TaelinArena.Game.Hitbox) ->
     (wei: F64) ->
-    (mph: F64) ->
+    (mhp: F64) ->
     (dmg: F64) ->
     (knk: F64.V3) ->
     (buf: List(TaelinArena.Game.Buff)) ->
@@ -77,7 +77,7 @@ TaelinArena.Game.Thing : Type
     | vel;
     | box;
     | wei;
-    | mph;
+    | mhp;
     | dmg;
     | knk;
     | buf;

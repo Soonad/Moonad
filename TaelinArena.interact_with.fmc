@@ -138,6 +138,8 @@ TaelinArena.interact_with:
   // ends this
   this
 
+
+// Interaction function between two things
 // interact_with(this:Thing, that:Thing): Thing
 //   // Physical collisions
 //   let this =
