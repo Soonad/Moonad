@@ -11,18 +11,16 @@ TaelinArena.Game.animate_between:
   (boost: F64) -> 
   (model: F64) -> 
   (count: F64) -> 
-  (from: F64) -> 
-  (til: F64) -> 
+  (from: F64)  -> 
+  (til: F64)   -> 
   TaelinArena.Game.Thing
   (self) (boost) (model) (count) (from) (til)
   let self.tik = TaelinArena.Game.get_thing_tik(self)
   let self.pad = TaelinArena.Game.get_thing_pad(self)
   let self.act = TaelinArena.Game.get_thing_act(self)
   let self.dir = TaelinArena.Game.get_thing_dir(self)
-
   Bool.if<TaelinArena.Game.Thing>(F64.is_between(from)(til)(self.tik))
   | let set_bst = TaelinArena.Game.set_thing_bst(self)(boost)
-
     let set_dir = 
       TaelinArena.Game.set_thing_dir(self)
       | let pad_len = F64.V3.len(self.pad)
@@ -32,7 +30,6 @@ TaelinArena.Game.animate_between:
           | F64.V3.norm(self.pad);
           | self.dir;;
       ;
-
     let set_mid = TaelinArena.Game.set_thing_mid(self)
     | let duration = F64.sub(til)(from)
       let curr_tik = F64.sub(self.tik)(from)

@@ -4,7 +4,6 @@ TaelinArena.Game.with_thing:
   (TaelinArena.Game.Thing -> TaelinArena.Game.Thing) -> 
   TaelinArena.Game.Game     -> 
   TaelinArena.Game.Game 
-  
   (pid) (fn) (gm)
   TaelinArena.Game.map_stage
   |TaelinArena.Game.with_thing.effect(pid)(fn);
