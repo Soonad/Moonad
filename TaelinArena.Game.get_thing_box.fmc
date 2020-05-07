@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_box: 
   (thi: TaelinArena.Game.Thing) -> 
   TaelinArena.Game.Hitbox
-
   (thi)
   thi<() TaelinArena.Game.Hitbox>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

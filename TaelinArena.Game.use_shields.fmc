@@ -6,7 +6,7 @@ TaelinArena.Game.use_shields:
   acc<() Pair(F64)(List(TaelinArena.Game.Buff))> 
   | (acc.fst) (acc.snd)
     buff<() Pair(F64)(List(TaelinArena.Game.Buff))>
-    | (buff.dur) (buff.val) //shielded
+    | #shielded# (buff.dur) (buff.val)
       Bool.if<Pair(F64)(List(TaelinArena.Game.Buff))>(F64.eql(acc.fst)(F64.0)) 
       | acc; // no damage
       | let compare = F64.compare_numbers(acc.fst)(buff.val)
@@ -25,26 +25,26 @@ TaelinArena.Game.use_shields:
           Pair.new<F64><List(TaelinArena.Game.Buff)>(remaining_dmg)(acc.snd);
       ;
   ;
-  | (buff.dur) (buff.val) 
+  | #slowed# (buff.dur) (buff.val) 
     Pair.new<F64><List(TaelinArena.Game.Buff)>
     | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //slowed
-  | (buff.dur) (buff.val)
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);;
+  | #hasted# (buff.dur) (buff.val)
     Pair.new<F64><List(TaelinArena.Game.Buff)>
     | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //hasted
-  | (buff.dur)
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);;
+  | #silenced# (buff.dur)
     Pair.new<F64><List(TaelinArena.Game.Buff)>
     | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; //silenced
-  | (buff.dur)
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);;
+  | #rooted# (buff.dur)
     Pair.new<F64><List(TaelinArena.Game.Buff)>
     | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // rooted
-  | (buff.dur)
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);;
+  | #stuned# (buff.dur)
     Pair.new<F64><List(TaelinArena.Game.Buff)>
     | acc.fst; 
-    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);; // stuned
+    | List.cons<TaelinArena.Game.Buff>(buff)(acc.snd);;
   ;
 
 // use_shields(buff: Buff, acc: Pair(Number, List(Buff))) : Pair(Number, List(Buff))

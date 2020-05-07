@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_hit:
   (thi: TaelinArena.Game.Thing) -> 
   (new_hit: List(TaelinArena.Game.Hit)) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_hit)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

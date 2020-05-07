@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_nam:
   (thi: TaelinArena.Game.Thing) -> 
   (new_nam: String) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_nam)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

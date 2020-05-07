@@ -1,7 +1,6 @@
 TaelinArena.Game.get_thing_mid: 
   (thi: TaelinArena.Game.Thing) -> 
   TaelinArena.Game.ModelId
-
   (thi)
   thi<() TaelinArena.Game.ModelId>
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

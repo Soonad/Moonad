@@ -2,7 +2,6 @@ TaelinArena.Game.set_thing_pid:
   (thi: TaelinArena.Game.Thing) -> 
   (new_pid: TaelinArena.Game.PlayerId) -> 
   TaelinArena.Game.Thing
-
   (thi) (new_pid)
   thi<() TaelinArena.Game.Thing> 
   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 

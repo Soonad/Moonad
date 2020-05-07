@@ -25,7 +25,7 @@ TaelinArena.Game.dash:
   (til_tik: F64) ->
   TaelinArena.Game.Thing
   (self) (speed) (from_tik) (til_tik)
-  let rooted = TaelinArena.Game.is_rooted(self)
+  let rooted   = TaelinArena.Game.is_rooted(self)
   let self.tik = TaelinArena.Game.get_thing_tik(self)
   Bool.if<TaelinArena.Game.Thing>(rooted)
   | self;
