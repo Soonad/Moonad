@@ -3,7 +3,7 @@ Lang.test : String
   | (e) Parser.Error.show(e);
   | (x) Core.stringify(x);
 
-Lang.testIO : IO(Unit)
-  use skip = IO.log<Unit>(Lang.test)
-  IO.end<Unit>(Unit.new)
-
+//Lang.testIO : IO(Unit)
+//  use skip = IO.log<Unit>(Lang.test)
+//  IO.end<Unit>(Unit.new)
+//

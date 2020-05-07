@@ -9,7 +9,7 @@ Core.stringify.go: Core -> Stringifier
   | (eras) (self) (name) (bind) (body) (x)
     let svar = Core.var(self)(Nat.zero)(Bool.false)
     let nvar = Core.var(name)(Nat.zero)(Bool.false)
-    let body = body(svar)(nvar);
+    let body = body(svar)(nvar)
     let self = lit(self)
     let lpar = lit("(")
     let name = lit(name)

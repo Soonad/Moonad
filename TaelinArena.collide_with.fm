@@ -31,7 +31,7 @@ TaelinArena.collide_with:
           let dst = F64.V3.point_segment_dist(a_pos)(segment)
           let rad = a_box.rad
           Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))
-          | let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b)));
+          | let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b)))
             let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir)
             Maybe.some<F64.V3>(out_vec);
           | none;;;
