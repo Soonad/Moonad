@@ -1,0 +1,190 @@
+TaelinArena.Thing.bleskape_fun: 
+  (self: TaelinArena.Game.Thing) -> 
+  TaelinArena.Game.Thing
+  (self)
+  let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2"))
+  let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("24"))
+  let self.act = TaelinArena.Game.get_thing_act(self)
+  let self.dir = TaelinArena.Game.get_thing_dir(self)
+  let self.pos = TaelinArena.Game.get_thing_pos(self)
+
+  Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))
+  | #BLESKAPE_IDLE#
+    F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))
+    | TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_WALK_000)
+      | F64.parse("4");
+      | F64.parse("16");;
+    | TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_IDLE_000)
+      | F64.parse("4");
+      | F64.parse("16");;;
+
+  | Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))
+  | #BLESKAPE_SHOCK_BALL#
+    let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)
+              | F64.parse("15");
+              | F64.parse("30");
+    let effs = 
+      List.cons<TaelinArena.Game.Effect>
+      | TaelinArena.Game.Effect.damage(F64.parse("3"));
+      | List.cons<TaelinArena.Game.Effect>
+        | TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir);
+        | List.nil<TaelinArena.Game.Effect>;;
+    let hits = 
+      List.cons<TaelinArena.Game.Hit>
+      | TaelinArena.Game.Hit.new
+        | effs;
+        | TaelinArena.Game.at_dist(self)(F64.parse("40"));
+        | self.dir;
+        | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
+      ;
+      | List.cons<TaelinArena.Game.Hit>
+        | TaelinArena.Game.Hit.new
+          | effs;
+          | TaelinArena.Game.at_dist(self)(F64.parse("40"));
+          | self.dir;
+          | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
+        ;
+        | List.nil<TaelinArena.Game.Hit>;
+      ;
+    let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits)
+    self;
+
+  | Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))
+    | #BLESKAPE_DEFENSE_MODE#
+      let self = 
+        TaelinArena.Game.animate_between(self)(F64.1)
+        | BLESKAPE_DEFENSE_MODE_000;
+        | F64.parse("3");
+        | F64.0;
+        | F64.parse("3");
+      let self = 
+        TaelinArena.Game.animate_between(self)(F64.1)
+        | BLESKAPE_DEFENSE_MODE_002;
+        | F64.1;
+        | F64.parse("3");
+        | F64.parse("12");
+      let self = TaelinArena.Game.reset(self)(F64.parse("12"))
+      self;
+
+  | Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))
+    | #BLESKAPE_SHOCK_GROUND_WAVE# 
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_GROUND_WAVE_000)
+        | F64.parse("12");
+        | F64.parse("24");
+      let effs = 
+        List.cons<TaelinArena.Game.Effect>
+        | TaelinArena.Game.Effect.damage(F64.parse("5"));
+        | List.nil<TaelinArena.Game.Effect>;
+      let hits = 
+        List.cons<TaelinArena.Game.Hit>
+        | TaelinArena.Game.Hit.new
+          | effs;
+          | self.pos;
+          | self.dir;
+          | TaelinArena.Game.Hitbox.cbox(F64.parse("58"));;
+        | List.nil<TaelinArena.Game.Hit>;
+      let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits)
+      self;
+
+  | Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))
+    | #BLESKAPE_SUPREME_PUNCH_SEQUENCE#  
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SUPREME_PUNCH_SEQUENCE_000)
+        | F64.parse("25");
+        | F64.parse("50");
+      let effs = 
+        List.cons<TaelinArena.Game.Effect>
+        | TaelinArena.Game.Effect.damage(F64.parse("1"));
+        | List.nil<TaelinArena.Game.Effect>;
+      let hits = 
+        List.cons<TaelinArena.Game.Hit>
+        | TaelinArena.Game.Hit.new
+          | effs;
+          | TaelinArena.Game.at_dist(self)(F64.parse("32"));
+          | self.dir;
+          | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));;
+        | List.nil<TaelinArena.Game.Hit>;
+      let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("34"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("42"))(hits)
+      let effs = 
+        List.cons<TaelinArena.Game.Effect>
+        | TaelinArena.Game.Effect.damage(F64.parse("2"));
+        | List.cons<TaelinArena.Game.Effect>
+          | TaelinArena.Game.Effect.impulse(F64.parse("18"))(self.dir);
+          | List.nil<TaelinArena.Game.Effect>;;
+      let hits = 
+        List.cons<TaelinArena.Game.Hit>
+        | TaelinArena.Game.Hit.new
+          | effs;
+          | TaelinArena.Game.at_dist(self)(F64.parse("32"));
+          | self.dir;
+          | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));;
+        | List.nil<TaelinArena.Game.Hit>;
+      let self = TaelinArena.Game.cast(self)(F64.parse("46"))(hits)
+      self;
+
+    | Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))
+    | #BLESKAPE_DASH# 
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_DASH_000)
+        | F64.parse("15");
+        | F64.parse("30");
+      let self = TaelinArena.Game.dash(self)(F64.parse("8"))
+        | F64.parse("15");
+        | F64.parse("25");
+      let effs = 
+        List.cons<TaelinArena.Game.Effect>
+        | TaelinArena.Game.Effect.damage(F64.parse("1"));
+        | List.cons<TaelinArena.Game.Effect>
+          | TaelinArena.Game.Effect.repulse(F64.parse("8"));
+          | List.nil<TaelinArena.Game.Effect>;;
+      let hits = 
+        List.cons<TaelinArena.Game.Hit>
+        | TaelinArena.Game.Hit.new
+          | effs;
+          | TaelinArena.Game.at_dist(self)(F64.parse("32"));
+          | self.dir;
+          | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));;
+        | List.nil<TaelinArena.Game.Hit>;
+      let self = TaelinArena.Game.cast(self)(F64.parse("17"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits)
+      let self = TaelinArena.Game.cast(self)(F64.parse("23"))(hits)
+      self;
+
+    | #BLESKAPE_TAUNT#  
+      TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_TAUNT_000)
+        | F64.parse("10");
+        | F64.parse("20");
+    ;;;;;;
+
+    // let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)
+    //            | F64.parse("15");
+    //            | F64.parse("30");
+    // let effs = 
+    //   List.cons<TaelinArena.Game.Effect>
+    //   | TaelinArena.Game.Effect.damage(F64.parse("3"));
+    //   | List.cons<TaelinArena.Game.Effect>
+    //     | TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir);
+    //     | List.nil<TaelinArena.Game.Effect>;;
+    // let hits = 
+    //   List.cons<TaelinArena.Game.Hit>
+    //   | TaelinArena.Game.Hit.new
+    //     | effs;
+    //     | TaelinArena.Game.at_dist(self)(F64.parse("40"));
+    //     | self.dir;
+    //     | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
+    //   ;
+    //   | List.cons<TaelinArena.Game.Hit>
+    //     | TaelinArena.Game.Hit.new
+    //       | effs;
+    //       | TaelinArena.Game.at_dist(self)(F64.parse("40"));
+    //       | self.dir;
+    //       | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
+    //     ;
+    //     | List.nil<TaelinArena.Game.Hit>;
+    //   ;
+    // let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits)
