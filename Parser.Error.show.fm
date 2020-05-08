@@ -1,0 +1,15 @@
+Parser.Error.show: Parser.Error -> String
+  (e)
+  e<() String>
+  | (position) (unexpect) (expected) 
+    String.concat("Error at ")        |
+    String.concat(Nat.show(position)) |
+    String.concat(":")                |
+    String.concat
+    | unexpect<() String>("")
+      | (v) String.concat(" unexpected ") |
+            String.concat(Parsec.Error.Item.show(v))(",");;; 
+                                      |
+    String.concat(" expected ")
+    | List.show<Parsec.Error.Item>(Parsec.Error.Item.show)(expected);;;;;;
+  | (position) (messages) "fancy";

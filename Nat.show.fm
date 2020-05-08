@@ -1,2 +1,2 @@
-Nat.show: Nat -> Nat -> String
-  (n) (base) Nat.show.aux(n)(base)("")
+Nat.show: Nat -> String
+  (n) Nat.show.aux(n)(Nat.10)("")

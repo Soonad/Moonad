@@ -1,0 +1,4 @@
+Lang.core: Parser(Core)
+  let C = Core.Ctx -> Core
+  Parser.bind<C><Core>(Lang.trm) | (term)
+  Parser.pure<Core>(term(Core.Ctx.nil));

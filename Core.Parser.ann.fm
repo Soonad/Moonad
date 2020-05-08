@@ -1,8 +1,0 @@
-Core.Parser.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
-  (expr)
-  Parser.then<Unit  ><C>(Core.Parser.space)        |
-  Parser.then<String><C>(Core.Parser.symbol("::")) |
-  Parser.bind<C     ><C>(Core.Parser.trm)          |  (type)
-  Parser.pure<C     >
-  | (ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx));;;;

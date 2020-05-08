@@ -1,7 +1,0 @@
-Core.Parser.space : Parser(Unit)
-  Parser.skip_many<Unit> | Parser.choice<Unit> |
-  List.cons<Parser(Unit)>(Core.Parser.whitespace)   |
-  List.cons<Parser(Unit)>(Core.Parser.line_comment) |
-  List.cons<Parser(Unit)>(Core.Parser.block_comment)|
-  List.nil<Parser(Unit)>;;;;;
-

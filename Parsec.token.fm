@@ -17,7 +17,7 @@ Parsec.token:
     empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es));
   | (c) (cs)
     f(c)<() X>
-    | let item = Parsec.Error.Item.tokens(NonEmpty.end<Char>(c))
+    | let item = Parsec.Error.Item.tokens(String.single(c))
       let unex = Maybe.some<Parsec.Error.Item>(item)
       empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es));
     | (x)
