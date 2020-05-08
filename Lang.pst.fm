@@ -4,10 +4,10 @@ Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   Parser.bind<Maybe(C)><C>
   | Parser.optional<C> |
     Parser.choice<C> |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.app(base))) |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.pip(base))) |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.arr(base))) |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.ann(base))) |
+    List.cons<Parser(C)>(Lang.app(base)) |
+    List.cons<Parser(C)>(Lang.pip(base)) |
+    List.cons<Parser(C)>(Lang.arr(base)) |
+    List.cons<Parser(C)>(Lang.ann(base)) |
     List.nil<Parser(C)>;;;;;;;
   | (maybe_term) maybe_term<() Parser(C)>
     | Parser.pure<C>(base);

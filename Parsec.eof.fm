@@ -10,5 +10,5 @@ Parsec.eof : <S: Type> -> <E: Type> -> Parsec(S)(E)(Unit)
     empty_error(s1) | Parsec.Error.make_trivial<E>
     | index;
     | Maybe.some<Parsec.Error.Item>
-      | Parsec.Error.Item.tokens(NonEmpty.end<Char>(head));;
+      | Parsec.Error.Item.tokens(String.single(head));;
     | List.single<Parsec.Error.Item>(Parsec.Error.Item.end_of_input);;;;
