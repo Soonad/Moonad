@@ -1,3 +1,0 @@
-Parsec.Error.Item.tokens: NonEmpty(Char) -> Parsec.Error.Item
-  (xs)
-  <P> (tokens) () () tokens(xs)

@@ -1,0 +1,2 @@
+String.quote: String -> String
+  (str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))

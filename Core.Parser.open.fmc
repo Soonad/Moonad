@@ -1,8 +1,0 @@
-Core.Parser.open: Parser(Bool)
-  Parser.plus<Bool>
-  | Parser.then<String><Bool>
-    | Core.Parser.symbol("(");
-    | Parser.pure<Bool>(Bool.false);;
-  | Parser.then<String><Bool>
-    | Core.Parser.symbol("<");
-    | Parser.pure<Bool>(Bool.true);;

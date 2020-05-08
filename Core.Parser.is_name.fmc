@@ -1,7 +1,0 @@
-Core.Parser.is_name: Char -> Bool
-  (c)
-  let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9")))
-  let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z")))
-  let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z")))
-  let und = U16.eql(c)(Char.parse("_"))
-  Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
