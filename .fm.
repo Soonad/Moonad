@@ -1,3 +1,9 @@
+Acc: (A: Type) -> (B: Type) -> (stop: A -> Bool) -> (a: A) -> Type
+  (A) (B) (stop) (a) stop(a)<() Type>(B)((a: A) -> Acc(A)(B)(stop)(a))
+
+Acc.foldl: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: B -> A -> B) -> (b: B) -> (a: A) -> Acc(A)(B)(stop)(a)
+  <A> <B> (stop) (acc) (b) (a) stop(a)<(b) Equal(Bool)(b)(stop(a)) -> Acc(A)(B)(stop)(a)>((eq) Equal.rewrite<Bool><Bool.true><stop(a)><(X) X<() Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)(b))((eq) Equal.rewrite<Bool><Bool.false><stop(a)><(X) X<() Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)((c) Acc.foldl<A><B>(stop)(acc)(acc(b)(a))(c)))(Equal.to<Bool><stop(a)>)
+
 Bit.0: Bit
   <P> (o) (i) o
 
@@ -46,6 +52,9 @@ Bits.reverse.go: Bits -> Bits -> Bits
 Bool.and: Bool -> Bool -> Bool
   (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.false))
 
+Bool.andVar: (n: Nat) -> Variadic(Bool)(Bool)(n)
+  Variadic.foldr<Bool><Bool>(Bool.and)(Bool.true)
+
 Bool.elim: (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
   (b) <P> (t) (f) b<P>(t)(f)
 
@@ -72,6 +81,9 @@ Bool.notf: Bool -> Bool
 
 Bool.or: Bool -> Bool -> Bool
   (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.true))(b<() Bool>(Bool.true)(Bool.false))
+
+Bool.orVar: (n: Nat) -> Variadic(Bool)(Bool)(n)
+  Variadic.foldr<Bool><Bool>(Bool.or)(Bool.false)
 
 Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
   (a) a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>)(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>)
@@ -100,6 +112,9 @@ Char.parse: (str: String) -> Char.parse.type(str)
 
 Char.parse.type: String -> Type
   (str) str<() Type>(Unit)((str.head) (str.tail) Char)
+
+Char.quote: Char
+  '"'
 
 Char.tab: Char
   '	'
@@ -193,72 +208,6 @@ Core.Defs.term: Core.Defs -> String -> Core
 
 Core.Defs.type: Core.Defs -> String -> Core
   (defs) (name) Core.Defs.get_type(defs)(name)<() Core>(Core.ref("<undefined>"))((type) type)
-
-Core.Parser.all: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; Parser.bind<String><C>(Core.Parser.nam(Bool.true))((self) Parser.bind<Pair(Bool)(Pair(String)(C))><C>(Core.Parser.enclose<Pair(String)(C)>(Parser.bind<String><Pair(String)(C)>(Core.Parser.nam(Bool.true))((n) Parser.then<Unit><Pair(String)(C)>(Core.Parser.space)(Parser.then<String><Pair(String)(C)>(Core.Parser.symbol(":"))(Parser.bind<C><Pair(String)(C)>(Core.Parser.trm)((t) Parser.pure<Pair(String)(C)>(Pair.new<String><C>(n)(t))))))))((x) x<() Parser(C)>((eras) (p) p<() Parser(C)>((name) (bind) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("->"))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx))) :: Core -> Core -> Core; Core.all(eras)(self)(name)(tbind)(tbody)))))))))
-
-Core.Parser.ann: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; (expr) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("::"))(Parser.bind<C><C>(Core.Parser.trm)((type) Parser.pure<C>((ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx))))))
-
-Core.Parser.app: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; (func) Parser.bind<Pair(Bool)(C)><C>(Core.Parser.enclose<C>(Core.Parser.trm))((x) x<() Parser(C)>((eras) (argm) Parser.pure<C>((ctx) Core.app(eras)(func(ctx))(argm(ctx)))))
-
-Core.Parser.arr: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; (bind) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("->"))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx))) :: Core -> Core -> Core; Core.all(Bool.false)(String.nil)(String.nil)(tbind)(tbody)))))
-
-Core.Parser.block_comment: Parser(Unit)
-  Parser.then<String><Unit>(Parser.tokens("#"))(Parser.then<List(Char)><Unit>(Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#")))(Parser.pure<Unit>(Unit.new)))
-
-Core.Parser.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
-  <A> (p) Parser.bind<Bool><Pair(Bool)(A)>(Core.Parser.open)((eras) Parser.bind<A><Pair(Bool)(A)>(p)((x) Parser.then<String><Pair(Bool)(A)>(eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")")))(Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x)))))
-
-Core.Parser.is_name: Char -> Bool
-  (c) let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9"))); let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z"))); let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z"))); let und = U16.eql(c)(Char.parse("_")); Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
-
-Core.Parser.is_space: Char -> Bool
-  (c) let spc = U16.eql(c)(Char.parse(" ")); let lin = U16.eql(c)(Char.newline); let tab = U16.eql(c)(Char.tab); Bool.or(spc)(Bool.or(lin)(tab))
-
-Core.Parser.lam: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; Parser.bind<Pair(Bool)(String)><C>(Core.Parser.enclose<String>(Core.Parser.nam(Bool.true)))((x) x<() Parser(C)>((eras) (n) Parser.then<Unit><C>(Core.Parser.space)(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(n)(x)(ctx)) :: Core -> Core; Core.lam(eras)(n)(tbody))))))
-
-Core.Parser.let: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; Parser.then<String><C>(Core.Parser.symbol("let"))(Parser.bind<String><C>(Core.Parser.nam(Bool.false))((name) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("="))(Parser.bind<C><C>(Core.Parser.trm)((expr) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<Maybe(String)><C>(Parser.optional<String>(Core.Parser.symbol(";")))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(name)(x)(ctx)) :: Core -> Core; Core.let(name)(expr(ctx))(tbody))))))))))
-
-Core.Parser.line_comment: Parser(Unit)
-  let not_newline = (c) Bool.not(U16.eql(c)(Char.newline)) :: Char -> Bool; Parser.then<String><Unit>(Parser.tokens("/"))(Parser.then<String><Unit>(Parser.take_while(not_newline))(Parser.then<Char><Unit>(Parser.char(Char.newline))(Parser.pure<Unit>(Unit.new))))
-
-Core.Parser.nam: Bool -> Parser(String)
-  (allow_empty) allow_empty<() Parser(String)>(Parser.take_while(Core.Parser.is_name))(Parser.take_while1("name")(Core.Parser.is_name))
-
-Core.Parser.open: Parser(Bool)
-  Parser.plus<Bool>(Parser.then<String><Bool>(Core.Parser.symbol("("))(Parser.pure<Bool>(Bool.false)))(Parser.then<String><Bool>(Core.Parser.symbol("<"))(Parser.pure<Bool>(Bool.true)))
-
-Core.Parser.par: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; Parser.then<String><C>(Core.Parser.symbol("("))(Parser.bind<C><C>(Core.Parser.trm)((term) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Parser.tokens(")"))(Parser.pure<C>(term)))))
-
-Core.Parser.pip: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; (func) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("|"))(Parser.bind<C><C>(Core.Parser.trm)((argm) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Parser.tokens(";"))(Parser.pure<C>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))))
-
-Core.Parser.pst: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; (base) Parser.bind<Maybe(C)><C>(Parser.optional<C>(Parser.choice<C>([Parser(C); Parser.try<C>(Core.Parser.ann(base)), Parser.try<C>(Core.Parser.arr(base)), Parser.try<C>(Core.Parser.pip(base)), Parser.try<C>(Core.Parser.app(base))])))((maybe_term) maybe_term<() Parser(C)>(Parser.pure<C>(base))((post) Core.Parser.pst(post)))
-
-Core.Parser.space: Parser(Unit)
-  Parser.skip_many<Unit>(Parser.choice<Unit>([Parser(Unit); Core.Parser.block_comment, Core.Parser.line_comment, Core.Parser.whitespace]))
-
-Core.Parser.symbol: String -> Parser(String)
-  (str) Parser.bind<String><String>(Parser.tokens(str))((x) Parser.then<Unit><String>(Core.Parser.space)(Parser.pure<String>(x)))
-
-Core.Parser.trm: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core; Parser.bind<C><C>(Parser.choice<C>([Parser(C); Core.Parser.var, Parser.try<C>(Core.Parser.typ), Parser.try<C>(Core.Parser.par), Parser.try<C>(Core.Parser.let), Parser.try<C>(Core.Parser.lam), Parser.try<C>(Core.Parser.all)]))((x) Core.Parser.pst(x))
-
-Core.Parser.typ: Parser(Core.Ctx -> Core)
-  Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type"))(Parser.pure<Core.Ctx -> Core>((ctx) Core.typ))
-
-Core.Parser.var: Parser(Core.Ctx -> Core)
-  Parser.bind<String><Core.Ctx -> Core>(Core.Parser.nam(Bool.false))((name) Parser.pure<Core.Ctx -> Core>((ctx) let got = List.ifind<Pair(String)(Core)>(ctx)((x) (i) String.eql(Pair.fst<String><Core>(x))(name)); got<() Core>(Core.ref(name))((x) x<() Core>((val) () Pair.snd<String><Core>(val)))))
-
-Core.Parser.whitespace: Parser(Unit)
-  Parser.then<String><Unit>(Parser.take_while1("whitespace")(Core.Parser.is_space))(Parser.pure<Unit>(Unit.new))
 
 Core.Read.Reply: (A: Type) -> Type
   (A) Maybe(Pair(A)(String))
@@ -442,6 +391,63 @@ Core.var: String -> Nat -> Bool -> Core
 
 Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
   <A> (s) (x) x(Unit.new)
+
+CURVE.a: Nat
+  Nat.0
+
+CURVE.b: Nat
+  Nat.7
+
+CURVE.P: Nat
+  Nat.parse_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F")
+
+CURVE.n: Nat
+  Nat.parse_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141")
+
+CURVE.h: Nat
+  Nat.parse_hex("1")
+
+CURVE.Gx: Nat
+  Nat.parse_hex("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
+
+CURVE.Gy: Nat
+  Nat.parse_hex("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
+
+CURVE.beta: Nat
+  Nat.parse_hex("7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE")
+
+ecdsa.mod: Nat -> Nat
+  (a) Nat.mod(a)(CURVE.P)
+
+ecdsa.P_DIV4_1: Nat
+  Nat.div(Nat.add(CURVE.P)(Nat.1))(Nat.4)
+
+ecdsa.weistrass: Nat -> Nat
+  (x) ecdsa.mod(Nat.add(Nat.add(Nat.pow(x)(Nat.3))(Nat.mul(CURVE.a)(x)))(CURVE.b))
+
+ecdsa.PRIME_SIZE: Nat
+  Nat.parse_decimal("256")
+
+ecdsa.USE_ENDOMORPHISM: Bool
+  Nat.eql(CURVE.a)(Nat.0)
+
+Point: Type
+  Pair(Nat)(Nat)
+
+Point.new: Nat -> Nat -> Point
+  (x) (y) Pair.new<Nat><Nat>(x)(y)
+
+Jacobian: Type
+  jacobian<P: Jacobian -> Type> -> (new: (x: Nat) -> (y: Nat) -> (z: Nat) -> P(Jacobian.new(x)(y)(z))) -> P(jacobian)
+
+Jacobian.new: Nat -> Nat -> Nat -> Jacobian
+  (x) (y) (z) <P> (point) point(x)(y)(z)
+
+Jacobian.equal: Jacobian -> Jacobian -> Bool
+  (a) (b) a<() Bool>((a.x) (a.y) (a.z) b<() Bool>((b.x) (b.y) (b.z) let a.z2 = ecdsa.mod(Nat.mul(a.z)(a.z)); let a.z3 = ecdsa.mod(Nat.mul(a.z)(a.z2)); let b.z2 = ecdsa.mod(Nat.mul(b.z)(b.z)); let b.z3 = ecdsa.mod(Nat.mul(b.z)(b.z2)); let eq1 = Nat.eql(ecdsa.mod(Nat.mul(a.x)(b.z2)))(ecdsa.mod(Nat.mul(b.x)(a.z2))); let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y)(b.z3)))(ecdsa.mod(Nat.mul(b.y)(a.z3))); Bool.and(eq1)(eq2)))
+
+Jacobian.fromPoint: Point -> Jacobian
+  (p) p<() Jacobian>((p.x) (p.y) Jacobian.new(p.x)(p.y)(Nat.1))
 
 Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> B -> Either(A)(C) -> Either(A)(C)
   <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
@@ -815,6 +821,84 @@ JSON.object: List(Pair(String)(JSON)) -> JSON
 JSON.string: String -> JSON
   (x) <P> () () () (string) () () string(x)
 
+Lang.Cont: Type
+  Core.Ctx -> Core
+
+Lang.all: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<String><C>(Lang.nam(Bool.true))((self) Parser.bind<Pair(Bool)(Pair(String)(C))><C>(Lang.enclose<Pair(String)(C)>(Parser.bind<String><Pair(String)(C)>(Lang.nam(Bool.true))((n) Parser.then<Unit><Pair(String)(C)>(Lang.space)(Parser.then<String><Pair(String)(C)>(Lang.symbol(":"))(Parser.bind<C><Pair(String)(C)>(Lang.trm)((t) Parser.pure<Pair(String)(C)>(Pair.new<String><C>(n)(t))))))))((x) x<() Parser(C)>((eras) (p) p<() Parser(C)>((name) (bind) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("->"))(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx))) :: Core -> Core -> Core; Core.all(eras)(self)(name)(tbind)(tbody)))))))))
+
+Lang.ann: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (expr) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("::"))(Parser.bind<C><C>(Lang.trm)((type) Parser.pure<C>((ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx))))))
+
+Lang.app: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (func) Parser.bind<Pair(Bool)(C)><C>(Lang.enclose<C>(Lang.trm))((x) x<() Parser(C)>((eras) (argm) Parser.pure<C>((ctx) Core.app(eras)(func(ctx))(argm(ctx)))))
+
+Lang.arr: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (bind) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("->"))(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx))) :: Core -> Core -> Core; Core.all(Bool.false)(String.nil)(String.nil)(tbind)(tbody)))))
+
+Lang.block_comment: Parser(Unit)
+  Parser.then<String><Unit>(Parser.tokens("#"))(Parser.then<List(Char)><Unit>(Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#")))(Parser.pure<Unit>(Unit.new)))
+
+Lang.core: Parser(Core)
+  let C = Core.Ctx -> Core; Parser.bind<C><Core>(Lang.trm)((term) Parser.pure<Core>(term(Core.Ctx.nil)))
+
+Lang.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
+  <A> (p) Parser.bind<Bool><Pair(Bool)(A)>(Lang.open)((eras) Parser.bind<A><Pair(Bool)(A)>(p)((x) Parser.then<String><Pair(Bool)(A)>(eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")")))(Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x)))))
+
+Lang.is_name: Char -> Bool
+  (c) let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9"))); let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z"))); let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z"))); let und = U16.eql(c)(Char.parse("_")); Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
+
+Lang.is_space: Char -> Bool
+  (c) let spc = U16.eql(c)(Char.parse(" ")); let lin = U16.eql(c)(Char.newline); let tab = U16.eql(c)(Char.tab); Bool.or(spc)(Bool.or(lin)(tab))
+
+Lang.lam: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<Pair(Bool)(String)><C>(Lang.enclose<String>(Lang.nam(Bool.true)))((x) x<() Parser(C)>((eras) (n) Parser.then<Unit><C>(Lang.space)(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(n)(x)(ctx)) :: Core -> Core; Core.lam(eras)(n)(tbody))))))
+
+Lang.let: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.then<String><C>(Lang.symbol("let"))(Parser.bind<String><C>(Lang.nam(Bool.false))((name) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("="))(Parser.bind<C><C>(Lang.trm)((expr) Parser.then<Unit><C>(Lang.space)(Parser.then<Maybe(String)><C>(Parser.optional<String>(Lang.symbol(";")))(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(name)(x)(ctx)) :: Core -> Core; Core.let(name)(expr(ctx))(tbody))))))))))
+
+Lang.line_comment: Parser(Unit)
+  let not_newline = (c) Bool.not(U16.eql(c)(Char.newline)) :: Char -> Bool; Parser.then<String><Unit>(Parser.tokens("/"))(Parser.then<String><Unit>(Parser.take_while(not_newline))(Parser.then<Char><Unit>(Parser.char(Char.newline))(Parser.pure<Unit>(Unit.new))))
+
+Lang.nam: Bool -> Parser(String)
+  (allow_empty) allow_empty<() Parser(String)>(Parser.take_while(Lang.is_name))(Parser.take_while1("name")(Lang.is_name))
+
+Lang.open: Parser(Bool)
+  Parser.plus<Bool>(Parser.then<String><Bool>(Lang.symbol("("))(Parser.pure<Bool>(Bool.false)))(Parser.then<String><Bool>(Lang.symbol("<"))(Parser.pure<Bool>(Bool.true)))
+
+Lang.par: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.then<String><C>(Lang.symbol("("))(Parser.bind<C><C>(Lang.trm)((term) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Parser.tokens(")"))(Parser.pure<C>(term)))))
+
+Lang.parse: (s: String) -> Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
+  (s) Parser.parse<Core>(Lang.core)(s)
+
+Lang.pip: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (func) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("|"))(Parser.bind<C><C>(Lang.trm)((argm) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Parser.tokens(";"))(Parser.pure<C>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))))
+
+Lang.pst: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (base) Parser.bind<Maybe(C)><C>(Parser.optional<C>(Parser.choice<C>([Parser(C); Lang.ann(base), Lang.arr(base), Lang.pip(base), Lang.app(base)])))((maybe_term) maybe_term<() Parser(C)>(Parser.pure<C>(base))((post) Lang.pst(post)))
+
+Lang.space: Parser(Unit)
+  Parser.skip_many<Unit>(Parser.choice<Unit>([Parser(Unit); Lang.block_comment, Lang.line_comment, Lang.whitespace]))
+
+Lang.symbol: String -> Parser(String)
+  (str) Parser.bind<String><String>(Parser.tokens(str))((x) Parser.then<Unit><String>(Lang.space)(Parser.pure<String>(x)))
+
+Lang.test: String
+  Parser.run_either<Core>(Lang.core)("(x : A) -> x")<() String>((e) Parser.Error.show(e))((x) Core.stringify(x))
+
+Lang.trm: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<C><C>(Parser.choice<C>([Parser(C); Lang.var, Lang.typ, Lang.let, Parser.try<C>(Lang.par), Parser.try<C>(Lang.lam), Parser.try<C>(Lang.all)]))((x) Lang.pst(x))
+
+Lang.typ: Parser(Core.Ctx -> Core)
+  Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type"))(Parser.pure<Core.Ctx -> Core>((ctx) Core.typ))
+
+Lang.var: Parser(Core.Ctx -> Core)
+  Parser.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false))((name) Parser.pure<Core.Ctx -> Core>((ctx) let got = List.ifind<Pair(String)(Core)>(ctx)((x) (i) String.eql(Pair.fst<String><Core>(x))(name)); got<() Core>(Core.ref(name))((x) x<() Core>((val) () Pair.snd<String><Core>(val)))))
+
+Lang.whitespace: Parser(Unit)
+  Parser.then<String><Unit>(Parser.take_while1("whitespace")(Lang.is_space))(Parser.pure<Unit>(Unit.new))
+
 List.all: <A: Type> -> A -> Bool -> List(A) -> Bool
   <A> (cond) (list) list<() Bool>(Bool.true)((head) (tail) cond(head)<() Bool>(List.all<A>(cond)(tail))(Bool.false))
 
@@ -878,6 +962,9 @@ List.ifind: <A: Type> -> List(A) -> A -> Nat -> Bool -> Maybe(Pair(A)(Nat))
 List.imap: <A: Type> -> <B: Type> -> Nat -> A -> B -> List(A) -> List(B)
   <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
 
+List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
+  <A> (sep) (xs) xs<() List(A)>([A;])((head) (tail) List.cons<A>(head)(List.cons<A>(sep)(List.intercalate<A>(sep)(tail))))
+
 List.is_empty: <A: Type> -> List(A) -> Bool
   <A> (list) list<() Bool>(Bool.true)((head) (tail) Bool.false)
 
@@ -898,6 +985,9 @@ List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
 
 List.reverse: <A: Type> -> List(A) -> List(A)
   <A> (as) List.reverse.aux<A>(as)([A;])
+
+List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
+  <A> (f) (xs) String.concat("[")(String.concat(String.flatten(List.intercalate<String>(",")(List.map<A><String>(f)(xs))))("]"))
 
 List.single: <A: Type> -> (x: A) -> List(A)
   <A> (x) [A; x]
@@ -1154,6 +1244,12 @@ Nat.9: Nat
 Nat.add: Nat -> Nat -> Nat
   (n) (m) n<() Nat>(m)((n.pred) Nat.succ(Nat.add(n.pred)(m)))
 
+Nat.addAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(Nat.0))(n)
+  Acc.foldl<Nat><Nat>(Nat.eql(Nat.0))(Nat.add)(Nat.0)
+
+Nat.addVar: (n: Nat) -> Variadic(Nat)(Nat)(n)
+  Variadic.foldr<Nat><Nat>(Nat.add)(Nat.0)
+
 Nat.apply: <A: Type> -> Nat -> A -> A -> A -> A
   <A> (n) (f) (x) n<() A>(x)((n.pred) Nat.apply<A>(n.pred)(f)(f(x)))
 
@@ -1202,11 +1298,26 @@ Nat.mod: Nat -> Nat -> Nat
 Nat.mul: Nat -> Nat -> Nat
   (n) (m) n<() Nat>(Nat.zero)((n.pred) Nat.add(m)(Nat.mul(n.pred)(m)))
 
+Nat.mulAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(Nat.1))(n)
+  Acc.foldl<Nat><Nat>(Nat.eql(Nat.1))(Nat.mul)(Nat.1)
+
+Nat.mulVar: (n: Nat) -> Variadic(Nat)(Nat)(n)
+  Variadic.foldr<Nat><Nat>(Nat.mul)(Nat.1)
+
 Nat.parse_decimal: String -> Nat
   (str) Nat.parse_decimal.go(str)(Nat.zero)
 
 Nat.parse_decimal.go: String -> Nat -> Nat
   (str) (res) str<() Nat>(res)((str.head) (str.tail) let dig = Nat.sub(U16.to_nat(str.head))(Nat.48); let res = Nat.add(dig)(Nat.mul(Nat.10)(res)); Nat.parse_decimal.go(str.tail)(res))
+
+Nat.parse_hex: String -> Nat
+  (str) Nat.parse_hex.go(str)(Nat.zero)
+
+Nat.parse_hex.go: String -> Nat -> Nat
+  (str) (res) str<() Nat>(res)((str.head) (str.tail) Bool.and(U16.gte(str.head)('0'))(U16.lte(str.head)('9'))<() Nat>(let dig = U16.to_nat(U16.sub(str.head)('0')); let res = Nat.add(dig)(Nat.mul(Nat.16)(res)); Nat.parse_hex.go(str.tail)(res))(Bool.and(U16.gte(str.head)('a'))(U16.lte(str.head)('f'))<() Nat>(let dig = Nat.add(U16.to_nat(U16.sub(str.head)('a')))(Nat.10); let res = Nat.add(dig)(Nat.mul(Nat.16)(res)); Nat.parse_hex.go(str.tail)(res))(Bool.and(U16.gte(str.head)('A'))(U16.lte(str.head)('F'))<() Nat>(let dig = Nat.add(U16.to_nat(U16.sub(str.head)('A')))(Nat.10); let res = Nat.add(dig)(Nat.mul(Nat.16)(res)); Nat.parse_hex.go(str.tail)(res))(res))))
+
+Nat.pow: Nat -> Nat -> Nat
+  Nat.pow
 
 Nat.pred: Nat -> Nat
   (n) n<() Nat>(Nat.zero)((n.pred) n.pred)
@@ -1217,7 +1328,10 @@ Nat.show.aux: Nat -> Nat -> String -> String
 Nat.show.digit: Nat -> Nat -> Char
   (n) (base) let m = Nat.mod(n)(base); Nat.eql(m)(Nat.0)<() Char>(Char.parse("0"))(Nat.eql(m)(Nat.1)<() Char>(Char.parse("1"))(Nat.eql(m)(Nat.2)<() Char>(Char.parse("2"))(Nat.eql(m)(Nat.3)<() Char>(Char.parse("3"))(Nat.eql(m)(Nat.4)<() Char>(Char.parse("4"))(Nat.eql(m)(Nat.5)<() Char>(Char.parse("5"))(Nat.eql(m)(Nat.6)<() Char>(Char.parse("6"))(Nat.eql(m)(Nat.7)<() Char>(Char.parse("7"))(Nat.eql(m)(Nat.8)<() Char>(Char.parse("8"))(Nat.eql(m)(Nat.9)<() Char>(Char.parse("9"))(Nat.eql(m)(Nat.10)<() Char>(Char.parse("a"))(Nat.eql(m)(Nat.11)<() Char>(Char.parse("b"))(Nat.eql(m)(Nat.12)<() Char>(Char.parse("c"))(Nat.eql(m)(Nat.13)<() Char>(Char.parse("d"))(Nat.eql(m)(Nat.14)<() Char>(Char.parse("e"))(Nat.eql(m)(Nat.15)<() Char>(Char.parse("f"))(Char.parse("#")))))))))))))))))
 
-Nat.show: Nat -> Nat -> String
+Nat.show: Nat -> String
+  (n) Nat.show.aux(n)(Nat.10)(String.nil)
+
+Nat.show_base: Nat -> Nat -> String
   (n) (base) Nat.show.aux(n)(base)(String.nil)
 
 Nat.sub: Nat -> Nat -> Nat
@@ -1308,12 +1422,15 @@ Parsec.Error.Item.end_of_input: Parsec.Error.Item
   <P> () () (end_of_input) end_of_input
 
 Parsec.Error.Item: Type
-  parser.error.tokens<P: Parsec.Error.Item -> Type> -> (tokens: (xs: NonEmpty(Char)) -> P(Parsec.Error.Item.tokens(xs))) -> (label: (xs: String) -> P(Parsec.Error.Item.label(xs))) -> (end_of_input: P(Parsec.Error.Item.end_of_input)) -> P(parser.error.tokens)
+  parser.error.tokens<P: Parsec.Error.Item -> Type> -> (tokens: (xs: String) -> P(Parsec.Error.Item.tokens(xs))) -> (label: (xs: String) -> P(Parsec.Error.Item.label(xs))) -> (end_of_input: P(Parsec.Error.Item.end_of_input)) -> P(parser.error.tokens)
 
 Parsec.Error.Item.label: String -> Parsec.Error.Item
   (xs) <P> () (label) () label(xs)
 
-Parsec.Error.Item.tokens: NonEmpty(Char) -> Parsec.Error.Item
+Parsec.Error.Item.show: Parsec.Error.Item -> String
+  (e) e<() String>((xs) String.quote(xs))((xs) String.concat("label ")(xs))("end of input")
+
+Parsec.Error.Item.tokens: String -> Parsec.Error.Item
   (xs) <P> (tokens) () () tokens(xs)
 
 Parsec.Error: Type -> Type
@@ -1374,13 +1491,13 @@ Parsec.bind: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A)
   <S> <E> <A> <B> (pa) (pf) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pa<X>(s1)((s2) (a) pf(a)<X>(s2)((s3) (b) empty_value(s3)(b))(empty_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(empty_error)((s2) (a) pf(a)<X>(s2)((s3) (b) eaten_value(s3)(b))(eaten_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(eaten_error)
 
 Parsec.char: <S: Type> -> <E: Type> -> Char -> Parsec(S)(E)(Char)
-  <S> <E> (c) Parsec.token<S><E><Char>((x) U16.eql(c)(x)<() Maybe(Char)>(Maybe.some<Char>(c))(Maybe.none<Char>))(List.single<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(c))))
+  <S> <E> (c) Parsec.token<S><E><Char>((x) U16.eql(c)(x)<() Maybe(Char)>(Maybe.some<Char>(c))(Maybe.none<Char>))(List.single<Parsec.Error.Item>(Parsec.Error.Item.tokens(String.single(c))))
 
 Parsec.choice: <S: Type> -> <E: Type> -> <A: Type> -> List(Parsec(S)(E)(A)) -> Parsec(S)(E)(A)
   <S> <E> <A> (ps) ps<() Parsec(S)(E)(A)>(Parsec.zero<S><E><A>)((head) (tail) Parsec.plus<S><E><A>(head)(Parsec.choice<S><E><A>(tail)))
 
 Parsec.eof: <S: Type> -> <E: Type> -> Parsec(S)(E)(Unit)
-  <S> <E> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(empty_value(s1)(Unit.new))((head) () empty_error(s1)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.end_of_input)))))
+  <S> <E> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(empty_value(s1)(Unit.new))((head) () empty_error(s1)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(String.single(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.end_of_input)))))
 
 Parsec.fail: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A)
   <S> <E> <A> (msg) <X> (s) () (empty_error) () () s<() X>(() (index) () () let e = List.single<Parsec.Error.Fancy(E)>(Parsec.Error.Fancy.fail<E>(msg)); empty_error(s)(Parsec.Error.make_fancy<E>(index)(e)))
@@ -1397,6 +1514,9 @@ Parsec.label: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A) -
 Parsec.make: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A) -> Parsec(S)(E)(A)
   <S> <E> <A> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) f(s1)<() X>((s2) (a) empty_value(s2)(a))(empty_error)((s2) (a) eaten_value(s2)(a))(eaten_error)
 
+Parsec.many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(List(A))
+  <S> <E> <A> (p) Parsec.bind<S><E><Maybe(A)><List(A)>(Parsec.optional<S><E><A>(p))((x) x<() Parsec(S)(E)(List(A))>(Parsec.pure<S><E><List(A)>([A;]))((a) Parsec.map<S><E><List(A)><List(A)>(List.cons<A>(a))(Parsec.many<S><E><A>(p))))
+
 Parsec.many_till: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(B) -> Parsec(S)(E)(List(A))
   <S> <E> <A> <B> (p) (q) Parsec.plus<S><E><List(A)>(Parsec.then<S><E><B><List(A)>(q)(Parsec.pure<S><E><List(A)>([A;])))(Parsec.bind<S><E><A><List(A)>(p)((x) Parsec.bind<S><E><List(A)><List(A)>(Parsec.many_till<S><E><A><B>(p)(q))((xs) Parsec.pure<S><E><List(A)>(List.cons<A>(x)(xs)))))
 
@@ -1409,8 +1529,8 @@ Parsec.observing: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Pars
 Parsec.optional: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(Maybe(A))
   <S> <E> <A> (p) Parsec.plus<S><E><Maybe(A)>(Parsec.map<S><E><A><Maybe(A)>(Maybe.some<A>)(p))(Parsec.pure<S><E><Maybe(A)>(Maybe.none<A>))
 
-Parsec.parse: <S: Type> -> <E: Type> -> <A: Type> -> (E.show: E -> String) -> (p: Parsec(S)(E)(A)) -> (s: Parsec.State(S)(E)) -> Parsec.type(S)(E)(A)(E.show)(Parsec.run<S><E><A>(p)(s))
-  <S> <E> <A> (E.show) (p) (s) Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(E.show)(t)>(() (x) x)(() (e) The.term<String>(Parsec.Error.show<E>(E.show)(e)))(() (x) x)(() (e) The.term<String>(Parsec.Error.show<E>(E.show)(e)))
+Parsec.parse: <S: Type> -> <E: Type> -> <A: Type> -> (p: Parsec(S)(E)(A)) -> (s: Parsec.State(S)(E)) -> Parsec.type(S)(E)(A)(Parsec.run<S><E><A>(p)(s))
+  <S> <E> <A> (p) (s) Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(t)>(() (x) x)(() (e) e)(() (x) x)(() (e) e)
 
 Parsec.peek: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
   <S> <E> <A> (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)((s2) (a) empty_value(s1)(a))(empty_error)((s2) (a) empty_value(s1)(a))(eaten_error)
@@ -1437,10 +1557,10 @@ Parsec.take_while: <S: Type> -> <E: Type> -> Char -> Bool -> Parsec(S)(E)(String
   <S> <E> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(empty_value(s2)(took))(() () eaten_value(s2)(took))))
 
 Parsec.take_while1: <S: Type> -> <E: Type> -> String -> Char -> Bool -> Parsec(S)(E)(String)
-  <S> <E> (err) (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(input<() X>(empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((head) () empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err))))))(() () eaten_value(s2)(took))))
+  <S> <E> (err) (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(input<() X>(empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((head) () empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(String.single(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err))))))(() () eaten_value(s2)(took))))
 
 Parsec.test1: String
-  Parsec.parse<Unit><Unit><String>(Unit.show)(Parsec.tokens<Unit><Unit>("a"))(Parsec.State.default<Unit><Unit>("a")(Unit.new))
+  Parsec.parse<Unit><Unit><String>(Parsec.tokens<Unit><Unit>("a"))(Parsec.State.default<Unit><Unit>("a")(Unit.new))
 
 Parsec.then: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(B) -> Parsec(S)(E)(B)
   <S> <E> <A> <B> (pa) (pb) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pa<X>(s1)((s2) (a) pb<X>(s2)((s3) (b) empty_value(s3)(b))(empty_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(empty_error)((s2) (a) pb<X>(s2)((s3) (b) eaten_value(s3)(b))(eaten_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(eaten_error)
@@ -1449,22 +1569,25 @@ Parsec.throw: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.Error(E) -> Parsec(S
   <S> <E> <A> (e) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_error(s1)(e)
 
 Parsec.token: <S: Type> -> <E: Type> -> <A: Type> -> Char -> Maybe(A) -> List(Parsec.Error.Item) -> Parsec(S)(E)(A)
-  <S> <E> <A> (f) (es) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es)))((c) (cs) f(c)<() X>(let item = Parsec.Error.Item.tokens(NonEmpty.end<Char>(c)); let unex = Maybe.some<Parsec.Error.Item>(item); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es)))((x) let s2 = Parsec.State.make<S><E>(cs)(Nat.succ(index))(error)(state); eaten_value(s2)(x))))
+  <S> <E> <A> (f) (es) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es)))((c) (cs) f(c)<() X>(let item = Parsec.Error.Item.tokens(String.single(c)); let unex = Maybe.some<Parsec.Error.Item>(item); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es)))((x) let s2 = Parsec.State.make<S><E>(cs)(Nat.succ(index))(error)(state); eaten_value(s2)(x))))
 
 Parsec.tokens: <S: Type> -> <E: Type> -> String -> Parsec(S)(E)(String)
-  <S> <E> (str) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) let len = String.length(str); String.take_n(len)(input)<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); let expe = List.single<Parsec.Error.Item>(Parsec.Error.Item.label(str)); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(expe)))((p) p<() X>((took) (rest) let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); String.eql(str)(took)<() X>(str<() X>(empty_value(s2)(str))(() () eaten_value(s2)(str)))(let unex_label = Parsec.Error.Item.label(took); let expe_label = Parsec.Error.Item.label(str); let unex = Maybe.some<Parsec.Error.Item>(unex_label); let expe = List.single<Parsec.Error.Item>(expe_label); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(expe))))))
+  <S> <E> (str) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) let len = String.length(str); String.take_n(len)(input)<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); let expe = List.single<Parsec.Error.Item>(Parsec.Error.Item.label(String.quote(str))); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(expe)))((p) p<() X>((took) (rest) let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); String.eql(str)(took)<() X>(str<() X>(empty_value(s2)(str))(() () eaten_value(s2)(str)))(let expe_label = Parsec.Error.Item.label(String.quote(str)); let unex = took<() Maybe(Parsec.Error.Item)>(Maybe.none<Parsec.Error.Item>)(() () Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(took))); let expe = List.single<Parsec.Error.Item>(expe_label); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(expe))))))
 
 Parsec.try: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
   <S> <E> <A> (p) <X> (s1) (empty_value) (empty_error) (eaten_value) () p<X>(s1)(empty_value)((s2) (e) empty_error(s1)(e))(eaten_value)((s2) (e) empty_error(s1)(e))
 
-Parsec.type: (S: Type) -> (E: Type) -> (A: Type) -> E -> String -> Parsec.Reply(S)(E)(A) -> Type
-  (S) (E) (A) (E.show) (reply) reply<() Type>(() () A)(() (e) The(String)(Parsec.Error.show<E>(E.show)(e)))(() () A)(() (e) The(String)(Parsec.Error.show<E>(E.show)(e)))
+Parsec.type: (S: Type) -> (E: Type) -> (A: Type) -> Parsec.Reply(S)(E)(A) -> Type
+  (S) (E) (A) (reply) reply<() Type>(() () A)(() (e) Parsec.Error(E))(() () A)(() (e) Parsec.Error(E))
 
 Parsec.zero: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A)
   <S> <E> <A> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>(() (index) () () let e = Parsec.Error.make_trivial<E>(index)(Maybe.none<Parsec.Error.Item>)([Parsec.Error.Item;]); empty_error(s1)(e))
 
 Parser.Error: Type
   Parsec.Error(Unit)
+
+Parser.Error.show: Parser.Error -> String
+  (e) e<() String>((position) (unexpect) (expected) String.concat("Error at ")(String.concat(Nat.show(position))(String.concat(":")(String.concat(unexpect<() String>(String.nil)((v) String.concat(" unexpected ")(String.concat(Parsec.Error.Item.show(v))(","))))(String.concat(" expected ")(List.show<Parsec.Error.Item>(Parsec.Error.Item.show)(expected)))))))((position) (messages) "fancy")
 
 Parser.Reply: Type -> Type
   (A) Parsec.Reply(Unit)(Unit)(A)
@@ -1502,6 +1625,9 @@ Parser: Type -> Type
 Parser.label: <A: Type> -> String -> Parser(A) -> Parser(A)
   <A> (label) (p) Parsec.label<Unit><Unit><A>(label)(p)
 
+Parser.many: <A: Type> -> Parser(A) -> Parser(List(A))
+  <A> (p) Parsec.many<Unit><Unit><A>(p)
+
 Parser.many_till: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(List(A))
   <A> <B> (p) (q) Parser.plus<List(A)>(Parser.then<B><List(A)>(q)(Parser.pure<List(A)>([A;])))(Parser.bind<A><List(A)>(p)((x) Parser.bind<List(A)><List(A)>(Parser.many_till<A><B>(p)(q))((xs) Parser.pure<List(A)>(List.cons<A>(x)(xs)))))
 
@@ -1512,7 +1638,7 @@ Parser.optional: <A: Type> -> Parser(A) -> Parser(Maybe(A))
   <A> (p) Parsec.optional<Unit><Unit><A>(p)
 
 Parser.parse: <A: Type> -> (p: Parser(A)) -> (s: String) -> Parser.type(A)(Parser.run<A>(p)(Parser.State.default(s)))
-  <A> (p) (s) Parsec.parse<Unit><Unit><A>(Unit.show)(p)(Parser.State.default(s))
+  <A> (p) (s) Parsec.parse<Unit><Unit><A>(p)(Parser.State.default(s))
 
 Parser.plus: <A: Type> -> Parser(A) -> Parser(A) -> Parser(A)
   <A> (p) (q) Parsec.plus<Unit><Unit><A>(p)(q)
@@ -1522,6 +1648,12 @@ Parser.pure: <A: Type> -> (a: A) -> Parser(A)
 
 Parser.run: <A: Type> -> Parser(A) -> Parser.State -> Parser.Reply(A)
   <A> (p) (s) Parsec.run<Unit><Unit><A>(p)(s)
+
+Parser.run_default: <A: Type> -> Parser(A) -> String -> Parser.Reply(A)
+  <A> (p) (s) Parsec.run<Unit><Unit><A>(p)(Parser.State.default(s))
+
+Parser.run_either: <A: Type> -> Parser(A) -> String -> Either(Parser.Error)(A)
+  <A> (p) (s) let reply = Parsec.run<Unit><Unit><A>(p)(Parser.State.default(s)); reply<() Either(Parser.Error)(A)>(() (x) Either.right<Parser.Error><A>(x))(() (e) Either.left<Parser.Error><A>(e))(() (x) Either.right<Parser.Error><A>(x))(() (e) Either.left<Parser.Error><A>(e))
 
 Parser.skip_many: <A: Type> -> Parser(A) -> Parser(Unit)
   <A> (p) Parsec.skip_many<Unit><Unit><A>(p)
@@ -1534,9 +1666,6 @@ Parser.take_while: Char -> Bool -> Parser(String)
 
 Parser.take_while1: String -> Char -> Bool -> Parser(String)
   (err) (f) Parsec.take_while1<Unit><Unit>(err)(f)
-
-Parser.test: String
-  Parser.parse<String>(Parser.tokens("a"))("a")
 
 Parser.then: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(B)
   <A> <B> (pa) (pb) Parsec.then<Unit><Unit><A><B>(pa)(pb)
@@ -1551,7 +1680,7 @@ Parser.try: <A: Type> -> Parser(A) -> Parser(A)
   <A> (p) Parsec.try<Unit><Unit><A>(p)
 
 Parser.type: (A: Type) -> Parser.Reply(A) -> Type
-  (A) (reply) Parsec.type(Unit)(Unit)(A)(Unit.show)(reply)
+  (A) (reply) Parsec.type(Unit)(Unit)(A)(reply)
 
 Parser.zero: <A: Type> -> Parser(A)
   <A> Parsec.zero<Unit><Unit><A>
@@ -1692,11 +1821,17 @@ String.length: String -> Nat
 String.nil: String
   <P> (strnil) (strcons) strnil
 
+String.quote: String -> String
+  (str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
+
 String.reverse: String -> String
   (str) String.reverse.go(str)(String.nil)
 
 String.reverse.go: String -> String -> String
   (str) (res) str<() String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
+
+String.single: (x: Char) -> String
+  (x) String.cons(x)(String.nil)
 
 String.tail: String -> String
   (str) str<() String>(String.nil)((str.head) (str.tail) str.tail)
@@ -2466,6 +2601,15 @@ Unit.new: Unit
 Unit.show: Unit -> String
   (u) "Unit.new"
 
+Variadic: Type -> Type -> Nat -> Type
+  (A) (B) (n) n<() Type>(B)((n.pred) A -> Variadic(A)(B)(n.pred))
+
+Variadic.foldr: <A: Type> -> <B: Type> -> (acc: A -> B -> B) -> (b: B) -> (n: Nat) -> Variadic(A)(B)(n)
+  <A> <B> (acc) (b) Variadic.foldr.go<A><B>(acc)(b)((r) r)
+
+Variadic.foldr.go: <A: Type> -> <B: Type> -> (acc: A -> B -> B) -> (b: B) -> (k: B -> B) -> (n: Nat) -> Variadic(A)(B)(n)
+  <A> <B> (acc) (b) (k) (n) n<(n) Variadic(A)(B)(n)>(k(b))((n.pred) (a) Variadic.foldr.go<A><B>(acc)(b)((r) k(acc(a)(r)))(n.pred))
+
 Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
   <size> (wo) <P> (we) (w0) (w1) w0<size>(wo)
 
@@ -2526,6 +2670,12 @@ Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
 Word.mul: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.mul
 
+Word.neg.aux: <size: Nat> -> Word(size) -> Bool -> Word(size)
+  <size> (word) (inc) word<(size) () Word(size)>(Word.nil)(<size> (pred) inc<() Word(Nat.succ(size))>(Word.0<size>(Word.neg.aux<size>(pred)(Bool.true)))(Word.1<size>(Word.neg.aux<size>(pred)(Bool.false))))(<size> (pred) inc<() Word(Nat.succ(size))>(Word.1<size>(Word.neg.aux<size>(pred)(Bool.false)))(Word.0<size>(Word.neg.aux<size>(pred)(Bool.false))))
+
+Word.neg: <size: Nat> -> Word(size) -> Word(size)
+  <size> (word) word<(size) () Word(size)>(Word.nil)(<size> (pred) Word.0<size>(Word.neg.aux<size>(pred)(Bool.true)))(<size> (pred) Word.1<size>(Word.neg.aux<size>(pred)(Bool.false)))
+
 Word.nil: Word(Nat.zero)
   <P> (we) (w0) (w1) we
 
@@ -2548,7 +2698,7 @@ Word.shift_right: <size: Nat> -> Nat -> Word(size) -> Word(size)
   Word.shift_right
 
 Word.sub: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.sub
+  <size> (a) (b) Word.add<size>(a)(Word.neg<size>(b))
 
 Word.to_bits: <size: Nat> -> Word(size) -> Bits
   <size> (a) a<() () Bits>(Bits.nil)(<size> (pred) Bits.0(Word.to_bits<size>(pred)))(<size> (pred) Bits.1(Word.to_bits<size>(pred)))
@@ -2561,9 +2711,6 @@ Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
 
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
-
-_a: List(Type)
-  [Type;]
 
 hello: IO(Unit)
   let uname = "Your name:"; let greet = String.concat("Hello, "); IO.log<Unit>(uname)(() IO.inp<Unit>((name) IO.log<Unit>(greet(name))(() IO.end<Unit>(Unit.new))))
