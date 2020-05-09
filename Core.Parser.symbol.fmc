@@ -1,5 +1,0 @@
-Core.Parser.symbol : String -> Parser(String)
-  (str)
-  Parser.bind<String><String>(Parser.tokens(str)) | (x)
-  Parser.then<Unit  ><String>(Core.Parser.space) |
-  Parser.pure<String>(x);;

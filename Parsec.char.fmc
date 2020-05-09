@@ -1,8 +1,0 @@
-Parsec.char : <S: Type> -> <E: Type> -> Char -> Parsec(S)(E)(Char)
-  <S> <E> (c)
-  Parsec.token<S><E><Char>
-  | (x) U16.eql(c)(x)<() Maybe(Char)>
-    | Maybe.some<Char>(c);
-    | Maybe.none<Char>;;
-  | List.single<Parsec.Error.Item>
-    | Parsec.Error.Item.tokens(NonEmpty.end<Char>(c));;

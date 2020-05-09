@@ -1,0 +1,10 @@
+Lang.pip: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core
+  (func)
+  Parser.then<Unit><C>(Lang.space)               |
+  Parser.then<String><C>(Lang.symbol("|"))       |
+  Parser.bind<C><C>(Lang.trm)                    | (argm)
+  Parser.then<Unit><C>(Lang.space)               |
+  Parser.then<String><C>(Parser.tokens(";"))            |
+  Parser.pure<C>
+  | (ctx) Core.app(Bool.false)(func(ctx))(argm(ctx));;;;;;

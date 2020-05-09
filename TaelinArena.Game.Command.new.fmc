@@ -1,9 +1,0 @@
-TaelinArena.Game.Command.new: 
-  TaelinArena.Game.PlayerId -> 
-  TaelinArena.Game.Input -> 
-  TaelinArena.Game.Command
-  
-  (pid) (inp)
-  <P> (new)
-  new(pid)(inp)
-  

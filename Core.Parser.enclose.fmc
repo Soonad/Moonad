@@ -1,7 +1,0 @@
-Core.Parser.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
-  <A> (p)
-  Parser.bind<Bool><Pair(Bool)(A)>(Core.Parser.open) | (eras)
-  Parser.bind<A><Pair(Bool)(A)>(p) | (x)
-  Parser.then<String><Pair(Bool)(A)>
-  | eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")"));
-  | Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;

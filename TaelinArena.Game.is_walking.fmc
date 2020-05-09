@@ -1,9 +1,0 @@
-// Is this thing walking?
-// is_walking(this: Thing) : Number
-//   case this |thing
-//   len_v3(this.pad) > 0 
-
-TaelinArena.Game.is_walking: TaelinArena.Game.Thing -> F64
-  (this)
-  let this.pad = TaelinArena.Game.get_thing_pad(this)
-  F64.from_bool(F64.ltn(F64.0)(F64.V3.len(this.pad)))

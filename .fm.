@@ -1,0 +1,2570 @@
+Bit.0: Bit
+  <P> (o) (i) o
+
+Bit.1: Bit
+  <P> (o) (i) i
+
+Bit: Type
+  bit<P: Bit -> Type> -> P(Bit.0) -> P(Bit.1) -> P(bit)
+
+Bits.0: (bs: Bits) -> Bits
+  (bs) <P> (be) (b0) (b1) b0(bs)
+
+Bits.1: (bs: Bits) -> Bits
+  (bs) <P> (be) (b0) (b1) b1(bs)
+
+Bits.concat: Bits -> Bits -> Bits
+  (a) (b) a<() Bits>(b)((a.pred) Bits.0(Bits.concat(a.pred)(b)))((a.pred) Bits.1(Bits.concat(a.pred)(b)))
+
+Bits.eql: Bits -> Bits -> Bool
+  (bs1) bs1<() Bits -> Bool>((bs2) bs2<() Bool>(Bool.true)(() Bool.false)(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred))(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)(() Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred)))
+
+Bits: Type
+  bits<P: Bits -> Type> -> (be: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.0(pred))) -> (b1: (pred: Bits) -> P(Bits.1(pred))) -> P(bits)
+
+Bits.from_string: String -> Bits
+  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() Unit -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
+
+Bits.inc: Bits -> Bits
+  (bits) bits<() Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
+
+Bits.nil: Bits
+  <P> (be) (b0) (b1) be
+
+Bits.parse_hex: String -> Bits
+  (str) Bits.parse_hex.go(str)(Bits.nil)
+
+Bits.parse_hex.go: String -> Bits -> Bits
+  (str) (res) str<() Bits>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Bits>(res)((value) let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil)))); let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000); Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))))
+
+Bits.reverse: Bits -> Bits
+  (as) Bits.reverse.go(as)(Bits.nil)
+
+Bits.reverse.go: Bits -> Bits -> Bits
+  (as) (res) as<() Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
+
+Bool.and: Bool -> Bool -> Bool
+  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.false))
+
+Bool.elim: (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
+  (b) <P> (t) (f) b<P>(t)(f)
+
+Bool.eql: Bool -> Bool -> Bool
+  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<(x) Bool>(Bool.false)(Bool.true))
+
+Bool.false: Bool
+  <P> (t) (f) f
+
+Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
+  (e) Equal.rewrite<Bool><Bool.false><Bool.true><(b) b<() Type>(Empty)(Unit)>(e)(Unit.new)
+
+Bool: Type
+  bool<P: Bool -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(bool)
+
+Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A
+  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<() A>(cf)(ct)
+
+Bool.not: Bool -> Bool
+  (a) a<() Bool>(Bool.false)(Bool.true)
+
+Bool.notf: Bool -> Bool
+  (a) <P> (t) (f) a<(self) P(Bool.notf(self))>(f)(t)
+
+Bool.or: Bool -> Bool -> Bool
+  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.true))(b<() Bool>(Bool.true)(Bool.false))
+
+Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
+  (a) a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>)(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>)
+
+Bool.true: Bool
+  <P> (t) (f) t
+
+Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
+  (e) Equal.rewrite<Bool><Bool.true><Bool.false><(b) b<() Type>(Unit)(Empty)>(e)(Unit.new)
+
+Char: Type
+  U16
+
+Char.hex_value: Char -> Maybe(Nat)
+  (chr) Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9'))<() Maybe(Nat)>(Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0'))))(Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10)))(Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10)))(Maybe.none<Nat>)))
+
+Char.new: Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Char
+  (b0) (b1) (b2) (b3) (b4) (b5) (b6) (b7) (b8) (b9) (bA) (bB) (bC) (bD) (bE) (bF) let kF = b0<() Word(Nat.0) -> Word(Nat.1)>(Word.0<Nat.0>)(Word.1<Nat.0>); let kE = b1<() Word(Nat.1) -> Word(Nat.2)>(Word.0<Nat.1>)(Word.1<Nat.1>); let kD = b2<() Word(Nat.2) -> Word(Nat.3)>(Word.0<Nat.2>)(Word.1<Nat.2>); let kC = b3<() Word(Nat.3) -> Word(Nat.4)>(Word.0<Nat.3>)(Word.1<Nat.3>); let kB = b4<() Word(Nat.4) -> Word(Nat.5)>(Word.0<Nat.4>)(Word.1<Nat.4>); let kA = b5<() Word(Nat.5) -> Word(Nat.6)>(Word.0<Nat.5>)(Word.1<Nat.5>); let k9 = b6<() Word(Nat.6) -> Word(Nat.7)>(Word.0<Nat.6>)(Word.1<Nat.6>); let k8 = b7<() Word(Nat.7) -> Word(Nat.8)>(Word.0<Nat.7>)(Word.1<Nat.7>); let k7 = b8<() Word(Nat.8) -> Word(Nat.9)>(Word.0<Nat.8>)(Word.1<Nat.8>); let k6 = b9<() Word(Nat.9) -> Word(Nat.10)>(Word.0<Nat.9>)(Word.1<Nat.9>); let k5 = bA<() Word(Nat.10) -> Word(Nat.11)>(Word.0<Nat.10>)(Word.1<Nat.10>); let k4 = bB<() Word(Nat.11) -> Word(Nat.12)>(Word.0<Nat.11>)(Word.1<Nat.11>); let k3 = bC<() Word(Nat.12) -> Word(Nat.13)>(Word.0<Nat.12>)(Word.1<Nat.12>); let k2 = bD<() Word(Nat.13) -> Word(Nat.14)>(Word.0<Nat.13>)(Word.1<Nat.13>); let k1 = bE<() Word(Nat.14) -> Word(Nat.15)>(Word.0<Nat.14>)(Word.1<Nat.14>); let k0 = bF<() Word(Nat.15) -> Word(Nat.16)>(Word.0<Nat.15>)(Word.1<Nat.15>); let k_ = Word.nil; U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
+
+Char.newline: Char
+  '
+'
+
+Char.parse: (str: String) -> Char.parse.type(str)
+  (str) str<(str) Char.parse.type(str)>(Unit.new)((str.head) (str.tail) str.head)
+
+Char.parse.type: String -> Type
+  (str) str<() Type>(Unit)((str.head) (str.tail) Char)
+
+Char.tab: Char
+  '	'
+
+Cmp.eql: Cmp
+  <P> (ltn) (eql) (gtn) eql
+
+Cmp: Type
+  cmp<P: Cmp -> Type> -> P(Cmp.ltn) -> P(Cmp.eql) -> P(Cmp.gtn) -> P(cmp)
+
+Cmp.gtn: Cmp
+  <P> (ltn) (eql) (gtn) gtn
+
+Cmp.ltn: Cmp
+  <P> (ltn) (eql) (gtn) ltn
+
+Comp.app: Comp -> Comp -> Comp
+  (func) (argm) <> () () (app) () () () app(func)(argm)
+
+Comp.fal: Comp
+  <> () () () () () (fal) fal
+
+Comp: Type
+  comp<P: Comp -> Type> -> (var: (name: String) -> P(Comp.var(name))) -> (lam: (name: String) -> (body: Comp) -> P(Comp.lam(name)(body))) -> (app: (func: Comp) -> (argm: Comp) -> P(Comp.app(func)(argm))) -> (let: (name: String) -> (expr: Comp) -> (body: Comp) -> P(Comp.let(name)(expr)(body))) -> (tru: P(Comp.tru)) -> (fal: P(Comp.fal)) -> P(comp)
+
+Comp.lam: String -> Comp -> Comp
+  (name) (body) <> () (lam) () () () () lam(name)(body)
+
+Comp.let: String -> Comp -> Comp -> Comp
+  (name) (expr) (body) <> () () () (Let) () () Let(name)(expr)(body)
+
+Comp.stringify: Comp -> Stringifier
+  (comp) let lit = String.to_stringifier; let rec = Comp.stringify; comp<() Stringifier>((term.name) lit(term.name))((term.name) (term.body) let lpar = lit("(("); let name = lit(term.name); let rpar = lit(") "); let body = rec(term.body); let lend = lit(")"); (x) lpar(name(rpar(body(lend(x))))))((term.func) (term.argm) let func = rec(term.func); let lpar = lit("("); let argm = rec(term.argm); let rpar = lit(")"); (x) func(lpar(argm(rpar(x)))))((term.name) (term.expr) (term.body) let llet = lit("let "); let name = lit(term.name); let leql = lit(" = "); let expr = rec(term.expr); let spac = lit("; "); let body = rec(term.body); (x) llet(name(leql(expr(spac(body(x)))))))(let lval = lit("true"); (x) lval(x))(let lval = lit("false"); (x) lval(x))
+
+Comp.tru: Comp
+  <> () () () () (tru) () tru
+
+Comp.var: String -> Comp
+  (name) <P> (var) () () () () () var(name)
+
+Concat: (A: Type) -> Type
+  (A) List(A) -> List(A)
+
+Concat.push: <A: Type> -> A -> Concat(A) -> Concat(A)
+  <A> (val) (con) (x) con(List.cons<A>(val)(x))
+
+Concat.to_list: <A: Type> -> (xs: Concat(A)) -> List(A)
+  <A> (xs) xs([A;])
+
+Core.Bind: Type
+  List(Pair(String)(Core)) -> Core
+
+Core.Comp.check: Core -> Core -> Core.Defs -> Nat -> Maybe(Pair(Comp)(Core))
+  (term) (type) (defs) (ctx) let Par = Pair(Comp)(Core); let par = Pair.new<Comp><Core>; let bnd = Maybe.bind<Par><Par>; let err = Maybe.none<Par>; let ret = Maybe.some<Par>; let Ret = Maybe(Par); let cmp = Pair.fst<Comp><Core>; let typ = Pair.snd<Comp><Core>; let con = String.concat; term<() Ret>(() () () Core.Comp.check(term)(type)(defs)(ctx))(() Core.Comp.check(term)(type)(defs)(ctx))(Core.Comp.check(term)(type)(defs)(ctx))(() () () () () Core.Comp.check(term)(type)(defs)(ctx))((term.eras) (term.name) (term.body) let typv = Core.reduce(type)(defs); Core.if_all(typv)<() Ret>(err)((got) got<Ret>((typv.eras) (typv.self) (typv.name) (typv.bind) (typv.body) let self_var = Core.ann(Bool.true)(term)(type); let name_var = Core.ann(Bool.true)(Core.var(term.name)(Nat.succ(ctx))(Bool.false))(typv.bind); let body_typ = typv.body(self_var)(name_var); let body_ctx = Nat.succ(ctx); bnd(Core.Comp.check(term.body(name_var))(body_typ)(defs)(body_ctx))((body_res) let comp = Comp.lam(term.name)(cmp(body_res)); ret(par(comp)(type))))))(() () () Core.Comp.check(term)(type)(defs)(ctx))((term.name) (term.expr) (term.body) bnd(Core.Comp.infer(term.expr)(defs)(ctx))((expr_res) let expr_var = Core.ann(Bool.true)(term.expr)(typ(expr_res)); let body_ctx = Nat.succ(ctx); bnd(Core.Comp.check(term.body(expr_var))(type)(defs)(Nat.succ(ctx)))((body_res) let comp = Comp.let(term.name)(cmp(expr_res))(cmp(body_res)); let type = typ(body_res); ret(par(comp)(type)))))(() () () Core.Comp.check(term)(type)(defs)(ctx))
+
+Core.Comp.infer: Core -> Core.Defs -> Nat -> Maybe(Pair(Comp)(Core))
+  (term) (defs) (ctx) let Par = Pair(Comp)(Core); let par = Pair.new<Comp><Core>; let bnd = Maybe.bind<Par><Par>; let err = Maybe.none<Par>; let ret = Maybe.some<Par>; let Ret = Maybe(Par); let cmp = Pair.fst<Comp><Core>; let typ = Pair.snd<Comp><Core>; term<() Ret>((term.name) (term.indx) (term.flip) let comp = Comp.var(term.name); let type = Core.var(term.name)(term.indx)(term.flip); ret(par(comp)(type)))((term.name) Core.Defs.get_type(defs)(term.name)<() Ret>(err)((type) let comp = Comp.var(term.name); ret(par(comp)(type))))(let comp = Comp.fal; let type = Core.typ; ret(par(comp)(type)))((term.eras) (term.self) (term.name) (term.bind) (term.body) let comp = Comp.fal; let type = Core.typ; ret(par(comp)(type)))((term.eras) (term.name) (term.body) err)((term.eras) (term.func) (term.argm) bnd(Core.Comp.infer(term.func)(defs)(ctx))((func_res) let func_typ = Core.reduce(typ(func_res))(defs); Core.if_all(func_typ)<() Ret>(err)((got) got<Ret>((func_typ.eras) (func_typ.self) (func_typ.name) (func_typ.bind) (func_typ.body) let self_var = Core.ann(Bool.true)(term.func)(func_typ); let name_var = Core.ann(Bool.true)(term.argm)(func_typ.bind); bnd(Core.Comp.check(term.argm)(func_typ.bind)(defs)(ctx))((argm_res) let term_typ = func_typ.body(self_var)(name_var); let comp = Comp.app(cmp(func_res))(cmp(argm_res)); let type = term_typ; ret(par(comp)(type)))))))((term.name) (term.expr) (term.body) bnd(Core.Comp.infer(term.expr)(defs)(ctx))((expr_res) let expr_var = Core.ann(Bool.true)(term.expr)(typ(expr_res)); bnd(Core.Comp.infer(term.body(expr_var))(defs)(Nat.succ(ctx)))((body_res) let comp = Comp.let(term.name)(cmp(expr_res))(cmp(body_res)); let type = typ(body_res); ret(par(comp)(type)))))((term.done) (term.expr) (term.type) Core.Comp.check(term.expr)(term.type)(defs)(ctx))
+
+Core.Ctx.ext: String -> Core -> Core.Ctx -> Core.Ctx
+  (str) (trm) List.cons<Pair(String)(Core)>(Pair.new<String><Core>(str)(trm))
+
+Core.Ctx: Type
+  List(Pair(String)(Core))
+
+Core.Ctx.nil: Core.Ctx
+  [Pair(String)(Core);]
+
+Core.Def: Type
+  Pair(Core)(Core)
+
+Core.Defs: Type
+  Map(Core.Def)
+
+Core.Defs.get: Core.Defs -> String -> Maybe(Core.Def)
+  (defs) (name) Map.get<Core.Def>(String.to_bits(name))(defs)
+
+Core.Defs.get_term: Core.Defs -> String -> Maybe(Core)
+  (defs) (name) Maybe.map<Core.Def><Core>(Pair.snd<Core><Core>)(Core.Defs.get(defs)(name))
+
+Core.Defs.get_type: Core.Defs -> String -> Maybe(Core)
+  (defs) (name) Maybe.map<Core.Def><Core>(Pair.fst<Core><Core>)(Core.Defs.get(defs)(name))
+
+Core.Defs.new: Map(Pair(Core)(Core))
+  Map.new<Pair(Core)(Core)>
+
+Core.Defs.set: String -> Core.Def -> Core.Defs -> Core.Defs
+  (name) (val) (defs) let key = String.to_bits(name); Map.set<Core.Def>(key)(val)(defs)
+
+Core.Defs.term: Core.Defs -> String -> Core
+  (defs) (name) Core.Defs.get_term(defs)(name)<() Core>(Core.ref("<undefined>"))((term) term)
+
+Core.Defs.type: Core.Defs -> String -> Core
+  (defs) (name) Core.Defs.get_type(defs)(name)<() Core>(Core.ref("<undefined>"))((type) type)
+
+Core.Parser.all: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<String><C>(Core.Parser.nam(Bool.true))((self) Parser.bind<Pair(Bool)(Pair(String)(C))><C>(Core.Parser.enclose<Pair(String)(C)>(Parser.bind<String><Pair(String)(C)>(Core.Parser.nam(Bool.true))((n) Parser.then<Unit><Pair(String)(C)>(Core.Parser.space)(Parser.then<String><Pair(String)(C)>(Core.Parser.symbol(":"))(Parser.bind<C><Pair(String)(C)>(Core.Parser.trm)((t) Parser.pure<Pair(String)(C)>(Pair.new<String><C>(n)(t))))))))((x) x<() Parser(C)>((eras) (p) p<() Parser(C)>((name) (bind) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("->"))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx))) :: Core -> Core -> Core; Core.all(eras)(self)(name)(tbind)(tbody)))))))))
+
+Core.Parser.ann: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (expr) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("::"))(Parser.bind<C><C>(Core.Parser.trm)((type) Parser.pure<C>((ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx))))))
+
+Core.Parser.app: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (func) Parser.bind<Pair(Bool)(C)><C>(Core.Parser.enclose<C>(Core.Parser.trm))((x) x<() Parser(C)>((eras) (argm) Parser.pure<C>((ctx) Core.app(eras)(func(ctx))(argm(ctx)))))
+
+Core.Parser.arr: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (bind) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("->"))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = (s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx))) :: Core -> Core -> Core; Core.all(Bool.false)(String.nil)(String.nil)(tbind)(tbody)))))
+
+Core.Parser.block_comment: Parser(Unit)
+  Parser.then<String><Unit>(Parser.tokens("#"))(Parser.then<List(Char)><Unit>(Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#")))(Parser.pure<Unit>(Unit.new)))
+
+Core.Parser.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
+  <A> (p) Parser.bind<Bool><Pair(Bool)(A)>(Core.Parser.open)((eras) Parser.bind<A><Pair(Bool)(A)>(p)((x) Parser.then<String><Pair(Bool)(A)>(eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")")))(Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x)))))
+
+Core.Parser.is_name: Char -> Bool
+  (c) let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9"))); let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z"))); let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z"))); let und = U16.eql(c)(Char.parse("_")); Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
+
+Core.Parser.is_space: Char -> Bool
+  (c) let spc = U16.eql(c)(Char.parse(" ")); let lin = U16.eql(c)(Char.newline); let tab = U16.eql(c)(Char.tab); Bool.or(spc)(Bool.or(lin)(tab))
+
+Core.Parser.lam: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<Pair(Bool)(String)><C>(Core.Parser.enclose<String>(Core.Parser.nam(Bool.true)))((x) x<() Parser(C)>((eras) (n) Parser.then<Unit><C>(Core.Parser.space)(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(n)(x)(ctx)) :: Core -> Core; Core.lam(eras)(n)(tbody))))))
+
+Core.Parser.let: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.then<String><C>(Core.Parser.symbol("let"))(Parser.bind<String><C>(Core.Parser.nam(Bool.false))((name) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("="))(Parser.bind<C><C>(Core.Parser.trm)((expr) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<Maybe(String)><C>(Parser.optional<String>(Core.Parser.symbol(";")))(Parser.bind<C><C>(Core.Parser.trm)((body) Parser.pure<C>((ctx) let tbody = (x) body(Core.Ctx.ext(name)(x)(ctx)) :: Core -> Core; Core.let(name)(expr(ctx))(tbody))))))))))
+
+Core.Parser.line_comment: Parser(Unit)
+  let not_newline = (c) Bool.not(U16.eql(c)(Char.newline)) :: Char -> Bool; Parser.then<String><Unit>(Parser.tokens("/"))(Parser.then<String><Unit>(Parser.take_while(not_newline))(Parser.then<Char><Unit>(Parser.char(Char.newline))(Parser.pure<Unit>(Unit.new))))
+
+Core.Parser.nam: Bool -> Parser(String)
+  (allow_empty) allow_empty<() Parser(String)>(Parser.take_while(Core.Parser.is_name))(Parser.take_while1("name")(Core.Parser.is_name))
+
+Core.Parser.open: Parser(Bool)
+  Parser.plus<Bool>(Parser.then<String><Bool>(Core.Parser.symbol("("))(Parser.pure<Bool>(Bool.false)))(Parser.then<String><Bool>(Core.Parser.symbol("<"))(Parser.pure<Bool>(Bool.true)))
+
+Core.Parser.par: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.then<String><C>(Core.Parser.symbol("("))(Parser.bind<C><C>(Core.Parser.trm)((term) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Parser.tokens(")"))(Parser.pure<C>(term)))))
+
+Core.Parser.pip: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (func) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Core.Parser.symbol("|"))(Parser.bind<C><C>(Core.Parser.trm)((argm) Parser.then<Unit><C>(Core.Parser.space)(Parser.then<String><C>(Parser.tokens(";"))(Parser.pure<C>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))))
+
+Core.Parser.pst: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; (base) Parser.bind<Maybe(C)><C>(Parser.optional<C>(Parser.choice<C>([Parser(C); Parser.try<C>(Core.Parser.ann(base)), Parser.try<C>(Core.Parser.arr(base)), Parser.try<C>(Core.Parser.pip(base)), Parser.try<C>(Core.Parser.app(base))])))((maybe_term) maybe_term<() Parser(C)>(Parser.pure<C>(base))((post) Core.Parser.pst(post)))
+
+Core.Parser.space: Parser(Unit)
+  Parser.skip_many<Unit>(Parser.choice<Unit>([Parser(Unit); Core.Parser.block_comment, Core.Parser.line_comment, Core.Parser.whitespace]))
+
+Core.Parser.symbol: String -> Parser(String)
+  (str) Parser.bind<String><String>(Parser.tokens(str))((x) Parser.then<Unit><String>(Core.Parser.space)(Parser.pure<String>(x)))
+
+Core.Parser.trm: Parser(Core.Ctx -> Core)
+  let C = Core.Ctx -> Core; Parser.bind<C><C>(Parser.choice<C>([Parser(C); Core.Parser.var, Parser.try<C>(Core.Parser.typ), Parser.try<C>(Core.Parser.par), Parser.try<C>(Core.Parser.let), Parser.try<C>(Core.Parser.lam), Parser.try<C>(Core.Parser.all)]))((x) Core.Parser.pst(x))
+
+Core.Parser.typ: Parser(Core.Ctx -> Core)
+  Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type"))(Parser.pure<Core.Ctx -> Core>((ctx) Core.typ))
+
+Core.Parser.var: Parser(Core.Ctx -> Core)
+  Parser.bind<String><Core.Ctx -> Core>(Core.Parser.nam(Bool.false))((name) Parser.pure<Core.Ctx -> Core>((ctx) let got = List.ifind<Pair(String)(Core)>(ctx)((x) (i) String.eql(Pair.fst<String><Core>(x))(name)); got<() Core>(Core.ref(name))((x) x<() Core>((val) () Pair.snd<String><Core>(val)))))
+
+Core.Parser.whitespace: Parser(Unit)
+  Parser.then<String><Unit>(Parser.take_while1("whitespace")(Core.Parser.is_space))(Parser.pure<Unit>(Unit.new))
+
+Core.Read.Reply: (A: Type) -> Type
+  (A) Maybe(Pair(A)(String))
+
+Core.Read.all: Core.Read(Core.Bind)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam)((self) Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<"))((eras) Core.Read.seek<Text><Core.Bind>(Core.Read.nam)((name) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(":"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((bind) Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">"))((skip) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.all(eras)(self)(name)(bind(ctx))((s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx)))))))))))))
+
+Core.Read.ann: Core.Bind -> Core.Read(Core.Bind)
+  (expr) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("::"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((type) Core.Read.done<Core.Bind>((ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx)))))
+
+Core.Read.app: Core.Bind -> Core.Read(Core.Bind)
+  (func) Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<"))((eras) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((argm) Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">"))((skip) Core.Read.done<Core.Bind>((ctx) Core.app(eras)(func(ctx))(argm(ctx))))))
+
+Core.Read.arr: Core.Bind -> Core.Read(Core.Bind)
+  (bind) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.all(Bool.false)(String.nil)(String.nil)(bind(ctx))((s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx)))))))
+
+Core.Read.bind: <A: Type> -> <B: Type> -> Core.Read(A) -> A -> Core.Read(B) -> Core.Read(B)
+  <A> <B> (ra) (rb) (code) ra(code)<() Core.Read.Reply(B)>(Core.Read.fail<B>)((got) got<() Core.Read.Reply(B)>(rb))
+
+Core.Read.def: Core.Read(Pair(String)(Core.Def))
+  Core.Read.seek<Text><Pair(String)(Core.Def)>(Core.Read.nam)((name) Core.Read.seek<Unit><Pair(String)(Core.Def)>(Core.Read.txt(":"))((skip) Core.Read.seek<Core.Bind><Pair(String)(Core.Def)>(Core.Read.trm)((type) Core.Read.seek<Core.Bind><Pair(String)(Core.Def)>(Core.Read.trm)((term) let term = term(Core.Ctx.nil); let type = type(Core.Ctx.nil); let pair = Pair.new<Core><Core>(type)(term); let pair = Pair.new<String><Core.Def>(name)(pair); Core.Read.done<Pair(String)(Core.Def)>(pair)))))
+
+Core.Read.defs: Core.Read(Core.Defs)
+  Core.Read.defs.go(Core.Defs.new)
+
+Core.Read.defs.go: Core.Defs -> Core.Read(Core.Defs)
+  (defs) (code) Core.Read.def(code)<() Core.Read.Reply(Core.Defs)>(Core.Read.done<Core.Defs>(defs)(code))((got) got<() Core.Read.Reply(Core.Defs)>((pair) (code) pair<() Core.Read.Reply(Core.Defs)>((name) (def) let defs = Core.Defs.set(name)(def)(defs); Core.Read.defs.go(defs)(code))))
+
+Core.Read.done: <A: Type> -> A -> String -> Core.Read.Reply(A)
+  <A> (x) (code) Maybe.some<Pair(A)(String)>(Pair.new<A><String>(x)(code))
+
+Core.Read.fail: <A: Type> -> Core.Read.Reply(A)
+  <A> Maybe.none<Pair(A)(String)>
+
+Core.Read.first_of: <A: Type> -> List(Core.Read(A)) -> Core.Read(A)
+  <A> (reads) (code) reads<() Core.Read.Reply(A)>(Core.Read.fail<A>)((reads.head) (reads.tail) reads.head(code)<() Core.Read.Reply(A)>(Core.Read.first_of<A>(reads.tail)(code))(Maybe.some<Pair(A)(String)>))
+
+Core.Read: Type -> Type
+  (A) String -> Core.Read.Reply(A)
+
+Core.Read.fst: List(String) -> Core.Read(Nat)
+  (txts) let reads = List.imap<String><Core.Read(Nat)>((i) (str) Core.Read.bind<Unit><Nat>(Core.Read.txt(str))(() Core.Read.done<Nat>(i)))(txts); Core.Read.first_of<Nat>(reads)
+
+Core.Read.is_name: Char -> Bool
+  (chr) Set.get(U16.to_bits(chr))(Core.Read.is_name.set)
+
+Core.Read.is_name.set: Map(Unit)
+  String.to_set(".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz")
+
+Core.Read.is_space: Char -> Bool
+  (chr) Bool.or(U16.eql(chr)(' '))(U16.eql(chr)(Char.newline))
+
+Core.Read.lam: Core.Read(Core.Bind)
+  Core.Read.seek<Bool><Core.Bind>(Core.Read.one("(")("<"))((eras) Core.Read.seek<Text><Core.Bind>(Core.Read.nam)((name) Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.lam(eras)(name)((x) body(Core.Ctx.ext(name)(x)(ctx))))))))
+
+Core.Read.let: Core.Read(Core.Bind)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("let "))((eras) Core.Read.seek<Text><Core.Bind>(Core.Read.wrd)((name) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("="))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((expr) Core.Read.seek<Bool><Core.Bind>(Core.Read.opt(";"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.let(name)(expr(ctx))((x) body(Core.Ctx.ext(name)(x)(ctx))))))))))
+
+Core.Read.nam: Core.Read(String)
+  (code) code<() Core.Read.Reply(String)>(Core.Read.done<String>(String.nil)(String.nil))((code.head) (code.tail) Core.Read.is_name(code.head)<() Core.Read.Reply(String)>(Core.Read.nam(code.tail)<() Core.Read.Reply(String)>(Core.Read.fail<String>)((got) got<() Core.Read.Reply(String)>((str) Core.Read.done<String>(String.cons(code.head)(str)))))(Core.Read.done<String>(String.nil)(code)))
+
+Core.Read.next: String -> String
+  (str) let str = String.drop_while(Core.Read.is_space)(str); str<() String>(String.nil)((str.head) (str.tail) U16.eql('/')(str.head)<() String>(Core.Read.next(String.tail(String.drop_until(U16.eql(Char.newline))(str.tail))))(U16.eql('#')(str.head)<() String>(Core.Read.next(String.tail(String.drop_until(U16.eql('#'))(str.tail))))(str)))
+
+Core.Read.one: String -> String -> Core.Read(Bool)
+  (chr0) (chr1) let list = [String; chr1, chr0]; Core.Read.bind<Nat><Bool>(Core.Read.fst(list))((idx) Core.Read.done<Bool>(Bool.not(Nat.is_zero(idx))))
+
+Core.Read.opt: String -> Core.Read(Bool)
+  (str) (code) Core.Read.txt(str)(code)<() Core.Read.Reply(Bool)>(Core.Read.done<Bool>(Bool.false)(code))((got) got<() Core.Read.Reply(Bool)>(() (code) Core.Read.done<Bool>(Bool.true)(code)))
+
+Core.Read.par: Core.Read(Core.Bind)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("("))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((term) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(")"))((skip) Core.Read.done<Core.Bind>(term))))
+
+Core.Read.pip: Core.Bind -> Core.Read(Core.Bind)
+  (func) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("|"))((eras) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((argm) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(";"))((skip) Core.Read.done<Core.Bind>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))
+
+Core.Read.seek: <A: Type> -> <B: Type> -> Core.Read(A) -> A -> Core.Read(B) -> Core.Read(B)
+  <A> <B> (ra) (rb) (code) Core.Read.bind<A><B>(ra)(rb)(Core.Read.next(code))
+
+Core.Read.trm.base: Core.Read(Core.Bind)
+  let nil = [Core.Read(Core.Bind);]; let ext = List.cons<Core.Read(Core.Bind)>; let bases = ext(Core.Read.all)(ext(Core.Read.lam)(ext(Core.Read.let)(ext(Core.Read.par)(ext(Core.Read.typ)(ext(Core.Read.var)(nil)))))); Core.Read.first_of<Core.Bind>(bases)
+
+Core.Read.trm: Core.Read(Core.Bind)
+  Core.Read.seek<Core.Bind><Core.Bind>(Core.Read.trm.base)(Core.Read.trm.post)
+
+Core.Read.trm.post: Core.Bind -> Core.Read(Core.Bind)
+  (base) (code) let nil = [Core.Read(Core.Bind);]; let ext = List.cons<Core.Read(Core.Bind)>; let posts = ext(Core.Read.app(base))(ext(Core.Read.pip(base))(ext(Core.Read.arr(base))(ext(Core.Read.ann(base))(nil)))); Core.Read.first_of<Core.Bind>(posts)(code)<() Core.Read.Reply(Core.Bind)>(Core.Read.done<Core.Bind>(base)(code))((got) got<() Core.Read.Reply(Core.Bind)>((post) (code) Core.Read.trm.post(post)(code)))
+
+Core.Read.txt: String -> Core.Read(Unit)
+  (str) (code) str<() Core.Read.Reply(Unit)>(Core.Read.done<Unit>(Unit.new)(code))((str.head) (str.tail) code<() Core.Read.Reply(Unit)>(Core.Read.fail<Unit>)((code.head) (code.tail) U16.eql(str.head)(code.head)<() Core.Read.Reply(Unit)>(Core.Read.txt(str.tail)(code.tail))(Core.Read.fail<Unit>)))
+
+Core.Read.typ: Core.Read(Core.Bind)
+  Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("Type"))((skip) Core.Read.done<Core.Bind>((ctx) Core.typ))
+
+Core.Read.var: Core.Read(Core.Bind)
+  Core.Read.seek<Text><Core.Bind>(Core.Read.nam)((name) Core.Read.done<Core.Bind>((ctx) let find_var = (var) var<() Bool>((var_name) () String.eql(name)(var_name)) :: Pair(String)(Core) -> Bool; let found_var = List.find<Pair(String)(Core)>(find_var)(ctx); found_var<() Core>(Core.ref(name))((var) var<() Core>((name) (term) term))))
+
+Core.Read.wrd: Core.Read(String)
+  Core.Read.bind<String><String>(Core.Read.nam)((nam) (code) String.is_empty(nam)<() Core.Read.Reply(String)>(Core.Read.fail<String>)(Core.Read.done<String>(nam)(code)))
+
+Core.all.Tuple: Type
+  <P: Type> -> (all: (eras: Bool) -> (self: String) -> (name: String) -> (bind: Core) -> (body: Core -> Core -> Core) -> P) -> P
+
+Core.all: Bool -> String -> String -> Core -> Core -> Core -> Core -> Core
+  (eras) (self) (name) (bind) (body) <> () () () (all) () () () () all(eras)(self)(name)(bind)(body)
+
+Core.ann: Bool -> Core -> Core -> Core
+  (done) (expr) (type) <> () () () () () () () (ann) ann(done)(expr)(type)
+
+Core.app: Bool -> Core -> Core -> Core
+  (eras) (func) (argm) <> () () () () () (app) () () app(eras)(func)(argm)
+
+Core.eql: Core -> Core -> Core.Defs -> Bool
+  (a) (b) (defs) Core.eql.go(a)(b)(defs)(Set.new)(Nat.zero)
+
+Core.eql.go: Core -> Core -> Core.Defs -> Set -> Nat -> Bool
+  (a) (b) (defs) (eql) (dep) let a = Core.reduce(a)(defs); let b = Core.reduce(b)(defs); let x = Core.to_uid(a); let y = Core.to_uid(b); let h = Bits.concat(x)(y); Bool.or(Bits.eql(x)(y))(Set.get(h)(eql))<() Unit -> Bool>(() Bool.true)(() let eql = Set.set(h)(eql); a<() Bool>(() () () Bool.false)((a.name) Bool.false)(Bool.false)((a.eras) (a.self) (a.name) (a.bind) (a.body) b<() Bool>(() () () Bool.false)(() Bool.false)(Bool.false)((b.eras) (b.self) (b.name) (b.bind) (b.body) let s_vari = Core.var(String.nil)(dep)(Bool.false); let n_vari = Core.var(String.nil)(Nat.succ(dep))(Bool.false); let a_body = a.body(s_vari)(n_vari); let b_body = b.body(s_vari)(n_vari); let e_eras = Bool.eql(a.eras)(b.eras); let e_self = String.eql(a.self)(b.self); let e_bind = Core.eql.go(a.bind)(b.bind)(defs)(eql)(dep); let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep); Bool.and(e_eras)(Bool.and(e_self)(Bool.and(e_bind)(e_body))))(() () () Bool.false)(() () () Bool.false)(() () () Bool.false)(() () () Bool.false))((a.eras) (a.name) (a.body) b<() Bool>(() () () Bool.false)(() Bool.false)(Bool.false)(() () () () () Bool.false)((b.eras) (b.name) (b.body) let n_vari = Core.var(String.nil)(dep)(Bool.false); let a_body = a.body(n_vari); let b_body = b.body(n_vari); let e_eras = Bool.eql(a.eras)(b.eras); let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep); Bool.and(e_eras)(e_body))(() () () Bool.false)(() () () Bool.false)(() () () Bool.false))((a.eras) (a.func) (a.argm) b<() Bool>(() () () Bool.false)(() Bool.false)(Bool.false)(() () () () () Bool.false)(() () () Bool.false)((b.eras) (b.func) (b.argm) let e_eras = Bool.eql(a.eras)(b.eras); let e_func = Core.eql.go(a.func)(b.func)(defs)(eql)(dep); let e_argm = Core.eql.go(a.argm)(b.argm)(defs)(eql)(dep); Bool.and(e_eras)(Bool.and(e_func)(e_argm)))(() () () Bool.false)(() () () Bool.false))((a.name) (a.expr) (a.body) b<() Bool>(() () () Bool.false)(() Bool.false)(Bool.false)(() () () () () Bool.false)(() () () Bool.false)(() () () Bool.false)((b.name) (b.expr) (b.body) let n_vari = Core.var(String.nil)(dep)(Bool.false); let a_body = a.body(n_vari); let b_body = b.body(n_vari); let e_expr = Core.eql.go(a.expr)(b.expr)(defs)(eql)(dep); let e_body = Core.eql.go(a_body)(b_body)(defs)(eql)(dep); Bool.eql(e_expr)(e_body))(() () () Bool.false))((a.done) (a.expr) (a.type) b<() Bool>(() () () Bool.false)(() Bool.false)(Bool.false)(() () () () () Bool.false)(() () () Bool.false)(() () () Bool.false)(() () () Bool.false)((b.done) (b.expr) (b.type) let e_expr = Core.eql.go(a.expr)(b.expr)(defs)(eql)(dep); e_expr)))(Unit.new)
+
+Core: Type
+  core<P: Core -> Type> -> (var: (name: String) -> (indx: Nat) -> (flip: Bool) -> P(Core.var(name)(indx)(flip))) -> (ref: (name: String) -> P(Core.ref(name))) -> (typ: P(Core.typ)) -> (all: (eras: Bool) -> (self: String) -> (name: String) -> (bind: Core) -> (body: Core -> Core -> Core) -> P(Core.all(eras)(self)(name)(bind)(body))) -> (lam: (eras: Bool) -> (name: String) -> (body: Core -> Core) -> P(Core.lam(eras)(name)(body))) -> (app: (eras: Bool) -> (func: Core) -> (argm: Core) -> P(Core.app(eras)(func)(argm))) -> (let: (name: String) -> (expr: Core) -> (body: Core -> Core) -> P(Core.let(name)(expr)(body))) -> (ann: (done: Bool) -> (expr: Core) -> (type: Core) -> P(Core.ann(done)(expr)(type))) -> P(core)
+
+Core.if_all: Core -> Maybe(Core.all.Tuple)
+  (term) term<() Maybe(Core.all.Tuple)>(() () () Maybe.none<Core.all.Tuple>)(() Maybe.none<Core.all.Tuple>)(Maybe.none<Core.all.Tuple>)((eras) (name) (self) (bind) (body) Maybe.some<Core.all.Tuple>(<P> (func) func(eras)(name)(self)(bind)(body)))(() () () Maybe.none<Core.all.Tuple>)(() () () Maybe.none<Core.all.Tuple>)(() () () Maybe.none<Core.all.Tuple>)(() () () Maybe.none<Core.all.Tuple>)
+
+Core.is_all: Core -> Bool
+  (term) term<() Bool>((name) (indx) (flip) Bool.false)((name) Bool.false)(Bool.false)((eras) (self) (name) (bind) (body) Bool.true)((eras) (name) (body) Bool.false)((eras) (func) (argm) Bool.false)((name) (expr) (body) Bool.false)((done) (expr) (type) Bool.false)
+
+Core.is_lam: Core -> Bool
+  (term) term<() Bool>((name) (indx) (flip) Bool.false)((name) Bool.false)(Bool.false)((eras) (self) (name) (bind) (body) Bool.false)((eras) (name) (body) Bool.true)((eras) (func) (argm) Bool.false)((name) (expr) (body) Bool.false)((done) (expr) (type) Bool.false)
+
+Core.lam: Bool -> String -> Core -> Core -> Core
+  (eras) (name) (body) <> () () () () (lam) () () () lam(eras)(name)(body)
+
+Core.let: String -> Core -> Core -> Core -> Core
+  (name) (expr) (body) <> () () () () () () (Let) () Let(name)(expr)(body)
+
+Core.normalize: Core -> Core.Defs -> Core
+  (term) (defs) Core.reduce(term)(defs)<() Core>((name) (indx) Core.var(name)(indx))((name) Core.ref(name))(Core.typ)((eras) (self) (name) (bind) (body) let bind = Core.normalize(bind)(defs); let body = (s) (x) Core.normalize(body(s)(x))(defs) :: Core -> Core -> Core; Core.all(eras)(self)(name)(bind)(body))((eras) (name) (body) let body = (x) Core.normalize(body(x))(defs) :: Core -> Core; Core.lam(eras)(name)(body))((eras) (func) (argm) let func = Core.normalize(func)(defs); let argm = Core.normalize(argm)(defs); Core.app(eras)(func)(argm))((name) (expr) (body) Core.normalize(body(expr))(defs))((done) (expr) (type) Core.normalize(expr)(defs))
+
+Core.parse: String -> Core
+  (code) Core.Read.trm(code)<() Core>(Core.ref("<error>"))((got) got<() Core>((term) () term(Core.Ctx.nil)))
+
+Core.parse_defs: String -> Core.Defs
+  (code) Core.Read.defs(code)<() Core.Defs>(Core.Defs.new)((got) got<() Core.Defs>((defs) () defs))
+
+Core.reduce: Core -> Core.Defs -> Core
+  (term) (defs) term<() Core>((indx) (name) (flip) Core.var(indx)(name)(flip))((name) Core.Defs.get_term(defs)(name)<() Core>(Core.ref(name))((term) Core.reduce(term)(defs)))(Core.typ)((eras) (self) (name) (bind) (body) Core.all(eras)(self)(name)(bind)(body))((eras) (name) (body) eras<() Core>(Core.reduce(body(Core.ref("-")))(defs))(Core.lam(eras)(name)(body)))((eras) (func) (argm) eras<() Core>(Core.reduce(func)(defs))(Core.reduce(func)(defs)<() Core -> Core>((findx) (fname) (fflip) Core.app(eras)(Core.var(findx)(fname)(fflip)))((fname) Core.app(eras)(Core.ref(fname)))(Core.app(eras)(Core.typ))((feras) (fself) (fname) (fbind) (fbody) Core.app(eras)(Core.all(feras)(fself)(fname)(fbind)(fbody)))((feras) (fname) (fbody) (term.argm) Core.reduce(fbody(term.argm))(defs))((feras) (ffunc) (fargm) Core.app(eras)(Core.app(feras)(ffunc)(fargm)))((fname) (fexpr) (fbody) Core.app(eras)(Core.let(fname)(fexpr)(fbody)))((fdone) (fexpr) (ftype) Core.app(eras)(Core.ann(fdone)(fexpr)(ftype)))(argm)))((name) (expr) (body) Core.reduce(body(expr))(defs))((done) (expr) (type) Core.reduce(expr)(defs))
+
+Core.ref: String -> Core
+  (name) <> () (ref) () () () () () () ref(name)
+
+Core.stringify: Core -> String
+  (term) Core.stringify.go(term)(String.nil)
+
+Core.stringify.go: Core -> Stringifier
+  (term) let lit = String.to_stringifier; term<() Stringifier>((name) (indx) (flip) (x) lit(name)(x))((name) (x) lit(name)(x))((x) lit("Type")(x))((eras) (self) (name) (bind) (body) (x) let svar = Core.var(self)(Nat.zero)(Bool.false); let nvar = Core.var(name)(Nat.zero)(Bool.false); let body = body(svar)(nvar); let self = lit(self); let lpar = lit("("); let name = lit(name); let colo = lit(": "); let bind = Core.stringify.go(bind); let rpar = lit(") -> "); let body = Core.stringify.go(body); self(lpar(name(colo(bind(rpar(body(x))))))))((eras) (name) (body) (x) let nvar = Core.var(name)(Nat.zero)(Bool.false); let body = body(nvar); let lpar = lit("("); let name = lit(name); let rpar = lit(")"); let spac = lit(" "); let body = Core.stringify.go(body); lpar(name(rpar(spac(body(x))))))((eras) (func) (argm) (x) let wrap = Bool.or(Core.is_lam(func))(Core.is_all(func)); let inif = wrap<() Stringifier>(lit("("))(lit(String.nil)); let func = Core.stringify.go(func); let endf = wrap<() Stringifier>(lit(")"))(lit(String.nil)); let lpar = lit("("); let argm = Core.stringify.go(argm); let rpar = lit(")"); inif(func(endf(lpar(argm(rpar(x)))))))((name) (expr) (body) (x) let nvar = Core.var(name)(Nat.zero)(Bool.false); let body = body(nvar); let lets = lit("let "); let name = lit(name); let eqls = lit(" = "); let expr = Core.stringify.go(expr); let spac = lit("; "); let body = Core.stringify.go(body); lets(name(eqls(expr(spac(body(x)))))))((done) (expr) (type) (x) let expr = Core.stringify.go(expr); let colo = lit(" :: "); let type = Core.stringify.go(type); expr(colo(type(x))))
+
+Core.to_bits: Core -> Bits
+  (term) Core.to_bits.go(term)(Nat.0)(Bool.false)(Bits.nil)
+
+Core.to_bits.go: Core -> Nat -> Bool -> Bits -> Bits
+  (term) (dep) (hash) term<() Bits -> Bits>((name) (indx) (flip) (x) let indx = flip<() Bits>(Nat.to_bits(Nat.sub(indx)(Nat.succ(dep))))(Nat.to_bits(indx)); Bits.0(Bits.0(Bits.0(Bits.0(Bits.concat(indx)(x))))))((name) (x) Bits.0(Bits.0(Bits.1(Bits.concat(String.to_bits(name))(x)))))((x) Bits.0(Bits.1(Bits.0(x))))((eras) (self) (name) (bind) (body) (x) let bind = Core.to_bits.go(bind)(dep)(hash); let body = Core.to_bits.go(let svar = Core.var(String.nil)(dep)(hash); let nvar = Core.var(String.nil)(Nat.succ(dep))(hash); body(svar)(nvar))(Nat.succ(Nat.succ(dep)))(hash); Bits.0(Bits.1(Bits.1(bind(body(x))))))((eras) (name) (body) (x) let nvar = Core.var(String.nil)(dep)(hash); let body = Core.to_bits.go(body(nvar))(Nat.succ(dep))(hash); Bits.1(Bits.0(Bits.0(body(x)))))((eras) (func) (argm) (x) let func = Core.to_bits.go(func)(dep)(hash); let argm = Core.to_bits.go(argm)(dep)(hash); Bits.1(Bits.0(Bits.1(func(argm(x))))))((name) (expr) (body) (x) let nvar = Core.var(String.nil)(dep)(hash); let expr = Core.to_bits.go(expr)(dep)(hash); let body = Core.to_bits.go(body(nvar))(Nat.succ(dep))(hash); Bits.1(Bits.1(Bits.0(expr(body(x))))))((done) (expr) (type) (x) hash<() Bits>(Core.to_bits.go(expr)(dep)(hash)(x))(let expr = Core.to_bits.go(expr)(dep)(hash); let type = Core.to_bits.go(type)(dep)(hash); Bits.1(Bits.1(Bits.1(expr(type(x)))))))
+
+Core.to_uid: Core -> Bits
+  (term) Core.to_bits.go(term)(Nat.0)(Bool.true)(Bits.nil)
+
+Core.typ: Core
+  <> () () (typ) () () () () () typ
+
+Core.typecheck: Core -> Core -> Core.Defs -> Nat -> Either(String)(Core)
+  (term) (type) (defs) (ctx) let bnd = Either.bind<Text><Core><Core>; let err = Either.left<Text><Core>; let ret = Either.right<Text><Core>; let Ret = Either(Text)(Core); term<() Ret>(() () () Core.typecomp(term)(type)(defs)(ctx))(() Core.typecomp(term)(type)(defs)(ctx))(Core.typecomp(term)(type)(defs)(ctx))(() () () () () Core.typecomp(term)(type)(defs)(ctx))((term.eras) (term.name) (term.body) let typv = Core.reduce(type)(defs); Core.if_all(typv)<() Ret>(err("Non-function application."))((got) got<Ret>((typv.eras) (typv.self) (typv.name) (typv.bind) (typv.body) let self_var = Core.ann(Bool.true)(term)(type); let name_var = Core.ann(Bool.true)(Core.var(term.name)(Nat.succ(ctx))(Bool.false))(typv.bind); let body_typ = typv.body(self_var)(name_var); let body_ctx = Nat.succ(ctx); bnd(Core.typecheck(term.body(name_var))(body_typ)(defs)(body_ctx))((_) ret(type)))))(() () () Core.typecomp(term)(type)(defs)(ctx))((term.name) (term.expr) (term.body) bnd(Core.typeinfer(term.expr)(defs)(ctx))((expr_typ) let expr_var = Core.ann(Bool.true)(term.expr)(expr_typ); let body_ctx = Nat.succ(ctx); Core.typecheck(term.body(expr_var))(type)(defs)(body_ctx)))(() () () Core.typecomp(term)(type)(defs)(ctx))
+
+Core.typecomp: Core -> Core -> Core.Defs -> Nat -> Either(String)(Core)
+  (term) (type) (defs) (ctx) let bnd = Either.bind<Text><Core><Core>; let err = Either.left<Text><Core>; let ret = Either.right<Text><Core>; let Ret = Either(Text)(Core); bnd(Core.typeinfer(term)(defs)(ctx))((infr) Core.eql(type)(infr)(defs)<() Either(Text)(Core)>(ret(type))(let type_str = Core.stringify(Core.normalize(type)(Core.Defs.new)); let infr_str = Core.stringify(Core.normalize(infr)(Core.Defs.new)); let erro_str = "Type mismatch.\n"; let erro_str = String.concat(erro_str)("Found type... \x1b[2m"); let erro_str = String.concat(erro_str)(infr_str); let erro_str = String.concat(erro_str)("\x1b[0m\n"); let erro_str = String.concat(erro_str)("Instead of... \x1b[2m"); let erro_str = String.concat(erro_str)(type_str); let erro_str = String.concat(erro_str)("\x1b[0m\n"); err(erro_str)))
+
+Core.typeinfer: Core -> Core.Defs -> Nat -> Either(Text)(Core)
+  (term) (defs) (ctx) let bnd = Either.bind<Text><Core><Core>; let err = Either.left<Text><Core>; let ret = Either.right<Text><Core>; let Ret = Either(Text)(Core); term<() Ret>((term.name) (term.indx) (term.flip) ret(Core.var(term.name)(term.indx)(term.flip)))((term.name) Core.Defs.get_type(defs)(term.name)<() Ret>(err(String.concat("Undefined reference: ")(term.name)))((type) ret(type)))(ret(Core.typ))((term.eras) (term.self) (term.name) (term.bind) (term.body) let self_var = Core.ann(Bool.true)(Core.var(term.self)(ctx)(Bool.false))(term); let name_var = Core.ann(Bool.true)(Core.var(term.name)(Nat.succ(ctx))(Bool.false))(term.bind); let body_ctx = Nat.succ(ctx); let body_ctx = Nat.succ(ctx); let term_body = term.body(self_var)(name_var); bnd(Core.typecheck(term.bind)(Core.typ)(defs)(ctx))((bind_typ) bnd(Core.typecheck(term_body)(Core.typ)(defs)(ctx))((body_typ) ret(Core.typ))))((term.eras) (term.name) (term.body) err("Can't infer type."))((term.eras) (term.func) (term.argm) bnd(Core.typeinfer(term.func)(defs)(ctx))((func_typ) let func_typ = Core.reduce(func_typ)(defs); Core.if_all(func_typ)<() Ret>(err("Non-function application."))((got) got<Ret>((func_typ.eras) (func_typ.self) (func_typ.name) (func_typ.bind) (func_typ.body) let self_var = Core.ann(Bool.true)(term.func)(func_typ); let name_var = Core.ann(Bool.true)(term.argm)(func_typ.bind); bnd(Core.typecheck(term.argm)(func_typ.bind)(defs)(ctx))((bind_typ) let term_typ = func_typ.body(self_var)(name_var); ret(term_typ))))))((term.name) (term.expr) (term.body) bnd(Core.typeinfer(term.expr)(defs)(ctx))((expr_typ) let expr_var = Core.ann(Bool.true)(term.expr)(expr_typ); let body_ctx = Nat.succ(ctx); bnd(Core.typeinfer(term.body(expr_var))(defs)(body_ctx))((body_typ) ret(body_typ))))((term.done) (term.expr) (term.type) term.done<() Ret>(ret(term.type))(Core.typeinfer(term.expr)(defs)(ctx)))
+
+Core.var: String -> Nat -> Bool -> Core
+  (name) (indx) (flip) <> (var) () () () () () () () var(name)(indx)(flip)
+
+Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
+  <A> (s) (x) x(Unit.new)
+
+Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> B -> Either(A)(C) -> Either(A)(C)
+  <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
+
+Either: (A: Type) -> (B: Type) -> Type
+  (A) (B) either<P: Either(A)(B) -> Type> -> (left: (x: A) -> P(Either.left<A><B>(x))) -> (right: (x: B) -> P(Either.right<A><B>(x))) -> P(either)
+
+Either.left: <A: Type> -> <B: Type> -> (x: A) -> Either(A)(B)
+  <A> <B> (x) <P> (left) (right) left(x)
+
+Either.right: <A: Type> -> <B: Type> -> (x: B) -> Either(A)(B)
+  <A> <B> (x) <P> (left) (right) right(x)
+
+Empty.absurd: (x: Empty) -> (P: Type) -> P
+  (x) (P) x<() P>
+
+Empty: Type
+  empty<P: Empty -> Type> -> P(empty)
+
+Equal.apply: <A: Type> -> <B: A -> Type> -> (a: A) -> (b: A) -> (f: (x: A) -> B(x)) -> (e: Equal(A)(a)(b)) -> Equal(B(a))(f(a))(Equal.rewrite<A><b><a><B>(Equal.mirror<A><a><b>(e))(f(b)))
+  <A> <B> (a) (b) (f) (e) e<(e.b) (e) Equal(B(a))(f(a))(Equal.rewrite<A><e.b><a><B>(Equal.mirror<A><a><e.b>(e))(f(e.b)))>(Equal.to<B(a)><f(a)>)
+
+Equal.apply_ind: <A: Type> -> <B: Type> -> (a: A) -> (b: A) -> (f: (x: A) -> B) -> (e: Equal(A)(a)(b)) -> Equal(B)(f(a))(f(b))
+  <A> <B> (a) (b) (f) (e) e<(e.b) (e) Equal(B)(f(a))(f(e.b))>(Equal.to<B><f(a)>)
+
+Equal.chain: <A: Type> -> <a: A> -> <b: A> -> <c: A> -> (d: Equal(A)(a)(b)) -> (e: Equal(A)(b)(c)) -> Equal(A)(a)(c)
+  <A> <a> <b> <c> (d) (e) e<(e.b) (c) Equal(A)(a)(e.b)>(d)
+
+Equal: (A: Type) -> A -> A -> Type
+  (A) (a) (b) equal<P: (b: A) -> Equal(A)(a)(b) -> Type> -> (to: P(a)(Equal.to<A><a>)) -> P(b)(equal)
+
+Equal.mirror: <A: Type> -> <a: A> -> <b: A> -> (e: Equal(A)(a)(b)) -> Equal(A)(b)(a)
+  <A> <a> <b> (e) e<(b) () Equal(A)(b)(a)>(Equal.to<A><a>)
+
+Equal.rewrite: <A: Type> -> <a: A> -> <b: A> -> <P: A -> Type> -> (e: Equal(A)(a)(b)) -> (x: P(a)) -> P(b)
+  <A> <a> <b> <P> (e) (x) e<(b) (a) P(b)>(x)
+
+Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
+  <A> <a> <P> (to) to
+
+Example.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+
+Example.tco: Nat
+  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
+
+Example.u32_add: U32
+  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
+
+Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
+  <A> (x) (xs) <P> (new) (add) add<A>(x)(xs<P>(new)(add))
+
+Exports.example: Exports
+  Exports.add<Bool>(Bool.true)(Exports.add<Bool>(Bool.false)(Exports.add<Bool -> Bool>(Bool.not)(Exports.add<Bool -> Bool -> Bool>(Bool.and)(Exports.add<Bool -> Bool -> Bool>(Bool.or)(Exports.new)))))
+
+Exports: Type
+  <P: Type> -> (new: P) -> (add: <A: Type> -> (x: A) -> (xs: P) -> P) -> P
+
+Exports.new: Exports
+  <P> (new) (add) new
+
+F64.0: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000000")
+
+F64.1: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111100")
+
+F64.160: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000010011000000010")
+
+F64.180: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000010110011000000010")
+
+F64.2: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010")
+
+F64.256: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000010")
+
+F64.3: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010")
+
+F64.4: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000100000000010")
+
+F64.5: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000010100000000010")
+
+F64.6: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000001100000000010")
+
+F64.Boundary: Type
+  boundary<P: F64.Boundary -> Type> -> (new: (pts: List(F64.V3)) -> P(F64.Boundary.new(pts))) -> P(boundary)
+
+F64.Boundary.new: List(F64.V3) -> F64.Boundary
+  (pts) <P> (new) new(pts)
+
+F64.Circle: Type
+  circle<P: F64.Circle -> Type> -> (new: (pos: F64.V3) -> (rad: F64) -> P(F64.Circle.new(pos)(rad))) -> P(circle)
+
+F64.Circle.new: F64.V3 -> F64 -> F64.Circle
+  (pos) (rad) <P> (new) new(pos)(rad)
+
+F64.Line: Type
+  line<P: F64.Line -> Type> -> (new: (pos: F64.V3) -> (dir: F64.V3) -> P(F64.Line.new(pos)(dir))) -> P(line)
+
+F64.Line.new: F64.V3 -> F64.V3 -> F64.Line
+  (pos) (dir) <P> (new) new(pos)(dir)
+
+F64.Segment: Type
+  segment<P: F64.Segment -> Type> -> (new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> P(segment)
+
+F64.Segment.new: F64.V3 -> F64.V3 -> F64.Segment
+  (a) (b) <P> (new) new(a)(b)
+
+F64.V3.add: F64.V3 -> F64.V3 -> F64.V3
+  (a) (b) a<() F64.V3>((a.x) (a.y) (a.z) b<() F64.V3>((b.x) (b.y) (b.z) let c.x = F64.add(a.x)(a.x); let c.y = F64.add(a.y)(b.y); let c.z = F64.add(a.z)(b.z); F64.V3.new(c.x)(c.y)(c.z)))
+
+F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
+  (c) (b) c<() F64>((c.pos) (c.rad) b<() F64>((pts) pts<() F64>(F64.0)((h0) (t0) t0<() F64>(F64.0)((h1) (t1) let p0 = h0; let p1 = h1; let sg = F64.Segment.new(p0)(p1); let cd = F64.V3.point_segment_sqrdist(c.pos)(sg); let test = F64.ltn(cd)(F64.mul(cd)(cd)); test<() F64>(F64.1)(let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1)); F64.V3.circle_boundary_intersects(c)(boun))))))
+
+F64.V3.circle_line_intersection: F64.Circle -> F64.Line -> Maybe(Pair(F64.V3)(F64.V3))
+  (c) (l) c<() Maybe(Pair(F64.V3)(F64.V3))>((c.pos) (c.rad) l<() Maybe(Pair(F64.V3)(F64.V3))>((l.pos) (l.dir) c.pos<() Maybe(Pair(F64.V3)(F64.V3))>((cx) (cy) (cz) l.pos<() Maybe(Pair(F64.V3)(F64.V3))>((l.pos.x) (l.pos.y) (l.pos.z) l.dir<() Maybe(Pair(F64.V3)(F64.V3))>((dx) (dy) (dz) let x1 = F64.sub(l.pos.x)(cx); let y1 = F64.sub(l.pos.y)(cy); let x2 = F64.sub(F64.add(l.pos.x)(dx))(cx); let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy); let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1)); let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd)); F64.lte(de)(F64.0)<() Maybe(Pair(F64.V3)(F64.V3))>(Maybe.none<Pair(F64.V3)(F64.V3)>)(let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dx))(dx); let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dy))(dy); let px = F64.mul(sx)(F64.sqrt(de)); let py = F64.mul(sy)(F64.sqrt(de)); let qx = F64.mul(dd)(dy); let qy = F64.mul(F64.sub(F64.0)(dd))(dx); let ax = F64.sub(qx)(px); let ay = F64.sub(qy)(py); let bx = F64.add(qx)(px); let by = F64.add(qy)(py); let ux = F64.add(ax)(cx); let uy = F64.add(ay)(cy); let vx = F64.add(bx)(cx); let vy = F64.add(by)(cy); let fst_v = F64.V3.new(ux)(uy)(F64.0); let snd_v = F64.V3.new(vx)(vy)(F64.0); Maybe.some<Pair(F64.V3)(F64.V3)>(Pair.new<F64.V3><F64.V3>(fst_v)(snd_v))))))))
+
+F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F64)
+  (a) (d) (b) a<() Maybe(F64)>((a.pos) (a.rad) b<() Maybe(F64)>((b.pos) (b.rad) let r = a.rad; let c = F64.Circle.new(b.pos)(F64.add(a.rad)(b.rad)); let l = F64.Line.new(a.pos)(F64.V3.norm(d)); let p = F64.V3.circle_line_intersection(c)(l); p<() Maybe(F64)>(Maybe.none<F64>)((some_pair) some_pair<() Maybe(F64)>((fst) (snd) let d0 = F64.V3.sqr_dist(a.pos)(fst); let d1 = F64.V3.sqr_dist(a.pos)(snd); let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd); let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos)); let ds = F64.V3.sqr_dist(hp)(a.pos); let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)); F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)))))
+
+F64.V3.dist: F64.V3 -> F64.V3 -> F64
+  (a) (b) F64.sqrt(F64.V3.sqr_dist(a)(b))
+
+F64.V3.dot: F64.V3 -> F64.V3 -> F64
+  (a) (b) a<() F64>((a.x) (a.y) (a.z) b<() F64>((b.x) (b.y) (b.z) let res = F64.0; let res = F64.add(res)(F64.mul(a.x)(b.x)); let res = F64.add(res)(F64.mul(a.y)(b.y)); let res = F64.add(res)(F64.mul(a.z)(b.z)); res))
+
+F64.V3.eql: F64.V3 -> F64.V3 -> Bool
+  (a) (b) a<() Bool>((a.x) (a.y) (a.z) b<() Bool>((b.x) (b.y) (b.z) let same_x = F64.eql(a.x)(b.x); let same_y = F64.eql(a.y)(b.y); let same_z = F64.eql(a.z)(b.z); Bool.and(same_x)(Bool.and(same_y)(same_z))))
+
+F64.V3: Type
+  v3<P: F64.V3 -> Type> -> (new: (x: F64) -> (y: F64) -> (z: F64) -> P(F64.V3.new(x)(y)(z))) -> P(v3)
+
+F64.V3.get_x: F64.V3 -> F64
+  (v) v<() F64>((v.x) (v.y) (v.z) v.x)
+
+F64.V3.get_y: F64.V3 -> F64
+  (v) v<() F64>((v.x) (v.y) (v.z) v.y)
+
+F64.V3.get_z: F64.V3 -> F64
+  (v) v<() F64>((v.x) (v.y) (v.z) v.z)
+
+F64.V3.len: F64.V3 -> F64
+  (v) v<() F64>((v.x) (v.y) (v.z) let sqr = F64.0; let sqr = F64.add(sqr)(F64.mul(v.x)(v.x)); let sqr = F64.add(sqr)(F64.mul(v.y)(v.y)); let sqr = F64.add(sqr)(F64.mul(v.z)(v.z)); let expo = F64.div(F64.1)(F64.add(F64.1)(F64.1)); let sqr = F64.pow(sqr)(expo); sqr)
+
+F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
+  (a) (b) (c) a<() F64.V3>((a.x) (a.y) (a.z) b<() F64.V3>((a.x) (a.y) (a.z) c<() F64.V3>((a.x) (a.y) (a.z) let a_eql_b = F64.V3.eql(a)(b); let diff = F64.V3.sub(b)(a); let normdiff = F64.V3.norm(diff); a_eql_b<() F64.V3>(normdiff)(c))))
+
+F64.V3.ltn: F64.V3 -> F64.V3 -> Bool
+  (a) (b) let len_a = F64.V3.len(a); let len_b = F64.V3.len(b); Bool.if<Bool>(F64.ltn(len_a)(len_b))(Bool.true)(Bool.false)
+
+F64.V3.map: F64 -> F64 -> F64.V3 -> F64.V3
+  (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z)))
+
+F64.V3.map_x: F64 -> F64 -> F64.V3 -> F64.V3
+  (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(fn(v.x))(v.y)(v.z))
+
+F64.V3.map_y: F64 -> F64 -> F64.V3 -> F64.V3
+  (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(v.x)(fn(v.y))(v.z))
+
+F64.V3.map_z: F64 -> F64 -> F64.V3 -> F64.V3
+  (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(v.x)(v.y)(fn(v.z)))
+
+F64.V3.mul: F64.V3 -> F64.V3 -> F64.V3
+  (a) (b) a<() F64.V3>((a.x) (a.y) (a.z) b<() F64.V3>((b.x) (b.y) (b.z) let c.x = F64.mul(a.x)(a.x); let c.y = F64.mul(a.y)(b.y); let c.z = F64.mul(a.z)(b.z); F64.V3.new(c.x)(c.y)(c.z)))
+
+F64.V3.new: F64 -> F64 -> F64 -> F64.V3
+  (x) (y) (z) <P> (new) new(x)(y)(z)
+
+F64.V3.norm: F64.V3 -> F64.V3
+  (v) v<() F64.V3>((v.x) (v.y) (v.z) let len = F64.V3.len(v); let new_x = F64.div(v.x)(len); let new_y = F64.div(v.y)(len); let new_z = F64.div(v.z)(len); F64.V3.new(new_x)(new_y)(new_z))
+
+F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
+  (p) (s) F64.sqrt(F64.V3.point_segment_sqrdist(p)(s))
+
+F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
+  (p) (s) p<() F64>((p.x) (p.y) (p.z) s<() F64>((a) (b) a<() F64>((a.x) (a.y) (a.z) b<() F64>((b.x) (b.y) (b.z) let ab_x_diff_sqrd = F64.pow(F64.sub(a.x)(b.x))(F64.2); let ab_y_diff_sqrd = F64.pow(F64.sub(a.y)(b.y))(F64.2); let pa_x_diff = F64.sub(p.x)(a.x); let pa_y_diff = F64.sub(p.y)(a.y); let ba_x_diff = F64.sub(b.x)(a.x); let ba_y_diff = F64.sub(b.y)(a.y); let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd); let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff)); let t = F64.div(t)(l); let t = F64.max(F64.0)(F64.min(F64.1)(t)); let d = F64.0; let t_times_ba_x_diff = F64.mul(t)(ba_x_diff); let t_times_ba_y_diff = F64.mul(t)(ba_y_diff); let k = F64.pow(F64.sub(p.x)(F64.add(a.x)(t_times_ba_x_diff)))(F64.2); let d = F64.add(d)(k); let k = F64.pow(F64.sub(p.y)(F64.add(a.y)(t_times_ba_y_diff)))(F64.2); let d = F64.add(d)(k); d))))
+
+F64.V3.polygon_to_segments.cons: F64.V3 -> F64.V3 -> F64.V3 -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment) -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)
+  (pos) (dir) (pt_b) (segs) (pt_a) (pt_0) pt_a<() List(F64.Segment)>(segs(Maybe.some<F64.V3>(pt_b))(Maybe.some<F64.V3>(pt_b)))((pt_a.value) let pt_0 = pt_0<() Maybe(F64.V3)>(Maybe.some<F64.V3>(pt_b))((pt_0.value) pt_0); let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value); let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_b); let sg = F64.Segment.new(p0)(p1); List.cons<F64.Segment>(sg)(segs(Maybe.some<F64.V3>(pt_b))(pt_0)))
+
+F64.V3.polygon_to_segments: F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)
+  (pos) (dir) (pts) List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments.nil(pos)(dir))(F64.V3.polygon_to_segments.cons(pos)(dir))(pts)(Maybe.none<F64.V3>)(Maybe.none<F64.V3>)
+
+F64.V3.polygon_to_segments.nil: F64.V3 -> F64.V3 -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)
+  (pos) (dir) (pt_a) (pt_0) pt_0<() List(F64.Segment)>([F64.Segment;])((pt_0.value) pt_a<() List(F64.Segment)>([F64.Segment;])((pt_a.value) let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value); let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_0.value); let sg = F64.Segment.new(p0)(p1); [F64.Segment; sg]))
+
+F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
+  (pos) (dir) (pnt) pnt<() F64.V3>((pnt.x) (pnt.y) (pnt.z) dir<() F64.V3>((dir.x) (dir.y) (dir.z) let a = F64.atan(dir.y)(dir.x); let pnt_x_times_cos_a = F64.mul(pnt.x)(F64.cos(a)); let pnt_y_times_sin_a = F64.mul(pnt.y)(F64.sin(a)); let pnt_x_times_sin_a = F64.mul(pnt.x)(F64.sin(a)); let pnt_y_times_cos_a = F64.mul(pnt.y)(F64.cos(a)); let x = F64.sub(pnt_x_times_cos_a)(pnt_y_times_sin_a); let y = F64.add(pnt_x_times_sin_a)(pnt_y_times_cos_a); F64.V3.add(pos)(F64.V3.new(x)(y)(pnt.z))))
+
+F64.V3.rot_90: F64.V3 -> F64.V3
+  (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(v.y)(F64.sub(F64.0)(v.x))(v.z))
+
+F64.V3.rotate: F64 -> F64.V3 -> F64.V3 -> F64.V3
+  (a) (v) (p) v<() F64.V3>((v.x) (v.y) (v.z) p<() F64.V3>((p.x) (p.y) (p.z) let rad = F64.mul(a)(F64.div(F64.pi)(F64.180)); let sin = F64.sin(rad); let cos = F64.cos(rad); let x_diff = F64.sub(v.x)(p.x); let y_diff = F64.sub(v.y)(p.y); let x_diff_times_cos = F64.mul(x_diff)(cos); let x_diff_times_sin = F64.mul(x_diff)(sin); let y_diff_times_cos = F64.mul(y_diff)(cos); let y_diff_times_sin = F64.mul(y_diff)(sin); let new_x = F64.sub(F64.add(p.x)(x_diff_times_cos))(y_diff_times_sin); let new_y = F64.add(F64.add(p.y)(x_diff_times_sin))(y_diff_times_cos); F64.V3.new(new_x)(new_y)(v.z)))
+
+F64.V3.scale: F64 -> F64.V3 -> F64.V3
+  (k) (v) v<() F64.V3>((v.x) (v.y) (v.z) let new_x = F64.mul(k)(v.x); let new_y = F64.mul(k)(v.y); let new_z = F64.mul(k)(v.z); F64.V3.new(new_x)(new_y)(new_z))
+
+F64.V3.sqr_dist: F64.V3 -> F64.V3 -> F64
+  (a) (b) a<() F64>((a.x) (a.y) (a.z) b<() F64>((b.x) (b.y) (b.z) let two = F64.add(F64.1)(F64.1); let x_diff = F64.pow(F64.sub(a.x)(b.x))(two); let y_diff = F64.pow(F64.sub(a.y)(b.y))(two); let z_diff = F64.pow(F64.sub(a.z)(b.z))(two); F64.add(x_diff)(F64.add(y_diff)(z_diff))))
+
+F64.V3.sub: F64.V3 -> F64.V3 -> F64.V3
+  (a) (b) a<() F64.V3>((a.x) (a.y) (a.z) b<() F64.V3>((b.x) (b.y) (b.z) let c.x = F64.sub(a.x)(a.x); let c.y = F64.sub(a.y)(b.y); let c.z = F64.sub(a.z)(b.z); F64.V3.new(c.x)(c.y)(c.z)))
+
+F64._1: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111101")
+
+F64._160: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000010011000000011")
+
+F64._256: F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000011")
+
+F64.acos: F64 -> F64
+  F64.acos
+
+F64.add: F64 -> F64 -> F64
+  F64.add
+
+F64.asin: F64 -> F64
+  F64.asin
+
+F64.atan: F64 -> F64 -> F64
+  F64.atan
+
+F64.cmp: F64 -> F64 -> Cmp
+  (a) (b) a<() Cmp>((a.word) b<() Cmp>((b.word) F64.eql(a)(b)<() Cmp>(Cmp.eql)(Word.ltn<Nat.64>(a.word)(b.word)<() Cmp>(Cmp.ltn)(Cmp.gtn))))
+
+F64.cos: F64 -> F64
+  F64.cos
+
+F64.div: F64 -> F64 -> F64
+  F64.div
+
+F64.eql: F64 -> F64 -> Bool
+  (x) (y) x<() Bool>((x.word) y<() Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
+
+F64.exp: F64 -> F64 -> F64
+  F64.exp
+
+F64.floor: F64 -> F64
+  (x) let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x)(F64.0)))(F64.1)(F64.0); F64.sub(F64.sub(x)(F64.mod(x)(F64.1)))(ltn_zero)
+
+F64: Type
+  f64<P: F64 -> Type> -> (new: (a: Word(Nat.64)) -> P(F64.new(a))) -> P(f64)
+
+F64.from_bool: Bool -> F64
+  (b) b<() F64>(F64.1)(F64.0)
+
+F64.gte: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+
+F64.gtn: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+
+F64.if: <A: Type> -> (x: F64) -> (ct: A) -> (cf: A) -> A
+  <A> (x) (ct) (cf) let bool = F64.eql(x)(F64.0); bool<() A>(cf)(ct)
+
+F64.is_between: F64 -> F64 -> F64 -> Bool
+  (a) (b) (x) let a_eql_x = F64.eql(a)(x); let a_ltn_x = F64.ltn(a)(x); let x_ltn_b = F64.ltn(x)(b); Bool.or(a_eql_x)(Bool.and(a_ltn_x)(x_ltn_b))
+
+F64.log: F64 -> F64
+  F64.log
+
+F64.lte: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+
+F64.ltn: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+
+F64.max: F64 -> F64 -> F64
+  F64.max
+
+F64.min: F64 -> F64 -> F64
+  F64.min
+
+F64.mod: F64 -> F64 -> F64
+  F64.mod
+
+F64.mul: F64 -> F64 -> F64
+  F64.mul
+
+F64.new: Word(Nat.64) -> F64
+  (a) <> (f64) f64(a)
+
+F64.parse_binary: String -> F64
+  (str) F64.new(Word.from_bits(Nat.64)(Bits.from_string(str)))
+
+F64.pi: F64
+  F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")
+
+F64.pow: F64 -> F64 -> F64
+  F64.pow
+
+F64.sin: F64 -> F64
+  F64.sin
+
+F64.sqrt: F64 -> F64
+  (n) F64.pow(n)(F64.div(F64.1)(F64.2))
+
+F64.sub: F64 -> F64 -> F64
+  F64.sub
+
+F64.tan: F64 -> F64
+  F64.tan
+
+Function.call: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
+  <A> <B> (x) (f) f(x)
+
+Function.comp: <A: Type> -> <B: Type> -> <C: B -> Type> -> (g: (b: B) -> C(b)) -> (f: A -> B) -> (x: A) -> C(f(x))
+  <A> <B> <C> (g) (f) (x) g(f(x))
+
+Function.const: <A: Type> -> (x: A) -> (y: A) -> A
+  <A> (x) (y) x
+
+Function.curry: <A: Type> -> <B: Type> -> <C: Type> -> (f: Pair(A)(B) -> C) -> (x: A) -> (y: B) -> C
+  <A> <B> <C> (f) (x) (y) f(Pair.new<A><B>(x)(y))
+
+Function.flip: <A: Type> -> <B: Type> -> <C: Type> -> (f: A -> B -> C) -> (y: B) -> (x: A) -> C
+  <A> <B> <C> (f) (y) (x) f(x)(y)
+
+Function: (A: Type) -> (B: A -> Type) -> Type
+  (A) (B) (x: A) -> B(x)
+
+Function.id: <A: Type> -> (x: A) -> A
+  <A> (x) x
+
+Function.pipe: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
+  <A> <B> (x) (f) f(x)
+
+Function.uncurry: <A: Type> -> <B: Type> -> <C: Type> -> (f: A -> B -> C) -> (p: Pair(A)(B)) -> C
+  <A> <B> <C> (f) (p) p<() C>((p.fst) (p.snd) f(p.fst)(p.snd))
+
+IO.end: <A: Type> -> A -> IO(A)
+  <A> (x) <P> (end) () () end(x)
+
+IO: Type -> Type
+  (A) io<P: IO(A) -> Type> -> (end: (val: A) -> P(IO.end<A>(val))) -> (log: (str: String) -> (nxt: Unit -> IO(A)) -> P(IO.log<A>(str)(nxt))) -> (inp: (nxt: String -> IO(A)) -> P(IO.inp<A>(nxt))) -> P(io)
+
+IO.inp: <A: Type> -> String -> IO(A) -> IO(A)
+  <A> (nxt) <P> () () (inp) inp(nxt)
+
+IO.log: <A: Type> -> String -> Unit -> IO(A) -> IO(A)
+  <A> (str) (nxt) <P> () (log) () log(str)(nxt)
+
+JSON.array: List(JSON) -> JSON
+  (x) <P> () () () () (array) () array(x)
+
+JSON.bool: Bool -> JSON
+  (x) <P> () (bool) () () () () bool(x)
+
+JSON: Type
+  json<P: JSON -> Type> -> (null: P(JSON.null)) -> (bool: (x: Bool) -> P(JSON.bool(x))) -> (number: (x: F64) -> P(JSON.number(x))) -> (string: (x: String) -> P(JSON.string(x))) -> (array: (x: List(JSON)) -> P(JSON.array(x))) -> (object: (x: List(Pair(String)(JSON))) -> P(JSON.object(x))) -> P(json)
+
+JSON.null: JSON
+  <P> (null) () () () () () null
+
+JSON.number: F64 -> JSON
+  (x) <P> () () (number) () () () number(x)
+
+JSON.object: List(Pair(String)(JSON)) -> JSON
+  (x) <P> () () () () () (object) object(x)
+
+JSON.string: String -> JSON
+  (x) <P> () () () (string) () () string(x)
+
+List.all: <A: Type> -> A -> Bool -> List(A) -> Bool
+  <A> (cond) (list) list<() Bool>(Bool.true)((head) (tail) cond(head)<() Bool>(List.all<A>(cond)(tail))(Bool.false))
+
+List.all_true: List(Bool) -> Bool
+  (list) List.all<Bool>((x) x)(list)
+
+List.any: <A: Type> -> A -> Bool -> List(A) -> Bool
+  <A> (cond) (list) list<() Bool>(Bool.false)((head) (tail) cond(head)<() Bool>(Bool.true)(List.any<A>(cond)(tail)))
+
+List.any_true: List(Bool) -> Bool
+  (list) List.any<Bool>((x) x)(list)
+
+List.append: <A: Type> -> List(A) -> A -> List(A)
+  <A> (as) (a) as<() List(A)>(List.single<A>(a))((head) (tail) List.cons<A>(head)(List.append<A>(tail)(a)))
+
+List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
+  <A> (list) (indx) list<() Maybe(A)>(Maybe.none<A>)((head) (tail) indx<() Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
+
+List.bind: <A: Type> -> <B: Type> -> List(A) -> A -> List(B) -> List(B)
+  <A> <B> (xs) (f) List.flatten<B>(List.map<A><List(B)>(f)(xs))
+
+List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
+  <A> (n) (list) n<() Maybe(List(A))>(Maybe.some<List(A)>([A;]))((pred) list<() Maybe(List(A))>(Maybe.none<List(A)>)((head) (tail) Maybe.bind<List(A)><List(A)>(List.chunk<A>(pred)(tail))((x) Maybe.some<List(A)>(List.cons<A>(head)(x)))))
+
+List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
+  <A> (as) (bs) as<() List(A)>(bs)((head) (tail) List.cons<A>(head)(List.concat<A>(tail)(bs)))
+
+List.cons: <A: Type> -> (head: A) -> (tail: List(A)) -> List(A)
+  <A> (head) (tail) <P> (nil) (cons) cons(head)(tail)
+
+List.drop: <A: Type> -> Nat -> List(A) -> List(A)
+  <A> (n) (list) n<() List(A)>(list)((pred) list<() List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
+
+List.filter: <A: Type> -> A -> Bool -> List(A) -> List(A)
+  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() List(A) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
+
+List.find: <A: Type> -> A -> Bool -> List(A) -> Maybe(A)
+  <A> (cond) (xs) xs<() Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<() Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
+
+List.find_last.aux: <A: Type> -> List(A) -> A -> Nat -> Bool -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx) (res) list<() Maybe(Pair(A)(Nat))>(res)((head) (tail) let res = cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(res); List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res))
+
+List.find_last: <A: Type> -> List(A) -> A -> Nat -> Bool -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) List.find_last.aux<A>(list)(cond)(Nat.zero)(Maybe.none<Pair(A)(Nat)>)
+
+List.flatten: <A: Type> -> List(List(A)) -> List(A)
+  <A> (as) as<() List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
+
+List: (A: Type) -> Type
+  (A) list<P: (x: List(A)) -> Type> -> (nil: P([A;])) -> (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) -> P(list)
+
+List.fold: <A: Type> -> <B: Type> -> B -> A -> B -> B -> List(A) -> B
+  <A> <B> (nil) (cons) (list) list<() B>(nil)((list.head) (list.tail) cons(list.head)(List.fold<A><B>(nil)(cons)(list.tail)))
+
+List.ifind.aux: <A: Type> -> List(A) -> A -> Nat -> Bool -> Nat -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx) list<() Maybe(Pair(A)(Nat))>(Maybe.none<Pair(A)(Nat)>)((head) (tail) cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(List.ifind.aux<A>(tail)(cond)(Nat.succ(indx))))
+
+List.ifind: <A: Type> -> List(A) -> A -> Nat -> Bool -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) List.ifind.aux<A>(list)(cond)(Nat.zero)
+
+List.imap: <A: Type> -> <B: Type> -> Nat -> A -> B -> List(A) -> List(B)
+  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
+
+List.is_empty: <A: Type> -> List(A) -> Bool
+  <A> (list) list<() Bool>(Bool.true)((head) (tail) Bool.false)
+
+List.length: <A: Type> -> List(A) -> Nat
+  <A> (list) list<() Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
+
+List.map: <A: Type> -> <B: Type> -> A -> B -> List(A) -> List(B)
+  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail)))
+
+List.nil: <A: Type> -> List(A)
+  <A> <P> (nil) (cons) nil
+
+List.push: <A: Type> -> A -> List(A) -> List(A)
+  <A> (val) (list) list<() List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
+
+List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
+  <A> (as) (xs) as<() List(A)>(xs)((head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs)))
+
+List.reverse: <A: Type> -> List(A) -> List(A)
+  <A> (as) List.reverse.aux<A>(as)([A;])
+
+List.single: <A: Type> -> (x: A) -> List(A)
+  <A> (x) [A; x]
+
+List.take: <A: Type> -> Nat -> List(A) -> List(A)
+  <A> (n) (list) list<() List(A)>([A;])((head) (tail) n<() List(A)>([A;])((pred) List.cons<A>(head)(List.take<A>(pred)(tail))))
+
+List.to_concat: <A: Type> -> (xs: List(A)) -> Concat(A)
+  <A> (xs) xs<() Concat(A)>((ys) ys)((head) (tail) (ys) List.cons<A>(head)(List.to_concat<A>(tail)(ys)))
+
+List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> A -> B -> C -> List(A) -> List(B) -> List(C)
+  <A> <B> <C> (fn) (as) (bs) as<() List(C)>([C;])((a.head) (a.tail) bs<() List(C)>([C;])((b.head) (b.tail) let head = fn(a.head)(b.head); let tail = List.zip_with<A><B><C>(fn)(a.tail)(b.tail); List.cons<C>(head)(tail)))
+
+Map: (A: Type) -> Type
+  (A) map<P: Map(A) -> Type> -> (new: P(Map.new<A>)) -> (tie: (val: Maybe(A)) -> (lft: Map(A)) -> (rgt: Map(A)) -> P(Map.tie<A>(val)(lft)(rgt))) -> P(map)
+
+Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
+  <A> (bits) (map) bits<() Maybe(A)>(map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) map.val))((bits.pred) map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) Map.get<A>(bits.pred)(map.lft)))((bits.pred) map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) Map.get<A>(bits.pred)(map.rgt)))
+
+Map.lookup: <A: Type> -> Bits -> A -> Map(A) -> Pair(A)(Map(A))
+  <A> (bits) (val) (map) bits<() Pair(A)(Map(A))>(map<() Pair(A)(Map(A))>(let map = Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>); Pair.new<A><Map(A)>(val)(map))((map.val) (map.lft) (map.rgt) let value = Maybe.extract<A>(map.val)(val); let map = Map.tie<A>(Maybe.some<A>(value))(map.lft)(map.rgt); Pair.new<A><Map(A)>(value)(map)))((bits.pred) map<() Pair(A)(Map(A))>(let p = Map.lookup<A>(bits.pred)(val)(Map.new<A>); p<() Pair(A)(Map(A))>((p.a) (p.b) Pair.new<A><Map(A)>(p.a)(Map.tie<A>(Maybe.none<A>)(p.b)(Map.new<A>))))((map.val) (map.lft) (map.rgt) let p = Map.lookup<A>(bits.pred)(val)(map.lft); p<() Pair(A)(Map(A))>((p.a) (p.b) Pair.new<A><Map(A)>(p.a)(Map.tie<A>(map.val)(p.b)(map.rgt)))))((bits.pred) map<() Pair(A)(Map(A))>(let p = Map.lookup<A>(bits.pred)(val)(Map.new<A>); p<() Pair(A)(Map(A))>((p.a) (p.b) Pair.new<A><Map(A)>(p.a)(Map.tie<A>(Maybe.none<A>)(Map.new<A>)(p.b))))((map.val) (map.lft) (map.rgt) let p = Map.lookup<A>(bits.pred)(val)(map.rgt); p<() Pair(A)(Map(A))>((p.a) (p.b) Pair.new<A><Map(A)>(p.a)(Map.tie<A>(map.val)(map.lft)(p.b)))))
+
+Map.mix: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
+  <> (val) (lft) (rgt) <> () (mix) mix(val)(lft)(rgt)
+
+Map.new: <A: Type> -> Map(A)
+  <> <> (new) () new
+
+query: <A: Type> -> A -> Pair(A)(A) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
+  <A> (cpy) (bits) (map) let rec = query<A>; bits<() A -> Pair(A)(A) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)) -> A -> Pair(A)(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>((rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let mval = map.val; mval<() Map(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>((map.lft) (map.rgt) let map = Map.tie<A>(Maybe.none<A>)(map.lft)(map.rgt); let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((mval.value) (map.lft) (map.rgt) let p = cpy(mval.value); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt); let val = Maybe.some<A>(p.snd); Pair.new<Map(A)><Maybe(A)>(map)(val)))(map.lft)(map.rgt)))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.lft); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(p.fst)(map.rgt); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.rgt); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(map.lft)(p.fst); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))(rec)(cpy)(map)
+
+Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
+  <A> (bits) (val) (map) bits<() Map(A)>(map<() Map(A)>(Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>))((map.val) (map.lft) (map.rgt) Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt)))((bits.pred) map<() Map(A)>(Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>))((map.val) (map.lft) (map.rgt) Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt)))((bits.pred) map<() Map(A)>(Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>)))((map.val) (map.lft) (map.rgt) Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt))))
+
+Map.tie: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
+  <> (val) (lft) (rgt) <> () (tie) tie(val)(lft)(rgt)
+
+Maybe.bind: <A: Type> -> <B: Type> -> Maybe(A) -> A -> Maybe(B) -> Maybe(B)
+  <A> <B> (m) (f) m<() Maybe(B)>(Maybe.none<B>)((m.val) f(m.val))
+
+Maybe.extract: <A: Type> -> Maybe(A) -> A -> A
+  <A> (m) (a) m<() A>(a)((m.value) m.value)
+
+Maybe: Type -> Type
+  (A) maybe<P: Maybe(A) -> Type> -> (none: P(Maybe.none<A>)) -> (some: (value: A) -> P(Maybe.some<A>(value))) -> P(maybe)
+
+Maybe.join: <A: Type> -> Maybe(Maybe(A)) -> Maybe(A)
+  <A> (m) m<() Maybe(A)>(Maybe.none<A>)((m.value) m.value)
+
+Maybe.map: <A: Type> -> <B: Type> -> A -> B -> Maybe(A) -> Maybe(B)
+  <A> <B> (fn) (maybe) maybe<() Maybe(B)>(Maybe.none<B>)((value) Maybe.some<B>(fn(value)))
+
+Maybe.none: <A: Type> -> Maybe(A)
+  <> <> (none) () none
+
+Maybe.some: <A: Type> -> A -> Maybe(A)
+  <> (value) <> () (some) some(value)
+
+Nat.0: Nat
+  Nat.zero
+
+Nat.1: Nat
+  Nat.succ(Nat.0)
+
+Nat.10: Nat
+  Nat.succ(Nat.9)
+
+Nat.11: Nat
+  Nat.succ(Nat.10)
+
+Nat.12: Nat
+  Nat.succ(Nat.11)
+
+Nat.13: Nat
+  Nat.succ(Nat.12)
+
+Nat.14: Nat
+  Nat.succ(Nat.13)
+
+Nat.15: Nat
+  Nat.succ(Nat.14)
+
+Nat.16: Nat
+  Nat.succ(Nat.15)
+
+Nat.17: Nat
+  Nat.succ(Nat.16)
+
+Nat.18: Nat
+  Nat.succ(Nat.17)
+
+Nat.19: Nat
+  Nat.succ(Nat.18)
+
+Nat.2: Nat
+  Nat.succ(Nat.1)
+
+Nat.20: Nat
+  Nat.succ(Nat.19)
+
+Nat.21: Nat
+  Nat.succ(Nat.20)
+
+Nat.22: Nat
+  Nat.succ(Nat.21)
+
+Nat.23: Nat
+  Nat.succ(Nat.22)
+
+Nat.24: Nat
+  Nat.succ(Nat.23)
+
+Nat.25: Nat
+  Nat.succ(Nat.24)
+
+Nat.26: Nat
+  Nat.succ(Nat.25)
+
+Nat.27: Nat
+  Nat.succ(Nat.26)
+
+Nat.28: Nat
+  Nat.succ(Nat.27)
+
+Nat.29: Nat
+  Nat.succ(Nat.28)
+
+Nat.3: Nat
+  Nat.succ(Nat.2)
+
+Nat.30: Nat
+  Nat.succ(Nat.29)
+
+Nat.31: Nat
+  Nat.succ(Nat.30)
+
+Nat.32: Nat
+  Nat.succ(Nat.31)
+
+Nat.33: Nat
+  Nat.succ(Nat.32)
+
+Nat.34: Nat
+  Nat.succ(Nat.33)
+
+Nat.35: Nat
+  Nat.succ(Nat.34)
+
+Nat.36: Nat
+  Nat.succ(Nat.35)
+
+Nat.37: Nat
+  Nat.succ(Nat.36)
+
+Nat.38: Nat
+  Nat.succ(Nat.37)
+
+Nat.39: Nat
+  Nat.succ(Nat.38)
+
+Nat.4: Nat
+  Nat.succ(Nat.3)
+
+Nat.40: Nat
+  Nat.succ(Nat.39)
+
+Nat.41: Nat
+  Nat.succ(Nat.40)
+
+Nat.42: Nat
+  Nat.succ(Nat.41)
+
+Nat.43: Nat
+  Nat.succ(Nat.42)
+
+Nat.44: Nat
+  Nat.succ(Nat.43)
+
+Nat.45: Nat
+  Nat.succ(Nat.44)
+
+Nat.46: Nat
+  Nat.succ(Nat.45)
+
+Nat.47: Nat
+  Nat.succ(Nat.46)
+
+Nat.48: Nat
+  Nat.succ(Nat.47)
+
+Nat.49: Nat
+  Nat.succ(Nat.48)
+
+Nat.5: Nat
+  Nat.succ(Nat.4)
+
+Nat.50: Nat
+  Nat.succ(Nat.49)
+
+Nat.51: Nat
+  Nat.succ(Nat.50)
+
+Nat.52: Nat
+  Nat.succ(Nat.51)
+
+Nat.53: Nat
+  Nat.succ(Nat.52)
+
+Nat.54: Nat
+  Nat.succ(Nat.53)
+
+Nat.55: Nat
+  Nat.succ(Nat.54)
+
+Nat.56: Nat
+  Nat.succ(Nat.55)
+
+Nat.57: Nat
+  Nat.succ(Nat.56)
+
+Nat.58: Nat
+  Nat.succ(Nat.57)
+
+Nat.59: Nat
+  Nat.succ(Nat.58)
+
+Nat.6: Nat
+  Nat.succ(Nat.5)
+
+Nat.60: Nat
+  Nat.succ(Nat.59)
+
+Nat.61: Nat
+  Nat.succ(Nat.60)
+
+Nat.62: Nat
+  Nat.succ(Nat.61)
+
+Nat.63: Nat
+  Nat.succ(Nat.62)
+
+Nat.64: Nat
+  Nat.succ(Nat.63)
+
+Nat.7: Nat
+  Nat.succ(Nat.6)
+
+Nat.8: Nat
+  Nat.succ(Nat.7)
+
+Nat.9: Nat
+  Nat.succ(Nat.8)
+
+Nat.add: Nat -> Nat -> Nat
+  (n) (m) n<() Nat>(m)((n.pred) Nat.succ(Nat.add(n.pred)(m)))
+
+Nat.apply: <A: Type> -> Nat -> A -> A -> A -> A
+  <A> (n) (f) (x) n<() A>(x)((n.pred) Nat.apply<A>(n.pred)(f)(f(x)))
+
+Nat.cmp: Nat -> Nat -> Cmp
+  (a) (b) a<() Cmp>(b<() Cmp>(Cmp.eql)((b.pred) Cmp.ltn))((a.pred) b<() Cmp>(Cmp.gtn)((b.pred) Nat.cmp(a.pred)(b.pred)))
+
+Nat.div: Nat -> Nat -> Nat
+  (n) (m) Pair.fst<Nat><Nat>(Nat.div_mod(n)(m))
+
+Nat.div_mod.aux: Nat -> Nat -> Nat -> Pair(Nat)(Nat)
+  (n) (m) (d) let p = Nat.sub_rem(n)(m); p<() Pair(Nat)(Nat)>((p.value) Nat.div_mod.aux(p.value)(m)(Nat.succ(d)))((p.value) Pair.new<Nat><Nat>(d)(n))
+
+Nat.div_mod: Nat -> Nat -> Pair(Nat)(Nat)
+  (n) (m) Nat.div_mod.aux(n)(m)(Nat.zero)
+
+Nat.double: Nat -> Nat
+  (n) n<() Nat>(Nat.zero)((n.pred) Nat.succ(Nat.succ(Nat.double(n.pred))))
+
+Nat.eql: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
+
+Nat: Type
+  nat<P: Nat -> Type> -> (zero: P(Nat.zero)) -> (succ: (pred: Nat) -> P(Nat.succ(pred))) -> P(nat)
+
+Nat.gte: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+
+Nat.gtn: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+
+Nat.induction: (n: Nat) -> <P: Nat -> Type> -> (z: P(Nat.zero)) -> (s: (m: Nat) -> P(m) -> P(Nat.succ(m))) -> P(n)
+  (k) <P> (z) (s) k<P>(z)((pred) s(pred)(Nat.induction(pred)<P>(z)(s)))
+
+Nat.is_zero: Nat -> Bool
+  (n) n<() Bool>(Bool.true)(() Bool.false)
+
+Nat.lte: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+
+Nat.ltn: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+
+Nat.mod: Nat -> Nat -> Nat
+  (n) (m) Pair.snd<Nat><Nat>(Nat.div_mod(n)(m))
+
+Nat.mul: Nat -> Nat -> Nat
+  (n) (m) n<() Nat>(Nat.zero)((n.pred) Nat.add(m)(Nat.mul(n.pred)(m)))
+
+Nat.parse_decimal: String -> Nat
+  (str) Nat.parse_decimal.go(str)(Nat.zero)
+
+Nat.parse_decimal.go: String -> Nat -> Nat
+  (str) (res) str<() Nat>(res)((str.head) (str.tail) let dig = Nat.sub(U16.to_nat(str.head))(Nat.48); let res = Nat.add(dig)(Nat.mul(Nat.10)(res)); Nat.parse_decimal.go(str.tail)(res))
+
+Nat.pred: Nat -> Nat
+  (n) n<() Nat>(Nat.zero)((n.pred) n.pred)
+
+Nat.show.aux: Nat -> Nat -> String -> String
+  (n) (base) (str) Nat.div_mod(n)(base)<() String>((d) (m) d<() String>(String.cons(Nat.show.digit(m)(base))(str))((pred) Nat.show.aux(d)(base)(String.cons(Nat.show.digit(m)(base))(str))))
+
+Nat.show.digit: Nat -> Nat -> Char
+  (n) (base) let m = Nat.mod(n)(base); Nat.eql(m)(Nat.0)<() Char>(Char.parse("0"))(Nat.eql(m)(Nat.1)<() Char>(Char.parse("1"))(Nat.eql(m)(Nat.2)<() Char>(Char.parse("2"))(Nat.eql(m)(Nat.3)<() Char>(Char.parse("3"))(Nat.eql(m)(Nat.4)<() Char>(Char.parse("4"))(Nat.eql(m)(Nat.5)<() Char>(Char.parse("5"))(Nat.eql(m)(Nat.6)<() Char>(Char.parse("6"))(Nat.eql(m)(Nat.7)<() Char>(Char.parse("7"))(Nat.eql(m)(Nat.8)<() Char>(Char.parse("8"))(Nat.eql(m)(Nat.9)<() Char>(Char.parse("9"))(Nat.eql(m)(Nat.10)<() Char>(Char.parse("a"))(Nat.eql(m)(Nat.11)<() Char>(Char.parse("b"))(Nat.eql(m)(Nat.12)<() Char>(Char.parse("c"))(Nat.eql(m)(Nat.13)<() Char>(Char.parse("d"))(Nat.eql(m)(Nat.14)<() Char>(Char.parse("e"))(Nat.eql(m)(Nat.15)<() Char>(Char.parse("f"))(Char.parse("#")))))))))))))))))
+
+Nat.show: Nat -> Nat -> String
+  (n) (base) Nat.show.aux(n)(base)(String.nil)
+
+Nat.sub: Nat -> Nat -> Nat
+  (n) (m) m<() Nat>(n)((m.pred) n<() Nat>(Nat.zero)((n.pred) Nat.sub(n.pred)(m.pred)))
+
+Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat)
+  (n) (m) m<() Either(Nat)(Nat)>(Either.left<Nat><Nat>(n))((m.pred) n<() Either(Nat)(Nat)>(Either.right<Nat><Nat>(Nat.succ(m.pred)))((n.pred) Nat.sub_rem(n.pred)(m.pred)))
+
+Nat.succ: Nat -> Nat
+  (n) <P> (z) (s) s(n)
+
+Nat.sum: Nat -> Nat
+  (n) Nat.sum.go(n)(Nat.zero)
+
+Nat.sum.go: Nat -> Nat -> Nat
+  (n) (r) n<() Nat>(r)((n.pred) Nat.sum.go(n.pred)(Nat.add(n)(r)))
+
+Nat.to_base: Nat -> Nat -> List(Nat)
+  (base) (nat) Nat.to_base.go(base)(nat)([Nat;])
+
+Nat.to_base.go: Nat -> Nat -> List(Nat) -> List(Nat)
+  (base) (nat) (res) Nat.div_mod(nat)(base)<() List(Nat)>((div) (rem) let res = List.cons<Nat>(rem)(res); div<() List(Nat)>(res)((div.pred) Nat.to_base.go(base)(div)(res)))
+
+Nat.to_bits: Nat -> Bits
+  (n) n<() Bits>(Bits.0(Bits.nil))((n.pred) Bits.1(Nat.to_bits(n.pred)))
+
+Nat.to_string: Nat -> String
+  (n) n<() String>(String.cons(Char.parse("z"))(String.nil))((n.pred) String.cons(Char.parse("s"))(Nat.to_string(n.pred)))
+
+Nat.to_string_base: Nat -> Nat -> String
+  (base) (nat) List.fold<Nat><String>(String.nil)((n) (str) String.cons(Nat.apply<Char>(n)(U16.inc)(Char.parse("0")))(str))(Nat.to_base(base)(nat))
+
+Nat.to_string_decimal: Nat -> String
+  Nat.to_string_base(Nat.10)
+
+Nat.zero: Nat
+  <P> (z) (s) z
+
+Newtype.elim: <A: Type> -> <tag: String> -> (n: Newtype(A)(tag)) -> A
+  <A> <tag> (n) n<() () A>((x) x)
+
+Newtype: (A: Type) -> (tag: String) -> Type
+  (A) (tag) newtype<P: (tag: String) -> Newtype(A)(tag) -> Type> -> (val: (x: A) -> P(tag)(Newtype.val<A><tag>(x))) -> P(tag)(newtype)
+
+Newtype.val: <A: Type> -> <tag: String> -> (x: A) -> Newtype(A)(tag)
+  <A> <tag> (x) <P> (val) val(x)
+
+NonEmpty.cons: <A: Type> -> (head: A) -> (tail: NonEmpty(A)) -> NonEmpty(A)
+  <A> (head) (tail) <P> (end) (cons) cons(head)(tail)
+
+NonEmpty.end: <A: Type> -> (value: A) -> NonEmpty(A)
+  <A> (value) <P> (end) (cons) end(value)
+
+NonEmpty: (A: Type) -> Type
+  (A) non_empty<P: (x: NonEmpty(A)) -> Type> -> (end: (value: A) -> P(NonEmpty.end<A>(value))) -> (cons: (head: A) -> (tail: NonEmpty(A)) -> P(NonEmpty.cons<A>(head)(tail))) -> P(non_empty)
+
+NonEmpty.to_list: <A: Type> -> NonEmpty(A) -> List(A)
+  <A> (xs) xs<() List(A)>((value) [A; value])((head) (tail) List.cons<A>(head)(NonEmpty.to_list<A>(tail)))
+
+Not: (P: Type) -> Type
+  (P) P -> Empty
+
+Or: (A: Type) -> (B: Type) -> Type
+  (A) (B) Either(A)(B)
+
+Pair: Type -> Type -> Type
+  (A) (B) pair<P: Pair(A)(B) -> Type> -> (new: (a: A) -> (b: B) -> P(Pair.new<A><B>(a)(b))) -> P(pair)
+
+Pair.fst: <A: Type> -> <B: Type> -> Pair(A)(B) -> A
+  <A> <B> (pair) pair<() A>((a) (b) a)
+
+Pair.new: <A: Type> -> <B: Type> -> A -> B -> Pair(A)(B)
+  <A> <B> (a) (b) <P> (pair) pair(a)(b)
+
+Pair.snd: <A: Type> -> <B: Type> -> Pair(A)(B) -> B
+  <A> <B> (pair) pair<() B>((a) (b) b)
+
+Parsec.Error.Fancy.custom: <E: Type> -> (e: E) -> Parsec.Error.Fancy(E)
+  <E> (e) <P> () (custom) custom(e)
+
+Parsec.Error.Fancy.fail: <E: Type> -> String -> Parsec.Error.Fancy(E)
+  <E> (msg) <P> (fail) () fail(msg)
+
+Parsec.Error.Fancy: Type -> Type
+  (E) parser.error.fancy<P: Parsec.Error.Fancy(E) -> Type> -> (fail: (msg: String) -> P(Parsec.Error.Fancy.fail<E>(msg))) -> (custom: (err: E) -> P(Parsec.Error.Fancy.custom<E>(err))) -> P(parser.error.fancy)
+
+Parsec.Error.Item.end_of_input: Parsec.Error.Item
+  <P> () () (end_of_input) end_of_input
+
+Parsec.Error.Item: Type
+  parser.error.tokens<P: Parsec.Error.Item -> Type> -> (tokens: (xs: NonEmpty(Char)) -> P(Parsec.Error.Item.tokens(xs))) -> (label: (xs: String) -> P(Parsec.Error.Item.label(xs))) -> (end_of_input: P(Parsec.Error.Item.end_of_input)) -> P(parser.error.tokens)
+
+Parsec.Error.Item.label: String -> Parsec.Error.Item
+  (xs) <P> () (label) () label(xs)
+
+Parsec.Error.Item.tokens: NonEmpty(Char) -> Parsec.Error.Item
+  (xs) <P> (tokens) () () tokens(xs)
+
+Parsec.Error: Type -> Type
+  (E) parser.error<P: Parsec.Error(E) -> Type> -> (trivial: (position: Nat) -> (unexpect: Maybe(Parsec.Error.Item)) -> (expected: List(Parsec.Error.Item)) -> P(Parsec.Error.make_trivial<E>(position)(unexpect)(expected))) -> (fancy: (position: Nat) -> (messages: List(Parsec.Error.Fancy(E))) -> P(Parsec.Error.make_fancy<E>(position)(messages))) -> P(parser.error)
+
+Parsec.Error.index: <E: Type> -> Parsec.Error(E) -> Nat
+  <E> (x) x<() Nat>((x.pos) (x.unx) (x.exp) x.pos)((x.pos) (x.msg) x.pos)
+
+Parsec.Error.make_fancy: <E: Type> -> Nat -> List(Parsec.Error.Fancy(E)) -> Parsec.Error(E)
+  <E> (position) (messages) <P> () (fancy) fancy(position)(messages)
+
+Parsec.Error.make_trivial: <E: Type> -> Nat -> Maybe(Parsec.Error.Item) -> List(Parsec.Error.Item) -> Parsec.Error(E)
+  <E> (position) (unexpect) (expected) <P> (trivial) () trivial(position)(unexpect)(expected)
+
+Parsec.Error.merge: <E: Type> -> Parsec.Error(E) -> Parsec.Error(E) -> Parsec.Error(E)
+  <E> (x) (y) let x.index = Parsec.Error.index<E>(x); let y.index = Parsec.Error.index<E>(y); Nat.cmp(x.index)(y.index)<() Parsec.Error(E)>(y)(x<() Parsec.Error(E)>((x.pos) (x.unx) (x.exp) y<() Parsec.Error(E)>((y.pos) (y.unx) (y.exp) Parsec.Error.make_trivial<E>(x.pos)(x.unx<() Maybe(Parsec.Error.Item)>(y.unx)(() x.unx))(List.concat<Parsec.Error.Item>(x.exp)(y.exp)))((y.pos) (y.msg) y))((x.pos) (x.msg) y<() Parsec.Error(E)>((y.pos) (y.unx) (y.exp) x)((y.pos) (y.msg) Parsec.Error.make_fancy<E>(x.pos)(List.concat<Parsec.Error.Fancy(E)>(x.msg)(y.msg)))))(x)
+
+Parsec.Error.show: <E: Type> -> E -> String -> Parsec.Error(E) -> String
+  <E> (f) (e) e<() String>((position) (unexpect) (expected) "trivial")((position) (messages) "fancy")
+
+Parsec.Reply.eaten_error: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Error(E) -> Parsec.Reply(S)(E)(A)
+  <S> <E> <A> (state) (error) <P> () () () (eaten_error) eaten_error(state)(error)
+
+Parsec.Reply.eaten_value: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> A -> Parsec.Reply(S)(E)(A)
+  <S> <E> <A> (state) (value) <P> () () (eaten_value) () eaten_value(state)(value)
+
+Parsec.Reply.empty_error: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Error(E) -> Parsec.Reply(S)(E)(A)
+  <S> <E> <A> (state) (error) <P> () (empty_error) () () empty_error(state)(error)
+
+Parsec.Reply.empty_value: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> A -> Parsec.Reply(S)(E)(A)
+  <S> <E> <A> (state) (value) <P> (empty_value) () () () empty_value(state)(value)
+
+Parsec.Reply: Type -> Type -> Type -> Type
+  (S) (E) (A) parser_reply<P: Parsec.Reply(S)(E)(A) -> Type> -> (empty_value: (state: Parsec.State(S)(E)) -> (value: A) -> P(Parsec.Reply.empty_value<S><E><A>(state)(value))) -> (empty_error: (state: Parsec.State(S)(E)) -> (error: Parsec.Error(E)) -> P(Parsec.Reply.empty_error<S><E><A>(state)(error))) -> (eaten_value: (state: Parsec.State(S)(E)) -> (value: A) -> P(Parsec.Reply.eaten_value<S><E><A>(state)(value))) -> (eaten_error: (state: Parsec.State(S)(E)) -> (error: Parsec.Error(E)) -> P(Parsec.Reply.eaten_error<S><E><A>(state)(error))) -> P(parser_reply)
+
+Parsec.Reply.to_either: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.Reply(S)(E)(A) -> Either(Parsec.Error(E))(A)
+  <S> <E> <A> (reply) reply<() Either(Parsec.Error(E))(A)>(() (a) Either.right<Parsec.Error(E)><A>(a))(() (e) Either.left<Parsec.Error(E)><A>(e))(() (a) Either.right<Parsec.Error(E)><A>(a))(() (e) Either.left<Parsec.Error(E)><A>(e))
+
+Parsec.State.default: <S: Type> -> <E: Type> -> String -> S -> Parsec.State(S)(E)
+  <S> <E> (input) (state) <P> (make) make(input)(Nat.zero)([Parsec.Error(E);])(state)
+
+Parsec.State: Type -> Type -> Type
+  (S) (E) parser_state<P: Parsec.State(S)(E) -> Type> -> (make: (input: String) -> (index: Nat) -> (error: List(Parsec.Error(E))) -> (state: S) -> P(Parsec.State.make<S><E>(input)(index)(error)(state))) -> P(parser_state)
+
+Parsec.State.longest_match: <S: Type> -> <E: Type> -> Parsec.State(S)(E) -> Parsec.State(S)(E) -> Parsec.State(S)(E)
+  <S> <E> (x) (y) x<() Parsec.State(S)(E)>((x.input) (x.index) (x.error) (x.state) y<() Parsec.State(S)(E)>((y.input) (y.index) (y.error) (y.state) Nat.cmp(x.index)(y.index)<() Parsec.State(S)(E)>(y)(x)(x)))
+
+Parsec.State.make: <S: Type> -> <E: Type> -> String -> Nat -> List(Parsec.Error(E)) -> S -> Parsec.State(S)(E)
+  <S> <E> (input) (index) (error) (state) <P> (make) make(input)(index)(error)(state)
+
+Parsec.any_char: <S: Type> -> <E: Type> -> Parsec(S)(E)(Char)
+  <S> <E> Parsec.token<S><E><Char>(Maybe.some<Char>)(List.single<Parsec.Error.Item>(Parsec.Error.Item.label("any char")))
+
+Parsec.ap: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A -> B) -> Parsec(S)(E)(A) -> Parsec(S)(E)(B)
+  <S> <E> <A> <B> (pf) (pa) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pf<X>(s1)((s2) (f) pa<X>(s2)((s3) (a) empty_value(s3)(f(a)))(empty_error)((s3) (a) eaten_value(s3)(f(a)))(eaten_error))(empty_error)((s2) (f) pa<X>(s2)((s3) (a) eaten_value(s3)(f(a)))(eaten_error)((s3) (a) eaten_value(s3)(f(a)))(eaten_error))(eaten_error)
+
+Parsec.bind: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> A -> Parsec(S)(E)(B) -> Parsec(S)(E)(B)
+  <S> <E> <A> <B> (pa) (pf) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pa<X>(s1)((s2) (a) pf(a)<X>(s2)((s3) (b) empty_value(s3)(b))(empty_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(empty_error)((s2) (a) pf(a)<X>(s2)((s3) (b) eaten_value(s3)(b))(eaten_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(eaten_error)
+
+Parsec.char: <S: Type> -> <E: Type> -> Char -> Parsec(S)(E)(Char)
+  <S> <E> (c) Parsec.token<S><E><Char>((x) U16.eql(c)(x)<() Maybe(Char)>(Maybe.some<Char>(c))(Maybe.none<Char>))(List.single<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(c))))
+
+Parsec.choice: <S: Type> -> <E: Type> -> <A: Type> -> List(Parsec(S)(E)(A)) -> Parsec(S)(E)(A)
+  <S> <E> <A> (ps) ps<() Parsec(S)(E)(A)>(Parsec.zero<S><E><A>)((head) (tail) Parsec.plus<S><E><A>(head)(Parsec.choice<S><E><A>(tail)))
+
+Parsec.eof: <S: Type> -> <E: Type> -> Parsec(S)(E)(Unit)
+  <S> <E> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(empty_value(s1)(Unit.new))((head) () empty_error(s1)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.end_of_input)))))
+
+Parsec.fail: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A)
+  <S> <E> <A> (msg) <X> (s) () (empty_error) () () s<() X>(() (index) () () let e = List.single<Parsec.Error.Fancy(E)>(Parsec.Error.Fancy.fail<E>(msg)); empty_error(s)(Parsec.Error.make_fancy<E>(index)(e)))
+
+Parsec: (S: Type) -> (E: Type) -> (A: Type) -> Type
+  (S) (E) (A) <B: Type> -> Parsec.State(S)(E) -> Parsec.State(S)(E) -> A -> B -> Parsec.State(S)(E) -> Parsec.Error(E) -> B -> Parsec.State(S)(E) -> A -> B -> Parsec.State(S)(E) -> Parsec.Error(E) -> B -> B
+
+Parsec.get_state: <S: Type> -> <E: Type> -> Parsec(S)(E)(Parsec.State(S)(E))
+  <S> <E> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_value(s1)(s1)
+
+Parsec.label: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (label) (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)(empty_value)((s2) (e) e<() X>((pos) (us) () empty_error(s2)(let es = List.single<Parsec.Error.Item>(Parsec.Error.Item.label(label)); Parsec.Error.make_trivial<E>(pos)(us)(es)))(() () empty_error(s2)(e)))(eaten_value)(eaten_error)
+
+Parsec.make: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) f(s1)<() X>((s2) (a) empty_value(s2)(a))(empty_error)((s2) (a) eaten_value(s2)(a))(eaten_error)
+
+Parsec.many_till: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(B) -> Parsec(S)(E)(List(A))
+  <S> <E> <A> <B> (p) (q) Parsec.plus<S><E><List(A)>(Parsec.then<S><E><B><List(A)>(q)(Parsec.pure<S><E><List(A)>([A;])))(Parsec.bind<S><E><A><List(A)>(p)((x) Parsec.bind<S><E><List(A)><List(A)>(Parsec.many_till<S><E><A><B>(p)(q))((xs) Parsec.pure<S><E><List(A)>(List.cons<A>(x)(xs)))))
+
+Parsec.map: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> A -> B -> Parsec(S)(E)(A) -> Parsec(S)(E)(B)
+  <S> <E> <A> <B> (f) (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)((s2) (a) empty_value(s2)(f(a)))(empty_error)((s2) (a) eaten_value(s2)(f(a)))(eaten_error)
+
+Parsec.observing: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(Either(Parsec.Error(E))(A))
+  <S> <E> <A> (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)((s2) (x) empty_value(s2)(Either.right<Parsec.Error(E)><A>(x)))((s2) (e) empty_value(s2)(Either.left<Parsec.Error(E)><A>(e)))((s2) (x) eaten_value(s2)(Either.right<Parsec.Error(E)><A>(x)))((s2) (e) eaten_value(s2)(Either.left<Parsec.Error(E)><A>(e)))
+
+Parsec.optional: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(Maybe(A))
+  <S> <E> <A> (p) Parsec.plus<S><E><Maybe(A)>(Parsec.map<S><E><A><Maybe(A)>(Maybe.some<A>)(p))(Parsec.pure<S><E><Maybe(A)>(Maybe.none<A>))
+
+Parsec.parse: <S: Type> -> <E: Type> -> <A: Type> -> (E.show: E -> String) -> (p: Parsec(S)(E)(A)) -> (s: Parsec.State(S)(E)) -> Parsec.type(S)(E)(A)(E.show)(Parsec.run<S><E><A>(p)(s))
+  <S> <E> <A> (E.show) (p) (s) Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(E.show)(t)>(() (x) x)(() (e) The.term<String>(Parsec.Error.show<E>(E.show)(e)))(() (x) x)(() (e) The.term<String>(Parsec.Error.show<E>(E.show)(e)))
+
+Parsec.peek: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)((s2) (a) empty_value(s1)(a))(empty_error)((s2) (a) empty_value(s1)(a))(eaten_error)
+
+Parsec.plus: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (p) (q) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)(empty_value)((s2) (p.err) q<X>(s1)(empty_value)((s3) (q.err) empty_error(Parsec.State.longest_match<S><E>(s2)(s3))(Parsec.Error.merge<E>(p.err)(q.err)))(eaten_value)((s3) (q.err) empty_error(Parsec.State.longest_match<S><E>(s2)(s3))(Parsec.Error.merge<E>(p.err)(q.err))))(eaten_value)(eaten_error)
+
+Parsec.pure: <S: Type> -> <E: Type> -> <A: Type> -> (a: A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (a) <X> (s) (empty_value) () () () empty_value(s)(a)
+
+Parsec.run: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A)
+  <S> <E> <A> (p) (s) p<Parsec.Reply(S)(E)(A)>(s)(Parsec.Reply.empty_value<S><E><A>)(Parsec.Reply.empty_error<S><E><A>)(Parsec.Reply.eaten_value<S><E><A>)(Parsec.Reply.eaten_error<S><E><A>)
+
+Parsec.run_default: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> String -> S -> Either(Parsec.Error(E))(A)
+  <S> <E> <A> (p) (str) (s) Parsec.Reply.to_either<S><E><A>(Parsec.run<S><E><A>(p)(Parsec.State.default<S><E>(str)(s)))
+
+Parsec.skip_many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(Unit)
+  <S> <E> <A> (p) Parsec.plus<S><E><Unit>(Parsec.then<S><E><A><Unit>(p)(Parsec.skip_many<S><E><A>(p)))(Parsec.pure<S><E><Unit>(Unit.new))
+
+Parsec.take: <S: Type> -> <E: Type> -> <A: Type> -> String -> Nat -> Parsec(S)(E)(String)
+  <S> <E> <A> (err) (n) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_n(n)(input)<() X>(empty_error(s1)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((p) p<() X>((took) (rest) let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(n))(error)(state); eaten_value(s2)(took))))
+
+Parsec.take_while: <S: Type> -> <E: Type> -> Char -> Bool -> Parsec(S)(E)(String)
+  <S> <E> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(empty_value(s2)(took))(() () eaten_value(s2)(took))))
+
+Parsec.take_while1: <S: Type> -> <E: Type> -> String -> Char -> Bool -> Parsec(S)(E)(String)
+  <S> <E> (err) (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(input<() X>(empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((head) () empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(NonEmpty.end<Char>(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err))))))(() () eaten_value(s2)(took))))
+
+Parsec.test1: String
+  Parsec.parse<Unit><Unit><String>(Unit.show)(Parsec.tokens<Unit><Unit>("a"))(Parsec.State.default<Unit><Unit>("a")(Unit.new))
+
+Parsec.then: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(B) -> Parsec(S)(E)(B)
+  <S> <E> <A> <B> (pa) (pb) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pa<X>(s1)((s2) (a) pb<X>(s2)((s3) (b) empty_value(s3)(b))(empty_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(empty_error)((s2) (a) pb<X>(s2)((s3) (b) eaten_value(s3)(b))(eaten_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(eaten_error)
+
+Parsec.throw: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.Error(E) -> Parsec(S)(E)(A)
+  <S> <E> <A> (e) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_error(s1)(e)
+
+Parsec.token: <S: Type> -> <E: Type> -> <A: Type> -> Char -> Maybe(A) -> List(Parsec.Error.Item) -> Parsec(S)(E)(A)
+  <S> <E> <A> (f) (es) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es)))((c) (cs) f(c)<() X>(let item = Parsec.Error.Item.tokens(NonEmpty.end<Char>(c)); let unex = Maybe.some<Parsec.Error.Item>(item); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es)))((x) let s2 = Parsec.State.make<S><E>(cs)(Nat.succ(index))(error)(state); eaten_value(s2)(x))))
+
+Parsec.tokens: <S: Type> -> <E: Type> -> String -> Parsec(S)(E)(String)
+  <S> <E> (str) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) let len = String.length(str); String.take_n(len)(input)<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); let expe = List.single<Parsec.Error.Item>(Parsec.Error.Item.label(str)); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(expe)))((p) p<() X>((took) (rest) let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); String.eql(str)(took)<() X>(str<() X>(empty_value(s2)(str))(() () eaten_value(s2)(str)))(let unex_label = Parsec.Error.Item.label(took); let expe_label = Parsec.Error.Item.label(str); let unex = Maybe.some<Parsec.Error.Item>(unex_label); let expe = List.single<Parsec.Error.Item>(expe_label); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(expe))))))
+
+Parsec.try: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
+  <S> <E> <A> (p) <X> (s1) (empty_value) (empty_error) (eaten_value) () p<X>(s1)(empty_value)((s2) (e) empty_error(s1)(e))(eaten_value)((s2) (e) empty_error(s1)(e))
+
+Parsec.type: (S: Type) -> (E: Type) -> (A: Type) -> E -> String -> Parsec.Reply(S)(E)(A) -> Type
+  (S) (E) (A) (E.show) (reply) reply<() Type>(() () A)(() (e) The(String)(Parsec.Error.show<E>(E.show)(e)))(() () A)(() (e) The(String)(Parsec.Error.show<E>(E.show)(e)))
+
+Parsec.zero: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A)
+  <S> <E> <A> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>(() (index) () () let e = Parsec.Error.make_trivial<E>(index)(Maybe.none<Parsec.Error.Item>)([Parsec.Error.Item;]); empty_error(s1)(e))
+
+Parser.Error: Type
+  Parsec.Error(Unit)
+
+Parser.Reply: Type -> Type
+  (A) Parsec.Reply(Unit)(Unit)(A)
+
+Parser.State.default: String -> Parser.State
+  (input) Parsec.State.default<Unit><Unit>(input)(Unit.new)
+
+Parser.State: Type
+  Parsec.State(Unit)(Unit)
+
+Parser.any_char: Parser(Char)
+  Parsec.any_char<Unit><Unit>
+
+Parser.ap: <A: Type> -> <B: Type> -> Parser(A -> B) -> Parser(A) -> Parser(B)
+  <A> <B> (pf) (pa) Parsec.ap<Unit><Unit><A><B>(pf)(pa)
+
+Parser.bind: <A: Type> -> <B: Type> -> Parser(A) -> A -> Parser(B) -> Parser(B)
+  <A> <B> (pa) (pf) Parsec.bind<Unit><Unit><A><B>(pa)(pf)
+
+Parser.char: Char -> Parser(Char)
+  (c) Parsec.char<Unit><Unit>(c)
+
+Parser.choice: <A: Type> -> List(Parser(A)) -> Parser(A)
+  <A> (ps) Parsec.choice<Unit><Unit><A>(ps)
+
+Parser.eof: Parser(Unit)
+  Parsec.eof<Unit><Unit>
+
+Parser.fail: <A: Type> -> String -> Parser(A)
+  <A> (msg) Parsec.fail<Unit><Unit><A>(msg)
+
+Parser: Type -> Type
+  (A) Parsec(Unit)(Unit)(A)
+
+Parser.label: <A: Type> -> String -> Parser(A) -> Parser(A)
+  <A> (label) (p) Parsec.label<Unit><Unit><A>(label)(p)
+
+Parser.many_till: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(List(A))
+  <A> <B> (p) (q) Parser.plus<List(A)>(Parser.then<B><List(A)>(q)(Parser.pure<List(A)>([A;])))(Parser.bind<A><List(A)>(p)((x) Parser.bind<List(A)><List(A)>(Parser.many_till<A><B>(p)(q))((xs) Parser.pure<List(A)>(List.cons<A>(x)(xs)))))
+
+Parser.observing: <A: Type> -> Parser(A) -> Parser(Either(Parser.Error)(A))
+  <A> (p) Parsec.observing<Unit><Unit><A>(p)
+
+Parser.optional: <A: Type> -> Parser(A) -> Parser(Maybe(A))
+  <A> (p) Parsec.optional<Unit><Unit><A>(p)
+
+Parser.parse: <A: Type> -> (p: Parser(A)) -> (s: String) -> Parser.type(A)(Parser.run<A>(p)(Parser.State.default(s)))
+  <A> (p) (s) Parsec.parse<Unit><Unit><A>(Unit.show)(p)(Parser.State.default(s))
+
+Parser.plus: <A: Type> -> Parser(A) -> Parser(A) -> Parser(A)
+  <A> (p) (q) Parsec.plus<Unit><Unit><A>(p)(q)
+
+Parser.pure: <A: Type> -> (a: A) -> Parser(A)
+  <A> (a) <X> (s) (empty_value) () () () empty_value(s)(a)
+
+Parser.run: <A: Type> -> Parser(A) -> Parser.State -> Parser.Reply(A)
+  <A> (p) (s) Parsec.run<Unit><Unit><A>(p)(s)
+
+Parser.skip_many: <A: Type> -> Parser(A) -> Parser(Unit)
+  <A> (p) Parsec.skip_many<Unit><Unit><A>(p)
+
+Parser.take: <A: Type> -> String -> Nat -> Parser(String)
+  <A> (err) (n) Parsec.take<Unit><Unit><A>(err)(n)
+
+Parser.take_while: Char -> Bool -> Parser(String)
+  (f) Parsec.take_while<Unit><Unit>(f)
+
+Parser.take_while1: String -> Char -> Bool -> Parser(String)
+  (err) (f) Parsec.take_while1<Unit><Unit>(err)(f)
+
+Parser.test: String
+  Parser.parse<String>(Parser.tokens("a"))("a")
+
+Parser.then: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(B)
+  <A> <B> (pa) (pb) Parsec.then<Unit><Unit><A><B>(pa)(pb)
+
+Parser.token: <A: Type> -> Char -> Maybe(A) -> List(Parsec.Error.Item) -> Parser(A)
+  <A> (f) (es) Parsec.token<Unit><Unit><A>(f)(es)
+
+Parser.tokens: String -> Parser(String)
+  (str) Parsec.tokens<Unit><Unit>(str)
+
+Parser.try: <A: Type> -> Parser(A) -> Parser(A)
+  <A> (p) Parsec.try<Unit><Unit><A>(p)
+
+Parser.type: (A: Type) -> Parser.Reply(A) -> Type
+  (A) (reply) Parsec.type(Unit)(Unit)(A)(Unit.show)(reply)
+
+Parser.zero: <A: Type> -> Parser(A)
+  <A> Parsec.zero<Unit><Unit><A>
+
+Research.core_in_core: String
+  let defs = Core.parse_defs("
+  Nat: Type
+    nat<P: Nat -> Type> ->
+    (zero: P(Nat.zero)) ->
+    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+    P(nat)
+
+  Nat.zero: Nat
+    <P> (z) (s) z
+
+  Nat.succ: Nat -> Nat
+    (n)
+    <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
+  "); let term = Core.Defs.term(defs)("main"); let type = Core.Defs.type(defs)("main"); Core.typecheck(term)(type)(defs)(Nat.zero)<() String>((err) err)((typ) Core.stringify(typ))
+
+Research.Var: Type
+  Pair(Char)(Nat)
+
+Research.Var.new: Char -> Nat -> Research.Var
+  Pair.new<Char><Nat>
+
+Research.Ctx: Type
+  List(Research.Var)
+
+Research.Ctx.nil: Research.Ctx
+  [Research.Var;]
+
+Research.Ctx.ext: Char -> Nat -> Research.Ctx -> Research.Ctx
+  (nam) (x) List.cons<Research.Var>(Research.Var.new(nam)(x))
+
+Research.Ctx.get: Char -> Research.Ctx -> Maybe(Nat)
+  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(Research.Ctx.get(chr)(t))))
+
+Research.parse_fun.filt: String -> String
+  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
+
+Research.parse_fun.typ0: String -> Research.Ctx -> Type
+  (str) (ctx) str<() Type>(Unit)((nam) (nxt) Research.parse_fun.typ1(nam)(nxt)(ctx))
+
+Research.parse_fun.typ1: Char -> String -> Research.Ctx -> Type
+  (nam) (nxt) (ctx) nxt<() Type>(Nat)((h) (t) (x: Nat) -> Research.parse_fun.typ0(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx)))
+
+Research.parse_fun.term: (str: String) -> (ctx: Research.Ctx) -> Research.parse_fun.typ0(str)(ctx)
+  (str) (ctx) str<(str) Research.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) Research.parse_fun.typ1(nam)(str)(ctx)>(Research.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) Research.parse_fun.term(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx))))
+
+Research.fun: (str: String) -> Research.parse_fun.typ0(Research.parse_fun.filt(str))(Research.Ctx.nil)
+  (str) Research.parse_fun.term(Research.parse_fun.filt(str))(Research.Ctx.nil)
+
+Research.crazy: Nat -> Nat -> Nat -> Nat
+  Research.fun("λx.λy.λz.y")
+
+Research.it_works: Equal(Nat)(Nat.1)(Research.crazy(Nat.0)(Nat.1)(Nat.2))
+  Equal.to<Nat><Nat.1>
+
+Research.equal_mul: Equal(Nat)(Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1))(Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1))
+  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
+
+Research.floats: F64
+  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
+
+Research.nat_literals: IO(Unit)
+  let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
+
+Set: Type
+  Map(Unit)
+
+Set.get: Bits -> Set -> Bool
+  (bits) (set) Map.get<Unit>(bits)(set)<() Bool>(Bool.false)(() Bool.true)
+
+Set.new: Set
+  Map.new<Unit>
+
+Set.set: Bits -> Set -> Set
+  (bits) (set) Map.set<Unit>(bits)(Unit.new)(set)
+
+Show: (x: String) -> Type
+  (x) show<P: (x: String) -> Show(x) -> Type> -> (msg: (x: String) -> P(x)(Show.msg(x))) -> P(x)(show)
+
+Show.msg: (x: String) -> Show(x)
+  (x) <P> (msg) msg(x)
+
+Sigma: (A: Type) -> (B: A -> Type) -> Type
+  (A) (B) sigma<P: Sigma(A)(B) -> Type> -> (new: (a: A) -> (b: B(a)) -> P(Sigma.new<A><B>(a)(b))) -> P(sigma)
+
+Sigma.fst: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> A
+  <A> <B> (sig) sig<() A>((x) (y) x)
+
+Sigma.new: <A: Type> -> <B: A -> Type> -> (a: A) -> B(a) -> Sigma(A)(B)
+  <A> <B> (a) (b) <P> (sigma) sigma(a)(b)
+
+Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B>(sig))
+  <A> <B> (sig) sig<(sig) B(Sigma.fst<A><B>(sig))>((x) (y) y)
+
+String.chunk: Nat -> String -> Maybe(String)
+  (n) (list) n<() Maybe(String)>(Maybe.some<String>(String.nil))((pred) list<() Maybe(String)>(Maybe.none<String>)((head) (tail) Maybe.bind<String><String>(String.chunk(pred)(tail))((x) Maybe.some<String>(String.cons(head)(x)))))
+
+String.concat: String -> String -> String
+  (as) (bs) as<() String>(bs)((head) (tail) String.cons(head)(String.concat(tail)(bs)))
+
+String.cons: Char -> String -> String
+  (head) (tail) <P> (strnil) (strcons) strcons(head)(tail)
+
+String.drop: Nat -> String -> String
+  (n) (list) n<() String>(list)((pred) list<() String>(String.nil)((head) (tail) String.drop(pred)(tail)))
+
+String.drop_until: Char -> Bool -> String -> String
+  (cond) String.drop_while((c) Bool.not(cond(c)))
+
+String.drop_while: Char -> Bool -> String -> String
+  (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() String>(String.drop_while(cond)(str.tail))(str))
+
+String.eql: String -> String -> Bool
+  (a) (b) a<() Bool>(b<() Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<() Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
+
+String.filter: Char -> Bool -> String -> String
+  (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() String -> String>((t) t)((t) String.cons(str.head)(t))(String.filter(cond)(str.tail)))
+
+String.flatten: List(String) -> String
+  (as) as<() String>(String.nil)((head) (tail) String.concat(head)(String.flatten(tail)))
+
+String: Type
+  string<P: String -> Type> -> (strnil: P(String.nil)) -> (strcons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) -> P(string)
+
+String.is_empty: String -> Bool
+  (str) str<() Bool>(Bool.true)((head) (tail) Bool.false)
+
+String.length: String -> Nat
+  (str) str<() Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
+
+String.nil: String
+  <P> (strnil) (strcons) strnil
+
+String.reverse: String -> String
+  (str) String.reverse.go(str)(String.nil)
+
+String.reverse.go: String -> String -> String
+  (str) (res) str<() String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
+
+String.tail: String -> String
+  (str) str<() String>(String.nil)((str.head) (str.tail) str.tail)
+
+String.take: Nat -> String -> String
+  (n) (list) list<() String>(String.nil)((head) (tail) n<() String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
+
+String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
+  (n) (str) (res) res<() Maybe(Pair(String)(String))>(n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
+
+String.take_n: Nat -> String -> Maybe(Pair(String)(String))
+  (n) (str) String.take_n.aux(n)(String.nil)(str)<() Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<() Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
+
+String.take_while.aux: Char -> Bool -> String -> String -> Pair(String)(String)
+  (f) (str) (res) res<() Pair(String)(String)>(Pair.new<String><String>(str)(String.nil))((head) (tail) f(head)<() Pair(String)(String)>(String.take_while.aux(f)(String.cons(head)(str))(tail))(Pair.new<String><String>(str)(res)))
+
+String.take_while: Char -> Bool -> String -> Pair(String)(String)
+  (f) (str) String.take_while.aux(f)(String.nil)(str)<() Pair(String)(String)>((x) (y) Pair.new<String><String>(String.reverse(x))(y))
+
+String.to_bits: String -> Bits
+  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail)))
+
+String.to_list: String -> List(Char)
+  (str) str<() List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
+
+String.to_set: String -> Set
+  (str) str<() Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
+
+String.to_stringifier: String -> Stringifier
+  (str) str<() Stringifier>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
+
+Stringifier.concat: Stringifier -> Stringifier -> Stringifier
+  (a) (b) (x) a(b(x))
+
+Stringifier: Type
+  String -> String
+
+Stringifier.to_string: Stringifier -> String
+  (str) str(String.nil)
+
+Subset: (A: Type) -> (B: A -> Type) -> Type
+  (A) (B) subset<P: Subset(A)(B) -> Type> -> (new: (a: A) -> <b: B(a)> -> P(Subset.new<A><B>(a)<b>)) -> P(subset)
+
+Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
+  <A> <B> (a) <b> <P> (subset) subset(a)<b>
+
+TaelinArena.Constants.POS_X_KEY: Bits
+  Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
+
+TaelinArena.Constants.POS_Y_KEY: Bits
+  Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
+
+TaelinArena.Game.ActionId: Type
+  F64
+
+TaelinArena.Game.Buff: Type
+  buff<P: TaelinArena.Game.Buff -> Type> -> (shielded: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.shielded(dur)(val))) -> (slowed: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.slowed(dur)(val))) -> (hasted: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.hasted(dur)(val))) -> (silenced: (dur: F64) -> P(TaelinArena.Game.Buff.silenced(dur))) -> (rooted: (dur: F64) -> P(TaelinArena.Game.Buff.rooted(dur))) -> (stuned: (dur: F64) -> P(TaelinArena.Game.Buff.stuned(dur))) -> P(buff)
+
+TaelinArena.Game.Buff.hasted: F64 -> F64 -> TaelinArena.Game.Buff
+  (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) hasted(dur)(val)
+
+TaelinArena.Game.Buff.rooted: F64 -> TaelinArena.Game.Buff
+  (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) rooted(dur)
+
+TaelinArena.Game.Buff.shielded: F64 -> F64 -> TaelinArena.Game.Buff
+  (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) shielded(dur)(val)
+
+TaelinArena.Game.Buff.silenced: F64 -> TaelinArena.Game.Buff
+  (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) silenced(dur)
+
+TaelinArena.Game.Buff.slowed: F64 -> F64 -> TaelinArena.Game.Buff
+  (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) slowed(dur)(val)
+
+TaelinArena.Game.Buff.stuned: F64 -> TaelinArena.Game.Buff
+  (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) stuned(dur)
+
+TaelinArena.Game.Command: Type
+  command<P: TaelinArena.Game.Command -> Type> -> (new: (pid: TaelinArena.Game.PlayerId) -> (inp: TaelinArena.Game.Input) -> P(TaelinArena.Game.Command.new(pid)(inp))) -> P(command)
+
+TaelinArena.Game.Command.new: TaelinArena.Game.PlayerId -> TaelinArena.Game.Input -> TaelinArena.Game.Command
+  (pid) (inp) <P> (new) new(pid)(inp)
+
+TaelinArena.Game.Effect.damage: F64 -> TaelinArena.Game.Effect
+  (dmg) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) damage(dmg)
+
+TaelinArena.Game.Effect: Type
+  effect<P: TaelinArena.Game.Effect -> Type> -> (heal: (lif: F64) -> P(TaelinArena.Game.Effect.heal(lif))) -> (damage: (dmg: F64) -> P(TaelinArena.Game.Effect.damage(dmg))) -> (repulse: (mag: F64) -> P(TaelinArena.Game.Effect.repulse(mag))) -> (impulse: (mag: F64) -> (dir: F64.V3) -> P(TaelinArena.Game.Effect.impulse(mag)(dir))) -> (slow: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.slow(dur)(val))) -> (haste: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.haste(dur)(val))) -> (shield: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.shield(dur)(val))) -> (silence: (dur: F64) -> P(TaelinArena.Game.Effect.silence(dur))) -> (root: (dur: F64) -> P(TaelinArena.Game.Effect.root(dur))) -> (stun: (dur: F64) -> P(TaelinArena.Game.Effect.stun(dur))) -> (teleport: (to_pos: F64.V3) -> (all: F64) -> P(TaelinArena.Game.Effect.teleport(to_pos)(all))) -> P(effect)
+
+TaelinArena.Game.Effect.haste: F64 -> F64 -> TaelinArena.Game.Effect
+  (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) haste(dur)(val)
+
+TaelinArena.Game.Effect.heal: F64 -> TaelinArena.Game.Effect
+  (lif) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) heal(lif)
+
+TaelinArena.Game.Effect.impulse: F64 -> F64.V3 -> TaelinArena.Game.Effect
+  (mag) (dir) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) impulse(mag)(dir)
+
+TaelinArena.Game.Effect.repulse: F64 -> TaelinArena.Game.Effect
+  (mag) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) repulse(mag)
+
+TaelinArena.Game.Effect.root: F64 -> TaelinArena.Game.Effect
+  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) root(dur)
+
+TaelinArena.Game.Effect.shield: F64 -> F64 -> TaelinArena.Game.Effect
+  (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) shield(dur)(val)
+
+TaelinArena.Game.Effect.silence: F64 -> TaelinArena.Game.Effect
+  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) silence(dur)
+
+TaelinArena.Game.Effect.slow: F64 -> F64 -> TaelinArena.Game.Effect
+  (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) slow(dur)(val)
+
+TaelinArena.Game.Effect.stun: F64 -> TaelinArena.Game.Effect
+  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) stun(dur)
+
+TaelinArena.Game.Effect.teleport: F64.V3 -> F64 -> TaelinArena.Game.Effect
+  (to_pos) (all) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) teleport(to_pos)(all)
+
+TaelinArena.Game.Game: Type
+  game<P: TaelinArena.Game.Game -> Type> -> (new: (stage: List(TaelinArena.Game.Thing)) -> P(TaelinArena.Game.Game.new(stage))) -> P(game)
+
+TaelinArena.Game.Game.new: List(TaelinArena.Game.Thing) -> TaelinArena.Game.Game
+  (stage) <P> (new) new(stage)
+
+TaelinArena.Game.Hit: Type
+  hit<P: TaelinArena.Game.Hit -> Type> -> (new: (eff: List(TaelinArena.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: TaelinArena.Game.Hitbox) -> P(TaelinArena.Game.Hit.new(eff)(pos)(dir)(box))) -> P(hit)
+
+TaelinArena.Game.Hit.new: List(TaelinArena.Game.Effect) -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> TaelinArena.Game.Hit
+  (eff) (pos) (dir) (box) <P> (new) new(eff)(pos)(dir)(box)
+
+TaelinArena.Game.Hitbox.cbox: F64 -> TaelinArena.Game.Hitbox
+  (rad) <P> (nbox) (cbox) (pbox) cbox(rad)
+
+TaelinArena.Game.Hitbox: Type
+  hitbox<P: TaelinArena.Game.Hitbox -> Type> -> (nbox: P(TaelinArena.Game.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(TaelinArena.Game.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(TaelinArena.Game.Hitbox.pbox(pts))) -> P(hitbox)
+
+TaelinArena.Game.Hitbox.nbox: TaelinArena.Game.Hitbox
+  <P> (nbox) (cbox) (pbox) nbox
+
+TaelinArena.Game.Hitbox.pbox: List(F64.V3) -> TaelinArena.Game.Hitbox
+  (pts) <P> (nbox) (cbox) (pbox) pbox(pts)
+
+TaelinArena.Game.Input.cmsg: String -> TaelinArena.Game.Input
+  (txt) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) cmsg(txt)
+
+TaelinArena.Game.Input: Type
+  input<P: TaelinArena.Game.Input -> Type> -> (sdir: (dir: F64.V3) -> P(TaelinArena.Game.Input.sdir(dir))) -> (key0: (pos: F64.V3) -> P(TaelinArena.Game.Input.key0(pos))) -> (key1: (pos: F64.V3) -> P(TaelinArena.Game.Input.key1(pos))) -> (key2: (pos: F64.V3) -> P(TaelinArena.Game.Input.key2(pos))) -> (key3: (pos: F64.V3) -> P(TaelinArena.Game.Input.key3(pos))) -> (key4: (pos: F64.V3) -> P(TaelinArena.Game.Input.key4(pos))) -> (key5: (pos: F64.V3) -> P(TaelinArena.Game.Input.key5(pos))) -> (cmsg: (txt: String) -> P(TaelinArena.Game.Input.cmsg(txt))) -> P(input)
+
+TaelinArena.Game.Input.key0: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key0(pos)
+
+TaelinArena.Game.Input.key1: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key1(pos)
+
+TaelinArena.Game.Input.key2: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key2(pos)
+
+TaelinArena.Game.Input.key3: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key3(pos)
+
+TaelinArena.Game.Input.key4: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key4(pos)
+
+TaelinArena.Game.Input.key5: F64.V3 -> TaelinArena.Game.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key5(pos)
+
+TaelinArena.Game.Input.sdir: F64.V3 -> TaelinArena.Game.Input
+  (dir) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) sdir(dir)
+
+TaelinArena.Game.Light: Type
+  light<P: TaelinArena.Game.Light -> Type> -> (new: (pos: F64.V3) -> (rad: F64) -> (rng: F64) -> (sub: F64.V3) -> (add: F64.V3) -> P(TaelinArena.Game.Light.new(pos)(rad)(rng)(sub)(add))) -> P(light)
+
+TaelinArena.Game.Light.new: F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Light
+  (pos) (rad) (rng) (sub) (add) <P> (new) new(pos)(rad)(rng)(sub)(add)
+
+TaelinArena.Game.ModelId: Type
+  F64
+
+F64.Ordering.EQ: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.EQ
+
+F64.Ordering.GT: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.GT
+
+F64.Ordering.LT: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.LT
+
+F64.Ordering: Type
+  F64.ordering<P: F64.Ordering -> Type> -> (LT: P(F64.Ordering.LT)) -> (EQ: P(F64.Ordering.EQ)) -> (GT: P(F64.Ordering.GT)) -> P(F64.ordering)
+
+TaelinArena.Game.PlayerId: Type
+  F64
+
+TaelinArena.Game.SideId: Type
+  F64
+
+TaelinArena.Game.Thing: Type
+  thing<P: TaelinArena.Game.Thing -> Type> -> (new: (fun: TaelinArena.Game.TxFunction) -> (pid: TaelinArena.Game.PlayerId) -> (mid: TaelinArena.Game.ModelId) -> (act: TaelinArena.Game.ActionId) -> (sid: TaelinArena.Game.SideId) -> (stt: Map(F64)) -> (nam: String) -> (lit: List(TaelinArena.Game.Light)) -> (tik: F64) -> (pos: F64.V3) -> (mov: F64) -> (bst: F64) -> (pad: F64.V3) -> (dir: F64.V3) -> (trg: F64.V3) -> (vel: F64.V3) -> (box: TaelinArena.Game.Hitbox) -> (wei: F64) -> (mhp: F64) -> (dmg: F64) -> (knk: F64.V3) -> (buf: List(TaelinArena.Game.Buff)) -> (chi: List(TaelinArena.Game.Thing)) -> (hit: List(TaelinArena.Game.Hit)) -> (rst: Bool) -> (die: Bool) -> P(TaelinArena.Game.Thing.new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die))) -> P(thing)
+
+TaelinArena.Game.Thing.new: TaelinArena.Game.TxFunction -> TaelinArena.Game.PlayerId -> TaelinArena.Game.ModelId -> TaelinArena.Game.ActionId -> TaelinArena.Game.SideId -> Map(F64) -> String -> List(TaelinArena.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit) -> Bool -> Bool -> TaelinArena.Game.Thing
+  (fun) (pid) (mid) (act) (sid) (stt) (nam) (lit) (tik) (pos) (mov) (bst) (pad) (dir) (trg) (vel) (box) (wei) (mhp) (dmg) (knk) (buf) (chi) (hit) (rst) (die) <P> (new) new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die)
+
+TaelinArena.Game.TxFunction: Type
+  TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+
+TaelinArena.Game.animate: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TaelinArena.Game.Thing
+  (self) (boost) (model) (count) (durat) let self = TaelinArena.Game.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TaelinArena.Game.reset(self)(F64.sub(durat)(F64.1)); self
+
+TaelinArena.Game.animate_between: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TaelinArena.Game.Thing
+  (self) (boost) (model) (count) (from) (til) let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pad = TaelinArena.Game.get_thing_pad(self); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); Bool.if<TaelinArena.Game.Thing>(F64.is_between(from)(til)(self.tik))(let set_bst = TaelinArena.Game.set_thing_bst(self)(boost); let set_dir = TaelinArena.Game.set_thing_dir(self)(let pad_len = F64.V3.len(self.pad); Bool.if<F64.V3>(Bool.and(F64.ltn(F64.0)(self.act))(F64.eql(pad_len)(F64.0)))(TaelinArena.Game.targ_dir(self))(Bool.if<F64.V3>(F64.ltn(F64.0)(pad_len))(F64.V3.norm(self.pad))(self.dir))); let set_mid = TaelinArena.Game.set_thing_mid(self)(let duration = F64.sub(til)(from); let curr_tik = F64.sub(self.tik)(from); let curr_tim = F64.div(curr_tik)(duration); F64.add(model)(F64.mod(F64.floor(F64.mul(curr_tim)(count)))(count))); self)(self)
+
+TaelinArena.Game.animate_die: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TaelinArena.Game.Thing
+  (self) (boost) (model) (count) (durat) let self = TaelinArena.Game.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TaelinArena.Game.die(self)(F64.sub(durat)(F64.1)); self
+
+TaelinArena.Game.animate_with_blink: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model_atk: F64) -> (model_idle: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TaelinArena.Game.Thing
+  (self) (boost) (model_atk) (model_idle) (count) (from) (til) let self = TaelinArena.Game.animate_between(self)(boost)(model_atk)(count)(from)(til); let self = TaelinArena.Game.animate_between(self)(boost)(model_idle)(F64.1)(til)(F64.add(til)(F64.1)); let self = TaelinArena.Game.reset(self)(til); self
+
+TaelinArena.Game.at_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
+  (self) (dist) let dir = TaelinArena.Game.targ_dir(self); let pos = TaelinArena.Game.get_thing_pos(self); F64.V3.add(pos)(F64.V3.scale(dist)(dir))
+
+TaelinArena.Game.at_max_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
+  (self) (max_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_max = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(max_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_trg)(dist_max); F64.if<F64.V3>(F64.from_bool(less_than))(TaelinArena.Game.at_dist(self)(dist_trg))(TaelinArena.Game.at_dist(self)(max_range))
+
+TaelinArena.Game.at_min_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
+  (self) (min_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_min = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(min_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_min)(dist_trg); F64.if<F64.V3>(F64.from_bool(less_than))(TaelinArena.Game.at_dist(self)(dist_trg))(TaelinArena.Game.at_dist(self)(min_range))
+
+TaelinArena.Game.between_dist: TaelinArena.Game.Thing -> F64 -> F64 -> F64.V3
+  (self) (min_range) (max_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_trg = F64.V3.dist(self_pos)(self_trg); let min = F64.min(max_range)(dist_trg); let max = F64.max(min_range)(min); TaelinArena.Game.at_dist(self)(max)
+
+TaelinArena.Game.blink: (self: TaelinArena.Game.Thing) -> (at_tik: F64) -> (to_pos: F64.V3) -> TaelinArena.Game.Thing
+  (self) (at_tik) (to_pos) let rooted = TaelinArena.Game.is_rooted(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pos = TaelinArena.Game.get_thing_pos(self); rooted<() TaelinArena.Game.Thing>(self)(let new_pos = Bool.if<F64.V3>(F64.eql(self.tik)(at_tik))(to_pos)(self.pos); TaelinArena.Game.set_thing_pos(self)(new_pos))
+
+TaelinArena.Game.cast: TaelinArena.Game.Thing -> F64 -> List(TaelinArena.Game.Hit) -> TaelinArena.Game.Thing
+  (self) (at_tik) (do_hit) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_hit(self)(do_hit))(self)
+
+TaelinArena.Game.combine_mov_buffs: TaelinArena.Game.Buff -> F64 -> F64
+  (buff) (i) buff<() F64>((buff.dur) (buff.val) i)((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) i)((buff.dur) F64.0)((buff.dur) F64.0)
+
+F64.compare_numbers: F64 -> F64 -> F64.Ordering
+  (a) (b) Bool.if<F64.Ordering>(F64.eql(a)(b))(F64.Ordering.EQ)(Bool.if<F64.Ordering>(F64.ltn(b)(a))(F64.Ordering.GT)(F64.Ordering.LT))
+
+TaelinArena.Game.create_at: (self: TaelinArena.Game.Thing) -> (at_tik: F64) -> (new_thing: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing
+  (self) (at_tik) (new_thing) let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pid = TaelinArena.Game.get_thing_pid(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.tik)(at_tik))(let self = TaelinArena.Game.set_thing_fun(self)(new_thing); let self = TaelinArena.Game.set_thing_pid(self)(self.pid); let self = TaelinArena.Game.set_thing_pos(self)(self.pos); self)(self)
+
+TaelinArena.Game.dash: (self: TaelinArena.Game.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: F64) -> TaelinArena.Game.Thing
+  (self) (speed) (from_tik) (til_tik) let rooted = TaelinArena.Game.is_rooted(self); let self.tik = TaelinArena.Game.get_thing_tik(self); Bool.if<TaelinArena.Game.Thing>(rooted)(self)(let is_between_tik = F64.is_between(from_tik)(til_tik)(self.tik); let new_vel = Bool.if<F64.V3>(is_between_tik)(let self.pos = TaelinArena.Game.get_thing_pos(self); let self.trg = TaelinArena.Game.get_thing_trg(self); let self.dir = TaelinArena.Game.get_thing_dir(self); F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir)))(F64.V3.new(F64.0)(F64.0)(F64.0)); TaelinArena.Game.set_thing_vel(self)(new_vel))
+
+TaelinArena.Game.die: TaelinArena.Game.Thing -> F64 -> TaelinArena.Game.Thing
+  (self) (at_tik) let curr_tik = TaelinArena.Game.get_thing_tik(self); let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_die<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_die(self)(Bool.true))(self)
+
+TaelinArena.Game.end_thing: (self: TaelinArena.Game.Thing) -> (tx: TaelinArena.Game.TxFunction) -> (after_tiks: F64) -> (stt_key: Bits) -> TaelinArena.Game.Thing
+  (self) (tx) (after_tiks) (stt_key) let self.stt = TaelinArena.Game.get_thing_stt(self); let current_tik = Map.get<F64>(stt_key)(self.stt); let empty_stt = Map.set<F64>(stt_key)(after_tiks)(self.stt); current_tik<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_stt(self)(empty_stt))((current_tik.value) Bool.if<TaelinArena.Game.Thing>(F64.eql(current_tik.value)(F64.0))(let self.pid = TaelinArena.Game.get_thing_pid(self); let self.pos = TaelinArena.Game.get_thing_pos(self); let self = TaelinArena.Game.set_thing_fun(self)(tx); let self = TaelinArena.Game.set_thing_pid(self)(self.pid); let self = TaelinArena.Game.set_thing_pos(self)(self.pos); let self = TaelinArena.Game.set_thing_stt(self)(empty_stt); self)(let new_stt = Map.set<F64>(stt_key)(Bool.if<F64>(F64.ltn(F64.0)(current_tik.value))(F64.sub(current_tik.value)(F64.1))(F64.0))(self.stt); TaelinArena.Game.set_thing_stt(self)(new_stt)))
+
+TaelinArena.Game.get_position_by_pid: TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> F64.V3
+  (pid) (gm) TaelinArena.Game.get_thing_by_pid(pid)(gm)<() F64.V3>(F64.V3.new(F64.0)(F64.0)(F64.0))((found) TaelinArena.Game.get_thing_pos(found))
+
+TaelinArena.Game.get_stt_value: TaelinArena.Game.Thing -> Bits -> F64
+  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() F64>(F64.0)((result.value) result.value)
+
+TaelinArena.Game.get_stt_value_v3: (self: TaelinArena.Game.Thing) -> F64.V3
+  (self) let x = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_X_KEY); let y = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_Y_KEY); F64.V3.new(x)(y)(F64.0)
+
+TaelinArena.Game.get_thing_act: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.ActionId
+  (thi) thi<() TaelinArena.Game.ActionId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.act)
+
+TaelinArena.Game.get_thing_box: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.Hitbox
+  (thi) thi<() TaelinArena.Game.Hitbox>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.box)
+
+TaelinArena.Game.get_thing_bst: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.bst)
+
+TaelinArena.Game.get_thing_buf: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Buff)
+  (thi) thi<() List(TaelinArena.Game.Buff)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.buf)
+
+TaelinArena.Game.get_thing_by_pid.cond: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> Bool
+  (pid) (thi) let thi.pid = TaelinArena.Game.get_thing_pid(thi); F64.eql(pid)(thi.pid)
+
+TaelinArena.Game.get_thing_by_pid: TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> Maybe(TaelinArena.Game.Thing)
+  (pid) (gm) gm<() Maybe(TaelinArena.Game.Thing)>((gm.stage) List.find<TaelinArena.Game.Thing>(TaelinArena.Game.get_thing_by_pid.cond(pid))(gm.stage))
+
+TaelinArena.Game.get_thing_chi: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing)
+  (thi) thi<() List(TaelinArena.Game.Thing)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.chi)
+
+TaelinArena.Game.get_thing_die: (thi: TaelinArena.Game.Thing) -> Bool
+  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.die)
+
+TaelinArena.Game.get_thing_dir: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dir)
+
+TaelinArena.Game.get_thing_dmg: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dmg)
+
+TaelinArena.Game.get_thing_fun: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.TxFunction
+  (thi) thi<() TaelinArena.Game.TxFunction>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.fun)
+
+TaelinArena.Game.get_thing_hit: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit)
+  (thi) thi<() List(TaelinArena.Game.Hit)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.hit)
+
+TaelinArena.Game.get_thing_knk: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.knk)
+
+TaelinArena.Game.get_thing_lit: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Light)
+  (thi) thi<() List(TaelinArena.Game.Light)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.lit)
+
+TaelinArena.Game.get_thing_mhp: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mhp)
+
+TaelinArena.Game.get_thing_mid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.ModelId
+  (thi) thi<() TaelinArena.Game.ModelId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mid)
+
+TaelinArena.Game.get_thing_mov: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mov)
+
+TaelinArena.Game.get_thing_nam: (thi: TaelinArena.Game.Thing) -> String
+  (thi) thi<() String>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.nam)
+
+TaelinArena.Game.get_thing_pad: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pad)
+
+TaelinArena.Game.get_thing_pid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.PlayerId
+  (thi) thi<() TaelinArena.Game.PlayerId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pid)
+
+TaelinArena.Game.get_thing_pos: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pos)
+
+TaelinArena.Game.get_thing_rst: (thi: TaelinArena.Game.Thing) -> Bool
+  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.rst)
+
+TaelinArena.Game.get_thing_sid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.SideId
+  (thi) thi<() TaelinArena.Game.SideId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.sid)
+
+TaelinArena.Game.get_thing_stt: (thi: TaelinArena.Game.Thing) -> Map(F64)
+  (thi) thi<() Map(F64)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.stt)
+
+TaelinArena.Game.get_thing_tik: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.tik)
+
+TaelinArena.Game.get_thing_trg: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.trg)
+
+TaelinArena.Game.get_thing_vel: (thi: TaelinArena.Game.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.vel)
+
+TaelinArena.Game.get_thing_wei: (thi: TaelinArena.Game.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.wei)
+
+TaelinArena.Game.handle_shields: (hit_dmg: F64) -> (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (hit_dmg) (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let self.dmg = TaelinArena.Game.get_thing_dmg(self); let init_val = Pair.new<F64><List(TaelinArena.Game.Buff)>(hit_dmg)([TaelinArena.Game.Buff;]); let res = List.fold<TaelinArena.Game.Buff><Pair(F64)(List(TaelinArena.Game.Buff))>(init_val)(TaelinArena.Game.use_shields)(self.buf); let res.fst = Pair.fst<F64><List(TaelinArena.Game.Buff)>(res); let res.snd = Pair.snd<F64><List(TaelinArena.Game.Buff)>(res); let remaining_dmg = F64.add(res.fst)(self.dmg); let remaining_buf = res.snd; let self = TaelinArena.Game.set_thing_dmg(self)(remaining_dmg); let self = TaelinArena.Game.set_thing_buf(self)(remaining_buf); self
+
+TaelinArena.Game.has_shields: TaelinArena.Game.Thing -> Bool
+  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let has_shields = (buff) buff<() Bool>((buff.dur) (buff.val) Bool.true)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(has_shields)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TaelinArena.Game.illumine: TaelinArena.Game.Thing -> F64 -> F64 -> List(TaelinArena.Game.Light) -> TaelinArena.Game.Thing
+  (self) (from_tik) (to_tik) (lights) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.is_between(from_tik)(to_tik)(curr_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_lit(self)(lights))(TaelinArena.Game.set_thing_lit(self)([TaelinArena.Game.Light;]))
+
+TaelinArena.Game.init_act: (self: TaelinArena.Game.Thing) -> (new_act: F64) -> (new_trg: F64.V3) -> TaelinArena.Game.Thing
+  (self) (new_act) (new_trg) let self.act = TaelinArena.Game.get_thing_act(self); let self.trg = TaelinArena.Game.get_thing_trg(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let act_eql_0 = F64.eql(self.act)(F64.0); let self = TaelinArena.Game.set_thing_act(self)(Bool.if<TaelinArena.Game.ActionId>(act_eql_0)(new_act)(self.act)); let self = TaelinArena.Game.set_thing_trg(self)(Bool.if<F64.V3>(act_eql_0)(new_trg)(self.trg)); let self = TaelinArena.Game.set_thing_tik(self)(Bool.if<F64>(act_eql_0)(F64.0)(self.tik)); self
+
+TaelinArena.Game.is_rooted: (self: TaelinArena.Game.Thing) -> Bool
+  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_rooted_buff = (buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.true) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_rooted_buff)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TaelinArena.Game.is_silenced: TaelinArena.Game.Thing -> Bool
+  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_silenced = (buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.false)((buff.dur) Bool.true) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_silenced)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TaelinArena.Game.is_stunned: TaelinArena.Game.Thing -> Bool
+  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_stunned = (buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_stunned)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TaelinArena.Game.is_using_buff: TaelinArena.Game.Thing -> Bits -> Bool
+  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() Bool>(Bool.false)((current_tik) F64.eql(current_tik)(F64.0)<() Bool>(Bool.false)(Bool.true))
+
+TaelinArena.Game.is_walking: TaelinArena.Game.Thing -> F64
+  (this) let this.pad = TaelinArena.Game.get_thing_pad(this); F64.from_bool(F64.ltn(F64.0)(F64.V3.len(this.pad)))
+
+TaelinArena.Game.map_stage: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
+  (fn) (gm) gm<() TaelinArena.Game.Game>((gm.stage) let new_stage = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(fn)(gm.stage); TaelinArena.Game.Game.new(new_stage))
+
+TaelinArena.Game.map_stt_key: TaelinArena.Game.Thing -> Bits -> F64 -> F64 -> TaelinArena.Game.Thing
+  (self) (stt_key) (func) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_stt(self)(Map.set<F64>(stt_key)(F64.0)(stt)))((result.value) TaelinArena.Game.set_thing_stt(self)(Map.set<F64>(stt_key)(func(result.value))(stt)))
+
+TaelinArena.Game.move.fmc: TaelinArena.Game.Thing -> F64.V3 -> TaelinArena.Game.Thing
+  (self) (to_pos) TaelinArena.Game.set_thing_pos(self)(to_pos)
+
+TaelinArena.Game.reset: TaelinArena.Game.Thing -> F64 -> TaelinArena.Game.Thing
+  (self) (at_tik) let curr_tik = TaelinArena.Game.get_thing_tik(self); let should_reset = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_reset<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_rst(self)(Bool.true))(self)
+
+TaelinArena.Game.set_stt_value_v3: (self: TaelinArena.Game.Thing) -> (v3: F64.V3) -> TaelinArena.Game.Thing
+  (self) (v3) let self.stt = TaelinArena.Game.get_thing_stt(self); v3<() TaelinArena.Game.Thing>((v3.x) (v3.y) (v3.z) let insert_x = Map.set<F64>(TaelinArena.Constants.POS_X_KEY)(v3.x)(self.stt); let insert_y = Map.set<F64>(TaelinArena.Constants.POS_Y_KEY)(v3.y)(self.stt); let self = TaelinArena.Game.set_thing_stt(self)(insert_x); let self = TaelinArena.Game.set_thing_stt(self)(insert_y); self)
+
+TaelinArena.Game.set_thing_act: (thi: TaelinArena.Game.Thing) -> (new_act: TaelinArena.Game.ActionId) -> TaelinArena.Game.Thing
+  (thi) (new_act) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(new_act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_box: (thi: TaelinArena.Game.Thing) -> (new_box: TaelinArena.Game.Hitbox) -> TaelinArena.Game.Thing
+  (thi) (new_box) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(new_box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_bst: (thi: TaelinArena.Game.Thing) -> (new_bst: F64) -> TaelinArena.Game.Thing
+  (thi) (new_bst) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(new_bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_buf: (thi: TaelinArena.Game.Thing) -> (new_buf: List(TaelinArena.Game.Buff)) -> TaelinArena.Game.Thing
+  (thi) (new_buf) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(new_buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_chi: (thi: TaelinArena.Game.Thing) -> (new_chi: List(TaelinArena.Game.Thing)) -> TaelinArena.Game.Thing
+  (thi) (new_chi) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(new_chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_die: (thi: TaelinArena.Game.Thing) -> (new_die: Bool) -> TaelinArena.Game.Thing
+  (thi) (new_die) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(new_die))
+
+TaelinArena.Game.set_thing_dir: (thi: TaelinArena.Game.Thing) -> (new_dir: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_dir) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(new_dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_dmg: (thi: TaelinArena.Game.Thing) -> (new_dmg: F64) -> TaelinArena.Game.Thing
+  (thi) (new_dmg) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(new_dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_fun: (thi: TaelinArena.Game.Thing) -> (new_fun: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing
+  (thi) (new_fun) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(new_fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_hit: (thi: TaelinArena.Game.Thing) -> (new_hit: List(TaelinArena.Game.Hit)) -> TaelinArena.Game.Thing
+  (thi) (new_hit) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(new_hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_knk: (thi: TaelinArena.Game.Thing) -> (new_knk: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_knk) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(new_knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_lit: (thi: TaelinArena.Game.Thing) -> (new_lit: List(TaelinArena.Game.Light)) -> TaelinArena.Game.Thing
+  (thi) (new_lit) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(new_lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_mhp: (thi: TaelinArena.Game.Thing) -> (new_mhp: F64) -> TaelinArena.Game.Thing
+  (thi) (new_mhp) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(new_mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_mid: (thi: TaelinArena.Game.Thing) -> (new_mid: TaelinArena.Game.ModelId) -> TaelinArena.Game.Thing
+  (thi) (new_mid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(new_mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_mov: (thi: TaelinArena.Game.Thing) -> (new_mov: F64) -> TaelinArena.Game.Thing
+  (thi) (new_mov) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(new_mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_nam: (thi: TaelinArena.Game.Thing) -> (new_nam: String) -> TaelinArena.Game.Thing
+  (thi) (new_nam) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(new_nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_pad: (thi: TaelinArena.Game.Thing) -> (new_pad: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_pad) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(new_pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_pid: (thi: TaelinArena.Game.Thing) -> (new_pid: TaelinArena.Game.PlayerId) -> TaelinArena.Game.Thing
+  (thi) (new_pid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(new_pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_pos: (thi: TaelinArena.Game.Thing) -> (new_pos: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_pos) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(new_pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_rst: (thi: TaelinArena.Game.Thing) -> (new_rst: Bool) -> TaelinArena.Game.Thing
+  (thi) (new_rst) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(new_rst)(thi.die))
+
+TaelinArena.Game.set_thing_sid: (thi: TaelinArena.Game.Thing) -> (new_sid: TaelinArena.Game.SideId) -> TaelinArena.Game.Thing
+  (thi) (new_sid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(new_sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_stt: (thi: TaelinArena.Game.Thing) -> (new_stt: Map(F64)) -> TaelinArena.Game.Thing
+  (thi) (new_stt) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(new_stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_tik: (thi: TaelinArena.Game.Thing) -> (new_tik: F64) -> TaelinArena.Game.Thing
+  (thi) (new_tik) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(new_tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_trg: (thi: TaelinArena.Game.Thing) -> (new_trg: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_trg) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(new_trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_vel: (thi: TaelinArena.Game.Thing) -> (new_vel: F64.V3) -> TaelinArena.Game.Thing
+  (thi) (new_vel) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(new_vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.set_thing_wei: (thi: TaelinArena.Game.Thing) -> (new_wei: F64) -> TaelinArena.Game.Thing
+  (thi) (new_wei) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(new_wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TaelinArena.Game.spawn: TaelinArena.Game.Thing -> F64 -> List(TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (self) (at_tik) (children) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_chi(self)(children))(self)
+
+TaelinArena.Game.speed_multiplier_of: TaelinArena.Game.Thing -> F64
+  (self) let bst = TaelinArena.Game.get_thing_bst(self); let buf = TaelinArena.Game.get_thing_buf(self); List.fold<TaelinArena.Game.Buff><F64>(bst)(TaelinArena.Game.combine_mov_buffs)(buf)
+
+TaelinArena.Game.targ_dir: TaelinArena.Game.Thing -> F64.V3
+  (self) let pos = TaelinArena.Game.get_thing_pos(self); let trg = TaelinArena.Game.get_thing_trg(self); let dir = TaelinArena.Game.get_thing_dir(self); F64.V3.look_at(pos)(trg)(dir)
+
+TaelinArena.Game.update_buff: TaelinArena.Game.Thing -> Bits -> TaelinArena.Game.Thing
+  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); let curr_tik = Map.get<F64>(stt_key)(stt); curr_tik<() TaelinArena.Game.Thing>(self)((curr_tik.value) F64.eql(curr_tik.value)(F64.0)<() TaelinArena.Game.Thing>(self)(F64.gtn(curr_tik.value)(F64.0)<() TaelinArena.Game.Thing>(let new_tik = F64.sub(curr_tik.value)(F64.1); let new_stt = Map.set<F64>(stt_key)(new_tik)(stt); TaelinArena.Game.set_thing_stt(self)(new_stt))(self)))
+
+TaelinArena.Game.update_buff_dur: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let fn = (buff) (acc) buff<() List(TaelinArena.Game.Buff)>((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.slowed(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.hasted(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.silenced(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.rooted(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.stuned(F64.sub(buff.dur)(F64.1)))(acc))) :: TaelinArena.Game.Buff -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Buff); let new_buf = List.fold<TaelinArena.Game.Buff><List(TaelinArena.Game.Buff)>([TaelinArena.Game.Buff;])(fn)(self.buf); TaelinArena.Game.set_thing_buf(self)(new_buf)
+
+TaelinArena.Game.use_shields: (buff: TaelinArena.Game.Buff) -> (acc: Pair(F64)(List(TaelinArena.Game.Buff))) -> Pair(F64)(List(TaelinArena.Game.Buff))
+  (buff) (acc) acc<() Pair(F64)(List(TaelinArena.Game.Buff))>((acc.fst) (acc.snd) buff<() Pair(F64)(List(TaelinArena.Game.Buff))>((buff.dur) (buff.val) Bool.if<Pair(F64)(List(TaelinArena.Game.Buff))>(F64.eql(acc.fst)(F64.0))(acc)(let compare = F64.compare_numbers(acc.fst)(buff.val); compare<() Pair(F64)(List(TaelinArena.Game.Buff))>(let remaining_shield_val = F64.sub(buff.val)(acc.fst); let remaining_buf = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(buff.dur)(remaining_shield_val))(acc.snd); Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(remaining_buf))(Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(acc.snd))(let remaining_dmg = F64.sub(acc.fst)(buff.val); Pair.new<F64><List(TaelinArena.Game.Buff)>(remaining_dmg)(acc.snd))))((buff.dur) (buff.val) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) (buff.val) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd))))
+
+TaelinArena.Game.with_thing.effect: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (pid) (fn) (thi) let thi.pid = TaelinArena.Game.get_thing_pid(thi); F64.eql(pid)(thi.pid)<() TaelinArena.Game.Thing>(fn(thi))(thi)
+
+TaelinArena.Game.with_thing: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
+  (pid) (fn) (gm) TaelinArena.Game.map_stage(TaelinArena.Game.with_thing.effect(pid)(fn))(gm)
+
+TaelinArena.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TaelinArena.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TaelinArena.Game.Hitbox) -> Maybe(F64.V3)
+  (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) let none = Maybe.none<F64.V3>; a_box<() Maybe(F64.V3)>(none)((a_box.rad) b_box<() Maybe(F64.V3)>(none)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); let if_condition = Bool.and(F64.ltn(F64.0)(dst))(F64.ltn(dst)(rad)); Bool.if<Maybe(F64.V3)>(if_condition)(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none))((b_box.pts) let cons = (segment) (result) result<() Maybe(F64.V3)>(segment<() Maybe(F64.V3)>((segment.a) (segment.b) let dst = F64.V3.point_segment_dist(a_pos)(segment); let rad = a_box.rad; Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))(let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b))); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none)))((result.value) Maybe.some<F64.V3>(result.value)) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3); let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts); List.fold<F64.Segment><Maybe(F64.V3)>(none)(cons)(segs)))((a_box.pts) none)
+
+TaelinArena.exec_command: TaelinArena.Game.Command -> TaelinArena.Game.Game -> TaelinArena.Game.Game
+  (cmd) (gm) cmd<() TaelinArena.Game.Game>((cmd.pid) (cmd.inp) let fn = (this) let inp = cmd.inp; let is_silenced = TaelinArena.Game.is_silenced(this); let is_stunned = TaelinArena.Game.is_stunned(this); is_stunned<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.init_act(this)(F64.0)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(is_silenced<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos))((key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos))((key2.pos) TaelinArena.Game.init_act(this)(F64.3)(key2.pos))((key3.pos) TaelinArena.Game.init_act(this)(F64.4)(key3.pos))((key4.pos) TaelinArena.Game.init_act(this)(F64.5)(key4.pos))((key5.pos) TaelinArena.Game.init_act(this)(F64.6)(key5.pos))((cmsg.txt) this))) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; TaelinArena.Game.with_thing(cmd.pid)(fn)(gm))
+
+TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
+  (gm) let intr = (that) (this) TaelinArena.interact_with(this)(that) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let tick = (this) (others) (res) let this = TaelinArena.Game.set_thing_hit(this)([TaelinArena.Game.Hit;]); let rst = TaelinArena.Game.get_thing_rst(this); let this = rst<() TaelinArena.Game.Thing>(let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0); let new_bst = F64.1; let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.3)(F64.4)); let new_act = F64.0; let new_tik = F64.0; let new_lit = [TaelinArena.Game.Light;]; let new_rst = Bool.false; let this = TaelinArena.Game.set_thing_vel(this)(new_vel); let this = TaelinArena.Game.set_thing_bst(this)(new_bst); let this = TaelinArena.Game.set_thing_box(this)(new_box); let this = TaelinArena.Game.set_thing_act(this)(new_act); let this = TaelinArena.Game.set_thing_tik(this)(new_tik); let this = TaelinArena.Game.set_thing_lit(this)(new_lit); let this = TaelinArena.Game.set_thing_rst(this)(new_rst); this)(this); let boost = TaelinArena.Game.speed_multiplier_of(this); let pos = TaelinArena.Game.get_thing_pos(this); let mov = TaelinArena.Game.get_thing_mov(this); let pad = TaelinArena.Game.get_thing_pad(this); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.add(pos)(F64.V3.scale(F64.mul(mov)(boost))(pad))); let this = TaelinArena.Game.update_buff_dur(this); let pos = TaelinArena.Game.get_thing_pos(this); let knk = TaelinArena.Game.get_thing_knk(this); let wei = TaelinArena.Game.get_thing_wei(this); let new_pos = F64.V3.add(pos)(knk); let knk_len = F64.V3.len(knk); let new_knk = F64.gtn(knk_len)(F64.0)<() F64.V3>(let force = F64.max(F64.sub(knk_len)(wei))(F64.0); F64.V3.scale(force)(F64.V3.norm(knk)))(knk); let this = TaelinArena.Game.set_thing_pos(this)(new_pos); let this = TaelinArena.Game.set_thing_knk(this)(new_knk); let fun = TaelinArena.Game.get_thing_fun(this); let this = fun(this); let this = List.fold<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(this)(intr)(others); let tik = TaelinArena.Game.get_thing_tik(this); let this = TaelinArena.Game.set_thing_tik(this)(F64.add(tik)(F64.1)); let this_chi = TaelinArena.Game.get_thing_chi(this); let chi_init = (chi) TaelinArena.Game.get_thing_fun(chi)(chi) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let chi_list = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(chi_init)(this_chi); let this = TaelinArena.Game.set_thing_chi(this)([TaelinArena.Game.Thing;]); let this_pos = TaelinArena.Game.get_thing_pos(this); let pos_x = F64.V3.get_z(this_pos); let pos_y = F64.V3.get_y(this_pos); let pos_z = F64.V3.get_z(this_pos); let new_x = F64.min(F64.max(F64._256)(pos_x))(F64.256); let new_y = F64.min(F64.max(F64._160)(pos_y))(F64.160); let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.256); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z)); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let new_dmg = F64.max(F64.0)(F64.min(mhp)(dmg)); let this = TaelinArena.Game.set_thing_dmg(this)(new_dmg); let sid = TaelinArena.Game.get_thing_sid(this); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let no_hp = Bool.false; let die = TaelinArena.Game.get_thing_die(this); let xs = Bool.or(die)(no_hp)<() List(TaelinArena.Game.Thing)>(res)(List.cons<TaelinArena.Game.Thing>(this)(res)); List.concat<TaelinArena.Game.Thing>(chi_list)(xs) :: TaelinArena.Game.Thing -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let things_id = (x) x :: List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let stage = gm<() List(TaelinArena.Game.Thing)>((stage) stage); let stage_nil = [TaelinArena.Game.Thing;]; let new_stage = TaelinArena.fold_with_context<TaelinArena.Game.Thing><List(TaelinArena.Game.Thing)>(stage_nil)(tick)(stage)(things_id); TaelinArena.Game.Game.new(new_stage)
+
+TaelinArena.fold_with_context: <A: Type> -> <B: Type> -> (i: B) -> (f: A -> List(A) -> B -> B) -> (xs: List(A)) -> (ys: List(A) -> List(A)) -> B
+  <A> <B> (i) (f) (xs) (ys) xs<() B>(i)((xs.head) (xs.tail) let ys2 = (x) ys(List.cons<A>(xs.head)(xs)) :: List(A) -> List(A); let rest = TaelinArena.fold_with_context<A><B>(i)(f)(xs.tail)(ys2); f(xs.head)(ys(xs.tail))(rest))
+
+TaelinArena.interact_with: (this: TaelinArena.Game.Thing) -> (that: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (this) (that) let this.pos = TaelinArena.Game.get_thing_pos(this); let this.dir = TaelinArena.Game.get_thing_dir(this); let this.box = TaelinArena.Game.get_thing_box(this); let this.buf = TaelinArena.Game.get_thing_buf(this); let this.sid = TaelinArena.Game.get_thing_sid(this); let that.pos = TaelinArena.Game.get_thing_pos(that); let that.dir = TaelinArena.Game.get_thing_dir(that); let that.box = TaelinArena.Game.get_thing_box(that); let that.hit = TaelinArena.Game.get_thing_hit(that); let that.sid = TaelinArena.Game.get_thing_sid(this); let out_vec = TaelinArena.collide_with(this.pos)(this.dir)(this.box)(that.pos)(that.dir)(that.box); let this = out_vec<() TaelinArena.Game.Thing>(this)((out_vec.value) let new_pos = F64.V3.add(this.pos)(out_vec.value); TaelinArena.Game.set_thing_pos(this)(new_pos)); let this = let apply_hit = (hit) (this) hit<() TaelinArena.Game.Thing>((hit.eff) (hit.pos) (hit.dir) (hit.box) let out_vec = TaelinArena.collide_with(this.pos)(this.dir)(this.box)(hit.pos)(hit.dir)(hit.box); out_vec<() TaelinArena.Game.Thing>(this)((out_vec.value) let compare_sid = F64.eql(this.sid)(that.sid); let apply_eff = (eff) (this) eff<() TaelinArena.Game.Thing>((eff.lif) let this.dmg = TaelinArena.Game.get_thing_dmg(this); Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(TaelinArena.Game.set_thing_dmg(this)(F64.sub(this.dmg)(eff.lif))))((eff.dmg) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(TaelinArena.Game.handle_shields(eff.dmg)(this)))((eff.mag) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let v3 = F64.V3.new(F64.1)(F64.0)(F64.0); let dir = F64.V3.look_at(hit.pos)(this.pos)(v3); let vec = F64.V3.scale(eff.mag)(dir); TaelinArena.Game.set_thing_knk(this)(vec)))((eff.mag) (eff.dir) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let vec = F64.V3.scale(eff.mag)(eff.dir); TaelinArena.Game.set_thing_knk(this)(vec)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.slowed(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.hasted(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.silenced(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.rooted(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.stuned(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.to_pos) (eff.all) Bool.if<TaelinArena.Game.Thing>(F64.eql(eff.all)(F64.1))(TaelinArena.Game.set_thing_pos(this)(eff.to_pos))(this)) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; List.fold<TaelinArena.Game.Effect><TaelinArena.Game.Thing>(this)(apply_eff)(hit.eff))) :: TaelinArena.Game.Hit -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; List.fold<TaelinArena.Game.Hit><TaelinArena.Game.Thing>(this)(apply_hit)(that.hit); this
+
+Text: Type
+  String
+
+The: (A: Type) -> (x: A) -> Type
+  (A) (x) the<P: (x: A) -> The(A)(x) -> Type> -> (term: (x: A) -> P(x)(The.term<A>(x))) -> P(x)(the)
+
+The.term: <A: Type> -> (x: A) -> The(A)(x)
+  <A> (x) <P> (term) term(x)
+
+U16.add: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.add<Nat.16>(a_val)(b_val))))
+
+U16.and: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.and<Nat.16>(a_val)(b_val))))
+
+U16.div: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.div<Nat.16>(a_val)(b_val))))
+
+U16.eql: U16 -> U16 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.16>(a_val)(b_val)))
+
+U16: Type
+  u16<P: U16 -> Type> -> (new: (a: Word(Nat.16)) -> P(U16.new(a))) -> P(u16)
+
+U16.gte: U16 -> U16 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.16>(a_val)(b_val)))
+
+U16.gtn: U16 -> U16 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.16>(a_val)(b_val)))
+
+U16.inc: U16 -> U16
+  (a) a<() U16>((a_val) U16.new(Word.inc<Nat.16>(a_val)))
+
+U16.lte: U16 -> U16 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.16>(a_val)(b_val)))
+
+U16.ltn: U16 -> U16 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.16>(a_val)(b_val)))
+
+U16.mod: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.mod<Nat.16>(a_val)(b_val))))
+
+U16.mul: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.mul<Nat.16>(a_val)(b_val))))
+
+U16.new: Word(Nat.16) -> U16
+  (a) <> (u16) u16(a)
+
+U16.or: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.or<Nat.16>(a_val)(b_val))))
+
+U16.parse_hex: String -> U16
+  (str) U16.new(Word.from_bits(Nat.16)(Bits.parse_hex(str)))
+
+U16.pow: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.pow<Nat.16>(a_val)(b_val))))
+
+U16.shl: Nat -> U16 -> U16
+  (n) (a) a<() U16>((a_val) U16.new(Word.shift_left<Nat.16>(n)(a_val)))
+
+U16.shr: Nat -> U16 -> U16
+  (n) (a) a<() U16>((a_val) U16.new(Word.shift_right<Nat.16>(n)(a_val)))
+
+U16.sub: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.sub<Nat.16>(a_val)(b_val))))
+
+U16.to_bits: U16 -> Bits
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.16>(a_val))
+
+U16.to_nat: U16 -> Nat
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.16>(a_val))
+
+U16.xor: U16 -> U16 -> U16
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.xor<Nat.16>(a_val)(b_val))))
+
+U32.0: U32
+  U32.new(Word.0<Nat.31>(Word.0<Nat.30>(Word.0<Nat.29>(Word.0<Nat.28>(Word.0<Nat.27>(Word.0<Nat.26>(Word.0<Nat.25>(Word.0<Nat.24>(Word.0<Nat.23>(Word.0<Nat.22>(Word.0<Nat.21>(Word.0<Nat.20>(Word.0<Nat.19>(Word.0<Nat.18>(Word.0<Nat.17>(Word.0<Nat.16>(Word.0<Nat.15>(Word.0<Nat.14>(Word.0<Nat.13>(Word.0<Nat.12>(Word.0<Nat.11>(Word.0<Nat.10>(Word.0<Nat.9>(Word.0<Nat.8>(Word.0<Nat.7>(Word.0<Nat.6>(Word.0<Nat.5>(Word.0<Nat.4>(Word.0<Nat.3>(Word.0<Nat.2>(Word.0<Nat.1>(Word.0<Nat.0>(Word.nil)))))))))))))))))))))))))))))))))
+
+U32.add: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.add<Nat.32>(a_val)(b_val))))
+
+U32.and: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.and<Nat.32>(a_val)(b_val))))
+
+U32.concat: U32 -> U32 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.concat<Nat.32><Nat.32>(a_val)(b_val))))
+
+U32.div: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.div<Nat.32>(a_val)(b_val))))
+
+U32.eql: U32 -> U32 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.32>(a_val)(b_val)))
+
+U32: Type
+  u32<P: U32 -> Type> -> (new: (a: Word(Nat.32)) -> P(U32.new(a))) -> P(u32)
+
+U32.gte: U32 -> U32 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.32>(a_val)(b_val)))
+
+U32.gtn: U32 -> U32 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.32>(a_val)(b_val)))
+
+U32.hash2: U32 -> U32 -> U32
+  (a) (b) U64.mix(U32.concat(a)(b))<() U32>((w64) U32.new(Word.drop<Nat.32>(Nat.32)(w64)))
+
+U32.inc: U32 -> U32
+  (a) a<() U32>((a_val) U32.new(Word.inc<Nat.32>(a_val)))
+
+U32.lte: U32 -> U32 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.32>(a_val)(b_val)))
+
+U32.ltn: U32 -> U32 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.32>(a_val)(b_val)))
+
+U32.mod: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.mod<Nat.32>(a_val)(b_val))))
+
+U32.mul: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.mul<Nat.32>(a_val)(b_val))))
+
+U32.new: Word(Nat.32) -> U32
+  (a) <P> (u32) u32(a)
+
+U32.or: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.or<Nat.32>(a_val)(b_val))))
+
+U32.parse_hex: String -> U32
+  (str) U32.new(Word.from_bits(Nat.32)(Bits.parse_hex(str)))
+
+U32.pow: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.pow<Nat.32>(a_val)(b_val))))
+
+U32.shl: Nat -> U32 -> U32
+  (n) (a) a<() U32>((a_val) U32.new(Word.shift_left<Nat.32>(n)(a_val)))
+
+U32.shr: Nat -> U32 -> U32
+  (n) (a) a<() U32>((a_val) U32.new(Word.shift_right<Nat.32>(n)(a_val)))
+
+U32.sub: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.sub<Nat.32>(a_val)(b_val))))
+
+U32.to_bits: U32 -> Bits
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.32>(a_val))
+
+U32.to_nat: U32 -> Nat
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.32>(a_val))
+
+U32.xor: U32 -> U32 -> U32
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.xor<Nat.32>(a_val)(b_val))))
+
+U64.0: U64
+  U64.parse_hex("0000000000000000")
+
+U64.add: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.add<Nat.64>(a_val)(b_val))))
+
+U64.and: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.and<Nat.64>(a_val)(b_val))))
+
+U64.div: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.div<Nat.64>(a_val)(b_val))))
+
+U64.eql: U64 -> U64 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.64>(a_val)(b_val)))
+
+U64: Type
+  u64<P: U64 -> Type> -> (new: (a: Word(Nat.64)) -> P(U64.new(a))) -> P(u64)
+
+U64.gte: U64 -> U64 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.64>(a_val)(b_val)))
+
+U64.gtn: U64 -> U64 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.64>(a_val)(b_val)))
+
+U64.inc: U64 -> U64
+  (a) a<() U64>((a_val) U64.new(Word.inc<Nat.64>(a_val)))
+
+U64.lte: U64 -> U64 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.64>(a_val)(b_val)))
+
+U64.ltn: U64 -> U64 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.64>(a_val)(b_val)))
+
+U64.mix.const0: U64
+  U64.parse_hex("ff51afd7ed558ccd")
+
+U64.mix.const1: U64
+  U64.parse_hex("c4ceb9fe1a85ec53")
+
+U64.mix: U64 -> U64
+  (h) let h = U64.xor(h)(U64.shr(Nat.33)(h)); let h = U64.mul(h)(U64.mix.const0); let h = U64.xor(h)(U64.shr(Nat.33)(h)); let h = U64.mul(h)(U64.mix.const1); let h = U64.xor(h)(U64.shr(Nat.33)(h)); h
+
+U64.mod: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.mod<Nat.64>(a_val)(b_val))))
+
+U64.mul: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.mul<Nat.64>(a_val)(b_val))))
+
+U64.new: Word(Nat.64) -> U64
+  (a) <P> (u64) u64(a)
+
+U64.or: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.or<Nat.64>(a_val)(b_val))))
+
+U64.parse_hex: String -> U64
+  (str) U64.new(Word.from_bits(Nat.64)(Bits.parse_hex(str)))
+
+U64.pow: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.pow<Nat.64>(a_val)(b_val))))
+
+U64.shl: Nat -> U64 -> U64
+  (n) (a) a<() U64>((a_val) U64.new(Word.shift_left<Nat.64>(n)(a_val)))
+
+U64.shr: Nat -> U64 -> U64
+  (n) (a) a<() U64>((a_val) U64.new(Word.shift_right<Nat.64>(n)(a_val)))
+
+U64.sub: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.sub<Nat.64>(a_val)(b_val))))
+
+U64.to_bits: U64 -> Bits
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.64>(a_val))
+
+U64.to_nat: U64 -> Nat
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.64>(a_val))
+
+U64.xor: U64 -> U64 -> U64
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.xor<Nat.64>(a_val)(b_val))))
+
+UFind.new: UFind
+  Map.new<UNode>
+
+UFind.equivalent: UFind -> Bits -> Bits -> Bool
+  (uf) (path1) (path2) UFind.find<Bool>(uf)(path1)((uf) (root1) (rank1) UFind.find<Bool>(uf)(path2)((uf) (root2) (rank2) Bits.eql(root1)(root2)))
+
+UFind.find: <B: Type> -> UFind -> Bits -> UFind -> Bits -> Nat -> B -> B
+  <B> (uf) (path) (k) let found = Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf); found<() B>((node) (uf) node<() B>((node.rank) k(uf)(path)(node.rank))((node.parent) UFind.find<B>(uf)(node.parent)((uf) (root) (rank) let uf = Map.set<UNode>(path)(UNode.link(root))(uf); k(uf)(root)(rank))))
+
+UFind: Type
+  Map(UNode)
+
+UFind.new_node: UFind -> Bits -> UFind
+  (uf) (path) Map.set<UNode>(path)(UNode.root(Nat.zero))(uf)
+
+UFind.union: UFind -> Bits -> Bits -> UFind
+  (uf) (path1) (path2) UFind.find<UFind>(uf)(path1)((uf) (root_path1) (rank1) UFind.find<UFind>(uf)(path2)((uf) (root_path2) (rank2) Bits.eql(root_path1)(root_path2)<() UFind>(uf)(Nat.cmp(rank1)(rank2)<() UFind>(let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf); uf)(let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf); let uf = Map.set<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf); uf)(let uf = Map.set<UNode>(root_path1)(UNode.root(rank2))(uf); let uf = Map.set<UNode>(root_path2)(UNode.link(root_path1))(uf); uf))))
+
+UNode: Type
+  unode_value<P: (x: UNode) -> Type> -> (root: (rank: Nat) -> P(UNode.root(rank))) -> (link: (parent: Bits) -> P(UNode.link(parent))) -> P(unode_value)
+
+UNode.link: Bits -> UNode
+  (parent) <> () (link) link(parent)
+
+UNode.root: Nat -> UNode
+  (rank) <> (root) () root(rank)
+
+Unit: Type
+  unit<P: Unit -> Type> -> (new: P(Unit.new)) -> P(unit)
+
+Unit.new: Unit
+  <P> (unit) unit
+
+Unit.show: Unit -> String
+  (u) "Unit.new"
+
+Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
+  <size> (wo) <P> (we) (w0) (w1) w0<size>(wo)
+
+Word.1: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
+  <size> (wo) <P> (we) (w0) (w1) w1<size>(wo)
+
+Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
+  <size> (a) (b) (c) a<(a.size) () Word(a.size) -> Word(a.size)>((b) Word.nil)(<a.size> (a.pred) (b) b<(b.size) () Word(Nat.pred(b.size)) -> Word(b.size)>((a.pred) Word.nil)(<b.size> (b.pred) (a.pred) c<() Unit -> Word(Nat.succ(b.size))>(() Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false)))(() Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false)))(Unit.new))(<b.size> (b.pred) (a.pred) c<() Unit -> Word(Nat.succ(b.size))>(() Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true)))(() Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false)))(Unit.new))(a.pred))(<a.size> (a.pred) (b) b<(b.size) () Word(Nat.pred(b.size)) -> Word(b.size)>((a.pred) Word.nil)(<b.size> (b.pred) (a.pred) c<() Unit -> Word(Nat.succ(b.size))>(() Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true)))(() Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false)))(Unit.new))(<b.size> (b.pred) (a.pred) c<() Unit -> Word(Nat.succ(b.size))>(() Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true)))(() Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true)))(Unit.new))(a.pred))(b)
+
+Word.add: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  <size> (a) (b) Word.add.aux<size>(a)(b)(Bool.false)
+
+Word.and: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.and
+
+Word.cmp.aux: <size: Nat> -> Word(size) -> Word(size) -> Cmp -> Cmp
+  <size> (a) (b) (c) a<(a.size) () Word(a.size) -> Cmp>((b) c)(<a.size> (a.pred) (b) b<(b.size) () Word(Nat.pred(b.size)) -> Cmp>((a.pred) c)(<b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(c))(<b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(Cmp.ltn))(a.pred))(<a.size> (a.pred) (b) b<(b.size) () Word(Nat.pred(b.size)) -> Cmp>((a.pred) c)(<b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(Cmp.gtn))(<b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(c))(a.pred))(b)
+
+Word.cmp: <size: Nat> -> Word(size) -> Word(size) -> Cmp
+  <size> (a) (b) Word.cmp.aux<size>(a)(b)(Cmp.eql)
+
+Word.concat: <a_size: Nat> -> <b_size: Nat> -> Word(a_size) -> Word(b_size) -> Word(Nat.add(a_size)(b_size))
+  <a_size> <b_size> (a) (b) a<(a_size) () Word(Nat.add(a_size)(b_size))>(b)(<a.size> (a.pred) let rest = Word.concat<a.size><b_size>(a.pred)(b); Word.0<Nat.add(a.size)(b_size)>(rest))(<a.size> (a.pred) let rest = Word.concat<a.size><b_size>(a.pred)(b); Word.1<Nat.add(a.size)(b_size)>(rest))
+
+Word.div: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.div
+
+Word.drop: <size: Nat> -> (n: Nat) -> Word(Nat.add(n)(size)) -> Word(size)
+  <size> (n) (word) n<(n) Word(Nat.add(n)(size)) -> Word(size)>((word) word)((n.pred) (word) let word.pred = Word.pred<Nat.add(n.pred)(size)>(word); Word.drop<size>(n.pred)(word.pred))(word)
+
+Word.eql: <size: Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b) Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
+
+Word: Nat -> Type
+  (size) word<P: (size: Nat) -> Word(size) -> Type> -> (we: P(Nat.zero)(Word.nil)) -> (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.0<size>(pred))) -> (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.1<size>(pred))) -> P(size)(word)
+
+Word.from_bits: (size: Nat) -> Bits -> Word(size)
+  (size) (bits) size<(size) Word(size)>(Word.nil)((size.pred) bits<() Word(Nat.succ(size.pred))>(Word.0<size.pred>(Word.from_bits(size.pred)(Bits.nil)))((bits.pred) Word.0<size.pred>(Word.from_bits(size.pred)(bits.pred)))((bits.pred) Word.1<size.pred>(Word.from_bits(size.pred)(bits.pred))))
+
+Word.gte: <size: Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b) Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+
+Word.gtn: <size: Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b) Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+
+Word.inc: <size: Nat> -> Word(size) -> Word(size)
+  <size> (word) word<(size) () Word(size)>(Word.nil)(<size> (pred) Word.1<size>(pred))(<size> (pred) Word.0<size>(Word.inc<size>(pred)))
+
+Word.lte: <size: Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b) Word.cmp<size>(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+
+Word.ltn: <size: Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b) Word.cmp<size>(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+
+Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.mod
+
+Word.mul: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.mul
+
+Word.nil: Word(Nat.zero)
+  <P> (we) (w0) (w1) we
+
+Word.or: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.or
+
+Word.parse_hex: (size: Nat) -> String -> Word(size)
+  (size) (str) Word.from_bits(size)(Bits.parse_hex(str))
+
+Word.pow: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.pow
+
+Word.pred: <size: Nat> -> Word(Nat.succ(size)) -> Word(size)
+  <size> (word) word<(size) () Word(Nat.pred(size))>(Word.nil)(<word.size> (word.pred) word.pred)(<word.size> (word.pred) word.pred)
+
+Word.shift_left: <size: Nat> -> Nat -> Word(size) -> Word(size)
+  Word.shift_left
+
+Word.shift_right: <size: Nat> -> Nat -> Word(size) -> Word(size)
+  Word.shift_right
+
+Word.sub: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.sub
+
+Word.to_bits: <size: Nat> -> Word(size) -> Bits
+  <size> (a) a<() () Bits>(Bits.nil)(<size> (pred) Bits.0(Word.to_bits<size>(pred)))(<size> (pred) Bits.1(Word.to_bits<size>(pred)))
+
+Word.to_nat: <size: Nat> -> Word(size) -> Nat
+  <size> (word) Word.to_nat.go<size>(word)(Nat.1)
+
+Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
+  <size> (word) (add) word<() () Nat>(Nat.zero)(<size> (word.pred) Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2)))(<size> (word.pred) Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2))))
+
+Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.xor
+
+_a: List(Type)
+  [Type;]
+
+hello: IO(Unit)
+  let uname = "Your name:"; let greet = String.concat("Hello, "); IO.log<Unit>(uname)(() IO.inp<Unit>((name) IO.log<Unit>(greet(name))(() IO.end<Unit>(Unit.new))))
+

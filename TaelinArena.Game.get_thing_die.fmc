@@ -1,9 +1,0 @@
-TaelinArena.Game.get_thing_die: (thi: TaelinArena.Game.Thing) -> Bool
-  (thi)
-  thi<() Bool>
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mph) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.die;
-  

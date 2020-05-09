@@ -1,0 +1,32 @@
+TaelinArena.Game.is_rooted: (self: TaelinArena.Game.Thing) -> Bool
+  (self)
+  let self.buf = TaelinArena.Game.get_thing_buf(self)
+  let is_rooted_buff = ((buff) 
+    buff<() Bool>
+    | #shielded# (buff.dur) (buff.val) Bool.false;
+    | #slowed#   (buff.dur) (buff.val) Bool.false;
+    | #hasted#   (buff.dur) (buff.val) Bool.false;
+    | #silenced# (buff.dur) Bool.false;
+    | #rooted#   (buff.dur) Bool.true;
+    | #stuned#   (buff.dur) Bool.true;
+  ) :: TaelinArena.Game.Buff -> Bool
+  let found_buf = List.find<TaelinArena.Game.Buff>
+    | is_rooted_buff;
+    | self.buf;
+  found_buf<() Bool>
+  | #none# Bool.false;
+  | #some# (value) Bool.true;
+ 
+ // is_rooted(self: Thing) : Bool 
+//   case self |thing 
+//   let is_rooted_buff = (buff: Buff) => 
+//     case buff 
+//     | shielded => false  
+//     | slowed   => false  
+//     | hasted   => false 
+//     | silenced => false  
+//     | rooted   => true 
+//     | stuned   => true  
+//   case find(Buff; is_rooted_buff, self.buf) as res 
+//   | none => false 
+//   | some => true
