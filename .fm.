@@ -1773,6 +1773,9 @@ Subset: (A: Type) -> (B: A -> Type) -> Type
 Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
   <A> <B> (a) <b> <P> (subset) subset(a)<b>
 
+TaelinArena.Constants.ONE_SEC: F64
+  F64.parse("24")
+
 TaelinArena.Constants.POS_X_KEY: Bits
   Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
 
