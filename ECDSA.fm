@@ -31,13 +31,22 @@ CURVE.beta: Nat
 ecdsa.mod: Nat -> Nat
   (a) Nat.mod(a)(CURVE.P)
 
+ecdsa.negate: Nat -> Nat
+  (a)
+  Nat.eql(a)(Nat.0)<() Nat>
+  | Nat.0;
+  | Nat.sub(CURVE.P)(ecdsa.mod(a));
+
+ecdsa.sub: Nat -> Nat -> Nat
+  (a) (b) ecdsa.mod(Nat.add(a)(ecdsa.negate(b)))
+
 ecdsa.P_DIV4_1: Nat
   Nat.div(Nat.add(CURVE.P)(Nat.1))(Nat.4)
 
 // RHS of elliptic curve equation
 ecdsa.weistrass: Nat -> Nat
   (x)
-  ecdsa.mod(Nat.add(Nat.add(Nat.pow(x)(Nat.3))(Nat.mul(CURVE.a)(x)))(CURVE.b))
+  ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(Nat.3)(x)(x)(x))(Nat.mul(CURVE.a)(x)))(CURVE.b))
 
 ecdsa.PRIME_SIZE: Nat
   Nat.parse_decimal("256")
@@ -61,6 +70,9 @@ Jacobian.new: Nat -> Nat -> Nat -> Jacobian
   (x) (y) (z)
   <P> (point) point(x)(y)(z)
 
+Jacobian.0: Jacobian
+  Jacobian.new(Nat.0)(Nat.0)(Nat.1)
+
 Jacobian.equal: Jacobian -> Jacobian -> Bool
   (a) (b)
   a<() Bool>
@@ -79,3 +91,56 @@ Jacobian.fromPoint: Point -> Jacobian
   (p)
   p<() Jacobian>
   | (p.x) (p.y) Jacobian.new(p.x)(p.y)(Nat.1);
+
+Jacobian.negate: Jacobian -> Jacobian
+  (p)
+  p<() Jacobian>
+  | (p.x) (p.y) (p.z) Jacobian.new(p.x)(ecdsa.negate(p.y))(p.z);
+
+Jacobian.double: Jacobian -> Jacobian
+  (p)
+  p<() Jacobian>
+  | (p.x) (p.y) (p.z)
+    let A = Nat.square(p.x)
+    let B = Nat.square(p.y)
+    let C = Nat.square(B)
+    let D = Nat.mul(Nat.2)(ecdsa.sub(Nat.square(Nat.add(p.x)(B)))(Nat.add(A)(C)))
+    let E = Nat.mul(Nat.3)(A)
+    let F = Nat.square(E)
+    let F = Nat.square(E)
+    let x = ecdsa.sub(F)(Nat.mul(Nat.2)(D))
+    let y = ecdsa.sub(Nat.mul(E)(ecdsa.sub(D)(x)))(Nat.mul(Nat.8)(C))
+    let z = ecdsa.mod(Nat.mulVar(Nat.3)(Nat.2)(p.y)(p.z))
+    Jacobian.new(x)(y)(z);
+
+Jacobian.add: Jacobian -> Jacobian -> Jacobian
+  (p) (q)
+  p<() Jacobian>
+  | (p.x) (p.y) (p.z)
+    Bool.or(Nat.eql(p.x)(Nat.0))(Nat.eql(p.y)(Nat.0))<() Jacobian>
+    | q;
+    | q<() Jacobian>
+      | (q.x) (q.y) (q.z)
+        Bool.or(Nat.eql(q.x)(Nat.0))(Nat.eql(q.y)(Nat.0))<() Jacobian>
+        | p;
+        |
+          let p.z2 = Nat.square(p.z)
+          let q.z2 = Nat.square(q.z)
+          let U1 = Nat.mul(p.x)(q.z2)
+          let U2 = Nat.mul(q.x)(p.z2)
+          let S1 = Nat.mulVar(Nat.3)(p.y)(q.z)(q.z2)
+          let S2 = Nat.mulVar(Nat.3)(q.y)(p.z)(p.z2)
+          let H = ecdsa.sub(U2)(U1)
+          let r = ecdsa.sub(S2)(S1)
+          // H = 0 meaning it's the same point.
+          Nat.eql(H)(Nat.0)<() Jacobian>
+          | Nat.eql(r)(Nat.0)<() Jacobian>
+            | Jacobian.double(p);
+            | Jacobian.0;;
+          | let HH = ecdsa.mod(Nat.square(H))
+            let HHH = ecdsa.mod(Nat.mul(H)(HH))
+            let V = Nat.mul(U1)(HH)
+            let x = ecdsa.sub(ecdsa.sub(Nat.square(r))(HHH))(Nat.mul(Nat.2)(V))
+            let y = ecdsa.sub(Nat.mul(r)(ecdsa.sub(V)(x)))(Nat.mul(S1)(HHH))
+            let z = ecdsa.mod(Nat.mulVar(Nat.3)(p.z)(q.z)(H))
+            Jacobian.new(x)(y)(z);;;;;

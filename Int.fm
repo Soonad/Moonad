@@ -1,0 +1,62 @@
+// An integer is a pair of nats quotiented by `(suc x, suc y) ~ (x, y)`
+Int: Type
+  int<P: Int -> Type> ->
+  (new: (x: Nat) -> (y: Nat) -> P(Int.new(x)(y))) ->
+  P(int)
+
+Int.new: Nat -> Nat -> Int
+  (x) (y)
+  <P> (new)
+  x<(x) P(Int.new(x)(y))>
+  | new(Nat.zero)(y);
+  | (x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>
+    | new(Nat.succ(x.pred))(Nat.zero);
+    | (y.pred) Int.new(x.pred)(y.pred)<P>(new);;
+
+Int.fromNat: Nat -> Int
+  (n) Int.new(n)(Nat.0)
+
+Int.0: Int
+  Int.fromNat(Nat.0)
+
+Int.1: Int
+  Int.fromNat(Nat.1)
+
+Int.add: Int -> Int -> Int
+  (a) (b)
+  a<() Int>
+  | (a.x) (a.y)
+    b<() Int>
+    | (b.x) (b.y)
+      Int.new(Nat.add(a.x)(b.x))(Nat.add(a.y)(b.y));;
+
+Int.neg: Int -> Int
+  (a) a<() Int>
+  | (a.x) (a.y) Int.new(a.y)(a.x);
+
+Int.sub: Int -> Int -> Int
+  (a) (b) Int.add(a)(Int.neg(b))
+
+Int.cmp: Int -> Int -> Cmp
+  (a) (b)
+  a<() Cmp>
+  | (a.x) (a.y)
+    b<() Cmp>
+    | (b.x) (b.y)
+      Nat.cmp(Nat.add(a.x)(b.y))(Nat.add(b.x)(a.y));;
+
+Int.parse_decimal: String -> Int
+  (str) str<() Int>
+  | Int.0;
+  | (str.head) (str.tail)
+    U16.eql(str.head)(Char.parse("-"))<() Int>
+    | Int.new(Nat.0)(Nat.parse_decimal(str.tail));
+    | Int.new(Nat.parse_decimal(String.cons(str.head)(str.tail)))(Nat.0);;
+
+Int.parse_hex: String -> Int
+  (str) str<() Int>
+  | Int.0;
+  | (str.head) (str.tail)
+    U16.eql(str.head)(Char.parse("-"))<() Int>
+    | Int.new(Nat.0)(Nat.parse_hex(str.tail));
+    | Int.new(Nat.parse_hex(String.cons(str.head)(str.tail)))(Nat.0);;

@@ -418,11 +418,17 @@ CURVE.beta: Nat
 ecdsa.mod: ∀(:Nat) Nat
   λa ((Nat.mod a) CURVE.P)
 
+ecdsa.negate: ∀(:Nat) Nat
+  λa ((<((Nat.eql a) Nat.0) λ Nat> Nat.0) ((Nat.sub CURVE.P) (ecdsa.mod a)))
+
+ecdsa.sub: ∀(:Nat) ∀(:Nat) Nat
+  λa λb (ecdsa.mod ((Nat.add a) (ecdsa.negate b)))
+
 ecdsa.P_DIV4_1: Nat
   ((Nat.div ((Nat.add CURVE.P) Nat.1)) Nat.4)
 
 ecdsa.weistrass: ∀(:Nat) Nat
-  λx (ecdsa.mod ((Nat.add ((Nat.add ((Nat.pow x) Nat.3)) ((Nat.mul CURVE.a) x))) CURVE.b))
+  λx (ecdsa.mod ((Nat.add ((Nat.add ((((Nat.mulVar Nat.3) x) x) x)) ((Nat.mul CURVE.a) x))) CURVE.b))
 
 ecdsa.PRIME_SIZE: Nat
   (Nat.parse_decimal :String ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0)) String.nil))))
@@ -442,11 +448,23 @@ Jacobian: *
 Jacobian.new: ∀(:Nat) ∀(:Nat) ∀(:Nat) Jacobian
   λx λy λz ΛP λpoint (((point x) y) z)
 
+Jacobian.0: Jacobian
+  (((Jacobian.new Nat.0) Nat.0) Nat.1)
+
 Jacobian.equal: ∀(:Jacobian) ∀(:Jacobian) Bool
   λa λb (<a λ Bool> λa.x λa.y λa.z (<b λ Bool> λb.x λb.y λb.z $a.z2=(ecdsa.mod ((Nat.mul a.z) a.z));$a.z3=(ecdsa.mod ((Nat.mul a.z) a.z2));$b.z2=(ecdsa.mod ((Nat.mul b.z) b.z));$b.z3=(ecdsa.mod ((Nat.mul b.z) b.z2));$eq1=((Nat.eql (ecdsa.mod ((Nat.mul a.x) b.z2))) (ecdsa.mod ((Nat.mul b.x) a.z2)));$eq2=((Nat.eql (ecdsa.mod ((Nat.mul a.y) b.z3))) (ecdsa.mod ((Nat.mul b.y) a.z3)));((Bool.and eq1) eq2)))
 
 Jacobian.fromPoint: ∀(:Point) Jacobian
   λp (<p λ Jacobian> λp.x λp.y (((Jacobian.new p.x) p.y) Nat.1))
+
+Jacobian.negate: ∀(:Jacobian) Jacobian
+  λp (<p λ Jacobian> λp.x λp.y λp.z (((Jacobian.new p.x) (ecdsa.negate p.y)) p.z))
+
+Jacobian.double: ∀(:Jacobian) Jacobian
+  λp (<p λ Jacobian> λp.x λp.y λp.z $A=(Nat.square p.x);$B=(Nat.square p.y);$C=(Nat.square B);$D=((Nat.mul Nat.2) ((ecdsa.sub (Nat.square ((Nat.add p.x) B))) ((Nat.add A) C)));$E=((Nat.mul Nat.3) A);$F=(Nat.square E);$F=(Nat.square E);$x=((ecdsa.sub F) ((Nat.mul Nat.2) D));$y=((ecdsa.sub ((Nat.mul E) ((ecdsa.sub D) x))) ((Nat.mul Nat.8) C));$z=(ecdsa.mod ((((Nat.mulVar Nat.3) Nat.2) p.y) p.z));(((Jacobian.new x) y) z))
+
+Jacobian.add: ∀(:Jacobian) ∀(:Jacobian) Jacobian
+  λp λq (<p λ Jacobian> λp.x λp.y λp.z ((<((Bool.or ((Nat.eql p.x) Nat.0)) ((Nat.eql p.y) Nat.0)) λ Jacobian> q) (<q λ Jacobian> λq.x λq.y λq.z ((<((Bool.or ((Nat.eql q.x) Nat.0)) ((Nat.eql q.y) Nat.0)) λ Jacobian> p) $p.z2=(Nat.square p.z);$q.z2=(Nat.square q.z);$U1=((Nat.mul p.x) q.z2);$U2=((Nat.mul q.x) p.z2);$S1=((((Nat.mulVar Nat.3) p.y) q.z) q.z2);$S2=((((Nat.mulVar Nat.3) q.y) p.z) p.z2);$H=((ecdsa.sub U2) U1);$r=((ecdsa.sub S2) S1);((<((Nat.eql H) Nat.0) λ Jacobian> ((<((Nat.eql r) Nat.0) λ Jacobian> (Jacobian.double p)) Jacobian.0)) $HH=(ecdsa.mod (Nat.square H));$HHH=(ecdsa.mod ((Nat.mul H) HH));$V=((Nat.mul U1) HH);$x=((ecdsa.sub ((ecdsa.sub (Nat.square r)) HHH)) ((Nat.mul Nat.2) V));$y=((ecdsa.sub ((Nat.mul r) ((ecdsa.sub V) x))) ((Nat.mul S1) HHH));$z=(ecdsa.mod ((((Nat.mulVar Nat.3) p.z) q.z) H));(((Jacobian.new x) y) z))))))
 
 Either.bind: Π(A:*) Π(B:*) Π(C:*) ∀(:((Either A) B)) ∀(:∀(:B) ((Either A) C)) ((Either A) C)
   ΛA ΛB ΛC λe λf ((<e λ ((Either A) C)> λval (<<Either.left A> C> val)) λval (f val))
@@ -798,6 +816,39 @@ IO.inp: Π(A:*) ∀(:∀(:String) (IO A)) (IO A)
 
 IO.log: Π(A:*) ∀(:String) ∀(:∀(:Unit) (IO A)) (IO A)
   ΛA λstr λnxt ΛP λ λlog λ ((log str) nxt)
+
+Int: *
+  Πint(P:∀(:Int) *) ∀(new:∀(x:Nat) ∀(y:Nat) (P ((Int.new x) y))) (P int)
+
+Int.new: ∀(:Nat) ∀(:Nat) Int
+  λx λy ΛP λnew ((<x λx (P ((Int.new x) y))> ((new Nat.zero) y)) λx.pred ((<y λy (P ((Int.new (Nat.succ x.pred)) y))> ((new (Nat.succ x.pred)) Nat.zero)) λy.pred (<((Int.new x.pred) y.pred) P> new)))
+
+Int.fromNat: ∀(:Nat) Int
+  λn ((Int.new n) Nat.0)
+
+Int.0: Int
+  (Int.fromNat Nat.0)
+
+Int.1: Int
+  (Int.fromNat Nat.1)
+
+Int.add: ∀(:Int) ∀(:Int) Int
+  λa λb (<a λ Int> λa.x λa.y (<b λ Int> λb.x λb.y ((Int.new ((Nat.add a.x) b.x)) ((Nat.add a.y) b.y))))
+
+Int.neg: ∀(:Int) Int
+  λa (<a λ Int> λa.x λa.y ((Int.new a.y) a.x))
+
+Int.sub: ∀(:Int) ∀(:Int) Int
+  λa λb ((Int.add a) (Int.neg b))
+
+Int.cmp: ∀(:Int) ∀(:Int) Cmp
+  λa λb (<a λ Cmp> λa.x λa.y (<b λ Cmp> λb.x λb.y ((Nat.cmp ((Nat.add a.x) b.y)) ((Nat.add b.x) a.y))))
+
+Int.parse_decimal: ∀(:String) Int
+  λstr ((<str λ Int> Int.0) λstr.head λstr.tail ((<((U16.eql str.head) (Char.parse :String ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1)) String.nil))) λ Int> ((Int.new Nat.0) (Nat.parse_decimal str.tail))) ((Int.new (Nat.parse_decimal ((String.cons str.head) str.tail))) Nat.0)))
+
+Int.parse_hex: ∀(:String) Int
+  λstr ((<str λ Int> Int.0) λstr.head λstr.tail ((<((U16.eql str.head) (Char.parse :String ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1)) String.nil))) λ Int> ((Int.new Nat.0) (Nat.parse_hex str.tail))) ((Int.new (Nat.parse_hex ((String.cons str.head) str.tail))) Nat.0)))
 
 JSON.array: ∀(:(List JSON)) JSON
   λx ΛP λ λ λ λ λarray λ (array x)
@@ -1313,7 +1364,7 @@ Nat.parse_hex: ∀(:String) Nat
   λstr ((Nat.parse_hex.go str) Nat.zero)
 
 Nat.parse_hex.go: ∀(:String) ∀(:Nat) Nat
-  λstr λres ((<str λ Nat> res) λstr.head λstr.tail ((<((Bool.and ((U16.gte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0))) ((U16.lte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1))) λ Nat> $dig=(U16.to_nat ((U16.sub str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0)));$res=((Nat.add dig) ((Nat.mul Nat.16) res));((Nat.parse_hex.go str.tail) res)) ((<((Bool.and ((U16.gte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1))) ((U16.lte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0))) λ Nat> $dig=((Nat.add (U16.to_nat ((U16.sub str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1)))) Nat.10);$res=((Nat.add dig) ((Nat.mul Nat.16) res));((Nat.parse_hex.go str.tail) res)) ((<((Bool.and ((U16.gte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1))) ((U16.lte str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0))) λ Nat> $dig=((Nat.add (U16.to_nat ((U16.sub str.head) :Char ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1)))) Nat.10);$res=((Nat.add dig) ((Nat.mul Nat.16) res));((Nat.parse_hex.go str.tail) res)) res))))
+  λstr λres ((<str λ Nat> res) λstr.head λstr.tail ((<(Char.hex_value str.head) λ Nat> res) λdig $res=((Nat.add dig) ((Nat.mul Nat.16) res));((Nat.parse_hex.go str.tail) res)))
 
 Nat.pow: ∀(:Nat) ∀(:Nat) Nat
   Nat.pow
@@ -1332,6 +1383,9 @@ Nat.show: ∀(:Nat) String
 
 Nat.show_base: ∀(:Nat) ∀(:Nat) String
   λn λbase (((Nat.show.aux n) base) :String String.nil)
+
+Nat.square: ∀(:Nat) Nat
+  λa ((Nat.mul a) a)
 
 Nat.sub: ∀(:Nat) ∀(:Nat) Nat
   λn λm ((<m λ Nat> n) λm.pred ((<n λ Nat> Nat.zero) λn.pred ((Nat.sub n.pred) m.pred)))

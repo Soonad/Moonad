@@ -1,0 +1,2 @@
+Nat.square: Nat -> Nat
+  (a) Nat.mul(a)(a)
