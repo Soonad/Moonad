@@ -17,8 +17,8 @@ TaelinArena.Thing.puddledmg_fun:
     | F64.parse("58");
   let effs =
     List.cons<TaelinArena.Game.Effect>
-      | TaelinArena.Game.Effect.damage(F64.parse("1"));
-      | List.nil;
+      | TaelinArena.Game.Effect.damage(F64.1);
+      | List.nil<TaelinArena.Game.Effect>;
   let hits = 
     List.cons<TaelinArena.Game.Hit>
     | TaelinArena.Game.Hit.new
@@ -30,9 +30,11 @@ TaelinArena.Thing.puddledmg_fun:
 
   let eff_slow =
     List.cons<TaelinArena.Game.Effect>
-      | TaelinArena.Game.Effect.slow
+      | TaelinArena.Game.Effect.slow  
         | F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3"));
-      | List.nil;
+        | F64.parse("0.7");;
+      | List.nil<TaelinArena.Game.Effect>;
+      
   let slow = 
     List.cons<TaelinArena.Game.Hit>
     | TaelinArena.Game.Hit.new
