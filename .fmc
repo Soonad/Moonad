@@ -23,7 +23,7 @@ Bits: *
   Πbits(P:∀(:Bits) *) ∀(be:(P Bits.nil)) ∀(b0:∀(pred:Bits) (P (Bits.0 pred))) ∀(b1:∀(pred:Bits) (P (Bits.1 pred))) (P bits)
 
 Bits.from_string: ∀(:String) Bits
-  λstr ((<str λ Bits> Bits.nil) λstr.head λstr.tail (((<((U16.eql str.head) (Char.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) λ ∀s(x:Unit) Bits> λ (Bits.1 (Bits.from_string str.tail))) λ (Bits.0 (Bits.from_string str.tail))) Unit.new))
+  λstr ((<str λ Bits> Bits.nil) λstr.head λstr.tail (((<((U16.eql str.head) (Char.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) λ ∀(x:Unit) Bits> λ (Bits.1 (Bits.from_string str.tail))) λ (Bits.0 (Bits.from_string str.tail))) Unit.new))
 
 Bits.inc: ∀(:Bits) Bits
   λbits (((<bits λ Bits> Bits.nil) λbits.pred (Bits.1 bits.pred)) λbits.pred (Bits.0 (Bits.inc bits.pred)))
@@ -89,7 +89,7 @@ Char.hex_value: ∀(:Char) (Maybe Nat)
   λchr ((<((Bool.and ((U16.gte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0))) ((U16.lte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1))) λ (Maybe Nat)> (<Maybe.some Nat> (U16.to_nat ((U16.sub chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0))))) ((<((Bool.and ((U16.gte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1))) ((U16.lte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0))) λ (Maybe Nat)> (<Maybe.some Nat> ((Nat.add (U16.to_nat ((U16.sub chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1)))) Nat.10))) ((<((Bool.and ((U16.gte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1))) ((U16.lte chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0))) λ (Maybe Nat)> (<Maybe.some Nat> ((Nat.add (U16.to_nat ((U16.sub chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1)))) Nat.10))) <Maybe.none Nat>)))
 
 Char.new: ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) ∀(:Bit) Char
-  λb0 λb1 λb2 λb3 λb4 λb5 λb6 λb7 λb8 λb9 λbA λbB λbC λbD λbE λbF $kF=((<b0 λx16 ∀(:(Word Nat.0)) (Word (Nat.succ Nat.0))> <Word.0 Nat.0>) <Word.1 Nat.0>);$kE=((<b1 λx17 ∀(:(Word Nat.1)) (Word (Nat.succ Nat.1))> <Word.0 Nat.1>) <Word.1 Nat.1>);$kD=((<b2 λx18 ∀(:(Word Nat.2)) (Word (Nat.succ Nat.2))> <Word.0 Nat.2>) <Word.1 Nat.2>);$kC=((<b3 λx19 ∀(:(Word Nat.3)) (Word (Nat.succ Nat.3))> <Word.0 Nat.3>) <Word.1 Nat.3>);$kB=((<b4 λx20 ∀(:(Word Nat.4)) (Word (Nat.succ Nat.4))> <Word.0 Nat.4>) <Word.1 Nat.4>);$kA=((<b5 λx21 ∀(:(Word Nat.5)) (Word (Nat.succ Nat.5))> <Word.0 Nat.5>) <Word.1 Nat.5>);$k9=((<b6 λx22 ∀(:(Word Nat.6)) (Word (Nat.succ Nat.6))> <Word.0 Nat.6>) <Word.1 Nat.6>);$k8=((<b7 λx23 ∀(:(Word Nat.7)) (Word (Nat.succ Nat.7))> <Word.0 Nat.7>) <Word.1 Nat.7>);$k7=((<b8 λx24 ∀(:(Word Nat.8)) (Word (Nat.succ Nat.8))> <Word.0 Nat.8>) <Word.1 Nat.8>);$k6=((<b9 λx25 ∀(:(Word Nat.9)) (Word (Nat.succ Nat.9))> <Word.0 Nat.9>) <Word.1 Nat.9>);$k5=((<bA λx26 ∀(:(Word Nat.10)) (Word (Nat.succ Nat.10))> <Word.0 Nat.10>) <Word.1 Nat.10>);$k4=((<bB λx27 ∀(:(Word Nat.11)) (Word (Nat.succ Nat.11))> <Word.0 Nat.11>) <Word.1 Nat.11>);$k3=((<bC λx28 ∀(:(Word Nat.12)) (Word (Nat.succ Nat.12))> <Word.0 Nat.12>) <Word.1 Nat.12>);$k2=((<bD λx29 ∀(:(Word Nat.13)) (Word (Nat.succ Nat.13))> <Word.0 Nat.13>) <Word.1 Nat.13>);$k1=((<bE λx30 ∀(:(Word Nat.14)) (Word (Nat.succ Nat.14))> <Word.0 Nat.14>) <Word.1 Nat.14>);$k0=((<bF λx31 ∀(:(Word Nat.15)) (Word (Nat.succ Nat.15))> <Word.0 Nat.15>) <Word.1 Nat.15>);$k_=Word.nil;(U16.new (k0 (k1 (k2 (k3 (k4 (k5 (k6 (k7 (k8 (k9 (kA (kB (kC (kD (kE (kF k_)))))))))))))))))
+  λb0 λb1 λb2 λb3 λb4 λb5 λb6 λb7 λb8 λb9 λbA λbB λbC λbD λbE λbF $kF=((<b0 λx16 ∀(:(Word Nat.zero)) (Word (Nat.succ Nat.zero))> <Word.0 Nat.zero>) <Word.1 Nat.zero>);$kE=((<b1 λx17 ∀(:(Word (Nat.succ Nat.zero))) (Word (Nat.succ (Nat.succ Nat.zero)))> <Word.0 (Nat.succ Nat.zero)>) <Word.1 (Nat.succ Nat.zero)>);$kD=((<b2 λx18 ∀(:(Word (Nat.succ (Nat.succ Nat.zero)))) (Word (Nat.succ (Nat.succ (Nat.succ Nat.zero))))> <Word.0 (Nat.succ (Nat.succ Nat.zero))>) <Word.1 (Nat.succ (Nat.succ Nat.zero))>);$kC=((<b3 λx19 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ Nat.zero))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ Nat.zero)))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ Nat.zero)))>);$kB=((<b4 λx20 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))>);$kA=((<b5 λx21 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))>);$k9=((<b6 λx22 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))>);$k8=((<b7 λx23 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))>);$k7=((<b8 λx24 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))>);$k6=((<b9 λx25 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))>);$k5=((<bA λx26 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))>);$k4=((<bB λx27 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))>);$k3=((<bC λx28 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))>);$k2=((<bD λx29 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))>);$k1=((<bE λx30 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))>);$k0=((<bF λx31 ∀(:(Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))))) (Word (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))))))> <Word.0 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))))>) <Word.1 (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))))))))))))))>);$k_=Word.nil;(U16.new (k0 (k1 (k2 (k3 (k4 (k5 (k6 (k7 (k8 (k9 (kA (kB (kC (kD (kE (kF k_)))))))))))))))))
 
 Char.newline: Char
   ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.0)
@@ -863,7 +863,7 @@ List.drop: Π(A:*) ∀(:Nat) ∀(:(List A)) (List A)
   ΛA λn λlist ((<n λ (List A)> list) λpred ((<list λ (List A)> <List.nil A>) λhead λtail ((<List.drop A> pred) tail)))
 
 List.filter: Π(A:*) ∀(:∀(:A) Bool) ∀(:(List A)) (List A)
-  ΛA λcond λlist ((<list λ (List A)> <List.nil A>) λlist.head λlist.tail (((<(cond list.head) λ ∀s(x:(List A)) (List A)> λt t) λt ((<List.cons A> list.head) t)) ((<List.filter A> cond) list.tail)))
+  ΛA λcond λlist ((<list λ (List A)> <List.nil A>) λlist.head λlist.tail (((<(cond list.head) λ ∀(x:(List A)) (List A)> λt t) λt ((<List.cons A> list.head) t)) ((<List.filter A> cond) list.tail)))
 
 List.find: Π(A:*) ∀(:∀(:A) Bool) ∀(:(List A)) (Maybe A)
   ΛA λcond λxs ((<xs λ (Maybe A)> <Maybe.none A>) λhead λtail ((<(cond head) λ (Maybe A)> (<Maybe.some A> head)) ((<List.find A> cond) tail)))
@@ -1649,7 +1649,7 @@ Research.get_syntax: Nat
   $pair=((<<Pair.new Nat> Nat> Nat.2) Nat.3);(<pair λx1 Nat> λx λy x)
 
 Research.inference0: (Word Nat.4)
-  (<Word.1 ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero)))> (<Word.0 ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero))> (<Word.1 ΛP λzero λsucc (succ ΛP λzero λsucc zero)> (<Word.0 ΛP λzero λsucc zero> Word.nil))))
+  (<Word.1 (Nat.succ (Nat.succ (Nat.succ Nat.zero)))> (<Word.0 (Nat.succ (Nat.succ Nat.zero))> (<Word.1 (Nat.succ Nat.zero)> (<Word.0 Nat.zero> Word.nil))))
 
 Research.inference1: ∀(:Bool) Bool
   λb ((<b λ Bool> Bool.true) Bool.false)
@@ -1664,7 +1664,7 @@ Research.synthesis0: Π(A:*) Π(B:*) Π(C:*) ∀(:∀(:B) C) ∀(:∀(:A) B) ∀
   ΛA ΛB ΛC λx3 λx4 λx5 (x3 (x4 x5))
 
 Research.synthesis1: Π(P:∀(:Nat) *) ∀(f:Π(n:Nat) ∀(:(P n)) (P (Nat.succ n))) ∀(x:(P Nat.zero)) (P Nat.3)
-  ΛP λf λx (<f ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero))> (<f ΛP λzero λsucc (succ ΛP λzero λsucc zero)> (<f ΛP λzero λsucc zero> x)))
+  ΛP λf λx (<f (Nat.succ ΛP λz λs (s Nat.zero))> (<f ΛP λz λs (s Nat.zero)> (<f Nat.zero> x)))
 
 Set: *
   (Map Unit)
@@ -1718,7 +1718,7 @@ String.eql: ∀(:String) ∀(:String) Bool
   λa λb ((<a λ Bool> ((<b λ Bool> Bool.true) λb.head λb.tail Bool.false)) λa.head λa.tail ((<b λ Bool> Bool.false) λb.head λb.tail ((Bool.and ((U16.eql a.head) b.head)) ((String.eql a.tail) b.tail))))
 
 String.filter: ∀(:∀(:Char) Bool) ∀(:String) String
-  λcond λstr ((<str λ String> String.nil) λstr.head λstr.tail (((<(cond str.head) λ ∀(:String) String> λt t) λt ((String.cons str.head) t)) ((String.filter cond) str.tail)))
+  λcond λstr ((<str λ String> String.nil) λstr.head λstr.tail (((<(cond str.head) λ ∀(x:String) String> λt t) λt ((String.cons str.head) t)) ((String.filter cond) str.tail)))
 
 String.flatten: ∀(:(List String)) String
   λas ((<as λ String> String.nil) λhead λtail ((String.concat head) (String.flatten tail)))
@@ -1757,13 +1757,13 @@ String.take_n.aux: ∀(:Nat) ∀(:String) ∀(:String) (Maybe ((Pair String) Str
   λn λstr λres ((<res λ (Maybe ((Pair String) String))> ((<n λ (Maybe ((Pair String) String))> (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> str) String.nil))) λ <Maybe.none ((Pair String) String)>)) λhead λtail ((<n λ (Maybe ((Pair String) String))> (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> str) res))) λpred (((String.take_n.aux pred) ((String.cons head) str)) tail)))
 
 String.take_n: ∀(:Nat) ∀(:String) (Maybe ((Pair String) String))
-  λn λstr ((<(((String.take_n.aux n) String.nil) str) λ (Maybe ((Pair String) String))> <Maybe.none ((Pair String) String)>) λp (<p λ (Maybe ((Pair String) String))> λx λy (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> (String.reverse x)) y))))
+  λn λstr ((<(((String.take_n.aux n) String.nil) str) λ (Maybe ((Pair String) String))> <Maybe.none ((Pair String) String)>) λp (<p λx3 (Maybe ((Pair String) String))> λx λy (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> (String.reverse x)) y))))
 
 String.take_while.aux: ∀(:∀(:Char) Bool) ∀(:String) ∀(:String) ((Pair String) String)
   λf λstr λres ((<res λ ((Pair String) String)> ((<<Pair.new String> String> str) String.nil)) λhead λtail ((<(f head) λ ((Pair String) String)> (((String.take_while.aux f) ((String.cons head) str)) tail)) ((<<Pair.new String> String> str) res)))
 
 String.take_while: ∀(:∀(:Char) Bool) ∀(:String) ((Pair String) String)
-  λf λstr (<(((String.take_while.aux f) String.nil) str) λ ((Pair String) String)> λx λy ((<<Pair.new String> String> (String.reverse x)) y))
+  λf λstr (<(((String.take_while.aux f) String.nil) str) λx2 ((Pair String) String)> λx λy ((<<Pair.new String> String> (String.reverse x)) y))
 
 String.to_bits: ∀(:String) Bits
   λstr ((<str λ Bits> Bits.nil) λstr.head λstr.tail ((Bits.concat (U16.to_bits str.head)) (String.to_bits str.tail)))
@@ -1775,7 +1775,7 @@ String.to_set: ∀(:String) Set
   λstr ((<str λ Set> Set.new) λstr.head λstr.tail ((Set.set (U16.to_bits str.head)) (String.to_set str.tail)))
 
 String.to_stringifier: ∀(:String) Stringifier
-  λstr ((<str λ Stringifier> λx x) λstr.head λstr.tail λx ((String.cons str.head) ((String.to_stringifier str.tail) x)))
+  λstr ((<str λ ∀(x:String) String> λx x) λstr.head λstr.tail λx ((String.cons str.head) ((String.to_stringifier str.tail) x)))
 
 Stringifier.concat: ∀(:Stringifier) ∀(:Stringifier) Stringifier
   λa λb λx (a (b x))
@@ -2261,7 +2261,7 @@ The.term: Π(A:*) ∀(x:A) ((The A) x)
   ΛA λx ΛP λterm (term x)
 
 U16.add: ∀(:U16) ∀(:U16) U16
-  λa λb (<a λ U16> λa_val (<b λ U16> λb_val (U16.new ((<Word.add Nat.16> a_val) b_val))))
+  λa λb (<a λx2 U16> λa_val (<b λx3 U16> λb_val (U16.new ((<Word.add Nat.16> a_val) b_val))))
 
 U16.and: ∀(:U16) ∀(:U16) U16
   λa λb (<a λ U16> λa_val (<b λ U16> λb_val (U16.new ((<Word.and Nat.16> a_val) b_val))))
