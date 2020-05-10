@@ -1,7 +1,7 @@
 // Pushes a value to the end of the list
 List.push: <A: Type> -> A -> List(A) -> List(A)
   <A> (val) (list)
-  list<() List(A)>
-  | List.cons<A>(val)(List.nil<A>);
+  case list:
+  | List.cons<>(val)(List.nil<>);
   | (list.head) (list.tail)
-    List.cons<A>(list.head)(List.push<A>(val)(list.tail));
+    List.cons<>(list.head)(List.push<>(val)(list.tail));

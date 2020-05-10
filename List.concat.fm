@@ -1,7 +1,7 @@
 // Concatenates two lists.
 List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
   <A> (as) (bs)
-  as<() List(A)>
+  case as:
   | bs;
   | (head) (tail)
-    List.cons<A>(head)(List.concat<A>(tail)(bs));
+    List.cons<>(head)(List.concat<>(tail)(bs));

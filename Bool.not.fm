@@ -1,6 +1,6 @@
 // Boolean negation.
 Bool.not: Bool -> Bool //prim//
   (a)
-  a<() Bool>
+  case a:
   | Bool.false;
   | Bool.true;
