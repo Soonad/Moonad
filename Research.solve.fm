@@ -1,0 +1,4 @@
+// Statically solves the equation `x * x + 5 = 54`
+// This results in the constant number 7
+Research.solve: Nat
+  Nat.solve_for()<(x) Equal()(Nat.add(Nat.mul(x)(x))(Nat.5))(Nat.54)><>
