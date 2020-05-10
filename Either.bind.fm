@@ -6,6 +6,6 @@ Either.bind
     (B -> Either(A)(C)) ->
     Either(A)(C)
   <A> <B> <C> (e) (f)
-  e<() Either(A)(C)>
+  case e:
   | (val) Either.left<A><C>(val);
   | (val) f(val);

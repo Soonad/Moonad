@@ -1,10 +1,10 @@
 // Are both booleans equal?
 Bool.eql: Bool -> Bool -> Bool
   (a) (b)
-  a<() Bool>
-  | b<() Bool>
+  case a:
+  | case b: 
     | Bool.true;
     | Bool.false;;
-  | b<(x) Bool>
+  | case b:
     | Bool.false;
     | Bool.true;;

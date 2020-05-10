@@ -1,9 +1,11 @@
+// TODO: improve using Concat instead. Check Core.stringify.go
 List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
   <A> (f) (xs)
-  String.concat("[") |
-  String.concat
+  String.concat("[")
+  | String.concat
     | String.flatten(List.intercalate<String>(",")(List.map<A><String>(f)(xs)));
-    | "]";;
+    | "]";
+  ;
 
 
 

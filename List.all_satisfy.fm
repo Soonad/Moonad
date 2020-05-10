@@ -1,9 +1,9 @@
 // Do all elements satisfy a condition?
 List.all: <A: Type> -> (A -> Bool) -> List(A) -> Bool
   <A> (cond) (list)
-  list<() Bool>
+  case list:
   | Bool.true;
   | (head) (tail)
-    cond(head)<() Bool>
-    | List.all<A>(cond)(tail);
+    case cond(head):
+    | List.all<>(cond)(tail);
     | Bool.false;;

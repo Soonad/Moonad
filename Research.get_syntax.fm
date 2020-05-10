@@ -1,0 +1,4 @@
+Research.get_syntax: Nat
+  let pair = Pair.new<><>(Nat.2)(Nat.3)
+  get x y = pair
+  x

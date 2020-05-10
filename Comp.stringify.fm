@@ -2,7 +2,7 @@ Comp.stringify: Comp -> Stringifier
   (comp)
   let lit = String.to_stringifier
   let rec = Comp.stringify
-  comp<() Stringifier>
+  case comp:
   |#var# (term.name)
     lit(term.name);
   |#lam# (term.name) (term.body)

@@ -1,5 +1,5 @@
 Char.parse.type : String -> Type
   (str)
-  str<() Type>
+  case str:
   | Unit;
   | (str.head) (str.tail) Char;
