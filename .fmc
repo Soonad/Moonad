@@ -1657,8 +1657,11 @@ Research.nat_literals: (IO Unit)
 Research.solve: Nat
   <<(Nat.solve_for ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero)))))))) λx (((Equal Πnat(P:∀(:Nat) *) ∀(zero:(P Nat.zero)) ∀(succ:∀(pred:Nat) (P (Nat.succ pred))) (P nat)) ((Nat.add ((Nat.mul x) x)) Nat.5)) Nat.54)> ΛP λto to>
 
-Research.synthesis: Π(A:*) Π(B:*) Π(C:*) ∀(:∀(:B) C) ∀(:∀(:A) B) ∀(:A) C
+Research.synthesis0: Π(A:*) Π(B:*) Π(C:*) ∀(:∀(:B) C) ∀(:∀(:A) B) ∀(:A) C
   ΛA ΛB ΛC λx3 λx4 λx5 (x3 (x4 x5))
+
+Research.synthesis1: Π(P:∀(:Nat) *) ∀(f:Π(n:Nat) ∀(:(P n)) (P (Nat.succ n))) ∀(x:(P Nat.zero)) (P Nat.3)
+  ΛP λf λx (<f ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero))> (<f ΛP λzero λsucc (succ ΛP λzero λsucc zero)> (<f ΛP λzero λsucc zero> x)))
 
 Set: *
   (Map Unit)

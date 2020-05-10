@@ -1706,8 +1706,11 @@ Research.nat_literals: IO(Unit)
 Research.solve: Nat
   Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) Equal(nat<P: Nat -> Type> -> (zero: P(Nat.zero)) -> (succ: (pred: Nat) -> P(Nat.succ(pred))) -> P(nat))(Nat.add(Nat.mul(x)(x))(Nat.5))(Nat.54)><<P> (to) to>
 
-Research.synthesis: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
+Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
   <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
+
+Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
+  <P> (f) (x) f<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))>(f<<P> (zero) (succ) succ(<P> (zero) (succ) zero)>(f<<P> (zero) (succ) zero>(x)))
 
 Set: Type
   Map(Unit)
