@@ -1,7 +1,13 @@
 List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
   <A> (sep) (xs)
+<<<<<<< HEAD
   xs<() List(A)>
   | List.nil<A>;
   | (head) (tail) 
     List.cons<A>(head)
     | List.cons<A>(sep)(List.intercalate<A>(sep)(tail));;
+=======
+  case xs:
+  | List.nil<>;
+  | (x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs)));
+>>>>>>> b0c583468e7000deb0573446dfd2de4528412edb

@@ -1,6 +1,6 @@
 Bits.parse_hex.go: String -> Bits -> Bits //loop//
   (str) (res)
-  str<() Bits>
+  case str:
   | res;
   | (str.head) (str.tail)
     Char.hex_value(str.head)<() Bits>

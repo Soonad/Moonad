@@ -1,9 +1,20 @@
+<<<<<<< HEAD
 List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
   <A> (f) (xs)
   String.concat("[") |
   String.concat
     | String.flatten(List.intercalate<String>(",")(List.map<A><String>(f)(xs)));
     | "]";;
+=======
+// TODO: improve using Concat instead. Check Core.stringify.go
+List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
+  <A> (f) (xs)
+  String.concat("[")
+  | String.concat
+    | String.flatten(List.intercalate<String>(",")(List.map<A><String>(f)(xs)));
+    | "]";
+  ;
+>>>>>>> b0c583468e7000deb0573446dfd2de4528412edb
 
 
 

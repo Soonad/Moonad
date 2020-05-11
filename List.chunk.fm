@@ -1,10 +1,12 @@
 List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
   <A> (n) (list)
-  n<() Maybe(List(A))>
-  | Maybe.some<List(A)>(List.nil<A>);
+  case n:
+  | Maybe.some<>(List.nil<>);
   | (pred)
-    list<() Maybe(List(A))>
-    | Maybe.none<List(A)>;
+    case list:
+    | Maybe.none<>;
     | (head) (tail)
-      Maybe.bind<List(A)><List(A)> | List.chunk<A>(pred)(tail);
-      | (x) Maybe.some<List(A)>(List.cons<A>(head)(x));;;
+      use x = Maybe.bind<><>(List.chunk<A>(pred)(tail))
+      Maybe.some<>(List.cons<A>(head)(x))
+    ;
+  ;

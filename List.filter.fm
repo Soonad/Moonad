@@ -1,10 +1,11 @@
 // Removes all elements that do not satisfy a condition.
 List.filter : <A: Type> -> (A -> Bool) -> List(A) -> List(A)
   <A> (cond) (list)
-  list<() List(A)>
+  case list:
   | List.nil<A>;
   | (list.head) (list.tail)
-    cond(list.head)<() List(A) -> List(A)>
+    case cond(list.head):
     | (t) t;
-    | (t) List.cons<A>(list.head)(t);
-    | List.filter<A>(cond)(list.tail);;
+    | (t) List.cons<>(list.head)(t);
+    | List.filter<>(cond)(list.tail);
+  ;

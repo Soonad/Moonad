@@ -1,7 +1,7 @@
 // Applies a function to all elements of the list.
 List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
   <A> <B> (fn) (list)
-  list<() List(B)>
-  | List.nil<B>;
+  case list:
+  | List.nil<>;
   | (list.head) (list.tail)
-    List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail));
+    List.cons<>(fn(list.head))(List.map<><>(fn)(list.tail));

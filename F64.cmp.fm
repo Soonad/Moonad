@@ -3,8 +3,8 @@ F64.cmp: F64 -> F64 -> Cmp
   (a) (b)
   a<() Cmp> | (a.word)
   b<() Cmp> | (b.word)
-  F64.eql(a)(b)<() Cmp>
+  case F64.eql(a)(b):
   | Cmp.eql;
-  | Word.ltn<Nat.64>(a.word)(b.word)<() Cmp>
+  | case Word.ltn<Nat.64>(a.word)(b.word):
     | Cmp.ltn;
     | Cmp.gtn;;;;
