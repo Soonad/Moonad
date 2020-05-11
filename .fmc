@@ -23,7 +23,7 @@ Bits: *
   Πbits(P:∀(:Bits) *) ∀(be:(P Bits.nil)) ∀(b0:∀(pred:Bits) (P (Bits.0 pred))) ∀(b1:∀(pred:Bits) (P (Bits.1 pred))) (P bits)
 
 Bits.from_string: ∀(:String) Bits
-  λstr ((<str λ Bits> Bits.nil) λstr.head λstr.tail (((<((U16.eql str.head) (Char.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) λ ∀s(x:Unit) Bits> λ (Bits.1 (Bits.from_string str.tail))) λ (Bits.0 (Bits.from_string str.tail))) Unit.new))
+  λstr ((<str λ Bits> Bits.nil) λstr.head λstr.tail (((<((U16.eql str.head) (Char.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) λ ∀(x:Unit) Bits> λ (Bits.1 (Bits.from_string str.tail))) λ (Bits.0 (Bits.from_string str.tail))) Unit.new))
 
 Bits.inc: ∀(:Bits) Bits
   λbits (((<bits λ Bits> Bits.nil) λbits.pred (Bits.1 bits.pred)) λbits.pred (Bits.0 (Bits.inc bits.pred)))
@@ -670,6 +670,9 @@ F64.mul: ∀(:F64) ∀(:F64) F64
 F64.new: ∀(:(Word Nat.64)) F64
   λa Λ λf64 (f64 a)
 
+F64.parse: ∀(:String) F64
+  F64.parse
+
 F64.parse_binary: ∀(:String) F64
   λstr (F64.new ((Word.from_bits Nat.64) (Bits.from_string str)))
 
@@ -863,7 +866,7 @@ List.drop: Π(A:*) ∀(:Nat) ∀(:(List A)) (List A)
   ΛA λn λlist ((<n λ (List A)> list) λpred ((<list λ (List A)> <List.nil A>) λhead λtail ((<List.drop A> pred) tail)))
 
 List.filter: Π(A:*) ∀(:∀(:A) Bool) ∀(:(List A)) (List A)
-  ΛA λcond λlist ((<list λ (List A)> <List.nil A>) λlist.head λlist.tail (((<(cond list.head) λ ∀s(x:(List A)) (List A)> λt t) λt ((<List.cons A> list.head) t)) ((<List.filter A> cond) list.tail)))
+  ΛA λcond λlist ((<list λ (List A)> <List.nil A>) λlist.head λlist.tail (((<(cond list.head) λ ∀(x:(List A)) (List A)> λt t) λt ((<List.cons A> list.head) t)) ((<List.filter A> cond) list.tail)))
 
 List.find: Π(A:*) ∀(:∀(:A) Bool) ∀(:(List A)) (Maybe A)
   ΛA λcond λxs ((<xs λ (Maybe A)> <Maybe.none A>) λhead λtail ((<(cond head) λ (Maybe A)> (<Maybe.some A> head)) ((<List.find A> cond) tail)))
@@ -1649,7 +1652,7 @@ Research.get_syntax: Nat
   $pair=((<<Pair.new Nat> Nat> Nat.2) Nat.3);(<pair λx1 Nat> λx λy x)
 
 Research.inference0: (Word Nat.4)
-  (<Word.1 ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero)))> (<Word.0 ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero))> (<Word.1 ΛP λzero λsucc (succ ΛP λzero λsucc zero)> (<Word.0 ΛP λzero λsucc zero> Word.nil))))
+  (<Word.1 (Nat.succ (Nat.succ (Nat.succ Nat.zero)))> (<Word.0 (Nat.succ (Nat.succ Nat.zero))> (<Word.1 (Nat.succ Nat.zero)> (<Word.0 Nat.zero> Word.nil))))
 
 Research.inference1: ∀(:Bool) Bool
   λb ((<b λ Bool> Bool.true) Bool.false)
@@ -1664,7 +1667,7 @@ Research.synthesis0: Π(A:*) Π(B:*) Π(C:*) ∀(:∀(:B) C) ∀(:∀(:A) B) ∀
   ΛA ΛB ΛC λx3 λx4 λx5 (x3 (x4 x5))
 
 Research.synthesis1: Π(P:∀(:Nat) *) ∀(f:Π(n:Nat) ∀(:(P n)) (P (Nat.succ n))) ∀(x:(P Nat.zero)) (P Nat.3)
-  ΛP λf λx (<f ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero))> (<f ΛP λzero λsucc (succ ΛP λzero λsucc zero)> (<f ΛP λzero λsucc zero> x)))
+  ΛP λf λx (<f (Nat.succ ΛP λz λs (s Nat.zero))> (<f ΛP λz λs (s Nat.zero)> (<f Nat.zero> x)))
 
 Set: *
   (Map Unit)
@@ -2235,6 +2238,9 @@ TaelinArena.Game.with_thing.effect: ∀(:TaelinArena.Game.PlayerId) ∀(:∀(:Ta
 
 TaelinArena.Game.with_thing: ∀(:TaelinArena.Game.PlayerId) ∀(:∀(:TaelinArena.Game.Thing) TaelinArena.Game.Thing) ∀(:TaelinArena.Game.Game) TaelinArena.Game.Game
   λpid λfn λgm ((TaelinArena.Game.map_stage ((TaelinArena.Game.with_thing.effect pid) fn)) gm)
+
+TaelinArena.Thing.new_thing: TaelinArena.Game.Thing
+  ((((((((((((((((((((((((((TaelinArena.Game.Thing.new λx x) F64.0) F64.0) F64.0) F64.0) <Map.new F64>) String.nil) <List.nil TaelinArena.Game.Light>) F64.0) (((F64.V3.new F64.0) F64.0) F64.0)) (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0)) String.nil))) F64.1) (((F64.V3.new F64.0) F64.0) F64.0)) (((F64.V3.new F64.0) F64._1) F64.0)) (((F64.V3.new F64.0) F64.0) F64.0)) (((F64.V3.new F64.0) F64.0) F64.0)) (TaelinArena.Game.Hitbox.cbox (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0)) String.nil))))) F64.1) (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0)) String.nil)))) F64.0) (((F64.V3.new F64.0) F64.0) F64.0)) <List.nil TaelinArena.Game.Buff>) <List.nil TaelinArena.Game.Thing>) <List.nil TaelinArena.Game.Hit>) Bool.false) Bool.false)
 
 TaelinArena.collide_with: ∀(a_pos:F64.V3) ∀(a_dir:F64.V3) ∀(a_box:TaelinArena.Game.Hitbox) ∀(b_pos:F64.V3) ∀(b_dir:F64.V3) ∀(b_box:TaelinArena.Game.Hitbox) (Maybe F64.V3)
   λa_pos λa_dir λa_box λb_pos λb_dir λb_box $none=<Maybe.none F64.V3>;(((<a_box λ (Maybe F64.V3)> none) λa_box.rad (((<b_box λ (Maybe F64.V3)> none) λb_box.rad $dst=((F64.V3.dist a_pos) b_pos);$rad=((F64.add a_box.rad) b_box.rad);$if_condition=((Bool.and ((F64.ltn F64.0) dst)) ((F64.ltn dst) rad));(((<Bool.if (Maybe F64.V3)> if_condition) $out_dir=(F64.V3.norm ((F64.V3.sub a_pos) b_pos));$out_vec=((F64.V3.scale ((F64.sub rad) dst)) out_dir);(<Maybe.some F64.V3> out_vec)) none)) λb_box.pts $cons=:∀(:F64.Segment) ∀(:(Maybe F64.V3)) (Maybe F64.V3) λsegment λresult ((<result λ (Maybe F64.V3)> (<segment λ (Maybe F64.V3)> λsegment.a λsegment.b $dst=((F64.V3.point_segment_dist a_pos) segment);$rad=a_box.rad;(((<Bool.if (Maybe F64.V3)> ((F64.ltn dst) rad)) $out_dir=(F64.V3.rot_90 (F64.V3.norm ((F64.V3.sub segment.a) segment.b)));$out_vec=((F64.V3.scale ((F64.sub rad) dst)) out_dir);(<Maybe.some F64.V3> out_vec)) none))) λresult.value (<Maybe.some F64.V3> result.value));$segs=(((F64.V3.polygon_to_segments b_pos) b_dir) b_box.pts);(((<<List.fold F64.Segment> (Maybe F64.V3)> none) cons) segs))) λa_box.pts none)
