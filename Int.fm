@@ -11,7 +11,7 @@ Int.new: Nat -> Nat -> Int
   | new(Nat.zero)(y);
   | (x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>
     | new(Nat.succ(x.pred))(Nat.zero);
-    | (y.pred) Int.new(x.pred)(y.pred)<P>(new);;
+    | (y.pred) Int.new(Nat.sub(x.pred)(y.pred))(Nat.sub(y.pred)(x.pred))<P>(new);;
 
 Int.fromNat: Nat -> Int
   (n) Int.new(n)(Nat.0)
@@ -37,6 +37,20 @@ Int.neg: Int -> Int
 Int.sub: Int -> Int -> Int
   (a) (b) Int.add(a)(Int.neg(b))
 
+Int.mul: Int -> Int -> Int
+  (a) (b)
+  a<() Int>
+  | (a.x) (a.y)
+    b<() Int>
+    | (b.x) (b.y)
+      Int.new(Nat.add(Nat.mul(a.x)(b.x))(Nat.mul(a.y)(b.y)))(Nat.add(Nat.mul(a.x)(b.y))(Nat.mul(a.y)(b.x)));;
+
+Int.div_Nat: Int -> Nat -> Int
+  (a) (n)
+  a<() Int>
+  | (a.x) (a.y)
+    Int.new(Nat.div(a.x)(n))(Nat.div(a.y)(n));
+
 Int.cmp: Int -> Int -> Cmp
   (a) (b)
   a<() Cmp>
@@ -60,3 +74,11 @@ Int.parse_hex: String -> Int
     U16.eql(str.head)(Char.parse("-"))<() Int>
     | Int.new(Nat.0)(Nat.parse_hex(str.tail));
     | Int.new(Nat.parse_hex(String.cons(str.head)(str.tail)))(Nat.0);;
+
+Int.to_string_decimal: Int -> String
+  (a)
+  a<() String>
+  | (a.x) (a.y)
+    a.y<() String>
+    | Nat.to_string_decimal(a.x);
+    | () String.cons(Char.parse("-"))(Nat.to_string_decimal(a.y));;

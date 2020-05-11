@@ -467,6 +467,9 @@ Jacobian.double: Jacobian -> Jacobian
 Jacobian.add: Jacobian -> Jacobian -> Jacobian
   (p) (q) p<() Jacobian>((p.x) (p.y) (p.z) Bool.or(Nat.eql(p.x)(Nat.0))(Nat.eql(p.y)(Nat.0))<() Jacobian>(q)(q<() Jacobian>((q.x) (q.y) (q.z) Bool.or(Nat.eql(q.x)(Nat.0))(Nat.eql(q.y)(Nat.0))<() Jacobian>(p)(let p.z2 = Nat.square(p.z); let q.z2 = Nat.square(q.z); let U1 = Nat.mul(p.x)(q.z2); let U2 = Nat.mul(q.x)(p.z2); let S1 = Nat.mulVar(Nat.3)(p.y)(q.z)(q.z2); let S2 = Nat.mulVar(Nat.3)(q.y)(p.z)(p.z2); let H = ecdsa.sub(U2)(U1); let r = ecdsa.sub(S2)(S1); Nat.eql(H)(Nat.0)<() Jacobian>(Nat.eql(r)(Nat.0)<() Jacobian>(Jacobian.double(p))(Jacobian.0))(let HH = ecdsa.mod(Nat.square(H)); let HHH = ecdsa.mod(Nat.mul(H)(HH)); let V = Nat.mul(U1)(HH); let x = ecdsa.sub(ecdsa.sub(Nat.square(r))(HHH))(Nat.mul(Nat.2)(V)); let y = ecdsa.sub(Nat.mul(r)(ecdsa.sub(V)(x)))(Nat.mul(S1)(HHH)); let z = ecdsa.mod(Nat.mulVar(Nat.3)(p.z)(q.z)(H)); Jacobian.new(x)(y)(z))))))
 
+ecdsa.split_scalar: Nat -> Pair(Int)(Int)
+  (k) let k = Int.fromNat(k); let a1 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15"); let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3"); let a2 = Int.parse_hex("114ca50f7a8e2f3f657c1108d9d44cfd8"); let b2 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15"); let c1 = Int.div_Nat(Int.mul(b2)(k))(CURVE.n); let c2 = Int.div_Nat(Int.mul(b1)(k))(CURVE.n); let k1 = Int.sub(Int.sub(k)(Int.mul(c1)(a1)))(Int.mul(c2)(a2)); let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2)); Pair.new<Int><Int>(k1)(k2)
+
 Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> B -> Either(A)(C) -> Either(A)(C)
   <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
 
@@ -822,7 +825,7 @@ Int: Type
   int<P: Int -> Type> -> (new: (x: Nat) -> (y: Nat) -> P(Int.new(x)(y))) -> P(int)
 
 Int.new: Nat -> Nat -> Int
-  (x) (y) <P> (new) x<(x) P(Int.new(x)(y))>(new(Nat.zero)(y))((x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>(new(Nat.succ(x.pred))(Nat.zero))((y.pred) Int.new(x.pred)(y.pred)<P>(new)))
+  (x) (y) <P> (new) x<(x) P(Int.new(x)(y))>(new(Nat.zero)(y))((x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>(new(Nat.succ(x.pred))(Nat.zero))((y.pred) Int.new(Nat.sub(x.pred)(y.pred))(Nat.sub(y.pred)(x.pred))<P>(new)))
 
 Int.fromNat: Nat -> Int
   (n) Int.new(n)(Nat.0)
@@ -842,6 +845,12 @@ Int.neg: Int -> Int
 Int.sub: Int -> Int -> Int
   (a) (b) Int.add(a)(Int.neg(b))
 
+Int.mul: Int -> Int -> Int
+  (a) (b) a<() Int>((a.x) (a.y) b<() Int>((b.x) (b.y) Int.new(Nat.add(Nat.mul(a.x)(b.x))(Nat.mul(a.y)(b.y)))(Nat.add(Nat.mul(a.x)(b.y))(Nat.mul(a.y)(b.x)))))
+
+Int.div_Nat: Int -> Nat -> Int
+  (a) (n) a<() Int>((a.x) (a.y) Int.new(Nat.div(a.x)(n))(Nat.div(a.y)(n)))
+
 Int.cmp: Int -> Int -> Cmp
   (a) (b) a<() Cmp>((a.x) (a.y) b<() Cmp>((b.x) (b.y) Nat.cmp(Nat.add(a.x)(b.y))(Nat.add(b.x)(a.y))))
 
@@ -850,6 +859,9 @@ Int.parse_decimal: String -> Int
 
 Int.parse_hex: String -> Int
   (str) str<() Int>(Int.0)((str.head) (str.tail) U16.eql(str.head)(Char.parse("-"))<() Int>(Int.new(Nat.0)(Nat.parse_hex(str.tail)))(Int.new(Nat.parse_hex(String.cons(str.head)(str.tail)))(Nat.0)))
+
+Int.to_string_decimal: Int -> String
+  (a) a<() String>((a.x) (a.y) a.y<() String>(Nat.to_string_decimal(a.x))(() String.cons(Char.parse("-"))(Nat.to_string_decimal(a.y))))
 
 JSON.array: List(JSON) -> JSON
   (x) <P> () () () () (array) () array(x)
