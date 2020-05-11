@@ -1,3 +1,3 @@
 // Is any element true?
 List.any_true: List(Bool) -> Bool
-  (list) List.any<Bool>((x) x)(list)
+  (list) List.any<>((x) x)(list)

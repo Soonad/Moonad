@@ -1,9 +1,9 @@
 // Returns the element at given position.
 List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
   <A> (list) (indx)
-  list<() Maybe(A)>
-  | Maybe.none<A>;
+  case list:
+  | Maybe.none<>;
   | (head) (tail)
-    indx<() Maybe(A)>
-    | Maybe.some<A>(head);
-    | (pred) List.at<A>(tail)(pred);;
+    case indx:
+    | Maybe.some<>(head);
+    | (pred) List.at<>(tail)(pred);;

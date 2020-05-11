@@ -1,17 +1,20 @@
 Bits.eql: Bits -> Bits -> Bool
   (bs1)
-  bs1<() Bits -> Bool>
-  | (bs2) bs2<() Bool>
+  bs1<() Bits -> _>
+  | (bs2)
+    case bs2:
     | Bool.true;
     | () Bool.false;
     | () Bool.false;
   ;
-  | (bs1.pred) (bs2) bs2<() Bool>
+  | (bs1.pred) (bs2)
+    case bs2:
     | Bool.false;
     | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
     | () Bool.false;
   ;
-  | (bs1.pred) (bs2) bs2<() Bool>
+  | (bs1.pred) (bs2)
+    case bs2:
     | Bool.false;
     | () Bool.false;
     | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
