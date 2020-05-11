@@ -42,7 +42,7 @@ TaelinArena.Thing.benfix_fun:
         | TaelinArena.Game.at_dist(self)(F64.parse("30"));
         | self.dir;
         | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));;
-      | List.nil<TaelinArena.Game.Effect>;
+      | List.nil<TaelinArena.Game.Hit>;
 
     let hits1 = 
       List.cons<TaelinArena.Game.Hit>
@@ -51,7 +51,7 @@ TaelinArena.Thing.benfix_fun:
         | TaelinArena.Game.at_dist(self)(F64.parse("30"));
         | self.dir;
         | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));;
-      | List.nil<TaelinArena.Game.Effect>;
+      | List.nil<TaelinArena.Game.Hit>;
 
     let self = TaelinArena.Game.cast(self)(F64.parse("14"))(hits0)
     let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits0)
@@ -76,7 +76,7 @@ TaelinArena.Thing.benfix_fun:
         List.cons<TaelinArena.Game.Effect>
         | TaelinArena.Game.Effect.damage(F64.parse("3"));
         | List.cons<TaelinArena.Game.Effect>
-          | TaelinArena.Game.Effect.slow(F64.parse("2"))(F64.parse("0.5"))
+          | TaelinArena.Game.Effect.slow(F64.parse("2"))(F64.parse("0.5"));
           | List.nil<TaelinArena.Game.Effect>;;
         
       let hits0 = 
@@ -111,7 +111,7 @@ TaelinArena.Thing.benfix_fun:
 
         let effs = 
           List.cons<TaelinArena.Game.Effect>
-          | TaelinArena.Game.Effect.damage(F64.1)
+          | TaelinArena.Game.Effect.damage(F64.1);
           | List.nil<TaelinArena.Game.Effect>;
         
         let hits = 

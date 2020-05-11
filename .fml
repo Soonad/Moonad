@@ -23,7 +23,7 @@ Bits: Type
   bits<P: Bits -> Type> -> (be: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.0(pred))) -> (b1: (pred: Bits) -> P(Bits.1(pred))) -> P(bits)
 
 Bits.from_string: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() s(x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
+  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
 
 Bits.inc: Bits -> Bits
   (bits) bits<() Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
@@ -671,6 +671,9 @@ F64.mul: F64 -> F64 -> F64
 F64.new: Word(Nat.64) -> F64
   (a) <> (f64) f64(a)
 
+F64.parse: String -> F64
+  F64.parse
+
 F64.parse_binary: String -> F64
   (str) F64.new(Word.from_bits(Nat.64)(Bits.from_string(str)))
 
@@ -864,7 +867,7 @@ List.drop: <A: Type> -> Nat -> List(A) -> List(A)
   <A> (n) (list) n<() List(A)>(list)((pred) list<() List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
 
 List.filter: <A: Type> -> A -> Bool -> List(A) -> List(A)
-  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() s(x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
+  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
 
 List.find: <A: Type> -> A -> Bool -> List(A) -> Maybe(A)
   <A> (cond) (xs) xs<() Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<() Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
@@ -1666,7 +1669,7 @@ Research.get_syntax: Nat
   let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
 
 Research.inference0: Word(Nat.4)
-  Word.1<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero)))>(Word.0<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))>(Word.1<<P> (zero) (succ) succ(<P> (zero) (succ) zero)>(Word.0<<P> (zero) (succ) zero>(Word.nil))))
+  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
 
 Research.inference1: Bool -> Bool
   (b) b<() Bool>(Bool.true)(Bool.false)
@@ -1681,7 +1684,7 @@ Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> 
   <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
 
 Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
-  <P> (f) (x) f<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))>(f<<P> (zero) (succ) succ(<P> (zero) (succ) zero)>(f<<P> (zero) (succ) zero>(x)))
+  <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
 
 Set: Type
   Map(Unit)
@@ -1844,6 +1847,27 @@ TaelinArena.Game.Command: Type
 
 TaelinArena.Game.Command.new: TaelinArena.Game.PlayerId -> TaelinArena.Game.Input -> TaelinArena.Game.Command
   (pid) (inp) <P> (new) new(pid)(inp)
+
+TaelinArena.Game.Constants.DARTH_VADER_USING_FORCE: Bits
+  Bits.from_string("0101100001")
+
+TaelinArena.Game.Constants.FORCE_AWAKENS_KEY: Bits
+  Bits.from_string("01101101")
+
+TaelinArena.Game.Constants.GON_AFTER_ULT: Bits
+  Bits.from_string("001101111010")
+
+TaelinArena.Game.Constants.MANDO_WEAPON_KEY: Bits
+  Bits.from_string("001101111010")
+
+TaelinArena.Game.Constants.STEVE_BLOCK_TIMER: Bits
+  Bits.from_string("000")
+
+TaelinArena.Game.Constants.STEVE_TNT_TIMER: Bits
+  Bits.from_string("001")
+
+TaelinArena.Game.Constants.ULT_TIME: Bits
+  Bits.from_string("1001010110")
 
 TaelinArena.Game.Effect.damage: F64 -> TaelinArena.Game.Effect
   (dmg) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) damage(dmg)
@@ -2252,6 +2276,1686 @@ TaelinArena.Game.with_thing.effect: TaelinArena.Game.PlayerId -> TaelinArena.Gam
 
 TaelinArena.Game.with_thing: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
   (pid) (fn) (gm) TaelinArena.Game.map_stage(TaelinArena.Game.with_thing.effect(pid)(fn))(gm)
+
+BEEDRILL_BLOCK_000: F64
+  F64.parse("0")
+
+BEEDRILL_FINAL_DRILL_ENEMY_MARK_000: F64
+  F64.parse("1")
+
+BEEDRILL_FINAL_DRILL_ENEMY_MARK_001: F64
+  F64.parse("2")
+
+BEEDRILL_FINAL_DRILL_ENEMY_MARK_002: F64
+  F64.parse("3")
+
+BEEDRILL_FINAL_DRILL_ENEMY_MARK_003: F64
+  F64.parse("4")
+
+BEEDRILL_FINAL_DRILL_FLYING_ANIMATION_000: F64
+  F64.parse("5")
+
+BEEDRILL_FINAL_DRILL_FLYING_ANIMATION_001: F64
+  F64.parse("6")
+
+BEEDRILL_FINAL_DRILL_FLYING_ANIMATION_002: F64
+  F64.parse("7")
+
+BEEDRILL_FINAL_DRILL_FLYING_ANIMATION_003: F64
+  F64.parse("8")
+
+BEEDRILL_FINAL_DRILL_000: F64
+  F64.parse("9")
+
+BEEDRILL_FINAL_DRILL_001: F64
+  F64.parse("10")
+
+BEEDRILL_FINAL_DRILL_002: F64
+  F64.parse("11")
+
+BEEDRILL_FINAL_DRILL_003: F64
+  F64.parse("12")
+
+BEEDRILL_FINAL_DRILL_004: F64
+  F64.parse("13")
+
+BEEDRILL_FINAL_DRILL_005: F64
+  F64.parse("14")
+
+BEEDRILL_FINAL_DRILL_006: F64
+  F64.parse("15")
+
+BEEDRILL_FINAL_DRILL_007: F64
+  F64.parse("16")
+
+BEEDRILL_IDLE_000: F64
+  F64.parse("17")
+
+BEEDRILL_IDLE_001: F64
+  F64.parse("18")
+
+BEEDRILL_IDLE_002: F64
+  F64.parse("19")
+
+BEEDRILL_IDLE_003: F64
+  F64.parse("20")
+
+BEEDRILL_IDLE_004: F64
+  F64.parse("21")
+
+BEEDRILL_IDLE_005: F64
+  F64.parse("22")
+
+BEEDRILL_IDLE_006: F64
+  F64.parse("23")
+
+BEEDRILL_IDLE_007: F64
+  F64.parse("24")
+
+BEEDRILL_PIN_MISSILE_000: F64
+  F64.parse("25")
+
+BEEDRILL_PIN_MISSILE_001: F64
+  F64.parse("26")
+
+BEEDRILL_PIN_MISSILE_002: F64
+  F64.parse("27")
+
+BEEDRILL_PIN_MISSILE_003: F64
+  F64.parse("28")
+
+BEEDRILL_PIN_MISSILE_004: F64
+  F64.parse("29")
+
+BEEDRILL_PIN_MISSILE_005: F64
+  F64.parse("30")
+
+BEEDRILL_PIN_MISSILE_006: F64
+  F64.parse("31")
+
+BEEDRILL_PIN_MISSILE_007: F64
+  F64.parse("32")
+
+BEEDRILL_PIN_MISSILE_008: F64
+  F64.parse("33")
+
+BEEDRILL_PIN_MISSILE_009: F64
+  F64.parse("34")
+
+BEEDRILL_PIN_MISSILE_010: F64
+  F64.parse("35")
+
+BEEDRILL_PIN_MISSILE_011: F64
+  F64.parse("36")
+
+BEEDRILL_PIN_MISSILE_012: F64
+  F64.parse("37")
+
+BEEDRILL_PIN_MISSILE_013: F64
+  F64.parse("38")
+
+BEEDRILL_PIN_PROJECTILE_000: F64
+  F64.parse("39")
+
+BEEDRILL_RAGE_000: F64
+  F64.parse("40")
+
+BEEDRILL_RAGE_001: F64
+  F64.parse("41")
+
+BEEDRILL_RAGE_002: F64
+  F64.parse("42")
+
+BEEDRILL_RAGE_003: F64
+  F64.parse("43")
+
+BEEDRILL_RAGE_004: F64
+  F64.parse("44")
+
+BEEDRILL_RAGE_005: F64
+  F64.parse("45")
+
+BEEDRILL_RAGE_006: F64
+  F64.parse("46")
+
+BEEDRILL_RAGE_007: F64
+  F64.parse("47")
+
+BEEDRILL_RAGE_008: F64
+  F64.parse("48")
+
+BEEDRILL_RAGE_009: F64
+  F64.parse("49")
+
+BEEDRILL_RAGE_010: F64
+  F64.parse("50")
+
+BEEDRILL_RAGE_011: F64
+  F64.parse("51")
+
+BEEDRILL_TAUNT_000: F64
+  F64.parse("52")
+
+BEEDRILL_TAUNT_001: F64
+  F64.parse("53")
+
+BEEDRILL_TAUNT_002: F64
+  F64.parse("54")
+
+BEEDRILL_TAUNT_003: F64
+  F64.parse("55")
+
+BEEDRILL_TAUNT_004: F64
+  F64.parse("56")
+
+BEEDRILL_TAUNT_005: F64
+  F64.parse("57")
+
+BEEDRILL_TAUNT_006: F64
+  F64.parse("58")
+
+BEEDRILL_TAUNT_007: F64
+  F64.parse("59")
+
+BEEDRILL_TAUNT_008: F64
+  F64.parse("60")
+
+BEEDRILL_TAUNT_009: F64
+  F64.parse("61")
+
+BEEDRILL_TWINEEDLE_2_000: F64
+  F64.parse("62")
+
+BEEDRILL_TWINEEDLE_2_001: F64
+  F64.parse("63")
+
+BEEDRILL_TWINEEDLE_2_002: F64
+  F64.parse("64")
+
+BEEDRILL_TWINEEDLE_2_003: F64
+  F64.parse("65")
+
+BEEDRILL_TWINEEDLE_2_004: F64
+  F64.parse("66")
+
+BEEDRILL_TWINEEDLE_000: F64
+  F64.parse("67")
+
+BEEDRILL_TWINEEDLE_001: F64
+  F64.parse("68")
+
+BEEDRILL_TWINEEDLE_002: F64
+  F64.parse("69")
+
+BEEDRILL_TWINEEDLE_003: F64
+  F64.parse("70")
+
+BEEDRILL_TWINEEDLE_004: F64
+  F64.parse("71")
+
+BEEDRILL_WALK_000: F64
+  F64.parse("72")
+
+BEEDRILL_WALK_001: F64
+  F64.parse("73")
+
+BEEDRILL_WALK_002: F64
+  F64.parse("74")
+
+BEEDRILL_WALK_003: F64
+  F64.parse("75")
+
+BEEDRILL_WALK_004: F64
+  F64.parse("76")
+
+BEEDRILL_WALK_005: F64
+  F64.parse("77")
+
+BENFIX_BLOCK_000: F64
+  F64.parse("78")
+
+BENFIX_DASH_000: F64
+  F64.parse("79")
+
+BENFIX_DASH_001: F64
+  F64.parse("80")
+
+BENFIX_DASH_002: F64
+  F64.parse("81")
+
+BENFIX_DASH_003: F64
+  F64.parse("82")
+
+BENFIX_DASH_004: F64
+  F64.parse("83")
+
+BENFIX_DASH_005: F64
+  F64.parse("84")
+
+BENFIX_DASH_006: F64
+  F64.parse("85")
+
+BENFIX_DASH_007: F64
+  F64.parse("86")
+
+BENFIX_DASH_008: F64
+  F64.parse("87")
+
+BENFIX_GIGA_DASH_000: F64
+  F64.parse("88")
+
+BENFIX_GIGA_DASH_001: F64
+  F64.parse("89")
+
+BENFIX_GIGA_DASH_002: F64
+  F64.parse("90")
+
+BENFIX_GIGA_DASH_003: F64
+  F64.parse("91")
+
+BENFIX_GIGA_DASH_004: F64
+  F64.parse("92")
+
+BENFIX_GIGA_DASH_005: F64
+  F64.parse("93")
+
+BENFIX_GIGA_DASH_006: F64
+  F64.parse("94")
+
+BENFIX_GIGA_DASH_007: F64
+  F64.parse("95")
+
+BENFIX_GIGA_DASH_008: F64
+  F64.parse("96")
+
+BENFIX_GIGA_DASH_009: F64
+  F64.parse("97")
+
+BENFIX_GIGA_DASH_010: F64
+  F64.parse("98")
+
+BENFIX_GIGA_DASH_011: F64
+  F64.parse("99")
+
+BENFIX_GIGA_DASH_012: F64
+  F64.parse("100")
+
+BENFIX_GIGA_DASH_013: F64
+  F64.parse("101")
+
+BENFIX_GIGA_DASH_014: F64
+  F64.parse("102")
+
+BENFIX_GIGA_DASH_015: F64
+  F64.parse("103")
+
+BENFIX_GIGA_DASH_016: F64
+  F64.parse("104")
+
+BENFIX_GIGA_DASH_017: F64
+  F64.parse("105")
+
+BENFIX_GIGA_DASH_018: F64
+  F64.parse("106")
+
+BENFIX_GIGA_DASH_019: F64
+  F64.parse("107")
+
+BENFIX_GIGA_DASH_020: F64
+  F64.parse("108")
+
+BENFIX_GIGA_DASH_021: F64
+  F64.parse("109")
+
+BENFIX_HURT_000: F64
+  F64.parse("110")
+
+BENFIX_IDLE_000: F64
+  F64.parse("111")
+
+BENFIX_IDLE_001: F64
+  F64.parse("112")
+
+BENFIX_IDLE_002: F64
+  F64.parse("113")
+
+BENFIX_IDLE_003: F64
+  F64.parse("114")
+
+BENFIX_IDLE_004: F64
+  F64.parse("115")
+
+BENFIX_IDLE_005: F64
+  F64.parse("116")
+
+BENFIX_IDLE_006: F64
+  F64.parse("117")
+
+BENFIX_IDLE_007: F64
+  F64.parse("118")
+
+BENFIX_IDLE_008: F64
+  F64.parse("119")
+
+BENFIX_IDLE_009: F64
+  F64.parse("120")
+
+BENFIX_IDLE_010: F64
+  F64.parse("121")
+
+BENFIX_IDLE_011: F64
+  F64.parse("122")
+
+BENFIX_SEISMIC_JUMP_CASTING_000: F64
+  F64.parse("123")
+
+BENFIX_SEISMIC_JUMP_CASTING_001: F64
+  F64.parse("124")
+
+BENFIX_SEISMIC_JUMP_000: F64
+  F64.parse("125")
+
+BENFIX_SEISMIC_JUMP_001: F64
+  F64.parse("126")
+
+BENFIX_SEISMIC_JUMP_002: F64
+  F64.parse("127")
+
+BENFIX_SEISMIC_JUMP_003: F64
+  F64.parse("128")
+
+BENFIX_SEISMIC_JUMP_004: F64
+  F64.parse("129")
+
+BENFIX_SEISMIC_JUMP_005: F64
+  F64.parse("130")
+
+BENFIX_SEISMIC_JUMP_006: F64
+  F64.parse("131")
+
+BENFIX_SEISMIC_JUMP_007: F64
+  F64.parse("132")
+
+BENFIX_SEISMIC_JUMP_008: F64
+  F64.parse("133")
+
+BENFIX_SEISMIC_JUMP_009: F64
+  F64.parse("134")
+
+BENFIX_STEEL_TORNADO_000: F64
+  F64.parse("135")
+
+BENFIX_STEEL_TORNADO_001: F64
+  F64.parse("136")
+
+BENFIX_STEEL_TORNADO_002: F64
+  F64.parse("137")
+
+BENFIX_STEEL_TORNADO_003: F64
+  F64.parse("138")
+
+BENFIX_TAUNT_000: F64
+  F64.parse("139")
+
+BENFIX_TAUNT_001: F64
+  F64.parse("140")
+
+BENFIX_TAUNT_002: F64
+  F64.parse("141")
+
+BENFIX_TAUNT_003: F64
+  F64.parse("142")
+
+BENFIX_TAUNT_004: F64
+  F64.parse("143")
+
+BENFIX_TAUNT_005: F64
+  F64.parse("144")
+
+BENFIX_TAUNT_006: F64
+  F64.parse("145")
+
+BENFIX_TAUNT_007: F64
+  F64.parse("146")
+
+BENFIX_TAUNT_008: F64
+  F64.parse("147")
+
+BENFIX_TAUNT_009: F64
+  F64.parse("148")
+
+BENFIX_TAUNT_010: F64
+  F64.parse("149")
+
+BENFIX_TAUNT_011: F64
+  F64.parse("150")
+
+BENFIX_TAUNT_012: F64
+  F64.parse("151")
+
+BENFIX_TAUNT_013: F64
+  F64.parse("152")
+
+BENFIX_TAUNT_014: F64
+  F64.parse("153")
+
+BENFIX_TAUNT_015: F64
+  F64.parse("154")
+
+BENFIX_TRIPLE_ATTACK_1_000: F64
+  F64.parse("155")
+
+BENFIX_TRIPLE_ATTACK_1_001: F64
+  F64.parse("156")
+
+BENFIX_TRIPLE_ATTACK_1_002: F64
+  F64.parse("157")
+
+BENFIX_TRIPLE_ATTACK_1_003: F64
+  F64.parse("158")
+
+BENFIX_TRIPLE_ATTACK_1_004: F64
+  F64.parse("159")
+
+BENFIX_TRIPLE_ATTACK_1_005: F64
+  F64.parse("160")
+
+BENFIX_TRIPLE_ATTACK_1_006: F64
+  F64.parse("161")
+
+BENFIX_TRIPLE_ATTACK_1_007: F64
+  F64.parse("162")
+
+BENFIX_TRIPLE_ATTACK_1_008: F64
+  F64.parse("163")
+
+BENFIX_TRIPLE_ATTACK_1_009: F64
+  F64.parse("164")
+
+BENFIX_TRIPLE_ATTACK_1_010: F64
+  F64.parse("165")
+
+BENFIX_TRIPLE_ATTACK_1_011: F64
+  F64.parse("166")
+
+BENFIX_TRIPLE_ATTACK_1_012: F64
+  F64.parse("167")
+
+BENFIX_TRIPLE_ATTACK_1_013: F64
+  F64.parse("168")
+
+BENFIX_TRIPLE_ATTACK_1_014: F64
+  F64.parse("169")
+
+BENFIX_TRIPLE_ATTACK_1_015: F64
+  F64.parse("170")
+
+BENFIX_TRIPLE_ATTACK_2_000: F64
+  F64.parse("171")
+
+BENFIX_TRIPLE_ATTACK_2_001: F64
+  F64.parse("172")
+
+BENFIX_TRIPLE_ATTACK_2_002: F64
+  F64.parse("173")
+
+BENFIX_TRIPLE_ATTACK_2_003: F64
+  F64.parse("174")
+
+BENFIX_TRIPLE_ATTACK_2_004: F64
+  F64.parse("175")
+
+BENFIX_TRIPLE_ATTACK_2_005: F64
+  F64.parse("176")
+
+BENFIX_TRIPLE_ATTACK_2_006: F64
+  F64.parse("177")
+
+BENFIX_TRIPLE_ATTACK_2_007: F64
+  F64.parse("178")
+
+BENFIX_TRIPLE_ATTACK_2_008: F64
+  F64.parse("179")
+
+BENFIX_TRIPLE_ATTACK_2_009: F64
+  F64.parse("180")
+
+BENFIX_TRIPLE_ATTACK_2_010: F64
+  F64.parse("181")
+
+BENFIX_WALK_000: F64
+  F64.parse("182")
+
+BENFIX_WALK_001: F64
+  F64.parse("183")
+
+BENFIX_WALK_002: F64
+  F64.parse("184")
+
+BENFIX_WALK_003: F64
+  F64.parse("185")
+
+BENFIX_WALK_004: F64
+  F64.parse("186")
+
+BENFIX_WALK_005: F64
+  F64.parse("187")
+
+BENFIX_WALK_006: F64
+  F64.parse("188")
+
+BLASTOISE_BUBBLE_BEAM_000: F64
+  F64.parse("189")
+
+BLASTOISE_BUBBLE_BEAM_001: F64
+  F64.parse("190")
+
+BLASTOISE_BUBBLE_BEAM_002: F64
+  F64.parse("191")
+
+BLASTOISE_BUBBLE_BEAM_003: F64
+  F64.parse("192")
+
+BLASTOISE_BUBBLE_BEAM_004: F64
+  F64.parse("193")
+
+BLASTOISE_BUBBLE_BEAM_005: F64
+  F64.parse("194")
+
+BLASTOISE_BUBBLE_BEAM_006: F64
+  F64.parse("195")
+
+BLASTOISE_BUBBLE_BEAM_007: F64
+  F64.parse("196")
+
+BLASTOISE_BUBBLE_BEAM_008: F64
+  F64.parse("197")
+
+BLASTOISE_BUBBLE_BEAM_009: F64
+  F64.parse("198")
+
+BLASTOISE_BUBBLE_BEAM_010: F64
+  F64.parse("199")
+
+BLASTOISE_BUBBLE_BEAM_011: F64
+  F64.parse("200")
+
+BLASTOISE_BUBBLE_BEAM_012: F64
+  F64.parse("201")
+
+BLASTOISE_BUBBLE_BEAM_013: F64
+  F64.parse("202")
+
+BLASTOISE_BUBBLE_BEAM_014: F64
+  F64.parse("203")
+
+BLASTOISE_BUBBLE_BEAM_015: F64
+  F64.parse("204")
+
+BLASTOISE_BUBBLE_BEAM_016: F64
+  F64.parse("205")
+
+BLASTOISE_HYDRO_PUMP_000: F64
+  F64.parse("206")
+
+BLASTOISE_HYDRO_PUMP_001: F64
+  F64.parse("207")
+
+BLASTOISE_HYDRO_PUMP_002: F64
+  F64.parse("208")
+
+BLASTOISE_HYDRO_PUMP_003: F64
+  F64.parse("209")
+
+BLASTOISE_HYDRO_PUMP_004: F64
+  F64.parse("210")
+
+BLASTOISE_HYDRO_PUMP_005: F64
+  F64.parse("211")
+
+BLASTOISE_HYDRO_PUMP_006: F64
+  F64.parse("212")
+
+BLASTOISE_HYDRO_PUMP_007: F64
+  F64.parse("213")
+
+BLASTOISE_HYDRO_PUMP_008: F64
+  F64.parse("214")
+
+BLASTOISE_HYDRO_PUMP_009: F64
+  F64.parse("215")
+
+BLASTOISE_HYDRO_PUMP_010: F64
+  F64.parse("216")
+
+BLASTOISE_HYDRO_PUMP_011: F64
+  F64.parse("217")
+
+BLASTOISE_HYDRO_PUMP_012: F64
+  F64.parse("218")
+
+BLASTOISE_HYDRO_PUMP_013: F64
+  F64.parse("219")
+
+BLASTOISE_HYDRO_PUMP_014: F64
+  F64.parse("220")
+
+BLASTOISE_HYDRO_PUMP_015: F64
+  F64.parse("221")
+
+BLASTOISE_HYDRO_PUMP_016: F64
+  F64.parse("222")
+
+BLASTOISE_HYDRO_PUMP_017: F64
+  F64.parse("223")
+
+BLASTOISE_HYDRO_PUMP_018: F64
+  F64.parse("224")
+
+BLASTOISE_HYDRO_PUMP_019: F64
+  F64.parse("225")
+
+BLASTOISE_HYDRO_PUMP_020: F64
+  F64.parse("226")
+
+BLASTOISE_HYDRO_PUMP_021: F64
+  F64.parse("227")
+
+BLASTOISE_HYDRO_PUMP_022: F64
+  F64.parse("228")
+
+BLASTOISE_HYDRO_PUMP_023: F64
+  F64.parse("229")
+
+BLASTOISE_HYDRO_PUMP_024: F64
+  F64.parse("230")
+
+BLASTOISE_HYDRO_PUMP_025: F64
+  F64.parse("231")
+
+BLASTOISE_HYDRO_PUMP_026: F64
+  F64.parse("232")
+
+BLASTOISE_HYDRO_PUMP_027: F64
+  F64.parse("233")
+
+BLASTOISE_IDLE_000: F64
+  F64.parse("234")
+
+BLASTOISE_IDLE_001: F64
+  F64.parse("235")
+
+BLASTOISE_IDLE_002: F64
+  F64.parse("236")
+
+BLASTOISE_IDLE_003: F64
+  F64.parse("237")
+
+BLASTOISE_IDLE_004: F64
+  F64.parse("238")
+
+BLASTOISE_IDLE_005: F64
+  F64.parse("239")
+
+BLASTOISE_IDLE_006: F64
+  F64.parse("240")
+
+BLASTOISE_IDLE_007: F64
+  F64.parse("241")
+
+BLASTOISE_IDLE_008: F64
+  F64.parse("242")
+
+BLASTOISE_IDLE_009: F64
+  F64.parse("243")
+
+BLASTOISE_IDLE_010: F64
+  F64.parse("244")
+
+BLASTOISE_IDLE_011: F64
+  F64.parse("245")
+
+BLASTOISE_IDLE_012: F64
+  F64.parse("246")
+
+BLASTOISE_IDLE_013: F64
+  F64.parse("247")
+
+BLASTOISE_IDLE_014: F64
+  F64.parse("248")
+
+BLASTOISE_IDLE_015: F64
+  F64.parse("249")
+
+BLASTOISE_IDLE_016: F64
+  F64.parse("250")
+
+BLASTOISE_IDLE_017: F64
+  F64.parse("251")
+
+BLASTOISE_IDLE_018: F64
+  F64.parse("252")
+
+BLASTOISE_IDLE_019: F64
+  F64.parse("253")
+
+BLASTOISE_IDLE_020: F64
+  F64.parse("254")
+
+BLASTOISE_IDLE_021: F64
+  F64.parse("255")
+
+BLASTOISE_IDLE_022: F64
+  F64.parse("256")
+
+BLASTOISE_IDLE_023: F64
+  F64.parse("257")
+
+BLASTOISE_IDLE_024: F64
+  F64.parse("258")
+
+BLASTOISE_IDLE_025: F64
+  F64.parse("259")
+
+BLASTOISE_IDLE_026: F64
+  F64.parse("260")
+
+BLASTOISE_IDLE_027: F64
+  F64.parse("261")
+
+BLASTOISE_IDLE_028: F64
+  F64.parse("262")
+
+BLASTOISE_IDLE_029: F64
+  F64.parse("263")
+
+BLASTOISE_RAPID_SPIN_000: F64
+  F64.parse("264")
+
+BLASTOISE_RAPID_SPIN_001: F64
+  F64.parse("265")
+
+BLASTOISE_RAPID_SPIN_002: F64
+  F64.parse("266")
+
+BLASTOISE_RAPID_SPIN_003: F64
+  F64.parse("267")
+
+BLASTOISE_RAPID_SPIN_004: F64
+  F64.parse("268")
+
+BLASTOISE_RAPID_SPIN_005: F64
+  F64.parse("269")
+
+BLASTOISE_RAPID_SPIN_006: F64
+  F64.parse("270")
+
+BLASTOISE_RAPID_SPIN_007: F64
+  F64.parse("271")
+
+BLASTOISE_RAPID_SPIN_008: F64
+  F64.parse("272")
+
+BLASTOISE_RAPID_SPIN_009: F64
+  F64.parse("273")
+
+BLASTOISE_RAPID_SPIN_010: F64
+  F64.parse("274")
+
+BLASTOISE_RAPID_SPIN_011: F64
+  F64.parse("275")
+
+BLASTOISE_RAPID_SPIN_012: F64
+  F64.parse("276")
+
+BLASTOISE_RAPID_SPIN_013: F64
+  F64.parse("277")
+
+BLASTOISE_RAPID_SPIN_014: F64
+  F64.parse("278")
+
+BLASTOISE_RAPID_SPIN_015: F64
+  F64.parse("279")
+
+BLASTOISE_RAPID_SPIN_016: F64
+  F64.parse("280")
+
+BLASTOISE_RAPID_SPIN_017: F64
+  F64.parse("281")
+
+BLASTOISE_RAPID_SPIN_018: F64
+  F64.parse("282")
+
+BLASTOISE_RAPID_SPIN_019: F64
+  F64.parse("283")
+
+BLASTOISE_RAPID_SPIN_020: F64
+  F64.parse("284")
+
+BLASTOISE_RAPID_SPIN_021: F64
+  F64.parse("285")
+
+BLASTOISE_SKULL_BASH_000: F64
+  F64.parse("286")
+
+BLASTOISE_SKULL_BASH_001: F64
+  F64.parse("287")
+
+BLASTOISE_SKULL_BASH_002: F64
+  F64.parse("288")
+
+BLASTOISE_SKULL_BASH_003: F64
+  F64.parse("289")
+
+BLASTOISE_SKULL_BASH_004: F64
+  F64.parse("290")
+
+BLASTOISE_SKULL_BASH_005: F64
+  F64.parse("291")
+
+BLASTOISE_SKULL_BASH_006: F64
+  F64.parse("292")
+
+BLASTOISE_SKULL_BASH_007: F64
+  F64.parse("293")
+
+BLASTOISE_SKULL_BASH_008: F64
+  F64.parse("294")
+
+BLASTOISE_SKULL_BASH_009: F64
+  F64.parse("295")
+
+BLASTOISE_SKULL_BASH_010: F64
+  F64.parse("296")
+
+BLASTOISE_SKULL_BASH_011: F64
+  F64.parse("297")
+
+BLASTOISE_SKULL_BASH_012: F64
+  F64.parse("298")
+
+BLASTOISE_SKULL_BASH_013: F64
+  F64.parse("299")
+
+BLASTOISE_SKULL_BASH_014: F64
+  F64.parse("300")
+
+BLASTOISE_SKULL_BASH_015: F64
+  F64.parse("301")
+
+BLASTOISE_SKULL_BASH_016: F64
+  F64.parse("302")
+
+BLASTOISE_SKULL_BASH_017: F64
+  F64.parse("303")
+
+BLASTOISE_SKULL_BASH_018: F64
+  F64.parse("304")
+
+BLASTOISE_SKULL_BASH_019: F64
+  F64.parse("305")
+
+BLASTOISE_SKULL_BASH_020: F64
+  F64.parse("306")
+
+BLASTOISE_SKULL_BASH_021: F64
+  F64.parse("307")
+
+BLASTOISE_TAUNT_000: F64
+  F64.parse("308")
+
+BLASTOISE_TAUNT_001: F64
+  F64.parse("309")
+
+BLASTOISE_TAUNT_002: F64
+  F64.parse("310")
+
+BLASTOISE_TAUNT_003: F64
+  F64.parse("311")
+
+BLASTOISE_TAUNT_004: F64
+  F64.parse("312")
+
+BLASTOISE_TAUNT_005: F64
+  F64.parse("313")
+
+BLASTOISE_TAUNT_006: F64
+  F64.parse("314")
+
+BLASTOISE_TAUNT_007: F64
+  F64.parse("315")
+
+BLASTOISE_TAUNT_008: F64
+  F64.parse("316")
+
+BLASTOISE_TAUNT_009: F64
+  F64.parse("317")
+
+BLASTOISE_TAUNT_010: F64
+  F64.parse("318")
+
+BLASTOISE_TAUNT_011: F64
+  F64.parse("319")
+
+BLASTOISE_TAUNT_012: F64
+  F64.parse("320")
+
+BLASTOISE_TAUNT_013: F64
+  F64.parse("321")
+
+BLASTOISE_TAUNT_014: F64
+  F64.parse("322")
+
+BLASTOISE_TAUNT_015: F64
+  F64.parse("323")
+
+BLASTOISE_WALK_000: F64
+  F64.parse("324")
+
+BLASTOISE_WALK_001: F64
+  F64.parse("325")
+
+BLASTOISE_WALK_002: F64
+  F64.parse("326")
+
+BLASTOISE_WALK_003: F64
+  F64.parse("327")
+
+BLASTOISE_WALK_004: F64
+  F64.parse("328")
+
+BLASTOISE_WALK_005: F64
+  F64.parse("329")
+
+BLASTOISE_WALK_006: F64
+  F64.parse("330")
+
+BLASTOISE_WALK_007: F64
+  F64.parse("331")
+
+BLASTOISE_WALK_008: F64
+  F64.parse("332")
+
+BLASTOISE_WALK_009: F64
+  F64.parse("333")
+
+BLASTOISE_WALK_010: F64
+  F64.parse("334")
+
+BLASTOISE_WALK_011: F64
+  F64.parse("335")
+
+BLASTOISE_WALK_012: F64
+  F64.parse("336")
+
+BLASTOISE_WALK_013: F64
+  F64.parse("337")
+
+BLASTOISE_WALK_014: F64
+  F64.parse("338")
+
+BLASTOISE_WALK_015: F64
+  F64.parse("339")
+
+BLASTOISE_WATER_GUN_000: F64
+  F64.parse("340")
+
+BLASTOISE_WATER_GUN_001: F64
+  F64.parse("341")
+
+BLASTOISE_WATER_GUN_002: F64
+  F64.parse("342")
+
+BLASTOISE_WATER_GUN_003: F64
+  F64.parse("343")
+
+BLASTOISE_WATER_GUN_004: F64
+  F64.parse("344")
+
+BLASTOISE_WATER_GUN_005: F64
+  F64.parse("345")
+
+BLASTOISE_WATER_GUN_006: F64
+  F64.parse("346")
+
+BLASTOISE_WATER_GUN_007: F64
+  F64.parse("347")
+
+BLASTOISE_WATER_GUN_008: F64
+  F64.parse("348")
+
+BLASTOISE_WATER_GUN_009: F64
+  F64.parse("349")
+
+BLASTOISE_WATER_GUN_010: F64
+  F64.parse("350")
+
+BLASTOISE_WATER_GUN_011: F64
+  F64.parse("351")
+
+BLASTOISE_WATER_GUN_012: F64
+  F64.parse("352")
+
+BLESKAPE_BASE_ATTACK_1_000: F64
+  F64.parse("353")
+
+BLESKAPE_BASE_ATTACK_1_001: F64
+  F64.parse("354")
+
+BLESKAPE_BASE_ATTACK_1_002: F64
+  F64.parse("355")
+
+BLESKAPE_BASE_ATTACK_1_003: F64
+  F64.parse("356")
+
+BLESKAPE_BASE_ATTACK_1_004: F64
+  F64.parse("357")
+
+BLESKAPE_BASE_ATTACK_1_005: F64
+  F64.parse("358")
+
+BLESKAPE_BASE_ATTACK_2_000: F64
+  F64.parse("359")
+
+BLESKAPE_BASE_ATTACK_2_001: F64
+  F64.parse("360")
+
+BLESKAPE_BASE_ATTACK_2_002: F64
+  F64.parse("361")
+
+BLESKAPE_BASE_ATTACK_2_003: F64
+  F64.parse("362")
+
+BLESKAPE_BASE_ATTACK_2_004: F64
+  F64.parse("363")
+
+BLESKAPE_BASE_ATTACK_2_005: F64
+  F64.parse("364")
+
+BLESKAPE_BASE_ATTACK_2_006: F64
+  F64.parse("365")
+
+BLESKAPE_DASH_000: F64
+  F64.parse("366")
+
+BLESKAPE_DASH_001: F64
+  F64.parse("367")
+
+BLESKAPE_DASH_002: F64
+  F64.parse("368")
+
+BLESKAPE_DASH_003: F64
+  F64.parse("369")
+
+BLESKAPE_DASH_004: F64
+  F64.parse("370")
+
+BLESKAPE_DASH_005: F64
+  F64.parse("371")
+
+BLESKAPE_DASH_006: F64
+  F64.parse("372")
+
+BLESKAPE_DASH_007: F64
+  F64.parse("373")
+
+BLESKAPE_DASH_008: F64
+  F64.parse("374")
+
+BLESKAPE_DASH_009: F64
+  F64.parse("375")
+
+BLESKAPE_DASH_010: F64
+  F64.parse("376")
+
+BLESKAPE_DASH_011: F64
+  F64.parse("377")
+
+BLESKAPE_DASH_012: F64
+  F64.parse("378")
+
+BLESKAPE_DASH_013: F64
+  F64.parse("379")
+
+BLESKAPE_DASH_014: F64
+  F64.parse("380")
+
+BLESKAPE_DEFENSE_MODE_000: F64
+  F64.parse("381")
+
+BLESKAPE_DEFENSE_MODE_001: F64
+  F64.parse("382")
+
+BLESKAPE_DEFENSE_MODE_002: F64
+  F64.parse("383")
+
+BLESKAPE_HURT_000: F64
+  F64.parse("384")
+
+BLESKAPE_IDLE_000: F64
+  F64.parse("385")
+
+BLESKAPE_IDLE_001: F64
+  F64.parse("386")
+
+BLESKAPE_IDLE_002: F64
+  F64.parse("387")
+
+BLESKAPE_IDLE_003: F64
+  F64.parse("388")
+
+BLESKAPE_SHOCK_BALL_000: F64
+  F64.parse("389")
+
+BLESKAPE_SHOCK_BALL_001: F64
+  F64.parse("390")
+
+BLESKAPE_SHOCK_BALL_002: F64
+  F64.parse("391")
+
+BLESKAPE_SHOCK_BALL_003: F64
+  F64.parse("392")
+
+BLESKAPE_SHOCK_BALL_004: F64
+  F64.parse("393")
+
+BLESKAPE_SHOCK_BALL_005: F64
+  F64.parse("394")
+
+BLESKAPE_SHOCK_BALL_006: F64
+  F64.parse("395")
+
+BLESKAPE_SHOCK_BALL_007: F64
+  F64.parse("396")
+
+BLESKAPE_SHOCK_BALL_008: F64
+  F64.parse("397")
+
+BLESKAPE_SHOCK_BALL_009: F64
+  F64.parse("398")
+
+BLESKAPE_SHOCK_BALL_010: F64
+  F64.parse("399")
+
+BLESKAPE_SHOCK_BALL_011: F64
+  F64.parse("400")
+
+BLESKAPE_SHOCK_BALL_012: F64
+  F64.parse("401")
+
+BLESKAPE_SHOCK_BALL_013: F64
+  F64.parse("402")
+
+BLESKAPE_SHOCK_BALL_014: F64
+  F64.parse("403")
+
+BLESKAPE_SHOCK_GROUND_WAVE_000: F64
+  F64.parse("404")
+
+BLESKAPE_SHOCK_GROUND_WAVE_001: F64
+  F64.parse("405")
+
+BLESKAPE_SHOCK_GROUND_WAVE_002: F64
+  F64.parse("406")
+
+BLESKAPE_SHOCK_GROUND_WAVE_003: F64
+  F64.parse("407")
+
+BLESKAPE_SHOCK_GROUND_WAVE_004: F64
+  F64.parse("408")
+
+BLESKAPE_SHOCK_GROUND_WAVE_005: F64
+  F64.parse("409")
+
+BLESKAPE_SHOCK_GROUND_WAVE_006: F64
+  F64.parse("410")
+
+BLESKAPE_SHOCK_GROUND_WAVE_007: F64
+  F64.parse("411")
+
+BLESKAPE_SHOCK_GROUND_WAVE_008: F64
+  F64.parse("412")
+
+BLESKAPE_SHOCK_GROUND_WAVE_009: F64
+  F64.parse("413")
+
+BLESKAPE_SHOCK_GROUND_WAVE_010: F64
+  F64.parse("414")
+
+BLESKAPE_SHOCK_GROUND_WAVE_011: F64
+  F64.parse("415")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_000: F64
+  F64.parse("416")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_001: F64
+  F64.parse("417")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_002: F64
+  F64.parse("418")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_003: F64
+  F64.parse("419")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_004: F64
+  F64.parse("420")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_005: F64
+  F64.parse("421")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_006: F64
+  F64.parse("422")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_007: F64
+  F64.parse("423")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_008: F64
+  F64.parse("424")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_009: F64
+  F64.parse("425")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_010: F64
+  F64.parse("426")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_011: F64
+  F64.parse("427")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_012: F64
+  F64.parse("428")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_013: F64
+  F64.parse("429")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_014: F64
+  F64.parse("430")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_015: F64
+  F64.parse("431")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_016: F64
+  F64.parse("432")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_017: F64
+  F64.parse("433")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_018: F64
+  F64.parse("434")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_019: F64
+  F64.parse("435")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_020: F64
+  F64.parse("436")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_021: F64
+  F64.parse("437")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_022: F64
+  F64.parse("438")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_023: F64
+  F64.parse("439")
+
+BLESKAPE_SUPREME_PUNCH_SEQUENCE_024: F64
+  F64.parse("440")
+
+BLESKAPE_TAUNT_000: F64
+  F64.parse("441")
+
+BLESKAPE_TAUNT_001: F64
+  F64.parse("442")
+
+BLESKAPE_TAUNT_002: F64
+  F64.parse("443")
+
+BLESKAPE_TAUNT_003: F64
+  F64.parse("444")
+
+BLESKAPE_TAUNT_004: F64
+  F64.parse("445")
+
+BLESKAPE_TAUNT_005: F64
+  F64.parse("446")
+
+BLESKAPE_TAUNT_006: F64
+  F64.parse("447")
+
+BLESKAPE_TAUNT_007: F64
+  F64.parse("448")
+
+BLESKAPE_TAUNT_008: F64
+  F64.parse("449")
+
+BLESKAPE_TAUNT_009: F64
+  F64.parse("450")
+
+BLESKAPE_WALK_000: F64
+  F64.parse("451")
+
+BLESKAPE_WALK_001: F64
+  F64.parse("452")
+
+BLESKAPE_WALK_002: F64
+  F64.parse("453")
+
+BLESKAPE_WALK_003: F64
+  F64.parse("454")
+
+DARTH_VADER_HURT_WITHOUT_SABER_000: F64
+  F64.parse("455")
+
+DARTH_VADER_HURT_000: F64
+  F64.parse("456")
+
+DARTH_VADER_IDLE_WITHOUT_SABER_000: F64
+  F64.parse("457")
+
+DARTH_VADER_IDLE_WITHOUT_SABER_001: F64
+  F64.parse("458")
+
+DARTH_VADER_IDLE_WITHOUT_SABER_002: F64
+  F64.parse("459")
+
+DARTH_VADER_IDLE_WITHOUT_SABER_003: F64
+  F64.parse("460")
+
+DARTH_VADER_IDLE_WITHOUT_SABER_004: F64
+  F64.parse("461")
+
+DARTH_VADER_IDLE_000: F64
+  F64.parse("462")
+
+DARTH_VADER_IDLE_001: F64
+  F64.parse("463")
+
+DARTH_VADER_IDLE_002: F64
+  F64.parse("464")
+
+DARTH_VADER_IDLE_003: F64
+  F64.parse("465")
+
+DARTH_VADER_IDLE_004: F64
+  F64.parse("466")
+
+DARTH_VADER_ROGUE_ONE_000: F64
+  F64.parse("467")
+
+DARTH_VADER_ROGUE_ONE_001: F64
+  F64.parse("468")
+
+DARTH_VADER_ROGUE_ONE_002: F64
+  F64.parse("469")
+
+DARTH_VADER_ROGUE_ONE_003: F64
+  F64.parse("470")
+
+DARTH_VADER_ROGUE_ONE_004: F64
+  F64.parse("471")
+
+DARTH_VADER_ROGUE_ONE_005: F64
+  F64.parse("472")
+
+DARTH_VADER_ROGUE_ONE_006: F64
+  F64.parse("473")
+
+DARTH_VADER_ROGUE_ONE_007: F64
+  F64.parse("474")
+
+DARTH_VADER_ROGUE_ONE_008: F64
+  F64.parse("475")
+
+DARTH_VADER_ROGUE_ONE_009: F64
+  F64.parse("476")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_000: F64
+  F64.parse("477")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_001: F64
+  F64.parse("478")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_002: F64
+  F64.parse("479")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_003: F64
+  F64.parse("480")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_004: F64
+  F64.parse("481")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_005: F64
+  F64.parse("482")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_006: F64
+  F64.parse("483")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_WITHOUT_SABER_007: F64
+  F64.parse("484")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_000: F64
+  F64.parse("485")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_001: F64
+  F64.parse("486")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_002: F64
+  F64.parse("487")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_003: F64
+  F64.parse("488")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_004: F64
+  F64.parse("489")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_005: F64
+  F64.parse("490")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_006: F64
+  F64.parse("491")
+
+DARTH_VADER_THE_EMPIRE_STRICKES_BACK_007: F64
+  F64.parse("492")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_000: F64
+  F64.parse("493")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_001: F64
+  F64.parse("494")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_002: F64
+  F64.parse("495")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_003: F64
+  F64.parse("496")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_004: F64
+  F64.parse("497")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_005: F64
+  F64.parse("498")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_006: F64
+  F64.parse("499")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_007: F64
+  F64.parse("500")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_000: F64
+  F64.parse("501")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_001: F64
+  F64.parse("502")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_002: F64
+  F64.parse("503")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_003: F64
+  F64.parse("504")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_004: F64
+  F64.parse("505")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_005: F64
+  F64.parse("506")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_006: F64
+  F64.parse("507")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_2_007: F64
+  F64.parse("508")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_000: F64
+  F64.parse("509")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_001: F64
+  F64.parse("510")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_002: F64
+  F64.parse("511")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_003: F64
+  F64.parse("512")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_004: F64
+  F64.parse("513")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_005: F64
+  F64.parse("514")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_006: F64
+  F64.parse("515")
+
+DARTH_VADER_THE_FORCE_AWAKENS_VAR_3_007: F64
+  F64.parse("516")
+
+DARTH_VADER_THE_PHANTOM_MENACE_CAST_ANIMATION_000: F64
+  F64.parse("517")
+
+DARTH_VADER_THE_PHANTOM_MENACE_CAST_ANIMATION_001: F64
+  F64.parse("518")
+
+DARTH_VADER_THE_PHANTOM_MENACE_CAST_ANIMATION_002: F64
+  F64.parse("519")
+
+DARTH_VADER_THE_PHANTOM_MENACE_CAST_ANIMATION_003: F64
+  F64.parse("520")
+
+DARTH_VADER_THE_PHANTOM_MENACE_CAST_ANIMATION_004: F64
+  F64.parse("521")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_000: F64
+  F64.parse("522")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_001: F64
+  F64.parse("523")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_002: F64
+  F64.parse("524")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_003: F64
+  F64.parse("525")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_004: F64
+  F64.parse("526")
+
+DARTH_VADER_THE_PHANTOM_MENACE_RETURN_005: F64
+  F64.parse("527")
+
+DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_000: F64
+  F64.parse("528")
+
+DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_001: F64
+  F64.parse("529")
+
+DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_002: F64
+  F64.parse("530")
+
+DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_003: F64
+  F64.parse("531")
+
+DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_004: F64
+  F64.parse("532")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_WITHOUT_SABER_000: F64
+  F64.parse("533")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_WITHOUT_SABER_001: F64
+  F64.parse("534")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_WITHOUT_SABER_002: F64
+  F64.parse("535")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_000: F64
+  F64.parse("536")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_001: F64
+  F64.parse("537")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_002: F64
+  F64.parse("538")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_EFFECT_ANIMATION_000: F64
+  F64.parse("539")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_EFFECT_ANIMATION_001: F64
+  F64.parse("540")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_EFFECT_ANIMATION_002: F64
+  F64.parse("541")
+
+DARTH_VADER_THE_RISE_OF_SKYWALKER_EFFECT_ANIMATION_003: F64
+  F64.parse("542")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_000: F64
+  F64.parse("543")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_001: F64
+  F64.parse("544")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_002: F64
+  F64.parse("545")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_003: F64
+  F64.parse("546")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_004: F64
+  F64.parse("547")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_005: F64
+  F64.parse("548")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_006: F64
+  F64.parse("549")
+
+DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_007: F64
+  F64.parse("550")
+
+DARTH_VADER_WALK_CYCLE_000: F64
+  F64.parse("551")
+
+DARTH_VADER_WALK_CYCLE_001: F64
+  F64.parse("552")
+
+DARTH_VADER_WALK_CYCLE_002: F64
+  F64.parse("553")
+
+DARTH_VADER_WALK_CYCLE_003: F64
+  F64.parse("554")
+
+DARTH_VADER_WALK_CYCLE_004: F64
+  F64.parse("555")
+
+DARTH_VADER_WALK_CYCLE_005: F64
+  F64.parse("556")
+
+DARTH_VADER_WALK_CYCLE_006: F64
+  F64.parse("557")
+
+DARTH_VADER_WALK_CYCLE_007: F64
+  F64.parse("558")
+
+TaelinArena.Thing.benfix_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("24")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(BENFIX_WALK_000)(F64.parse("7"))(F64.parse("14")))(TaelinArena.Game.animate(self)(F64.1)(BENFIX_IDLE_000)(F64.parse("12"))(F64.parse("24"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_TRIPLE_ATTACK_1_000)(F64.parse("16"))(F64.parse("32")); let effs0 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("1"))]; let effs1 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs0)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs1)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("14"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("22"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("28"))(hits1); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_SEISMIC_JUMP_000)(F64.parse("10"))(F64.parse("30")); let effs0 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let effs1 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.parse("2"))(F64.parse("0.5")), TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs0)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs1)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("40")))]; let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("22"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("24"))(hits1); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_STEEL_TORNADO_000)(F64.parse("4"))(F64.parse("12")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("40")))]; let self = TaelinArena.Game.cast(self)(F64.parse("2"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("4"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("6"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("8"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("11"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.1)(BENFIX_GIGA_DASH_000)(F64.parse("22"))(F64.parse("22")); let self = TaelinArena.Game.dash(self)(F64.parse("4"))(F64.0)(F64.parse("22")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.stun(F64.1), TaelinArena.Game.Effect.damage(F64.parse("2"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("15"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TaelinArena.Game.animate(self)(F64.1)(BENFIX_DASH_000)(F64.parse("9"))(F64.parse("18")); let self = TaelinArena.Game.dash(self)(F64.parse("3"))(F64.parse("0"))(F64.parse("18")); self)(TaelinArena.Game.animate(self)(F64.0)(BENFIX_TAUNT_000)(F64.parse("16"))(F64.parse("32"))))))))
 
 TaelinArena.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TaelinArena.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TaelinArena.Game.Hitbox) -> Maybe(F64.V3)
   (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) let none = Maybe.none<F64.V3>; a_box<() Maybe(F64.V3)>(none)((a_box.rad) b_box<() Maybe(F64.V3)>(none)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); let if_condition = Bool.and(F64.ltn(F64.0)(dst))(F64.ltn(dst)(rad)); Bool.if<Maybe(F64.V3)>(if_condition)(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none))((b_box.pts) let cons = ((segment) (result) result<() Maybe(F64.V3)>(segment<() Maybe(F64.V3)>((segment.a) (segment.b) let dst = F64.V3.point_segment_dist(a_pos)(segment); let rad = a_box.rad; Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))(let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b))); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none)))((result.value) Maybe.some<F64.V3>(result.value))) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3); let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts); List.fold<F64.Segment><Maybe(F64.V3)>(none)(cons)(segs)))((a_box.pts) none)
