@@ -1,6 +1,6 @@
-TaelinArena.Thing.puddleheak_fun: 
-  TaelinArena.Game.Thing ->
-  TaelinArena.Game.Thing
+TaelinArena.Thing.puddleheal_fun
+  : TaelinArena.Game.Thing ->
+    TaelinArena.Game.Thing
   (self)
   let self.pos = TaelinArena.Game.get_thing_pos(self)
   let self.dir = TaelinArena.Game.get_thing_dir(self)
