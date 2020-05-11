@@ -1,23 +1,25 @@
 Lang.all: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
-  Parser.bind<String><C>(Lang.nam(Bool.true)) | (self)
-  Parser.bind<Pair(Bool)(Pair(String)(C))><C>
-  | Lang.enclose<Pair(String)(C)>
-    | Parser.bind<String><Pair(String)(C)>(Lang.nam(Bool.true)) | (n)
-      Parser.then<Unit  ><Pair(String)(C)>(Lang.space)          |
-      Parser.then<String><Pair(String)(C)>(Lang.symbol(":"))    |
-      Parser.bind<C     ><Pair(String)(C)>(Lang.trm)            | (t)
-      Parser.pure<Pair(String)(C)>(Pair.new<String><C>(n)(t));;;;;;
+  let Bnd = Core.Ctx -> Core
+  let Ret = Pair(Text)(Bnd)
+  Parser.bind<Text><Bnd>(Lang.nam(Bool.true)) | (self)
+  Parser.bind<Pair(Bool)(Ret)><Bnd>
+  | use   = Lang.enclose<Ret>
+    use n = Parser.bind<Text><Ret>(Lang.nam(Bool.true))
+    use   = Parser.then<Unit><Ret>(Lang.space)
+    use   = Parser.then<Text><Ret>(Lang.symbol(":"))
+    use t = Parser.bind<Bnd ><Ret>(Lang.trm)
+    Parser.pure<Ret>(Pair.new<Text><Bnd>(n)(t));
   | (x)
-  x<() Parser(C)>                                  | (eras) (p)
-  p<() Parser(C)>                                  | (name) (bind)
-  Parser.then<Unit  ><C>(Lang.space)        |
-  Parser.then<String><C>(Lang.symbol("->")) |
-  Parser.bind<C     ><C>(Lang.trm)          | (body)
-  Parser.pure<C>
-  | (ctx) 
-    let tbind = bind(ctx)
-    let tbody = ((s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx))))
-              :: Core -> Core -> Core
-    Core.all(eras)(self)(name)(tbind)(tbody);;;;;;;;
+    use eras p    = x<() Parser(Bnd)>
+    use name bind = p<() Parser(Bnd)>
+    use           = Parser.then<Unit><Bnd>(Lang.space)
+    use           = Parser.then<Text><Bnd>(Lang.symbol("->"))
+    use body      = Parser.bind<Bnd><Bnd>(Lang.trm)
+    use ctx       = Parser.pure<Bnd>
+    let tbind     = bind(ctx)
+    let tbody     = ((s) (x) body
+                  | Core.Ctx.ext(name)(x)
+                  | Core.Ctx.ext(self)(s)(ctx);;)
+                  :: Core -> Core -> Core
+    Core.all(eras)(self)(name)(tbind)(tbody);;
 
