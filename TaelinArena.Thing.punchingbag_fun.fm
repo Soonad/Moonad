@@ -1,6 +1,6 @@
-TaelinArena.Thing.punchingbag_fun: 
-  TaelinArena.Game.Thing -> 
-  TaelinArena.Game.Thing
+TaelinArena.Thing.punchingbag_fun
+  : TaelinArena.Game.Thing -> 
+    TaelinArena.Game.Thing
   (self)
   let self.dmg = TaelinArena.Game.get_thing_dmg(self)
   let self.tik = TaelinArena.Game.get_thing_tik(self)

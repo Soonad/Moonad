@@ -1,6 +1,6 @@
-TaelinArena.Thing.poste_fun:
-  TaelinArena.Game.Thing ->
-  TaelinArena.Game.Thing
+TaelinArena.Thing.poste_fun
+  : TaelinArena.Game.Thing ->
+    TaelinArena.Game.Thing
   (self)
   let self.pos = TaelinArena.Game.get_thing_pos(self)
 
@@ -16,7 +16,6 @@ TaelinArena.Thing.poste_fun:
   let lsub = F64.V3.new(F64.0)(F64.0)(F64.0)
   let ladd = F64.V3.new(F64.parse("0.72"))(F64.parse("0.60"))(F64.parse("0.24"))
   let lght = TaelinArena.Game.Light.new(lpos)(lrad)(lrng)(lsub)(ladd)
-  let self = 
-    TaelinArena.Game.illumine(self)(F64.0)(F64.parse("2147483648"))
-    | List.cons<TaelinArena.Game.Light>(lght)(List.nil<TaelinArena.Game.Light>);
+  let self =  TaelinArena.Game.illumine(self)(F64.0)(F64.parse("2147483648"))
+    | [TaelinArena.Game.Light; lght];
   self

@@ -1,6 +1,6 @@
-TaelinArena.Thing.puddledmg_fun: 
-  TaelinArena.Game.Thing ->
-  TaelinArena.Game.Thing
+TaelinArena.Thing.puddledmg_fun
+  : TaelinArena.Game.Thing ->
+    TaelinArena.Game.Thing
   (self)
   let self.pos = TaelinArena.Game.get_thing_pos(self)
   let self.dir = TaelinArena.Game.get_thing_dir(self)
@@ -15,34 +15,32 @@ TaelinArena.Thing.puddledmg_fun:
     | DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000;
     | F64.parse("29");
     | F64.parse("58");
-  let effs =
-    List.cons<TaelinArena.Game.Effect>
-      | TaelinArena.Game.Effect.damage(F64.1);
-      | List.nil<TaelinArena.Game.Effect>;
-  let hits = 
-    List.cons<TaelinArena.Game.Hit>
-    | TaelinArena.Game.Hit.new
-      | effs;
-      | self.pos;
-      | self.dir;
-      | TaelinArena.Game.Hitbox.cbox(F64.parse("48"));;
-    | List.nil<TaelinArena.Game.Hit>;
-
-  let eff_slow =
-    List.cons<TaelinArena.Game.Effect>
-      | TaelinArena.Game.Effect.slow  
-        | F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3"));
-        | F64.parse("0.7");;
-      | List.nil<TaelinArena.Game.Effect>;
-      
-  let slow = 
-    List.cons<TaelinArena.Game.Hit>
-    | TaelinArena.Game.Hit.new
-      | eff_slow;
-      | self.pos;
-      | self.dir;
-      | TaelinArena.Game.Hitbox.cbox(F64.parse("48"));;
-    | List.nil<TaelinArena.Game.Hit>;
+  let effs = [
+    TaelinArena.Game.Effect;
+    TaelinArena.Game.Effect.damage(F64.1)
+  ]
+  let hits = [
+    TaelinArena.Game.Hit;
+    TaelinArena.Game.Hit.new
+    | effs;
+    | self.pos;
+    | self.dir;
+    | TaelinArena.Game.Hitbox.cbox(F64.parse("48"));
+  ]
+  let eff_slow = [
+    TaelinArena.Game.Effect;
+    TaelinArena.Game.Effect.slow  
+    | F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3"));
+    | F64.parse("0.7");
+  ]
+  let slow = [
+    TaelinArena.Game.Hit;
+    TaelinArena.Game.Hit.new
+    | eff_slow;
+    | self.pos;
+    | self.dir;
+    | TaelinArena.Game.Hitbox.cbox(F64.parse("48"));
+  ]
   let self = TaelinArena.Game.cast(self)(F64.parse("10"))(slow)
   let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits)
   let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits)
