@@ -38,10 +38,10 @@ TaelinArena.exec_command
         | (sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir); 
         | (key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos);  
         | (key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos);
-        | (key2.pos) TaelinArena.Game.init_act(this)(F64.3)(key2.pos);
-        | (key3.pos) TaelinArena.Game.init_act(this)(F64.4)(key3.pos);
-        | (key4.pos) TaelinArena.Game.init_act(this)(F64.5)(key4.pos);
-        | (key5.pos) TaelinArena.Game.init_act(this)(F64.6)(key5.pos);
+        | (key2.pos) TaelinArena.Game.init_act(this)(F64.parse("3"))(key2.pos);
+        | (key3.pos) TaelinArena.Game.init_act(this)(F64.parse("4"))(key3.pos);
+        | (key4.pos) TaelinArena.Game.init_act(this)(F64.parse("5"))(key4.pos);
+        | (key5.pos) TaelinArena.Game.init_act(this)(F64.parse("6"))(key5.pos);
         | (cmsg.txt) this;;;
   ) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
   TaelinArena.Game.with_thing(cmd.pid)(fn)(gm);

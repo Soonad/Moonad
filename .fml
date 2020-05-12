@@ -428,6 +428,9 @@ Example.tco: Nat
 Example.u32_add: U32
   let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
 
+Exports.TaelinArena: Exports
+  Exports.add<<A: Type> -> List(A)>(List.nil)(Exports.add<<A: Type> -> (head: A) -> (tail: List(A)) -> List(A)>(List.cons)(Exports.add<F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments)(Exports.add<F64.V3 -> F64.V3 -> F64.V3 -> F64.V3>(F64.V3.look_at)(Exports.add<TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> F64.V3>(TaelinArena.Game.get_position_by_pid)(Exports.add<TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.Game.map_stage)(Exports.add<TaelinArena.Game.PlayerId -> TaelinArena.Game.Input -> TaelinArena.Game.Command>(TaelinArena.Game.Command.new)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.sdir)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key0)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key1)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key2)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key3)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key4)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key5)(Exports.add<TaelinArena.Game.Command -> TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.exec_command)(Exports.add<TaelinArena.Game.TxFunction -> TaelinArena.Game.PlayerId -> TaelinArena.Game.ModelId -> TaelinArena.Game.ActionId -> TaelinArena.Game.SideId -> Map(F64) -> String -> List(TaelinArena.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit) -> Bool -> Bool -> TaelinArena.Game.Thing>(TaelinArena.Game.Thing.new)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_fun: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_fun)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_sid: TaelinArena.Game.SideId) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_sid)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_pid: TaelinArena.Game.PlayerId) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_pid)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_pos: F64.V3) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_pos)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_nam: String) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_nam)(Exports.add<List(TaelinArena.Game.Thing) -> TaelinArena.Game.Game>(TaelinArena.Game.Game.new)(Exports.add<TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.exec_turn)(Exports.new)))))))))))))))))))))))
+
 Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
   <A> (x) (xs) <P> (new) (add) add<A>(x)(xs<P>(new)(add))
 
@@ -446,9 +449,6 @@ F64.0: F64
 F64.1: F64
   F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111100")
 
-F64.160: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000010011000000010")
-
 F64.180: F64
   F64.parse_binary("0000000000000000000000000000000000000000000000010110011000000010")
 
@@ -457,18 +457,6 @@ F64.2: F64
 
 F64.256: F64
   F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000010")
-
-F64.3: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010")
-
-F64.4: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000000100000000010")
-
-F64.5: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000010100000000010")
-
-F64.6: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000001100000000010")
 
 F64.Boundary: Type
   boundary<P: F64.Boundary -> Type> -> (new: (pts: List(F64.V3)) -> P(F64.Boundary.new(pts))) -> P(boundary)
@@ -592,12 +580,6 @@ F64.V3.sub: F64.V3 -> F64.V3 -> F64.V3
 
 F64._1: F64
   F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111101")
-
-F64._160: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000010011000000011")
-
-F64._256: F64
-  F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000011")
 
 F64.acos: F64 -> F64
   F64.acos
@@ -1811,6 +1793,9 @@ Subset: (A: Type) -> (B: A -> Type) -> Type
 
 Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
   <A> <B> (a) <b> <P> (subset) subset(a)<b>
+
+TaelinArena.Constants.ONE_SEC: F64
+  F64.parse("24")
 
 TaelinArena.Constants.POS_X_KEY: Bits
   Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
@@ -3207,896 +3192,647 @@ DARTH_VADER_WALK_CYCLE_006: F64
 DARTH_VADER_WALK_CYCLE_007: F64
   F64.parse("316")
 
-DILMA_CONFUSION_ANIM_000: F64
+DORIME_BLESS_CASTANIMATION_000: F64
   F64.parse("317")
 
-DILMA_CONFUSION_ANIM_001: F64
+DORIME_BLESS_CASTANIMATION_001: F64
   F64.parse("318")
 
-DILMA_CONFUSION_ANIM_002: F64
+DORIME_BLESS_CASTANIMATION_002: F64
   F64.parse("319")
 
-DILMA_CONFUSION_ANIM_003: F64
+DORIME_BLESS_CASTANIMATION_003: F64
   F64.parse("320")
 
-DILMA_CONFUSION_CASTING_000: F64
+DORIME_BLESS_CASTANIMATION_004: F64
   F64.parse("321")
 
-DILMA_CONFUSION_CASTING_001: F64
+DORIME_BLESS_CASTANIMATION_005: F64
   F64.parse("322")
 
-DILMA_CONFUSION_CASTING_002: F64
+DORIME_BLESS_HALO_000: F64
   F64.parse("323")
 
-DILMA_CONFUSION_CASTING_003: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_PROJECTILE_000: F64
   F64.parse("324")
 
-DILMA_CONFUSION_CASTING_004: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_000: F64
   F64.parse("325")
 
-DILMA_CONFUSION_CASTING_005: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_001: F64
   F64.parse("326")
 
-DILMA_CONFUSION_CASTING_006: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_002: F64
   F64.parse("327")
 
-DILMA_CONFUSION_CASTING_007: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_003: F64
   F64.parse("328")
 
-DILMA_CONFUSION_CASTING_008: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_004: F64
   F64.parse("329")
 
-DILMA_CONFUSION_CASTING_009: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_005: F64
   F64.parse("330")
 
-DILMA_CONFUSION_CASTING_010: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_006: F64
   F64.parse("331")
 
-DILMA_CONFUSION_CASTING_011: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_007: F64
   F64.parse("332")
 
-DILMA_CONFUSION_CASTING_012: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_008: F64
   F64.parse("333")
 
-DILMA_CONFUSION_CASTING_013: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_009: F64
   F64.parse("334")
 
-DILMA_CONFUSION_CASTING_014: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_010: F64
   F64.parse("335")
 
-DILMA_CONFUSION_CASTING_015: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_011: F64
   F64.parse("336")
 
-DILMA_CONFUSION_CASTING_016: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_012: F64
   F64.parse("337")
 
-DILMA_CONFUSION_CASTING_017: F64
+DORIME_BLESSING_FOR_WHO_DESERVE_013: F64
   F64.parse("338")
 
-DILMA_CONFUSION_CASTING_018: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_000: F64
   F64.parse("339")
 
-DILMA_IDLE_000: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_001: F64
   F64.parse("340")
 
-DILMA_IDLE_001: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_002: F64
   F64.parse("341")
 
-DILMA_IDLE_002: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_003: F64
   F64.parse("342")
 
-DILMA_IDLE_003: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_004: F64
   F64.parse("343")
 
-DILMA_PROTECTION_000: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_005: F64
   F64.parse("344")
 
-DILMA_PROTECTION_001: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_006: F64
   F64.parse("345")
 
-DILMA_PROTECTION_002: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_007: F64
   F64.parse("346")
 
-DILMA_PROTECTION_003: F64
+DORIME_GODS_CHAMBER_CAST_ANIMATION_008: F64
   F64.parse("347")
 
-DILMA_PROTECTION_004: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_000: F64
   F64.parse("348")
 
-DILMA_PROTECTION_005: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_001: F64
   F64.parse("349")
 
-DILMA_PROTECTION_006: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_002: F64
   F64.parse("350")
 
-DILMA_PROTECTION_007: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_003: F64
   F64.parse("351")
 
-DILMA_PROTECTION_008: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_004: F64
   F64.parse("352")
 
-DILMA_PROTECTION_009: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_005: F64
   F64.parse("353")
 
-DILMA_PROTECTION_010: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_006: F64
   F64.parse("354")
 
-DILMA_PROTECTION_011: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_007: F64
   F64.parse("355")
 
-DILMA_PROTECTION_012: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_008: F64
   F64.parse("356")
 
-DILMA_PROTECTION_013: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_009: F64
   F64.parse("357")
 
-DILMA_SALUTING_THE_CASSAVA_000: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_010: F64
   F64.parse("358")
 
-DILMA_SALUTING_THE_CASSAVA_001: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_011: F64
   F64.parse("359")
 
-DILMA_SALUTING_THE_CASSAVA_002: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_012: F64
   F64.parse("360")
 
-DILMA_SALUTING_THE_CASSAVA_003: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_013: F64
   F64.parse("361")
 
-DILMA_SALUTING_THE_CASSAVA_004: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_014: F64
   F64.parse("362")
 
-DILMA_SALUTING_THE_CASSAVA_005: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015: F64
   F64.parse("363")
 
-DILMA_SALUTING_THE_CASSAVA_006: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_016: F64
   F64.parse("364")
 
-DILMA_SALUTING_THE_CASSAVA_007: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_017: F64
   F64.parse("365")
 
-DILMA_SALUTING_THE_CASSAVA_008: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_018: F64
   F64.parse("366")
 
-DILMA_SALUTING_THE_CASSAVA_009: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_019: F64
   F64.parse("367")
 
-DILMA_SALUTING_THE_CASSAVA_010: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_020: F64
   F64.parse("368")
 
-DILMA_SALUTING_THE_CASSAVA_011: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_021: F64
   F64.parse("369")
 
-DILMA_SALUTING_THE_CASSAVA_012: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_022: F64
   F64.parse("370")
 
-DILMA_SALUTING_THE_CASSAVA_013: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_023: F64
   F64.parse("371")
 
-DILMA_SALUTING_THE_CASSAVA_014: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_024: F64
   F64.parse("372")
 
-DILMA_SALUTING_THE_CASSAVA_015: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_025: F64
   F64.parse("373")
 
-DILMA_SALUTING_THE_CASSAVA_016: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_026: F64
   F64.parse("374")
 
-DILMA_SALUTING_THE_CASSAVA_017: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_027: F64
   F64.parse("375")
 
-DILMA_STOCKING_WIND_ANIM_000: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_028: F64
   F64.parse("376")
 
-DILMA_STOCKING_WIND_ANIM_001: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_000: F64
   F64.parse("377")
 
-DILMA_STOCKING_WIND_ANIM_002: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_001: F64
   F64.parse("378")
 
-DILMA_STOCKING_WIND_CASTING_000: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_002: F64
   F64.parse("379")
 
-DILMA_STOCKING_WIND_CASTING_001: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_003: F64
   F64.parse("380")
 
-DILMA_STOCKING_WIND_CASTING_002: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_004: F64
   F64.parse("381")
 
-DILMA_STOCKING_WIND_CASTING_003: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_005: F64
   F64.parse("382")
 
-DILMA_STOCKING_WIND_CASTING_004: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_006: F64
   F64.parse("383")
 
-DILMA_STOCKING_WIND_CASTING_005: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_007: F64
   F64.parse("384")
 
-DILMA_STOCKING_WIND_CASTING_006: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_008: F64
   F64.parse("385")
 
-DILMA_STOCKING_WIND_CASTING_007: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_009: F64
   F64.parse("386")
 
-DILMA_STOCKING_WIND_CASTING_008: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_010: F64
   F64.parse("387")
 
-DILMA_STOCKING_WIND_CASTING_009: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_011: F64
   F64.parse("388")
 
-DILMA_TAUNT_000: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_012: F64
   F64.parse("389")
 
-DILMA_TAUNT_001: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_013: F64
   F64.parse("390")
 
-DILMA_TAUNT_002: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_014: F64
   F64.parse("391")
 
-DILMA_TAUNT_003: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_015: F64
   F64.parse("392")
 
-DILMA_TAUNT_004: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_016: F64
   F64.parse("393")
 
-DILMA_TAUNT_005: F64
+DORIME_GODS_CHAMBER_HEAL_CIRCLE_017: F64
   F64.parse("394")
 
-DILMA_WALK_000: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_000: F64
   F64.parse("395")
 
-DILMA_WALK_001: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_001: F64
   F64.parse("396")
 
-DILMA_WALK_002: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_002: F64
   F64.parse("397")
 
-DILMA_WALK_003: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_003: F64
   F64.parse("398")
 
-DILMA_WALK_004: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_004: F64
   F64.parse("399")
 
-DILMA_WALK_005: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_005: F64
   F64.parse("400")
 
-DILMA_WALK_006: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_006: F64
   F64.parse("401")
 
-DILMA_WALK_007: F64
+DORIME_HOLY_FLAME_CAST_ANIMATION_007: F64
   F64.parse("402")
 
-DORIME_BLESS_CASTANIMATION_000: F64
+DORIME_HOLY_FLAME_PILLAR_000: F64
   F64.parse("403")
 
-DORIME_BLESS_CASTANIMATION_001: F64
+DORIME_HOLY_FLAME_PILLAR_001: F64
   F64.parse("404")
 
-DORIME_BLESS_CASTANIMATION_002: F64
+DORIME_HOLY_FLAME_PILLAR_002: F64
   F64.parse("405")
 
-DORIME_BLESS_CASTANIMATION_003: F64
+DORIME_HOLY_FLAME_PILLAR_003: F64
   F64.parse("406")
 
-DORIME_BLESS_CASTANIMATION_004: F64
+DORIME_HOLY_FLAME_PILLAR_004: F64
   F64.parse("407")
 
-DORIME_BLESS_CASTANIMATION_005: F64
+DORIME_HURT_000: F64
   F64.parse("408")
 
-DORIME_BLESS_HALO_000: F64
+DORIME_IDLE_000: F64
   F64.parse("409")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_PROJECTILE_000: F64
+DORIME_IDLE_001: F64
   F64.parse("410")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_000: F64
+DORIME_IDLE_002: F64
   F64.parse("411")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_001: F64
+DORIME_IDLE_003: F64
   F64.parse("412")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_002: F64
+DORIME_IDLE_004: F64
   F64.parse("413")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_003: F64
+DORIME_JESUS_POWER_000: F64
   F64.parse("414")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_004: F64
+DORIME_JESUS_POWER_001: F64
   F64.parse("415")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_005: F64
+DORIME_JESUS_POWER_002: F64
   F64.parse("416")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_006: F64
+DORIME_JESUS_POWER_003: F64
   F64.parse("417")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_007: F64
+DORIME_JESUS_POWER_004: F64
   F64.parse("418")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_008: F64
+DORIME_JESUS_POWER_005: F64
   F64.parse("419")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_009: F64
+DORIME_JESUS_POWER_006: F64
   F64.parse("420")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_010: F64
+DORIME_JESUS_POWER_007: F64
   F64.parse("421")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_011: F64
+DORIME_JESUS_POWER_008: F64
   F64.parse("422")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_012: F64
+DORIME_JESUS_POWER_009: F64
   F64.parse("423")
 
-DORIME_BLESSING_FOR_WHO_DESERVE_013: F64
+DORIME_JESUS_POWER_010: F64
   F64.parse("424")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_000: F64
+DORIME_JESUS_POWER_011: F64
   F64.parse("425")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_001: F64
+DORIME_JESUS_POWER_012: F64
   F64.parse("426")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_002: F64
+DORIME_JESUS_POWER_013: F64
   F64.parse("427")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_003: F64
+DORIME_JESUS_POWER_014: F64
   F64.parse("428")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_004: F64
+DORIME_JESUS_POWER_015: F64
   F64.parse("429")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_005: F64
+DORIME_JESUS_POWER_016: F64
   F64.parse("430")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_006: F64
+DORIME_JESUS_POWER_017: F64
   F64.parse("431")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_007: F64
+DORIME_JESUS_POWER_018: F64
   F64.parse("432")
 
-DORIME_GODS_CHAMBER_CAST_ANIMATION_008: F64
+DORIME_JESUS_POWER_019: F64
   F64.parse("433")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_000: F64
+DORIME_JESUS_POWER_020: F64
   F64.parse("434")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_001: F64
+DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_000: F64
   F64.parse("435")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_002: F64
+DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_001: F64
   F64.parse("436")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_003: F64
+DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_002: F64
   F64.parse("437")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_004: F64
+DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_003: F64
   F64.parse("438")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_005: F64
+DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_004: F64
   F64.parse("439")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_006: F64
+DORIME_LEPTOSPIROSE_CURSE_POT_000: F64
   F64.parse("440")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_007: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000: F64
   F64.parse("441")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_008: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_001: F64
   F64.parse("442")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_009: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_002: F64
   F64.parse("443")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_010: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_003: F64
   F64.parse("444")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_011: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_004: F64
   F64.parse("445")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_012: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_005: F64
   F64.parse("446")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_013: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_006: F64
   F64.parse("447")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_014: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_007: F64
   F64.parse("448")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_008: F64
   F64.parse("449")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_016: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_009: F64
   F64.parse("450")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_017: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_010: F64
   F64.parse("451")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_018: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_011: F64
   F64.parse("452")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_019: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_012: F64
   F64.parse("453")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_020: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_013: F64
   F64.parse("454")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_021: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_014: F64
   F64.parse("455")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_022: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_015: F64
   F64.parse("456")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_023: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_016: F64
   F64.parse("457")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_024: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_017: F64
   F64.parse("458")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_025: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_018: F64
   F64.parse("459")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_026: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_019: F64
   F64.parse("460")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_027: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_020: F64
   F64.parse("461")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_028: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_021: F64
   F64.parse("462")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_000: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_022: F64
   F64.parse("463")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_001: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_023: F64
   F64.parse("464")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_002: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_024: F64
   F64.parse("465")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_003: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_025: F64
   F64.parse("466")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_004: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_026: F64
   F64.parse("467")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_005: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_027: F64
   F64.parse("468")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_006: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_028: F64
   F64.parse("469")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_007: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_000: F64
   F64.parse("470")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_008: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_001: F64
   F64.parse("471")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_009: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_002: F64
   F64.parse("472")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_010: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_003: F64
   F64.parse("473")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_011: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_004: F64
   F64.parse("474")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_012: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_005: F64
   F64.parse("475")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_013: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_006: F64
   F64.parse("476")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_014: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_007: F64
   F64.parse("477")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_015: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_008: F64
   F64.parse("478")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_016: F64
+DORIME_LEPTOSPIROSE_CURSE_PUDDLE_009: F64
   F64.parse("479")
 
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_017: F64
+DORIME_POSED_BACKUP: F64
   F64.parse("480")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_000: F64
+DORIME_TAUNT_IDLE_000: F64
   F64.parse("481")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_001: F64
+DORIME_TAUNT_IDLE_001: F64
   F64.parse("482")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_002: F64
+DORIME_TAUNT_IDLE_002: F64
   F64.parse("483")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_003: F64
+DORIME_TAUNT_000: F64
   F64.parse("484")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_004: F64
+DORIME_TAUNT_001: F64
   F64.parse("485")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_005: F64
+DORIME_TAUNT_002: F64
   F64.parse("486")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_006: F64
+DORIME_WALK_CYCLE_000: F64
   F64.parse("487")
 
-DORIME_HOLY_FLAME_CAST_ANIMATION_007: F64
+DORIME_WALK_CYCLE_001: F64
   F64.parse("488")
 
-DORIME_HOLY_FLAME_PILLAR_000: F64
+DORIME_WALK_CYCLE_002: F64
   F64.parse("489")
 
-DORIME_HOLY_FLAME_PILLAR_001: F64
+DORIME_WALK_CYCLE_003: F64
   F64.parse("490")
 
-DORIME_HOLY_FLAME_PILLAR_002: F64
+DORIME_WALK_CYCLE_004: F64
   F64.parse("491")
 
-DORIME_HOLY_FLAME_PILLAR_003: F64
+DORIME_WALK_CYCLE_005: F64
   F64.parse("492")
 
-DORIME_HOLY_FLAME_PILLAR_004: F64
+DORIME_WALK_CYCLE_006: F64
   F64.parse("493")
 
-DORIME_HURT_000: F64
+DORIME_WALK_CYCLE_007: F64
   F64.parse("494")
 
-DORIME_IDLE_000: F64
+POSTE_IDLE_000: F64
   F64.parse("495")
 
-DORIME_IDLE_001: F64
+PUNCHINGBAG_IDLE_000: F64
   F64.parse("496")
 
-DORIME_IDLE_002: F64
+PUNCHINGBAG_IDLE_001: F64
   F64.parse("497")
 
-DORIME_IDLE_003: F64
+PUNCHINGBAG_IDLE_002: F64
   F64.parse("498")
 
-DORIME_IDLE_004: F64
+PUNCHINGBAG_IDLE_003: F64
   F64.parse("499")
 
-DORIME_JESUS_POWER_000: F64
+PUNCHINGBAG_IDLE_004: F64
   F64.parse("500")
 
-DORIME_JESUS_POWER_001: F64
+PUNCHINGBAG_IDLE_005: F64
   F64.parse("501")
 
-DORIME_JESUS_POWER_002: F64
+PUNCHINGBAG_IDLE_006: F64
   F64.parse("502")
 
-DORIME_JESUS_POWER_003: F64
+PUNCHINGBAG_IDLE_007: F64
   F64.parse("503")
 
-DORIME_JESUS_POWER_004: F64
+PUNCHINGBAG_IDLE_008: F64
   F64.parse("504")
 
-DORIME_JESUS_POWER_005: F64
+PUNCHINGBAG_IDLE_009: F64
   F64.parse("505")
 
-DORIME_JESUS_POWER_006: F64
+PUNCHINGBAG_IDLE_010: F64
   F64.parse("506")
 
-DORIME_JESUS_POWER_007: F64
+PUNCHINGBAG_IDLE_011: F64
   F64.parse("507")
 
-DORIME_JESUS_POWER_008: F64
+PUNCHINGBAG_IDLE_012: F64
   F64.parse("508")
 
-DORIME_JESUS_POWER_009: F64
+PUNCHINGBAG_IDLE_013: F64
   F64.parse("509")
 
-DORIME_JESUS_POWER_010: F64
+PUNCHINGBAG_IDLE_014: F64
   F64.parse("510")
 
-DORIME_JESUS_POWER_011: F64
+PUNCHINGBAG_IDLE_015: F64
   F64.parse("511")
 
-DORIME_JESUS_POWER_012: F64
+PUNCHINGBAG_IDLE_016: F64
   F64.parse("512")
 
-DORIME_JESUS_POWER_013: F64
+PUNCHINGBAG_IDLE_017: F64
   F64.parse("513")
 
-DORIME_JESUS_POWER_014: F64
+PUNCHINGBAG_IDLE_018: F64
   F64.parse("514")
 
-DORIME_JESUS_POWER_015: F64
+PUNCHINGBAG_IDLE_019: F64
   F64.parse("515")
 
-DORIME_JESUS_POWER_016: F64
+PUNCHINGBAG_IDLE_020: F64
   F64.parse("516")
 
-DORIME_JESUS_POWER_017: F64
+PUNCHINGBAG_IDLE_021: F64
   F64.parse("517")
 
-DORIME_JESUS_POWER_018: F64
+PUNCHINGBAG_IDLE_022: F64
   F64.parse("518")
 
-DORIME_JESUS_POWER_019: F64
+PUNCHINGBAG_IDLE_023: F64
   F64.parse("519")
 
-DORIME_JESUS_POWER_020: F64
-  F64.parse("520")
-
-DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_000: F64
-  F64.parse("521")
-
-DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_001: F64
-  F64.parse("522")
-
-DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_002: F64
-  F64.parse("523")
-
-DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_003: F64
-  F64.parse("524")
-
-DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_004: F64
-  F64.parse("525")
-
-DORIME_LEPTOSPIROSE_CURSE_POT_000: F64
-  F64.parse("526")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000: F64
-  F64.parse("527")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_001: F64
-  F64.parse("528")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_002: F64
-  F64.parse("529")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_003: F64
-  F64.parse("530")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_004: F64
-  F64.parse("531")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_005: F64
-  F64.parse("532")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_006: F64
-  F64.parse("533")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_007: F64
-  F64.parse("534")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_008: F64
-  F64.parse("535")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_009: F64
-  F64.parse("536")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_010: F64
-  F64.parse("537")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_011: F64
-  F64.parse("538")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_012: F64
-  F64.parse("539")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_013: F64
-  F64.parse("540")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_014: F64
-  F64.parse("541")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_015: F64
-  F64.parse("542")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_016: F64
-  F64.parse("543")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_017: F64
-  F64.parse("544")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_018: F64
-  F64.parse("545")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_019: F64
-  F64.parse("546")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_020: F64
-  F64.parse("547")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_021: F64
-  F64.parse("548")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_022: F64
-  F64.parse("549")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_023: F64
-  F64.parse("550")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_024: F64
-  F64.parse("551")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_025: F64
-  F64.parse("552")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_026: F64
-  F64.parse("553")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_027: F64
-  F64.parse("554")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_028: F64
-  F64.parse("555")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_000: F64
-  F64.parse("556")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_001: F64
-  F64.parse("557")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_002: F64
-  F64.parse("558")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_003: F64
-  F64.parse("559")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_004: F64
-  F64.parse("560")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_005: F64
-  F64.parse("561")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_006: F64
-  F64.parse("562")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_007: F64
-  F64.parse("563")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_008: F64
-  F64.parse("564")
-
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_009: F64
-  F64.parse("565")
-
-DORIME_POSED_BACKUP: F64
-  F64.parse("566")
-
-DORIME_TAUNT_IDLE_000: F64
-  F64.parse("567")
-
-DORIME_TAUNT_IDLE_001: F64
-  F64.parse("568")
-
-DORIME_TAUNT_IDLE_002: F64
-  F64.parse("569")
-
-DORIME_TAUNT_000: F64
-  F64.parse("570")
-
-DORIME_TAUNT_001: F64
-  F64.parse("571")
-
-DORIME_TAUNT_002: F64
-  F64.parse("572")
-
-DORIME_WALK_CYCLE_000: F64
-  F64.parse("573")
-
-DORIME_WALK_CYCLE_001: F64
-  F64.parse("574")
-
-DORIME_WALK_CYCLE_002: F64
-  F64.parse("575")
-
-DORIME_WALK_CYCLE_003: F64
-  F64.parse("576")
-
-DORIME_WALK_CYCLE_004: F64
-  F64.parse("577")
-
-DORIME_WALK_CYCLE_005: F64
-  F64.parse("578")
-
-DORIME_WALK_CYCLE_006: F64
-  F64.parse("579")
-
-DORIME_WALK_CYCLE_007: F64
-  F64.parse("580")
-
-POSTE_IDLE_000: F64
-  F64.parse("581")
-
-PUNCHINGBAG_IDLE_000: F64
-  F64.parse("582")
-
-PUNCHINGBAG_IDLE_001: F64
-  F64.parse("583")
-
-PUNCHINGBAG_IDLE_002: F64
-  F64.parse("584")
-
-PUNCHINGBAG_IDLE_003: F64
-  F64.parse("585")
-
-PUNCHINGBAG_IDLE_004: F64
-  F64.parse("586")
-
-PUNCHINGBAG_IDLE_005: F64
-  F64.parse("587")
-
-PUNCHINGBAG_IDLE_006: F64
-  F64.parse("588")
-
-PUNCHINGBAG_IDLE_007: F64
-  F64.parse("589")
-
-PUNCHINGBAG_IDLE_008: F64
-  F64.parse("590")
-
-PUNCHINGBAG_IDLE_009: F64
-  F64.parse("591")
-
-PUNCHINGBAG_IDLE_010: F64
-  F64.parse("592")
-
-PUNCHINGBAG_IDLE_011: F64
-  F64.parse("593")
-
-PUNCHINGBAG_IDLE_012: F64
-  F64.parse("594")
-
-PUNCHINGBAG_IDLE_013: F64
-  F64.parse("595")
-
-PUNCHINGBAG_IDLE_014: F64
-  F64.parse("596")
-
-PUNCHINGBAG_IDLE_015: F64
-  F64.parse("597")
-
-PUNCHINGBAG_IDLE_016: F64
-  F64.parse("598")
-
-PUNCHINGBAG_IDLE_017: F64
-  F64.parse("599")
-
-PUNCHINGBAG_IDLE_018: F64
-  F64.parse("600")
-
-PUNCHINGBAG_IDLE_019: F64
-  F64.parse("601")
-
-PUNCHINGBAG_IDLE_020: F64
-  F64.parse("602")
-
-PUNCHINGBAG_IDLE_021: F64
-  F64.parse("603")
-
-PUNCHINGBAG_IDLE_022: F64
-  F64.parse("604")
-
-PUNCHINGBAG_IDLE_023: F64
-  F64.parse("605")
-
 WALL_IDLE_000: F64
-  F64.parse("606")
-
-TaelinArena.Thing.dilma_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(DILMA_WALK_000)(F64.parse("8"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_PROTECTION_000)(F64.parse("6"))(F64.parse("3"))(F64.parse("7")); let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_PROTECTION_007)(F64.parse("5"))(F64.parse("28"))(F64.parse("14")); let self = TaelinArena.Game.reset(self)(F64.parse("27")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_000)(F64.parse("17"))(F64.parse("0"))(F64.parse("34")); let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_016)(F64.parse("3"))(F64.parse("34"))(F64.parse("64")); let self = TaelinArena.Game.reset(self)(F64.parse("63")); let speech = TaelinArena.Thing.new_thing; let speech = TaelinArena.Game.set_thing_fun(speech)(TaelinArena.Thing.dilma.confusion_fun); let speech = TaelinArena.Game.set_thing_dir(speech)(TaelinArena.Game.targ_dir(self)); let self = TaelinArena.Game.spawn(self)(F64.parse("34"))([TaelinArena.Game.Thing; TaelinArena.Game.move(speech)(TaelinArena.Game.at_max_dist(self)(F64.parse("100")))]); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(DILMA_SALUTING_THE_CASSAVA_000)(F64.parse("18"))(F64.parse("54")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.0)(DILMA_STOCKING_WIND_CASTING_000)(F64.parse("10"))(F64.parse("30")); let wind = TaelinArena.Thing.new_thing; let wind = TaelinArena.Game.set_thing_fun(wind)(TaelinArena.Thing.dilma.stocking_wind_fun); let wind = TaelinArena.Game.set_thing_pos(wind)(self.pos); let wind = TaelinArena.Game.set_thing_dir(wind)(TaelinArena.Game.targ_dir(self)); let wind = TaelinArena.Game.set_thing_vel(wind)(F64.V3.scale(F64.parse("6"))(TaelinArena.Game.targ_dir(self))); let wind = TaelinArena.Game.set_thing_box(wind)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.spawn(self)(F64.parse("8"))([TaelinArena.Game.Thing; wind]); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(TaelinArena.Game.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.0)(DILMA_TAUNT_000)(F64.parse("6"))(F64.parse("18"))))))))
-
-TaelinArena.Thing.dilma.stocking_wind_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) TaelinArena.Game.animate_die(self)(F64.0)(DILMA_STOCKING_WIND_ANIM_000)(F64.parse("3"))(F64.parse("15"))
-
-TaelinArena.Thing.dilma.confusion_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) TaelinArena.Game.animate_die(self)(F64.0)(DILMA_CONFUSION_ANIM_000)(F64.parse("4"))(F64.parse("40"))
+  F64.parse("520")
 
 TaelinArena.Thing.new_thing: TaelinArena.Game.Thing
   TaelinArena.Game.Thing.new((x) x)(F64.0)(F64.0)(F64.0)(F64.0)(Map.new<F64>)(String.nil)([TaelinArena.Game.Light;])(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.parse("8"))(F64.1)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64._1)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(TaelinArena.Game.Hitbox.cbox(F64.parse("12")))(F64.1)(F64.parse("24"))(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))([TaelinArena.Game.Buff;])([TaelinArena.Game.Thing;])([TaelinArena.Game.Hit;])(Bool.false)(Bool.false)
+
+TaelinArena.Thing.bleskape_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
+  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("24")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_WALK_000)(F64.parse("4"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)(F64.parse("15"))(F64.parse("30")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir), TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20"))), TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_000)(F64.parse("3"))(F64.0)(F64.parse("3")); let self = TaelinArena.Game.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_002)(F64.1)(F64.parse("3"))(F64.parse("12")); let self = TaelinArena.Game.reset(self)(F64.parse("12")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_GROUND_WAVE_000)(F64.parse("12"))(F64.parse("24")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("5"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("58")))]; let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SUPREME_PUNCH_SEQUENCE_000)(F64.parse("25"))(F64.parse("50")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("1"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("34"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("42"))(hits); let effes = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.impulse(F64.parse("18"))(self.dir), TaelinArena.Game.Effect.impulse(F64.parse("18"))(self.dir)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("46"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_DASH_000)(F64.parse("15"))(F64.parse("30")); let self = TaelinArena.Game.dash(self)(F64.parse("8"))(F64.parse("15"))(F64.parse("25")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.repulse(F64.parse("8")), TaelinArena.Game.Effect.damage(F64.parse("1"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("17"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("23"))(hits); self)(TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_TAUNT_000)(F64.parse("10"))(F64.parse("20"))))))))
+
+TaelinArena.Thing.poste_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let new_pos = F64.V3.new(F64.0)(F64.0)(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let self = TaelinArena.Game.set_thing_mid(self)(POSTE_IDLE_000); let lpos = self.pos<() F64.V3>((self.pos.x) (self.pos.y) (self.pos.z) F64.V3.new(self.pos.x)(self.pos.y)(F64.parse("52"))); let lrng = F64.parse("32.0"); let lrad = F64.parse("12"); let lsub = F64.V3.new(F64.0)(F64.0)(F64.0); let ladd = F64.V3.new(F64.parse("0.72"))(F64.parse("0.60"))(F64.parse("0.24")); let lght = TaelinArena.Game.Light.new(lpos)(lrad)(lrng)(lsub)(ladd); let self = TaelinArena.Game.illumine(self)(F64.0)(F64.parse("2147483648"))([TaelinArena.Game.Light; lght]); self
+
+TaelinArena.Thing.puddledmg_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("100"))(F64.parse("-100"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000)(F64.parse("29"))(F64.parse("58")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let eff_slow = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3")))(F64.parse("0.7"))]; let slow = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(eff_slow)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(slow); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("44"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("52"))(hits); self
+
+TaelinArena.Thing.puddleheal_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("130"))(F64.parse("80"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_sid(self)(F64.0); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015)(F64.parse("9"))(F64.parse("36")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.heal(F64.parse("2"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("42")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); self
+
+TaelinArena.Thing.punchingbag_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (self) let self.dmg = TaelinArena.Game.get_thing_dmg(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let smhp = F64.parse("32"); let self = TaelinArena.Game.set_thing_mhp(self)(smhp); let self = TaelinArena.Game.set_thing_dir(self)(F64.V3.new(F64.parse("0.707"))(F64.parse("-0.707"))(F64.0)); let div_aux = F64.div(F64.parse("2"))(F64.parse("24")); let self = TaelinArena.Game.set_thing_dmg(self)(F64.sub(self.dmg)(div_aux)); let self = TaelinArena.Game.set_thing_mid(self)(let pow = F64.max(F64.0)(F64.min(F64.1)(F64.div(self.dmg)(smhp))); let sin = F64.sin(F64.div(self.tik)(F64.parse("6"))); let re0 = F64.mul(F64.mul(sin)(F64.parse("12")))(pow); let re1 = F64.add(F64.add(re0)(F64.parse("24")))(F64.parse("0.5")); let ang = F64.mod(re1)(F64.parse("24")); F64.add(PUNCHINGBAG_IDLE_000)(F64.floor(ang))); self
+
+TaelinArena.Thing.wall_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
+  (self) let new_pos = F64.V3.new(F64.parse("-64"))(F64.parse("64"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_mid(self)(WALL_IDLE_000); let boxw = F64.parse("60"); let boxh = F64.parse("7"); let new_pbox = [F64.V3; F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0)]; self
 
 TaelinArena.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TaelinArena.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TaelinArena.Game.Hitbox) -> Maybe(F64.V3)
   (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) let none = Maybe.none<F64.V3>; a_box<() Maybe(F64.V3)>(none)((a_box.rad) b_box<() Maybe(F64.V3)>(none)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); let if_condition = Bool.and(F64.ltn(F64.0)(dst))(F64.ltn(dst)(rad)); Bool.if<Maybe(F64.V3)>(if_condition)(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none))((b_box.pts) let cons = ((segment) (result) result<() Maybe(F64.V3)>(segment<() Maybe(F64.V3)>((segment.a) (segment.b) let dst = F64.V3.point_segment_dist(a_pos)(segment); let rad = a_box.rad; Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))(let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b))); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none)))((result.value) Maybe.some<F64.V3>(result.value))) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3); let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts); List.fold<F64.Segment><Maybe(F64.V3)>(none)(cons)(segs)))((a_box.pts) none)
 
 TaelinArena.exec_command: TaelinArena.Game.Command -> TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (cmd) (gm) cmd<() TaelinArena.Game.Game>((cmd.pid) (cmd.inp) let fn = ((this) let inp = cmd.inp; let is_silenced = TaelinArena.Game.is_silenced(this); let is_stunned = TaelinArena.Game.is_stunned(this); is_stunned<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.init_act(this)(F64.0)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(is_silenced<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos))((key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos))((key2.pos) TaelinArena.Game.init_act(this)(F64.3)(key2.pos))((key3.pos) TaelinArena.Game.init_act(this)(F64.4)(key3.pos))((key4.pos) TaelinArena.Game.init_act(this)(F64.5)(key4.pos))((key5.pos) TaelinArena.Game.init_act(this)(F64.6)(key5.pos))((cmsg.txt) this)))) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; TaelinArena.Game.with_thing(cmd.pid)(fn)(gm))
+  (cmd) (gm) cmd<() TaelinArena.Game.Game>((cmd.pid) (cmd.inp) let fn = ((this) let inp = cmd.inp; let is_silenced = TaelinArena.Game.is_silenced(this); let is_stunned = TaelinArena.Game.is_stunned(this); is_stunned<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.init_act(this)(F64.0)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(is_silenced<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos))((key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos))((key2.pos) TaelinArena.Game.init_act(this)(F64.parse("3"))(key2.pos))((key3.pos) TaelinArena.Game.init_act(this)(F64.parse("4"))(key3.pos))((key4.pos) TaelinArena.Game.init_act(this)(F64.parse("5"))(key4.pos))((key5.pos) TaelinArena.Game.init_act(this)(F64.parse("6"))(key5.pos))((cmsg.txt) this)))) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; TaelinArena.Game.with_thing(cmd.pid)(fn)(gm))
 
 TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (gm) let intr = ((that) (this) TaelinArena.interact_with(this)(that)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let tick = ((this) (others) (res) let this = TaelinArena.Game.set_thing_hit(this)([TaelinArena.Game.Hit;]); let rst = TaelinArena.Game.get_thing_rst(this); let this = rst<() TaelinArena.Game.Thing>(let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0); let new_bst = F64.1; let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.3)(F64.4)); let new_act = F64.0; let new_tik = F64.0; let new_lit = [TaelinArena.Game.Light;]; let new_rst = Bool.false; let this = TaelinArena.Game.set_thing_vel(this)(new_vel); let this = TaelinArena.Game.set_thing_bst(this)(new_bst); let this = TaelinArena.Game.set_thing_box(this)(new_box); let this = TaelinArena.Game.set_thing_act(this)(new_act); let this = TaelinArena.Game.set_thing_tik(this)(new_tik); let this = TaelinArena.Game.set_thing_lit(this)(new_lit); let this = TaelinArena.Game.set_thing_rst(this)(new_rst); this)(this); let boost = TaelinArena.Game.speed_multiplier_of(this); let pos = TaelinArena.Game.get_thing_pos(this); let mov = TaelinArena.Game.get_thing_mov(this); let pad = TaelinArena.Game.get_thing_pad(this); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.add(pos)(F64.V3.scale(F64.mul(mov)(boost))(pad))); let this = TaelinArena.Game.update_buff_dur(this); let pos = TaelinArena.Game.get_thing_pos(this); let knk = TaelinArena.Game.get_thing_knk(this); let wei = TaelinArena.Game.get_thing_wei(this); let new_pos = F64.V3.add(pos)(knk); let knk_len = F64.V3.len(knk); let new_knk = F64.gtn(knk_len)(F64.0)<() F64.V3>(let force = F64.max(F64.sub(knk_len)(wei))(F64.0); F64.V3.scale(force)(F64.V3.norm(knk)))(knk); let this = TaelinArena.Game.set_thing_pos(this)(new_pos); let this = TaelinArena.Game.set_thing_knk(this)(new_knk); let fun = TaelinArena.Game.get_thing_fun(this); let this = fun(this); let this = List.fold<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(this)(intr)(others); let tik = TaelinArena.Game.get_thing_tik(this); let this = TaelinArena.Game.set_thing_tik(this)(F64.add(tik)(F64.1)); let this_chi = TaelinArena.Game.get_thing_chi(this); let chi_init = ((chi) TaelinArena.Game.get_thing_fun(chi)(chi)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let chi_list = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(chi_init)(this_chi); let this = TaelinArena.Game.set_thing_chi(this)([TaelinArena.Game.Thing;]); let this_pos = TaelinArena.Game.get_thing_pos(this); let pos_x = F64.V3.get_z(this_pos); let pos_y = F64.V3.get_y(this_pos); let pos_z = F64.V3.get_z(this_pos); let new_x = F64.min(F64.max(F64._256)(pos_x))(F64.256); let new_y = F64.min(F64.max(F64._160)(pos_y))(F64.160); let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.256); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z)); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let new_dmg = F64.max(F64.0)(F64.min(mhp)(dmg)); let this = TaelinArena.Game.set_thing_dmg(this)(new_dmg); let sid = TaelinArena.Game.get_thing_sid(this); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let no_hp = Bool.false; let die = TaelinArena.Game.get_thing_die(this); let xs = Bool.or(die)(no_hp)<() List(TaelinArena.Game.Thing)>(res)(List.cons<TaelinArena.Game.Thing>(this)(res)); List.concat<TaelinArena.Game.Thing>(chi_list)(xs)) :: TaelinArena.Game.Thing -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let things_id = ((x) x) :: List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let stage = gm<() List(TaelinArena.Game.Thing)>((stage) stage); let stage_nil = [TaelinArena.Game.Thing;]; let new_stage = TaelinArena.fold_with_context<TaelinArena.Game.Thing><List(TaelinArena.Game.Thing)>(stage_nil)(tick)(stage)(things_id); TaelinArena.Game.Game.new(new_stage)
+  (gm) let intr = ((that) (this) TaelinArena.interact_with(this)(that)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let tick = ((this) (others) (res) let this = TaelinArena.Game.set_thing_hit(this)([TaelinArena.Game.Hit;]); let rst = TaelinArena.Game.get_thing_rst(this); let this = rst<() TaelinArena.Game.Thing>(let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0); let new_bst = F64.1; let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.parse("3"))(F64.parse("4"))); let new_act = F64.0; let new_tik = F64.0; let new_lit = [TaelinArena.Game.Light;]; let new_rst = Bool.false; let this = TaelinArena.Game.set_thing_vel(this)(new_vel); let this = TaelinArena.Game.set_thing_bst(this)(new_bst); let this = TaelinArena.Game.set_thing_box(this)(new_box); let this = TaelinArena.Game.set_thing_act(this)(new_act); let this = TaelinArena.Game.set_thing_tik(this)(new_tik); let this = TaelinArena.Game.set_thing_lit(this)(new_lit); let this = TaelinArena.Game.set_thing_rst(this)(new_rst); this)(this); let boost = TaelinArena.Game.speed_multiplier_of(this); let pos = TaelinArena.Game.get_thing_pos(this); let mov = TaelinArena.Game.get_thing_mov(this); let pad = TaelinArena.Game.get_thing_pad(this); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.add(pos)(F64.V3.scale(F64.mul(mov)(boost))(pad))); let this = TaelinArena.Game.update_buff_dur(this); let pos = TaelinArena.Game.get_thing_pos(this); let knk = TaelinArena.Game.get_thing_knk(this); let wei = TaelinArena.Game.get_thing_wei(this); let new_pos = F64.V3.add(pos)(knk); let knk_len = F64.V3.len(knk); let new_knk = F64.gtn(knk_len)(F64.0)<() F64.V3>(let force = F64.max(F64.sub(knk_len)(wei))(F64.0); F64.V3.scale(force)(F64.V3.norm(knk)))(knk); let this = TaelinArena.Game.set_thing_pos(this)(new_pos); let this = TaelinArena.Game.set_thing_knk(this)(new_knk); let fun = TaelinArena.Game.get_thing_fun(this); let this = fun(this); let this = List.fold<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(this)(intr)(others); let tik = TaelinArena.Game.get_thing_tik(this); let this = TaelinArena.Game.set_thing_tik(this)(F64.add(tik)(F64.1)); let this_chi = TaelinArena.Game.get_thing_chi(this); let chi_init = ((chi) TaelinArena.Game.get_thing_fun(chi)(chi)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let chi_list = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(chi_init)(this_chi); let this = TaelinArena.Game.set_thing_chi(this)([TaelinArena.Game.Thing;]); let this_pos = TaelinArena.Game.get_thing_pos(this); let pos_x = F64.V3.get_z(this_pos); let pos_y = F64.V3.get_y(this_pos); let pos_z = F64.V3.get_z(this_pos); let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256")); let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160")); let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256")); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z)); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let new_dmg = F64.max(F64.0)(F64.min(mhp)(dmg)); let this = TaelinArena.Game.set_thing_dmg(this)(new_dmg); let sid = TaelinArena.Game.get_thing_sid(this); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let no_hp = Bool.false; let die = TaelinArena.Game.get_thing_die(this); let xs = Bool.or(die)(no_hp)<() List(TaelinArena.Game.Thing)>(res)(List.cons<TaelinArena.Game.Thing>(this)(res)); List.concat<TaelinArena.Game.Thing>(chi_list)(xs)) :: TaelinArena.Game.Thing -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let things_id = ((x) x) :: List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let stage = gm<() List(TaelinArena.Game.Thing)>((stage) stage); let stage_nil = [TaelinArena.Game.Thing;]; let new_stage = TaelinArena.fold_with_context<TaelinArena.Game.Thing><List(TaelinArena.Game.Thing)>(stage_nil)(tick)(stage)(things_id); TaelinArena.Game.Game.new(new_stage)
 
 TaelinArena.fold_with_context: <A: Type> -> <B: Type> -> (i: B) -> (f: A -> List(A) -> B -> B) -> (xs: List(A)) -> (ys: List(A) -> List(A)) -> B
   <A> <B> (i) (f) (xs) (ys) xs<() B>(i)((xs.head) (xs.tail) let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A); let rest = TaelinArena.fold_with_context<A><B>(i)(f)(xs.tail)(ys2); f(xs.head)(ys(xs.tail))(rest))
