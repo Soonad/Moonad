@@ -1,0 +1,32 @@
+TaelinArena.Thing.dorime.blessing_fun
+  : (self: TaelinArena.Game.Thing) -> 
+    TaelinArena.Game.Thing
+  (self)
+  let self.pos = TaelinArena.Game.get_thing_pos(self)
+  let self.dir = TaelinArena.Game.get_thing_dir(self)
+  let self = TaelinArena.Game.animate_die(self)(F64.0)
+    | DORIME_BLESSING_FOR_WHO_DESERVE_PROJECTILE_000;
+    | F64.1;
+    | F64.parse("16");
+  let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox)
+  let effs = [
+      TaelinArena.Game.Effect; 
+      TaelinArena.Game.Effect.damage(F64.1)
+  ]
+  let hits = [
+    TaelinArena.Game.Hit;
+    TaelinArena.Game.Hit.new
+    | effs;
+    | self.pos;
+    | self.dir;
+    | TaelinArena.Game.Hitbox.cbox(F64.parse("4"));
+  ]  
+  let self = TaelinArena.Game.cast(self)(F64.0)(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("2"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("4"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("6"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("8"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("12"))(hits)
+  let self = TaelinArena.Game.cast(self)(F64.parse("14"))(hits)
+  self

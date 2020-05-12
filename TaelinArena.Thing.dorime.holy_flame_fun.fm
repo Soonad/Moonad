@@ -1,0 +1,26 @@
+TaelinArena.Thing.dorime.holy_flame_fun
+  : TaelinArena.Game.Thing -> 
+    TaelinArena.Game.Thing
+  (self)
+  let self.pos = TaelinArena.Game.get_thing_pos(self)
+  let self.dir = TaelinArena.Game.get_thing_dir(self)
+  let self = 
+    TaelinArena.Game.animate_die(self)(F64.0)(DORIME_HOLY_FLAME_PILLAR_000)
+    | F64.parse("5");
+    | F64.parse("15");
+  let self = TaelinArena.Game.set_thing_box(self)
+    | TaelinArena.Game.Hitbox.nbox;
+  let effs = [
+    TaelinArena.Game.Effect; 
+    TaelinArena.Game.Effect.damage(F64.parse("3"))
+  ]
+  let hits = [
+    TaelinArena.Game.Hit;
+    TaelinArena.Game.Hit.new
+    | effs;
+    | self.pos;
+    | self.dir;
+    | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
+  ]  
+  let self = TaelinArena.Game.cast(self)(F64.0)(hits)
+  self
