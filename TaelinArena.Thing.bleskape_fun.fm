@@ -24,7 +24,7 @@ TaelinArena.Thing.bleskape_fun:
     let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)
       | F64.parse("15");
       | F64.parse("30");
-    let effes = [
+    let effs = [
       TaelinArena.Game.Effect; 
       TaelinArena.Game.Effect.damage(F64.parse("3")),
       TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir)
@@ -81,7 +81,7 @@ TaelinArena.Thing.bleskape_fun:
         | effs;
         | self.pos;
         | self.dir;
-        | TaelinArena.Game.Hitbox.cbox(F64.parse("58"))
+        | TaelinArena.Game.Hitbox.cbox(F64.parse("58"));
       ]
 
       let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits)
@@ -104,7 +104,7 @@ TaelinArena.Thing.bleskape_fun:
         | effs;
         | TaelinArena.Game.at_dist(self)(F64.parse("32"));
         | self.dir;
-        | TaelinArena.Game.Hitbox.cbox(F64.parse("32"))
+        | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));
       ]
       let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits)
       let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits)
@@ -122,7 +122,7 @@ TaelinArena.Thing.bleskape_fun:
         | effs;
         | TaelinArena.Game.at_dist(self)(F64.parse("32"));
         | self.dir;
-        | TaelinArena.Game.Hitbox.cbox(F64.parse("32"))
+        | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));
       ]
       let self = TaelinArena.Game.cast(self)(F64.parse("46"))(hits)
       self
@@ -144,8 +144,10 @@ TaelinArena.Thing.bleskape_fun:
       ]
       let hits = [
         TaelinArena.Game.Hit;
-        TaelinArena.Game.at_dist(self)(F64.parse("32")),
-        TaelinArena.Game.Hitbox.cbox(F64.parse("32"))
+        TaelinArena.Game.Hit.new(effs)
+        | TaelinArena.Game.at_dist(self)(F64.parse("32"));
+        | self.dir;
+        | TaelinArena.Game.Hitbox.cbox(F64.parse("32"));
       ]
       let self = TaelinArena.Game.cast(self)(F64.parse("17"))(hits)
       let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits)
@@ -158,31 +160,3 @@ TaelinArena.Thing.bleskape_fun:
       | F64.parse("10");
       | F64.parse("20");
     ;;;;;;
-
-    // let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)
-    //            | F64.parse("15");
-    //            | F64.parse("30");
-    // let effs = 
-    //   List.cons<TaelinArena.Game.Effect>
-    //   | TaelinArena.Game.Effect.damage(F64.parse("3"));
-    //   | List.cons<TaelinArena.Game.Effect>
-    //     | TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir);
-    //     | List.nil<TaelinArena.Game.Effect>;;
-    // let hits = 
-    //   List.cons<TaelinArena.Game.Hit>
-    //   | TaelinArena.Game.Hit.new
-    //     | effs;
-    //     | TaelinArena.Game.at_dist(self)(F64.parse("40"));
-    //     | self.dir;
-    //     | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
-    //   ;
-    //   | List.cons<TaelinArena.Game.Hit>
-    //     | TaelinArena.Game.Hit.new
-    //       | effs;
-    //       | TaelinArena.Game.at_dist(self)(F64.parse("40"));
-    //       | self.dir;
-    //       | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
-    //     ;
-    //     | List.nil<TaelinArena.Game.Hit>;
-    //   ;
-    // let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits)
