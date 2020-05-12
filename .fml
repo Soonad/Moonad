@@ -23,7 +23,7 @@ Bits: Type
   bits<P: Bits -> Type> -> (be: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.0(pred))) -> (b1: (pred: Bits) -> P(Bits.1(pred))) -> P(bits)
 
 Bits.from_string: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() s(x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
+  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
 
 Bits.inc: Bits -> Bits
   (bits) bits<() Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
@@ -671,6 +671,9 @@ F64.mul: F64 -> F64 -> F64
 F64.new: Word(Nat.64) -> F64
   (a) <> (f64) f64(a)
 
+F64.parse: String -> F64
+  F64.parse
+
 F64.parse_binary: String -> F64
   (str) F64.new(Word.from_bits(Nat.64)(Bits.from_string(str)))
 
@@ -864,7 +867,7 @@ List.drop: <A: Type> -> Nat -> List(A) -> List(A)
   <A> (n) (list) n<() List(A)>(list)((pred) list<() List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
 
 List.filter: <A: Type> -> A -> Bool -> List(A) -> List(A)
-  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() s(x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
+  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
 
 List.find: <A: Type> -> A -> Bool -> List(A) -> Maybe(A)
   <A> (cond) (xs) xs<() Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<() Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
@@ -1666,7 +1669,7 @@ Research.get_syntax: Nat
   let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
 
 Research.inference0: Word(Nat.4)
-  Word.1<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero)))>(Word.0<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))>(Word.1<<P> (zero) (succ) succ(<P> (zero) (succ) zero)>(Word.0<<P> (zero) (succ) zero>(Word.nil))))
+  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
 
 Research.inference1: Bool -> Bool
   (b) b<() Bool>(Bool.true)(Bool.false)
@@ -1681,7 +1684,7 @@ Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> 
   <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
 
 Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
-  <P> (f) (x) f<<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))>(f<<P> (zero) (succ) succ(<P> (zero) (succ) zero)>(f<<P> (zero) (succ) zero>(x)))
+  <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
 
 Set: Type
   Map(Unit)
@@ -2252,6 +2255,9 @@ TaelinArena.Game.with_thing.effect: TaelinArena.Game.PlayerId -> TaelinArena.Gam
 
 TaelinArena.Game.with_thing: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
   (pid) (fn) (gm) TaelinArena.Game.map_stage(TaelinArena.Game.with_thing.effect(pid)(fn))(gm)
+
+TaelinArena.Thing.new_thing: TaelinArena.Game.Thing
+  TaelinArena.Game.Thing.new((x) x)(F64.0)(F64.0)(F64.0)(F64.0)(Map.new<F64>)(String.nil)([TaelinArena.Game.Light;])(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.parse("8"))(F64.1)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64._1)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(TaelinArena.Game.Hitbox.cbox(F64.parse("12")))(F64.1)(F64.parse("24"))(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))([TaelinArena.Game.Buff;])([TaelinArena.Game.Thing;])([TaelinArena.Game.Hit;])(Bool.false)(Bool.false)
 
 TaelinArena.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TaelinArena.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TaelinArena.Game.Hitbox) -> Maybe(F64.V3)
   (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) let none = Maybe.none<F64.V3>; a_box<() Maybe(F64.V3)>(none)((a_box.rad) b_box<() Maybe(F64.V3)>(none)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); let if_condition = Bool.and(F64.ltn(F64.0)(dst))(F64.ltn(dst)(rad)); Bool.if<Maybe(F64.V3)>(if_condition)(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none))((b_box.pts) let cons = ((segment) (result) result<() Maybe(F64.V3)>(segment<() Maybe(F64.V3)>((segment.a) (segment.b) let dst = F64.V3.point_segment_dist(a_pos)(segment); let rad = a_box.rad; Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))(let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b))); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none)))((result.value) Maybe.some<F64.V3>(result.value))) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3); let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts); List.fold<F64.Segment><Maybe(F64.V3)>(none)(cons)(segs)))((a_box.pts) none)
