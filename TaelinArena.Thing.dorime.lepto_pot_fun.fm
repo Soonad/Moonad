@@ -8,12 +8,13 @@ TaelinArena.Thing.dorime.leptospirose_puddle_pot_fun
     | DORIME_LEPTOSPIROSE_CURSE_POT_000;
     | F64.1;
     | F64.parse("10");
-  let self = TaelinArena.Game.set_thing_box
+  let self = TaelinArena.Game.set_thing_box(self)
     | TaelinArena.Game.Hitbox.cbox(F64.parse("10"));
-  let pudd = TaelinArena.Game.new_thing
+  let pudd = TaelinArena.Thing.new_thing
   let pudd = TaelinArena.Game.set_thing_sid(pudd)(self.sid)
   let pudd = TaelinArena.Game.set_thing_fun(pudd)
     | TaelinArena.Thing.dorime.leptospirose_puddle_fun;
   let pudd = TaelinArena.Game.set_thing_pos(pudd)(self.pos)
-  let self = TaelinArena.Game.spawn(self)(F64.parse("9"))(pudd)
+  let self = TaelinArena.Game.spawn(self)(F64.parse("9"))
+    | [TaelinArena.Game.Thing; pudd];
   self
