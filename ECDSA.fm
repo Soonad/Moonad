@@ -33,9 +33,10 @@ ecdsa.mod: Nat -> Nat
 
 ecdsa.negate: Nat -> Nat
   (a)
+  let a = ecdsa.mod(a)
   Nat.eql(a)(Nat.0)<() Nat>
   | Nat.0;
-  | Nat.sub(CURVE.P)(ecdsa.mod(a));
+  | Nat.sub(CURVE.P)(a);
 
 ecdsa.sub: Nat -> Nat -> Nat
   (a) (b) ecdsa.mod(Nat.add(a)(ecdsa.negate(b)))
@@ -53,6 +54,52 @@ ecdsa.PRIME_SIZE: Nat
 
 ecdsa.USE_ENDOMORPHISM: Bool
   Nat.eql(CURVE.a)(Nat.0)
+
+Nat.odd: Nat -> Bool
+  (n) Nat.eql(Nat.mod(n)(Nat.2))(Nat.1)
+
+// Extended Euclidian algorithm. Given natural numbers a, b, computes GCD(a,b) and
+// Bezout's coefficients; that is, integers x, y such that a*x + b*y = GCD(a,b)
+Nat.egcd: Nat -> Nat -> Pair(Nat)(Pair(Int)(Int))
+  (a) (b) Nat.egcd_aux.tco(a)(b)(Int.0)(Int.1)(Int.1)(Int.0)
+
+Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat)(Pair(Int)(Int))
+  (a) (b) (x) (y) (u) (v)
+  a<() Unit -> Pair(Nat)(Pair(Int)(Int))>
+  | () Pair.new<Nat><Pair(Int)(Int)>(b)(Pair.new<Int><Int>(x)(y));
+  | (pred) ()
+    let q = Nat.div(b)(a)
+    let r = Nat.mod(b)(a)
+    let m = Int.sub(x)(Int.mul(u)(Int.fromNat(q)))
+    let n = Int.sub(y)(Int.mul(v)(Int.fromNat(q)))
+    Nat.egcd_aux.tco(r)(a)(u)(v)(m)(n);
+  | Unit.new;
+
+ecdsa.invert: Nat -> Nat -> Maybe(Nat)
+  (number) (modulo)
+  Nat.eql(number)(Nat.0)<() Maybe(Nat)>
+  | Maybe.none<Nat>;
+  | Nat.egcd(Nat.mod(number)(modulo))(modulo)<() Maybe(Nat)>
+    | (gcd) (p)
+      Nat.eql(gcd)(Nat.1)<() Maybe(Nat)>
+      | p<() Maybe(Nat)>
+        | (x) (y) Maybe.some<Nat>(Int.mod_Nat(x)(modulo));;
+      | Maybe.none<Nat>;;;
+
+// Split 256-bit K into 2 128-bit (k1, k2) for which k1 + k2 * lambda = K.
+// https://gist.github.com/paulmillr/eb670806793e84df628a7c434a873066
+ecdsa.split_scalar: Nat -> Pair(Int)(Int)
+  (k)
+  let k  = Int.fromNat(k)
+  let a1 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
+  let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3")
+  let a2 = Int.parse_hex("114ca50f7a8e2f3f657c1108d9d44cfd8")
+  let b2 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
+  let c1 = Int.div_Nat(Int.mul(b2)(k))(CURVE.n)
+  let c2 = Int.div_Nat(Int.mul(b1)(k))(CURVE.n)
+  let k1 = Int.sub(Int.sub(k)(Int.mul(c1)(a1)))(Int.mul(c2)(a2))
+  let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2))
+  Pair.new<Int><Int>(k1)(k2)
 
 Point: Type
   Pair(Nat)(Nat)
@@ -145,25 +192,10 @@ Jacobian.add: Jacobian -> Jacobian -> Jacobian
             let z = ecdsa.mod(Nat.mulVar(Nat.3)(p.z)(q.z)(H))
             Jacobian.new(x)(y)(z);;;;;
 
-// Split 256-bit K into 2 128-bit (k1, k2) for which k1 + k2 * lambda = K.
-// https://gist.github.com/paulmillr/eb670806793e84df628a7c434a873066
-ecdsa.split_scalar: Nat -> Pair(Int)(Int)
-  (k)
-  let k  = Int.fromNat(k)
-  let a1 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
-  let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3")
-  let a2 = Int.parse_hex("114ca50f7a8e2f3f657c1108d9d44cfd8")
-  let b2 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
-  let c1 = Int.div_Nat(Int.mul(b2)(k))(CURVE.n)
-  let c2 = Int.div_Nat(Int.mul(b1)(k))(CURVE.n)
-  let k1 = Int.sub(Int.sub(k)(Int.mul(c1)(a1)))(Int.mul(c2)(a2))
-  let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2))
-  Pair.new<Int><Int>(k1)(k2)
-
-// Non-constant-time multiplication. Uses double-and-add algorithm.
-// It's faster, but should only be used when you don't care about
-// an exposed private key e.g. sig verification.
-multiply_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
+    // Non-constant-time multiplication. Uses double-and-add algorithm.
+    // It's faster, but should only be used when you don't care about
+    // an exposed private key e.g. sig verification.
+Jacobian.mul_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
   (d) (scalar)
   let n = Nat.mod(scalar)(CURVE.n)
   let res = ecdsa.split_scalar(n)<() Jacobian>
@@ -172,7 +204,7 @@ multiply_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
       | (k1neg) (k1)
         Int.toNat(k2)<() Jacobian>
         | (k2neg) (k2)
-          multiply_unsafe.aux(d)(Jacobian.0)(Jacobian.0)(k1)(k2)<() Jacobian>
+          Jacobian.mul_unsafe_aux.tco(d)(Jacobian.0)(Jacobian.0)(k1)(k2)<() Jacobian>
           | (k1p) (k2p)
             let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p))(k1p)
             let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p))(k2p)
@@ -183,10 +215,7 @@ multiply_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
   | Maybe.none<Jacobian>;
   | () Maybe.some<Jacobian>(res);
 
-Nat.odd: Nat -> Bool
-  (n) Nat.eql(Nat.mod(n)(Nat.2))(Nat.1)
-
-multiply_unsafe.aux: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian)(Jacobian)
+Jacobian.mul_unsafe_aux.tco: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian)(Jacobian)
   (d) (k1p) (k2p) (k1) (k2)
   Bool.or(Nat.gtn(k1)(Nat.0))(Nat.gtn(k2)(Nat.0))<() Unit -> Pair(Jacobian)(Jacobian)>
   | ()
@@ -195,6 +224,6 @@ multiply_unsafe.aux: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jaco
     let d = Jacobian.double(d)
     let k1 = Nat.div(k1)(Nat.2)
     let k2 = Nat.div(k2)(Nat.2)
-    multiply_unsafe.aux(d)(k1p)(k2p)(k1)(k2);
+    Jacobian.mul_unsafe_aux.tco(d)(k1p)(k2p)(k1)(k2);
   | () Pair.new<Jacobian><Jacobian>(k1p)(k2p);
   | Unit.new;
