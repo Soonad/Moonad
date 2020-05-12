@@ -16,6 +16,15 @@ Int.new: Nat -> Nat -> Int
 Int.fromNat: Nat -> Int
   (n) Int.new(n)(Nat.0)
 
+// true is negative, false is positive
+Int.toNat: Int -> Pair(Bool)(Nat)
+  (a)
+  a<() Pair(Bool)(Nat)>
+  | (a.x) (a.y)
+    a.y<() Pair(Bool)(Nat)>
+    | Pair.new<Bool><Nat>(Bool.false)(a.x);
+    | () Pair.new<Bool><Nat>(Bool.true)(a.y);;
+
 Int.0: Int
   Int.fromNat(Nat.0)
 

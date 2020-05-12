@@ -470,6 +470,24 @@ Jacobian.add: Jacobian -> Jacobian -> Jacobian
 ecdsa.split_scalar: Nat -> Pair(Int)(Int)
   (k) let k = Int.fromNat(k); let a1 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15"); let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3"); let a2 = Int.parse_hex("114ca50f7a8e2f3f657c1108d9d44cfd8"); let b2 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15"); let c1 = Int.div_Nat(Int.mul(b2)(k))(CURVE.n); let c2 = Int.div_Nat(Int.mul(b1)(k))(CURVE.n); let k1 = Int.sub(Int.sub(k)(Int.mul(c1)(a1)))(Int.mul(c2)(a2)); let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2)); Pair.new<Int><Int>(k1)(k2)
 
+multiply_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
+  (d) (scalar) let n = Nat.mod(scalar)(CURVE.n); let res = ecdsa.split_scalar(n)<() Jacobian>((k1) (k2) Int.toNat(k1)<() Jacobian>((k1neg) (k1) Int.toNat(k2)<() Jacobian>((k2neg) (k2) multiply_unsafe.aux(d)(Jacobian.0)(Jacobian.0)(k1)(k2)<() Jacobian>((k1p) (k2p) let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p))(k1p); let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p))(k2p); let k2p = k2p<() Jacobian>((k2p.x) (k2p.y) (k2p.z) Jacobian.new(ecdsa.mod(Nat.mul(k2p.x)(CURVE.beta)))(k2p.y)(k2p.z)); Jacobian.add(k1p)(k2p))))); n<() Maybe(Jacobian)>(Maybe.none<Jacobian>)(() Maybe.some<Jacobian>(res))
+
+Nat.odd: Nat -> Bool
+  (n) Nat.eql(Nat.mod(n)(Nat.2))(Nat.1)
+
+multiply_unsafe.aux: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian)(Jacobian)
+  (d) (k1p) (k2p) (k1) (k2) Bool.or(Nat.gtn(k1)(Nat.0))(Nat.gtn(k2)(Nat.0))<() Pair(Jacobian)(Jacobian)>(let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p)(d))(k1p); let k2p = Nat.odd(k2)<() Jacobian>(Jacobian.add(k2p)(d))(k2p); let d = Jacobian.double(d); let k1 = Nat.div(k1)(Nat.2); let k2 = Nat.div(k2)(Nat.2); multiply_unsafe.aux(d)(k1p)(k2p)(k1)(k2))(Pair.new<Jacobian><Jacobian>(k1p)(k2p))
+
+test: Nat -> String
+  (k) Nat.gtn(k)(Nat.0)<() String>(let k = Nat.div(k)(Nat.2); test(k))("hey")
+
+main: IO(Unit)
+  IO.log<Unit>(test(Nat.0))(IO.end<Unit>)
+
+lel: IO(Unit)
+  let n = Nat.parse_hex("a0244bc0387a83ef901b1cb204997b2247abbc2"); let J = Jacobian.new(Nat.14)(Nat.19)(Nat.1); multiply_unsafe(J)(n)<() IO(Unit)>(IO.end<Unit>(Unit.new))((some) some<() IO(Unit)>((a) (b) (c) let a = Nat.to_string_decimal(a); let b = Nat.to_string_decimal(b); let c = Nat.to_string_decimal(c); IO.log<Unit>(a)(() IO.log<Unit>(b)(() IO.log<Unit>(c)(IO.end<Unit>)))))
+
 Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> B -> Either(A)(C) -> Either(A)(C)
   <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
 
@@ -829,6 +847,9 @@ Int.new: Nat -> Nat -> Int
 
 Int.fromNat: Nat -> Int
   (n) Int.new(n)(Nat.0)
+
+Int.toNat: Int -> Pair(Bool)(Nat)
+  (a) a<() Pair(Bool)(Nat)>((a.x) (a.y) a.y<() Pair(Bool)(Nat)>(Pair.new<Bool><Nat>(Bool.false)(a.x))(() Pair.new<Bool><Nat>(Bool.true)(a.y)))
 
 Int.0: Int
   Int.fromNat(Nat.0)

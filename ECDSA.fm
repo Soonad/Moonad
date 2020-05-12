@@ -159,3 +159,42 @@ ecdsa.split_scalar: Nat -> Pair(Int)(Int)
   let k1 = Int.sub(Int.sub(k)(Int.mul(c1)(a1)))(Int.mul(c2)(a2))
   let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2))
   Pair.new<Int><Int>(k1)(k2)
+
+// Non-constant-time multiplication. Uses double-and-add algorithm.
+// It's faster, but should only be used when you don't care about
+// an exposed private key e.g. sig verification.
+multiply_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
+  (d) (scalar)
+  let n = Nat.mod(scalar)(CURVE.n)
+  let res = ecdsa.split_scalar(n)<() Jacobian>
+    | (k1) (k2)
+      Int.toNat(k1)<() Jacobian>
+      | (k1neg) (k1)
+        Int.toNat(k2)<() Jacobian>
+        | (k2neg) (k2)
+          multiply_unsafe.aux(d)(Jacobian.0)(Jacobian.0)(k1)(k2)<() Jacobian>
+          | (k1p) (k2p)
+            let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p))(k1p)
+            let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p))(k2p)
+            let k2p = k2p<() Jacobian>((k2p.x) (k2p.y) (k2p.z)
+              Jacobian.new(ecdsa.mod(Nat.mul(k2p.x)(CURVE.beta)))(k2p.y)(k2p.z))
+            Jacobian.add(k1p)(k2p);;;;
+  n<() Maybe(Jacobian)>
+  | Maybe.none<Jacobian>;
+  | () Maybe.some<Jacobian>(res);
+
+Nat.odd: Nat -> Bool
+  (n) Nat.eql(Nat.mod(n)(Nat.2))(Nat.1)
+
+multiply_unsafe.aux: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian)(Jacobian)
+  (d) (k1p) (k2p) (k1) (k2)
+  Bool.or(Nat.gtn(k1)(Nat.0))(Nat.gtn(k2)(Nat.0))<() Unit -> Pair(Jacobian)(Jacobian)>
+  | ()
+    let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p)(d))(k1p)
+    let k2p = Nat.odd(k2)<() Jacobian>(Jacobian.add(k2p)(d))(k2p)
+    let d = Jacobian.double(d)
+    let k1 = Nat.div(k1)(Nat.2)
+    let k2 = Nat.div(k2)(Nat.2)
+    multiply_unsafe.aux(d)(k1p)(k2p)(k1)(k2);
+  | () Pair.new<Jacobian><Jacobian>(k1p)(k2p);
+  | Unit.new;
