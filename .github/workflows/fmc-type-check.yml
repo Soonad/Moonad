@@ -26,4 +26,8 @@ jobs:
     - name: Type check --github
       id: check_type_github
       run: node node_modules/formality-core/bin/fmc.js --github
+    
+    - name: Type check --github
+      id: check_type_fm_github
+      run: node node_modules/formality-core/bin/fm.js --github
           
