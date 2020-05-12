@@ -1,0 +1,2 @@
+TaelinArena.Constants.FORCE_AWAKENS_KEY : Bits 
+  Bits.from_string("01101101")
