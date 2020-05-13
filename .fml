@@ -419,15 +419,6 @@ Equal.rewrite: <A: Type> -> <a: A> -> <b: A> -> <P: A -> Type> -> (e: Equal(A)(a
 Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
   <A> <a> <P> (to) to
 
-Example.nat: Nat
-  Nat.mul(Nat.10)(Nat.10)
-
-Example.tco: Nat
-  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
-
-Example.u32_add: U32
-  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
-
 Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
   <A> (x) (xs) <P> (new) (add) add<A>(x)(xs<P>(new)(add))
 
@@ -1257,10 +1248,10 @@ Nat.succ: Nat -> Nat
   (n) <P> (z) (s) s(n)
 
 Nat.sum: Nat -> Nat
-  (n) Nat.sum.go(n)(Nat.zero)
+  (n) Nat.sum.tco(n)(Nat.zero)
 
-Nat.sum.go: Nat -> Nat -> Nat
-  (n) (r) n<() Nat>(r)((n.pred) Nat.sum.go(n.pred)(Nat.add(n)(r)))
+Nat.sum.tco: Nat -> Nat -> Nat
+  (n) (r) n<() Nat>(r)((n.pred) Nat.sum.tco(n.pred)(Nat.add(n)(r)))
 
 Nat.to_base: Nat -> Nat -> List(Nat)
   (base) (nat) Nat.to_base.go(base)(nat)([Nat;])
@@ -1671,6 +1662,9 @@ Research.inference0: Word(Nat.4)
 Research.inference1: Bool -> Bool
   (b) b<() Bool>(Bool.true)(Bool.false)
 
+Research.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+
 Research.nat_literals: IO(Unit)
   let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
 
@@ -1682,6 +1676,12 @@ Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> 
 
 Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
   <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
+
+Research.tail_calls: Nat
+  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
+
+Research.u32_add: U32
+  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
 
 Set: Type
   Map(Unit)
