@@ -25,13 +25,6 @@ jobs:
       id: check_type_fm_github
       run: node node_modules/formality-core/bin/fm.js --github
       
-  update_file:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-    - uses: actions/checkout@v2
-      
     - name: Update .fmc
       uses: alexesprit/action-update-file@master
       with:
@@ -43,5 +36,7 @@ jobs:
     - name: Type check fmc --github
       id: check_type_github
       run: node node_modules/formality-core/bin/fmc.js --github
+      
+   
 
     
