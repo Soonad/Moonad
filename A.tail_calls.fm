@@ -1,4 +1,4 @@
-Research.tail_calls: Nat
+A.tail_calls: Nat
   let n10   = Nat.10
   let n100  = Nat.mul(n10)(n10)
   let n1k   = Nat.mul(n10)(n100)

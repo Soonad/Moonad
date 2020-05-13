@@ -1,3 +1,97 @@
+A.core_in_core: String
+  let defs = Core.parse_defs("
+  Nat: Type
+    nat<P: Nat -> Type> ->
+    (zero: P(Nat.zero)) ->
+    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+    P(nat)
+
+  Nat.zero: Nat
+    <P> (z) (s) z
+
+  Nat.succ: Nat -> Nat
+    (n)
+    <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
+  "); let term = Core.Defs.term(defs)("main"); let type = Core.Defs.type(defs)("main"); Core.typecheck(term)(type)(defs)(Nat.zero)<() String>((err) err)((typ) Core.stringify(typ))
+
+A.Var: Type
+  Pair(Char)(Nat)
+
+A.Var.new: Char -> Nat -> A.Var
+  Pair.new<Char><Nat>
+
+A.Ctx: Type
+  List(A.Var)
+
+A.Ctx.nil: A.Ctx
+  [A.Var;]
+
+A.Ctx.ext: Char -> Nat -> A.Ctx -> A.Ctx
+  (nam) (x) List.cons<A.Var>(A.Var.new(nam)(x))
+
+A.Ctx.get: Char -> A.Ctx -> Maybe(Nat)
+  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(A.Ctx.get(chr)(t))))
+
+A.parse_fun.filt: String -> String
+  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
+
+A.parse_fun.typ0: String -> A.Ctx -> Type
+  (str) (ctx) str<() Type>(Unit)((nam) (nxt) A.parse_fun.typ1(nam)(nxt)(ctx))
+
+A.parse_fun.typ1: Char -> String -> A.Ctx -> Type
+  (nam) (nxt) (ctx) nxt<() Type>(Nat)((h) (t) (x: Nat) -> A.parse_fun.typ0(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx)))
+
+A.parse_fun.term: (str: String) -> (ctx: A.Ctx) -> A.parse_fun.typ0(str)(ctx)
+  (str) (ctx) str<(str) A.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) A.parse_fun.typ1(nam)(str)(ctx)>(A.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) A.parse_fun.term(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx))))
+
+A.fun: (str: String) -> A.parse_fun.typ0(A.parse_fun.filt(str))(A.Ctx.nil)
+  (str) A.parse_fun.term(A.parse_fun.filt(str))(A.Ctx.nil)
+
+A.crazy: Nat -> Nat -> Nat -> Nat
+  A.fun("λx.λy.λz.y")
+
+A.it_works: Equal(Nat)(Nat.1)(A.crazy(Nat.0)(Nat.1)(Nat.2))
+  Equal.to<Nat><Nat.1>
+
+A.equal_mul: Equal(Nat)(Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1))(Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1))
+  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
+
+A.floats: F64
+  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
+
+A.get_syntax: Nat
+  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
+
+A.inference0: Word(Nat.4)
+  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
+
+A.inference1: Bool -> Bool
+  (b) b<() Bool>(Bool.true)(Bool.false)
+
+A.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+
+A.nat_literals: IO(Unit)
+  let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
+
+A.solve: Nat
+  Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
+
+A.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
+  <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
+
+A.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
+  <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
+
+A.tail_calls: Nat
+  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
+
+A.u32_add: U32
+  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
+
 Bit.0: Bit
   <P> (o) (i) o
 
