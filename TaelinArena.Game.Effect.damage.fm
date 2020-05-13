@@ -1,5 +1,0 @@
-TaelinArena.Game.Effect.damage: F64 -> TaelinArena.Game.Effect
-  (dmg) 
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  damage(dmg)
-  

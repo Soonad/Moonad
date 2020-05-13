@@ -1,0 +1,5 @@
+TA.Game.Effect.heal: F64 -> TA.Game.Effect
+  (lif)
+  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
+  heal(lif)
+  

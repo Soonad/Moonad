@@ -1,0 +1,48 @@
+TA.exec_command
+  : TA.Game.Command ->
+    TA.Game.Game    ->
+    TA.Game.Game
+  (cmd) (gm)
+  cmd<() TA.Game.Game> | (cmd.pid) (cmd.inp)
+  let fn = ( (this)
+    let inp = cmd.inp 
+    let is_silenced = TA.Thing.is_silenced(this)
+    let is_stunned  = TA.Thing.is_stunned(this)
+    is_stunned<() TA.Thing>
+    | #true# 
+      inp<() TA.Thing> 
+      | (sdir.dir) TA.Game.init_act(this)(F64.0)(sdir.dir); 
+      | (key0.pos) this;  
+      | (key1.pos) this;
+      | (key2.pos) this;
+      | (key3.pos) this;
+      | (key4.pos) this;
+      | (key5.pos) this;
+      | (cmsg.txt) this;;
+
+    | #false#
+      is_silenced<() TA.Thing>  
+      | #true# 
+        inp<() TA.Thing> 
+        | (sdir.dir) TA.Thing.set_pad(this)(sdir.dir); 
+        | (key0.pos) this;  
+        | (key1.pos) this;
+        | (key2.pos) this;
+        | (key3.pos) this;
+        | (key4.pos) this;
+        | (key5.pos) this;
+        | (cmsg.txt) this;;             
+      
+      | #false#
+        inp<() TA.Thing> 
+        | (sdir.dir) TA.Thing.set_pad(this)(sdir.dir); 
+        | (key0.pos) TA.Game.init_act(this)(F64.1)(key0.pos);  
+        | (key1.pos) TA.Game.init_act(this)(F64.2)(key1.pos);
+        | (key2.pos) TA.Game.init_act(this)(F64.parse("3"))(key2.pos);
+        | (key3.pos) TA.Game.init_act(this)(F64.parse("4"))(key3.pos);
+        | (key4.pos) TA.Game.init_act(this)(F64.parse("5"))(key4.pos);
+        | (key5.pos) TA.Game.init_act(this)(F64.parse("6"))(key5.pos);
+        | (cmsg.txt) this;;;
+  ) :: TA.Thing -> TA.Thing
+  TA.Game.with_thing(cmd.pid)(fn)(gm);
+    

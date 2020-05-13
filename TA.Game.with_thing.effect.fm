@@ -1,0 +1,11 @@
+TA.Game.with_thing.effect
+  : TA.Game.PlayerId   ->
+    TA.Game.TxFunction ->
+    TA.Thing           -> 
+    TA.Thing
+  (pid) (fn) (thi)
+  let thi.pid = TA.Thing.get_pid(thi)
+  F64.eql(pid)(thi.pid)<() TA.Thing>
+  | fn(thi);
+  | thi;
+  

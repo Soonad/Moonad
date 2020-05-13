@@ -1,5 +1,0 @@
-TaelinArena.Game.Effect.repulse: F64 -> TaelinArena.Game.Effect
-  (mag)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  repulse(mag)
-  

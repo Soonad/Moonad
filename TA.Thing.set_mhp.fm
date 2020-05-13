@@ -1,0 +1,35 @@
+TA.Thing.set_mhp: (thi: TA.Thing) -> (new_mhp: F64) -> TA.Thing
+  (thi) (new_mhp)
+  thi<() TA.Thing> 
+  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
+    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
+    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
+    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
+    TA.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | new_mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
