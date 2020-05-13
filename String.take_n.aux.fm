@@ -1,12 +1,12 @@
 String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
   (n) (str) (res)
-  res<() Maybe(Pair(String)(String))>
-  | n<() Maybe(Pair(String)(String))>
-    | Maybe.some<Pair(String)(String)>
-      | Pair.new<String><String>(str)(String.nil);;
-    | () Maybe.none<Pair(String)(String)>;;
+  case res:
+  | case n:
+    | Maybe.some<>(Pair.new<><>(str)(String.nil));
+    | () Maybe.none<Pair(String)(String)>;
+  ;
   | (head) (tail)
-    n<() Maybe(Pair(String)(String))>
-    | Maybe.some<Pair(String)(String)>
-      | Pair.new<String><String>(str)(res);;
-    | (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);;
+    case n:
+    | Maybe.some<>(Pair.new<String><String>(str)(res));
+    | (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);
+  ;

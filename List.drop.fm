@@ -1,9 +1,10 @@
 // Removes the first elements of a list.
 List.drop: <A: Type> -> Nat -> List(A) -> List(A)
   <A> (n) (list)
-  n<() List(A)>
+  case n:
   | list;
   | (pred)
-    list<() List(A)>
+    case list:
     | List.nil<A>;
-    | (head) (tail) List.drop<A>(pred)(tail);;
+    | (head) (tail)
+      List.drop<>(pred)(tail);;

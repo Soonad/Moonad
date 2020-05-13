@@ -1,5 +1,5 @@
 Lang.trm: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
+  def C = Core.Ctx -> Core
   Parser.bind<C><C>
   | Parser.choice<C> |
     List.cons<Parser(C)>(Parser.try<C>(Lang.all))  |

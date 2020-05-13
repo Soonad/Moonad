@@ -20,7 +20,7 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
       | #true#
         let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0)
         let new_bst = F64.1
-        let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.3)(F64.4))
+        let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.parse("3"))(F64.parse("4")))
         let new_act = F64.0
         let new_tik = F64.0
         let new_lit = List.nil<TaelinArena.Game.Light>
@@ -95,9 +95,9 @@ TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
     let pos_x = F64.V3.get_z(this_pos)
     let pos_y = F64.V3.get_y(this_pos)
     let pos_z = F64.V3.get_z(this_pos)
-    let new_x = F64.min(F64.max(F64._256)(pos_x))(F64.256)
-    let new_y = F64.min(F64.max(F64._160)(pos_y))(F64.160)
-    let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.256)
+    let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256"))
+    let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160"))
+    let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256"))
     let this  = TaelinArena.Game.set_thing_pos
     |this;
     |F64.V3.new(new_x)(new_y)(new_z);

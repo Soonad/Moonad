@@ -1,4 +1,4 @@
-hello : IO(Unit)
+hello: IO(Unit)
   let uname = "Your name:"
   let greet = String.concat("Hello, ")
   IO.log<Unit>(uname)       | ()

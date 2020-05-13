@@ -1,5 +1,5 @@
 Lang.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
+  def C = Core.Ctx -> Core
   (func)
   Parser.bind<Pair(Bool)(C)><C>
   | Lang.enclose<C>(Lang.trm);

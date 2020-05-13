@@ -1,0 +1,8 @@
+// Big type annotations are avoided
+A.inference0: Word(Nat.4)
+  ( Word.1<>
+  | Word.0<>
+  | Word.1<>
+  | Word.0<>
+  | Word.nil
+  ;;;;)

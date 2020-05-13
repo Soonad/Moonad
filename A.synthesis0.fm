@@ -1,0 +1,9 @@
+// The synthesizer can generate functions definition like composition
+A.synthesis0
+  : <A:Type> ->
+    <B:Type> ->
+    <C:Type> ->
+    (B -> C) ->
+    (A -> B) ->
+    (A -> C)
+  _

@@ -1,9 +1,9 @@
 // Do any element satisfy a condition?
 List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
   <A> (cond) (list)
-  list<() Bool>
+  case list:
   | Bool.false;
   | (head) (tail)
-    cond(head)<() Bool>
+    case cond(head):
     | Bool.true;
-    | List.any<A>(cond)(tail);;
+    | List.any<>(cond)(tail);;

@@ -1,6 +1,5 @@
 String.length: String -> Nat
   (str)
-  str<() Nat>
+  case str:
   | Nat.zero;
-  | (head) (tail)
-    Nat.succ(String.length(tail));
+  | (head) (tail) Nat.succ(String.length(tail));
