@@ -29,7 +29,7 @@ jobs:
       uses: alexesprit/action-update-file@master
       with:
         file-path: .fmc
-        commit-msg: Update .fmc
+        commit-msg: Update .fmc with Github Action
         github-token: ${{ secrets.GITHUB_TOKEN }}
         allow-removing: true
    
