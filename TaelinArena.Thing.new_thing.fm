@@ -1,0 +1,29 @@
+TaelinArena.Thing.new_thing
+   : TaelinArena.Game.Thing
+   TaelinArena.Game.Thing.new
+   | #fun# ((x) x);
+   | #pid# F64.0;
+   | #mid# F64.0;
+   | #act# F64.0;
+   | #sid# F64.0;
+   | #stt# Map.new<>;
+   | #nam# String.nil;
+   | #lit# List.nil<TaelinArena.Game.Light>;
+   | #tik# F64.0;
+   | #pos# F64.V3.new(F64.0)(F64.0)(F64.0);
+   | #mov# F64.parse("8");
+   | #bst# F64.1;
+   | #pad# F64.V3.new(F64.0)(F64.0)(F64.0);
+   | #dir# F64.V3.new(F64.0)(F64._1)(F64.0);
+   | #trg# F64.V3.new(F64.0)(F64.0)(F64.0);
+   | #vel# F64.V3.new(F64.0)(F64.0)(F64.0);
+   | #box# TaelinArena.Game.Hitbox.cbox(F64.parse("12"));
+   | #wei# F64.1;
+   | #mhp# F64.parse("24");
+   | #dmg# F64.0;
+   | #knk# F64.V3.new(F64.0)(F64.0)(F64.0);
+   | #buf# List.nil<TaelinArena.Game.Buff>;
+   | #chi# List.nil<TaelinArena.Game.Thing>;
+   | #hit# List.nil<TaelinArena.Game.Hit>;
+   | #rst# Bool.false;
+   | #die# Bool.false; 
