@@ -1,5 +1,5 @@
 Lang.let: Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
+  def C = Core.Ctx -> Core
   Parser.then<String><C>(Lang.symbol("let"))   |
   Parser.bind<String><C>(Lang.nam(Bool.false)) | (name)
   Parser.then<Unit  ><C>(Lang.space)           |
