@@ -1,5 +1,5 @@
 Bits.concat: Bits -> Bits -> Bits
-  (a) (b)
+  (a, b)
   a<() Bits>
   | b;
   | (a.pred) Bits.0(Bits.concat(a.pred)(b));

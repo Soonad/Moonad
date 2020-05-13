@@ -1,13 +1,13 @@
 Core.Comp.check: Core -> Core -> Core.Defs -> Nat -> Maybe(Pair(Comp)(Core))
   (term) (type) (defs) (ctx)
-  let Par = Pair(Comp)(Core)
-  let par = Pair.new<Comp><Core>
-  let bnd = Maybe.bind<Par><Par>
-  let err = Maybe.none<Par>
-  let ret = Maybe.some<Par>
-  let Ret = Maybe(Par)
-  let cmp = Pair.fst<Comp><Core>
-  let typ = Pair.snd<Comp><Core>
+  def Par = Pair(Comp)(Core)
+  def par = Pair.new<Comp><Core>
+  def bnd = Maybe.bind<Par><Par>
+  def err = Maybe.none<Par>
+  def ret = Maybe.some<Par>
+  def Ret = Maybe(Par)
+  def cmp = Pair.fst<Comp><Core>
+  def typ = Pair.snd<Comp><Core>
   let con = String.concat
   term<() Ret>
   |#var# () () ()

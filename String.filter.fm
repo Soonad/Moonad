@@ -1,9 +1,9 @@
 String.filter : (Char -> Bool) -> String -> String
   (cond) (str)
-  str<() String>
+  case str:
   | String.nil;
   | (str.head) (str.tail)
-    cond(str.head)<() String -> String>
+    case cond(str.head):
     | (t) t;
     | (t) String.cons(str.head)(t);
     | String.filter(cond)(str.tail);;

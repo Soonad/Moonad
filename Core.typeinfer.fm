@@ -1,9 +1,9 @@
 Core.typeinfer: Core -> Core.Defs -> Nat -> Either(Text)(Core)
   (term) (defs) (ctx)
-  let bnd = Either.bind<Text><Core><Core>
-  let err = Either.left<Text><Core>
-  let ret = Either.right<Text><Core>
-  let Ret = Either(Text)(Core)
+  def bnd = Either.bind<Text><Core><Core>
+  def err = Either.left<Text><Core>
+  def ret = Either.right<Text><Core>
+  def Ret = Either(Text)(Core)
   term<() Ret>
   |#var# (term.name) (term.indx) (term.flip)
     ret(Core.var(term.name)(term.indx)(term.flip));
