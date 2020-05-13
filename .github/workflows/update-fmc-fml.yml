@@ -32,6 +32,14 @@ jobs:
         commit-msg: Update .fmc with Github Action
         github-token: ${{ secrets.GITHUB_TOKEN }}
         allow-removing: true
+    
+    - name: Update .fml
+      uses: alexesprit/action-update-file@master
+      with:
+        file-path: .fml
+        commit-msg: Update .fml with Github Action
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-removing: true
    
     - name: Type check fmc --github
       id: check_type_github
