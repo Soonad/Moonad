@@ -1,5 +1,5 @@
 Lang.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  let C = Core.Ctx -> Core
+  def C = Core.Ctx -> Core
   (expr)
   Parser.then<Unit  ><C>(Lang.space)        |
   Parser.then<String><C>(Lang.symbol("::")) |
