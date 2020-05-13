@@ -17,7 +17,7 @@ TaelinArena.Thing.puddledmg_fun
     | F64.parse("58");
   let effs = [
     TaelinArena.Game.Effect;
-    TaelinArena.Game.Effect.damage(F64.1)
+    TaelinArena.Game.Effect.damage(F64.2)
   ]
   let hits = [
     TaelinArena.Game.Hit;

@@ -1668,100 +1668,6 @@ Parser.type: (A: Type) -> Parser.Reply(A) -> Type
 Parser.zero: <A: Type> -> Parser(A)
   <A> Parsec.zero<Unit><Unit><A>
 
-Research.core_in_core: String
-  let defs = Core.parse_defs("
-  Nat: Type
-    nat<P: Nat -> Type> ->
-    (zero: P(Nat.zero)) ->
-    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
-    P(nat)
-
-  Nat.zero: Nat
-    <P> (z) (s) z
-
-  Nat.succ: Nat -> Nat
-    (n)
-    <P> (z) (s) s(n)
-
-  main: Nat
-    Nat.succ(Nat.zero)
-  "); let term = Core.Defs.term(defs)("main"); let type = Core.Defs.type(defs)("main"); Core.typecheck(term)(type)(defs)(Nat.zero)<() String>((err) err)((typ) Core.stringify(typ))
-
-Research.Var: Type
-  Pair(Char)(Nat)
-
-Research.Var.new: Char -> Nat -> Research.Var
-  Pair.new<Char><Nat>
-
-Research.Ctx: Type
-  List(Research.Var)
-
-Research.Ctx.nil: Research.Ctx
-  [Research.Var;]
-
-Research.Ctx.ext: Char -> Nat -> Research.Ctx -> Research.Ctx
-  (nam) (x) List.cons<Research.Var>(Research.Var.new(nam)(x))
-
-Research.Ctx.get: Char -> Research.Ctx -> Maybe(Nat)
-  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(Research.Ctx.get(chr)(t))))
-
-Research.parse_fun.filt: String -> String
-  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
-
-Research.parse_fun.typ0: String -> Research.Ctx -> Type
-  (str) (ctx) str<() Type>(Unit)((nam) (nxt) Research.parse_fun.typ1(nam)(nxt)(ctx))
-
-Research.parse_fun.typ1: Char -> String -> Research.Ctx -> Type
-  (nam) (nxt) (ctx) nxt<() Type>(Nat)((h) (t) (x: Nat) -> Research.parse_fun.typ0(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx)))
-
-Research.parse_fun.term: (str: String) -> (ctx: Research.Ctx) -> Research.parse_fun.typ0(str)(ctx)
-  (str) (ctx) str<(str) Research.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) Research.parse_fun.typ1(nam)(str)(ctx)>(Research.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) Research.parse_fun.term(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx))))
-
-Research.fun: (str: String) -> Research.parse_fun.typ0(Research.parse_fun.filt(str))(Research.Ctx.nil)
-  (str) Research.parse_fun.term(Research.parse_fun.filt(str))(Research.Ctx.nil)
-
-Research.crazy: Nat -> Nat -> Nat -> Nat
-  Research.fun("λx.λy.λz.y")
-
-Research.it_works: Equal(Nat)(Nat.1)(Research.crazy(Nat.0)(Nat.1)(Nat.2))
-  Equal.to<Nat><Nat.1>
-
-Research.equal_mul: Equal(Nat)(Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1))(Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1))
-  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
-
-Research.floats: F64
-  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
-
-Research.get_syntax: Nat
-  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
-
-Research.inference0: Word(Nat.4)
-  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
-
-Research.inference1: Bool -> Bool
-  (b) b<() Bool>(Bool.true)(Bool.false)
-
-Research.nat: Nat
-  Nat.mul(Nat.10)(Nat.10)
-
-Research.nat_literals: IO(Unit)
-  let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
-
-Research.solve: Nat
-  Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
-
-Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
-  <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
-
-Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
-  <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
-
-Research.tail_calls: Nat
-  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
-
-Research.u32_add: U32
-  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
-
 Set: Type
   Map(Unit)
 
@@ -4199,7 +4105,7 @@ TaelinArena.Thing.poste_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
   (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let new_pos = F64.V3.new(F64.0)(F64.0)(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let self = TaelinArena.Game.set_thing_mid(self)(POSTE_IDLE_000); let lpos = self.pos<() F64.V3>((self.pos.x) (self.pos.y) (self.pos.z) F64.V3.new(self.pos.x)(self.pos.y)(F64.parse("52"))); let lrng = F64.parse("32.0"); let lrad = F64.parse("12"); let lsub = F64.V3.new(F64.0)(F64.0)(F64.0); let ladd = F64.V3.new(F64.parse("0.72"))(F64.parse("0.60"))(F64.parse("0.24")); let lght = TaelinArena.Game.Light.new(lpos)(lrad)(lrng)(lsub)(ladd); let self = TaelinArena.Game.illumine(self)(F64.0)(F64.parse("2147483648"))([TaelinArena.Game.Light; lght]); self
 
 TaelinArena.Thing.puddledmg_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("100"))(F64.parse("-100"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000)(F64.parse("29"))(F64.parse("58")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let eff_slow = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3")))(F64.parse("0.7"))]; let slow = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(eff_slow)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(slow); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("44"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("52"))(hits); self
+  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("100"))(F64.parse("-100"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000)(F64.parse("29"))(F64.parse("58")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.2)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let eff_slow = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3")))(F64.parse("0.7"))]; let slow = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(eff_slow)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(slow); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("44"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("52"))(hits); self
 
 TaelinArena.Thing.puddleheal_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
   (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("130"))(F64.parse("80"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_sid(self)(F64.0); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015)(F64.parse("9"))(F64.parse("36")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.heal(F64.parse("2"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("42")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); self
