@@ -86,6 +86,9 @@ ecdsa.invert: Nat -> Nat -> Maybe(Nat)
         | (x) (y) Maybe.some<Nat>(Int.mod_Nat(x)(modulo));;
       | Maybe.none<Nat>;;;
 
+ecdsa.invertUnsafe: Nat -> Nat -> Nat
+  (number) (modulo) Maybe.extract<Nat>(ecdsa.invert(number)(modulo))(Nat.1)
+
 // Split 256-bit K into 2 128-bit (k1, k2) for which k1 + k2 * lambda = K.
 // https://gist.github.com/paulmillr/eb670806793e84df628a7c434a873066
 ecdsa.split_scalar: Nat -> Pair(Int)(Int)
@@ -101,13 +104,14 @@ ecdsa.split_scalar: Nat -> Pair(Int)(Int)
   let k2 = Int.sub(Int.mul(c1)(b1))(Int.mul(c2)(b2))
   Pair.new<Int><Int>(k1)(k2)
 
+// Point works in default coordinates
 Point: Type
   Pair(Nat)(Nat)
 
 Point.new: Nat -> Nat -> Point
   (x) (y) Pair.new<Nat><Nat>(x)(y)
 
-// Jacobian point works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
+// Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
 Jacobian: Type
   jacobian<P: Jacobian -> Type> ->
   (new: (x: Nat) -> (y: Nat) -> (z: Nat)-> P(Jacobian.new(x)(y)(z))) ->
@@ -119,6 +123,9 @@ Jacobian.new: Nat -> Nat -> Nat -> Jacobian
 
 Jacobian.0: Jacobian
   Jacobian.new(Nat.0)(Nat.0)(Nat.1)
+
+Jacobian.base: Jacobian
+  Jacobian.new(CURVE.Gx)(CURVE.Gy)(Nat.1)
 
 Jacobian.equal: Jacobian -> Jacobian -> Bool
   (a) (b)
@@ -134,10 +141,20 @@ Jacobian.equal: Jacobian -> Jacobian -> Bool
       let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y)(b.z3)))(ecdsa.mod(Nat.mul(b.y)(a.z3)))
       Bool.and(eq1)(eq2);;
 
-Jacobian.fromPoint: Point -> Jacobian
+Jacobian.from_point: Point -> Jacobian
   (p)
   p<() Jacobian>
   | (p.x) (p.y) Jacobian.new(p.x)(p.y)(Nat.1);
+
+Jacobian.to_point: Jacobian -> Point
+  (p)
+  p<() Point>
+  | (p.x) (p.y) (p.z)
+    let invz = ecdsa.invertUnsafe(p.z)(CURVE.P)
+    let invz2 = Nat.square(invz)
+    let x = ecdsa.mod(Nat.mul(p.x)(invz2))
+    let y = ecdsa.mod(Nat.mulVar(Nat.3)(p.y)(invz2)(invz))
+    Point.new(x)(y);
 
 Jacobian.negate: Jacobian -> Jacobian
   (p)
@@ -227,3 +244,6 @@ Jacobian.mul_unsafe_aux.tco: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> P
     Jacobian.mul_unsafe_aux.tco(d)(k1p)(k2p)(k1)(k2);
   | () Pair.new<Jacobian><Jacobian>(k1p)(k2p);
   | Unit.new;
+
+Point.mul_unsafe: Point -> Nat -> Maybe(Point)
+  (p) (n) Maybe.map<Jacobian><Point>(Jacobian.to_point)(Jacobian.mul_unsafe(Jacobian.from_point(p))(n))
