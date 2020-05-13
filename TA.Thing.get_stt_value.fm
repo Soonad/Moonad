@@ -1,0 +1,14 @@
+TA.Thing.get_stt_value: TA.Thing -> Bits -> F64
+  (self) (stt_key) 
+  let stt = TA.Thing.get_stt(self)
+  Map.get<F64>(stt_key)(stt)<() F64>
+  | F64.0;
+  | (result.value) 
+    result.value;
+
+// get_stt_value(self: Thing, stt_key: Bits) : Number 
+//   case self |thing 
+//     let result = lookup(_ stt_key, self.stt)
+//     case result 
+//     | none => 0
+//     | some => result.value

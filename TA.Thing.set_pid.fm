@@ -1,0 +1,39 @@
+TA.Thing.set_pid
+  : (thi: TA.Thing)        -> 
+    (new_pid: TA.Game.PlayerId) -> 
+    TA.Thing
+  (thi) (new_pid)
+  thi<() TA.Thing> 
+  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
+    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
+    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
+    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
+    TA.Thing.new
+    | thi.fun;
+    | new_pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
+

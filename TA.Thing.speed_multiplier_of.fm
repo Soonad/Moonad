@@ -1,0 +1,12 @@
+TA.Thing.speed_multiplier_of: TA.Thing -> F64
+  (self) 
+  let bst = TA.Thing.get_bst(self)
+  let buf = TA.Thing.get_buf(self)
+  List.fold<TA.Game.Buff><F64>
+  |bst;
+  |TA.Game.combine_mov_buffs;
+  |buf;  
+
+// speed_multiplier_of(self: Thing) : Number
+//   case self |thing 
+//   fold(Buff; Number; self.bst, combine_mov_buffs, self.buf)

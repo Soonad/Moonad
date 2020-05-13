@@ -1,0 +1,4 @@
+TA.Game.Buff.rooted: F64 -> TA.Game.Buff 
+  (dur)
+  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
+  rooted(dur)

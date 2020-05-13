@@ -1,3 +1,94 @@
+A.core_in_core: String
+  let defs = Core.parse_defs("
+  Nat: Type
+    nat<P: Nat -> Type> ->
+    (zero: P(Nat.zero)) ->
+    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+    P(nat)
+
+  Nat.zero: Nat
+    <P> (z) (s) z
+
+  Nat.succ: Nat -> Nat
+    (n)
+    <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
+  "); let term = Core.Defs.term(defs)("main"); let type = Core.Defs.type(defs)("main"); Core.typecheck(term)(type)(defs)(Nat.zero)<() String>((err) err)((typ) Core.stringify(typ))
+
+A.Var: Type
+  Pair(Char)(Nat)
+
+A.Var.new: Char -> Nat -> A.Var
+  Pair.new<Char><Nat>
+
+A.Ctx: Type
+  List(A.Var)
+
+A.Ctx.nil: A.Ctx
+  [A.Var;]
+
+A.Ctx.ext: Char -> Nat -> A.Ctx -> A.Ctx
+  (nam) (x) List.cons<A.Var>(A.Var.new(nam)(x))
+
+A.Ctx.get: Char -> A.Ctx -> Maybe(Nat)
+  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(A.Ctx.get(chr)(t))))
+
+A.parse_fun.filt: String -> String
+  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
+
+A.parse_fun.typ0: String -> A.Ctx -> Type
+  (str) (ctx) str<() Type>(Unit)((nam) (nxt) A.parse_fun.typ1(nam)(nxt)(ctx))
+
+A.parse_fun.typ1: Char -> String -> A.Ctx -> Type
+  (nam) (nxt) (ctx) nxt<() Type>(Nat)((h) (t) (x: Nat) -> A.parse_fun.typ0(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx)))
+
+A.parse_fun.term: (str: String) -> (ctx: A.Ctx) -> A.parse_fun.typ0(str)(ctx)
+  (str) (ctx) str<(str) A.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) A.parse_fun.typ1(nam)(str)(ctx)>(A.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) A.parse_fun.term(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx))))
+
+A.fun: (str: String) -> A.parse_fun.typ0(A.parse_fun.filt(str))(A.Ctx.nil)
+  (str) A.parse_fun.term(A.parse_fun.filt(str))(A.Ctx.nil)
+
+A.crazy: Nat -> Nat -> Nat -> Nat
+  A.fun("λx.λy.λz.y")
+
+A.it_works: Equal(Nat)(Nat.1)(A.crazy(Nat.0)(Nat.1)(Nat.2))
+  Equal.to<Nat><Nat.1>
+
+A.equal_mul: Equal(Nat)(Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1))(Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1))
+  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
+
+A.floats: F64
+  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
+
+A.get_syntax: Nat
+  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
+
+A.inference0: Word(Nat.4)
+  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
+
+A.inference1: Bool -> Bool
+  (b) b<() Bool>(Bool.true)(Bool.false)
+
+A.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+
+A.nat_literals: IO(Unit)
+  let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
+
+A.solve: Nat
+  Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
+
+A.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
+  <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
+
+A.tail_calls: Nat
+  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
+
+A.u32_add: U32
+  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
+
 Bit.0: Bit
   <P> (o) (i) o
 
@@ -377,6 +468,66 @@ Core.typeinfer: Core -> Core.Defs -> Nat -> Either(Text)(Core)
 Core.var: String -> Nat -> Bool -> Core
   (name) (indx) (flip) <> (var) () () () () () () () var(name)(indx)(flip)
 
+Data.Flds: Type
+  self<P: Data.Flds -> Type> -> (nil: P(Data.Flds.nil)) -> (ext: (name: String) -> (type: Data) -> (flds: Data.Flds) -> P(Data.Flds.ext(name)(type)(flds))) -> P(self)
+
+Data.Flds.nil: Data.Flds
+  <P> (nil) (ext) nil
+
+Data.Flds.ext: String -> Data -> Data.Flds -> Data.Flds
+  (name) (type) (flds) <P> (nil) (ext) ext(name)(type)(flds)
+
+Data.Ctrs: Type
+  self<P: Data.Ctrs -> Type> -> (nil: P(Data.Ctrs.nil)) -> (ext: (name: String) -> (flds: Data.Flds) -> (ctrs: Data.Ctrs) -> P(Data.Ctrs.ext(name)(flds)(ctrs))) -> P(self)
+
+Data.Ctrs.nil: Data.Ctrs
+  <P> (nil) (ext) nil
+
+Data.Ctrs.ext: String -> Data.Flds -> Data.Ctrs -> Data.Ctrs
+  (name) (flds) (ctrs) <P> (nil) (ext) ext(name)(flds)(ctrs)
+
+Data: Type
+  self<P: Data -> Type> -> (new: (name: String) -> (ctrs: Data.Ctrs) -> P(Data.new(name)(ctrs))) -> P(self)
+
+Data.new: String -> Data.Ctrs -> Data
+  (name) (ctrs) <P> (new) new(name)(ctrs)
+
+Data.Flds.type: Type -> Data.Flds -> Type
+  (P) (flds) flds<() Type>(P)((flds.name) (flds.type) (flds.flds) (x: P) -> Data.Flds.type(P)(flds.flds))
+
+Data.Ctrs.type: Type -> Data.Ctrs -> Type
+  (P) (ctr) ctr<() Type>(P)((ctr.name) (ctr.flds) (ctr.ctrs) (ctr: Data.Flds.type(P)(ctr.flds)) -> Data.Ctrs.type(P)(ctr.ctrs))
+
+Data.type: Data -> Type
+  (data) data<() Type>((data.name) (data.ctrs) self<P: Type> -> Data.Ctrs.type(P)(data.ctrs))
+
+Data.Ctrs.ctr_type.header: (P: Type) -> Data.Ctrs -> List(P) -> Type
+  (P) (ctrs) (vars) ctrs<() Type>(vars<() Type>(Unit)(() () P))((ctrs.name) (ctrs.flds) (ctrs.ctrs) (x: P) -> Data.Ctrs.ctr_type.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+
+Data.Ctrs.ctr_type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
+  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr_type.header(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr_type(ctr.ctrs)(ctr0)(nth.pred)))
+
+Data.ctr_type: Data -> Nat -> Type
+  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr_type(data.ctrs)(data.ctrs)(nth))
+
+Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr_type.header(P)(ctrs)(vars)
+  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr_type.header(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+
+Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)
+  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
+
+Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr_type(data)(nth)
+  (data) (nth) data<(data) Data.ctr_type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
+
+Bit.Data: Data
+  Data.new("Bit")(Data.Ctrs.ext("b0")(Data.Flds.nil)(Data.Ctrs.ext("b1")(Data.Flds.nil)(Data.Ctrs.nil)))
+
+Bit.Type: Type
+  Data.type(Bit.Data)
+
+Bit.Ctr.0: Data.ctr_type(Bit.Data)(Nat.0)
+  Data.ctr(Bit.Data)(Nat.0)
+
 Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
   <A> (s) (x) x(Unit.new)
 
@@ -419,8 +570,8 @@ Equal.rewrite: <A: Type> -> <a: A> -> <b: A> -> <P: A -> Type> -> (e: Equal(A)(a
 Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
   <A> <a> <P> (to) to
 
-Exports.TaelinArena: Exports
-  Exports.add<<A: Type> -> List(A)>(List.nil)(Exports.add<<A: Type> -> (head: A) -> (tail: List(A)) -> List(A)>(List.cons)(Exports.add<F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments)(Exports.add<F64.V3 -> F64.V3 -> F64.V3 -> F64.V3>(F64.V3.look_at)(Exports.add<TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> F64.V3>(TaelinArena.Game.get_position_by_pid)(Exports.add<TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.Game.map_stage)(Exports.add<TaelinArena.Game.PlayerId -> TaelinArena.Game.Input -> TaelinArena.Game.Command>(TaelinArena.Game.Command.new)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.sdir)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key0)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key1)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key2)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key3)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key4)(Exports.add<F64.V3 -> TaelinArena.Game.Input>(TaelinArena.Game.Input.key5)(Exports.add<TaelinArena.Game.Command -> TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.exec_command)(Exports.add<TaelinArena.Game.TxFunction -> TaelinArena.Game.PlayerId -> TaelinArena.Game.ModelId -> TaelinArena.Game.ActionId -> TaelinArena.Game.SideId -> Map(F64) -> String -> List(TaelinArena.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit) -> Bool -> Bool -> TaelinArena.Game.Thing>(TaelinArena.Game.Thing.new)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_fun: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_fun)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_sid: TaelinArena.Game.SideId) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_sid)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_pid: TaelinArena.Game.PlayerId) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_pid)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_pos: F64.V3) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_pos)(Exports.add<(thi: TaelinArena.Game.Thing) -> (new_nam: String) -> TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_nam)(Exports.add<List(TaelinArena.Game.Thing) -> TaelinArena.Game.Game>(TaelinArena.Game.Game.new)(Exports.add<TaelinArena.Game.Game -> TaelinArena.Game.Game>(TaelinArena.exec_turn)(Exports.new)))))))))))))))))))))))
+Exports.TA: Exports
+  Exports.add<<A: Type> -> List(A)>(List.nil)(Exports.add<<A: Type> -> (head: A) -> (tail: List(A)) -> List(A)>(List.cons)(Exports.add<F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments)(Exports.add<F64.V3 -> F64.V3 -> F64.V3 -> F64.V3>(F64.V3.look_at)(Exports.add<TA.Game.PlayerId -> TA.Game.Game -> F64.V3>(TA.Game.get_position_by_pid)(Exports.add<TA.Thing -> TA.Thing -> TA.Game.Game -> TA.Game.Game>(TA.Game.map_stage)(Exports.add<TA.Game.PlayerId -> TA.Game.Input -> TA.Game.Command>(TA.Game.Command.new)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.sdir)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key0)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key1)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key2)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key3)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key4)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key5)(Exports.add<TA.Game.Command -> TA.Game.Game -> TA.Game.Game>(TA.exec_command)(Exports.add<TA.Game.TxFunction -> TA.Game.PlayerId -> TA.Game.ModelId -> TA.Game.ActionId -> TA.Game.SideId -> Map(F64) -> String -> List(TA.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TA.Game.Buff) -> List(TA.Thing) -> List(TA.Game.Hit) -> Bool -> Bool -> TA.Thing>(TA.Thing.new)(Exports.add<(thi: TA.Thing) -> (new_fun: TA.Game.TxFunction) -> TA.Thing>(TA.Thing.set_fun)(Exports.add<(thi: TA.Thing) -> (new_sid: TA.Game.SideId) -> TA.Thing>(TA.Thing.set_sid)(Exports.add<(thi: TA.Thing) -> (new_pid: TA.Game.PlayerId) -> TA.Thing>(TA.Thing.set_pid)(Exports.add<(thi: TA.Thing) -> (new_pos: F64.V3) -> TA.Thing>(TA.Thing.set_pos)(Exports.add<(thi: TA.Thing) -> (new_nam: String) -> TA.Thing>(TA.Thing.set_nam)(Exports.add<List(TA.Thing) -> TA.Game.Game>(TA.Game.Game.new)(Exports.add<TA.Game.Game -> TA.Game.Game>(TA.exec_turn)(Exports.new)))))))))))))))))))))))
 
 Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
   <A> (x) (xs) <P> (new) (add) add<A>(x)(xs<P>(new)(add))
@@ -466,6 +617,18 @@ F64.Line: Type
 
 F64.Line.new: F64.V3 -> F64.V3 -> F64.Line
   (pos) (dir) <P> (new) new(pos)(dir)
+
+F64.Ordering.EQ: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.EQ
+
+F64.Ordering.GT: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.GT
+
+F64.Ordering.LT: F64.Ordering
+  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.LT
+
+F64.Ordering: Type
+  F64.ordering<P: F64.Ordering -> Type> -> (LT: P(F64.Ordering.LT)) -> (EQ: P(F64.Ordering.EQ)) -> (GT: P(F64.Ordering.GT)) -> P(F64.ordering)
 
 F64.Segment: Type
   segment<P: F64.Segment -> Type> -> (new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> P(segment)
@@ -585,7 +748,10 @@ F64.atan: F64 -> F64 -> F64
   F64.atan
 
 F64.cmp: F64 -> F64 -> Cmp
-  (a) (b) a<() Cmp>((a.word) b<() Cmp>((b.word) F64.eql(a)(b)<() Cmp>(Cmp.eql)(Word.ltn<Nat.64>(a.word)(b.word)<() Cmp>(Cmp.ltn)(Cmp.gtn))))
+  F64.cmp
+
+F64.compare_numbers: F64 -> F64 -> F64.Ordering
+  (a) (b) Bool.if<F64.Ordering>(F64.eql(a)(b))(F64.Ordering.EQ)(Bool.if<F64.Ordering>(F64.ltn(b)(a))(F64.Ordering.GT)(F64.Ordering.LT))
 
 F64.cos: F64 -> F64
   F64.cos
@@ -594,7 +760,7 @@ F64.div: F64 -> F64 -> F64
   F64.div
 
 F64.eql: F64 -> F64 -> Bool
-  (x) (y) x<(x2) Bool>((x.word) y<() Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
+  (x) (y) x<(tag) (x3) Bool>((x.word) y<() (x4) Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
 
 F64.exp: F64 -> F64 -> F64
   F64.exp
@@ -603,7 +769,7 @@ F64.floor: F64 -> F64
   (x) let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x)(F64.0)))(F64.1)(F64.0); F64.sub(F64.sub(x)(F64.mod(x)(F64.1)))(ltn_zero)
 
 F64: Type
-  f64<P: F64 -> Type> -> (new: (a: Word(Nat.64)) -> P(F64.new(a))) -> P(f64)
+  Newtype(Word(Nat.64))("F64")
 
 F64.from_bool: Bool -> F64
   (b) b<() F64>(F64.1)(F64.0)
@@ -1574,100 +1740,6 @@ Parser.type: (A: Type) -> Parser.Reply(A) -> Type
 Parser.zero: <A: Type> -> Parser(A)
   <A> Parsec.zero<Unit><Unit><A>
 
-Research.core_in_core: String
-  let defs = Core.parse_defs("
-  Nat: Type
-    nat<P: Nat -> Type> ->
-    (zero: P(Nat.zero)) ->
-    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
-    P(nat)
-
-  Nat.zero: Nat
-    <P> (z) (s) z
-
-  Nat.succ: Nat -> Nat
-    (n)
-    <P> (z) (s) s(n)
-
-  main: Nat
-    Nat.succ(Nat.zero)
-  "); let term = Core.Defs.term(defs)("main"); let type = Core.Defs.type(defs)("main"); Core.typecheck(term)(type)(defs)(Nat.zero)<() String>((err) err)((typ) Core.stringify(typ))
-
-Research.Var: Type
-  Pair(Char)(Nat)
-
-Research.Var.new: Char -> Nat -> Research.Var
-  Pair.new<Char><Nat>
-
-Research.Ctx: Type
-  List(Research.Var)
-
-Research.Ctx.nil: Research.Ctx
-  [Research.Var;]
-
-Research.Ctx.ext: Char -> Nat -> Research.Ctx -> Research.Ctx
-  (nam) (x) List.cons<Research.Var>(Research.Var.new(nam)(x))
-
-Research.Ctx.get: Char -> Research.Ctx -> Maybe(Nat)
-  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(Research.Ctx.get(chr)(t))))
-
-Research.parse_fun.filt: String -> String
-  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
-
-Research.parse_fun.typ0: String -> Research.Ctx -> Type
-  (str) (ctx) str<() Type>(Unit)((nam) (nxt) Research.parse_fun.typ1(nam)(nxt)(ctx))
-
-Research.parse_fun.typ1: Char -> String -> Research.Ctx -> Type
-  (nam) (nxt) (ctx) nxt<() Type>(Nat)((h) (t) (x: Nat) -> Research.parse_fun.typ0(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx)))
-
-Research.parse_fun.term: (str: String) -> (ctx: Research.Ctx) -> Research.parse_fun.typ0(str)(ctx)
-  (str) (ctx) str<(str) Research.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) Research.parse_fun.typ1(nam)(str)(ctx)>(Research.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) Research.parse_fun.term(String.cons(h)(t))(Research.Ctx.ext(nam)(x)(ctx))))
-
-Research.fun: (str: String) -> Research.parse_fun.typ0(Research.parse_fun.filt(str))(Research.Ctx.nil)
-  (str) Research.parse_fun.term(Research.parse_fun.filt(str))(Research.Ctx.nil)
-
-Research.crazy: Nat -> Nat -> Nat -> Nat
-  Research.fun("λx.λy.λz.y")
-
-Research.it_works: Equal(Nat)(Nat.1)(Research.crazy(Nat.0)(Nat.1)(Nat.2))
-  Equal.to<Nat><Nat.1>
-
-Research.equal_mul: Equal(Nat)(Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1))(Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1))
-  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
-
-Research.floats: F64
-  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
-
-Research.get_syntax: Nat
-  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
-
-Research.inference0: Word(Nat.4)
-  Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
-
-Research.inference1: Bool -> Bool
-  (b) b<() Bool>(Bool.true)(Bool.false)
-
-Research.nat: Nat
-  Nat.mul(Nat.10)(Nat.10)
-
-Research.nat_literals: IO(Unit)
-  let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
-
-Research.solve: Nat
-  Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
-
-Research.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
-  <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
-
-Research.synthesis1: <P: Nat -> Type> -> (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) -> (x: P(Nat.zero)) -> P(Nat.3)
-  <P> (f) (x) f<Nat.succ(<P> (z) (s) s(Nat.zero))>(f<<P> (z) (s) s(Nat.zero)>(f<Nat.zero>(x)))
-
-Research.tail_calls: Nat
-  let n10 = Nat.10; let n100 = Nat.mul(n10)(n10); let n1k = Nat.mul(n10)(n100); let n10k = Nat.mul(n10)(n1k); let n100k = Nat.mul(n10)(n10k); let n1m = Nat.mul(n10)(n100k); let n10m = Nat.mul(n10)(n1m); Nat.sum(n10m)
-
-Research.u32_add: U32
-  let num = U32.inc(U32.inc(U32.0)); U32.add(num)(num)
-
 Set: Type
   Map(Unit)
 
@@ -1794,473 +1866,191 @@ Subset: (A: Type) -> (B: A -> Type) -> Type
 Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
   <A> <B> (a) <b> <P> (subset) subset(a)<b>
 
-TaelinArena.Constants.ONE_SEC: F64
+TA.Constants.ONE_SEC: F64
   F64.parse("24")
 
-TaelinArena.Constants.POS_X_KEY: Bits
+TA.Constants.POS_X_KEY: Bits
   Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
 
-TaelinArena.Constants.POS_Y_KEY: Bits
+TA.Constants.POS_Y_KEY: Bits
   Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil))))))))
 
-TaelinArena.Game.ActionId: Type
+TA.Game.ActionId: Type
   F64
 
-TaelinArena.Game.Buff: Type
-  buff<P: TaelinArena.Game.Buff -> Type> -> (shielded: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.shielded(dur)(val))) -> (slowed: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.slowed(dur)(val))) -> (hasted: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Buff.hasted(dur)(val))) -> (silenced: (dur: F64) -> P(TaelinArena.Game.Buff.silenced(dur))) -> (rooted: (dur: F64) -> P(TaelinArena.Game.Buff.rooted(dur))) -> (stuned: (dur: F64) -> P(TaelinArena.Game.Buff.stuned(dur))) -> P(buff)
+TA.Game.Buff: Type
+  buff<P: TA.Game.Buff -> Type> -> (shielded: (dur: F64) -> (val: F64) -> P(TA.Game.Buff.shielded(dur)(val))) -> (slowed: (dur: F64) -> (val: F64) -> P(TA.Game.Buff.slowed(dur)(val))) -> (hasted: (dur: F64) -> (val: F64) -> P(TA.Game.Buff.hasted(dur)(val))) -> (silenced: (dur: F64) -> P(TA.Game.Buff.silenced(dur))) -> (rooted: (dur: F64) -> P(TA.Game.Buff.rooted(dur))) -> (stuned: (dur: F64) -> P(TA.Game.Buff.stuned(dur))) -> P(buff)
 
-TaelinArena.Game.Buff.hasted: F64 -> F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.hasted: F64 -> F64 -> TA.Game.Buff
   (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) hasted(dur)(val)
 
-TaelinArena.Game.Buff.rooted: F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.rooted: F64 -> TA.Game.Buff
   (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) rooted(dur)
 
-TaelinArena.Game.Buff.shielded: F64 -> F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.shielded: F64 -> F64 -> TA.Game.Buff
   (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) shielded(dur)(val)
 
-TaelinArena.Game.Buff.silenced: F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.silenced: F64 -> TA.Game.Buff
   (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) silenced(dur)
 
-TaelinArena.Game.Buff.slowed: F64 -> F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.slowed: F64 -> F64 -> TA.Game.Buff
   (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) slowed(dur)(val)
 
-TaelinArena.Game.Buff.stuned: F64 -> TaelinArena.Game.Buff
+TA.Game.Buff.stuned: F64 -> TA.Game.Buff
   (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) stuned(dur)
 
-TaelinArena.Game.Command: Type
-  command<P: TaelinArena.Game.Command -> Type> -> (new: (pid: TaelinArena.Game.PlayerId) -> (inp: TaelinArena.Game.Input) -> P(TaelinArena.Game.Command.new(pid)(inp))) -> P(command)
+TA.Game.Command: Type
+  command<P: TA.Game.Command -> Type> -> (new: (pid: TA.Game.PlayerId) -> (inp: TA.Game.Input) -> P(TA.Game.Command.new(pid)(inp))) -> P(command)
 
-TaelinArena.Game.Command.new: TaelinArena.Game.PlayerId -> TaelinArena.Game.Input -> TaelinArena.Game.Command
+TA.Game.Command.new: TA.Game.PlayerId -> TA.Game.Input -> TA.Game.Command
   (pid) (inp) <P> (new) new(pid)(inp)
 
-TaelinArena.Game.Constants.DARTH_VADER_USING_FORCE: Bits
+TA.Game.Constants.DARTH_VADER_USING_FORCE: Bits
   Bits.from_string("0101100001")
 
-TaelinArena.Game.Constants.FORCE_AWAKENS_KEY: Bits
+TA.Game.Constants.FORCE_AWAKENS_KEY: Bits
   Bits.from_string("01101101")
 
-TaelinArena.Game.Constants.GON_AFTER_ULT: Bits
+TA.Game.Constants.GON_AFTER_ULT: Bits
   Bits.from_string("001101111010")
 
-TaelinArena.Game.Constants.MANDO_WEAPON_KEY: Bits
+TA.Game.Constants.MANDO_WEAPON_KEY: Bits
   Bits.from_string("001101111010")
 
-TaelinArena.Game.Constants.STEVE_BLOCK_TIMER: Bits
+TA.Game.Constants.STEVE_BLOCK_TIMER: Bits
   Bits.from_string("000")
 
-TaelinArena.Game.Constants.STEVE_TNT_TIMER: Bits
+TA.Game.Constants.STEVE_TNT_TIMER: Bits
   Bits.from_string("001")
 
-TaelinArena.Game.Constants.ULT_TIME: Bits
+TA.Game.Constants.ULT_TIME: Bits
   Bits.from_string("1001010110")
 
-TaelinArena.Game.Effect.damage: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.damage: F64 -> TA.Game.Effect
   (dmg) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) damage(dmg)
 
-TaelinArena.Game.Effect: Type
-  effect<P: TaelinArena.Game.Effect -> Type> -> (heal: (lif: F64) -> P(TaelinArena.Game.Effect.heal(lif))) -> (damage: (dmg: F64) -> P(TaelinArena.Game.Effect.damage(dmg))) -> (repulse: (mag: F64) -> P(TaelinArena.Game.Effect.repulse(mag))) -> (impulse: (mag: F64) -> (dir: F64.V3) -> P(TaelinArena.Game.Effect.impulse(mag)(dir))) -> (slow: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.slow(dur)(val))) -> (haste: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.haste(dur)(val))) -> (shield: (dur: F64) -> (val: F64) -> P(TaelinArena.Game.Effect.shield(dur)(val))) -> (silence: (dur: F64) -> P(TaelinArena.Game.Effect.silence(dur))) -> (root: (dur: F64) -> P(TaelinArena.Game.Effect.root(dur))) -> (stun: (dur: F64) -> P(TaelinArena.Game.Effect.stun(dur))) -> (teleport: (to_pos: F64.V3) -> (all: F64) -> P(TaelinArena.Game.Effect.teleport(to_pos)(all))) -> P(effect)
+TA.Game.Effect: Type
+  effect<P: TA.Game.Effect -> Type> -> (heal: (lif: F64) -> P(TA.Game.Effect.heal(lif))) -> (damage: (dmg: F64) -> P(TA.Game.Effect.damage(dmg))) -> (repulse: (mag: F64) -> P(TA.Game.Effect.repulse(mag))) -> (impulse: (mag: F64) -> (dir: F64.V3) -> P(TA.Game.Effect.impulse(mag)(dir))) -> (slow: (dur: F64) -> (val: F64) -> P(TA.Game.Effect.slow(dur)(val))) -> (haste: (dur: F64) -> (val: F64) -> P(TA.Game.Effect.haste(dur)(val))) -> (shield: (dur: F64) -> (val: F64) -> P(TA.Game.Effect.shield(dur)(val))) -> (silence: (dur: F64) -> P(TA.Game.Effect.silence(dur))) -> (root: (dur: F64) -> P(TA.Game.Effect.root(dur))) -> (stun: (dur: F64) -> P(TA.Game.Effect.stun(dur))) -> (teleport: (to_pos: F64.V3) -> (all: F64) -> P(TA.Game.Effect.teleport(to_pos)(all))) -> P(effect)
 
-TaelinArena.Game.Effect.haste: F64 -> F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.haste: F64 -> F64 -> TA.Game.Effect
   (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) haste(dur)(val)
 
-TaelinArena.Game.Effect.heal: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.heal: F64 -> TA.Game.Effect
   (lif) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) heal(lif)
 
-TaelinArena.Game.Effect.impulse: F64 -> F64.V3 -> TaelinArena.Game.Effect
+TA.Game.Effect.impulse: F64 -> F64.V3 -> TA.Game.Effect
   (mag) (dir) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) impulse(mag)(dir)
 
-TaelinArena.Game.Effect.repulse: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.repulse: F64 -> TA.Game.Effect
   (mag) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) repulse(mag)
 
-TaelinArena.Game.Effect.root: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.root: F64 -> TA.Game.Effect
   (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) root(dur)
 
-TaelinArena.Game.Effect.shield: F64 -> F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.shield: F64 -> F64 -> TA.Game.Effect
   (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) shield(dur)(val)
 
-TaelinArena.Game.Effect.silence: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.silence: F64 -> TA.Game.Effect
   (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) silence(dur)
 
-TaelinArena.Game.Effect.slow: F64 -> F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.slow: F64 -> F64 -> TA.Game.Effect
   (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) slow(dur)(val)
 
-TaelinArena.Game.Effect.stun: F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.stun: F64 -> TA.Game.Effect
   (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) stun(dur)
 
-TaelinArena.Game.Effect.teleport: F64.V3 -> F64 -> TaelinArena.Game.Effect
+TA.Game.Effect.teleport: F64.V3 -> F64 -> TA.Game.Effect
   (to_pos) (all) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) teleport(to_pos)(all)
 
-TaelinArena.Game.Game: Type
-  game<P: TaelinArena.Game.Game -> Type> -> (new: (stage: List(TaelinArena.Game.Thing)) -> P(TaelinArena.Game.Game.new(stage))) -> P(game)
+TA.Game.Game: Type
+  game<P: TA.Game.Game -> Type> -> (new: (stage: List(TA.Thing)) -> P(TA.Game.Game.new(stage))) -> P(game)
 
-TaelinArena.Game.Game.new: List(TaelinArena.Game.Thing) -> TaelinArena.Game.Game
+TA.Game.Game.new: List(TA.Thing) -> TA.Game.Game
   (stage) <P> (new) new(stage)
 
-TaelinArena.Game.Hit: Type
-  hit<P: TaelinArena.Game.Hit -> Type> -> (new: (eff: List(TaelinArena.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: TaelinArena.Game.Hitbox) -> P(TaelinArena.Game.Hit.new(eff)(pos)(dir)(box))) -> P(hit)
+TA.Game.Hit: Type
+  hit<P: TA.Game.Hit -> Type> -> (new: (eff: List(TA.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: TA.Game.Hitbox) -> P(TA.Game.Hit.new(eff)(pos)(dir)(box))) -> P(hit)
 
-TaelinArena.Game.Hit.new: List(TaelinArena.Game.Effect) -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> TaelinArena.Game.Hit
+TA.Game.Hit.new: List(TA.Game.Effect) -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> TA.Game.Hit
   (eff) (pos) (dir) (box) <P> (new) new(eff)(pos)(dir)(box)
 
-TaelinArena.Game.Hitbox.cbox: F64 -> TaelinArena.Game.Hitbox
+TA.Game.Hitbox.cbox: F64 -> TA.Game.Hitbox
   (rad) <P> (nbox) (cbox) (pbox) cbox(rad)
 
-TaelinArena.Game.Hitbox: Type
-  hitbox<P: TaelinArena.Game.Hitbox -> Type> -> (nbox: P(TaelinArena.Game.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(TaelinArena.Game.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(TaelinArena.Game.Hitbox.pbox(pts))) -> P(hitbox)
+TA.Game.Hitbox: Type
+  hitbox<P: TA.Game.Hitbox -> Type> -> (nbox: P(TA.Game.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(TA.Game.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(TA.Game.Hitbox.pbox(pts))) -> P(hitbox)
 
-TaelinArena.Game.Hitbox.nbox: TaelinArena.Game.Hitbox
+TA.Game.Hitbox.nbox: TA.Game.Hitbox
   <P> (nbox) (cbox) (pbox) nbox
 
-TaelinArena.Game.Hitbox.pbox: List(F64.V3) -> TaelinArena.Game.Hitbox
+TA.Game.Hitbox.pbox: List(F64.V3) -> TA.Game.Hitbox
   (pts) <P> (nbox) (cbox) (pbox) pbox(pts)
 
-TaelinArena.Game.Input.cmsg: String -> TaelinArena.Game.Input
+TA.Game.Input.cmsg: String -> TA.Game.Input
   (txt) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) cmsg(txt)
 
-TaelinArena.Game.Input: Type
-  input<P: TaelinArena.Game.Input -> Type> -> (sdir: (dir: F64.V3) -> P(TaelinArena.Game.Input.sdir(dir))) -> (key0: (pos: F64.V3) -> P(TaelinArena.Game.Input.key0(pos))) -> (key1: (pos: F64.V3) -> P(TaelinArena.Game.Input.key1(pos))) -> (key2: (pos: F64.V3) -> P(TaelinArena.Game.Input.key2(pos))) -> (key3: (pos: F64.V3) -> P(TaelinArena.Game.Input.key3(pos))) -> (key4: (pos: F64.V3) -> P(TaelinArena.Game.Input.key4(pos))) -> (key5: (pos: F64.V3) -> P(TaelinArena.Game.Input.key5(pos))) -> (cmsg: (txt: String) -> P(TaelinArena.Game.Input.cmsg(txt))) -> P(input)
+TA.Game.Input: Type
+  input<P: TA.Game.Input -> Type> -> (sdir: (dir: F64.V3) -> P(TA.Game.Input.sdir(dir))) -> (key0: (pos: F64.V3) -> P(TA.Game.Input.key0(pos))) -> (key1: (pos: F64.V3) -> P(TA.Game.Input.key1(pos))) -> (key2: (pos: F64.V3) -> P(TA.Game.Input.key2(pos))) -> (key3: (pos: F64.V3) -> P(TA.Game.Input.key3(pos))) -> (key4: (pos: F64.V3) -> P(TA.Game.Input.key4(pos))) -> (key5: (pos: F64.V3) -> P(TA.Game.Input.key5(pos))) -> (cmsg: (txt: String) -> P(TA.Game.Input.cmsg(txt))) -> P(input)
 
-TaelinArena.Game.Input.key0: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key0: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key0(pos)
 
-TaelinArena.Game.Input.key1: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key1: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key1(pos)
 
-TaelinArena.Game.Input.key2: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key2: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key2(pos)
 
-TaelinArena.Game.Input.key3: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key3: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key3(pos)
 
-TaelinArena.Game.Input.key4: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key4: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key4(pos)
 
-TaelinArena.Game.Input.key5: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.key5: F64.V3 -> TA.Game.Input
   (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key5(pos)
 
-TaelinArena.Game.Input.sdir: F64.V3 -> TaelinArena.Game.Input
+TA.Game.Input.sdir: F64.V3 -> TA.Game.Input
   (dir) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) sdir(dir)
 
-TaelinArena.Game.Light: Type
-  light<P: TaelinArena.Game.Light -> Type> -> (new: (pos: F64.V3) -> (rad: F64) -> (rng: F64) -> (sub: F64.V3) -> (add: F64.V3) -> P(TaelinArena.Game.Light.new(pos)(rad)(rng)(sub)(add))) -> P(light)
+TA.Game.Light: Type
+  light<P: TA.Game.Light -> Type> -> (new: (pos: F64.V3) -> (rad: F64) -> (rng: F64) -> (sub: F64.V3) -> (add: F64.V3) -> P(TA.Game.Light.new(pos)(rad)(rng)(sub)(add))) -> P(light)
 
-TaelinArena.Game.Light.new: F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Light
+TA.Game.Light.new: F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> TA.Game.Light
   (pos) (rad) (rng) (sub) (add) <P> (new) new(pos)(rad)(rng)(sub)(add)
 
-TaelinArena.Game.ModelId: Type
+TA.Game.ModelId: Type
   F64
 
-F64.Ordering.EQ: F64.Ordering
-  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.EQ
-
-F64.Ordering.GT: F64.Ordering
-  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.GT
-
-F64.Ordering.LT: F64.Ordering
-  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.LT
-
-F64.Ordering: Type
-  F64.ordering<P: F64.Ordering -> Type> -> (LT: P(F64.Ordering.LT)) -> (EQ: P(F64.Ordering.EQ)) -> (GT: P(F64.Ordering.GT)) -> P(F64.ordering)
-
-TaelinArena.Game.PlayerId: Type
+TA.Game.PlayerId: Type
   F64
 
-TaelinArena.Game.SideId: Type
+TA.Game.SideId: Type
   F64
 
-TaelinArena.Game.Thing: Type
-  thing<P: TaelinArena.Game.Thing -> Type> -> (new: (fun: TaelinArena.Game.TxFunction) -> (pid: TaelinArena.Game.PlayerId) -> (mid: TaelinArena.Game.ModelId) -> (act: TaelinArena.Game.ActionId) -> (sid: TaelinArena.Game.SideId) -> (stt: Map(F64)) -> (nam: String) -> (lit: List(TaelinArena.Game.Light)) -> (tik: F64) -> (pos: F64.V3) -> (mov: F64) -> (bst: F64) -> (pad: F64.V3) -> (dir: F64.V3) -> (trg: F64.V3) -> (vel: F64.V3) -> (box: TaelinArena.Game.Hitbox) -> (wei: F64) -> (mhp: F64) -> (dmg: F64) -> (knk: F64.V3) -> (buf: List(TaelinArena.Game.Buff)) -> (chi: List(TaelinArena.Game.Thing)) -> (hit: List(TaelinArena.Game.Hit)) -> (rst: Bool) -> (die: Bool) -> P(TaelinArena.Game.Thing.new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die))) -> P(thing)
+TA.Game.TxFunction: Type
+  TA.Thing -> TA.Thing
 
-TaelinArena.Game.Thing.new: TaelinArena.Game.TxFunction -> TaelinArena.Game.PlayerId -> TaelinArena.Game.ModelId -> TaelinArena.Game.ActionId -> TaelinArena.Game.SideId -> Map(F64) -> String -> List(TaelinArena.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TaelinArena.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit) -> Bool -> Bool -> TaelinArena.Game.Thing
-  (fun) (pid) (mid) (act) (sid) (stt) (nam) (lit) (tik) (pos) (mov) (bst) (pad) (dir) (trg) (vel) (box) (wei) (mhp) (dmg) (knk) (buf) (chi) (hit) (rst) (die) <P> (new) new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die)
-
-TaelinArena.Game.TxFunction: Type
-  TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-
-TaelinArena.Game.animate: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TaelinArena.Game.Thing
-  (self) (boost) (model) (count) (durat) let self = TaelinArena.Game.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TaelinArena.Game.reset(self)(F64.sub(durat)(F64.1)); self
-
-TaelinArena.Game.animate_between: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TaelinArena.Game.Thing
-  (self) (boost) (model) (count) (from) (til) let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pad = TaelinArena.Game.get_thing_pad(self); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); Bool.if<TaelinArena.Game.Thing>(F64.is_between(from)(til)(self.tik))(let set_bst = TaelinArena.Game.set_thing_bst(self)(boost); let set_dir = TaelinArena.Game.set_thing_dir(self)(let pad_len = F64.V3.len(self.pad); Bool.if<F64.V3>(Bool.and(F64.ltn(F64.0)(self.act))(F64.eql(pad_len)(F64.0)))(TaelinArena.Game.targ_dir(self))(Bool.if<F64.V3>(F64.ltn(F64.0)(pad_len))(F64.V3.norm(self.pad))(self.dir))); let set_mid = TaelinArena.Game.set_thing_mid(self)(let duration = F64.sub(til)(from); let curr_tik = F64.sub(self.tik)(from); let curr_tim = F64.div(curr_tik)(duration); F64.add(model)(F64.mod(F64.floor(F64.mul(curr_tim)(count)))(count))); self)(self)
-
-TaelinArena.Game.animate_die: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TaelinArena.Game.Thing
-  (self) (boost) (model) (count) (durat) let self = TaelinArena.Game.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TaelinArena.Game.die(self)(F64.sub(durat)(F64.1)); self
-
-TaelinArena.Game.animate_with_blink: (self: TaelinArena.Game.Thing) -> (boost: F64) -> (model_atk: F64) -> (model_idle: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TaelinArena.Game.Thing
-  (self) (boost) (model_atk) (model_idle) (count) (from) (til) let self = TaelinArena.Game.animate_between(self)(boost)(model_atk)(count)(from)(til); let self = TaelinArena.Game.animate_between(self)(boost)(model_idle)(F64.1)(til)(F64.add(til)(F64.1)); let self = TaelinArena.Game.reset(self)(til); self
-
-TaelinArena.Game.at_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
-  (self) (dist) let dir = TaelinArena.Game.targ_dir(self); let pos = TaelinArena.Game.get_thing_pos(self); F64.V3.add(pos)(F64.V3.scale(dist)(dir))
-
-TaelinArena.Game.at_max_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
-  (self) (max_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_max = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(max_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_trg)(dist_max); F64.if<F64.V3>(F64.from_bool(less_than))(TaelinArena.Game.at_dist(self)(dist_trg))(TaelinArena.Game.at_dist(self)(max_range))
-
-TaelinArena.Game.at_min_dist: TaelinArena.Game.Thing -> F64 -> F64.V3
-  (self) (min_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_min = F64.V3.dist(self_pos)(TaelinArena.Game.at_dist(self)(min_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_min)(dist_trg); F64.if<F64.V3>(F64.from_bool(less_than))(TaelinArena.Game.at_dist(self)(dist_trg))(TaelinArena.Game.at_dist(self)(min_range))
-
-TaelinArena.Game.between_dist: TaelinArena.Game.Thing -> F64 -> F64 -> F64.V3
-  (self) (min_range) (max_range) let self_pos = TaelinArena.Game.get_thing_pos(self); let self_trg = TaelinArena.Game.get_thing_trg(self); let dist_trg = F64.V3.dist(self_pos)(self_trg); let min = F64.min(max_range)(dist_trg); let max = F64.max(min_range)(min); TaelinArena.Game.at_dist(self)(max)
-
-TaelinArena.Game.blink: (self: TaelinArena.Game.Thing) -> (at_tik: F64) -> (to_pos: F64.V3) -> TaelinArena.Game.Thing
-  (self) (at_tik) (to_pos) let rooted = TaelinArena.Game.is_rooted(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pos = TaelinArena.Game.get_thing_pos(self); rooted<() TaelinArena.Game.Thing>(self)(let new_pos = Bool.if<F64.V3>(F64.eql(self.tik)(at_tik))(to_pos)(self.pos); TaelinArena.Game.set_thing_pos(self)(new_pos))
-
-TaelinArena.Game.cast: TaelinArena.Game.Thing -> F64 -> List(TaelinArena.Game.Hit) -> TaelinArena.Game.Thing
-  (self) (at_tik) (do_hit) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_hit(self)(do_hit))(self)
-
-TaelinArena.Game.combine_mov_buffs: TaelinArena.Game.Buff -> F64 -> F64
+TA.Game.combine_mov_buffs: TA.Game.Buff -> F64 -> F64
   (buff) (i) buff<() F64>((buff.dur) (buff.val) i)((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) i)((buff.dur) F64.0)((buff.dur) F64.0)
 
-F64.compare_numbers: F64 -> F64 -> F64.Ordering
-  (a) (b) Bool.if<F64.Ordering>(F64.eql(a)(b))(F64.Ordering.EQ)(Bool.if<F64.Ordering>(F64.ltn(b)(a))(F64.Ordering.GT)(F64.Ordering.LT))
+TA.Game.get_position_by_pid: TA.Game.PlayerId -> TA.Game.Game -> F64.V3
+  (pid) (gm) TA.Thing.get_by_pid(pid)(gm)<() F64.V3>(F64.V3.new(F64.0)(F64.0)(F64.0))((found) TA.Thing.get_pos(found))
 
-TaelinArena.Game.create_at: (self: TaelinArena.Game.Thing) -> (at_tik: F64) -> (new_thing: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing
-  (self) (at_tik) (new_thing) let self.tik = TaelinArena.Game.get_thing_tik(self); let self.pid = TaelinArena.Game.get_thing_pid(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.tik)(at_tik))(let self = TaelinArena.Game.set_thing_fun(self)(new_thing); let self = TaelinArena.Game.set_thing_pid(self)(self.pid); let self = TaelinArena.Game.set_thing_pos(self)(self.pos); self)(self)
+TA.Game.init_act: (self: TA.Thing) -> (new_act: F64) -> (new_trg: F64.V3) -> TA.Thing
+  (self) (new_act) (new_trg) let self.act = TA.Thing.get_act(self); let self.trg = TA.Thing.get_trg(self); let self.tik = TA.Thing.get_tik(self); let act_eql_0 = F64.eql(self.act)(F64.0); let self = TA.Thing.set_act(self)(Bool.if<TA.Game.ActionId>(act_eql_0)(new_act)(self.act)); let self = TA.Thing.set_trg(self)(Bool.if<F64.V3>(act_eql_0)(new_trg)(self.trg)); let self = TA.Thing.set_tik(self)(Bool.if<F64>(act_eql_0)(F64.0)(self.tik)); self
 
-TaelinArena.Game.dash: (self: TaelinArena.Game.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: F64) -> TaelinArena.Game.Thing
-  (self) (speed) (from_tik) (til_tik) let rooted = TaelinArena.Game.is_rooted(self); let self.tik = TaelinArena.Game.get_thing_tik(self); Bool.if<TaelinArena.Game.Thing>(rooted)(self)(let is_between_tik = F64.is_between(from_tik)(til_tik)(self.tik); let new_vel = Bool.if<F64.V3>(is_between_tik)(let self.pos = TaelinArena.Game.get_thing_pos(self); let self.trg = TaelinArena.Game.get_thing_trg(self); let self.dir = TaelinArena.Game.get_thing_dir(self); F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir)))(F64.V3.new(F64.0)(F64.0)(F64.0)); TaelinArena.Game.set_thing_vel(self)(new_vel))
+TA.Game.map_stage: TA.Thing -> TA.Thing -> TA.Game.Game -> TA.Game.Game
+  (fn) (gm) gm<() TA.Game.Game>((gm.stage) let new_stage = List.map<TA.Thing><TA.Thing>(fn)(gm.stage); TA.Game.Game.new(new_stage))
 
-TaelinArena.Game.die: TaelinArena.Game.Thing -> F64 -> TaelinArena.Game.Thing
-  (self) (at_tik) let curr_tik = TaelinArena.Game.get_thing_tik(self); let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_die<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_die(self)(Bool.true))(self)
+TA.Game.use_shields: (buff: TA.Game.Buff) -> (acc: Pair(F64)(List(TA.Game.Buff))) -> Pair(F64)(List(TA.Game.Buff))
+  (buff) (acc) acc<() Pair(F64)(List(TA.Game.Buff))>((acc.fst) (acc.snd) buff<() Pair(F64)(List(TA.Game.Buff))>((buff.dur) (buff.val) Bool.if<Pair(F64)(List(TA.Game.Buff))>(F64.eql(acc.fst)(F64.0))(acc)(let compare = F64.compare_numbers(acc.fst)(buff.val); compare<() Pair(F64)(List(TA.Game.Buff))>(let remaining_shield_val = F64.sub(buff.val)(acc.fst); let remaining_buf = List.cons<TA.Game.Buff>(TA.Game.Buff.shielded(buff.dur)(remaining_shield_val))(acc.snd); Pair.new<F64><List(TA.Game.Buff)>(F64.0)(remaining_buf))(Pair.new<F64><List(TA.Game.Buff)>(F64.0)(acc.snd))(let remaining_dmg = F64.sub(acc.fst)(buff.val); Pair.new<F64><List(TA.Game.Buff)>(remaining_dmg)(acc.snd))))((buff.dur) (buff.val) Pair.new<F64><List(TA.Game.Buff)>(acc.fst)(List.cons<TA.Game.Buff>(buff)(acc.snd)))((buff.dur) (buff.val) Pair.new<F64><List(TA.Game.Buff)>(acc.fst)(List.cons<TA.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TA.Game.Buff)>(acc.fst)(List.cons<TA.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TA.Game.Buff)>(acc.fst)(List.cons<TA.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TA.Game.Buff)>(acc.fst)(List.cons<TA.Game.Buff>(buff)(acc.snd))))
 
-TaelinArena.Game.end_thing: (self: TaelinArena.Game.Thing) -> (tx: TaelinArena.Game.TxFunction) -> (after_tiks: F64) -> (stt_key: Bits) -> TaelinArena.Game.Thing
-  (self) (tx) (after_tiks) (stt_key) let self.stt = TaelinArena.Game.get_thing_stt(self); let current_tik = Map.get<F64>(stt_key)(self.stt); let empty_stt = Map.set<F64>(stt_key)(after_tiks)(self.stt); current_tik<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_stt(self)(empty_stt))((current_tik.value) Bool.if<TaelinArena.Game.Thing>(F64.eql(current_tik.value)(F64.0))(let self.pid = TaelinArena.Game.get_thing_pid(self); let self.pos = TaelinArena.Game.get_thing_pos(self); let self = TaelinArena.Game.set_thing_fun(self)(tx); let self = TaelinArena.Game.set_thing_pid(self)(self.pid); let self = TaelinArena.Game.set_thing_pos(self)(self.pos); let self = TaelinArena.Game.set_thing_stt(self)(empty_stt); self)(let new_stt = Map.set<F64>(stt_key)(Bool.if<F64>(F64.ltn(F64.0)(current_tik.value))(F64.sub(current_tik.value)(F64.1))(F64.0))(self.stt); TaelinArena.Game.set_thing_stt(self)(new_stt)))
+TA.Game.with_thing.effect: TA.Game.PlayerId -> TA.Game.TxFunction -> TA.Thing -> TA.Thing
+  (pid) (fn) (thi) let thi.pid = TA.Thing.get_pid(thi); F64.eql(pid)(thi.pid)<() TA.Thing>(fn(thi))(thi)
 
-TaelinArena.Game.get_position_by_pid: TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> F64.V3
-  (pid) (gm) TaelinArena.Game.get_thing_by_pid(pid)(gm)<() F64.V3>(F64.V3.new(F64.0)(F64.0)(F64.0))((found) TaelinArena.Game.get_thing_pos(found))
-
-TaelinArena.Game.get_stt_value: TaelinArena.Game.Thing -> Bits -> F64
-  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() F64>(F64.0)((result.value) result.value)
-
-TaelinArena.Game.get_stt_value_v3: (self: TaelinArena.Game.Thing) -> F64.V3
-  (self) let x = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_X_KEY); let y = TaelinArena.Game.get_stt_value(self)(TaelinArena.Constants.POS_Y_KEY); F64.V3.new(x)(y)(F64.0)
-
-TaelinArena.Game.get_thing_act: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.ActionId
-  (thi) thi<() TaelinArena.Game.ActionId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.act)
-
-TaelinArena.Game.get_thing_box: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.Hitbox
-  (thi) thi<() TaelinArena.Game.Hitbox>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.box)
-
-TaelinArena.Game.get_thing_bst: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.bst)
-
-TaelinArena.Game.get_thing_buf: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Buff)
-  (thi) thi<() List(TaelinArena.Game.Buff)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.buf)
-
-TaelinArena.Game.get_thing_by_pid.cond: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> Bool
-  (pid) (thi) let thi.pid = TaelinArena.Game.get_thing_pid(thi); F64.eql(pid)(thi.pid)
-
-TaelinArena.Game.get_thing_by_pid: TaelinArena.Game.PlayerId -> TaelinArena.Game.Game -> Maybe(TaelinArena.Game.Thing)
-  (pid) (gm) gm<() Maybe(TaelinArena.Game.Thing)>((gm.stage) List.find<TaelinArena.Game.Thing>(TaelinArena.Game.get_thing_by_pid.cond(pid))(gm.stage))
-
-TaelinArena.Game.get_thing_chi: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing)
-  (thi) thi<() List(TaelinArena.Game.Thing)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.chi)
-
-TaelinArena.Game.get_thing_die: (thi: TaelinArena.Game.Thing) -> Bool
-  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.die)
-
-TaelinArena.Game.get_thing_dir: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dir)
-
-TaelinArena.Game.get_thing_dmg: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dmg)
-
-TaelinArena.Game.get_thing_fun: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.TxFunction
-  (thi) thi<() TaelinArena.Game.TxFunction>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.fun)
-
-TaelinArena.Game.get_thing_hit: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Hit)
-  (thi) thi<() List(TaelinArena.Game.Hit)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.hit)
-
-TaelinArena.Game.get_thing_knk: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.knk)
-
-TaelinArena.Game.get_thing_lit: (thi: TaelinArena.Game.Thing) -> List(TaelinArena.Game.Light)
-  (thi) thi<() List(TaelinArena.Game.Light)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.lit)
-
-TaelinArena.Game.get_thing_mhp: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mhp)
-
-TaelinArena.Game.get_thing_mid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.ModelId
-  (thi) thi<() TaelinArena.Game.ModelId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mid)
-
-TaelinArena.Game.get_thing_mov: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mov)
-
-TaelinArena.Game.get_thing_nam: (thi: TaelinArena.Game.Thing) -> String
-  (thi) thi<() String>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.nam)
-
-TaelinArena.Game.get_thing_pad: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pad)
-
-TaelinArena.Game.get_thing_pid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.PlayerId
-  (thi) thi<() TaelinArena.Game.PlayerId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pid)
-
-TaelinArena.Game.get_thing_pos: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pos)
-
-TaelinArena.Game.get_thing_rst: (thi: TaelinArena.Game.Thing) -> Bool
-  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.rst)
-
-TaelinArena.Game.get_thing_sid: (thi: TaelinArena.Game.Thing) -> TaelinArena.Game.SideId
-  (thi) thi<() TaelinArena.Game.SideId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.sid)
-
-TaelinArena.Game.get_thing_stt: (thi: TaelinArena.Game.Thing) -> Map(F64)
-  (thi) thi<() Map(F64)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.stt)
-
-TaelinArena.Game.get_thing_tik: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.tik)
-
-TaelinArena.Game.get_thing_trg: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.trg)
-
-TaelinArena.Game.get_thing_vel: (thi: TaelinArena.Game.Thing) -> F64.V3
-  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.vel)
-
-TaelinArena.Game.get_thing_wei: (thi: TaelinArena.Game.Thing) -> F64
-  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.wei)
-
-TaelinArena.Game.handle_shields: (hit_dmg: F64) -> (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (hit_dmg) (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let self.dmg = TaelinArena.Game.get_thing_dmg(self); let init_val = Pair.new<F64><List(TaelinArena.Game.Buff)>(hit_dmg)([TaelinArena.Game.Buff;]); let res = List.fold<TaelinArena.Game.Buff><Pair(F64)(List(TaelinArena.Game.Buff))>(init_val)(TaelinArena.Game.use_shields)(self.buf); let res.fst = Pair.fst<F64><List(TaelinArena.Game.Buff)>(res); let res.snd = Pair.snd<F64><List(TaelinArena.Game.Buff)>(res); let remaining_dmg = F64.add(res.fst)(self.dmg); let remaining_buf = res.snd; let self = TaelinArena.Game.set_thing_dmg(self)(remaining_dmg); let self = TaelinArena.Game.set_thing_buf(self)(remaining_buf); self
-
-TaelinArena.Game.has_shields: TaelinArena.Game.Thing -> Bool
-  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let has_shields = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.true)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(has_shields)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
-
-TaelinArena.Game.illumine: TaelinArena.Game.Thing -> F64 -> F64 -> List(TaelinArena.Game.Light) -> TaelinArena.Game.Thing
-  (self) (from_tik) (to_tik) (lights) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.is_between(from_tik)(to_tik)(curr_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_lit(self)(lights))(TaelinArena.Game.set_thing_lit(self)([TaelinArena.Game.Light;]))
-
-TaelinArena.Game.init_act: (self: TaelinArena.Game.Thing) -> (new_act: F64) -> (new_trg: F64.V3) -> TaelinArena.Game.Thing
-  (self) (new_act) (new_trg) let self.act = TaelinArena.Game.get_thing_act(self); let self.trg = TaelinArena.Game.get_thing_trg(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let act_eql_0 = F64.eql(self.act)(F64.0); let self = TaelinArena.Game.set_thing_act(self)(Bool.if<TaelinArena.Game.ActionId>(act_eql_0)(new_act)(self.act)); let self = TaelinArena.Game.set_thing_trg(self)(Bool.if<F64.V3>(act_eql_0)(new_trg)(self.trg)); let self = TaelinArena.Game.set_thing_tik(self)(Bool.if<F64>(act_eql_0)(F64.0)(self.tik)); self
-
-TaelinArena.Game.is_rooted: (self: TaelinArena.Game.Thing) -> Bool
-  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_rooted_buff = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.true)) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_rooted_buff)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
-
-TaelinArena.Game.is_silenced: TaelinArena.Game.Thing -> Bool
-  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_silenced = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.false)((buff.dur) Bool.true)) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_silenced)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
-
-TaelinArena.Game.is_stunned: TaelinArena.Game.Thing -> Bool
-  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let is_stunned = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)) :: TaelinArena.Game.Buff -> Bool; let found_buf = List.find<TaelinArena.Game.Buff>(is_stunned)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
-
-TaelinArena.Game.is_using_buff: TaelinArena.Game.Thing -> Bits -> Bool
-  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() Bool>(Bool.false)((current_tik) F64.eql(current_tik)(F64.0)<() Bool>(Bool.false)(Bool.true))
-
-TaelinArena.Game.is_walking: TaelinArena.Game.Thing -> F64
-  (this) let this.pad = TaelinArena.Game.get_thing_pad(this); F64.from_bool(F64.ltn(F64.0)(F64.V3.len(this.pad)))
-
-TaelinArena.Game.map_stage: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (fn) (gm) gm<() TaelinArena.Game.Game>((gm.stage) let new_stage = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(fn)(gm.stage); TaelinArena.Game.Game.new(new_stage))
-
-TaelinArena.Game.map_stt_key: TaelinArena.Game.Thing -> Bits -> F64 -> F64 -> TaelinArena.Game.Thing
-  (self) (stt_key) (func) let stt = TaelinArena.Game.get_thing_stt(self); Map.get<F64>(stt_key)(stt)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_stt(self)(Map.set<F64>(stt_key)(F64.0)(stt)))((result.value) TaelinArena.Game.set_thing_stt(self)(Map.set<F64>(stt_key)(func(result.value))(stt)))
-
-TaelinArena.Game.move: TaelinArena.Game.Thing -> F64.V3 -> TaelinArena.Game.Thing
-  (self) (to_pos) TaelinArena.Game.set_thing_pos(self)(to_pos)
-
-TaelinArena.Game.reset: TaelinArena.Game.Thing -> F64 -> TaelinArena.Game.Thing
-  (self) (at_tik) let curr_tik = TaelinArena.Game.get_thing_tik(self); let should_reset = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_reset<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_rst(self)(Bool.true))(self)
-
-TaelinArena.Game.set_stt_value_v3: (self: TaelinArena.Game.Thing) -> (v3: F64.V3) -> TaelinArena.Game.Thing
-  (self) (v3) let self.stt = TaelinArena.Game.get_thing_stt(self); v3<() TaelinArena.Game.Thing>((v3.x) (v3.y) (v3.z) let insert_x = Map.set<F64>(TaelinArena.Constants.POS_X_KEY)(v3.x)(self.stt); let insert_y = Map.set<F64>(TaelinArena.Constants.POS_Y_KEY)(v3.y)(self.stt); let self = TaelinArena.Game.set_thing_stt(self)(insert_x); let self = TaelinArena.Game.set_thing_stt(self)(insert_y); self)
-
-TaelinArena.Game.set_thing_act: (thi: TaelinArena.Game.Thing) -> (new_act: TaelinArena.Game.ActionId) -> TaelinArena.Game.Thing
-  (thi) (new_act) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(new_act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_box: (thi: TaelinArena.Game.Thing) -> (new_box: TaelinArena.Game.Hitbox) -> TaelinArena.Game.Thing
-  (thi) (new_box) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(new_box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_bst: (thi: TaelinArena.Game.Thing) -> (new_bst: F64) -> TaelinArena.Game.Thing
-  (thi) (new_bst) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(new_bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_buf: (thi: TaelinArena.Game.Thing) -> (new_buf: List(TaelinArena.Game.Buff)) -> TaelinArena.Game.Thing
-  (thi) (new_buf) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(new_buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_chi: (thi: TaelinArena.Game.Thing) -> (new_chi: List(TaelinArena.Game.Thing)) -> TaelinArena.Game.Thing
-  (thi) (new_chi) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(new_chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_die: (thi: TaelinArena.Game.Thing) -> (new_die: Bool) -> TaelinArena.Game.Thing
-  (thi) (new_die) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(new_die))
-
-TaelinArena.Game.set_thing_dir: (thi: TaelinArena.Game.Thing) -> (new_dir: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_dir) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(new_dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_dmg: (thi: TaelinArena.Game.Thing) -> (new_dmg: F64) -> TaelinArena.Game.Thing
-  (thi) (new_dmg) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(new_dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_fun: (thi: TaelinArena.Game.Thing) -> (new_fun: TaelinArena.Game.TxFunction) -> TaelinArena.Game.Thing
-  (thi) (new_fun) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(new_fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_hit: (thi: TaelinArena.Game.Thing) -> (new_hit: List(TaelinArena.Game.Hit)) -> TaelinArena.Game.Thing
-  (thi) (new_hit) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(new_hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_knk: (thi: TaelinArena.Game.Thing) -> (new_knk: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_knk) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(new_knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_lit: (thi: TaelinArena.Game.Thing) -> (new_lit: List(TaelinArena.Game.Light)) -> TaelinArena.Game.Thing
-  (thi) (new_lit) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(new_lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_mhp: (thi: TaelinArena.Game.Thing) -> (new_mhp: F64) -> TaelinArena.Game.Thing
-  (thi) (new_mhp) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(new_mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_mid: (thi: TaelinArena.Game.Thing) -> (new_mid: TaelinArena.Game.ModelId) -> TaelinArena.Game.Thing
-  (thi) (new_mid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(new_mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_mov: (thi: TaelinArena.Game.Thing) -> (new_mov: F64) -> TaelinArena.Game.Thing
-  (thi) (new_mov) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(new_mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_nam: (thi: TaelinArena.Game.Thing) -> (new_nam: String) -> TaelinArena.Game.Thing
-  (thi) (new_nam) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(new_nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_pad: (thi: TaelinArena.Game.Thing) -> (new_pad: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_pad) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(new_pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_pid: (thi: TaelinArena.Game.Thing) -> (new_pid: TaelinArena.Game.PlayerId) -> TaelinArena.Game.Thing
-  (thi) (new_pid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(new_pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_pos: (thi: TaelinArena.Game.Thing) -> (new_pos: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_pos) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(new_pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_rst: (thi: TaelinArena.Game.Thing) -> (new_rst: Bool) -> TaelinArena.Game.Thing
-  (thi) (new_rst) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(new_rst)(thi.die))
-
-TaelinArena.Game.set_thing_sid: (thi: TaelinArena.Game.Thing) -> (new_sid: TaelinArena.Game.SideId) -> TaelinArena.Game.Thing
-  (thi) (new_sid) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(new_sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_stt: (thi: TaelinArena.Game.Thing) -> (new_stt: Map(F64)) -> TaelinArena.Game.Thing
-  (thi) (new_stt) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(new_stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_tik: (thi: TaelinArena.Game.Thing) -> (new_tik: F64) -> TaelinArena.Game.Thing
-  (thi) (new_tik) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(new_tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_trg: (thi: TaelinArena.Game.Thing) -> (new_trg: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_trg) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(new_trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_vel: (thi: TaelinArena.Game.Thing) -> (new_vel: F64.V3) -> TaelinArena.Game.Thing
-  (thi) (new_vel) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(new_vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.set_thing_wei: (thi: TaelinArena.Game.Thing) -> (new_wei: F64) -> TaelinArena.Game.Thing
-  (thi) (new_wei) thi<() TaelinArena.Game.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TaelinArena.Game.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(new_wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
-
-TaelinArena.Game.spawn: TaelinArena.Game.Thing -> F64 -> List(TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (self) (at_tik) (children) let curr_tik = TaelinArena.Game.get_thing_tik(self); F64.eql(curr_tik)(at_tik)<() TaelinArena.Game.Thing>(TaelinArena.Game.set_thing_chi(self)(children))(self)
-
-TaelinArena.Game.speed_multiplier_of: TaelinArena.Game.Thing -> F64
-  (self) let bst = TaelinArena.Game.get_thing_bst(self); let buf = TaelinArena.Game.get_thing_buf(self); List.fold<TaelinArena.Game.Buff><F64>(bst)(TaelinArena.Game.combine_mov_buffs)(buf)
-
-TaelinArena.Game.targ_dir: TaelinArena.Game.Thing -> F64.V3
-  (self) let pos = TaelinArena.Game.get_thing_pos(self); let trg = TaelinArena.Game.get_thing_trg(self); let dir = TaelinArena.Game.get_thing_dir(self); F64.V3.look_at(pos)(trg)(dir)
-
-TaelinArena.Game.update_buff: TaelinArena.Game.Thing -> Bits -> TaelinArena.Game.Thing
-  (self) (stt_key) let stt = TaelinArena.Game.get_thing_stt(self); let curr_tik = Map.get<F64>(stt_key)(stt); curr_tik<() TaelinArena.Game.Thing>(self)((curr_tik.value) F64.eql(curr_tik.value)(F64.0)<() TaelinArena.Game.Thing>(self)(F64.gtn(curr_tik.value)(F64.0)<() TaelinArena.Game.Thing>(let new_tik = F64.sub(curr_tik.value)(F64.1); let new_stt = Map.set<F64>(stt_key)(new_tik)(stt); TaelinArena.Game.set_thing_stt(self)(new_stt))(self)))
-
-TaelinArena.Game.update_buff_dur: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (self) let self.buf = TaelinArena.Game.get_thing_buf(self); let fn = ((buff) (acc) buff<() List(TaelinArena.Game.Buff)>((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.slowed(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.hasted(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.silenced(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.rooted(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TaelinArena.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.stuned(F64.sub(buff.dur)(F64.1)))(acc)))) :: TaelinArena.Game.Buff -> List(TaelinArena.Game.Buff) -> List(TaelinArena.Game.Buff); let new_buf = List.fold<TaelinArena.Game.Buff><List(TaelinArena.Game.Buff)>([TaelinArena.Game.Buff;])(fn)(self.buf); TaelinArena.Game.set_thing_buf(self)(new_buf)
-
-TaelinArena.Game.use_shields: (buff: TaelinArena.Game.Buff) -> (acc: Pair(F64)(List(TaelinArena.Game.Buff))) -> Pair(F64)(List(TaelinArena.Game.Buff))
-  (buff) (acc) acc<() Pair(F64)(List(TaelinArena.Game.Buff))>((acc.fst) (acc.snd) buff<() Pair(F64)(List(TaelinArena.Game.Buff))>((buff.dur) (buff.val) Bool.if<Pair(F64)(List(TaelinArena.Game.Buff))>(F64.eql(acc.fst)(F64.0))(acc)(let compare = F64.compare_numbers(acc.fst)(buff.val); compare<() Pair(F64)(List(TaelinArena.Game.Buff))>(let remaining_shield_val = F64.sub(buff.val)(acc.fst); let remaining_buf = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(buff.dur)(remaining_shield_val))(acc.snd); Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(remaining_buf))(Pair.new<F64><List(TaelinArena.Game.Buff)>(F64.0)(acc.snd))(let remaining_dmg = F64.sub(acc.fst)(buff.val); Pair.new<F64><List(TaelinArena.Game.Buff)>(remaining_dmg)(acc.snd))))((buff.dur) (buff.val) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) (buff.val) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd)))((buff.dur) Pair.new<F64><List(TaelinArena.Game.Buff)>(acc.fst)(List.cons<TaelinArena.Game.Buff>(buff)(acc.snd))))
-
-TaelinArena.Game.with_thing.effect: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (pid) (fn) (thi) let thi.pid = TaelinArena.Game.get_thing_pid(thi); F64.eql(pid)(thi.pid)<() TaelinArena.Game.Thing>(fn(thi))(thi)
-
-TaelinArena.Game.with_thing: TaelinArena.Game.PlayerId -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (pid) (fn) (gm) TaelinArena.Game.map_stage(TaelinArena.Game.with_thing.effect(pid)(fn))(gm)
+TA.Game.with_thing: TA.Game.PlayerId -> TA.Game.TxFunction -> TA.Game.Game -> TA.Game.Game
+  (pid) (fn) (gm) TA.Game.map_stage(TA.Game.with_thing.effect(pid)(fn))(gm)
 
 BENFIX_BLOCK_000: F64
   F64.parse("0")
@@ -4083,21 +3873,23 @@ PUNCHINGBAG_IDLE_023: F64
 WALL_IDLE_000: F64
   F64.parse("606")
 
-TaelinArena.Thing.benfix_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("24")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(BENFIX_WALK_000)(F64.parse("7"))(F64.parse("14")))(TaelinArena.Game.animate(self)(F64.1)(BENFIX_IDLE_000)(F64.parse("12"))(F64.parse("24"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_TRIPLE_ATTACK_1_000)(F64.parse("16"))(F64.parse("32")); let effs0 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("1"))]; let effs1 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs0)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs1)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("14"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("22"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("28"))(hits1); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_SEISMIC_JUMP_000)(F64.parse("10"))(F64.parse("30")); let effs0 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let effs1 = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.parse("2"))(F64.parse("0.5")), TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs0)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs1)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("40")))]; let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("22"))(hits0); let self = TaelinArena.Game.cast(self)(F64.parse("24"))(hits1); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(BENFIX_STEEL_TORNADO_000)(F64.parse("4"))(F64.parse("12")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("40")))]; let self = TaelinArena.Game.cast(self)(F64.parse("2"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("4"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("6"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("8"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("11"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.1)(BENFIX_GIGA_DASH_000)(F64.parse("22"))(F64.parse("22")); let self = TaelinArena.Game.dash(self)(F64.parse("4"))(F64.0)(F64.parse("22")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.stun(F64.1), TaelinArena.Game.Effect.damage(F64.parse("2"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("30")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("15"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TaelinArena.Game.animate(self)(F64.1)(BENFIX_DASH_000)(F64.parse("9"))(F64.parse("18")); let self = TaelinArena.Game.dash(self)(F64.parse("3"))(F64.parse("0"))(F64.parse("18")); self)(TaelinArena.Game.animate(self)(F64.0)(BENFIX_TAUNT_000)(F64.parse("16"))(F64.parse("32"))))))))
+TA.Thing.animate: (self: TA.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TA.Thing
+  (self) (boost) (model) (count) (durat) let self = TA.Thing.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TA.Thing.reset(self)(F64.sub(durat)(F64.1)); self
 
-TaelinArena.Thing.bleskape_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("24")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_WALK_000)(F64.parse("4"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.1)(BLESKAPE_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)(F64.parse("15"))(F64.parse("30")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.impulse(F64.parse("12"))(self.dir), TaelinArena.Game.Effect.damage(F64.parse("3"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20"))), TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("40")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("20")))]; let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_000)(F64.parse("3"))(F64.0)(F64.parse("3")); let self = TaelinArena.Game.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_002)(F64.1)(F64.parse("3"))(F64.parse("12")); let self = TaelinArena.Game.reset(self)(F64.parse("12")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SHOCK_GROUND_WAVE_000)(F64.parse("12"))(F64.parse("24")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("5"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("58")))]; let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_SUPREME_PUNCH_SEQUENCE_000)(F64.parse("25"))(F64.parse("50")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.parse("1"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("34"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("42"))(hits); let effes = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.impulse(F64.parse("18"))(self.dir), TaelinArena.Game.Effect.impulse(F64.parse("18"))(self.dir)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("46"))(hits); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_DASH_000)(F64.parse("15"))(F64.parse("30")); let self = TaelinArena.Game.dash(self)(F64.parse("8"))(F64.parse("15"))(F64.parse("25")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.repulse(F64.parse("8")), TaelinArena.Game.Effect.damage(F64.parse("1"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(TaelinArena.Game.at_dist(self)(F64.parse("32")))(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("32")))]; let self = TaelinArena.Game.cast(self)(F64.parse("17"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("20"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("23"))(hits); self)(TaelinArena.Game.animate(self)(F64.0)(BLESKAPE_TAUNT_000)(F64.parse("10"))(F64.parse("20"))))))))
+TA.Thing.animate_between: (self: TA.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TA.Thing
+  (self) (boost) (model) (count) (from) (til) let self.tik = TA.Thing.get_tik(self); let self.pad = TA.Thing.get_pad(self); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); Bool.if<TA.Thing>(F64.is_between(from)(til)(self.tik))(let set_bst = TA.Thing.set_bst(self)(boost); let set_dir = TA.Thing.set_dir(self)(let pad_len = F64.V3.len(self.pad); Bool.if<F64.V3>(Bool.and(F64.ltn(F64.0)(self.act))(F64.eql(pad_len)(F64.0)))(TA.Thing.targ_dir(self))(Bool.if<F64.V3>(F64.ltn(F64.0)(pad_len))(F64.V3.norm(self.pad))(self.dir))); let set_mid = TA.Thing.set_mid(self)(let duration = F64.sub(til)(from); let curr_tik = F64.sub(self.tik)(from); let curr_tim = F64.div(curr_tik)(duration); F64.add(model)(F64.mod(F64.floor(F64.mul(curr_tim)(count)))(count))); self)(self)
 
-TaelinArena.Thing.dilma_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2")); let self.act = TaelinArena.Game.get_thing_act(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self.pos = TaelinArena.Game.get_thing_pos(self); Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.0))(F64.if<TaelinArena.Game.Thing>(TaelinArena.Game.is_walking(self))(TaelinArena.Game.animate(self)(F64.1)(DILMA_WALK_000)(F64.parse("8"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.1))(let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_PROTECTION_000)(F64.parse("6"))(F64.parse("3"))(F64.parse("7")); let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_PROTECTION_007)(F64.parse("5"))(F64.parse("28"))(F64.parse("14")); let self = TaelinArena.Game.reset(self)(F64.parse("27")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.2))(let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_000)(F64.parse("17"))(F64.parse("0"))(F64.parse("34")); let self = TaelinArena.Game.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_016)(F64.parse("3"))(F64.parse("34"))(F64.parse("64")); let self = TaelinArena.Game.reset(self)(F64.parse("63")); let speech = TaelinArena.Thing.new_thing; let speech = TaelinArena.Game.set_thing_fun(speech)(TaelinArena.Thing.dilma.confusion_fun); let speech = TaelinArena.Game.set_thing_dir(speech)(TaelinArena.Game.targ_dir(self)); let self = TaelinArena.Game.spawn(self)(F64.parse("34"))([TaelinArena.Game.Thing; TaelinArena.Game.move(speech)(TaelinArena.Game.at_max_dist(self)(F64.parse("100")))]); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TaelinArena.Game.animate(self)(F64.0)(DILMA_SALUTING_THE_CASSAVA_000)(F64.parse("18"))(F64.parse("54")); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TaelinArena.Game.animate(self)(F64.0)(DILMA_STOCKING_WIND_CASTING_000)(F64.parse("10"))(F64.parse("30")); let wind = TaelinArena.Thing.new_thing; let wind = TaelinArena.Game.set_thing_fun(wind)(TaelinArena.Thing.dilma.stocking_wind_fun); let wind = TaelinArena.Game.set_thing_pos(wind)(self.pos); let wind = TaelinArena.Game.set_thing_dir(wind)(TaelinArena.Game.targ_dir(self)); let wind = TaelinArena.Game.set_thing_vel(wind)(F64.V3.scale(F64.parse("6"))(TaelinArena.Game.targ_dir(self))); let wind = TaelinArena.Game.set_thing_box(wind)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.spawn(self)(F64.parse("8"))([TaelinArena.Game.Thing; wind]); self)(Bool.if<TaelinArena.Game.Thing>(F64.eql(self.act)(F64.parse("5")))(TaelinArena.Game.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16")))(TaelinArena.Game.animate(self)(F64.0)(DILMA_TAUNT_000)(F64.parse("6"))(F64.parse("18"))))))))
+TA.Thing.animate_die: (self: TA.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TA.Thing
+  (self) (boost) (model) (count) (durat) let self = TA.Thing.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TA.Thing.die(self)(F64.sub(durat)(F64.1)); self
 
-TaelinArena.Thing.dilma.stocking_wind_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) TaelinArena.Game.animate_die(self)(F64.0)(DILMA_STOCKING_WIND_ANIM_000)(F64.parse("3"))(F64.parse("15"))
+TA.Thing.animate_with_blink: (self: TA.Thing) -> (boost: F64) -> (model_atk: F64) -> (model_idle: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> TA.Thing
+  (self) (boost) (model_atk) (model_idle) (count) (from) (til) let self = TA.Thing.animate_between(self)(boost)(model_atk)(count)(from)(til); let self = TA.Thing.animate_between(self)(boost)(model_idle)(F64.1)(til)(F64.add(til)(F64.1)); let self = TA.Thing.reset(self)(til); self
 
-TaelinArena.Thing.dilma.confusion_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) TaelinArena.Game.animate_die(self)(F64.0)(DILMA_CONFUSION_ANIM_000)(F64.parse("4"))(F64.parse("40"))
+TA.Thing.at_dist: TA.Thing -> F64 -> F64.V3
+  (self) (dist) let dir = TA.Thing.targ_dir(self); let pos = TA.Thing.get_pos(self); F64.V3.add(pos)(F64.V3.scale(dist)(dir))
 
+TA.Thing.at_max_dist: TA.Thing -> F64 -> F64.V3
+  (self) (max_range) let self_pos = TA.Thing.get_pos(self); let self_trg = TA.Thing.get_trg(self); let dist_max = F64.V3.dist(self_pos)(TA.Thing.at_dist(self)(max_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_trg)(dist_max); F64.if<F64.V3>(F64.from_bool(less_than))(TA.Thing.at_dist(self)(dist_trg))(TA.Thing.at_dist(self)(max_range))
 TaelinArena.Thing.dorime.blessing_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
   (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let self = TaelinArena.Game.animate_die(self)(F64.0)(DORIME_BLESSING_FOR_WHO_DESERVE_PROJECTILE_000)(F64.1)(F64.parse("16")); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("4")))]; let self = TaelinArena.Game.cast(self)(F64.0)(hits); let self = TaelinArena.Game.cast(self)(F64.parse("2"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("4"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("6"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("8"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("12"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("14"))(hits); self
 
@@ -4122,35 +3914,302 @@ TaelinArena.Thing.dorime_fun: (self: TaelinArena.Game.Thing) -> TaelinArena.Game
 TaelinArena.Thing.new_thing: TaelinArena.Game.Thing
   TaelinArena.Game.Thing.new((x) x)(F64.0)(F64.0)(F64.0)(F64.0)(Map.new<F64>)(String.nil)([TaelinArena.Game.Light;])(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.parse("8"))(F64.1)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64._1)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(TaelinArena.Game.Hitbox.cbox(F64.parse("12")))(F64.1)(F64.parse("24"))(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))([TaelinArena.Game.Buff;])([TaelinArena.Game.Thing;])([TaelinArena.Game.Hit;])(Bool.false)(Bool.false)
 
-TaelinArena.Thing.poste_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let new_pos = F64.V3.new(F64.0)(F64.0)(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let self = TaelinArena.Game.set_thing_mid(self)(POSTE_IDLE_000); let lpos = self.pos<() F64.V3>((self.pos.x) (self.pos.y) (self.pos.z) F64.V3.new(self.pos.x)(self.pos.y)(F64.parse("52"))); let lrng = F64.parse("32.0"); let lrad = F64.parse("12"); let lsub = F64.V3.new(F64.0)(F64.0)(F64.0); let ladd = F64.V3.new(F64.parse("0.72"))(F64.parse("0.60"))(F64.parse("0.24")); let lght = TaelinArena.Game.Light.new(lpos)(lrad)(lrng)(lsub)(ladd); let self = TaelinArena.Game.illumine(self)(F64.0)(F64.parse("2147483648"))([TaelinArena.Game.Light; lght]); self
+TA.Thing.at_min_dist: TA.Thing -> F64 -> F64.V3
+  (self) (min_range) let self_pos = TA.Thing.get_pos(self); let self_trg = TA.Thing.get_trg(self); let dist_min = F64.V3.dist(self_pos)(TA.Thing.at_dist(self)(min_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_min)(dist_trg); F64.if<F64.V3>(F64.from_bool(less_than))(TA.Thing.at_dist(self)(dist_trg))(TA.Thing.at_dist(self)(min_range))
 
-TaelinArena.Thing.puddledmg_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("100"))(F64.parse("-100"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000)(F64.parse("29"))(F64.parse("58")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.damage(F64.1)]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let eff_slow = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.slow(F64.mul(TaelinArena.Constants.ONE_SEC)(F64.parse("3")))(F64.parse("0.7"))]; let slow = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(eff_slow)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("48")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(slow); let self = TaelinArena.Game.cast(self)(F64.parse("18"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("26"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("30"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("38"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("44"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("52"))(hits); self
+TA.Thing.benfix_fun: (self: TA.Thing) -> TA.Thing
+  (self) let self = TA.Thing.set_mov(self)(F64.parse("2")); let self = TA.Thing.set_mhp(self)(F64.parse("24")); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.act)(F64.0))(F64.if<TA.Thing>(TA.Thing.is_walking(self))(TA.Thing.animate(self)(F64.1)(BENFIX_WALK_000)(F64.parse("7"))(F64.parse("14")))(TA.Thing.animate(self)(F64.1)(BENFIX_IDLE_000)(F64.parse("12"))(F64.parse("24"))))(Bool.if<TA.Thing>(F64.eql(self.act)(F64.1))(let self = TA.Thing.animate(self)(F64.0)(BENFIX_TRIPLE_ATTACK_1_000)(F64.parse("16"))(F64.parse("32")); let effs0 = [TA.Game.Effect; TA.Game.Effect.damage(F64.parse("1"))]; let effs1 = [TA.Game.Effect; TA.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TA.Game.Hit; TA.Game.Hit.new(effs0)(TA.Thing.at_dist(self)(F64.parse("30")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TA.Game.Hit; TA.Game.Hit.new(effs1)(TA.Thing.at_dist(self)(F64.parse("30")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let self = TA.Thing.cast(self)(F64.parse("14"))(hits0); let self = TA.Thing.cast(self)(F64.parse("18"))(hits0); let self = TA.Thing.cast(self)(F64.parse("22"))(hits0); let self = TA.Thing.cast(self)(F64.parse("28"))(hits1); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.2))(let self = TA.Thing.animate(self)(F64.0)(BENFIX_SEISMIC_JUMP_000)(F64.parse("10"))(F64.parse("30")); let effs0 = [TA.Game.Effect; TA.Game.Effect.damage(F64.1)]; let effs1 = [TA.Game.Effect; TA.Game.Effect.slow(F64.parse("2"))(F64.parse("0.5")), TA.Game.Effect.damage(F64.parse("3"))]; let hits0 = [TA.Game.Hit; TA.Game.Hit.new(effs0)(TA.Thing.at_dist(self)(F64.parse("40")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let hits1 = [TA.Game.Hit; TA.Game.Hit.new(effs1)(TA.Thing.at_dist(self)(F64.parse("30")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("40")))]; let self = TA.Thing.cast(self)(F64.parse("20"))(hits0); let self = TA.Thing.cast(self)(F64.parse("22"))(hits0); let self = TA.Thing.cast(self)(F64.parse("24"))(hits1); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TA.Thing.animate(self)(F64.0)(BENFIX_STEEL_TORNADO_000)(F64.parse("4"))(F64.parse("12")); let effs = [TA.Game.Effect; TA.Game.Effect.damage(F64.1)]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("40")))]; let self = TA.Thing.cast(self)(F64.parse("2"))(hits); let self = TA.Thing.cast(self)(F64.parse("4"))(hits); let self = TA.Thing.cast(self)(F64.parse("6"))(hits); let self = TA.Thing.cast(self)(F64.parse("8"))(hits); let self = TA.Thing.cast(self)(F64.parse("10"))(hits); let self = TA.Thing.cast(self)(F64.parse("11"))(hits); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TA.Thing.animate(self)(F64.1)(BENFIX_GIGA_DASH_000)(F64.parse("22"))(F64.parse("22")); let self = TA.Thing.dash(self)(F64.parse("4"))(F64.0)(F64.parse("22")); let effs = [TA.Game.Effect; TA.Game.Effect.stun(F64.1), TA.Game.Effect.damage(F64.parse("2"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("30")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let self = TA.Thing.cast(self)(F64.parse("10"))(hits); let self = TA.Thing.cast(self)(F64.parse("15"))(hits); let self = TA.Thing.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TA.Thing.animate(self)(F64.1)(BENFIX_DASH_000)(F64.parse("9"))(F64.parse("18")); let self = TA.Thing.dash(self)(F64.parse("3"))(F64.parse("0"))(F64.parse("18")); self)(TA.Thing.animate(self)(F64.0)(BENFIX_TAUNT_000)(F64.parse("16"))(F64.parse("32"))))))))
 
-TaelinArena.Thing.puddleheal_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self.pos = TaelinArena.Game.get_thing_pos(self); let self.dir = TaelinArena.Game.get_thing_dir(self); let new_pos = F64.V3.new(F64.parse("130"))(F64.parse("80"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_sid(self)(F64.0); let self = TaelinArena.Game.set_thing_box(self)(TaelinArena.Game.Hitbox.nbox); let self = TaelinArena.Game.set_thing_mid(self)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015); let self = TaelinArena.Game.animate(self)(F64.0)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015)(F64.parse("9"))(F64.parse("36")); let effs = [TaelinArena.Game.Effect; TaelinArena.Game.Effect.heal(F64.parse("2"))]; let hits = [TaelinArena.Game.Hit; TaelinArena.Game.Hit.new(effs)(self.pos)(self.dir)(TaelinArena.Game.Hitbox.cbox(F64.parse("42")))]; let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); let self = TaelinArena.Game.cast(self)(F64.parse("10"))(hits); self
+TA.Thing.between_dist: TA.Thing -> F64 -> F64 -> F64.V3
+  (self) (min_range) (max_range) let self_pos = TA.Thing.get_pos(self); let self_trg = TA.Thing.get_trg(self); let dist_trg = F64.V3.dist(self_pos)(self_trg); let min = F64.min(max_range)(dist_trg); let max = F64.max(min_range)(min); TA.Thing.at_dist(self)(max)
 
-TaelinArena.Thing.punchingbag_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let self.dmg = TaelinArena.Game.get_thing_dmg(self); let self.tik = TaelinArena.Game.get_thing_tik(self); let smhp = F64.parse("32"); let self = TaelinArena.Game.set_thing_mhp(self)(smhp); let self = TaelinArena.Game.set_thing_dir(self)(F64.V3.new(F64.parse("0.707"))(F64.parse("-0.707"))(F64.0)); let div_aux = F64.div(F64.parse("2"))(F64.parse("24")); let self = TaelinArena.Game.set_thing_dmg(self)(F64.sub(self.dmg)(div_aux)); let self = TaelinArena.Game.set_thing_mid(self)(let pow = F64.max(F64.0)(F64.min(F64.1)(F64.div(self.dmg)(smhp))); let sin = F64.sin(F64.div(self.tik)(F64.parse("6"))); let re0 = F64.mul(F64.mul(sin)(F64.parse("12")))(pow); let re1 = F64.add(F64.add(re0)(F64.parse("24")))(F64.parse("0.5")); let ang = F64.mod(re1)(F64.parse("24")); F64.add(PUNCHINGBAG_IDLE_000)(F64.floor(ang))); self
+TA.Thing.bleskape_fun: (self: TA.Thing) -> TA.Thing
+  (self) let self = TA.Thing.set_mov(self)(F64.parse("2")); let self = TA.Thing.set_mhp(self)(F64.parse("24")); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.act)(F64.0))(F64.if<TA.Thing>(TA.Thing.is_walking(self))(TA.Thing.animate(self)(F64.1)(BLESKAPE_WALK_000)(F64.parse("4"))(F64.parse("16")))(TA.Thing.animate(self)(F64.1)(BLESKAPE_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TA.Thing>(F64.eql(self.act)(F64.1))(let self = TA.Thing.animate(self)(F64.0)(BLESKAPE_SHOCK_BALL_000)(F64.parse("15"))(F64.parse("30")); let effs = [TA.Game.Effect; TA.Game.Effect.impulse(F64.parse("12"))(self.dir), TA.Game.Effect.damage(F64.parse("3"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("40")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20"))), TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("40")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let self = TA.Thing.cast(self)(F64.parse("18"))(hits); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.2))(let self = TA.Thing.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_000)(F64.parse("3"))(F64.0)(F64.parse("3")); let self = TA.Thing.animate_between(self)(F64.1)(BLESKAPE_DEFENSE_MODE_002)(F64.1)(F64.parse("3"))(F64.parse("12")); let self = TA.Thing.reset(self)(F64.parse("12")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TA.Thing.animate(self)(F64.0)(BLESKAPE_SHOCK_GROUND_WAVE_000)(F64.parse("12"))(F64.parse("24")); let effs = [TA.Game.Effect; TA.Game.Effect.damage(F64.parse("5"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("58")))]; let self = TA.Thing.cast(self)(F64.parse("20"))(hits); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TA.Thing.animate(self)(F64.0)(BLESKAPE_SUPREME_PUNCH_SEQUENCE_000)(F64.parse("25"))(F64.parse("50")); let effs = [TA.Game.Effect; TA.Game.Effect.damage(F64.parse("1"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("32")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("32")))]; let self = TA.Thing.cast(self)(F64.parse("26"))(hits); let self = TA.Thing.cast(self)(F64.parse("30"))(hits); let self = TA.Thing.cast(self)(F64.parse("34"))(hits); let self = TA.Thing.cast(self)(F64.parse("38"))(hits); let self = TA.Thing.cast(self)(F64.parse("42"))(hits); let effes = [TA.Game.Effect; TA.Game.Effect.impulse(F64.parse("18"))(self.dir), TA.Game.Effect.impulse(F64.parse("18"))(self.dir)]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("32")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("32")))]; let self = TA.Thing.cast(self)(F64.parse("46"))(hits); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("5")))(let self = TA.Thing.animate(self)(F64.0)(BLESKAPE_DASH_000)(F64.parse("15"))(F64.parse("30")); let self = TA.Thing.dash(self)(F64.parse("8"))(F64.parse("15"))(F64.parse("25")); let effs = [TA.Game.Effect; TA.Game.Effect.repulse(F64.parse("8")), TA.Game.Effect.damage(F64.parse("1"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(TA.Thing.at_dist(self)(F64.parse("32")))(self.dir)(TA.Game.Hitbox.cbox(F64.parse("32")))]; let self = TA.Thing.cast(self)(F64.parse("17"))(hits); let self = TA.Thing.cast(self)(F64.parse("20"))(hits); let self = TA.Thing.cast(self)(F64.parse("23"))(hits); self)(TA.Thing.animate(self)(F64.0)(BLESKAPE_TAUNT_000)(F64.parse("10"))(F64.parse("20"))))))))
 
-TaelinArena.Thing.wall_fun: TaelinArena.Game.Thing -> TaelinArena.Game.Thing
-  (self) let new_pos = F64.V3.new(F64.parse("-64"))(F64.parse("64"))(F64.0); let self = TaelinArena.Game.set_thing_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TaelinArena.Game.set_thing_dir(self)(new_dir); let self = TaelinArena.Game.set_thing_mid(self)(WALL_IDLE_000); let boxw = F64.parse("60"); let boxh = F64.parse("7"); let new_pbox = [F64.V3; F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0)]; self
+TA.Thing.blink: (self: TA.Thing) -> (at_tik: F64) -> (to_pos: F64.V3) -> TA.Thing
+  (self) (at_tik) (to_pos) let rooted = TA.Thing.is_rooted(self); let self.tik = TA.Thing.get_tik(self); let self.pos = TA.Thing.get_pos(self); rooted<() TA.Thing>(self)(let new_pos = Bool.if<F64.V3>(F64.eql(self.tik)(at_tik))(to_pos)(self.pos); TA.Thing.set_pos(self)(new_pos))
 
-TaelinArena.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TaelinArena.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TaelinArena.Game.Hitbox) -> Maybe(F64.V3)
+TA.Thing.cast: TA.Thing -> F64 -> List(TA.Game.Hit) -> TA.Thing
+  (self) (at_tik) (do_hit) let curr_tik = TA.Thing.get_tik(self); F64.eql(curr_tik)(at_tik)<() TA.Thing>(TA.Thing.set_hit(self)(do_hit))(self)
+
+TA.Thing.create_at: (self: TA.Thing) -> (at_tik: F64) -> (new_thing: TA.Game.TxFunction) -> TA.Thing
+  (self) (at_tik) (new_thing) let self.tik = TA.Thing.get_tik(self); let self.pid = TA.Thing.get_pid(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.tik)(at_tik))(let self = TA.Thing.set_fun(self)(new_thing); let self = TA.Thing.set_pid(self)(self.pid); let self = TA.Thing.set_pos(self)(self.pos); self)(self)
+
+TA.Thing.dash: (self: TA.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: F64) -> TA.Thing
+  (self) (speed) (from_tik) (til_tik) let rooted = TA.Thing.is_rooted(self); let self.tik = TA.Thing.get_tik(self); Bool.if<TA.Thing>(rooted)(self)(let is_between_tik = F64.is_between(from_tik)(til_tik)(self.tik); let new_vel = Bool.if<F64.V3>(is_between_tik)(let self.pos = TA.Thing.get_pos(self); let self.trg = TA.Thing.get_trg(self); let self.dir = TA.Thing.get_dir(self); F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir)))(F64.V3.new(F64.0)(F64.0)(F64.0)); TA.Thing.set_vel(self)(new_vel))
+
+TA.Thing.die: TA.Thing -> F64 -> TA.Thing
+  (self) (at_tik) let curr_tik = TA.Thing.get_tik(self); let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_die<() TA.Thing>(TA.Thing.set_die(self)(Bool.true))(self)
+
+TA.Thing.dilma_fun: TA.Thing -> TA.Thing
+  (self) let self = TA.Thing.set_mov(self)(F64.parse("2")); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.act)(F64.0))(F64.if<TA.Thing>(TA.Thing.is_walking(self))(TA.Thing.animate(self)(F64.1)(DILMA_WALK_000)(F64.parse("8"))(F64.parse("16")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TA.Thing>(F64.eql(self.act)(F64.1))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_000)(F64.parse("6"))(F64.parse("3"))(F64.parse("7")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_007)(F64.parse("5"))(F64.parse("28"))(F64.parse("14")); let self = TA.Thing.reset(self)(F64.parse("27")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.2))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_000)(F64.parse("17"))(F64.parse("0"))(F64.parse("34")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_016)(F64.parse("3"))(F64.parse("34"))(F64.parse("64")); let self = TA.Thing.reset(self)(F64.parse("63")); let speech = TA.Thing.new_thing; let speech = TA.Thing.set_fun(speech)(TA.Thing.dilma.confusion_fun); let speech = TA.Thing.set_dir(speech)(TA.Thing.targ_dir(self)); let self = TA.Thing.spawn(self)(F64.parse("34"))([TA.Thing; TA.Thing.move(speech)(TA.Thing.at_max_dist(self)(F64.parse("100")))]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_SALUTING_THE_CASSAVA_000)(F64.parse("18"))(F64.parse("54")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_STOCKING_WIND_CASTING_000)(F64.parse("10"))(F64.parse("30")); let wind = TA.Thing.new_thing; let wind = TA.Thing.set_fun(wind)(TA.Thing.dilma.stocking_wind_fun); let wind = TA.Thing.set_pos(wind)(self.pos); let wind = TA.Thing.set_dir(wind)(TA.Thing.targ_dir(self)); let wind = TA.Thing.set_vel(wind)(F64.V3.scale(F64.parse("6"))(TA.Thing.targ_dir(self))); let wind = TA.Thing.set_box(wind)(TA.Game.Hitbox.nbox); let self = TA.Thing.spawn(self)(F64.parse("8"))([TA.Thing; wind]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("5")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16")))(TA.Thing.animate(self)(F64.0)(DILMA_TAUNT_000)(F64.parse("6"))(F64.parse("18"))))))))
+
+TA.Thing.dilma.stocking_wind_fun: TA.Thing -> TA.Thing
+  (self) TA.Thing.animate_die(self)(F64.0)(DILMA_STOCKING_WIND_ANIM_000)(F64.parse("3"))(F64.parse("15"))
+
+TA.Thing.dilma.confusion_fun: TA.Thing -> TA.Thing
+  (self) TA.Thing.animate_die(self)(F64.0)(DILMA_CONFUSION_ANIM_000)(F64.parse("4"))(F64.parse("40"))
+
+TA.Thing.end_thing: (self: TA.Thing) -> (tx: TA.Game.TxFunction) -> (after_tiks: F64) -> (stt_key: Bits) -> TA.Thing
+  (self) (tx) (after_tiks) (stt_key) let self.stt = TA.Thing.get_stt(self); let current_tik = Map.get<F64>(stt_key)(self.stt); let empty_stt = Map.set<F64>(stt_key)(after_tiks)(self.stt); current_tik<() TA.Thing>(TA.Thing.set_stt(self)(empty_stt))((current_tik.value) Bool.if<TA.Thing>(F64.eql(current_tik.value)(F64.0))(let self.pid = TA.Thing.get_pid(self); let self.pos = TA.Thing.get_pos(self); let self = TA.Thing.set_fun(self)(tx); let self = TA.Thing.set_pid(self)(self.pid); let self = TA.Thing.set_pos(self)(self.pos); let self = TA.Thing.set_stt(self)(empty_stt); self)(let new_stt = Map.set<F64>(stt_key)(Bool.if<F64>(F64.ltn(F64.0)(current_tik.value))(F64.sub(current_tik.value)(F64.1))(F64.0))(self.stt); TA.Thing.set_stt(self)(new_stt)))
+
+TA.Thing: Type
+  thing<P: TA.Thing -> Type> -> (new: (fun: TA.Game.TxFunction) -> (pid: TA.Game.PlayerId) -> (mid: TA.Game.ModelId) -> (act: TA.Game.ActionId) -> (sid: TA.Game.SideId) -> (stt: Map(F64)) -> (nam: String) -> (lit: List(TA.Game.Light)) -> (tik: F64) -> (pos: F64.V3) -> (mov: F64) -> (bst: F64) -> (pad: F64.V3) -> (dir: F64.V3) -> (trg: F64.V3) -> (vel: F64.V3) -> (box: TA.Game.Hitbox) -> (wei: F64) -> (mhp: F64) -> (dmg: F64) -> (knk: F64.V3) -> (buf: List(TA.Game.Buff)) -> (chi: List(TA.Thing)) -> (hit: List(TA.Game.Hit)) -> (rst: Bool) -> (die: Bool) -> P(TA.Thing.new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die))) -> P(thing)
+
+TA.Thing.get_act: (thi: TA.Thing) -> TA.Game.ActionId
+  (thi) thi<() TA.Game.ActionId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.act)
+
+TA.Thing.get_box: (thi: TA.Thing) -> TA.Game.Hitbox
+  (thi) thi<() TA.Game.Hitbox>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.box)
+
+TA.Thing.get_bst: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.bst)
+
+TA.Thing.get_buf: (thi: TA.Thing) -> List(TA.Game.Buff)
+  (thi) thi<() List(TA.Game.Buff)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.buf)
+
+TA.Thing.get_by_pid.cond: TA.Game.PlayerId -> TA.Thing -> Bool
+  (pid) (thi) let thi.pid = TA.Thing.get_pid(thi); F64.eql(pid)(thi.pid)
+
+TA.Thing.get_by_pid: TA.Game.PlayerId -> TA.Game.Game -> Maybe(TA.Thing)
+  (pid) (gm) gm<() Maybe(TA.Thing)>((gm.stage) List.find<TA.Thing>(TA.Thing.get_by_pid.cond(pid))(gm.stage))
+
+TA.Thing.get_chi: (thi: TA.Thing) -> List(TA.Thing)
+  (thi) thi<() List(TA.Thing)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.chi)
+
+TA.Thing.get_die: (thi: TA.Thing) -> Bool
+  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.die)
+
+TA.Thing.get_dir: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dir)
+
+TA.Thing.get_dmg: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.dmg)
+
+TA.Thing.get_fun: (thi: TA.Thing) -> TA.Game.TxFunction
+  (thi) thi<() TA.Game.TxFunction>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.fun)
+
+TA.Thing.get_hit: (thi: TA.Thing) -> List(TA.Game.Hit)
+  (thi) thi<() List(TA.Game.Hit)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.hit)
+
+TA.Thing.get_knk: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.knk)
+
+TA.Thing.get_lit: (thi: TA.Thing) -> List(TA.Game.Light)
+  (thi) thi<() List(TA.Game.Light)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.lit)
+
+TA.Thing.get_mhp: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mhp)
+
+TA.Thing.get_mid: (thi: TA.Thing) -> TA.Game.ModelId
+  (thi) thi<() TA.Game.ModelId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mid)
+
+TA.Thing.get_mov: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.mov)
+
+TA.Thing.get_nam: (thi: TA.Thing) -> String
+  (thi) thi<() String>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.nam)
+
+TA.Thing.get_pad: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pad)
+
+TA.Thing.get_pid: (thi: TA.Thing) -> TA.Game.PlayerId
+  (thi) thi<() TA.Game.PlayerId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pid)
+
+TA.Thing.get_pos: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.pos)
+
+TA.Thing.get_rst: (thi: TA.Thing) -> Bool
+  (thi) thi<() Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.rst)
+
+TA.Thing.get_sid: (thi: TA.Thing) -> TA.Game.SideId
+  (thi) thi<() TA.Game.SideId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.sid)
+
+TA.Thing.get_stt: (thi: TA.Thing) -> Map(F64)
+  (thi) thi<() Map(F64)>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.stt)
+
+TA.Thing.get_stt_value: TA.Thing -> Bits -> F64
+  (self) (stt_key) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() F64>(F64.0)((result.value) result.value)
+
+TA.Thing.get_stt_value_v3: (self: TA.Thing) -> F64.V3
+  (self) let x = TA.Thing.get_stt_value(self)(TA.Constants.POS_X_KEY); let y = TA.Thing.get_stt_value(self)(TA.Constants.POS_Y_KEY); F64.V3.new(x)(y)(F64.0)
+
+TA.Thing.get_tik: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.tik)
+
+TA.Thing.get_trg: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.trg)
+
+TA.Thing.get_vel: (thi: TA.Thing) -> F64.V3
+  (thi) thi<() F64.V3>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.vel)
+
+TA.Thing.get_wei: (thi: TA.Thing) -> F64
+  (thi) thi<() F64>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.wei)
+
+TA.Thing.handle_shields: (hit_dmg: F64) -> (self: TA.Thing) -> TA.Thing
+  (hit_dmg) (self) let self.buf = TA.Thing.get_buf(self); let self.dmg = TA.Thing.get_dmg(self); let init_val = Pair.new<F64><List(TA.Game.Buff)>(hit_dmg)([TA.Game.Buff;]); let res = List.fold<TA.Game.Buff><Pair(F64)(List(TA.Game.Buff))>(init_val)(TA.Game.use_shields)(self.buf); let res.fst = Pair.fst<F64><List(TA.Game.Buff)>(res); let res.snd = Pair.snd<F64><List(TA.Game.Buff)>(res); let remaining_dmg = F64.add(res.fst)(self.dmg); let remaining_buf = res.snd; let self = TA.Thing.set_dmg(self)(remaining_dmg); let self = TA.Thing.set_buf(self)(remaining_buf); self
+
+TA.Thing.has_shields: TA.Thing -> Bool
+  (self) let self.buf = TA.Thing.get_buf(self); let has_shields = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.true)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)) :: TA.Game.Buff -> Bool; let found_buf = List.find<TA.Game.Buff>(has_shields)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TA.Thing.illumine: TA.Thing -> F64 -> F64 -> List(TA.Game.Light) -> TA.Thing
+  (self) (from_tik) (to_tik) (lights) let curr_tik = TA.Thing.get_tik(self); F64.is_between(from_tik)(to_tik)(curr_tik)<() TA.Thing>(TA.Thing.set_lit(self)(lights))(TA.Thing.set_lit(self)([TA.Game.Light;]))
+
+TA.Thing.is_rooted: (self: TA.Thing) -> Bool
+  (self) let self.buf = TA.Thing.get_buf(self); let is_rooted_buff = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.true)) :: TA.Game.Buff -> Bool; let found_buf = List.find<TA.Game.Buff>(is_rooted_buff)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TA.Thing.is_silenced: TA.Thing -> Bool
+  (self) let self.buf = TA.Thing.get_buf(self); let is_silenced = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.false)((buff.dur) Bool.true)) :: TA.Game.Buff -> Bool; let found_buf = List.find<TA.Game.Buff>(is_silenced)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TA.Thing.is_stunned: TA.Thing -> Bool
+  (self) let self.buf = TA.Thing.get_buf(self); let is_stunned = ((buff) buff<() Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)) :: TA.Game.Buff -> Bool; let found_buf = List.find<TA.Game.Buff>(is_stunned)(self.buf); found_buf<() Bool>(Bool.false)((value) Bool.true)
+
+TA.Thing.is_using_buff: TA.Thing -> Bits -> Bool
+  (self) (stt_key) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() Bool>(Bool.false)((current_tik) F64.eql(current_tik)(F64.0)<() Bool>(Bool.false)(Bool.true))
+
+TA.Thing.is_walking: TA.Thing -> F64
+  (this) let this.pad = TA.Thing.get_pad(this); F64.from_bool(F64.ltn(F64.0)(F64.V3.len(this.pad)))
+
+TA.Thing.map_stt_key: TA.Thing -> Bits -> F64 -> F64 -> TA.Thing
+  (self) (stt_key) (func) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() TA.Thing>(TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(F64.0)(stt)))((result.value) TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(func(result.value))(stt)))
+
+TA.Thing.move: TA.Thing -> F64.V3 -> TA.Thing
+  (self) (to_pos) TA.Thing.set_pos(self)(to_pos)
+
+TA.Thing.new: TA.Game.TxFunction -> TA.Game.PlayerId -> TA.Game.ModelId -> TA.Game.ActionId -> TA.Game.SideId -> Map(F64) -> String -> List(TA.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TA.Game.Buff) -> List(TA.Thing) -> List(TA.Game.Hit) -> Bool -> Bool -> TA.Thing
+  (fun) (pid) (mid) (act) (sid) (stt) (nam) (lit) (tik) (pos) (mov) (bst) (pad) (dir) (trg) (vel) (box) (wei) (mhp) (dmg) (knk) (buf) (chi) (hit) (rst) (die) <P> (new) new(fun)(pid)(mid)(act)(sid)(stt)(nam)(lit)(tik)(pos)(mov)(bst)(pad)(dir)(trg)(vel)(box)(wei)(mhp)(dmg)(knk)(buf)(chi)(hit)(rst)(die)
+
+TA.Thing.new_thing: TA.Thing
+  TA.Thing.new((x) x)(F64.0)(F64.0)(F64.0)(F64.0)(Map.new<F64>)(String.nil)([TA.Game.Light;])(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.parse("8"))(F64.1)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64._1)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(TA.Game.Hitbox.cbox(F64.parse("12")))(F64.1)(F64.parse("24"))(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))([TA.Game.Buff;])([TA.Thing;])([TA.Game.Hit;])(Bool.false)(Bool.false)
+
+TA.Thing.poste_fun: TA.Game.TxFunction
+  (self) let self.pos = TA.Thing.get_pos(self); let new_pos = F64.V3.new(F64.0)(F64.0)(F64.0); let self = TA.Thing.set_pos(self)(new_pos); let self = TA.Thing.set_mid(self)(POSTE_IDLE_000); let lpos = self.pos<() F64.V3>((self.pos.x) (self.pos.y) (self.pos.z) F64.V3.new(self.pos.x)(self.pos.y)(F64.parse("52"))); let lrng = F64.parse("32.0"); let lrad = F64.parse("12"); let lsub = F64.V3.new(F64.0)(F64.0)(F64.0); let ladd = F64.V3.new(F64.parse("0.72"))(F64.parse("0.60"))(F64.parse("0.24")); let lght = TA.Game.Light.new(lpos)(lrad)(lrng)(lsub)(ladd); let self = TA.Thing.illumine(self)(F64.0)(F64.parse("2147483648"))([TA.Game.Light; lght]); self
+
+TA.Thing.puddledmg_fun: TA.Game.TxFunction
+  (self) let self.pos = TA.Thing.get_pos(self); let self.dir = TA.Thing.get_dir(self); let new_pos = F64.V3.new(F64.parse("100"))(F64.parse("-100"))(F64.0); let self = TA.Thing.set_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TA.Thing.set_dir(self)(new_dir); let self = TA.Thing.set_box(self)(TA.Game.Hitbox.nbox); let self = TA.Thing.set_mid(self)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000); let self = TA.Thing.animate(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_000)(F64.parse("29"))(F64.parse("58")); let effs = [TA.Game.Effect; TA.Game.Effect.damage(F64.1)]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("48")))]; let eff_slow = [TA.Game.Effect; TA.Game.Effect.slow(F64.mul(TA.Constants.ONE_SEC)(F64.parse("3")))(F64.parse("0.7"))]; let slow = [TA.Game.Hit; TA.Game.Hit.new(eff_slow)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("48")))]; let self = TA.Thing.cast(self)(F64.parse("10"))(slow); let self = TA.Thing.cast(self)(F64.parse("18"))(hits); let self = TA.Thing.cast(self)(F64.parse("26"))(hits); let self = TA.Thing.cast(self)(F64.parse("30"))(hits); let self = TA.Thing.cast(self)(F64.parse("38"))(hits); let self = TA.Thing.cast(self)(F64.parse("44"))(hits); let self = TA.Thing.cast(self)(F64.parse("52"))(hits); self
+
+TA.Thing.puddleheal_fun: TA.Game.TxFunction
+  (self) let self.pos = TA.Thing.get_pos(self); let self.dir = TA.Thing.get_dir(self); let new_pos = F64.V3.new(F64.parse("130"))(F64.parse("80"))(F64.0); let self = TA.Thing.set_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TA.Thing.set_dir(self)(new_dir); let self = TA.Thing.set_sid(self)(F64.0); let self = TA.Thing.set_box(self)(TA.Game.Hitbox.nbox); let self = TA.Thing.set_mid(self)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015); let self = TA.Thing.animate(self)(F64.0)(DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_015)(F64.parse("9"))(F64.parse("36")); let effs = [TA.Game.Effect; TA.Game.Effect.heal(F64.parse("2"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("42")))]; let self = TA.Thing.cast(self)(F64.parse("10"))(hits); let self = TA.Thing.cast(self)(F64.parse("10"))(hits); let self = TA.Thing.cast(self)(F64.parse("10"))(hits); let self = TA.Thing.cast(self)(F64.parse("10"))(hits); self
+
+TA.Thing.punchingbag_fun: TA.Game.TxFunction
+  (self) let self.dmg = TA.Thing.get_dmg(self); let self.tik = TA.Thing.get_tik(self); let smhp = F64.parse("32"); let self = TA.Thing.set_mhp(self)(smhp); let self = TA.Thing.set_dir(self)(F64.V3.new(F64.parse("0.707"))(F64.parse("-0.707"))(F64.0)); let div_aux = F64.div(F64.parse("2"))(F64.parse("24")); let self = TA.Thing.set_dmg(self)(F64.sub(self.dmg)(div_aux)); let self = TA.Thing.set_mid(self)(let pow = F64.max(F64.0)(F64.min(F64.1)(F64.div(self.dmg)(smhp))); let sin = F64.sin(F64.div(self.tik)(F64.parse("6"))); let re0 = F64.mul(F64.mul(sin)(F64.parse("12")))(pow); let re1 = F64.add(F64.add(re0)(F64.parse("24")))(F64.parse("0.5")); let ang = F64.mod(re1)(F64.parse("24")); F64.add(PUNCHINGBAG_IDLE_000)(F64.floor(ang))); self
+
+TA.Thing.reset: TA.Thing -> F64 -> TA.Thing
+  (self) (at_tik) let curr_tik = TA.Thing.get_tik(self); let should_reset = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_reset<() TA.Thing>(TA.Thing.set_rst(self)(Bool.true))(self)
+
+TA.Thing.set_act: (thi: TA.Thing) -> (new_act: TA.Game.ActionId) -> TA.Thing
+  (thi) (new_act) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(new_act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_box: (thi: TA.Thing) -> (new_box: TA.Game.Hitbox) -> TA.Thing
+  (thi) (new_box) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(new_box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_bst: (thi: TA.Thing) -> (new_bst: F64) -> TA.Thing
+  (thi) (new_bst) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(new_bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_buf: (thi: TA.Thing) -> (new_buf: List(TA.Game.Buff)) -> TA.Thing
+  (thi) (new_buf) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(new_buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_chi: (thi: TA.Thing) -> (new_chi: List(TA.Thing)) -> TA.Thing
+  (thi) (new_chi) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(new_chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_die: (thi: TA.Thing) -> (new_die: Bool) -> TA.Thing
+  (thi) (new_die) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(new_die))
+
+TA.Thing.set_dir: (thi: TA.Thing) -> (new_dir: F64.V3) -> TA.Thing
+  (thi) (new_dir) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(new_dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_dmg: (thi: TA.Thing) -> (new_dmg: F64) -> TA.Thing
+  (thi) (new_dmg) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(new_dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_fun: (thi: TA.Thing) -> (new_fun: TA.Game.TxFunction) -> TA.Thing
+  (thi) (new_fun) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(new_fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_hit: (thi: TA.Thing) -> (new_hit: List(TA.Game.Hit)) -> TA.Thing
+  (thi) (new_hit) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(new_hit)(thi.rst)(thi.die))
+
+TA.Thing.set_knk: (thi: TA.Thing) -> (new_knk: F64.V3) -> TA.Thing
+  (thi) (new_knk) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(new_knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_lit: (thi: TA.Thing) -> (new_lit: List(TA.Game.Light)) -> TA.Thing
+  (thi) (new_lit) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(new_lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_mhp: (thi: TA.Thing) -> (new_mhp: F64) -> TA.Thing
+  (thi) (new_mhp) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(new_mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_mid: (thi: TA.Thing) -> (new_mid: TA.Game.ModelId) -> TA.Thing
+  (thi) (new_mid) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(new_mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_mov: (thi: TA.Thing) -> (new_mov: F64) -> TA.Thing
+  (thi) (new_mov) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(new_mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_nam: (thi: TA.Thing) -> (new_nam: String) -> TA.Thing
+  (thi) (new_nam) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(new_nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_pad: (thi: TA.Thing) -> (new_pad: F64.V3) -> TA.Thing
+  (thi) (new_pad) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(new_pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_pid: (thi: TA.Thing) -> (new_pid: TA.Game.PlayerId) -> TA.Thing
+  (thi) (new_pid) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(new_pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_pos: (thi: TA.Thing) -> (new_pos: F64.V3) -> TA.Thing
+  (thi) (new_pos) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(new_pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_rst: (thi: TA.Thing) -> (new_rst: Bool) -> TA.Thing
+  (thi) (new_rst) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(new_rst)(thi.die))
+
+TA.Thing.set_sid: (thi: TA.Thing) -> (new_sid: TA.Game.SideId) -> TA.Thing
+  (thi) (new_sid) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(new_sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_stt: (thi: TA.Thing) -> (new_stt: Map(F64)) -> TA.Thing
+  (thi) (new_stt) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(new_stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_stt_value_v3: (self: TA.Thing) -> (v3: F64.V3) -> TA.Thing
+  (self) (v3) let self.stt = TA.Thing.get_stt(self); v3<() TA.Thing>((v3.x) (v3.y) (v3.z) let insert_x = Map.set<F64>(TA.Constants.POS_X_KEY)(v3.x)(self.stt); let insert_y = Map.set<F64>(TA.Constants.POS_Y_KEY)(v3.y)(self.stt); let self = TA.Thing.set_stt(self)(insert_x); let self = TA.Thing.set_stt(self)(insert_y); self)
+
+TA.Thing.set_tik: (thi: TA.Thing) -> (new_tik: F64) -> TA.Thing
+  (thi) (new_tik) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(new_tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_trg: (thi: TA.Thing) -> (new_trg: F64.V3) -> TA.Thing
+  (thi) (new_trg) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(new_trg)(thi.vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_vel: (thi: TA.Thing) -> (new_vel: F64.V3) -> TA.Thing
+  (thi) (new_vel) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(new_vel)(thi.box)(thi.wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.set_wei: (thi: TA.Thing) -> (new_wei: F64) -> TA.Thing
+  (thi) (new_wei) thi<() TA.Thing>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) TA.Thing.new(thi.fun)(thi.pid)(thi.mid)(thi.act)(thi.sid)(thi.stt)(thi.nam)(thi.lit)(thi.tik)(thi.pos)(thi.mov)(thi.bst)(thi.pad)(thi.dir)(thi.trg)(thi.vel)(thi.box)(new_wei)(thi.mhp)(thi.dmg)(thi.knk)(thi.buf)(thi.chi)(thi.hit)(thi.rst)(thi.die))
+
+TA.Thing.spawn: TA.Thing -> F64 -> List(TA.Thing) -> TA.Thing
+  (self) (at_tik) (children) let curr_tik = TA.Thing.get_tik(self); F64.eql(curr_tik)(at_tik)<() TA.Thing>(TA.Thing.set_chi(self)(children))(self)
+
+TA.Thing.speed_multiplier_of: TA.Thing -> F64
+  (self) let bst = TA.Thing.get_bst(self); let buf = TA.Thing.get_buf(self); List.fold<TA.Game.Buff><F64>(bst)(TA.Game.combine_mov_buffs)(buf)
+
+TA.Thing.targ_dir: TA.Thing -> F64.V3
+  (self) let pos = TA.Thing.get_pos(self); let trg = TA.Thing.get_trg(self); let dir = TA.Thing.get_dir(self); F64.V3.look_at(pos)(trg)(dir)
+
+TA.Thing.update_buff: TA.Thing -> Bits -> TA.Thing
+  (self) (stt_key) let stt = TA.Thing.get_stt(self); let curr_tik = Map.get<F64>(stt_key)(stt); curr_tik<() TA.Thing>(self)((curr_tik.value) F64.eql(curr_tik.value)(F64.0)<() TA.Thing>(self)(F64.gtn(curr_tik.value)(F64.0)<() TA.Thing>(let new_tik = F64.sub(curr_tik.value)(F64.1); let new_stt = Map.set<F64>(stt_key)(new_tik)(stt); TA.Thing.set_stt(self)(new_stt))(self)))
+
+TA.Thing.update_buff_dur: (self: TA.Thing) -> TA.Thing
+  (self) let self.buf = TA.Thing.get_buf(self); let fn = ((buff) (acc) buff<() List(TA.Game.Buff)>((buff.dur) (buff.val) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.shielded(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.slowed(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) (buff.val) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.hasted(F64.sub(buff.dur)(F64.1))(buff.val))(acc)))((buff.dur) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.silenced(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.rooted(F64.sub(buff.dur)(F64.1)))(acc)))((buff.dur) Bool.if<List(TA.Game.Buff)>(F64.eql(buff.dur)(F64.0))(acc)(List.cons<TA.Game.Buff>(TA.Game.Buff.stuned(F64.sub(buff.dur)(F64.1)))(acc)))) :: TA.Game.Buff -> List(TA.Game.Buff) -> List(TA.Game.Buff); let new_buf = List.fold<TA.Game.Buff><List(TA.Game.Buff)>([TA.Game.Buff;])(fn)(self.buf); TA.Thing.set_buf(self)(new_buf)
+
+TA.Thing.wall_fun: TA.Game.TxFunction
+  (self) let new_pos = F64.V3.new(F64.parse("-64"))(F64.parse("64"))(F64.0); let self = TA.Thing.set_pos(self)(new_pos); let new_dir = F64.V3.new(F64.parse("0.7071"))(F64.parse("0.7071"))(F64.0); let self = TA.Thing.set_dir(self)(new_dir); let self = TA.Thing.set_mid(self)(WALL_IDLE_000); let boxw = F64.parse("60"); let boxh = F64.parse("7"); let new_pbox = [F64.V3; F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0), F64.V3.new(F64.mul(boxw)(F64._1))(F64.mul(boxh)(F64._1))(F64.0)]; self
+
+TA.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: TA.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: TA.Game.Hitbox) -> Maybe(F64.V3)
   (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) let none = Maybe.none<F64.V3>; a_box<() Maybe(F64.V3)>(none)((a_box.rad) b_box<() Maybe(F64.V3)>(none)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); let if_condition = Bool.and(F64.ltn(F64.0)(dst))(F64.ltn(dst)(rad)); Bool.if<Maybe(F64.V3)>(if_condition)(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none))((b_box.pts) let cons = ((segment) (result) result<() Maybe(F64.V3)>(segment<() Maybe(F64.V3)>((segment.a) (segment.b) let dst = F64.V3.point_segment_dist(a_pos)(segment); let rad = a_box.rad; Bool.if<Maybe(F64.V3)>(F64.ltn(dst)(rad))(let out_dir = F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a)(segment.b))); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(none)))((result.value) Maybe.some<F64.V3>(result.value))) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3); let segs = F64.V3.polygon_to_segments(b_pos)(b_dir)(b_box.pts); List.fold<F64.Segment><Maybe(F64.V3)>(none)(cons)(segs)))((a_box.pts) none)
 
-TaelinArena.exec_command: TaelinArena.Game.Command -> TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (cmd) (gm) cmd<() TaelinArena.Game.Game>((cmd.pid) (cmd.inp) let fn = ((this) let inp = cmd.inp; let is_silenced = TaelinArena.Game.is_silenced(this); let is_stunned = TaelinArena.Game.is_stunned(this); is_stunned<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.init_act(this)(F64.0)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(is_silenced<() TaelinArena.Game.Thing>(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(inp<() TaelinArena.Game.Thing>((sdir.dir) TaelinArena.Game.set_thing_pad(this)(sdir.dir))((key0.pos) TaelinArena.Game.init_act(this)(F64.1)(key0.pos))((key1.pos) TaelinArena.Game.init_act(this)(F64.2)(key1.pos))((key2.pos) TaelinArena.Game.init_act(this)(F64.parse("3"))(key2.pos))((key3.pos) TaelinArena.Game.init_act(this)(F64.parse("4"))(key3.pos))((key4.pos) TaelinArena.Game.init_act(this)(F64.parse("5"))(key4.pos))((key5.pos) TaelinArena.Game.init_act(this)(F64.parse("6"))(key5.pos))((cmsg.txt) this)))) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; TaelinArena.Game.with_thing(cmd.pid)(fn)(gm))
+TA.exec_command: TA.Game.Command -> TA.Game.Game -> TA.Game.Game
+  (cmd) (gm) cmd<() TA.Game.Game>((cmd.pid) (cmd.inp) let fn = ((this) let inp = cmd.inp; let is_silenced = TA.Thing.is_silenced(this); let is_stunned = TA.Thing.is_stunned(this); is_stunned<() TA.Thing>(inp<() TA.Thing>((sdir.dir) TA.Game.init_act(this)(F64.0)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(is_silenced<() TA.Thing>(inp<() TA.Thing>((sdir.dir) TA.Thing.set_pad(this)(sdir.dir))((key0.pos) this)((key1.pos) this)((key2.pos) this)((key3.pos) this)((key4.pos) this)((key5.pos) this)((cmsg.txt) this))(inp<() TA.Thing>((sdir.dir) TA.Thing.set_pad(this)(sdir.dir))((key0.pos) TA.Game.init_act(this)(F64.1)(key0.pos))((key1.pos) TA.Game.init_act(this)(F64.2)(key1.pos))((key2.pos) TA.Game.init_act(this)(F64.parse("3"))(key2.pos))((key3.pos) TA.Game.init_act(this)(F64.parse("4"))(key3.pos))((key4.pos) TA.Game.init_act(this)(F64.parse("5"))(key4.pos))((key5.pos) TA.Game.init_act(this)(F64.parse("6"))(key5.pos))((cmsg.txt) this)))) :: TA.Thing -> TA.Thing; TA.Game.with_thing(cmd.pid)(fn)(gm))
 
-TaelinArena.exec_turn: TaelinArena.Game.Game -> TaelinArena.Game.Game
-  (gm) let intr = ((that) (this) TaelinArena.interact_with(this)(that)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let tick = ((this) (others) (res) let this = TaelinArena.Game.set_thing_hit(this)([TaelinArena.Game.Hit;]); let rst = TaelinArena.Game.get_thing_rst(this); let this = rst<() TaelinArena.Game.Thing>(let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0); let new_bst = F64.1; let new_box = TaelinArena.Game.Hitbox.cbox(F64.mul(F64.parse("3"))(F64.parse("4"))); let new_act = F64.0; let new_tik = F64.0; let new_lit = [TaelinArena.Game.Light;]; let new_rst = Bool.false; let this = TaelinArena.Game.set_thing_vel(this)(new_vel); let this = TaelinArena.Game.set_thing_bst(this)(new_bst); let this = TaelinArena.Game.set_thing_box(this)(new_box); let this = TaelinArena.Game.set_thing_act(this)(new_act); let this = TaelinArena.Game.set_thing_tik(this)(new_tik); let this = TaelinArena.Game.set_thing_lit(this)(new_lit); let this = TaelinArena.Game.set_thing_rst(this)(new_rst); this)(this); let boost = TaelinArena.Game.speed_multiplier_of(this); let pos = TaelinArena.Game.get_thing_pos(this); let mov = TaelinArena.Game.get_thing_mov(this); let pad = TaelinArena.Game.get_thing_pad(this); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.add(pos)(F64.V3.scale(F64.mul(mov)(boost))(pad))); let this = TaelinArena.Game.update_buff_dur(this); let pos = TaelinArena.Game.get_thing_pos(this); let knk = TaelinArena.Game.get_thing_knk(this); let wei = TaelinArena.Game.get_thing_wei(this); let new_pos = F64.V3.add(pos)(knk); let knk_len = F64.V3.len(knk); let new_knk = F64.gtn(knk_len)(F64.0)<() F64.V3>(let force = F64.max(F64.sub(knk_len)(wei))(F64.0); F64.V3.scale(force)(F64.V3.norm(knk)))(knk); let this = TaelinArena.Game.set_thing_pos(this)(new_pos); let this = TaelinArena.Game.set_thing_knk(this)(new_knk); let fun = TaelinArena.Game.get_thing_fun(this); let this = fun(this); let this = List.fold<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(this)(intr)(others); let tik = TaelinArena.Game.get_thing_tik(this); let this = TaelinArena.Game.set_thing_tik(this)(F64.add(tik)(F64.1)); let this_chi = TaelinArena.Game.get_thing_chi(this); let chi_init = ((chi) TaelinArena.Game.get_thing_fun(chi)(chi)) :: TaelinArena.Game.Thing -> TaelinArena.Game.Thing; let chi_list = List.map<TaelinArena.Game.Thing><TaelinArena.Game.Thing>(chi_init)(this_chi); let this = TaelinArena.Game.set_thing_chi(this)([TaelinArena.Game.Thing;]); let this_pos = TaelinArena.Game.get_thing_pos(this); let pos_x = F64.V3.get_z(this_pos); let pos_y = F64.V3.get_y(this_pos); let pos_z = F64.V3.get_z(this_pos); let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256")); let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160")); let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256")); let this = TaelinArena.Game.set_thing_pos(this)(F64.V3.new(new_x)(new_y)(new_z)); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let new_dmg = F64.max(F64.0)(F64.min(mhp)(dmg)); let this = TaelinArena.Game.set_thing_dmg(this)(new_dmg); let sid = TaelinArena.Game.get_thing_sid(this); let dmg = TaelinArena.Game.get_thing_dmg(this); let mhp = TaelinArena.Game.get_thing_mhp(this); let no_hp = Bool.false; let die = TaelinArena.Game.get_thing_die(this); let xs = Bool.or(die)(no_hp)<() List(TaelinArena.Game.Thing)>(res)(List.cons<TaelinArena.Game.Thing>(this)(res)); List.concat<TaelinArena.Game.Thing>(chi_list)(xs)) :: TaelinArena.Game.Thing -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let things_id = ((x) x) :: List(TaelinArena.Game.Thing) -> List(TaelinArena.Game.Thing); let stage = gm<() List(TaelinArena.Game.Thing)>((stage) stage); let stage_nil = [TaelinArena.Game.Thing;]; let new_stage = TaelinArena.fold_with_context<TaelinArena.Game.Thing><List(TaelinArena.Game.Thing)>(stage_nil)(tick)(stage)(things_id); TaelinArena.Game.Game.new(new_stage)
+TA.exec_turn: TA.Game.Game -> TA.Game.Game
+  (gm) let intr = ((that) (this) TA.interact_with(this)(that)) :: TA.Thing -> TA.Thing -> TA.Thing; let tick = ((this) (others) (res) let this = TA.Thing.set_hit(this)([TA.Game.Hit;]); let rst = TA.Thing.get_rst(this); let this = rst<() TA.Thing>(let new_vel = F64.V3.new(F64.0)(F64.0)(F64.0); let new_bst = F64.1; let new_box = TA.Game.Hitbox.cbox(F64.mul(F64.parse("3"))(F64.parse("4"))); let new_act = F64.0; let new_tik = F64.0; let new_lit = [TA.Game.Light;]; let new_rst = Bool.false; let this = TA.Thing.set_vel(this)(new_vel); let this = TA.Thing.set_bst(this)(new_bst); let this = TA.Thing.set_box(this)(new_box); let this = TA.Thing.set_act(this)(new_act); let this = TA.Thing.set_tik(this)(new_tik); let this = TA.Thing.set_lit(this)(new_lit); let this = TA.Thing.set_rst(this)(new_rst); this)(this); let boost = TA.Thing.speed_multiplier_of(this); let pos = TA.Thing.get_pos(this); let mov = TA.Thing.get_mov(this); let pad = TA.Thing.get_pad(this); let this = TA.Thing.set_pos(this)(F64.V3.add(pos)(F64.V3.scale(F64.mul(mov)(boost))(pad))); let this = TA.Thing.update_buff_dur(this); let pos = TA.Thing.get_pos(this); let knk = TA.Thing.get_knk(this); let wei = TA.Thing.get_wei(this); let new_pos = F64.V3.add(pos)(knk); let knk_len = F64.V3.len(knk); let new_knk = F64.gtn(knk_len)(F64.0)<() F64.V3>(let force = F64.max(F64.sub(knk_len)(wei))(F64.0); F64.V3.scale(force)(F64.V3.norm(knk)))(knk); let this = TA.Thing.set_pos(this)(new_pos); let this = TA.Thing.set_knk(this)(new_knk); let fun = TA.Thing.get_fun(this); let this = fun(this); let this = List.fold<TA.Thing><TA.Thing>(this)(intr)(others); let tik = TA.Thing.get_tik(this); let this = TA.Thing.set_tik(this)(F64.add(tik)(F64.1)); let this_chi = TA.Thing.get_chi(this); let chi_init = ((chi) TA.Thing.get_fun(chi)(chi)) :: TA.Thing -> TA.Thing; let chi_list = List.map<TA.Thing><TA.Thing>(chi_init)(this_chi); let this = TA.Thing.set_chi(this)([TA.Thing;]); let this_pos = TA.Thing.get_pos(this); let pos_x = F64.V3.get_z(this_pos); let pos_y = F64.V3.get_y(this_pos); let pos_z = F64.V3.get_z(this_pos); let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256")); let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160")); let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256")); let this = TA.Thing.set_pos(this)(F64.V3.new(new_x)(new_y)(new_z)); let dmg = TA.Thing.get_dmg(this); let mhp = TA.Thing.get_mhp(this); let new_dmg = F64.max(F64.0)(F64.min(mhp)(dmg)); let this = TA.Thing.set_dmg(this)(new_dmg); let sid = TA.Thing.get_sid(this); let dmg = TA.Thing.get_dmg(this); let mhp = TA.Thing.get_mhp(this); let no_hp = Bool.false; let die = TA.Thing.get_die(this); let xs = Bool.or(die)(no_hp)<() List(TA.Thing)>(res)(List.cons<TA.Thing>(this)(res)); List.concat<TA.Thing>(chi_list)(xs)) :: TA.Thing -> List(TA.Thing) -> List(TA.Thing) -> List(TA.Thing); let things_id = ((x) x) :: List(TA.Thing) -> List(TA.Thing); let stage = gm<() List(TA.Thing)>((stage) stage); let stage_nil = [TA.Thing;]; let new_stage = TA.fold_with_context<TA.Thing><List(TA.Thing)>(stage_nil)(tick)(stage)(things_id); TA.Game.Game.new(new_stage)
 
-TaelinArena.fold_with_context: <A: Type> -> <B: Type> -> (i: B) -> (f: A -> List(A) -> B -> B) -> (xs: List(A)) -> (ys: List(A) -> List(A)) -> B
-  <A> <B> (i) (f) (xs) (ys) xs<() B>(i)((xs.head) (xs.tail) let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A); let rest = TaelinArena.fold_with_context<A><B>(i)(f)(xs.tail)(ys2); f(xs.head)(ys(xs.tail))(rest))
+TA.fold_with_context: <A: Type> -> <B: Type> -> (i: B) -> (f: A -> List(A) -> B -> B) -> (xs: List(A)) -> (ys: List(A) -> List(A)) -> B
+  <A> <B> (i) (f) (xs) (ys) xs<() B>(i)((xs.head) (xs.tail) let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A); let rest = TA.fold_with_context<A><B>(i)(f)(xs.tail)(ys2); f(xs.head)(ys(xs.tail))(rest))
 
-TaelinArena.interact_with: (this: TaelinArena.Game.Thing) -> (that: TaelinArena.Game.Thing) -> TaelinArena.Game.Thing
-  (this) (that) let this.pos = TaelinArena.Game.get_thing_pos(this); let this.dir = TaelinArena.Game.get_thing_dir(this); let this.box = TaelinArena.Game.get_thing_box(this); let this.buf = TaelinArena.Game.get_thing_buf(this); let this.sid = TaelinArena.Game.get_thing_sid(this); let that.pos = TaelinArena.Game.get_thing_pos(that); let that.dir = TaelinArena.Game.get_thing_dir(that); let that.box = TaelinArena.Game.get_thing_box(that); let that.hit = TaelinArena.Game.get_thing_hit(that); let that.sid = TaelinArena.Game.get_thing_sid(this); let out_vec = TaelinArena.collide_with(this.pos)(this.dir)(this.box)(that.pos)(that.dir)(that.box); let this = out_vec<() TaelinArena.Game.Thing>(this)((out_vec.value) let new_pos = F64.V3.add(this.pos)(out_vec.value); TaelinArena.Game.set_thing_pos(this)(new_pos)); let this = let apply_hit = ((hit) (this) hit<() TaelinArena.Game.Thing>((hit.eff) (hit.pos) (hit.dir) (hit.box) let out_vec = TaelinArena.collide_with(this.pos)(this.dir)(this.box)(hit.pos)(hit.dir)(hit.box); out_vec<() TaelinArena.Game.Thing>(this)((out_vec.value) let compare_sid = F64.eql(this.sid)(that.sid); let apply_eff = ((eff) (this) eff<() TaelinArena.Game.Thing>((eff.lif) let this.dmg = TaelinArena.Game.get_thing_dmg(this); Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(TaelinArena.Game.set_thing_dmg(this)(F64.sub(this.dmg)(eff.lif))))((eff.dmg) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(TaelinArena.Game.handle_shields(eff.dmg)(this)))((eff.mag) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let v3 = F64.V3.new(F64.1)(F64.0)(F64.0); let dir = F64.V3.look_at(hit.pos)(this.pos)(v3); let vec = F64.V3.scale(eff.mag)(dir); TaelinArena.Game.set_thing_knk(this)(vec)))((eff.mag) (eff.dir) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let vec = F64.V3.scale(eff.mag)(eff.dir); TaelinArena.Game.set_thing_knk(this)(vec)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.slowed(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.hasted(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.shielded(eff.dur)(eff.val))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.silenced(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.rooted(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.dur) Bool.if<TaelinArena.Game.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TaelinArena.Game.Buff>(TaelinArena.Game.Buff.stuned(eff.dur))(this.buf); TaelinArena.Game.set_thing_buf(this)(updated_buffs)))((eff.to_pos) (eff.all) Bool.if<TaelinArena.Game.Thing>(F64.eql(eff.all)(F64.1))(TaelinArena.Game.set_thing_pos(this)(eff.to_pos))(this))) :: TaelinArena.Game.Effect -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; List.fold<TaelinArena.Game.Effect><TaelinArena.Game.Thing>(this)(apply_eff)(hit.eff)))) :: TaelinArena.Game.Hit -> TaelinArena.Game.Thing -> TaelinArena.Game.Thing; List.fold<TaelinArena.Game.Hit><TaelinArena.Game.Thing>(this)(apply_hit)(that.hit); this
+TA.interact_with: (this: TA.Thing) -> (that: TA.Thing) -> TA.Thing
+  (this) (that) let this.pos = TA.Thing.get_pos(this); let this.dir = TA.Thing.get_dir(this); let this.box = TA.Thing.get_box(this); let this.buf = TA.Thing.get_buf(this); let this.sid = TA.Thing.get_sid(this); let that.pos = TA.Thing.get_pos(that); let that.dir = TA.Thing.get_dir(that); let that.box = TA.Thing.get_box(that); let that.hit = TA.Thing.get_hit(that); let that.sid = TA.Thing.get_sid(this); let out_vec = TA.collide_with(this.pos)(this.dir)(this.box)(that.pos)(that.dir)(that.box); let this = out_vec<() TA.Thing>(this)((out_vec.value) let new_pos = F64.V3.add(this.pos)(out_vec.value); TA.Thing.set_pos(this)(new_pos)); let this = let apply_hit = ((hit) (this) hit<() TA.Thing>((hit.eff) (hit.pos) (hit.dir) (hit.box) let out_vec = TA.collide_with(this.pos)(this.dir)(this.box)(hit.pos)(hit.dir)(hit.box); out_vec<() TA.Thing>(this)((out_vec.value) let compare_sid = F64.eql(this.sid)(that.sid); let apply_eff = ((eff) (this) eff<() TA.Thing>((eff.lif) let this.dmg = TA.Thing.get_dmg(this); Bool.if<TA.Thing>(compare_sid)(this)(TA.Thing.set_dmg(this)(F64.sub(this.dmg)(eff.lif))))((eff.dmg) Bool.if<TA.Thing>(compare_sid)(this)(TA.Thing.handle_shields(eff.dmg)(this)))((eff.mag) Bool.if<TA.Thing>(compare_sid)(this)(let v3 = F64.V3.new(F64.1)(F64.0)(F64.0); let dir = F64.V3.look_at(hit.pos)(this.pos)(v3); let vec = F64.V3.scale(eff.mag)(dir); TA.Thing.set_knk(this)(vec)))((eff.mag) (eff.dir) Bool.if<TA.Thing>(compare_sid)(this)(let vec = F64.V3.scale(eff.mag)(eff.dir); TA.Thing.set_knk(this)(vec)))((eff.dur) (eff.val) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.slowed(eff.dur)(eff.val))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.hasted(eff.dur)(eff.val))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.dur) (eff.val) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.shielded(eff.dur)(eff.val))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.dur) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.silenced(eff.dur))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.dur) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.rooted(eff.dur))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.dur) Bool.if<TA.Thing>(compare_sid)(this)(let updated_buffs = List.cons<TA.Game.Buff>(TA.Game.Buff.stuned(eff.dur))(this.buf); TA.Thing.set_buf(this)(updated_buffs)))((eff.to_pos) (eff.all) Bool.if<TA.Thing>(F64.eql(eff.all)(F64.1))(TA.Thing.set_pos(this)(eff.to_pos))(this))) :: TA.Game.Effect -> TA.Thing -> TA.Thing; List.fold<TA.Game.Effect><TA.Thing>(this)(apply_eff)(hit.eff)))) :: TA.Game.Hit -> TA.Thing -> TA.Thing; List.fold<TA.Game.Hit><TA.Thing>(this)(apply_hit)(that.hit); this
 
 Text: Type
   String

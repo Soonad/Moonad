@@ -1,0 +1,31 @@
+// Spawns another thing
+// - self: thing that will create another thing
+// - at_tik: number of the tik when thing will be created
+// - at_pos: position on which thing will be created
+// - thing: thing that will be created
+
+TA.Thing.create_at
+  : (self: TA.Thing)           ->
+    (at_tik: F64)                   ->
+    (new_thing: TA.Game.TxFunction) ->
+    TA.Thing
+  (self) (at_tik) (new_thing)
+  let self.tik = TA.Thing.get_tik(self)
+  let self.pid = TA.Thing.get_pid(self)
+  let self.pos = TA.Thing.get_pos(self)
+  Bool.if<TA.Thing>(F64.eql(self.tik)(at_tik))
+  | let self = TA.Thing.set_fun(self)(new_thing)
+    let self = TA.Thing.set_pid(self)(self.pid)
+    let self = TA.Thing.set_pos(self)(self.pos)
+    self;
+  | self;
+
+// create_at(
+//   self   : Thing,
+//   at_tik : Number
+//   new_thing: TxFunction)
+//   case self |thing
+//   if self.tik === at_tik then
+//     self <= thing(fun=new_thing, pid=self.pid, pos=self.pos)
+//   else 
+//     self
