@@ -1,4 +1,4 @@
-name: CI
+name: Update local files
 
 on:
   push:
@@ -16,7 +16,11 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
+    
+    # Install dependency
+    - name: Install formality-core
+      run: npm i formality-core
+       
     - name: Type check fm --github
       id: check_type_fm_github
       run: node node_modules/formality-core/bin/fm.js --github
