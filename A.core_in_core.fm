@@ -1,4 +1,4 @@
-Research.core_in_core: String
+A.core_in_core: String
   let defs = Core.parse_defs("
   Nat: Type
     nat<P: Nat -> Type> ->

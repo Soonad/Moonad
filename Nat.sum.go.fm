@@ -1,5 +1,0 @@
-Nat.sum.go: Nat -> Nat -> Nat //loop//
-  (n) (r)
-  n<() Nat>
-  | r;
-  | (n.pred) Nat.sum.go(n.pred)(Nat.add(n)(r));

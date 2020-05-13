@@ -1,5 +1,5 @@
 // The synthesizer can generate functions definition like composition
-Research.synthesis0
+A.synthesis0
   : <A:Type> ->
     <B:Type> ->
     <C:Type> ->

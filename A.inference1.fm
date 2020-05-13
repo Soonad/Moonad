@@ -1,4 +1,4 @@
-Research.inference1: Bool -> Bool
+A.inference1: Bool -> Bool
   (b)
   case b:
   | Bool.true;
