@@ -1,5 +1,0 @@
-TaelinArena.Game.Hitbox.cbox: F64 -> TaelinArena.Game.Hitbox
-  (rad)
-  <P> (nbox) (cbox) (pbox)
-  cbox(rad)
-  

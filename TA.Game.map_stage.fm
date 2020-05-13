@@ -1,0 +1,10 @@
+TA.Game.map_stage
+  : (TA.Thing -> TA.Thing) ->
+    TA.Game.Game                     -> 
+    TA.Game.Game
+  (fn) (gm)
+  gm<() TA.Game.Game> | (gm.stage)
+  let new_stage = List.map<TA.Thing><TA.Thing>
+  |fn;
+  |gm.stage;
+  TA.Game.Game.new(new_stage);

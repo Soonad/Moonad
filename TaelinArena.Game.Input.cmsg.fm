@@ -1,4 +1,0 @@
-TaelinArena.Game.Input.cmsg: String -> TaelinArena.Game.Input
-  (txt)
-  <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg)
-  cmsg(txt)

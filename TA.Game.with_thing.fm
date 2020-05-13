@@ -1,0 +1,19 @@
+// Modifies the object with given id
+TA.Game.with_thing
+  : TA.Game.PlayerId   ->
+    TA.Game.TxFunction -> 
+    TA.Game.Game       -> 
+    TA.Game.Game 
+  (pid) (fn) (gm)
+  TA.Game.map_stage
+  |TA.Game.with_thing.effect(pid)(fn);
+  |gm;
+  
+// with_thing(pid:PlayerId, fn: Thing -> Thing, gm:Game) : Game
+//   let effect = (thi) =>
+//     case thi |thing
+//     case number_equal(thi.pid, pid) as e
+//     with thi : Thing
+//     | true  => fn(thi)
+//     | false => thi
+//   map_stage(effect, gm)
