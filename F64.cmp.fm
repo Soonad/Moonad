@@ -1,11 +1,12 @@
 // TODO
 F64.cmp: F64 -> F64 -> Cmp 
-  (a) (b)
-  let a.word = Newtype.elim<><>(a)
-  let b.word = Newtype.elim<><>(b)
-  case F64.eql(a)(b):
-  | Cmp.eql;
-  | case Word.ltn<Nat.64>(a.word)(b.word):
-    | Cmp.ltn;
-    | Cmp.gtn;
-  ;
+  F64.cmp
+  //(a) (b)
+  //let a.word = Newtype.elim<><>(a)
+  //let b.word = Newtype.elim<><>(b)
+  //case F64.eql(a)(b):
+  //| Cmp.eql;
+  //| case Word.ltn<Nat.64>(a.word)(b.word):
+    //| Cmp.ltn;
+    //| Cmp.gtn;
+  //;
