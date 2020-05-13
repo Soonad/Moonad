@@ -15,5 +15,6 @@ TaelinArena.Thing.dorime.jesus_power
     | self.dir;
     | TaelinArena.Game.Hitbox.cbox(F64.parse("20"));
   ]  
+  let self = TaelinArena.Game.cast(self)(F64.0)(hits)
   let self = TaelinArena.Game.die(self)(F64.parse("6"))
   self

@@ -1,0 +1,142 @@
+TaelinArena.Thing.dorime_fun
+  : (self: TaelinArena.Game.Thing) -> 
+    TaelinArena.Game.Thing
+  (self)
+  let self.pos = TaelinArena.Game.get_thing_pos(self)
+  let self.sid = TaelinArena.Game.get_thing_sid(self)
+  let self = TaelinArena.Game.set_thing_mov(self)(F64.parse("2.2"))
+  let self = TaelinArena.Game.set_thing_box(self)
+    | TaelinArena.Game.Hitbox.cbox(F64.parse("8"));
+  let self = TaelinArena.Game.set_thing_mhp(self)(F64.parse("32"))
+  let self.act = TaelinArena.Game.get_thing_act(self)
+  let self.dir = TaelinArena.Game.get_thing_dir(self)
+  let self.sid = TaelinArena.Game.get_thing_sid(self)
+
+  Bool.if<>(F64.eql(self.act)(F64.0)) 
+  | #DORIME_IDLE# // Walk
+    F64.if<>(TaelinArena.Game.is_walking(self))
+    | TaelinArena.Game.animate(self)(F64.1)(DORIME_WALK_CYCLE_000)
+      | F64.parse("8");
+      | F64.parse("16");
+    ;
+    | TaelinArena.Game.animate(self)(F64.1)(DORIME_IDLE_000)
+      | F64.parse("5");
+      | F64.parse("15");
+    ;
+  ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.1))
+    | #DORIME_BLESSING_FOR_WHO_DESERVE# // Left
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)(DORIME_BLESSING_FOR_WHO_DESERVE_000)
+        | F64.parse("14");
+        | F64.parse("28");
+      let fire = TaelinArena.Thing.new_thing
+      let fire = TaelinArena.Game.set_thing_sid(fire)(self.sid)
+      let fire = TaelinArena.Game.set_thing_fun(fire)
+        | TaelinArena.Thing.dorime.blessing_fun;
+      let fire = TaelinArena.Game.set_thing_vel(fire)
+        | F64.V3.scale(F64.parse("8"))(TaelinArena.Game.targ_dir(self));
+      let fire = TaelinArena.Game.set_thing_dir(fire)
+        | TaelinArena.Game.targ_dir(self);
+      let fire = TaelinArena.Game.set_thing_pos(fire)(self.pos)
+      let self = TaelinArena.Game.spawn(self)(F64.parse("8"))
+        | [TaelinArena.Game.Thing; fire];
+      let self = TaelinArena.Game.spawn(self)(F64.parse("16"))
+        | [TaelinArena.Game.Thing; fire];
+      let self = TaelinArena.Game.spawn(self)(F64.parse("22"))
+        | [TaelinArena.Game.Thing; fire];
+      self
+    ;
+    
+  | Bool.if<>(F64.eql(self.act)(F64.2)) 
+    | #DORIME_LEPTOSPIROSE_CURSE# // Middle
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)
+        | DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_000;
+        | F64.parse("5");
+        | F64.parse("15"); 
+      let pot = TaelinArena.Thing.new_thing
+      let pot = TaelinArena.Game.set_thing_sid(pot)(self.sid)
+      let pot = TaelinArena.Game.set_thing_fun(pot)
+        | TaelinArena.Thing.dorime.leptospirose_puddle_pot_fun;
+      let pot = TaelinArena.Game.set_thing_pos(pot)(self.pos)
+      let pot = TaelinArena.Game.set_thing_vel(pot)
+        | F64.V3.scale(F64.parse("14"))(TaelinArena.Game.targ_dir(self));
+      let self = TaelinArena.Game.spawn(self)(F64.parse("14"))
+      | [TaelinArena.Game.Thing; pot];
+      self
+    ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.parse("3")))
+    | #DORIME_HOLY_FLAME# // Right
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)
+        | DORIME_HOLY_FLAME_CAST_ANIMATION_000;
+        | F64.parse("8");
+        | F64.parse("16"); 
+      let flame = TaelinArena.Thing.new_thing
+      let flame = TaelinArena.Game.set_thing_sid(flame)(self.sid)
+      let flame = TaelinArena.Game.set_thing_fun(flame)
+        | TaelinArena.Thing.dorime.holy_flame_fun;
+      let self = TaelinArena.Game.spawn(self)(F64.parse("5"))
+        | [TaelinArena.Game.Thing;
+           TaelinArena.Game.move(flame)
+           | TaelinArena.Game.at_max_dist(self)(F64.parse("128"));];
+      self
+    ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.parse("4"))) 
+    | #DORIME_JESUS_POWER# // Q
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)
+        | DORIME_JESUS_POWER_000;
+        | F64.parse("21");
+        | F64.parse("21");
+      let hit = TaelinArena.Thing.new_thing
+      let hit = TaelinArena.Game.set_thing_sid(hit)(self.sid)
+      let hit = TaelinArena.Game.set_thing_fun(hit)
+        | TaelinArena.Thing.dorime.jesus_power;
+      let self = TaelinArena.Game.spawn(self)(F64.parse("18"))
+        | [TaelinArena.Game.Thing;
+           TaelinArena.Game.move(hit)
+           | TaelinArena.Game.at_dist(self)(F64.parse("30"));];
+      self
+    ;
+    
+  | Bool.if<>(F64.eql(self.act)(F64.parse("5"))) 
+    | #DORIME_GODS_CHAMBER# // Space
+      let self = 
+        TaelinArena.Game.animate(self)(F64.0)
+        | DORIME_GODS_CHAMBER_CAST_ANIMATION_000;
+        | F64.parse("9");
+        | F64.parse("27");
+      let heal = TaelinArena.Thing.new_thing
+      let heal = TaelinArena.Game.set_thing_sid(heal)(self.sid)
+      let heal = TaelinArena.Game.set_thing_fun(heal)
+        | TaelinArena.Thing.dorime.gods_chamber_fun;
+      let self = TaelinArena.Game.spawn(self)(F64.parse("9"))
+        | [TaelinArena.Game.Thing;
+           TaelinArena.Game.move(heal)
+           | TaelinArena.Game.at_max_dist(self)(F64.parse("128"));];
+      self
+    ;
+
+    | #DORIME_TAUNT# // E
+     let self = 
+        TaelinArena.Game.animate_between(self)(F64.0)
+        | DORIME_TAUNT_000;
+        | F64.parse("3");
+        | F64.parse("0");
+        | F64.parse("6");
+      let self = 
+        TaelinArena.Game.animate_between(self)(F64.0)
+        | DORIME_TAUNT_002;
+        | F64.parse("1");
+        | F64.parse("6");
+        | F64.parse("36");
+      let self = TaelinArena.Game.reset(self)(F64.parse("36"))
+      self 
+    ;
+  ;;;;;
+  
