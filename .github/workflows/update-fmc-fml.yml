@@ -36,6 +36,7 @@ jobs:
         file-path: .fmc
         commit-msg: Update .fmc
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-removing: true
    
     - name: Type check fmc --github
       id: check_type_github
