@@ -33,7 +33,7 @@ jobs:
     - name: Update .fmc
       uses: alexesprit/action-update-file@master
       with:
-        file-path: ./.fmc
+        file-path: ../.fmc
         commit-msg: Update .fmc
         github-token: ${{ secrets.GITHUB_TOKEN }}
    
