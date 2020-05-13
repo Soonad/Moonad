@@ -468,6 +468,66 @@ Core.typeinfer: Core -> Core.Defs -> Nat -> Either(Text)(Core)
 Core.var: String -> Nat -> Bool -> Core
   (name) (indx) (flip) <> (var) () () () () () () () var(name)(indx)(flip)
 
+Data.Flds: Type
+  self<P: Data.Flds -> Type> -> (nil: P(Data.Flds.nil)) -> (ext: (name: String) -> (type: Data) -> (flds: Data.Flds) -> P(Data.Flds.ext(name)(type)(flds))) -> P(self)
+
+Data.Flds.nil: Data.Flds
+  <P> (nil) (ext) nil
+
+Data.Flds.ext: String -> Data -> Data.Flds -> Data.Flds
+  (name) (type) (flds) <P> (nil) (ext) ext(name)(type)(flds)
+
+Data.Ctrs: Type
+  self<P: Data.Ctrs -> Type> -> (nil: P(Data.Ctrs.nil)) -> (ext: (name: String) -> (flds: Data.Flds) -> (ctrs: Data.Ctrs) -> P(Data.Ctrs.ext(name)(flds)(ctrs))) -> P(self)
+
+Data.Ctrs.nil: Data.Ctrs
+  <P> (nil) (ext) nil
+
+Data.Ctrs.ext: String -> Data.Flds -> Data.Ctrs -> Data.Ctrs
+  (name) (flds) (ctrs) <P> (nil) (ext) ext(name)(flds)(ctrs)
+
+Data: Type
+  self<P: Data -> Type> -> (new: (name: String) -> (ctrs: Data.Ctrs) -> P(Data.new(name)(ctrs))) -> P(self)
+
+Data.new: String -> Data.Ctrs -> Data
+  (name) (ctrs) <P> (new) new(name)(ctrs)
+
+Data.Flds.type: Type -> Data.Flds -> Type
+  (P) (flds) flds<() Type>(P)((flds.name) (flds.type) (flds.flds) (x: P) -> Data.Flds.type(P)(flds.flds))
+
+Data.Ctrs.type: Type -> Data.Ctrs -> Type
+  (P) (ctr) ctr<() Type>(P)((ctr.name) (ctr.flds) (ctr.ctrs) (ctr: Data.Flds.type(P)(ctr.flds)) -> Data.Ctrs.type(P)(ctr.ctrs))
+
+Data.type: Data -> Type
+  (data) data<() Type>((data.name) (data.ctrs) self<P: Type> -> Data.Ctrs.type(P)(data.ctrs))
+
+Data.Ctrs.ctr_type.header: (P: Type) -> Data.Ctrs -> List(P) -> Type
+  (P) (ctrs) (vars) ctrs<() Type>(vars<() Type>(Unit)(() () P))((ctrs.name) (ctrs.flds) (ctrs.ctrs) (x: P) -> Data.Ctrs.ctr_type.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+
+Data.Ctrs.ctr_type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
+  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr_type.header(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr_type(ctr.ctrs)(ctr0)(nth.pred)))
+
+Data.ctr_type: Data -> Nat -> Type
+  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr_type(data.ctrs)(data.ctrs)(nth))
+
+Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr_type.header(P)(ctrs)(vars)
+  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr_type.header(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+
+Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)
+  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
+
+Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr_type(data)(nth)
+  (data) (nth) data<(data) Data.ctr_type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
+
+Bit.Data: Data
+  Data.new("Bit")(Data.Ctrs.ext("b0")(Data.Flds.nil)(Data.Ctrs.ext("b1")(Data.Flds.nil)(Data.Ctrs.nil)))
+
+Bit.Type: Type
+  Data.type(Bit.Data)
+
+Bit.Ctr.0: Data.ctr_type(Bit.Data)(Nat.0)
+  Data.ctr(Bit.Data)(Nat.0)
+
 Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
   <A> (s) (x) x(Unit.new)
 
@@ -4487,66 +4547,6 @@ Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
 
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
-
-Data.Flds: Type
-  self<P: Data.Flds -> Type> -> (nil: P(Data.Flds.nil)) -> (ext: (name: String) -> (type: Data) -> (flds: Data.Flds) -> P(Data.Flds.ext(name)(type)(flds))) -> P(self)
-
-Data.Flds.nil: Data.Flds
-  <P> (nil) (ext) nil
-
-Data.Flds.ext: String -> Data -> Data.Flds -> Data.Flds
-  (name) (type) (flds) <P> (nil) (ext) ext(name)(type)(flds)
-
-Data.Ctrs: Type
-  self<P: Data.Ctrs -> Type> -> (nil: P(Data.Ctrs.nil)) -> (ext: (name: String) -> (flds: Data.Flds) -> (ctrs: Data.Ctrs) -> P(Data.Ctrs.ext(name)(flds)(ctrs))) -> P(self)
-
-Data.Ctrs.nil: Data.Ctrs
-  <P> (nil) (ext) nil
-
-Data.Ctrs.ext: String -> Data.Flds -> Data.Ctrs -> Data.Ctrs
-  (name) (flds) (ctrs) <P> (nil) (ext) ext(name)(flds)(ctrs)
-
-Data: Type
-  self<P: Data -> Type> -> (new: (name: String) -> (ctrs: Data.Ctrs) -> P(Data.new(name)(ctrs))) -> P(self)
-
-Data.new: String -> Data.Ctrs -> Data
-  (name) (ctrs) <P> (new) new(name)(ctrs)
-
-Data.Flds.type: Type -> Data.Flds -> Type
-  (P) (flds) flds<() Type>(P)((flds.name) (flds.type) (flds.flds) (x: P) -> Data.Flds.type(P)(flds.flds))
-
-Data.Ctrs.type: Type -> Data.Ctrs -> Type
-  (P) (ctr) ctr<() Type>(P)((ctr.name) (ctr.flds) (ctr.ctrs) (ctr: Data.Flds.type(P)(ctr.flds)) -> Data.Ctrs.type(P)(ctr.ctrs))
-
-Data.type: Data -> Type
-  (data) data<() Type>((data.name) (data.ctrs) self<P: Type> -> Data.Ctrs.type(P)(data.ctrs))
-
-Data.Ctrs.ctr_type.header: (P: Type) -> Data.Ctrs -> List(P) -> Type
-  (P) (ctrs) (vars) ctrs<() Type>(vars<() Type>(Unit)(() () P))((ctrs.name) (ctrs.flds) (ctrs.ctrs) (x: P) -> Data.Ctrs.ctr_type.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
-
-Data.Ctrs.ctr_type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
-  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr_type.header(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr_type(ctr.ctrs)(ctr0)(nth.pred)))
-
-Data.ctr_type: Data -> Nat -> Type
-  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr_type(data.ctrs)(data.ctrs)(nth))
-
-Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr_type.header(P)(ctrs)(vars)
-  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr_type.header(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
-
-Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)
-  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
-
-Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr_type(data)(nth)
-  (data) (nth) data<(data) Data.ctr_type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
-
-Bit.Data: Data
-  Data.new("Bit")(Data.Ctrs.ext("b0")(Data.Flds.nil)(Data.Ctrs.ext("b1")(Data.Flds.nil)(Data.Ctrs.nil)))
-
-Bit.Type: Type
-  Data.type(Bit.Data)
-
-Bit.Ctr.0: Data.ctr_type(Bit.Data)(Nat.0)
-  Data.ctr(Bit.Data)(Nat.0)
 
 hello: IO(Unit)
   let uname = "Your name:"; let greet = String.concat("Hello, "); IO.log<Unit>(uname)(() IO.inp<Unit>((name) IO.log<Unit>(greet(name))(() IO.end<Unit>(Unit.new))))

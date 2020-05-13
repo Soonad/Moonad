@@ -451,6 +451,66 @@ Core.typeinfer: ∀(:Core) ∀(:Core.Defs) ∀(:Nat) ((Either Text) Core)
 Core.var: ∀(:String) ∀(:Nat) ∀(:Bool) Core
   λname λindx λflip Λ λvar λ λ λ λ λ λ λ (((var name) indx) flip)
 
+Data.Flds: *
+  Πself(P:∀(:Data.Flds) *) ∀(nil:(P Data.Flds.nil)) ∀(ext:∀(name:String) ∀(type:Data) ∀(flds:Data.Flds) (P (((Data.Flds.ext name) type) flds))) (P self)
+
+Data.Flds.nil: Data.Flds
+  ΛP λnil λext nil
+
+Data.Flds.ext: ∀(:String) ∀(:Data) ∀(:Data.Flds) Data.Flds
+  λname λtype λflds ΛP λnil λext (((ext name) type) flds)
+
+Data.Ctrs: *
+  Πself(P:∀(:Data.Ctrs) *) ∀(nil:(P Data.Ctrs.nil)) ∀(ext:∀(name:String) ∀(flds:Data.Flds) ∀(ctrs:Data.Ctrs) (P (((Data.Ctrs.ext name) flds) ctrs))) (P self)
+
+Data.Ctrs.nil: Data.Ctrs
+  ΛP λnil λext nil
+
+Data.Ctrs.ext: ∀(:String) ∀(:Data.Flds) ∀(:Data.Ctrs) Data.Ctrs
+  λname λflds λctrs ΛP λnil λext (((ext name) flds) ctrs)
+
+Data: *
+  Πself(P:∀(:Data) *) ∀(new:∀(name:String) ∀(ctrs:Data.Ctrs) (P ((Data.new name) ctrs))) (P self)
+
+Data.new: ∀(:String) ∀(:Data.Ctrs) Data
+  λname λctrs ΛP λnew ((new name) ctrs)
+
+Data.Flds.type: ∀(:*) ∀(:Data.Flds) *
+  λP λflds ((<flds λ *> P) λflds.name λflds.type λflds.flds ∀(x:P) ((Data.Flds.type P) flds.flds))
+
+Data.Ctrs.type: ∀(:*) ∀(:Data.Ctrs) *
+  λP λctr ((<ctr λ *> P) λctr.name λctr.flds λctr.ctrs ∀(ctr:((Data.Flds.type P) ctr.flds)) ((Data.Ctrs.type P) ctr.ctrs))
+
+Data.type: ∀(:Data) *
+  λdata (<data λ *> λdata.name λdata.ctrs Πself(P:*) ((Data.Ctrs.type P) data.ctrs))
+
+Data.Ctrs.ctr_type.header: ∀(P:*) ∀(:Data.Ctrs) ∀(:(List P)) *
+  λP λctrs λvars ((<ctrs λ *> ((<vars λ *> Unit) λ λ P)) λctrs.name λctrs.flds λctrs.ctrs ∀(x:P) (((Data.Ctrs.ctr_type.header P) ctrs.ctrs) ((<List.cons P> x) vars)))
+
+Data.Ctrs.ctr_type: ∀(:Data.Ctrs) ∀(:Data.Ctrs) ∀(:Nat) *
+  λctr λctr0 λnth ((<ctr λ *> *) λctr.name λctr.flds λctr.ctrs ((<nth λ *> Π(P:*) (((Data.Ctrs.ctr_type.header P) ctr0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr_type ctr.ctrs) ctr0) nth.pred)))
+
+Data.ctr_type: ∀(:Data) ∀(:Nat) *
+  λdata λnth (<data λ *> λdata.name λdata.ctrs (((Data.Ctrs.ctr_type data.ctrs) data.ctrs) nth))
+
+Data.Ctrs.ctr.header: ∀(P:*) ∀(ctrs:Data.Ctrs) ∀(vars:(List P)) (((Data.Ctrs.ctr_type.header P) ctrs) vars)
+  λP λctrs λvars ((<ctrs λctrs (((Data.Ctrs.ctr_type.header P) ctrs) vars)> ((<vars λvars ((<vars λ *> Unit) λ λ P)> Unit.new) λh λt h)) λctrs.head λctrs.flds λctrs.ctrs λx (((Data.Ctrs.ctr.header P) ctrs.ctrs) ((<List.cons P> x) vars)))
+
+Data.Ctrs.ctr: ∀(ctrs:Data.Ctrs) ∀(ctrs0:Data.Ctrs) ∀(nth:Nat) (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)
+  λctrs λctrs0 λnth ((<ctrs λctrs (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)> *) λctrs.name λctrs.flds λctrs.ctrs $ctrs=(((Data.Ctrs.ext ctrs.name) ctrs.flds) ctrs.ctrs);((<nth λnth (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)> ΛP (((Data.Ctrs.ctr.header P) ctrs0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr ctrs.ctrs) ctrs0) nth.pred)))
+
+Data.ctr: ∀(data:Data) ∀(nth:Nat) ((Data.ctr_type data) nth)
+  λdata λnth (<data λdata ((Data.ctr_type data) nth)> λdata.name λdata.ctrs $data=((Data.new data.name) data.ctrs);(((Data.Ctrs.ctr data.ctrs) data.ctrs) nth))
+
+Bit.Data: Data
+  ((Data.new ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0)) String.nil)))) (((Data.Ctrs.ext ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0)) String.nil))) Data.Flds.nil) (((Data.Ctrs.ext ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) Data.Flds.nil) Data.Ctrs.nil)))
+
+Bit.Type: *
+  (Data.type Bit.Data)
+
+Bit.Ctr.0: ((Data.ctr_type Bit.Data) Nat.0)
+  ((Data.ctr Bit.Data) Nat.0)
+
 Debug.log: Π(A:*) ∀(s:String) ∀(x:∀(:Unit) A) A
   ΛA λs λx (x Unit.new)
 
@@ -4470,66 +4530,6 @@ Word.to_nat.go: Π(size:Nat) ∀(:(Word size)) ∀(:Nat) Nat
 
 Word.xor: Π(size:Nat) ∀(:(Word size)) ∀(:(Word size)) (Word size)
   Word.xor
-
-Data.Flds: *
-  Πself(P:∀(:Data.Flds) *) ∀(nil:(P Data.Flds.nil)) ∀(ext:∀(name:String) ∀(type:Data) ∀(flds:Data.Flds) (P (((Data.Flds.ext name) type) flds))) (P self)
-
-Data.Flds.nil: Data.Flds
-  ΛP λnil λext nil
-
-Data.Flds.ext: ∀(:String) ∀(:Data) ∀(:Data.Flds) Data.Flds
-  λname λtype λflds ΛP λnil λext (((ext name) type) flds)
-
-Data.Ctrs: *
-  Πself(P:∀(:Data.Ctrs) *) ∀(nil:(P Data.Ctrs.nil)) ∀(ext:∀(name:String) ∀(flds:Data.Flds) ∀(ctrs:Data.Ctrs) (P (((Data.Ctrs.ext name) flds) ctrs))) (P self)
-
-Data.Ctrs.nil: Data.Ctrs
-  ΛP λnil λext nil
-
-Data.Ctrs.ext: ∀(:String) ∀(:Data.Flds) ∀(:Data.Ctrs) Data.Ctrs
-  λname λflds λctrs ΛP λnil λext (((ext name) flds) ctrs)
-
-Data: *
-  Πself(P:∀(:Data) *) ∀(new:∀(name:String) ∀(ctrs:Data.Ctrs) (P ((Data.new name) ctrs))) (P self)
-
-Data.new: ∀(:String) ∀(:Data.Ctrs) Data
-  λname λctrs ΛP λnew ((new name) ctrs)
-
-Data.Flds.type: ∀(:*) ∀(:Data.Flds) *
-  λP λflds ((<flds λ *> P) λflds.name λflds.type λflds.flds ∀(x:P) ((Data.Flds.type P) flds.flds))
-
-Data.Ctrs.type: ∀(:*) ∀(:Data.Ctrs) *
-  λP λctr ((<ctr λ *> P) λctr.name λctr.flds λctr.ctrs ∀(ctr:((Data.Flds.type P) ctr.flds)) ((Data.Ctrs.type P) ctr.ctrs))
-
-Data.type: ∀(:Data) *
-  λdata (<data λ *> λdata.name λdata.ctrs Πself(P:*) ((Data.Ctrs.type P) data.ctrs))
-
-Data.Ctrs.ctr_type.header: ∀(P:*) ∀(:Data.Ctrs) ∀(:(List P)) *
-  λP λctrs λvars ((<ctrs λ *> ((<vars λ *> Unit) λ λ P)) λctrs.name λctrs.flds λctrs.ctrs ∀(x:P) (((Data.Ctrs.ctr_type.header P) ctrs.ctrs) ((<List.cons P> x) vars)))
-
-Data.Ctrs.ctr_type: ∀(:Data.Ctrs) ∀(:Data.Ctrs) ∀(:Nat) *
-  λctr λctr0 λnth ((<ctr λ *> *) λctr.name λctr.flds λctr.ctrs ((<nth λ *> Π(P:*) (((Data.Ctrs.ctr_type.header P) ctr0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr_type ctr.ctrs) ctr0) nth.pred)))
-
-Data.ctr_type: ∀(:Data) ∀(:Nat) *
-  λdata λnth (<data λ *> λdata.name λdata.ctrs (((Data.Ctrs.ctr_type data.ctrs) data.ctrs) nth))
-
-Data.Ctrs.ctr.header: ∀(P:*) ∀(ctrs:Data.Ctrs) ∀(vars:(List P)) (((Data.Ctrs.ctr_type.header P) ctrs) vars)
-  λP λctrs λvars ((<ctrs λctrs (((Data.Ctrs.ctr_type.header P) ctrs) vars)> ((<vars λvars ((<vars λ *> Unit) λ λ P)> Unit.new) λh λt h)) λctrs.head λctrs.flds λctrs.ctrs λx (((Data.Ctrs.ctr.header P) ctrs.ctrs) ((<List.cons P> x) vars)))
-
-Data.Ctrs.ctr: ∀(ctrs:Data.Ctrs) ∀(ctrs0:Data.Ctrs) ∀(nth:Nat) (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)
-  λctrs λctrs0 λnth ((<ctrs λctrs (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)> *) λctrs.name λctrs.flds λctrs.ctrs $ctrs=(((Data.Ctrs.ext ctrs.name) ctrs.flds) ctrs.ctrs);((<nth λnth (((Data.Ctrs.ctr_type ctrs) ctrs0) nth)> ΛP (((Data.Ctrs.ctr.header P) ctrs0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr ctrs.ctrs) ctrs0) nth.pred)))
-
-Data.ctr: ∀(data:Data) ∀(nth:Nat) ((Data.ctr_type data) nth)
-  λdata λnth (<data λdata ((Data.ctr_type data) nth)> λdata.name λdata.ctrs $data=((Data.new data.name) data.ctrs);(((Data.Ctrs.ctr data.ctrs) data.ctrs) nth))
-
-Bit.Data: Data
-  ((Data.new ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0)) String.nil)))) (((Data.Ctrs.ext ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0)) String.nil))) Data.Flds.nil) (((Data.Ctrs.ext ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) String.nil))) Data.Flds.nil) Data.Ctrs.nil)))
-
-Bit.Type: *
-  (Data.type Bit.Data)
-
-Bit.Ctr.0: ((Data.ctr_type Bit.Data) Nat.0)
-  ((Data.ctr Bit.Data) Nat.0)
 
 hello: (IO Unit)
   @uname=((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.1) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0)) String.nil))))))))));@greet=(String.concat ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.1) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0)) String.nil))))))));((<IO.log Unit> uname) λ (<IO.inp Unit> λname ((<IO.log Unit> (greet name)) λ (<IO.end Unit> Unit.new))))
