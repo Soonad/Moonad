@@ -30,6 +30,8 @@ jobs:
     needs: build
     
     steps:
+    - uses: actions/checkout@v2
+      
     - name: Update .fmc
       uses: alexesprit/action-update-file@master
       with:
