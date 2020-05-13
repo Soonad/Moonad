@@ -5,7 +5,9 @@ name: Type check terms on PR
 on:
   pull_request:
     branches: [ master ]
-
+  push:
+    branches: [ master ]
+    
 jobs:
   # This workflow contains a single job called "build"
   fmc-type-check:
