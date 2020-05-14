@@ -1,5 +1,5 @@
-U16.or: U16 -> U16 -> U16 //prim//
+U16.or: U16 -> U16 -> U16
   (a) (b)
-  a<() U16> | (a_val)
-  b<() U16> | (b_val)
-  U16.new(Word.or<Nat.16>(a_val)(b_val));;
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
+  U16.new(Word.or<>(a.val)(b.val))

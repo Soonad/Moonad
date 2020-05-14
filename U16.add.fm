@@ -1,5 +1,5 @@
-U16.add: U16 -> U16 -> U16 //prim//
+U16.add: U16 -> U16 -> U16 
   (a) (b)
-  get a_val = a
-  get b_val = b
-  U16.new(Word.add<?zz>(a_val)(b_val))
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
+  U16.new(Word.add<>(a.val)(b.val))

@@ -1,6 +1,6 @@
 // a < b
-U16.ltn: U16 -> U16 -> Bool //prim//
+U16.ltn: U16 -> U16 -> Bool
   (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.ltn<Nat.16>(a_val)(b_val);;
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
+  Word.ltn<>(a.val)(b.val)

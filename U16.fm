@@ -1,4 +1,2 @@
-U16: Type //prim//
-  u16<P: U16 -> Type> ->
-  (new: (a: Word(Nat.16)) -> P(U16.new(a))) ->
-  P(u16)
+U16: Type 
+  Newtype(Word(Nat.16))("U16")

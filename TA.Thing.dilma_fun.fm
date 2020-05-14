@@ -1,4 +1,5 @@
-TA.Thing.dilma_fun: TA.Thing -> TA.Thing
+TA.Thing.dilma_fun
+  : TA.Game.TxFunction
   (self)
   let self = TA.Thing.set_mov(self)(F64.parse("2"))
   let self.act = TA.Thing.get_act(self)

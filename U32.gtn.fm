@@ -1,6 +1,6 @@
 // a > b
-U32.gtn: U32 -> U32 -> Bool //prim//
+U32.gtn: U32 -> U32 -> Bool
   (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gtn<Nat.32>(a_val)(b_val);;
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
+  Word.gtn<>(a.val)(b.val)
