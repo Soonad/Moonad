@@ -1,4 +1,4 @@
-U32.shr: Nat -> U32 -> U32 
+U32.shr: Nat -> U32 -> U32 //prim//
   (n) (a)
-  let a.val = Newtype.elim<><>(a)
-  U32.new(Word.shift_right<>(n)(a.val))
+  a<() U32> | (a_val)
+  U32.new(Word.shift_right<Nat.32>(n)(a_val));
