@@ -1,0 +1,17 @@
+TA.Thing.is_using_buff: TA.Thing -> Bits -> Bool
+  (self) (stt_key)
+  let stt = TA.Thing.get_stt(self)
+  Map.get<F64>(stt_key)(stt)<() Bool>
+  | Bool.false; 
+  | (current_tik)
+    F64.eql(current_tik)(F64.0)<() Bool>
+    | Bool.false;
+    | Bool.true;;
+
+
+// is_using_buff(self: Thing, stt_key: Bits) : Bool
+//   case self |thing
+//     let current_tik = lookup(_ stt_key, self.stt)
+//     case current_tik
+//     | none => false
+//     | some => if current_tik.value === 0 then false else true

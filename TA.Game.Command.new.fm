@@ -1,0 +1,8 @@
+TA.Game.Command.new
+  : TA.Game.PlayerId -> 
+    TA.Game.Input    -> 
+    TA.Game.Command
+  (pid) (inp)
+  <P> (new)
+  new(pid)(inp)
+  

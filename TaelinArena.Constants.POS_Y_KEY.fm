@@ -1,3 +1,0 @@
-TaelinArena.Constants.POS_Y_KEY : Bits
-  // 01110101b
-  (Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))

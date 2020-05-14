@@ -1,5 +1,0 @@
-TaelinArena.Game.Hitbox.pbox: List(F64.V3) -> TaelinArena.Game.Hitbox
-  (pts)
-  <P> (nbox) (cbox) (pbox)
-  pbox(pts)
-  

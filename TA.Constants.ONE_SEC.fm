@@ -1,0 +1,2 @@
+TA.Constants.ONE_SEC: F64
+  F64.parse("24")

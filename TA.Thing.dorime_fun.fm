@@ -1,0 +1,141 @@
+TA.Thing.dorime_fun
+  : TA.Game.TxFunction
+  (self)
+  let self.pos = TA.Thing.get_pos(self)
+  let self.sid = TA.Thing.get_sid(self)
+  let self = TA.Thing.set_mov(self)(F64.parse("2.2"))
+  let self = TA.Thing.set_box(self)
+    | TA.Game.Hitbox.cbox(F64.parse("8"));
+  let self = TA.Thing.set_mhp(self)(F64.parse("32"))
+  let self.act = TA.Thing.get_act(self)
+  let self.dir = TA.Thing.get_dir(self)
+  let self.sid = TA.Thing.get_sid(self)
+
+  Bool.if<>(F64.eql(self.act)(F64.0)) 
+  | #DORIME_IDLE# // Walk
+    F64.if<>(TA.Thing.is_walking(self))
+    | TA.Thing.animate(self)(F64.1)(DORIME_WALK_CYCLE_000)
+      | F64.parse("8");
+      | F64.parse("16");
+    ;
+    | TA.Thing.animate(self)(F64.1)(DORIME_IDLE_000)
+      | F64.parse("5");
+      | F64.parse("15");
+    ;
+  ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.1))
+    | #DORIME_BLESSING_FOR_WHO_DESERVE# // Left
+      let self = 
+        TA.Thing.animate(self)(F64.0)(DORIME_BLESSING_FOR_WHO_DESERVE_000)
+        | F64.parse("14");
+        | F64.parse("28");
+      let fire = TA.Thing.new_thing
+      let fire = TA.Thing.set_sid(fire)(self.sid)
+      let fire = TA.Thing.set_fun(fire)
+        | TA.Thing.dorime.blessing_fun;
+      let fire = TA.Thing.set_vel(fire)
+        | F64.V3.scale(F64.parse("8"))(TA.Thing.targ_dir(self));
+      let fire = TA.Thing.set_dir(fire)
+        | TA.Thing.targ_dir(self);
+      let fire = TA.Thing.set_pos(fire)(self.pos)
+      let self = TA.Thing.spawn(self)(F64.parse("8"))
+        | [TA.Thing; fire];
+      let self = TA.Thing.spawn(self)(F64.parse("16"))
+        | [TA.Thing; fire];
+      let self = TA.Thing.spawn(self)(F64.parse("22"))
+        | [TA.Thing; fire];
+      self
+    ;
+    
+  | Bool.if<>(F64.eql(self.act)(F64.2)) 
+    | #DORIME_LEPTOSPIROSE_CURSE# // Middle
+      let self = 
+        TA.Thing.animate(self)(F64.0)
+        | DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_000;
+        | F64.parse("5");
+        | F64.parse("15"); 
+      let pot = TA.Thing.new_thing
+      let pot = TA.Thing.set_sid(pot)(self.sid)
+      let pot = TA.Thing.set_fun(pot)
+        | TA.Thing.dorime.leptospirose_puddle_pot_fun;
+      let pot = TA.Thing.set_pos(pot)(self.pos)
+      let pot = TA.Thing.set_vel(pot)
+        | F64.V3.scale(F64.parse("14"))(TA.Thing.targ_dir(self));
+      let self = TA.Thing.spawn(self)(F64.parse("14"))
+      | [TA.Thing; pot];
+      self
+    ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.parse("3")))
+    | #DORIME_HOLY_FLAME# // Right
+      let self = 
+        TA.Thing.animate(self)(F64.0)
+        | DORIME_HOLY_FLAME_CAST_ANIMATION_000;
+        | F64.parse("8");
+        | F64.parse("16"); 
+      let flame = TA.Thing.new_thing
+      let flame = TA.Thing.set_sid(flame)(self.sid)
+      let flame = TA.Thing.set_fun(flame)
+        | TA.Thing.dorime.holy_flame_fun;
+      let self = TA.Thing.spawn(self)(F64.parse("5"))
+        | [TA.Thing;
+           TA.Thing.move(flame)
+           | TA.Thing.at_max_dist(self)(F64.parse("128"));];
+      self
+    ;
+
+  | Bool.if<>(F64.eql(self.act)(F64.parse("4"))) 
+    | #DORIME_JESUS_POWER# // Q
+      let self = 
+        TA.Thing.animate(self)(F64.0)
+        | DORIME_JESUS_POWER_000;
+        | F64.parse("21");
+        | F64.parse("21");
+      let hit = TA.Thing.new_thing
+      let hit = TA.Thing.set_sid(hit)(self.sid)
+      let hit = TA.Thing.set_fun(hit)
+        | TA.Thing.dorime.jesus_power;
+      let self = TA.Thing.spawn(self)(F64.parse("18"))
+        | [TA.Thing;
+           TA.Thing.move(hit)
+           | TA.Thing.at_dist(self)(F64.parse("30"));];
+      self
+    ;
+    
+  | Bool.if<>(F64.eql(self.act)(F64.parse("5"))) 
+    | #DORIME_GODS_CHAMBER# // Space
+      let self = 
+        TA.Thing.animate(self)(F64.0)
+        | DORIME_GODS_CHAMBER_CAST_ANIMATION_000;
+        | F64.parse("9");
+        | F64.parse("27");
+      let heal = TA.Thing.new_thing
+      let heal = TA.Thing.set_sid(heal)(self.sid)
+      let heal = TA.Thing.set_fun(heal)
+        | TA.Thing.dorime.gods_chamber_fun;
+      let self = TA.Thing.spawn(self)(F64.parse("9"))
+        | [TA.Thing;
+           TA.Thing.move(heal)
+           | TA.Thing.at_max_dist(self)(F64.parse("128"));];
+      self
+    ;
+
+    | #DORIME_TAUNT# // E
+     let self = 
+        TA.Thing.animate_between(self)(F64.0)
+        | DORIME_TAUNT_000;
+        | F64.parse("3");
+        | F64.parse("0");
+        | F64.parse("6");
+      let self = 
+        TA.Thing.animate_between(self)(F64.0)
+        | DORIME_TAUNT_002;
+        | F64.parse("1");
+        | F64.parse("6");
+        | F64.parse("36");
+      let self = TA.Thing.reset(self)(F64.parse("36"))
+      self 
+    ;
+  ;;;;;
+  
