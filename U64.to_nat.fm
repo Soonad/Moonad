@@ -1,4 +1,4 @@
-U64.to_nat: U64 -> Nat //prim//
+U64.to_nat: U64 -> Nat 
   (a)
-  a<() Nat> | (a_val)
-  Word.to_nat<Nat.64>(a_val);
+  let a.val = Newtype.val<><>(a)
+  Word.to_nat<>(a.val)
