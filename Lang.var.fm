@@ -1,6 +1,6 @@
-Lang.var: Parser(Core.Ctx -> Core)
-  Parser.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false)) | (name)
-  Parser.pure<Core.Ctx -> Core>
+Lang.var: Parsec(Core.Ctx -> Core)
+  Parsec.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false)) | (name)
+  Parsec.pure<Core.Ctx -> Core>
   | (ctx)
     let got =
       List.ifind<Pair(String)(Core)>

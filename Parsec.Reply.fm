@@ -4,27 +4,27 @@
 // - eaten_value when the parser returns a value and input was consumed
 // - eaten_error when the parser throws an error and input was consumed
 
-Parsec.Reply : Type -> Type -> Type -> Type
-  (S) (E) (A)
-  parser_reply<P: Parsec.Reply(S)(E)(A) -> Type> ->
+Parsec.Reply : Type -> Type
+  (A)
+  parser_reply<P: Parsec.Reply(A) -> Type> ->
   (empty_value:
-    (state: Parsec.State(S)(E)) ->
+    (state: Parsec.State) ->
     (value: A)    ->
-    P(Parsec.Reply.empty_value<S><E><A>(state)(value))
+    P(Parsec.Reply.empty_value<A>(state)(value))
   ) ->
   (empty_error:
-    (state: Parsec.State(S)(E)) ->
-    (error: Parsec.Error(E))    ->
-    P(Parsec.Reply.empty_error<S><E><A>(state)(error))
+    (state: Parsec.State) ->
+    (error: Parsec.Error)    ->
+    P(Parsec.Reply.empty_error<A>(state)(error))
   ) ->
   (eaten_value:
-    (state: Parsec.State(S)(E)) ->
+    (state: Parsec.State) ->
     (value: A)    ->
-    P(Parsec.Reply.eaten_value<S><E><A>(state)(value))
+    P(Parsec.Reply.eaten_value<A>(state)(value))
   ) ->
   (eaten_error:
-    (state: Parsec.State(S)(E)) ->
-    (error: Parsec.Error(E))    ->
-    P(Parsec.Reply.eaten_error<S><E><A>(state)(error))
+    (state: Parsec.State) ->
+    (error: Parsec.Error)    ->
+    P(Parsec.Reply.eaten_error<A>(state)(error))
   ) ->
   P(parser_reply)

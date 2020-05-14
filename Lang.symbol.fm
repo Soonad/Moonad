@@ -1,5 +1,5 @@
-Lang.symbol : String -> Parser(String)
+Lang.symbol : String -> Parsec(String)
   (str)
-  Parser.bind<String><String>(Parser.tokens(str)) | (x)
-  Parser.then<Unit  ><String>(Lang.space) |
-  Parser.pure<String>(x);;
+  Parsec.bind<String><String>(Parsec.tokens(str)) | (x)
+  Parsec.then<Unit  ><String>(Lang.space) |
+  Parsec.pure<String>(x);;

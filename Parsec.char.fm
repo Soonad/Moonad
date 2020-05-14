@@ -1,6 +1,6 @@
-Parsec.char : <S: Type> -> <E: Type> -> Char -> Parsec(S)(E)(Char)
-  <S> <E> (c)
-  Parsec.token<S><E><Char>
+Parsec.char : Char -> Parsec(Char)
+  (c)
+  Parsec.token<Char>
   | (x) U16.eql(c)(x)<() Maybe(Char)>
     | Maybe.some<Char>(c);
     | Maybe.none<Char>;;

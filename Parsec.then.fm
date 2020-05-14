@@ -1,14 +1,7 @@
 // a parser is a monad
-Parsec.then:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  <B: Type> ->
-  Parsec(S)(E)(A) ->
-  Parsec(S)(E)(B) ->
-  Parsec(S)(E)(B)
+Parsec.then: <A: Type> -> <B: Type> -> Parsec(A) -> Parsec(B) -> Parsec(B)
 
-  <S> <E> <A> <B> (pa) (pb)
+  <A> <B> (pa) (pb)
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   pa<X>(s1)
   | (s2) (a) pb<X>(s2)

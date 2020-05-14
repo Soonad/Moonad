@@ -1,5 +1,5 @@
-Lang.block_comment: Parser(Unit)
-  Parser.then<String><Unit>(Parser.tokens("#")) |
-  Parser.then<List(Char)><Unit>
-  | Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#"));
-  | Parser.pure<Unit>(Unit.new);;
+Lang.block_comment: Parsec(Unit)
+  Parsec.then<String><Unit>(Parsec.tokens("#")) |
+  Parsec.then<List(Char)><Unit>
+  | Parsec.many_till<Char><String>(Parsec.any_char)(Parsec.tokens("#"));
+  | Parsec.pure<Unit>(Unit.new);;

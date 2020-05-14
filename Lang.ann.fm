@@ -1,8 +1,8 @@
-Lang.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+Lang.ann: (Core.Ctx -> Core) -> Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
   (expr)
-  Parser.then<Unit  ><C>(Lang.space)        |
-  Parser.then<String><C>(Lang.symbol("::")) |
-  Parser.bind<C     ><C>(Lang.trm)          |  (type)
-  Parser.pure<C     >
+  Parsec.then<Unit  ><C>(Lang.space)        |
+  Parsec.then<String><C>(Lang.symbol("::")) |
+  Parsec.bind<C     ><C>(Lang.trm)          |  (type)
+  Parsec.pure<C     >
   | (ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx));;;;

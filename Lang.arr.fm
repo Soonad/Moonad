@@ -1,10 +1,10 @@
-Lang.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+Lang.arr: (Core.Ctx -> Core) -> Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
   (bind)
-  Parser.then<Unit  ><C>(Lang.space)        |
-  Parser.then<String><C>(Lang.symbol("->")) |
-  Parser.bind<C     ><C>(Lang.trm)          | (body)
-  Parser.pure<C>
+  Parsec.then<Unit  ><C>(Lang.space)        |
+  Parsec.then<String><C>(Lang.symbol("->")) |
+  Parsec.bind<C     ><C>(Lang.trm)          | (body)
+  Parsec.pure<C>
   | (ctx)
     let tbind = bind(ctx)
     let tbody = ((s) (x) body(Core.Ctx.ext("")(x)(Core.Ctx.ext("")(s)(ctx))))

@@ -1,2 +1,0 @@
-Parser : Type -> Type
-  (A) Parsec(Unit)(Unit)(A)

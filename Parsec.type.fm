@@ -1,9 +1,9 @@
 // A dependent type of parser reply for use by Parsec.parse
 
-Parsec.type: (S: Type) -> (E: Type) -> (A: Type) -> Parsec.Reply(S)(E)(A) -> Type
-  (S) (E) (A) (reply)
+Parsec.type: (A: Type) -> Parsec.Reply(A) -> Type
+  (A) (reply)
   reply<() Type>
   | () () A;
-  | () (e) Parsec.Error(E);
+  | () (e) Parsec.Error;
   | () () A;
-  | () (e) Parsec.Error(E);
+  | () (e) Parsec.Error;

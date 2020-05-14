@@ -1,4 +1,2 @@
-Lang.parse
-  : (s : String) ->
-    Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
-  (s) Parser.parse<Core>(Lang.core)(s)
+Lang.parse : (s : String) -> Parsec.type(Core)(Parsec.run_default<Core>(Lang.core)(s))
+  (s) Parsec.parse<Core>(Lang.core)(Parsec.State.default(s))

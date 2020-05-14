@@ -1,10 +1,5 @@
 // by default, a parser state has its index at zero and no errors
-Parsec.State.default:
-  <S: Type> ->
-  <E: Type> ->
-  String ->
-  S ->
-  Parsec.State(S)(E)
+Parsec.State.default: String -> Parsec.State
 
-  <S> <E> (input) (state)
-  <P> (make) make(input)(Nat.zero)(List.nil<Parsec.Error(E)>)(state)
+  (input)
+  <P> (make) make(input)(Nat.zero)(List.nil<Parsec.Error>)

@@ -1,4 +1,4 @@
-Parsec.get_state: <S: Type> -> <E: Type> -> Parsec(S)(E)(Parsec.State(S)(E))
-  <S> <E>
+Parsec.get_state: Parsec(Parsec.State)
+  
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   empty_value(s1)(s1)

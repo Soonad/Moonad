@@ -1,14 +1,6 @@
 // A parser is a functor
-Parsec.map:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  <B: Type> ->
-  (A -> B) ->
-  Parsec(S)(E)(A) ->
-  Parsec(S)(E)(B)
-
-  <S> <E> <A> <B> (f) (p)
+Parsec.map: <A: Type> -> <B: Type> -> (A -> B) -> Parsec(A) -> Parsec(B)
+  <A> <B> (f) (p)
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   p<X>(s1)
   | (s2) (a) empty_value(s2)(f(a));

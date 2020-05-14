@@ -1,14 +1,9 @@
 // an empty parser that always fails consuming no input and showing no error
-Parsec.zero:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parsec(S)(E)(A)
-
-  <S> <E> <A>
+Parsec.zero: <A: Type> -> Parsec(A)
+  <A>
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
-  s1<() X> | () (index) () ()
-  let e = Parsec.Error.make_trivial<E>
+  s1<() X> | () (index) ()
+  let e = Parsec.Error.make_trivial
           | index;
           | Maybe.none<Parsec.Error.Item>;
           | List.nil<Parsec.Error.Item>;

@@ -1,16 +1,11 @@
 // We can collapse a parser reply to an Either by throwing away consumption info
 
-Parsec.Reply.to_either:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  Parsec.Reply(S)(E)(A) ->
-  Either(Parsec.Error(E))(A)
+Parsec.Reply.to_either: <A: Type> -> Parsec.Reply(A) -> Either(Parsec.Error)(A)
 
-  <S> <E> <A> (reply)
-  reply<() Either(Parsec.Error(E))(A)>
-  | () (a) Either.right<Parsec.Error(E)><A>(a);
-  | () (e) Either.left<Parsec.Error(E)><A>(e);
-  | () (a) Either.right<Parsec.Error(E)><A>(a);
-  | () (e) Either.left<Parsec.Error(E)><A>(e);
+  <A> (reply)
+  reply<() Either(Parsec.Error)(A)>
+  | () (a) Either.right<Parsec.Error><A>(a);
+  | () (e) Either.left<Parsec.Error><A>(e);
+  | () (a) Either.right<Parsec.Error><A>(a);
+  | () (e) Either.left<Parsec.Error><A>(e);
 

@@ -1,0 +1,7 @@
+Parsec.run_either: <A: Type> -> Parsec(A) -> String -> Either(Parsec.Error)(A)
+  <A> (p) (s)
+  Parsec.run<A>(p)(Parsec.State.default(s))<() Either(Parsec.Error)(A)>
+  | () (x) Either.right<Parsec.Error><A>(x);
+  | () (e) Either.left<Parsec.Error><A>(e);
+  | () (x) Either.right<Parsec.Error><A>(x);
+  | () (e) Either.left<Parsec.Error><A>(e);

@@ -6,19 +6,18 @@
 // - a fancy, or user specified, errror with
 //  - the index at which the error occured
 //  - a list of custom messages (eihter type String or type E) at that index
-Parsec.Error : Type -> Type
-  (E)
-  parser.error<P: Parsec.Error(E) -> Type> ->
+Parsec.Error : Type
+  parser.error<P: Parsec.Error -> Type> ->
   (trivial:
     (position: Nat) ->
     (unexpect: Maybe(Parsec.Error.Item)) ->
     (expected: List(Parsec.Error.Item))  ->
-    P(Parsec.Error.make_trivial<E>(position)(unexpect)(expected))
+    P(Parsec.Error.make_trivial(position)(unexpect)(expected))
   ) ->
   (fancy:
     (position: Nat) ->
-    (messages: List(Parsec.Error.Fancy(E))) ->
-    P(Parsec.Error.make_fancy<E>(position)(messages))
+    (messages: List(String)) ->
+    P(Parsec.Error.make_fancy(position)(messages))
   ) ->
   P(parser.error)
 

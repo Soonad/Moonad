@@ -1,7 +1,7 @@
-Lang.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
+Lang.enclose: <A: Type> -> Parsec(A) -> Parsec(Pair(Bool)(A))
   <A> (p)
-  Parser.bind<Bool><Pair(Bool)(A)>(Lang.open) | (eras)
-  Parser.bind<A><Pair(Bool)(A)>(p) | (x)
-  Parser.then<String><Pair(Bool)(A)>
-  | eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")"));
-  | Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;
+  Parsec.bind<Bool><Pair(Bool)(A)>(Lang.open) | (eras)
+  Parsec.bind<A><Pair(Bool)(A)>(p) | (x)
+  Parsec.then<String><Pair(Bool)(A)>
+  | eras<() Parsec(String)>(Parsec.tokens(">"))(Parsec.tokens(")"));
+  | Parsec.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;

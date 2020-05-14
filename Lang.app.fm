@@ -1,8 +1,8 @@
-Lang.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+Lang.app: (Core.Ctx -> Core) -> Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
   (func)
-  Parser.bind<Pair(Bool)(C)><C>
+  Parsec.bind<Pair(Bool)(C)><C>
   | Lang.enclose<C>(Lang.trm);
-  | (x) x<() Parser(C)> | (eras) (argm)
-  Parser.pure<C>
+  | (x) x<() Parsec(C)> | (eras) (argm)
+  Parsec.pure<C>
   | (ctx) Core.app(eras)(func(ctx))(argm(ctx));;;

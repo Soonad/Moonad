@@ -1,15 +1,8 @@
 // Throw a custom error message
 
-Parsec.fail:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  String ->
-  Parsec(S)(E)(A)
-
-  <S> <E> <A> (msg)
+Parsec.fail: <A: Type> -> String -> Parsec(A)
+  <A> (msg)
   <X> (s) () (empty_error) () ()
-  s<() X>
-  | () (index) () ()
-    let e = List.single<Parsec.Error.Fancy(E)>(Parsec.Error.Fancy.fail<E>(msg))
-    empty_error(s)(Parsec.Error.make_fancy<E>(index)(e));
+  s<() X> | () (index) ()
+    let e = List.single<String>(msg)
+    empty_error(s)(Parsec.Error.make_fancy(index)(e));

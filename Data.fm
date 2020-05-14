@@ -5,19 +5,19 @@
 // will eventually work!
 
 // From:
-// 
+//
 // T Vector <A: Type> (len: Nat)
 // | nil                                   : Vector<A>(Nat.zero);
 // | ext(n: Nat, x: A, xs: Vector<A>(len)) : Vector<A>(Nat.succ(len));
 //
 // To:
-// 
+//
 // Vector <A: Type> (len: Nat) : Type 
 //   vector(P: Vector<A>(len) -> Type) ->
 //   (nil: P(Nat.zero)) ->
 //   (ext: (n: Nat, x: A, xs: Vector<A>(len)) -> P(Nat.succ(len))(Vector.ext<A>(n)(x)(xs))) ->
 //   P(len)(vector)
-// 
+//
 // + constructors + generic functions
 
 // Data: a type for inductive datatype descriptions

@@ -1,6 +1,6 @@
-Lang.nam: Bool -> Parser(String)
+Lang.nam: Bool -> Parsec(String)
   (allow_empty)
-  allow_empty<() Parser(String)>
-  | Parser.take_while(Lang.is_name);
-  | Parser.take_while1("name")(Lang.is_name);
+  allow_empty<() Parsec(String)>
+  | Parsec.take_while(Lang.is_name);
+  | Parsec.take_while1("name")(Lang.is_name);
 

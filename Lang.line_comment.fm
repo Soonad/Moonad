@@ -1,6 +1,6 @@
-Lang.line_comment: Parser(Unit)
+Lang.line_comment: Parsec(Unit)
   let not_newline = ((c) Bool.not(U16.eql(c)(Char.newline))) :: Char -> Bool
-  Parser.then<String><Unit>(Parser.tokens("/")) |
-  Parser.then<String><Unit>(Parser.take_while(not_newline)) |
-  Parser.then<Char  ><Unit>(Parser.char(Char.newline)) |
-  Parser.pure<Unit>(Unit.new);;;
+  Parsec.then<String><Unit>(Parsec.tokens("/")) |
+  Parsec.then<String><Unit>(Parsec.take_while(not_newline)) |
+  Parsec.then<Char  ><Unit>(Parsec.char(Char.newline)) |
+  Parsec.pure<Unit>(Unit.new);;;

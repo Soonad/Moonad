@@ -1,14 +1,8 @@
 // We can make a parser from any generic function
 // that can process parser states into parser replies
 
-Parsec.make:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  (Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A)) ->
-  Parsec(S)(E)(A)
-
-  <S> <E> <A> (f)
+Parsec.make: <A: Type> -> (Parsec.State -> Parsec.Reply(A)) -> Parsec(A)
+  <A> (f)
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   f(s1)<() X>
   | (s2) (a) empty_value(s2)(a);

@@ -1,10 +1,5 @@
-Parsec.Error.index:
-  <E: Type> ->
-  Parsec.Error(E) ->
-  Nat
-
-  <E> (x)
-
-  x<() Nat>
+Parsec.Error.index: Parsec.Error -> Nat
+  (e)
+  e<() Nat>
   | (x.pos) (x.unx) (x.exp) x.pos;
   | (x.pos) (x.msg) x.pos;

@@ -1,12 +1,12 @@
-Lang.trm: Parser(Core.Ctx -> Core)
+Lang.trm: Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
-  Parser.bind<C><C>
-  | Parser.choice<C> |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.all))  |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.lam))  |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.par))  |
-    List.cons<Parser(C)>(Lang.let)                 |
-    List.cons<Parser(C)>(Lang.typ)                 |
-    List.cons<Parser(C)>(Lang.var)                 |
-    List.nil< Parser(C)>;;;;;;;;
-  | (x) Lang.pst(x);
+  Parsec.bind<C><C>
+  | Parsec.choice<C> |
+    List.cons<Parsec(C)>(Lang.let)                 |
+    List.cons<Parsec(C)>(Lang.typ)                 |
+    List.cons<Parsec(C)>(Lang.var)                 |
+    List.cons<Parsec(C)>(Parsec.try<C>(Lang.all))  |
+    List.cons<Parsec(C)>(Parsec.try<C>(Lang.lam))  |
+    List.cons<Parsec(C)>(Lang.par)                 |
+    List.nil< Parsec(C)>;;;;;;;;
+  | (x) Parsec.pure<C>(x); //Lang.pst(x);

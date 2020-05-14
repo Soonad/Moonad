@@ -1,16 +1,11 @@
 // take characters while a condition is true (can return no characters)
-Parsec.take_while:
-  <S: Type> ->
-  <E: Type> ->
-  (Char -> Bool) ->
-  Parsec(S)(E)(String)
-
-  <S> <E> (f)
+Parsec.take_while: (Char -> Bool) -> Parsec(String)
+  (f)
   <X> (s1) (empty_value) (empty_error) (eaten_value) ()
-  s1<() X> | (input) (index) (error) (state)
+  s1<() X> | (input) (index) (error)
   String.take_while(f)(input)<() X> | (took) (rest)
   let len = String.length(took)
-  let s2  = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state)
+  let s2  = Parsec.State.make(rest)(Nat.add(index)(len))(error)
   took<() X>
   | empty_value(s2)(took);
   | () () eaten_value(s2)(took);;;

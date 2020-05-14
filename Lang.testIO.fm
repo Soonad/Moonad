@@ -1,0 +1,3 @@
+Lang.testIO : IO(Unit)
+  use skip = IO.log<Unit>(Lang.test)
+  IO.end<Unit>(Unit.new)

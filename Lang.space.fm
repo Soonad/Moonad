@@ -1,7 +1,7 @@
-Lang.space : Parser(Unit)
-  Parser.skip_many<Unit> | Parser.choice<Unit> |
-  List.cons<Parser(Unit)>(Lang.whitespace)   |
-  List.cons<Parser(Unit)>(Lang.line_comment) |
-  List.cons<Parser(Unit)>(Lang.block_comment)|
-  List.nil<Parser(Unit)>;;;;;
+Lang.space : Parsec(Unit)
+  Parsec.skip_many<Unit> | Parsec.choice<Unit> |
+  List.cons<Parsec(Unit)>(Lang.whitespace)   |
+  List.cons<Parsec(Unit)>(Lang.line_comment) |
+  List.cons<Parsec(Unit)>(Lang.block_comment)|
+  List.nil<Parsec(Unit)>;;;;;
 

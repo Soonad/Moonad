@@ -1,14 +1,14 @@
-Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+Lang.pst: (Core.Ctx -> Core) -> Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
   (base)
-  Parser.bind<Maybe(C)><C>
-  | Parser.optional<C> |
-    Parser.choice<C> |
-    List.cons<Parser(C)>(Lang.app(base)) |
-    List.cons<Parser(C)>(Lang.pip(base)) |
-    List.cons<Parser(C)>(Lang.arr(base)) |
-    List.cons<Parser(C)>(Lang.ann(base)) |
-    List.nil<Parser(C)>;;;;;;;
-  | (maybe_term) maybe_term<() Parser(C)>
-    | Parser.pure<C>(base);
+  Parsec.bind<Maybe(C)><C>
+  | Parsec.optional<C> |
+    Parsec.choice<C> |
+    List.cons<Parsec(C)>(Lang.app(base)) |
+    List.cons<Parsec(C)>(Lang.pip(base)) |
+    List.cons<Parsec(C)>(Lang.arr(base)) |
+    List.cons<Parsec(C)>(Lang.ann(base)) |
+    List.nil<Parsec(C)>;;;;;;;
+  | (maybe_term) maybe_term<() Parsec(C)>
+    | Parsec.pure<C>(base);
     | (post) Lang.pst(post);;

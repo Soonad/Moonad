@@ -8,14 +8,14 @@
 // - eaten_value (COK) processes a state and a  value when input was consumed
 // - eaten_error (CER) processes a state and an error when input was consumed
 
-Parsec : (S : Type) -> (E : Type) -> (A: Type) -> Type
-  (S) (E) (A)
+Parsec : (A: Type) -> Type
+  (A)
     <B : Type> ->
-    Parsec.State(S)(E) ->
-    (Parsec.State(S)(E) -> A -> B) ->
-    (Parsec.State(S)(E) -> Parsec.Error(E) -> B) ->
-    (Parsec.State(S)(E) -> A -> B) ->
-    (Parsec.State(S)(E) -> Parsec.Error(E) -> B) ->
+    Parsec.State ->
+    (Parsec.State -> A -> B) ->
+    (Parsec.State -> Parsec.Error -> B) ->
+    (Parsec.State -> A -> B) ->
+    (Parsec.State -> Parsec.Error -> B) ->
     B
 
 

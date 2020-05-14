@@ -1,11 +1,11 @@
-Lang.lam: Parser(Core.Ctx -> Core)
+Lang.lam: Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
-  Parser.bind<Pair(Bool)(String)><C>
+  Parsec.bind<Pair(Bool)(String)><C>
   | Lang.enclose<String>(Lang.nam(Bool.true));
-  | (x) x<() Parser(C)> | (eras) (n)
-  Parser.then<Unit><C>(Lang.space) |
-  Parser.bind<C   ><C>(Lang.trm)   | (body)
-  Parser.pure<C>
+  | (x) x<() Parsec(C)> | (eras) (n)
+  Parsec.then<Unit><C>(Lang.space) |
+  Parsec.bind<C   ><C>(Lang.trm)   | (body)
+  Parsec.pure<C>
   | (ctx)
     let tbody = ((x) body(Core.Ctx.ext(n)(x)(ctx))) :: Core -> Core
     Core.lam(eras)(n)(tbody);;;;;

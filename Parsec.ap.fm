@@ -1,14 +1,7 @@
 // a parser is an applicative
-Parsec.ap:
-  <S: Type> ->
-  <E: Type> ->
-  <A: Type> ->
-  <B: Type> ->
-  Parsec(S)(E)(A -> B) ->
-  Parsec(S)(E)(A) ->
-  Parsec(S)(E)(B)
+Parsec.ap: <A: Type> -> <B: Type> -> Parsec(A -> B) -> Parsec(A) -> Parsec(B)
 
-  <S> <E> <A> <B> (pf) (pa)
+  <A> <B> (pf) (pa)
   <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error)
   pf<X>(s1)
   | (s2) (f) pa<X>(s2)

@@ -1,10 +1,10 @@
-Lang.pip: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+Lang.pip: (Core.Ctx -> Core) -> Parsec(Core.Ctx -> Core)
   def C = Core.Ctx -> Core
   (func)
-  Parser.then<Unit><C>(Lang.space)               |
-  Parser.then<String><C>(Lang.symbol("|"))       |
-  Parser.bind<C><C>(Lang.trm)                    | (argm)
-  Parser.then<Unit><C>(Lang.space)               |
-  Parser.then<String><C>(Parser.tokens(";"))            |
-  Parser.pure<C>
+  Parsec.then<Unit><C>(Lang.space)               |
+  Parsec.then<String><C>(Lang.symbol("|"))       |
+  Parsec.bind<C><C>(Lang.trm)                    | (argm)
+  Parsec.then<Unit><C>(Lang.space)               |
+  Parsec.then<String><C>(Parsec.tokens(";"))            |
+  Parsec.pure<C>
   | (ctx) Core.app(Bool.false)(func(ctx))(argm(ctx));;;;;;
