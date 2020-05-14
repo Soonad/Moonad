@@ -1,5 +1,5 @@
 U32.or: U32 -> U32 -> U32
   (a) (b)
-  let a.val = Newtype.val<><>(a)
-  let b.val = Newtype.val<><>(b)
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
   U32.new(Word.or<>(a.val)(b.val))

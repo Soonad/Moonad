@@ -1,4 +1,4 @@
 U16.to_bits: U16 -> Bits
   (a)
-  let a.val = Newtype.val<><>(a)
+  let a.val = Newtype.elim<><>(a)
   Word.to_bits<>(a.val)

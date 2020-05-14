@@ -1,5 +1,5 @@
 U16.xor: U16 -> U16 -> U16
   (a) (b)
-  let a.val = Newtype.val<><>(a)
-  let b.val = Newtype.val<><>(b)
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
   U16.new(Word.xor<>(a.val)(b.val))

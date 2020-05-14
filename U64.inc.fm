@@ -1,4 +1,4 @@
 U64.inc: U64 -> U64 
   (a)
-  let a.val = Newtype.val<><>(a)
+  let a.val = Newtype.elim<><>(a)
   U64.new(Word.inc<>(a.val))

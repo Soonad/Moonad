@@ -1,4 +1,4 @@
 U16.inc: U16 -> U16
   (a)
-  let a.val = Newtype.val<><>(a)
+  let a.val = Newtype.elim<><>(a)
   U16.new(Word.inc<>(a.val))

@@ -1,6 +1,6 @@
 // a >= b
 U16.gte: U16 -> U16 -> Bool
   (a) (b)
-  let a.val = Newtype.val<><>(a)
-  let b.val = Newtype.val<><>(b)
+  let a.val = Newtype.elim<><>(a)
+  let b.val = Newtype.elim<><>(b)
   Word.gte<>(a.val)(b.val)

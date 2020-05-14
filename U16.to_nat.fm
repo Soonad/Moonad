@@ -1,4 +1,4 @@
 U16.to_nat: U16 -> Nat
   (a)
-  let a.val = Newtype.val<><>(a)
+  let a.val = Newtype.elim<><>(a)
   Word.to_nat<>(a.val)

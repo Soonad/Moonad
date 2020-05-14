@@ -1,4 +1,4 @@
 U32.shl: Nat -> U32 -> U32
   (n) (a)
-  let a.val = Newtype.val<><>(a)
+  let a.val = Newtype.elim<><>(a)
   U32.new(Word.shift_left<>(n)(a.val))
