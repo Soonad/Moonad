@@ -1,4 +1,4 @@
-U32.to_nat: U32 -> Nat
+U32.to_nat: U32 -> Nat //prim//
   (a)
-  let a.val = Newtype.elim<><>(a)
-  Word.to_nat<>(a.val)
+  a<() Nat> | (a_val)
+  Word.to_nat<Nat.32>(a_val);

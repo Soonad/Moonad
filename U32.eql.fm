@@ -1,6 +1,6 @@
 // a == b
-U32.eql: U32 -> U32 -> Bool
+U32.eql: U32 -> U32 -> Bool //prim//
   (a) (b)
-  let a.val = Newtype.elim<><>(a)
-  let b.val = Newtype.elim<><>(b)
-  Word.eql<>(a.val)(b.val)
+  a<() Bool> | (a_val)
+  b<() Bool> | (b_val)
+  Word.eql<Nat.32>(a_val)(b_val);;

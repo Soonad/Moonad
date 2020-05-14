@@ -1,6 +1,6 @@
 // a >= b
-U16.gte: U16 -> U16 -> Bool
+U16.gte: U16 -> U16 -> Bool //prim//
   (a) (b)
-  let a.val = Newtype.elim<><>(a)
-  let b.val = Newtype.elim<><>(b)
-  Word.gte<>(a.val)(b.val)
+  a<() Bool> | (a_val)
+  b<() Bool> | (b_val)
+  Word.gte<Nat.16>(a_val)(b_val);;
