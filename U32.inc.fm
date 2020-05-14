@@ -1,4 +1,4 @@
-U32.inc: U32 -> U32 //prim//
+U32.inc: U32 -> U32
   (a)
-  a<() U32> | (a_val)
-  U32.new(Word.inc<Nat.32>(a_val));
+  let a.val = Newtype.elim<><>(a)
+  U32.new(Word.inc<>(a.val))
