@@ -29,7 +29,7 @@ Data.Flds: Type
     P(Data.Flds.nil)) ->
   (ext:
     (name: String) ->
-    (type: Data) ->
+    (type: Type) ->
     (flds: Data.Flds) ->
     P(Data.Flds.ext(name)(type)(flds))) ->
   P(self)
@@ -37,7 +37,7 @@ Data.Flds: Type
 Data.Flds.nil: Data.Flds
   <P> (nil) (ext) nil
 
-Data.Flds.ext: String -> Data -> Data.Flds -> Data.Flds
+Data.Flds.ext: String -> Type -> Data.Flds -> Data.Flds
   (name) (type) (flds)
   <P> (nil) (ext) ext(name)(type)(flds)
 
@@ -95,65 +95,53 @@ Data.type: Data -> Type
   | (data.name) (data.ctrs)
     self<P: Type> -> Data.Ctrs.type(P, data.ctrs);
 
-// Derivers for constructor types
-// ==============================
+// Derivers for constructors
+// =========================
 
-//Data.Flds.ctr_type: (P: Type) -> Data.Flds -> List(P) -> Type
-  //(P) (flds) (vars)
-  //flds<() Type>
-  //|#nil# vars<() Type>(Unit, () () P);
-  //|#ext# (flds.name) (flds.type) (flds.flds)
-    //(x: P) -> Data.Flds.ctr_type(P, flds.flds, List.cons<P>(x)(vars));
-
-Data.Ctrs.ctr_type.header: (P: Type) -> Data.Ctrs -> List(P) -> Type
+Data.Ctrs.ctr.header.type: (P: Type) -> Data.Ctrs -> List(P) -> Type
   (P) (ctrs) (vars)
   ctrs<() Type>
   |#nil# vars<() Type>(Unit, () () P);
   |#ext# (ctrs.name) (ctrs.flds) (ctrs.ctrs)
-    (x: P) -> Data.Ctrs.ctr_type.header(P, ctrs.ctrs, List.cons<P>(x)(vars));
+    (x: P) -> Data.Ctrs.ctr.header.type(P, ctrs.ctrs, List.cons<P>(x)(vars));
 
-Data.Ctrs.ctr_type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
+Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr.header.type(P, ctrs, vars)
+  (P) (ctrs) (vars)
+  ctrs<(ctrs) Data.Ctrs.ctr.header.type(P, ctrs, vars)>
+  |#nil# vars<(vars) vars<() Type>(Unit, () () P)>(Unit.new, (h) (t) h); 
+  |#ext# (ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P, ctrs.ctrs, List.cons<P>(x)(vars));
+
+Data.Ctrs.ctr.type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
   (ctr) (ctr0) (nth)
   ctr<() Type>
   |#nil# Type;
   |#ext# (ctr.name) (ctr.flds) (ctr.ctrs)
     nth<() Type>
-    |#zero# <P: Type> -> Data.Ctrs.ctr_type.header(P, ctr0, List.nil<P>);
-    |#succ# (nth.pred) Data.Ctrs.ctr_type(ctr.ctrs, ctr0, nth.pred);;
+    |#zero# <P: Type> -> Data.Ctrs.ctr.header.type(P, ctr0, List.nil<P>);
+    |#succ# (nth.pred) Data.Ctrs.ctr.type(ctr.ctrs, ctr0, nth.pred);;
 
-Data.ctr_type: Data -> Nat -> Type
-  (data) (nth)
-  data<() Type>
-  | (data.name) (data.ctrs) Data.Ctrs.ctr_type(data.ctrs, data.ctrs, nth);
-
-// Derivers for constructors
-// =========================
-
-//Found type... Data.Ctrs.ctr_type(Data.type(data))(data.ctrs)(nth)
-//Instead of... Data.ctr_type(data)(nth)
-
-Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr_type.header(P, ctrs, vars)
-  (P) (ctrs) (vars)
-  ctrs<(ctrs) Data.Ctrs.ctr_type.header(P, ctrs, vars)>
-  |#nil# vars<(vars) vars<() Type>(Unit, () () P)>(Unit.new, (h) (t) h); 
-  |#ext# (ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P, ctrs.ctrs, List.cons<P>(x)(vars));
-
-Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr_type(ctrs, ctrs0, nth)
+Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr.type(ctrs, ctrs0, nth)
   (ctrs) (ctrs0) (nth)
-  ctrs<(ctrs) Data.Ctrs.ctr_type(ctrs, ctrs0, nth)>
+  ctrs<(ctrs) Data.Ctrs.ctr.type(ctrs, ctrs0, nth)>
   |#nil# Type;
   |#ext# (ctrs.name) (ctrs.flds) (ctrs.ctrs)
     def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs)
-    nth<(nth) Data.Ctrs.ctr_type(ctrs, ctrs0, nth)>
+    nth<(nth) Data.Ctrs.ctr.type(ctrs, ctrs0, nth)>
     |#zero# <P> Data.Ctrs.ctr.header(P, ctrs0, List.nil<P>);
     |#succ# (nth.pred) Data.Ctrs.ctr(ctrs.ctrs, ctrs0, nth.pred); ;
 
-Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr_type(data, nth)
+Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr.type(data, nth)
   (data, nth)
-  data<(data) Data.ctr_type(data, nth)>
+  data<(data) Data.ctr.type(data, nth)>
   |#new# (data.name) (data.ctrs)
     def data = Data.new(data.name)(data.ctrs)
     Data.Ctrs.ctr(data.ctrs, data.ctrs, nth) ;
+
+Data.ctr.type: Data -> Nat -> Type
+  (data) (nth)
+  data<() Type>
+  | (data.name) (data.ctrs) Data.Ctrs.ctr.type(data.ctrs, data.ctrs, nth);
+
 
 // Examples
 // ========
@@ -177,5 +165,30 @@ Bit.Type: Type
 // Derives the first constructor of "Bit"
 //   Bit.Ctr.0: <P: Type> -> (b0: P) -> (b1: P) -> P
 //     <P> (b0) (b1) b0
-Bit.Ctr.0: Data.ctr_type(Bit.Data)(Nat.0)
+Bit.Ctr.0: Data.ctr.type(Bit.Data)(Nat.0)
   Data.ctr(Bit.Data)(Nat.0)
+
+
+// Describes the "Nat" datatype
+//   T Nat
+//   | z
+//   | s(pred: Nat)
+Nat.Data: Data
+  Data.new("Nat")
+  | Data.Ctrs.ext("z", Data.Flds.nil,
+    Data.Ctrs.ext("s",
+      Data.Flds.ext("pred", Data.type(Nat.Data),
+      Data.Flds.nil),
+    Data.Ctrs.nil));
+
+// Derives the type of "Bit"
+//   Bit.Type: Type
+//     <P: Type> -> (b0: P) -> (b1: P) -> P
+Nat.Type: Type
+  Data.type(Nat.Data)
+  
+// Derives the first constructor of "Bit"
+//   Bit.Ctr.0: <P: Type> -> (b0: P) -> (b1: P) -> P
+//     <P> (b0) (b1) b0
+//Bit.Ctr.0: Data.ctr.type(Bit.Data)(Nat.0)
+  //Data.ctr(Bit.Data)(Nat.0)
