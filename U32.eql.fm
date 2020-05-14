@@ -3,4 +3,4 @@ U32.eql: U32 -> U32 -> Bool
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)
-  U32.new(Word.eql<>(a.val)(b.val))
+  Word.eql<>(a.val)(b.val)

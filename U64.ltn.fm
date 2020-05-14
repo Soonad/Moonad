@@ -3,4 +3,4 @@ U64.ltn: U64 -> U64 -> Bool
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)
-  U64.new(Word.ltn<>(a.val)(b.val))
+  Word.ltn<>(a.val)(b.val)

@@ -1,5 +1,5 @@
-U16.mod: U16 -> U16 -> U16 //prim//
+U16.mod: U16 -> U16 -> U16
   (a) (b)
-  a<() U16> | (a_val)
-  b<() U16> | (b_val)
-  U16.new(Word.mod<Nat.16>(a_val)(b_val));;
+  let a.val = Newtype.val<><>(a)
+  let b.val = Newtype.val<><>(b)
+  U16.new(Word.mod<>(a.val)(b.val))

@@ -3,4 +3,4 @@ U32.gtn: U32 -> U32 -> Bool
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)
-  U32.new(Word.gtn<>(a.val)(b.val))
+  Word.gtn<>(a.val)(b.val)

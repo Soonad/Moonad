@@ -3,5 +3,5 @@ U64.lte: U64 -> U64 -> Bool
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)
-  U64.new(Word.lte<>(a.val)(b.val))
+  Word.lte<>(a.val)(b.val)
 

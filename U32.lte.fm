@@ -3,4 +3,4 @@ U32.lte: U32 -> U32 -> Bool
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)
-  U32.new(Word.lte<>(a.val)(b.val))
+  Word.lte<>(a.val)(b.val)
