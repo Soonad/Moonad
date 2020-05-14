@@ -1,0 +1,14 @@
+Vector: (A: Type) -> (size: Nat) -> Type
+  (A) (size)
+  vector<P: (size: Nat) -> (x: Vector(A)(size)) -> Type> ->
+  (nil: P(Nat.0)(Vector.nil<A>)) ->
+  (cons: <size: Nat> -> (head: A) -> (tail: Vector(A)(size)) -> P(Nat.succ(size))(Vector.cons<A><size>(head)(tail))) ->
+  P(size)(vector)
+
+Vector.nil: <A: Type> -> Vector(A)(Nat.0)
+  <A>
+  <P> (nil) (cons) nil
+
+Vector.cons: <A: Type> -> <size: Nat> -> (head: A) -> (tail: Vector(A)(size)) -> Vector(A)(Nat.succ(size))
+  <A> <size> (head) (tail)
+  <P> (nil) (cons) cons<size>(head)(tail)

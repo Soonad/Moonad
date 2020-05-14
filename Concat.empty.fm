@@ -1,0 +1,2 @@
+Concat.empty: <A: Type> -> Concat(A)
+  <> (xs) xs

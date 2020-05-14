@@ -1,3 +1,6 @@
-// TODO Nat exponentiation
-Nat.pow: Nat -> Nat -> Nat
-  Nat.pow
+Nat.pow: Nat -> Nat -> Nat //prim//
+  (a) (b)
+  b<() Nat>
+  | Nat.1;
+  | (b.pred) Nat.mul(a)(Nat.pow(a)(b.pred));
+

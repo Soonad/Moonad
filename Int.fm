@@ -1,29 +1,29 @@
 // An integer is a pair of nats quotiented by `(suc x, suc y) ~ (x, y)`
 Int: Type
   int<P: Int -> Type> ->
-  (new: (x: Nat) -> (y: Nat) -> P(Int.new(x)(y))) ->
+  (new: (x: Nat) -> (y: Nat) -> P(Int.new(x, y))) ->
   P(int)
 
 Int.new: Nat -> Nat -> Int
   (x) (y)
   <P> (new)
-  x<(x) P(Int.new(x)(y))>
-  | new(Nat.zero)(y);
-  | (x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>
-    | new(Nat.succ(x.pred))(Nat.zero);
-    | (y.pred) Int.new(Nat.sub(x.pred)(y.pred))(Nat.sub(y.pred)(x.pred))<P>(new);;
+  x<(x) P(Int.new(x, y))>
+  | new(Nat.zero, y);
+  | (x.pred) y<(y) P(Int.new(Nat.succ(x.pred), y))>
+    | new(Nat.succ(x.pred), Nat.zero);
+    | (y.pred) Int.new(Nat.sub(x.pred, y.pred), Nat.sub(y.pred, x.pred))<P>(new);;
 
 Int.fromNat: Nat -> Int
-  (n) Int.new(n)(Nat.0)
+  (n) Int.new(n, Nat.0)
 
 // true is negative, false is positive
-Int.toNat: Int -> Pair(Bool)(Nat)
+Int.toNat: Int -> Pair(Bool, Nat)
   (a)
-  a<() Pair(Bool)(Nat)>
+  a<() Pair(Bool, Nat)>
   | (a.x) (a.y)
-    a.y<() Pair(Bool)(Nat)>
-    | Pair.new<Bool><Nat>(Bool.false)(a.x);
-    | () Pair.new<Bool><Nat>(Bool.true)(a.y);;
+    a.y<() Pair(Bool, Nat)>
+    | Pair.new<Bool, Nat>(Bool.false, a.x);
+    | () Pair.new<Bool, Nat>(Bool.true, a.y);;
 
 Int.0: Int
   Int.fromNat(Nat.0)
@@ -37,14 +37,14 @@ Int.add: Int -> Int -> Int
   | (a.x) (a.y)
     b<() Int>
     | (b.x) (b.y)
-      Int.new(Nat.add(a.x)(b.x))(Nat.add(a.y)(b.y));;
+      Int.new(Nat.add(a.x, b.x), Nat.add(a.y, b.y));;
 
 Int.neg: Int -> Int
   (a) a<() Int>
-  | (a.x) (a.y) Int.new(a.y)(a.x);
+  | (a.x) (a.y) Int.new(a.y, a.x);
 
 Int.sub: Int -> Int -> Int
-  (a) (b) Int.add(a)(Int.neg(b))
+  (a) (b) Int.add(a, Int.neg(b))
 
 Int.mul: Int -> Int -> Int
   (a) (b)
@@ -52,21 +52,21 @@ Int.mul: Int -> Int -> Int
   | (a.x) (a.y)
     b<() Int>
     | (b.x) (b.y)
-      Int.new(Nat.add(Nat.mul(a.x)(b.x))(Nat.mul(a.y)(b.y)))(Nat.add(Nat.mul(a.x)(b.y))(Nat.mul(a.y)(b.x)));;
+      Int.new(Nat.add(Nat.mul(a.x, b.x), Nat.mul(a.y, b.y)), Nat.add(Nat.mul(a.x, b.y), Nat.mul(a.y, b.x)));;
 
 Int.div_Nat: Int -> Nat -> Int
   (a) (n)
   a<() Int>
   | (a.x) (a.y)
-    Int.new(Nat.div(a.x)(n))(Nat.div(a.y)(n));
+    Int.new(Nat.div(a.x, n), Nat.div(a.y, n));
 
 Int.mod_Nat: Int -> Nat -> Nat
   (a) (n)
   a<() Nat>
   | (a.x) (a.y)
-    let b = Nat.mod(a.y)(n)
-    let sum = Nat.add(a.x)(Nat.sub(n)(b))
-    Nat.mod(sum)(n);
+    let b = Nat.mod(a.y, n)
+    let sum = Nat.add(a.x, Nat.sub(n, b))
+    Nat.mod(sum, n);
 
 Int.cmp: Int -> Int -> Cmp
   (a) (b)
@@ -74,23 +74,23 @@ Int.cmp: Int -> Int -> Cmp
   | (a.x) (a.y)
     b<() Cmp>
     | (b.x) (b.y)
-      Nat.cmp(Nat.add(a.x)(b.y))(Nat.add(b.x)(a.y));;
+      Nat.cmp(Nat.add(a.x, b.y), Nat.add(b.x, a.y));;
 
 Int.parse_decimal: String -> Int
   (str) str<() Int>
   | Int.0;
   | (str.head) (str.tail)
-    U16.eql(str.head)(Char.parse("-"))<() Int>
-    | Int.new(Nat.0)(Nat.parse_decimal(str.tail));
-    | Int.new(Nat.parse_decimal(String.cons(str.head)(str.tail)))(Nat.0);;
+    U16.eql(str.head, Char.parse("-"))<() Int>
+    | Int.new(Nat.0, Nat.parse_decimal(str.tail));
+    | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), Nat.0);;
 
 Int.parse_hex: String -> Int
   (str) str<() Int>
   | Int.0;
   | (str.head) (str.tail)
-    U16.eql(str.head)(Char.parse("-"))<() Int>
-    | Int.new(Nat.0)(Nat.parse_hex(str.tail));
-    | Int.new(Nat.parse_hex(String.cons(str.head)(str.tail)))(Nat.0);;
+    U16.eql(str.head, Char.parse("-"))<() Int>
+    | Int.new(Nat.0, Nat.parse_hex(str.tail));
+    | Int.new(Nat.parse_hex(String.cons(str.head, str.tail)), Nat.0);;
 
 Int.to_string_decimal: Int -> String
   (a)
@@ -98,4 +98,4 @@ Int.to_string_decimal: Int -> String
   | (a.x) (a.y)
     a.y<() String>
     | Nat.to_string_decimal(a.x);
-    | () String.cons(Char.parse("-"))(Nat.to_string_decimal(a.y));;
+    | () String.cons(Char.parse("-"), Nat.to_string_decimal(a.y));;
