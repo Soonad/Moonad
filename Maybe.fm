@@ -1,10 +1,4 @@
 // The Maybe(A) type can hold a value of type A or nothing.
-// T Maybe
-// | none
-// | some(value: A)
-Maybe: Type -> Type
-  (A)
-  maybe<P: Maybe(A) -> Type> ->
-  (none: P(Maybe.none<A>)) ->
-  (some: (value: A) -> P(Maybe.some<A>(value))) ->
-  P(maybe)
+T Maybe <A: Type>
+| none;
+| some(value: A);

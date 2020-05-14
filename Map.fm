@@ -2,14 +2,6 @@
 // T Map<A>
 // | new
 // | tie(val: Maybe(A), lft: Map(A), rgt: Map(A))
-Map: (A: Type) -> Type
-  (A)
-  map<P: Map(A) -> Type> ->
-  (new:
-    P(Map.new<A>)) ->
-  (tie:
-    (val: Maybe(A)) ->
-    (lft: Map(A)) ->
-    (rgt: Map(A)) ->
-    P(Map.tie<A>(val)(lft)(rgt))) ->
-  P(map)
+T Map <A: Type>
+| new;
+| tie(val: Maybe(A), lft: Map(A), rgt: Map(A));

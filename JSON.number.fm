@@ -1,4 +1,0 @@
-JSON.number: F64 -> JSON
-  (x)
-  <P> () () (number) () () ()
-  number(x)

@@ -3,21 +3,17 @@
 // is a WIP, right now it only supports simple types, no fields, and there are
 // many things missing. But check the end of the file for a preview of how it
 // will eventually work!
-
 // From:
-// 
-// T Vector <A: Type> (len: Nat)
-// | nil                                   : Vector<A>(Nat.zero);
-// | ext(n: Nat, x: A, xs: Vector<A>(len)) : Vector<A>(Nat.succ(len));
-//
+//   T Vector <A: Type>                       ~ (len: Nat)
+//   | nil                                    ~ (Nat.zero);
+//   | ext<len: Nat>(x: A, xs: Vector(A,len)) ~ (Nat.succ(len));
 // To:
-// 
-// Vector <A: Type> (len: Nat) : Type 
-//   vector(P: Vector<A>(len) -> Type) ->
-//   (nil: P(Nat.zero)) ->
-//   (ext: (n: Nat, x: A, xs: Vector<A>(len)) -> P(Nat.succ(len))(Vector.ext<A>(n)(x)(xs))) ->
-//   P(len)(vector)
-// 
+//   Vector (A: Type, len: Nat) : Type 
+//     (A, len)
+//     self(P: Nat -> Vector(A, len) -> Type) ->
+//     (nil: P(Nat.zero)(Vector.nil<A>)) ->
+//     (ext: <len: Nat> -> (x: A, xs: Vector<A>(len)) -> P(Nat.succ(len))(Vector.ext<A>(len)(x)(xs))) ->
+//     P(len)(self)
 // + constructors + generic functions
 
 // Data: a type for inductive datatype descriptions

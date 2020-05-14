@@ -2,8 +2,6 @@
 // T Bool
 // | true
 // | false
-Bool: Type //prim//
-  bool<P: Bool -> Type> ->
-  (true  : P(Bool.true)) ->
-  (false : P(Bool.false)) ->
-  P(bool)
+T Bool
+| true;
+| false;

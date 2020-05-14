@@ -1,0 +1,3 @@
+T Vector <A: Type>                       ~ (len: Nat)
+| nil                                    ~ (Nat.zero);
+| ext<len: Nat>(x: A, xs: Vector(A,len)) ~ (Nat.succ(len));
