@@ -1,0 +1,15 @@
+// Return the position within a mininum and maximun range towards look_dir
+// between_dist(self: Thing, min_range: Number, max_range: Number)
+//   case self |thing
+//   let dist_trg = dist_v3(self.pos, self.trg)
+//   at_dist(self, max(min_range, min(max_range, dist_trg)))
+
+TA.Thing.between_dist: TA.Thing -> F64 -> F64 -> F64.V3
+  (self) (min_range) (max_range)
+  let self_pos = TA.Thing.get_pos(self)
+  let self_trg = TA.Thing.get_trg(self) 
+  let dist_trg = F64.V3.dist(self_pos)(self_trg)
+  let min = F64.min(max_range)(dist_trg)
+  let max = F64.max(min_range)(min)
+  TA.Thing.at_dist(self)(max)
+

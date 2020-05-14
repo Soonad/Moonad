@@ -1,7 +1,0 @@
-// The synthesizer can generate functions definition like composition
-A.synthesis1
-  : <P: Nat -> Type> ->
-    (f: <n: Nat> -> P(n) -> P(Nat.succ(n))) ->
-    (x: P(Nat.zero)) ->
-    P(Nat.3)
-  _

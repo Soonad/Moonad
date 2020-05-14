@@ -1,2 +1,0 @@
-TaelinArena.Game.Constants.MANDO_WEAPON_KEY : Bits 
-  Bits.from_string("001101111010")

@@ -1,0 +1,20 @@
+// Spawns another thing
+// - self: thing that will create another thing
+// - at_tik: number of the tik when thing will be created
+// - thing: thing that will be created
+TA.Thing.spawn: TA.Thing -> F64 -> List(TA.Thing) -> TA.Thing
+  (self) (at_tik) (children)
+  let curr_tik = TA.Thing.get_tik(self)
+  F64.eql(curr_tik)(at_tik)<() TA.Thing>
+  | TA.Thing.set_chi(self)(children);
+  | self;  
+
+// spawn(
+//   self   : Thing,
+//   at_tik : Number,
+//   childs : List(Thing))
+//   self <= thing(chi =
+//     if tik === at_tik then
+//       childs
+//     else
+//       chi)

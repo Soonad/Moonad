@@ -1,0 +1,13 @@
+
+// Formality
+// ---------
+// T Command
+// | command(pid: PlayerId, inp: Input)
+
+TA.Game.Command : Type
+  command<P: TA.Game.Command -> Type> ->
+  (new: 
+    (pid: TA.Game.PlayerId) -> 
+    (inp: TA.Game.Input) -> 
+    P(TA.Game.Command.new(pid)(inp)) ) ->
+  P(command)

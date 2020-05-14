@@ -1,0 +1,38 @@
+TA.Thing.set_fun
+  : (thi: TA.Thing)          -> 
+    (new_fun: TA.Game.TxFunction) -> 
+    TA.Thing
+  (thi) (new_fun)
+  thi<() TA.Thing> 
+  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
+    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
+    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
+    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
+    TA.Thing.new
+    | new_fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;

@@ -1,0 +1,12 @@
+// Returns the position at a given distance towards targ_dir
+// at_dist(self: Thing, dist: Number)
+//   case self |thing
+//   let dir = targ_dir(self)
+//   let pos = add_v3(self.pos, scale_v3(dist, dir))
+//   pos
+TA.Thing.at_dist: TA.Thing -> F64 -> F64.V3
+  (self) (dist)
+  let dir = TA.Thing.targ_dir(self)
+  let pos = TA.Thing.get_pos(self)
+  F64.V3.add(pos)(F64.V3.scale(dist)(dir)) 
+  
