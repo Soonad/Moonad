@@ -1,4 +1,4 @@
 U64.shr: Nat -> U64 -> U64 
   (n) (a)
   let a.val = Newtype.val<><>(a)
-  U64.new(Word.add<>(n)(a.val))
+  U64.new(Word.shift_right<>(n)(a.val))

@@ -1,4 +1,4 @@
-U64.add: U64 -> U64 -> U64 //prim//
+U64.add: U64 -> U64 -> U64 
   (a) (b)
   let a.val = Newtype.val<><>(a)
   let b.val = Newtype.val<><>(b)

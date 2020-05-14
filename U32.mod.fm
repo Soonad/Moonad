@@ -1,5 +1,5 @@
-U32.mod: U32 -> U32 -> U32 //prim//
+U32.mod: U32 -> U32 -> U32
   (a) (b)
-  a<() U32> | (a_val)
-  b<() U32> | (b_val)
-  U32.new(Word.mod<Nat.32>(a_val)(b_val));;
+  let a.val = Newtype.val<><>(a)
+  let b.val = Newtype.val<><>(b)
+  U32.new(Word.mod<>(a.val)(b.val))

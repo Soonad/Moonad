@@ -1,6 +1,6 @@
 // a >= b
-U32.gte: U32 -> U32 -> Bool //prim//
+U32.gte: U32 -> U32 -> Bool
   (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gte<Nat.32>(a_val)(b_val);;
+  let a.val = Newtype.val<><>(a)
+  let b.val = Newtype.val<><>(b)
+  U32.new(Word.gte<>(a.val)(b.val))
