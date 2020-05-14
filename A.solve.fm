@@ -1,0 +1,8 @@
+// Statically solves the equation `x * x + 5 = 27 + 27`
+// This results in the constant number 7
+A.solve: Nat
+  Nat.solve_for()<(x)
+    let a = Nat.add(Nat.mul(x)(x))(Nat.5)
+    let b = Nat.add(Nat.27)(Nat.27)
+    Equal()(a)(b) // x * x + 5 = 54
+  ><>

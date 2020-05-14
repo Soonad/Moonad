@@ -1,6 +1,0 @@
-Research.equal_mul
-  : Equal(Nat)
-    | Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1);
-    | Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1);
-  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
-  

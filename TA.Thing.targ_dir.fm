@@ -1,0 +1,10 @@
+// Returns the direction the thing is looking to
+// targ_dir(self: Thing)
+//   case self |thing
+//   lookat_v3(self.pos, self.trg, self.dir)
+TA.Thing.targ_dir: TA.Thing -> F64.V3
+  (self) 
+  let pos = TA.Thing.get_pos(self)
+  let trg = TA.Thing.get_trg(self)
+  let dir = TA.Thing.get_dir(self)
+  F64.V3.look_at(pos)(trg)(dir)

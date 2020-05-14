@@ -1,9 +1,0 @@
-Example.tco: Nat
-  let n10   = Nat.10
-  let n100  = Nat.mul(n10)(n10)
-  let n1k   = Nat.mul(n10)(n100)
-  let n10k  = Nat.mul(n10)(n1k)
-  let n100k = Nat.mul(n10)(n10k)
-  let n1m   = Nat.mul(n10)(n100k)
-  let n10m  = Nat.mul(n10)(n1m)
-  Nat.sum(n10m)

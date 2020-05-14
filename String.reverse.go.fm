@@ -1,6 +1,5 @@
 String.reverse.go: String -> String -> String
   (str) (res)
-  str<() String>
+  case str:
   | res;
-  | (str.head) (str.tail)
-    String.reverse.go(str.tail)(String.cons(str.head)(res));
+  | (str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res));

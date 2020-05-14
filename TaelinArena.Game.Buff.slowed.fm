@@ -1,5 +1,0 @@
-TaelinArena.Game.Buff.slowed: F64 -> F64 -> TaelinArena.Game.Buff 
-  (dur) (val)
-  <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned)
-  slowed(dur)(val)
-  

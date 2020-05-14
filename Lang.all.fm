@@ -1,6 +1,6 @@
 Lang.all: Parser(Core.Ctx -> Core)
-  let Bnd = Core.Ctx -> Core
-  let Ret = Pair(Text)(Bnd)
+  def Bnd = Core.Ctx -> Core
+  def Ret = Pair(Text)(Bnd)
   Parser.bind<Text><Bnd>(Lang.nam(Bool.true)) | (self)
   Parser.bind<Pair(Bool)(Ret)><Bnd>
   | use   = Lang.enclose<Ret>

@@ -1,0 +1,64 @@
+A.Var : Type
+  Pair(Char)(Nat)
+
+A.Var.new : Char -> Nat -> A.Var
+  Pair.new<Char><Nat>
+
+A.Ctx : Type
+  List(A.Var)
+
+A.Ctx.nil : A.Ctx
+  List.nil<A.Var>
+
+A.Ctx.ext : Char -> Nat -> A.Ctx -> A.Ctx
+  (nam) (x) List.cons<A.Var>(A.Var.new(nam)(x))
+
+A.Ctx.get : Char -> A.Ctx -> Maybe(Nat)
+  (chr) (ctx)
+  ctx<() Maybe(Nat)>
+  | Maybe.none<Nat>;
+  | (h) (t)
+    h<() Maybe(Nat)>
+    | (nam) (var)
+      U16.eql(nam)(chr)<() Maybe(Nat)>
+      | Maybe.some<Nat>(var);
+      | A.Ctx.get(chr)(t);;;
+
+A.parse_fun.filt : String -> String
+  String.filter((c) Bool.or
+    | U16.eql(c)(Char.parse("λ"));
+    | U16.eql(c)(Char.parse("."));)
+
+A.parse_fun.typ0 : String -> A.Ctx -> Type
+  (str) (ctx)
+  str<() Type>
+  | Unit;
+  | (nam) (nxt) A.parse_fun.typ1(nam)(nxt)(ctx);
+
+A.parse_fun.typ1 : Char -> String -> A.Ctx -> Type
+  (nam) (nxt) (ctx)
+  nxt<() Type>
+  | Nat;
+  | (h) (t) (x: Nat) -> A.parse_fun.typ0(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx));
+
+A.parse_fun.term : (str:String) -> (ctx:A.Ctx) -> A.parse_fun.typ0(str)(ctx)
+  (str) (ctx)
+  str<(str) A.parse_fun.typ0(str)(ctx)>
+  | Unit.new;
+  | (nam) (nxt)
+    nxt<(str) A.parse_fun.typ1(nam)(str)(ctx)>
+    | A.Ctx.get(nam)(ctx)<() Nat>
+      | Nat.zero;
+      | (n) n;;
+    | (h) (t) (x) A.parse_fun.term(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx));;
+
+A.fun : (str:String) -> A.parse_fun.typ0(A.parse_fun.filt(str))(A.Ctx.nil)
+  (str) A.parse_fun.term(A.parse_fun.filt(str))(A.Ctx.nil)
+
+A.crazy: Nat -> Nat -> Nat -> Nat
+  A.fun("λx.λy.λz.y")
+
+A.it_works: Equal(Nat)(Nat.1)(A.crazy(Nat.0)(Nat.1)(Nat.2))
+  Equal.to<Nat><Nat.1>
+  
+  

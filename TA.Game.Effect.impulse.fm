@@ -1,0 +1,5 @@
+TA.Game.Effect.impulse: F64 -> F64.V3 -> TA.Game.Effect
+  (mag) (dir)
+  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
+  impulse(mag)(dir)
+  
