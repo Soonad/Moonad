@@ -1,9 +1,0 @@
-F64.V3.dot: F64.V3 -> F64.V3 -> F64
-  (a) (b)
-  a<() F64> | (a.x) (a.y) (a.z)
-  b<() F64> | (b.x) (b.y) (b.z)
-  let res = F64.0
-  let res = F64.add(res)(F64.mul(a.x)(b.x))
-  let res = F64.add(res)(F64.mul(a.y)(b.y))
-  let res = F64.add(res)(F64.mul(a.z)(b.z))
-  res;;

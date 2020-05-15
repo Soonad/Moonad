@@ -1,0 +1,3 @@
+Concat: Π(A:*) *
+  λA Π(:(List A)) (List A)
+

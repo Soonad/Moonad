@@ -1,0 +1,3 @@
+String.nil: String
+  ΛP λnil λcons nil
+

@@ -1,3 +1,8 @@
+IO.end: <A: Type> -> A -> IO(A)
+  <A> (x)
+  <P> (end) () ()
+  end(x)
+
 // The IO type allows representing side-effective computations.
 // You can run a term of type `IO(Unit)` using `fmcio my_term`.
 IO: Type -> Type
@@ -7,3 +12,14 @@ IO: Type -> Type
   (log: (str: String) -> (nxt: Unit -> IO(A)) -> P(IO.log<A>(str)(nxt))) ->
   (inp: (nxt: String -> IO(A)) -> P(IO.inp<A>(nxt))) ->
   P(io)
+
+IO.inp: <A: Type> -> (String -> IO(A)) -> IO(A)
+  <A> (nxt)
+  <P> () () (inp)
+  inp(nxt)
+
+IO.log: <A: Type> -> String -> (Unit -> IO(A)) -> IO(A)
+  <A> (str) (nxt)
+  <P> () (log) ()
+  log(str)(nxt)
+

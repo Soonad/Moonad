@@ -1,0 +1,3 @@
+List.bind: ∀(A:*) ∀(B:*) Π(:(List A)) Π(:Π(:A) (List B)) (List B)
+  ΛA ΛB λxs λf (<List.flatten B> ((<<List.map A> (List B)> f) xs))
+

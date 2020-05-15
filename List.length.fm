@@ -1,7 +1,0 @@
-// Computes the length of the list.
-List.length: <A: Type> -> List(A) -> Nat
-  <A> (list)
-  case list:
-  | Nat.zero;
-  | (head) (tail)
-    Nat.succ(List.length<A>(tail));

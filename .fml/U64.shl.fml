@@ -1,0 +1,3 @@
+U64.shl: Nat -> U64 -> U64
+  (n) (a) a<() U64>((a_val) U64.new(Word.shift_left<Nat.64>(n)(a_val)))
+

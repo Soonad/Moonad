@@ -1,0 +1,3 @@
+String.drop_until: Π(:Π(:Char) Bool) Π(:String) String
+  λcond (String.drop_while λc (Bool.not (cond c)))
+

@@ -1,0 +1,3 @@
+Set.set: Π(:Bits) Π(:Set) Set
+  λbits λset (((<Map.set Unit> bits) Unit.new) set)
+

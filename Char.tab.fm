@@ -1,6 +1,0 @@
-Char.tab: Char
-  Char.new
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.1; | Bit.0; | Bit.0; | Bit.1;

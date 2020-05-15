@@ -1,0 +1,3 @@
+Core.Read.is_name: Π(:Char) Bool
+  λchr ((Set.get (U16.to_bits chr)) Core.Read.is_name.set)
+

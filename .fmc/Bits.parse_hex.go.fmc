@@ -1,0 +1,3 @@
+Bits.parse_hex.go: Π(:String) Π(:Bits) Bits
+  λstr λres ((<str λself Bits> res) λstr.head λstr.tail ((<(Char.hex_value str.head) λ Bits> res) λvalue @b0000=(Bits.0 (Bits.0 (Bits.0 (Bits.0 Bits.nil))));@bhead=(((<Nat.apply Bits> value) Bits.inc) b0000);((Bits.parse_hex.go str.tail) ((Bits.concat bhead) res))))
+

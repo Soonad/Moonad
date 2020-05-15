@@ -1,0 +1,3 @@
+JSON.object: Π(x:(List ((Pair String) JSON))) JSON
+  λx ΛP λnull λbool λnumber λstring λarray λobject (object x)
+

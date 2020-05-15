@@ -1,0 +1,3 @@
+Nat.sum.tco: Π(:Nat) Π(:Nat) Nat
+  λn λr ((<n λ Nat> r) λn.pred ((Nat.sum.tco n.pred) ((Nat.add n) r)))
+

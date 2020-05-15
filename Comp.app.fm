@@ -1,4 +1,0 @@
-Comp.app: Comp -> Comp -> Comp
-  (func) (argm)
-  <> () () (app) () () ()
-  app(func)(argm)

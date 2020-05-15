@@ -1,0 +1,3 @@
+Lang.par: Parser(Core.Ctx -> Core)
+  def C = Core.Ctx -> Core; Parser.then<String><C>(Lang.symbol("("))(Parser.bind<C><C>(Lang.trm)((term) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Parser.tokens(")"))(Parser.pure<C>(term)))))
+

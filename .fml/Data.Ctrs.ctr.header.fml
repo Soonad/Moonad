@@ -1,0 +1,3 @@
+Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr.header.type(P)(ctrs)(vars)
+  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr.header.type(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+

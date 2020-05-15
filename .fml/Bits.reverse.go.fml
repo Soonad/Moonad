@@ -1,0 +1,3 @@
+Bits.reverse.go: Bits -> Bits -> Bits
+  (as) (res) as<(x2) Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
+

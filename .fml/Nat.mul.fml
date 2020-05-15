@@ -1,0 +1,3 @@
+Nat.mul: Nat -> Nat -> Nat
+  (n) (m) n<() Nat>(Nat.zero)((n.pred) Nat.add(m)(Nat.mul(n.pred)(m)))
+

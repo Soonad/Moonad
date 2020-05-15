@@ -1,0 +1,3 @@
+Core.normalize: Π(:Core) Π(:Core.Defs) Core
+  λterm λdefs ((((((((<((Core.reduce term) defs) λ Core> λname λindx ((Core.var name) indx)) λname (Core.ref name)) Core.typ) λeras λself λname λbind λbody @bind=((Core.normalize bind) defs);@body=:Π(:Core) Π(:Core) Core λs λx ((Core.normalize ((body s) x)) defs);(((((Core.all eras) self) name) bind) body)) λeras λname λbody @body=:Π(:Core) Core λx ((Core.normalize (body x)) defs);(((Core.lam eras) name) body)) λeras λfunc λargm @func=((Core.normalize func) defs);@argm=((Core.normalize argm) defs);(((Core.app eras) func) argm)) λname λexpr λbody ((Core.normalize (body expr)) defs)) λdone λexpr λtype ((Core.normalize expr) defs))
+

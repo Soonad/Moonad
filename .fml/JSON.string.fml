@@ -1,0 +1,3 @@
+JSON.string: (x: String) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) string(x)
+

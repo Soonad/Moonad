@@ -1,0 +1,3 @@
+Parser.char: Π(:Char) (Parser Char)
+  λc (<<Parsec.char Unit> Unit> c)
+

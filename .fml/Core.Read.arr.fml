@@ -1,0 +1,3 @@
+Core.Read.arr: Core.Bind -> Core.Read(Core.Bind)
+  (bind) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.all(Bool.false)(String.nil)(String.nil)(bind(ctx))((s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx)))))))
+

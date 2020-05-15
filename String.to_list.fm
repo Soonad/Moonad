@@ -1,5 +1,0 @@
-String.to_list: String -> List(Char)
-  (str)
-  case str:
-  | List.nil<>;
-  | (str.head) (str.tail) List.cons<>(str.head)(String.to_list(str.tail));

@@ -1,5 +1,0 @@
-Nat.to_string: Nat -> String
-  (n)
-  n<() String>
-  | String.cons(Char.parse("z"))(String.nil);
-  | (n.pred) String.cons(Char.parse("s"))(Nat.to_string(n.pred));

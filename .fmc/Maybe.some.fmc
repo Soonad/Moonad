@@ -1,0 +1,3 @@
+Maybe.some: ∀(A:*) Π(value:A) (Maybe A)
+  ΛA λvalue ΛP λnone λsome (some value)
+

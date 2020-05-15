@@ -1,8 +1,0 @@
-Nat.sub: Nat -> Nat -> Nat //prim//
-  (n) (m)
-  m<() Nat>
-  | n;
-  | (m.pred) 
-    n<() Nat>
-    | Nat.zero; 
-    | (n.pred) Nat.sub(n.pred)(m.pred);;

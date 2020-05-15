@@ -3,3 +3,12 @@ UNode: Type
   (root: (rank: Nat) -> P(UNode.root(rank))) ->
   (link: (parent: Bits) -> P(UNode.link(parent))) ->
   P(unode_value)
+
+UNode.link: Bits -> UNode
+  (parent)
+  <> () (link) link(parent)
+
+UNode.root: Nat -> UNode
+  (rank)
+  <> (root) () root(rank)
+

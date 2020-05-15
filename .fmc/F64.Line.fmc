@@ -1,0 +1,3 @@
+F64.Line: *
+  ∀line(P:Π(:F64.Line) *) Π(new:Π(pos:F64.V3) Π(dir:F64.V3) (P ((F64.Line.new pos) dir))) (P line)
+

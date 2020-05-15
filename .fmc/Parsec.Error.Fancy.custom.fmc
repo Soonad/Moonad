@@ -1,0 +1,3 @@
+Parsec.Error.Fancy.custom: ∀(E:*) Π(e:E) (Parsec.Error.Fancy E)
+  ΛE λe ΛP λ λcustom (custom e)
+

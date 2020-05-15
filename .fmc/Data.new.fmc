@@ -1,0 +1,3 @@
+Data.new: Π(:String) Π(:Data.Ctrs) Data
+  λname λctrs ΛP λnew ((new name) ctrs)
+

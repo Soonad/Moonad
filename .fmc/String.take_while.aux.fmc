@@ -1,0 +1,3 @@
+String.take_while.aux: Π(:Π(:Char) Bool) Π(:String) Π(:String) ((Pair String) String)
+  λf λstr λres ((<res λself ((Pair String) String)> ((<<Pair.new String> String> str) String.nil)) λhead λtail ((<(f head) λself ((Pair String) String)> (((String.take_while.aux f) ((String.cons head) str)) tail)) ((<<Pair.new String> String> str) res)))
+

@@ -1,0 +1,3 @@
+F64.V3.sqr_dist: Π(:F64.V3) Π(:F64.V3) F64
+  λa λb (<a λ F64> λa.x λa.y λa.z (<b λ F64> λb.x λb.y λb.z @two=((F64.add F64.1) F64.1);@x_diff=((F64.pow ((F64.sub a.x) b.x)) two);@y_diff=((F64.pow ((F64.sub a.y) b.y)) two);@z_diff=((F64.pow ((F64.sub a.z) b.z)) two);((F64.add x_diff) ((F64.add y_diff) z_diff))))
+

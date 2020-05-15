@@ -1,0 +1,3 @@
+Show.msg: Π(x:String) (Show x)
+  λx ΛP λmsg (msg x)
+

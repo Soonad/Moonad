@@ -1,0 +1,3 @@
+Nat.24: Nat
+  (Nat.succ Nat.23)
+

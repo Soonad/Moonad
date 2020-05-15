@@ -1,0 +1,3 @@
+Core.Read.fst: Π(:(List String)) (Core.Read Nat)
+  λtxts @reads=((<<List.imap String> (Core.Read Nat)> λi λstr ((<<Core.Read.bind Unit> Nat> (Core.Read.txt str)) λ (<Core.Read.done Nat> i))) txts);(<Core.Read.first_of Nat> reads)
+

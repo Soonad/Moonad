@@ -1,0 +1,3 @@
+Nat.4: Nat
+  (Nat.succ Nat.3)
+

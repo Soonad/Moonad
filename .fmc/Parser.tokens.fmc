@@ -1,0 +1,3 @@
+Parser.tokens: Π(:String) (Parser String)
+  λstr (<<Parsec.tokens Unit> Unit> str)
+

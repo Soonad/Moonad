@@ -1,4 +1,0 @@
-U32.inc: U32 -> U32 //prim//
-  (a)
-  a<() U32> | (a_val)
-  U32.new(Word.inc<Nat.32>(a_val));

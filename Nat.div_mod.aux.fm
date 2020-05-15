@@ -1,6 +1,0 @@
-Nat.div_mod.aux: Nat -> Nat -> Nat -> Pair(Nat)(Nat) //loop//
-  (n) (m) (d)
-  let p = Nat.sub_rem(n)(m)
-  p<() Pair(Nat)(Nat)>
-  | (p.value) Nat.div_mod.aux(p.value)(m)(Nat.succ(d));
-  | (p.value) Pair.new<Nat><Nat>(d)(n);

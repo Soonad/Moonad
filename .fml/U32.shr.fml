@@ -1,0 +1,3 @@
+U32.shr: Nat -> U32 -> U32
+  (n) (a) a<() U32>((a_val) U32.new(Word.shift_right<Nat.32>(n)(a_val)))
+

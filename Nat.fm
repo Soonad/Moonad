@@ -1,5 +1,435 @@
+Nat.0: Nat
+  Nat.zero
+
+Nat.1: Nat
+  Nat.succ(Nat.0)
+
+Nat.10: Nat
+  Nat.succ(Nat.9)
+
+Nat.11: Nat
+  Nat.succ(Nat.10)
+
+Nat.12: Nat
+  Nat.succ(Nat.11)
+
+Nat.13: Nat
+  Nat.succ(Nat.12)
+
+Nat.14: Nat
+  Nat.succ(Nat.13)
+
+Nat.15: Nat
+  Nat.succ(Nat.14)
+
+Nat.16: Nat
+  Nat.succ(Nat.15)
+
+Nat.17: Nat
+  Nat.succ(Nat.16)
+
+Nat.18: Nat
+  Nat.succ(Nat.17)
+
+Nat.19: Nat
+  Nat.succ(Nat.18)
+
+Nat.2: Nat
+  Nat.succ(Nat.1)
+
+Nat.20: Nat
+  Nat.succ(Nat.19)
+
+Nat.21: Nat
+  Nat.succ(Nat.20)
+
+Nat.22: Nat
+  Nat.succ(Nat.21)
+
+Nat.23: Nat
+  Nat.succ(Nat.22)
+
+Nat.24: Nat
+  Nat.succ(Nat.23)
+
+Nat.25: Nat
+  Nat.succ(Nat.24)
+
+Nat.26: Nat
+  Nat.succ(Nat.25)
+
+Nat.27: Nat
+  Nat.succ(Nat.26)
+
+Nat.28: Nat
+  Nat.succ(Nat.27)
+
+Nat.29: Nat
+  Nat.succ(Nat.28)
+
+Nat.3: Nat
+  Nat.succ(Nat.2)
+
+Nat.30: Nat
+  Nat.succ(Nat.29)
+
+Nat.31: Nat
+  Nat.succ(Nat.30)
+
+Nat.32: Nat
+  Nat.succ(Nat.31)
+
+Nat.33: Nat
+  Nat.succ(Nat.32)
+
+Nat.34: Nat
+  Nat.succ(Nat.33)
+
+Nat.35: Nat
+  Nat.succ(Nat.34)
+
+Nat.36: Nat
+  Nat.succ(Nat.35)
+
+Nat.37: Nat
+  Nat.succ(Nat.36)
+
+Nat.38: Nat
+  Nat.succ(Nat.37)
+
+Nat.39: Nat
+  Nat.succ(Nat.38)
+
+Nat.4: Nat
+  Nat.succ(Nat.3)
+
+Nat.40: Nat
+  Nat.succ(Nat.39)
+
+Nat.41: Nat
+  Nat.succ(Nat.40)
+
+Nat.42: Nat
+  Nat.succ(Nat.41)
+
+Nat.43: Nat
+  Nat.succ(Nat.42)
+
+Nat.44: Nat
+  Nat.succ(Nat.43)
+
+Nat.45: Nat
+  Nat.succ(Nat.44)
+
+Nat.46: Nat
+  Nat.succ(Nat.45)
+
+Nat.47: Nat
+  Nat.succ(Nat.46)
+
+Nat.48: Nat
+  Nat.succ(Nat.47)
+
+Nat.49: Nat
+  Nat.succ(Nat.48)
+
+Nat.5: Nat
+  Nat.succ(Nat.4)
+
+Nat.50: Nat
+  Nat.succ(Nat.49)
+
+Nat.51: Nat
+  Nat.succ(Nat.50)
+
+Nat.52: Nat
+  Nat.succ(Nat.51)
+
+Nat.53: Nat
+  Nat.succ(Nat.52)
+
+Nat.54: Nat
+  Nat.succ(Nat.53)
+
+Nat.55: Nat
+  Nat.succ(Nat.54)
+
+Nat.56: Nat
+  Nat.succ(Nat.55)
+
+Nat.57: Nat
+  Nat.succ(Nat.56)
+
+Nat.58: Nat
+  Nat.succ(Nat.57)
+
+Nat.59: Nat
+  Nat.succ(Nat.58)
+
+Nat.6: Nat
+  Nat.succ(Nat.5)
+
+Nat.60: Nat
+  Nat.succ(Nat.59)
+
+Nat.61: Nat
+  Nat.succ(Nat.60)
+
+Nat.62: Nat
+  Nat.succ(Nat.61)
+
+Nat.63: Nat
+  Nat.succ(Nat.62)
+
+Nat.64: Nat
+  Nat.succ(Nat.63)
+
+Nat.7: Nat
+  Nat.succ(Nat.6)
+
+Nat.8: Nat
+  Nat.succ(Nat.7)
+
+Nat.9: Nat
+  Nat.succ(Nat.8)
+
+Nat.add: Nat -> Nat -> Nat //prim//
+  (n) (m)
+  n<() Nat>
+  | m;
+  | (n.pred) Nat.succ(Nat.add(n.pred)(m));
+
+Nat.apply: <A: Type> -> Nat -> (A -> A) -> A -> A //loop//
+  <A> (n) (f) (x)
+  n<() A>
+  | x;
+  | (n.pred) Nat.apply<A>(n.pred)(f)(f(x));
+
+Nat.cmp: Nat -> Nat -> Cmp
+  (a) (b)
+  a<() Cmp>
+  | b<() Cmp>
+    | Cmp.eql;
+    | (b.pred) Cmp.ltn;;
+  | (a.pred)
+    b<() Cmp>
+    | Cmp.gtn;
+    | (b.pred) Nat.cmp(a.pred)(b.pred);;
+
+Nat.div: Nat -> Nat -> Nat //prim//
+  (n) (m) Pair.fst<Nat><Nat>(Nat.div_mod(n)(m))
+
+Nat.div_mod.aux: Nat -> Nat -> Nat -> Pair(Nat)(Nat) //loop//
+  (n) (m) (d)
+  let p = Nat.sub_rem(n)(m)
+  p<() Pair(Nat)(Nat)>
+  | (p.value) Nat.div_mod.aux(p.value)(m)(Nat.succ(d));
+  | (p.value) Pair.new<Nat><Nat>(d)(n);
+
+Nat.div_mod: Nat -> Nat -> Pair(Nat)(Nat) //prim//
+  (n) (m) Nat.div_mod.aux(n)(m)(Nat.zero)
+
+Nat.double: Nat -> Nat
+  (n)
+  n<() Nat>
+  | Nat.zero;
+  | (n.pred) Nat.succ(Nat.succ(Nat.double(n.pred)));
+
+Nat.eql: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
+
 Nat: Type //prim//
   nat<P: Nat -> Type> ->
   (zero: P(Nat.zero)) ->
   (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
   P(nat)
+
+Nat.gte: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+
+Nat.gtn: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+
+Nat.induction:
+  (n: Nat) ->
+  <P: Nat -> Type> ->
+  (z: P(Nat.zero)) ->
+  (s: ((m:Nat) -> P(m) -> P(Nat.succ(m)))) ->
+  P(n)
+
+  (k) <P> (z) (s)
+  k<P>(z)((pred) s(pred)(Nat.induction(pred)<P>(z)(s)))
+
+Nat.is_zero: Nat -> Bool
+  (n)
+  n<() Bool>
+  | Bool.true;
+  | () Bool.false;
+
+Nat.lte: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+
+Nat.ltn: Nat -> Nat -> Bool
+  (a) (b) Nat.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+
+Nat.mod: Nat -> Nat -> Nat
+  (n) (m) Pair.snd<Nat><Nat>(Nat.div_mod(n)(m))
+
+Nat.mul: Nat -> Nat -> Nat //prim//
+  (n) (m)
+  n<() Nat>
+  | Nat.zero;
+  | (n.pred) Nat.add(m)(Nat.mul(n.pred)(m));
+
+//// TODO: error on misformatted Nat
+Nat.parse_decimal: String -> Nat
+  (str) Nat.parse_decimal.go(str)(Nat.zero) 
+
+// TODO: error on misformatted Nat
+Nat.parse_decimal.go: String -> Nat -> Nat //loop//
+  (str) (res)
+  str<() Nat>
+  | res;
+  | (str.head) (str.tail)
+    let dig = Nat.sub(U16.to_nat(str.head))(Nat.48)
+    let res = Nat.add(dig)(Nat.mul(Nat.10)(res))
+    Nat.parse_decimal.go(str.tail)(res);
+
+Nat.pred: Nat -> Nat
+  (n)
+  n<() Nat>
+  | Nat.zero;
+  | (n.pred) n.pred;
+
+Nat.show.aux: Nat -> Nat -> String -> String
+  (n) (base) (str)
+  (Nat.div_mod(n)(base))<() String> | (d) (m)
+  d<() String>
+  | String.cons(Nat.show.digit(m)(base))(str);
+  | (pred) Nat.show.aux(d)(base)(String.cons(Nat.show.digit(m)(base))(str));;
+
+
+Nat.show.digit: Nat -> Nat -> Char
+  (n) (base) 
+  let m = Nat.mod(n)(base)
+  Nat.eql(m)(Nat.0)<() Char> | Char.parse("0"); |
+  Nat.eql(m)(Nat.1)<() Char> | Char.parse("1"); |
+  Nat.eql(m)(Nat.2)<() Char> | Char.parse("2"); |
+  Nat.eql(m)(Nat.3)<() Char> | Char.parse("3"); |
+  Nat.eql(m)(Nat.4)<() Char> | Char.parse("4"); |
+  Nat.eql(m)(Nat.5)<() Char> | Char.parse("5"); |
+  Nat.eql(m)(Nat.6)<() Char> | Char.parse("6"); |
+  Nat.eql(m)(Nat.7)<() Char> | Char.parse("7"); |
+  Nat.eql(m)(Nat.8)<() Char> | Char.parse("8"); |
+  Nat.eql(m)(Nat.9)<() Char> | Char.parse("9"); |
+  Nat.eql(m)(Nat.10)<() Char> | Char.parse("a"); |
+  Nat.eql(m)(Nat.11)<() Char> | Char.parse("b"); |
+  Nat.eql(m)(Nat.12)<() Char> | Char.parse("c"); |
+  Nat.eql(m)(Nat.13)<() Char> | Char.parse("d"); |
+  Nat.eql(m)(Nat.14)<() Char> | Char.parse("e"); |
+  Nat.eql(m)(Nat.15)<() Char> | Char.parse("f"); |
+    Char.parse("#");;;;;;;;;;;;;;;;
+    // TODO: use absurd to cancel this case
+//  Nat.eql(m)(Nat.16)<() Char> | Char.parse("g"); |
+//  Nat.eql(m)(Nat.17)<() Char> | Char.parse("h"); |
+//  Nat.eql(m)(Nat.18)<() Char> | Char.parse("i"); |
+//  Nat.eql(m)(Nat.19)<() Char> | Char.parse("j"); |
+//  Nat.eql(m)(Nat.20)<() Char> | Char.parse("k"); |
+//  Nat.eql(m)(Nat.21)<() Char> | Char.parse("l"); |
+//  Nat.eql(m)(Nat.22)<() Char> | Char.parse("m"); |
+//  Nat.eql(m)(Nat.23)<() Char> | Char.parse("n"); |
+//  Nat.eql(m)(Nat.24)<() Char> | Char.parse("o"); |
+//  Nat.eql(m)(Nat.25)<() Char> | Char.parse("p"); |
+//  Nat.eql(m)(Nat.26)<() Char> | Char.parse("q"); |
+//  Nat.eql(m)(Nat.27)<() Char> | Char.parse("r"); |
+//  Nat.eql(m)(Nat.28)<() Char> | Char.parse("s"); |
+//  Nat.eql(m)(Nat.30)<() Char> | Char.parse("t"); |
+//  Nat.eql(m)(Nat.31)<() Char> | Char.parse("u"); |
+//  Nat.eql(m)(Nat.32)<() Char> | Char.parse("v"); |
+
+
+Nat.show: Nat -> String
+  (n) Nat.show.aux(n)(Nat.10)("")
+
+Nat.show_base: Nat -> Nat -> String
+  (n) (base) Nat.show.aux(n)(base)("")
+
+Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
+  (x) <E> <P> x
+
+Nat.sub: Nat -> Nat -> Nat //prim//
+  (n) (m)
+  m<() Nat>
+  | n;
+  | (m.pred) 
+    n<() Nat>
+    | Nat.zero; 
+    | (n.pred) Nat.sub(n.pred)(m.pred);;
+
+Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat) //loop//
+  (n) (m)
+  m<() Either(Nat)(Nat)>
+  | Either.left<Nat><Nat>(n);
+  | (m.pred) n<() Either(Nat)(Nat)>
+    | Either.right<Nat><Nat>(Nat.succ(m.pred));
+    | (n.pred) Nat.sub_rem(n.pred)(m.pred);;
+
+Nat.succ: Nat -> Nat
+  (n)
+  <P> (z) (s) s(n)
+
+Nat.succ_isnt_zero(n: Nat, e: Equal(Nat)(Nat.succ(n))(Nat.zero)) : Empty
+  def P = ((x) case x: | Empty; | (p) Unit;) :: Nat -> Type
+  Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><P>(e)(Unit.new)
+
+Nat.sum: Nat -> Nat
+  (n) Nat.sum.tco(n)(Nat.zero)
+
+Nat.sum.tco: Nat -> Nat -> Nat //loop//
+  (n) (r)
+  n<() Nat>
+  | r;
+  | (n.pred) Nat.sum.tco(n.pred)(Nat.add(n)(r));
+
+Nat.to_base: Nat -> Nat -> List(Nat)
+  (base) (nat)
+  Nat.to_base.go(base)(nat)(List.nil<Nat>)
+
+Nat.to_base.go: Nat -> Nat -> List(Nat) -> List(Nat) //loop//
+  (base) (nat) (res)
+  Nat.div_mod(nat)(base)<() List(Nat)>
+  | (div) (rem)
+    let res = List.cons<Nat>(rem)(res)
+    div<() List(Nat)>
+    | res;
+    | (div.pred) Nat.to_base.go(base)(div)(res);;
+
+//base(123, [])
+//base(12, [3])
+//base(1, [2,3])
+
+Nat.to_bits: Nat -> Bits
+  (n)
+  n<() Bits>
+  | Bits.0(Bits.nil);
+  | (n.pred) Bits.1(Nat.to_bits(n.pred));
+
+Nat.to_string: Nat -> String
+  (n)
+  n<() String>
+  | String.cons(Char.parse("z"))(String.nil);
+  | (n.pred) String.cons(Char.parse("s"))(Nat.to_string(n.pred));
+
+Nat.to_string_base: Nat -> Nat -> String
+  (base) (nat)
+  List.fold<Nat><String>
+  | String.nil;
+  | (n) (str) String.cons(Nat.apply<Char>(n)(U16.inc)(Char.parse("0")))(str);
+  | Nat.to_base(base)(nat);
+
+Nat.to_string_decimal: Nat -> String
+  Nat.to_string_base(Nat.10)
+
+Nat.zero: Nat
+  <P> (z) (s) z
+

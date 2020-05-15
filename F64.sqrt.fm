@@ -1,3 +1,0 @@
-// Square root function.
-F64.sqrt: F64 -> F64 //prim//
-  (n) F64.pow(n)(F64.div(F64.1)(F64.2))

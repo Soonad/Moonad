@@ -1,0 +1,3 @@
+A.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> (B -> C) -> (A -> B) -> A -> C
+  <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
+

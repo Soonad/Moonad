@@ -1,6 +1,0 @@
-F64.Segment.new: F64.V3 -> F64.V3 -> F64.Segment
-  (a) (b)
-  <P> (new)
-  new(a)(b)
-
-   

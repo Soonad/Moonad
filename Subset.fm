@@ -5,3 +5,4 @@ T Subset <A: Type> <B: A -> Type>
   //subset<P: Subset(A)(B) -> Type> ->
   //(new: (a: A) -> <b: B(a)> -> P(Subset.new<A><B>(a)<b>)) ->
   //P(subset)
+

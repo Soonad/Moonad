@@ -1,4 +1,0 @@
-Comp.let: String -> Comp -> Comp -> Comp
-  (name) (expr) (body)
-  <> () () () (Let) () ()
-  Let(name)(expr)(body)

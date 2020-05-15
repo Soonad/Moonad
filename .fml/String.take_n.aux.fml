@@ -1,0 +1,3 @@
+String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
+  (n) (str) (res) res<(self) Maybe(Pair(String)(String))>(n<(x3) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<(x5) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
+

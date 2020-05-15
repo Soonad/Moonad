@@ -1,6 +1,0 @@
-// Parses a character. Example: `Char.parse("x")`
-Char.parse : (str : String) -> Char.parse.type(str)
-  (str)
-  str<(str) Char.parse.type(str)>
-  | Unit.new;
-  | (str.head) (str.tail) str.head;

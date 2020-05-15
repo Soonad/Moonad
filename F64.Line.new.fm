@@ -1,5 +1,0 @@
-F64.Line.new: F64.V3 -> F64.V3 -> F64.Line 
-  (pos) (dir)
-  <P> (new)
-  new(pos)(dir)
-  

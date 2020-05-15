@@ -1,0 +1,3 @@
+Nat.25: Nat
+  Nat.succ(Nat.24)
+

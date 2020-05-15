@@ -1,0 +1,3 @@
+Nat.10: Nat
+  (Nat.succ Nat.9)
+

@@ -1,0 +1,3 @@
+String.take: Nat -> String -> String
+  (n) (list) list<(self) String>(String.nil)((head) (tail) n<(x4) String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
+

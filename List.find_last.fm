@@ -1,4 +1,0 @@
-// Finds the last element that satisfies a condition and its index.
-List.find_last: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond)
-  List.find_last.aux<A>(list)(cond)(Nat.zero)(Maybe.none<Pair(A)(Nat)>)

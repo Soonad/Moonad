@@ -1,0 +1,3 @@
+Nat.succ_isnt_zero: (n: Nat) -> (e: Equal(Nat)(Nat.succ(n))(Nat.zero)) -> Empty
+  (n) (e) def P = ((x) x<(x3) Type>(Empty)((p) Unit)) :: Nat -> Type; Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><P>(e)(Unit.new)
+

@@ -1,0 +1,3 @@
+A.solve: Nat
+  Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
+

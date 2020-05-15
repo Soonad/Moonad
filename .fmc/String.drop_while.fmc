@@ -1,0 +1,3 @@
+String.drop_while: Π(:Π(:Char) Bool) Π(:String) String
+  λcond λstr ((<str λ String> String.nil) λstr.head λstr.tail ((<(cond str.head) λ String> ((String.drop_while cond) str.tail)) str))
+

@@ -1,6 +1,0 @@
-Parsec.Error.Item.show : Parsec.Error.Item -> String
-  (e) e<() String>
-  | (xs) String.quote(xs);
-  | (xs) String.concat("label ")(xs);
-  | "end of input";
-

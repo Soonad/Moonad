@@ -1,8 +1,0 @@
-F64.V3.norm: F64.V3 -> F64.V3 
-  (v)
-  v<() F64.V3> | (v.x) (v.y) (v.z)
-  let len = F64.V3.len(v)
-  let new_x = F64.div(v.x)(len)
-  let new_y = F64.div(v.y)(len)
-  let new_z = F64.div(v.z)(len)
-  F64.V3.new(new_x)(new_y)(new_z);

@@ -1,0 +1,3 @@
+Parsec.Error.make_fancy: ∀(E:*) Π(:Nat) Π(:(List (Parsec.Error.Fancy E))) (Parsec.Error E)
+  ΛE λposition λmessages ΛP λ λfancy ((fancy position) messages)
+

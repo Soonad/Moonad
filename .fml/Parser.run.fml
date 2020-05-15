@@ -1,0 +1,3 @@
+Parser.run: <A: Type> -> Parser(A) -> Parser.State -> Parser.Reply(A)
+  <A> (p) (s) Parsec.run<Unit><Unit><A>(p)(s)
+

@@ -1,2 +1,0 @@
-Bits.parse_hex: String -> Bits
-  (str) Bits.parse_hex.go(str)(Bits.nil)

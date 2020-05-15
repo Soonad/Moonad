@@ -1,4 +1,0 @@
-Parser.plus: <A: Type> -> Parser(A) -> Parser(A) -> Parser(A)
-  <A> (p) (q)
-  Parsec.plus<Unit><Unit><A>(p)(q)
-

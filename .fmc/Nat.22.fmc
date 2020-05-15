@@ -1,0 +1,3 @@
+Nat.22: Nat
+  (Nat.succ Nat.21)
+

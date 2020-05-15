@@ -1,0 +1,3 @@
+Lang.symbol: Π(:String) (Parser String)
+  λstr ((<<Parser.bind String> String> (Parser.tokens str)) λx ((<<Parser.then Unit> String> Lang.space) (<Parser.pure String> x)))
+

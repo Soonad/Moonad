@@ -1,0 +1,3 @@
+Lang.open: Parser(Bool)
+  Parser.plus<Bool>(Parser.then<String><Bool>(Lang.symbol("("))(Parser.pure<Bool>(Bool.false)))(Parser.then<String><Bool>(Lang.symbol("<"))(Parser.pure<Bool>(Bool.true)))
+

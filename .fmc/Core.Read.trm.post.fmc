@@ -1,0 +1,3 @@
+Core.Read.trm.post: Π(:Core.Bind) (Core.Read Core.Bind)
+  λbase λcode @nil=<List.nil (Core.Read Core.Bind)>;@ext=<List.cons (Core.Read Core.Bind)>;@posts=((ext (Core.Read.app base)) ((ext (Core.Read.pip base)) ((ext (Core.Read.arr base)) ((ext (Core.Read.ann base)) nil))));((<((<Core.Read.first_of Core.Bind> posts) code) λ (Core.Read.Reply Core.Bind)> ((<Core.Read.done Core.Bind> base) code)) λgot (<got λ (Core.Read.Reply Core.Bind)> λpost λcode ((Core.Read.trm.post post) code)))
+

@@ -1,0 +1,3 @@
+List.reverse: ∀(A:*) Π(:(List A)) (List A)
+  ΛA λas ((<List.reverse.aux A> as) <List.nil A>)
+

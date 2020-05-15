@@ -1,0 +1,3 @@
+Nat.succ: Π(:Nat) Nat
+  λn ΛP λz λs (s n)
+

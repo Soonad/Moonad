@@ -1,0 +1,3 @@
+Pair.snd: ∀(A:*) ∀(B:*) Π(:((Pair A) B)) B
+  ΛA ΛB λpair (<pair λ B> λa λb b)
+

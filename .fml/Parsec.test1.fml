@@ -1,0 +1,3 @@
+Parsec.test1: String
+  Parsec.parse<Unit><Unit><String>(Parsec.tokens<Unit><Unit>("a"))(Parsec.State.default<Unit><Unit>("a")(Unit.new))
+

@@ -1,0 +1,3 @@
+Nat.50: Nat
+  Nat.succ(Nat.49)
+

@@ -1,0 +1,3 @@
+Nat.33: Nat
+  (Nat.succ Nat.32)
+

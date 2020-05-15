@@ -1,3 +1,0 @@
-Parser.then: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(B)
-  <A> <B> (pa) (pb)
-  Parsec.then<Unit><Unit><A><B>(pa)(pb)

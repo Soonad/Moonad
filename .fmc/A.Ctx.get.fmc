@@ -1,0 +1,3 @@
+A.Ctx.get: Π(:Char) Π(:A.Ctx) (Maybe Nat)
+  λchr λctx ((<ctx λ (Maybe Nat)> <Maybe.none Nat>) λh λt (<h λ (Maybe Nat)> λnam λvar ((<((U16.eql nam) chr) λ (Maybe Nat)> (<Maybe.some Nat> var)) ((A.Ctx.get chr) t))))
+

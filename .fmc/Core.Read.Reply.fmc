@@ -1,0 +1,3 @@
+Core.Read.Reply: Π(A:*) *
+  λA (Maybe ((Pair A) String))
+

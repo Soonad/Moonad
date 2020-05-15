@@ -1,0 +1,3 @@
+Bits.eql: Π(:Bits) Π(:Bits) Bool
+  λbs1 (((<bs1 λ Π(:Bits) Bool> λbs2 (((<bs2 λx2 Bool> Bool.true) λ Bool.false) λ Bool.false)) λbs1.pred λbs2 (((<bs2 λx3 Bool> Bool.false) λbs2.pred ((Bits.eql bs1.pred) bs2.pred)) λ Bool.false)) λbs1.pred λbs2 (((<bs2 λx3 Bool> Bool.false) λ Bool.false) λbs2.pred ((Bits.eql bs1.pred) bs2.pred)))
+

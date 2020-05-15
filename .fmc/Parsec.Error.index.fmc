@@ -1,0 +1,3 @@
+Parsec.Error.index: ∀(E:*) Π(:(Parsec.Error E)) Nat
+  ΛE λx ((<x λ Nat> λx.pos λx.unx λx.exp x.pos) λx.pos λx.msg x.pos)
+

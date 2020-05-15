@@ -1,6 +1,0 @@
-Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A //prim//
-  <A> (x) (ct) (cf)
-  case Bool.eql(x)(Bool.false):
-  | cf;
-  | ct;
-  

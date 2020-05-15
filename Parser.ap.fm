@@ -1,3 +1,0 @@
-Parser.ap: <A: Type> -> <B: Type> -> Parser(A -> B) -> Parser(A) -> Parser(B)
-  <A> <B> (pf) (pa)
-  Parsec.ap<Unit><Unit><A><B>(pf)(pa)

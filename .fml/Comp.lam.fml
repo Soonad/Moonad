@@ -1,0 +1,3 @@
+Comp.lam: String -> Comp -> Comp
+  (name) (body) <> () (lam) () () () () lam(name)(body)
+

@@ -1,0 +1,3 @@
+Core.Ctx.ext: Π(:String) Π(:Core) Π(:Core.Ctx) Core.Ctx
+  λstr λtrm (<List.cons ((Pair String) Core)> ((<<Pair.new String> Core> str) trm))
+

@@ -1,3 +1,0 @@
-Pair.fst: <A: Type> -> <B: Type> -> Pair(A)(B) -> A
-  <A> <B> (pair)
-  pair<() A>((a) (b) a)

@@ -1,0 +1,3 @@
+Parser.optional: <A: Type> -> Parser(A) -> Parser(Maybe(A))
+  <A> (p) Parsec.optional<Unit><Unit><A>(p)
+

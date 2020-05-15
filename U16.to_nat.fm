@@ -1,4 +1,0 @@
-U16.to_nat: U16 -> Nat //prim//
-  (a)
-  a<() Nat> | (a_val)
-  Word.to_nat<Nat.16>(a_val);

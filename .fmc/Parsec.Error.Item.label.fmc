@@ -1,0 +1,3 @@
+Parsec.Error.Item.label: Π(:String) Parsec.Error.Item
+  λxs ΛP λ λlabel λ (label xs)
+

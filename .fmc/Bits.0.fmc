@@ -1,0 +1,3 @@
+Bits.0: Π(bs:Bits) Bits
+  λbs ΛP λbe λb0 λb1 (b0 bs)
+

@@ -1,0 +1,3 @@
+Data.new: String -> Data.Ctrs -> Data
+  (name) (ctrs) <P> (new) new(name)(ctrs)
+

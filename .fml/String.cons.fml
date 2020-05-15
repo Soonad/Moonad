@@ -1,0 +1,3 @@
+String.cons: (head: Char) -> (tail: String) -> String
+  (head) (tail) <P> (nil) (cons) cons(head)(tail)
+

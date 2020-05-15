@@ -1,2 +1,0 @@
-U64.mix.const1: U64
-  U64.parse_hex("c4ceb9fe1a85ec53")

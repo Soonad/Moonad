@@ -1,0 +1,3 @@
+Data.Flds: *
+  ∀self(P:Π(:Data.Flds) *) Π(nil:(P Data.Flds.nil)) Π(ext:Π(name:String) Π(type:*) Π(flds:Data.Flds) (P (((Data.Flds.ext name) type) flds))) (P self)
+

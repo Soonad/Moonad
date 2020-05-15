@@ -1,0 +1,3 @@
+JSON.number: (x: F64) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) number(x)
+

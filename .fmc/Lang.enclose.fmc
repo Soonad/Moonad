@@ -1,0 +1,3 @@
+Lang.enclose: ∀(A:*) Π(:(Parser A)) (Parser ((Pair Bool) A))
+  ΛA λp ((<<Parser.bind Bool> ((Pair Bool) A)> Lang.open) λeras ((<<Parser.bind A> ((Pair Bool) A)> p) λx ((<<Parser.then String> ((Pair Bool) A)> ((<eras λ (Parser String)> (Parser.tokens ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.1) Bit.1) Bit.0)) String.nil))) (Parser.tokens ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.1) Bit.0) Bit.0) Bit.1)) String.nil)))) (<Parser.pure ((Pair Bool) A)> ((<<Pair.new Bool> A> eras) x)))))
+

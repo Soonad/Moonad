@@ -1,3 +1,64 @@
+Equal.apply
+  : <A: Type> ->
+    <B: A -> Type> -> 
+    (a: A) ->
+    (b: A) ->
+    (f: (x: A) -> B(x)) ->
+    (e: Equal(A)(a)(b)) ->
+    Equal(B(a))(f(a))(Equal.rewrite<A><b><a><B>(Equal.mirror<A><a><b>(e))(f(b)))
+  <A> <B> (a) (b) (f) (e)
+  e<(e.b) (e)
+    Equal(B(a))(f(a))
+    | Equal.rewrite<A><e.b><a><B>(Equal.mirror<A><a><e.b>(e))(f(e.b));>
+  | Equal.to<B(a)><f(a)>;
+
+Equal.apply_ind:
+  <A: Type> ->
+  <B: Type> ->
+  (a: A) ->
+  (b: A) ->
+  (f: (x: A) -> B) ->
+  (e: Equal(A)(a)(b)) ->
+  Equal(B)(f(a))(f(b))
+
+  <A> <B> (a) (b) (f) (e)
+  e<(e.b) (e) Equal(B)(f(a))(f(e.b))>
+  | Equal.to<B><f(a)>;
+
+Equal.chain:
+  <A: Type> ->
+  <a: A> ->
+  <b: A> ->
+  <c: A> -> 
+  (d: Equal(A)(a)(b)) ->
+  (e: Equal(A)(b)(c)) ->
+  Equal(A)(a)(c)
+
+  <A> <a> <b> <c> (d) (e)
+  e<(e.b) (c) Equal(A)(a)(e.b)>(d)
+
 // The Equal datatype.
 T Equal <A: Type> (a: A) ~ (b: A)
 | to ~ (a);
+
+Equal.mirror
+  : <A: Type> ->
+    <a: A> ->
+    <b: A> ->
+    (e: Equal(A)(a)(b)) ->
+    Equal(A)(b)(a)
+  <A> <a> <b> (e)
+  e<(b) () Equal(A)(b)(a)>
+  | Equal.to<A><a>;
+
+Equal.rewrite
+  : <A: Type> ->
+    <a: A> ->
+    <b: A> ->
+    <P: A -> Type> ->
+    (e: Equal(A)(a)(b)) ->
+    (x: P(a)) ->
+    P(b)
+  <A> <a> <b> <P> (e) (x)
+  e<(b) (a) P(b)>(x)
+

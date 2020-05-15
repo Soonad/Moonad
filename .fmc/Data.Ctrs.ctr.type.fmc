@@ -1,0 +1,3 @@
+Data.Ctrs.ctr.type: Π(:Data.Ctrs) Π(:Data.Ctrs) Π(:Nat) *
+  λctr λctr0 λnth ((<ctr λ *> *) λctr.name λctr.flds λctr.ctrs ((<nth λ *> ∀(P:*) (((Data.Ctrs.ctr.header.type P) ctr0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr.type ctr.ctrs) ctr0) nth.pred)))
+

@@ -1,0 +1,3 @@
+String.reverse: Π(:String) String
+  λstr ((String.reverse.go str) String.nil)
+

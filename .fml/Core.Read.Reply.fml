@@ -1,0 +1,3 @@
+Core.Read.Reply: (A: Type) -> Type
+  (A) Maybe(Pair(A)(String))
+

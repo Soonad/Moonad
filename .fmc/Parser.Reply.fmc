@@ -1,0 +1,3 @@
+Parser.Reply: Π(:*) *
+  λA (((Parsec.Reply Unit) Unit) A)
+

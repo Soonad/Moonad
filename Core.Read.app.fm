@@ -1,7 +1,0 @@
-Core.Read.app: Core.Bind -> Core.Read(Core.Bind)
-  (func)
-  use eras = Core.Read.bind<Bool><Core.Bind>(Core.Read.one("(")("<"))
-  use argm = Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)     
-  use skip = Core.Read.seek<Bool><Core.Bind>(Core.Read.one(")")(">"))
-  use ctx  = Core.Read.done<Core.Bind>                               
-  Core.app(eras)(func(ctx))(argm(ctx))

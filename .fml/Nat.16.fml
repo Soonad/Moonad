@@ -1,0 +1,3 @@
+Nat.16: Nat
+  Nat.succ(Nat.15)
+
