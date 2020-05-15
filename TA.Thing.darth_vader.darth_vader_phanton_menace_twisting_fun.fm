@@ -1,0 +1,8 @@
+TA.Thing.darth_vader.darth_vader_phanton_menace_twisting_fun: TA.Game.TxFunction
+  (self)
+  TA.Thing.animate_die
+  | self;
+  | F64.0;
+  | DARTH_VADER_THE_PHANTOM_MENACE_SABER_TWISTING_000;
+  | F64.parse("5");
+  | F64.parse("30");
