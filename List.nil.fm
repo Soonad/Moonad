@@ -1,4 +1,0 @@
-// The empty list.
-List.nil: <A: Type> -> List(A)
-  <A>
-  <P> (nil) (cons) nil

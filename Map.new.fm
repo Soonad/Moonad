@@ -1,4 +1,0 @@
-Map.new: <A: Type> -> Map(A)
-  <>
-  <> (new) ()
-  new

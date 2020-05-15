@@ -1,7 +1,7 @@
 // Boolean negation, fusible.
-Bool.notf: Bool -> Bool
-  (a)
+Bool.notf(a: Bool): Bool
   <P> (t) (f)
-  a<(self) P(Bool.notf(self))>
+  case a
+  : (a) P(Bool.notf(a));
   | f;
   | t;

@@ -1,5 +1,2 @@
-Pair: Type -> Type -> Type
-  (A) (B)
-  pair<P: Pair(A)(B) -> Type> ->
-  (new: (a: A) -> (b: B) -> P(Pair.new<A><B>(a)(b))) ->
-  P(pair)
+T Pair <A: Type> <B: Type>
+| new(a: A, b: B);

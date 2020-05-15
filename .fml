@@ -63,13 +63,13 @@ A.floats: F64
   let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010"); let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010"); F64.div(f3)(f2)
 
 A.get_syntax: Nat
-  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x1) Nat>((x) (y) x)
+  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(self) Nat>((x) (y) x)
 
 A.inference0: Word(Nat.4)
   Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
 
 A.inference1: Bool -> Bool
-  (b) b<() Bool>(Bool.true)(Bool.false)
+  (b) b<(self) Bool>(Bool.true)(Bool.false)
 
 A.nat: Nat
   Nat.mul(Nat.10)(Nat.10)
@@ -77,10 +77,13 @@ A.nat: Nat
 A.nat_literals: IO(Unit)
   let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
 
+A.optimal_reduction: Bool
+  def Nat = <P: Type> -> (P -> P) -> P -> P; let suc = ((n) <P> (s) (z) s(n<P>(s)(z))) :: Nat -> Nat; let zer = <P> (s) (z) z :: Nat; let mul = ((a) (b) <P> (s) a<P>(b<P>(s))) :: Nat -> Nat -> Nat; let n0 = zer; let n1 = suc(n0); let n2 = suc(n1); let p0 = n1; let p1 = mul(p0)(n2); let p2 = mul(p1)(n2); let p3 = mul(p2)(n2); let p4 = mul(p3)(n2); let p5 = mul(p4)(n2); let p6 = mul(p5)(n2); let p7 = mul(p6)(n2); let p8 = mul(p7)(n2); let p9 = mul(p8)(n2); let p10 = mul(p9)(n2); let p11 = mul(p10)(n2); let p12 = mul(p11)(n2); let p13 = mul(p12)(n2); let p14 = mul(p13)(n2); let p15 = mul(p14)(n2); let p16 = mul(p15)(n2); let p17 = mul(p16)(n2); let p18 = mul(p17)(n2); let p19 = mul(p18)(n2); let p20 = mul(p19)(n2); let p21 = mul(p20)(n2); let p22 = mul(p21)(n2); let p23 = mul(p22)(n2); let p24 = mul(p23)(n2); let p25 = mul(p24)(n2); let p26 = mul(p25)(n2); let p27 = mul(p26)(n2); let p28 = mul(p27)(n2); let p29 = mul(p28)(n2); let p30 = mul(p29)(n2); let p31 = mul(p30)(n2); let p32 = mul(p31)(n2); suc(p32)<Bool>(Bool.notf)(Bool.true)
+
 A.solve: Nat
   Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
 
-A.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> B -> C -> A -> B -> A -> C
+A.synthesis0: <A: Type> -> <B: Type> -> <C: Type> -> (B -> C) -> (A -> B) -> A -> C
   <A> <B> <C> (x3) (x4) (x5) x3(x4(x5))
 
 A.tail_calls: Nat
@@ -108,16 +111,16 @@ Bits.concat: Bits -> Bits -> Bits
   (a) (b) a<() Bits>(b)((a.pred) Bits.0(Bits.concat(a.pred)(b)))((a.pred) Bits.1(Bits.concat(a.pred)(b)))
 
 Bits.eql: Bits -> Bits -> Bool
-  (bs1) bs1<() Bits -> Bool>((bs2) bs2<() Bool>(Bool.true)(() Bool.false)(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred))(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)(() Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred)))
+  (bs1) bs1<() Bits -> Bool>((bs2) bs2<(x2) Bool>(Bool.true)(() Bool.false)(() Bool.false))((bs1.pred) (bs2) bs2<(x3) Bool>(Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred))(() Bool.false))((bs1.pred) (bs2) bs2<(x3) Bool>(Bool.false)(() Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred)))
 
 Bits: Type
   bits<P: Bits -> Type> -> (be: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.0(pred))) -> (b1: (pred: Bits) -> P(Bits.1(pred))) -> P(bits)
 
 Bits.from_string: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
+  (str) str<(self) Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<(self) (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
 
 Bits.inc: Bits -> Bits
-  (bits) bits<() Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
+  (bits) bits<(x1) Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
 
 Bits.nil: Bits
   <P> (be) (b0) (b1) be
@@ -126,49 +129,49 @@ Bits.parse_hex: String -> Bits
   (str) Bits.parse_hex.go(str)(Bits.nil)
 
 Bits.parse_hex.go: String -> Bits -> Bits
-  (str) (res) str<() Bits>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Bits>(res)((value) let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil)))); let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000); Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))))
+  (str) (res) str<(self) Bits>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Bits>(res)((value) let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil)))); let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000); Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))))
 
 Bits.reverse: Bits -> Bits
   (as) Bits.reverse.go(as)(Bits.nil)
 
 Bits.reverse.go: Bits -> Bits -> Bits
-  (as) (res) as<() Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
+  (as) (res) as<(x2) Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
 
 Bool.and: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.false))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.false))(b<(self) Bool>(Bool.false)(Bool.false))
 
 Bool.elim: (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
   (b) <P> (t) (f) b<P>(t)(f)
 
 Bool.eql: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.true))
-
-Bool.false: Bool
-  <P> (t) (f) f
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.false))(b<(self) Bool>(Bool.false)(Bool.true))
 
 Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
-  def P = ((b) b<() Type>(Empty)(Unit)) :: Bool -> Type; (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
+  def P = ((b) b<(self) Type>(Empty)(Unit)) :: Bool -> Type; (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
 
 Bool: Type
-  bool<P: Bool -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(bool)
+  self<P: (self: Bool) -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(self)
+
+Bool.true: Bool
+  <P> (true) (false) true
+
+Bool.false: Bool
+  <P> (true) (false) false
 
 Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A
-  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<() A>(cf)(ct)
+  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<(self) A>(cf)(ct)
 
 Bool.not: Bool -> Bool
-  (a) a<() Bool>(Bool.false)(Bool.true)
+  (a) a<(self) Bool>(Bool.false)(Bool.true)
 
-Bool.notf: Bool -> Bool
-  (a) <P> (t) (f) a<(self) P(Bool.notf(self))>(f)(t)
+Bool.notf: (a: Bool) -> Bool
+  (a) <P> (t) (f) a<(a) P(Bool.notf(a))>(f)(t)
 
 Bool.or: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.true))(b<() Bool>(Bool.true)(Bool.false))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.true))(b<(self) Bool>(Bool.true)(Bool.false))
 
 Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
   (a) a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>)(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>)
-
-Bool.true: Bool
-  <P> (t) (f) t
 
 Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
   (e) Equal.rewrite<Bool><Bool.true><Bool.false><(b) b<() Type>(Unit)(Empty)>(e)(Unit.new)
@@ -177,7 +180,7 @@ Char: Type
   U16
 
 Char.hex_value: Char -> Maybe(Nat)
-  (chr) Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9'))<() Maybe(Nat)>(Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0'))))(Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10)))(Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10)))(Maybe.none<Nat>)))
+  (chr) Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9'))<(self) Maybe(Nat)>(Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0'))))(Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f'))<(self) Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10)))(Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F'))<(self) Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10)))(Maybe.none<Nat>)))
 
 Char.new: Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Char
   (b0) (b1) (b2) (b3) (b4) (b5) (b6) (b7) (b8) (b9) (bA) (bB) (bC) (bD) (bE) (bF) let kF = b0<(x16) Word(Nat.zero) -> Word(Nat.succ(Nat.zero))>(Word.0<Nat.zero>)(Word.1<Nat.zero>); let kE = b1<(x17) Word(Nat.succ(Nat.zero)) -> Word(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.zero)>)(Word.1<Nat.succ(Nat.zero)>); let kD = b2<(x18) Word(Nat.succ(Nat.succ(Nat.zero))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>)(Word.1<Nat.succ(Nat.succ(Nat.zero))>); let kC = b3<(x19) Word(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>); let kB = b4<(x20) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>); let kA = b5<(x21) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>); let k9 = b6<(x22) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>); let k8 = b7<(x23) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>); let k7 = b8<(x24) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>); let k6 = b9<(x25) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>); let k5 = bA<(x26) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>); let k4 = bB<(x27) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>); let k3 = bC<(x28) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>); let k2 = bD<(x29) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>); let k1 = bE<(x30) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>); let k0 = bF<(x31) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>); let k_ = Word.nil; U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
@@ -190,7 +193,7 @@ Char.parse: (str: String) -> Char.parse.type(str)
   (str) str<(str) Char.parse.type(str)>(Unit.new)((str.head) (str.tail) str.head)
 
 Char.parse.type: String -> Type
-  (str) str<() Type>(Unit)((str.head) (str.tail) Char)
+  (str) str<(self) Type>(Unit)((str.head) (str.tail) Char)
 
 Char.quote: Char
   '"'
@@ -198,17 +201,17 @@ Char.quote: Char
 Char.tab: Char
   '	'
 
-Cmp.eql: Cmp
-  <P> (ltn) (eql) (gtn) eql
-
 Cmp: Type
-  cmp<P: Cmp -> Type> -> P(Cmp.ltn) -> P(Cmp.eql) -> P(Cmp.gtn) -> P(cmp)
-
-Cmp.gtn: Cmp
-  <P> (ltn) (eql) (gtn) gtn
+  self<P: (self: Cmp) -> Type> -> (ltn: P(Cmp.ltn)) -> (eql: P(Cmp.eql)) -> (gtn: P(Cmp.gtn)) -> P(self)
 
 Cmp.ltn: Cmp
   <P> (ltn) (eql) (gtn) ltn
+
+Cmp.eql: Cmp
+  <P> (ltn) (eql) (gtn) eql
+
+Cmp.gtn: Cmp
+  <P> (ltn) (eql) (gtn) gtn
 
 Comp.app: Comp -> Comp -> Comp
   (func) (argm) <> () () (app) () () () app(func)(argm)
@@ -226,7 +229,7 @@ Comp.let: String -> Comp -> Comp -> Comp
   (name) (expr) (body) <> () () () (Let) () () Let(name)(expr)(body)
 
 Comp.stringify: Comp -> Stringifier
-  (comp) let lit = String.to_stringifier; let rec = Comp.stringify; comp<() Stringifier>((term.name) lit(term.name))((term.name) (term.body) let lpar = lit("(("); let name = lit(term.name); let rpar = lit(") "); let body = rec(term.body); let lend = lit(")"); (x) lpar(name(rpar(body(lend(x))))))((term.func) (term.argm) let func = rec(term.func); let lpar = lit("("); let argm = rec(term.argm); let rpar = lit(")"); (x) func(lpar(argm(rpar(x)))))((term.name) (term.expr) (term.body) let llet = lit("let "); let name = lit(term.name); let leql = lit(" = "); let expr = rec(term.expr); let spac = lit("; "); let body = rec(term.body); (x) llet(name(leql(expr(spac(body(x)))))))(let lval = lit("true"); (x) lval(x))(let lval = lit("false"); (x) lval(x))
+  (comp) let lit = String.to_stringifier; let rec = Comp.stringify; comp<(x3) Stringifier>((term.name) lit(term.name))((term.name) (term.body) let lpar = lit("(("); let name = lit(term.name); let rpar = lit(") "); let body = rec(term.body); let lend = lit(")"); (x) lpar(name(rpar(body(lend(x))))))((term.func) (term.argm) let func = rec(term.func); let lpar = lit("("); let argm = rec(term.argm); let rpar = lit(")"); (x) func(lpar(argm(rpar(x)))))((term.name) (term.expr) (term.body) let llet = lit("let "); let name = lit(term.name); let leql = lit(" = "); let expr = rec(term.expr); let spac = lit("; "); let body = rec(term.body); (x) llet(name(leql(expr(spac(body(x)))))))(let lval = lit("true"); (x) lval(x))(let lval = lit("false"); (x) lval(x))
 
 Comp.tru: Comp
   <> () () () () (tru) () tru
@@ -283,7 +286,7 @@ Core.Defs.set: String -> Core.Def -> Core.Defs -> Core.Defs
   (name) (val) (defs) let key = String.to_bits(name); Map.set<Core.Def>(key)(val)(defs)
 
 Core.Defs.term: Core.Defs -> String -> Core
-  (defs) (name) Core.Defs.get_term(defs)(name)<() Core>(Core.ref("<undefined>"))((term) term)
+  (defs) (name) Core.Defs.get_term(defs)(name)<(self) Core>(Core.ref("<undefined>"))((term) term)
 
 Core.Defs.type: Core.Defs -> String -> Core
   (defs) (name) Core.Defs.get_type(defs)(name)<() Core>(Core.ref("<undefined>"))((type) type)
@@ -303,7 +306,7 @@ Core.Read.app: Core.Bind -> Core.Read(Core.Bind)
 Core.Read.arr: Core.Bind -> Core.Read(Core.Bind)
   (bind) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))((skip) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((body) Core.Read.done<Core.Bind>((ctx) Core.all(Bool.false)(String.nil)(String.nil)(bind(ctx))((s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx)))))))
 
-Core.Read.bind: <A: Type> -> <B: Type> -> Core.Read(A) -> A -> Core.Read(B) -> Core.Read(B)
+Core.Read.bind: <A: Type> -> <B: Type> -> Core.Read(A) -> (A -> Core.Read(B)) -> Core.Read(B)
   <A> <B> (ra) (rb) (code) ra(code)<() Core.Read.Reply(B)>(Core.Read.fail<B>)((got) got<() Core.Read.Reply(B)>(rb))
 
 Core.Read.def: Core.Read(Pair(String)(Core.Def))
@@ -363,7 +366,7 @@ Core.Read.par: Core.Read(Core.Bind)
 Core.Read.pip: Core.Bind -> Core.Read(Core.Bind)
   (func) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("|"))((eras) Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm)((argm) Core.Read.seek<Unit><Core.Bind>(Core.Read.txt(";"))((skip) Core.Read.done<Core.Bind>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))
 
-Core.Read.seek: <A: Type> -> <B: Type> -> Core.Read(A) -> A -> Core.Read(B) -> Core.Read(B)
+Core.Read.seek: <A: Type> -> <B: Type> -> Core.Read(A) -> (A -> Core.Read(B)) -> Core.Read(B)
   <A> <B> (ra) (rb) (code) Core.Read.bind<A><B>(ra)(rb)(Core.Read.next(code))
 
 Core.Read.trm.base: Core.Read(Core.Bind)
@@ -390,7 +393,7 @@ Core.Read.wrd: Core.Read(String)
 Core.all.Tuple: Type
   <P: Type> -> (all: (eras: Bool) -> (self: String) -> (name: String) -> (bind: Core) -> (body: Core -> Core -> Core) -> P) -> P
 
-Core.all: Bool -> String -> String -> Core -> Core -> Core -> Core -> Core
+Core.all: Bool -> String -> String -> Core -> (Core -> Core -> Core) -> Core
   (eras) (self) (name) (bind) (body) <> () () () (all) () () () () all(eras)(self)(name)(bind)(body)
 
 Core.ann: Bool -> Core -> Core -> Core
@@ -417,10 +420,10 @@ Core.is_all: Core -> Bool
 Core.is_lam: Core -> Bool
   (term) term<() Bool>((name) (indx) (flip) Bool.false)((name) Bool.false)(Bool.false)((eras) (self) (name) (bind) (body) Bool.false)((eras) (name) (body) Bool.true)((eras) (func) (argm) Bool.false)((name) (expr) (body) Bool.false)((done) (expr) (type) Bool.false)
 
-Core.lam: Bool -> String -> Core -> Core -> Core
+Core.lam: Bool -> String -> (Core -> Core) -> Core
   (eras) (name) (body) <> () () () () (lam) () () () lam(eras)(name)(body)
 
-Core.let: String -> Core -> Core -> Core -> Core
+Core.let: String -> Core -> (Core -> Core) -> Core
   (name) (expr) (body) <> () () () () () () (Let) () Let(name)(expr)(body)
 
 Core.normalize: Core -> Core.Defs -> Core
@@ -469,12 +472,12 @@ Core.var: String -> Nat -> Bool -> Core
   (name) (indx) (flip) <> (var) () () () () () () () var(name)(indx)(flip)
 
 Data.Flds: Type
-  self<P: Data.Flds -> Type> -> (nil: P(Data.Flds.nil)) -> (ext: (name: String) -> (type: Data) -> (flds: Data.Flds) -> P(Data.Flds.ext(name)(type)(flds))) -> P(self)
+  self<P: Data.Flds -> Type> -> (nil: P(Data.Flds.nil)) -> (ext: (name: String) -> (type: Type) -> (flds: Data.Flds) -> P(Data.Flds.ext(name)(type)(flds))) -> P(self)
 
 Data.Flds.nil: Data.Flds
   <P> (nil) (ext) nil
 
-Data.Flds.ext: String -> Data -> Data.Flds -> Data.Flds
+Data.Flds.ext: String -> Type -> Data.Flds -> Data.Flds
   (name) (type) (flds) <P> (nil) (ext) ext(name)(type)(flds)
 
 Data.Ctrs: Type
@@ -501,23 +504,23 @@ Data.Ctrs.type: Type -> Data.Ctrs -> Type
 Data.type: Data -> Type
   (data) data<() Type>((data.name) (data.ctrs) self<P: Type> -> Data.Ctrs.type(P)(data.ctrs))
 
-Data.Ctrs.ctr_type.header: (P: Type) -> Data.Ctrs -> List(P) -> Type
-  (P) (ctrs) (vars) ctrs<() Type>(vars<() Type>(Unit)(() () P))((ctrs.name) (ctrs.flds) (ctrs.ctrs) (x: P) -> Data.Ctrs.ctr_type.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+Data.Ctrs.ctr.header.type: (P: Type) -> Data.Ctrs -> List(P) -> Type
+  (P) (ctrs) (vars) ctrs<() Type>(vars<() Type>(Unit)(() () P))((ctrs.name) (ctrs.flds) (ctrs.ctrs) (x: P) -> Data.Ctrs.ctr.header.type(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
 
-Data.Ctrs.ctr_type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
-  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr_type.header(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr_type(ctr.ctrs)(ctr0)(nth.pred)))
+Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr.header.type(P)(ctrs)(vars)
+  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr.header.type(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
 
-Data.ctr_type: Data -> Nat -> Type
-  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr_type(data.ctrs)(data.ctrs)(nth))
+Data.Ctrs.ctr.type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
+  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr.header.type(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr.type(ctr.ctrs)(ctr0)(nth.pred)))
 
-Data.Ctrs.ctr.header: (P: Type) -> (ctrs: Data.Ctrs) -> (vars: List(P)) -> Data.Ctrs.ctr_type.header(P)(ctrs)(vars)
-  (P) (ctrs) (vars) ctrs<(ctrs) Data.Ctrs.ctr_type.header(P)(ctrs)(vars)>(vars<(vars) vars<() Type>(Unit)(() () P)>(Unit.new)((h) (t) h))((ctrs.head) (ctrs.flds) (ctrs.ctrs) (x) Data.Ctrs.ctr.header(P)(ctrs.ctrs)(List.cons<P>(x)(vars)))
+Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)
+  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
 
-Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)
-  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr_type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
+Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr.type(data)(nth)
+  (data) (nth) data<(data) Data.ctr.type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
 
-Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr_type(data)(nth)
-  (data) (nth) data<(data) Data.ctr_type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
+Data.ctr.type: Data -> Nat -> Type
+  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr.type(data.ctrs)(data.ctrs)(nth))
 
 Bit.Data: Data
   Data.new("Bit")(Data.Ctrs.ext("b0")(Data.Flds.nil)(Data.Ctrs.ext("b1")(Data.Flds.nil)(Data.Ctrs.nil)))
@@ -525,17 +528,23 @@ Bit.Data: Data
 Bit.Type: Type
   Data.type(Bit.Data)
 
-Bit.Ctr.0: Data.ctr_type(Bit.Data)(Nat.0)
+Bit.Ctr.0: Data.ctr.type(Bit.Data)(Nat.0)
   Data.ctr(Bit.Data)(Nat.0)
+
+Nat.Data: Data
+  Data.new("Nat")(Data.Ctrs.ext("z")(Data.Flds.nil)(Data.Ctrs.ext("s")(Data.Flds.ext("pred")(Data.type(Nat.Data))(Data.Flds.nil))(Data.Ctrs.nil)))
+
+Nat.Type: Type
+  Data.type(Nat.Data)
 
 Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
   <A> (s) (x) x(Unit.new)
 
-Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> B -> Either(A)(C) -> Either(A)(C)
-  <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
+Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> (B -> Either(A)(C)) -> Either(A)(C)
+  <A> <B> <C> (e) (f) e<(self) Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
 
 Either: (A: Type) -> (B: Type) -> Type
-  (A) (B) either<P: Either(A)(B) -> Type> -> (left: (x: A) -> P(Either.left<A><B>(x))) -> (right: (x: B) -> P(Either.right<A><B>(x))) -> P(either)
+  (A) (B) self<P: (self: Either(A)(B)) -> Type> -> (left: (x: A) -> P(Either.left<A><B>(x))) -> (right: (x: B) -> P(Either.right<A><B>(x))) -> P(self)
 
 Either.left: <A: Type> -> <B: Type> -> (x: A) -> Either(A)(B)
   <A> <B> (x) <P> (left) (right) left(x)
@@ -547,7 +556,7 @@ Empty.absurd: (x: Empty) -> (P: Type) -> P
   (x) (P) x<() P>
 
 Empty: Type
-  empty<P: Empty -> Type> -> P(empty)
+  self<P: (self: Empty) -> Type> -> P(self)
 
 Equal.apply: <A: Type> -> <B: A -> Type> -> (a: A) -> (b: A) -> (f: (x: A) -> B(x)) -> (e: Equal(A)(a)(b)) -> Equal(B(a))(f(a))(Equal.rewrite<A><b><a><B>(Equal.mirror<A><a><b>(e))(f(b)))
   <A> <B> (a) (b) (f) (e) e<(e.b) (e) Equal(B(a))(f(a))(Equal.rewrite<A><e.b><a><B>(Equal.mirror<A><a><e.b>(e))(f(e.b)))>(Equal.to<B(a)><f(a)>)
@@ -558,8 +567,11 @@ Equal.apply_ind: <A: Type> -> <B: Type> -> (a: A) -> (b: A) -> (f: (x: A) -> B) 
 Equal.chain: <A: Type> -> <a: A> -> <b: A> -> <c: A> -> (d: Equal(A)(a)(b)) -> (e: Equal(A)(b)(c)) -> Equal(A)(a)(c)
   <A> <a> <b> <c> (d) (e) e<(e.b) (c) Equal(A)(a)(e.b)>(d)
 
-Equal: (A: Type) -> A -> A -> Type
-  (A) (a) (b) equal<P: (b: A) -> Equal(A)(a)(b) -> Type> -> (to: P(a)(Equal.to<A><a>)) -> P(b)(equal)
+Equal: (A: Type) -> (a: A) -> (b: A) -> Type
+  (A) (a) (b) self<P: (b: A) -> (self: Equal(A)(a)(b)) -> Type> -> (to: P(a)(Equal.to<A><a>)) -> P(b)(self)
+
+Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
+  <A> <a> <P> (to) to
 
 Equal.mirror: <A: Type> -> <a: A> -> <b: A> -> (e: Equal(A)(a)(b)) -> Equal(A)(b)(a)
   <A> <a> <b> (e) e<(b) () Equal(A)(b)(a)>(Equal.to<A><a>)
@@ -567,11 +579,8 @@ Equal.mirror: <A: Type> -> <a: A> -> <b: A> -> (e: Equal(A)(a)(b)) -> Equal(A)(b
 Equal.rewrite: <A: Type> -> <a: A> -> <b: A> -> <P: A -> Type> -> (e: Equal(A)(a)(b)) -> (x: P(a)) -> P(b)
   <A> <a> <b> <P> (e) (x) e<(b) (a) P(b)>(x)
 
-Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
-  <A> <a> <P> (to) to
-
 Exports.TA: Exports
-  Exports.add<<A: Type> -> List(A)>(List.nil)(Exports.add<<A: Type> -> (head: A) -> (tail: List(A)) -> List(A)>(List.cons)(Exports.add<F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments)(Exports.add<F64.V3 -> F64.V3 -> F64.V3 -> F64.V3>(F64.V3.look_at)(Exports.add<TA.Game.PlayerId -> TA.Game.Game -> F64.V3>(TA.Game.get_position_by_pid)(Exports.add<TA.Thing -> TA.Thing -> TA.Game.Game -> TA.Game.Game>(TA.Game.map_stage)(Exports.add<TA.Game.PlayerId -> TA.Game.Input -> TA.Game.Command>(TA.Game.Command.new)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.sdir)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key0)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key1)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key2)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key3)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key4)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key5)(Exports.add<TA.Game.Command -> TA.Game.Game -> TA.Game.Game>(TA.exec_command)(Exports.add<TA.Game.TxFunction -> TA.Game.PlayerId -> TA.Game.ModelId -> TA.Game.ActionId -> TA.Game.SideId -> Map(F64) -> String -> List(TA.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TA.Game.Buff) -> List(TA.Thing) -> List(TA.Game.Hit) -> Bool -> Bool -> TA.Thing>(TA.Thing.new)(Exports.add<(thi: TA.Thing) -> (new_fun: TA.Game.TxFunction) -> TA.Thing>(TA.Thing.set_fun)(Exports.add<(thi: TA.Thing) -> (new_sid: TA.Game.SideId) -> TA.Thing>(TA.Thing.set_sid)(Exports.add<(thi: TA.Thing) -> (new_pid: TA.Game.PlayerId) -> TA.Thing>(TA.Thing.set_pid)(Exports.add<(thi: TA.Thing) -> (new_pos: F64.V3) -> TA.Thing>(TA.Thing.set_pos)(Exports.add<(thi: TA.Thing) -> (new_nam: String) -> TA.Thing>(TA.Thing.set_nam)(Exports.add<List(TA.Thing) -> TA.Game.Game>(TA.Game.Game.new)(Exports.add<TA.Game.Game -> TA.Game.Game>(TA.exec_turn)(Exports.new)))))))))))))))))))))))
+  Exports.add<<A: Type> -> List(A)>(List.nil)(Exports.add<<A: Type> -> (head: A) -> (tail: List(A)) -> List(A)>(List.cons)(Exports.add<F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)>(F64.V3.polygon_to_segments)(Exports.add<F64.V3 -> F64.V3 -> F64.V3 -> F64.V3>(F64.V3.look_at)(Exports.add<TA.Game.PlayerId -> TA.Game.Game -> F64.V3>(TA.Game.get_position_by_pid)(Exports.add<(TA.Thing -> TA.Thing) -> TA.Game.Game -> TA.Game.Game>(TA.Game.map_stage)(Exports.add<TA.Game.PlayerId -> TA.Game.Input -> TA.Game.Command>(TA.Game.Command.new)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.sdir)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key0)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key1)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key2)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key3)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key4)(Exports.add<F64.V3 -> TA.Game.Input>(TA.Game.Input.key5)(Exports.add<TA.Game.Command -> TA.Game.Game -> TA.Game.Game>(TA.exec_command)(Exports.add<TA.Game.TxFunction -> TA.Game.PlayerId -> TA.Game.ModelId -> TA.Game.ActionId -> TA.Game.SideId -> Map(F64) -> String -> List(TA.Game.Light) -> F64 -> F64.V3 -> F64 -> F64 -> F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> F64 -> F64 -> F64 -> F64.V3 -> List(TA.Game.Buff) -> List(TA.Thing) -> List(TA.Game.Hit) -> Bool -> Bool -> TA.Thing>(TA.Thing.new)(Exports.add<(thi: TA.Thing) -> (new_fun: TA.Game.TxFunction) -> TA.Thing>(TA.Thing.set_fun)(Exports.add<(thi: TA.Thing) -> (new_sid: TA.Game.SideId) -> TA.Thing>(TA.Thing.set_sid)(Exports.add<(thi: TA.Thing) -> (new_pid: TA.Game.PlayerId) -> TA.Thing>(TA.Thing.set_pid)(Exports.add<(thi: TA.Thing) -> (new_pos: F64.V3) -> TA.Thing>(TA.Thing.set_pos)(Exports.add<(thi: TA.Thing) -> (new_nam: String) -> TA.Thing>(TA.Thing.set_nam)(Exports.add<List(TA.Thing) -> TA.Game.Game>(TA.Game.Game.new)(Exports.add<TA.Game.Game -> TA.Game.Game>(TA.exec_turn)(Exports.add<TA.Game.PlayerId -> TA.Game.Game -> F64.V3>(TA.Game.get_position_by_pid)(Exports.add<(self: TA.Thing) -> TA.Thing>(TA.Thing.bleskape_fun)(Exports.add<TA.Thing -> TA.Thing>(TA.Thing.dilma_fun)(Exports.add<TA.Thing -> TA.Thing>(TA.Thing.dilma.stocking_wind_fun)(Exports.add<TA.Thing -> TA.Thing>(TA.Thing.dilma.confusion_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime.blessing_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime.gods_chamber_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime.holy_flame_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime.leptospirose_puddle_pot_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime.leptospirose_puddle_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.dorime_fun)(Exports.add<(thi: TA.Thing) -> TA.Game.TxFunction>(TA.Thing.get_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.poste_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.puddledmg_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.puddleheal_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.punchingbag_fun)(Exports.add<(thi: TA.Thing) -> (new_fun: TA.Game.TxFunction) -> TA.Thing>(TA.Thing.set_fun)(Exports.add<TA.Game.TxFunction>(TA.Thing.wall_fun)(Exports.new)))))))))))))))))))))))))))))))))))))))))
 
 Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
   <A> (x) (xs) <P> (new) (add) add<A>(x)(xs<P>(new)(add))
@@ -678,16 +687,16 @@ F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
 F64.V3.ltn: F64.V3 -> F64.V3 -> Bool
   (a) (b) let len_a = F64.V3.len(a); let len_b = F64.V3.len(b); Bool.if<Bool>(F64.ltn(len_a)(len_b))(Bool.true)(Bool.false)
 
-F64.V3.map: F64 -> F64 -> F64.V3 -> F64.V3
+F64.V3.map: (F64 -> F64) -> F64.V3 -> F64.V3
   (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z)))
 
-F64.V3.map_x: F64 -> F64 -> F64.V3 -> F64.V3
+F64.V3.map_x: (F64 -> F64) -> F64.V3 -> F64.V3
   (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(fn(v.x))(v.y)(v.z))
 
-F64.V3.map_y: F64 -> F64 -> F64.V3 -> F64.V3
+F64.V3.map_y: (F64 -> F64) -> F64.V3 -> F64.V3
   (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(v.x)(fn(v.y))(v.z))
 
-F64.V3.map_z: F64 -> F64 -> F64.V3 -> F64.V3
+F64.V3.map_z: (F64 -> F64) -> F64.V3 -> F64.V3
   (fn) (v) v<() F64.V3>((v.x) (v.y) (v.z) F64.V3.new(v.x)(v.y)(fn(v.z)))
 
 F64.V3.mul: F64.V3 -> F64.V3 -> F64.V3
@@ -705,7 +714,7 @@ F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
 F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
   (p) (s) p<() F64>((p.x) (p.y) (p.z) s<() F64>((a) (b) a<() F64>((a.x) (a.y) (a.z) b<() F64>((b.x) (b.y) (b.z) let ab_x_diff_sqrd = F64.pow(F64.sub(a.x)(b.x))(F64.2); let ab_y_diff_sqrd = F64.pow(F64.sub(a.y)(b.y))(F64.2); let pa_x_diff = F64.sub(p.x)(a.x); let pa_y_diff = F64.sub(p.y)(a.y); let ba_x_diff = F64.sub(b.x)(a.x); let ba_y_diff = F64.sub(b.y)(a.y); let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd); let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff)); let t = F64.div(t)(l); let t = F64.max(F64.0)(F64.min(F64.1)(t)); let d = F64.0; let t_times_ba_x_diff = F64.mul(t)(ba_x_diff); let t_times_ba_y_diff = F64.mul(t)(ba_y_diff); let k = F64.pow(F64.sub(p.x)(F64.add(a.x)(t_times_ba_x_diff)))(F64.2); let d = F64.add(d)(k); let k = F64.pow(F64.sub(p.y)(F64.add(a.y)(t_times_ba_y_diff)))(F64.2); let d = F64.add(d)(k); d))))
 
-F64.V3.polygon_to_segments.cons: F64.V3 -> F64.V3 -> F64.V3 -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment) -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)
+F64.V3.polygon_to_segments.cons: F64.V3 -> F64.V3 -> F64.V3 -> (Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)) -> Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)
   (pos) (dir) (pt_b) (segs) (pt_a) (pt_0) pt_a<() List(F64.Segment)>(segs(Maybe.some<F64.V3>(pt_b))(Maybe.some<F64.V3>(pt_b)))((pt_a.value) let pt_0 = pt_0<() Maybe(F64.V3)>(Maybe.some<F64.V3>(pt_b))((pt_0.value) pt_0); let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value); let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_b); let sg = F64.Segment.new(p0)(p1); List.cons<F64.Segment>(sg)(segs(Maybe.some<F64.V3>(pt_b))(pt_0)))
 
 F64.V3.polygon_to_segments: F64.V3 -> F64.V3 -> List(F64.V3) -> List(F64.Segment)
@@ -760,7 +769,7 @@ F64.div: F64 -> F64 -> F64
   F64.div
 
 F64.eql: F64 -> F64 -> Bool
-  (x) (y) x<(tag) (x3) Bool>((x.word) y<() (x4) Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
+  (x) (y) x<(tag) (x3) Bool>((x.word) y<(tag) (x4) Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
 
 F64.exp: F64 -> F64 -> F64
   F64.exp
@@ -867,32 +876,32 @@ IO.end: <A: Type> -> A -> IO(A)
 IO: Type -> Type
   (A) io<P: IO(A) -> Type> -> (end: (val: A) -> P(IO.end<A>(val))) -> (log: (str: String) -> (nxt: Unit -> IO(A)) -> P(IO.log<A>(str)(nxt))) -> (inp: (nxt: String -> IO(A)) -> P(IO.inp<A>(nxt))) -> P(io)
 
-IO.inp: <A: Type> -> String -> IO(A) -> IO(A)
+IO.inp: <A: Type> -> (String -> IO(A)) -> IO(A)
   <A> (nxt) <P> () () (inp) inp(nxt)
 
-IO.log: <A: Type> -> String -> Unit -> IO(A) -> IO(A)
+IO.log: <A: Type> -> String -> (Unit -> IO(A)) -> IO(A)
   <A> (str) (nxt) <P> () (log) () log(str)(nxt)
 
-JSON.array: List(JSON) -> JSON
-  (x) <P> () () () () (array) () array(x)
-
-JSON.bool: Bool -> JSON
-  (x) <P> () (bool) () () () () bool(x)
-
 JSON: Type
-  json<P: JSON -> Type> -> (null: P(JSON.null)) -> (bool: (x: Bool) -> P(JSON.bool(x))) -> (number: (x: F64) -> P(JSON.number(x))) -> (string: (x: String) -> P(JSON.string(x))) -> (array: (x: List(JSON)) -> P(JSON.array(x))) -> (object: (x: List(Pair(String)(JSON))) -> P(JSON.object(x))) -> P(json)
+  self<P: (self: JSON) -> Type> -> (null: P(JSON.null)) -> (bool: (x: Bool) -> P(JSON.bool(x))) -> (number: (x: F64) -> P(JSON.number(x))) -> (string: (x: String) -> P(JSON.string(x))) -> (array: (x: List(JSON)) -> P(JSON.array(x))) -> (object: (x: List(Pair(String)(JSON))) -> P(JSON.object(x))) -> P(self)
 
 JSON.null: JSON
-  <P> (null) () () () () () null
+  <P> (null) (bool) (number) (string) (array) (object) null
 
-JSON.number: F64 -> JSON
-  (x) <P> () () (number) () () () number(x)
+JSON.bool: (x: Bool) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) bool(x)
 
-JSON.object: List(Pair(String)(JSON)) -> JSON
-  (x) <P> () () () () () (object) object(x)
+JSON.number: (x: F64) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) number(x)
 
-JSON.string: String -> JSON
-  (x) <P> () () () (string) () () string(x)
+JSON.string: (x: String) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) string(x)
+
+JSON.array: (x: List(JSON)) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) array(x)
+
+JSON.object: (x: List(Pair(String)(JSON))) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) object(x)
 
 Lang.Cont: Type
   Core.Ctx -> Core
@@ -900,13 +909,13 @@ Lang.Cont: Type
 Lang.all: Parser(Core.Ctx -> Core)
   def Bnd = Core.Ctx -> Core; def Ret = Pair(Text)(Bnd); Parser.bind<Text><Bnd>(Lang.nam(Bool.true))((self) Parser.bind<Pair(Bool)(Ret)><Bnd>(Lang.enclose<Ret>(Parser.bind<Text><Ret>(Lang.nam(Bool.true))((n) Parser.then<Unit><Ret>(Lang.space)(Parser.then<Text><Ret>(Lang.symbol(":"))(Parser.bind<Bnd><Ret>(Lang.trm)((t) Parser.pure<Ret>(Pair.new<Text><Bnd>(n)(t))))))))((x) x<() Parser(Bnd)>((eras) (p) p<() Parser(Bnd)>((name) (bind) Parser.then<Unit><Bnd>(Lang.space)(Parser.then<Text><Bnd>(Lang.symbol("->"))(Parser.bind<Bnd><Bnd>(Lang.trm)((body) Parser.pure<Bnd>((ctx) let tbind = bind(ctx); let tbody = ((s) (x) body(Core.Ctx.ext(name)(x)(Core.Ctx.ext(self)(s)(ctx)))) :: Core -> Core -> Core; Core.all(eras)(self)(name)(tbind)(tbody)))))))))
 
-Lang.ann: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+Lang.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   def C = Core.Ctx -> Core; (expr) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("::"))(Parser.bind<C><C>(Lang.trm)((type) Parser.pure<C>((ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx))))))
 
-Lang.app: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+Lang.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   def C = Core.Ctx -> Core; (func) Parser.bind<Pair(Bool)(C)><C>(Lang.enclose<C>(Lang.trm))((x) x<() Parser(C)>((eras) (argm) Parser.pure<C>((ctx) Core.app(eras)(func(ctx))(argm(ctx)))))
 
-Lang.arr: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+Lang.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   def C = Core.Ctx -> Core; (bind) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("->"))(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = ((s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx)))) :: Core -> Core -> Core; Core.all(Bool.false)(String.nil)(String.nil)(tbind)(tbody)))))
 
 Lang.block_comment: Parser(Unit)
@@ -945,10 +954,10 @@ Lang.par: Parser(Core.Ctx -> Core)
 Lang.parse: (s: String) -> Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
   (s) Parser.parse<Core>(Lang.core)(s)
 
-Lang.pip: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+Lang.pip: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   def C = Core.Ctx -> Core; (func) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("|"))(Parser.bind<C><C>(Lang.trm)((argm) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Parser.tokens(";"))(Parser.pure<C>((ctx) Core.app(Bool.false)(func(ctx))(argm(ctx))))))))
 
-Lang.pst: Core.Ctx -> Core -> Parser(Core.Ctx -> Core)
+Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
   def C = Core.Ctx -> Core; (base) Parser.bind<Maybe(C)><C>(Parser.optional<C>(Parser.choice<C>([Parser(C); Lang.ann(base), Lang.arr(base), Lang.pip(base), Lang.app(base)])))((maybe_term) maybe_term<() Parser(C)>(Parser.pure<C>(base))((post) Lang.pst(post)))
 
 Lang.space: Parser(Unit)
@@ -972,89 +981,89 @@ Lang.var: Parser(Core.Ctx -> Core)
 Lang.whitespace: Parser(Unit)
   Parser.then<String><Unit>(Parser.take_while1("whitespace")(Lang.is_space))(Parser.pure<Unit>(Unit.new))
 
-List.all: <A: Type> -> A -> Bool -> List(A) -> Bool
-  <A> (cond) (list) list<() Bool>(Bool.true)((head) (tail) cond(head)<() Bool>(List.all<A>(cond)(tail))(Bool.false))
+List.all: <A: Type> -> (A -> Bool) -> List(A) -> Bool
+  <A> (cond) (list) list<(self) Bool>(Bool.true)((head) (tail) cond(head)<(self) Bool>(List.all<A>(cond)(tail))(Bool.false))
 
 List.all_true: List(Bool) -> Bool
   (list) List.all<Bool>((x) x)(list)
 
-List.any: <A: Type> -> A -> Bool -> List(A) -> Bool
-  <A> (cond) (list) list<() Bool>(Bool.false)((head) (tail) cond(head)<() Bool>(Bool.true)(List.any<A>(cond)(tail)))
+List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
+  <A> (cond) (list) list<(self) Bool>(Bool.false)((head) (tail) cond(head)<(self) Bool>(Bool.true)(List.any<A>(cond)(tail)))
 
 List.any_true: List(Bool) -> Bool
   (list) List.any<Bool>((x) x)(list)
 
 List.append: <A: Type> -> List(A) -> A -> List(A)
-  <A> (as) (a) as<() List(A)>(List.single<A>(a))((head) (tail) List.cons<A>(head)(List.append<A>(tail)(a)))
+  <A> (as) (a) as<(self) List(A)>(List.single<A>(a))((head) (tail) List.cons<A>(head)(List.append<A>(tail)(a)))
 
 List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
-  <A> (list) (indx) list<() Maybe(A)>(Maybe.none<A>)((head) (tail) indx<() Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
+  <A> (list) (indx) list<(self) Maybe(A)>(Maybe.none<A>)((head) (tail) indx<(x5) Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
 
-List.bind: <A: Type> -> <B: Type> -> List(A) -> A -> List(B) -> List(B)
+List.bind: <A: Type> -> <B: Type> -> List(A) -> (A -> List(B)) -> List(B)
   <A> <B> (xs) (f) List.flatten<B>(List.map<A><List(B)>(f)(xs))
 
 List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
-  <A> (n) (list) n<() Maybe(List(A))>(Maybe.some<List(A)>([A;]))((pred) list<() Maybe(List(A))>(Maybe.none<List(A)>)((head) (tail) Maybe.bind<List(A)><List(A)>(List.chunk<A>(pred)(tail))((x) Maybe.some<List(A)>(List.cons<A>(head)(x)))))
+  <A> (n) (list) n<(x3) Maybe(List(A))>(Maybe.some<List(A)>([A;]))((pred) list<(self) Maybe(List(A))>(Maybe.none<List(A)>)((head) (tail) Maybe.bind<List(A)><List(A)>(List.chunk<A>(pred)(tail))((x) Maybe.some<List(A)>(List.cons<A>(head)(x)))))
 
 List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (bs) as<() List(A)>(bs)((head) (tail) List.cons<A>(head)(List.concat<A>(tail)(bs)))
-
-List.cons: <A: Type> -> (head: A) -> (tail: List(A)) -> List(A)
-  <A> (head) (tail) <P> (nil) (cons) cons(head)(tail)
+  <A> (as) (bs) as<(self) List(A)>(bs)((head) (tail) List.cons<A>(head)(List.concat<A>(tail)(bs)))
 
 List.drop: <A: Type> -> Nat -> List(A) -> List(A)
-  <A> (n) (list) n<() List(A)>(list)((pred) list<() List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
+  <A> (n) (list) n<(x3) List(A)>(list)((pred) list<(self) List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
 
-List.filter: <A: Type> -> A -> Bool -> List(A) -> List(A)
-  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
+List.filter: <A: Type> -> (A -> Bool) -> List(A) -> List(A)
+  <A> (cond) (list) list<(self) List(A)>([A;])((list.head) (list.tail) cond(list.head)<(self) (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
 
-List.find: <A: Type> -> A -> Bool -> List(A) -> Maybe(A)
-  <A> (cond) (xs) xs<() Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<() Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
+List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
+  <A> (cond) (xs) xs<(self) Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<(self) Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
 
-List.find_last.aux: <A: Type> -> List(A) -> A -> Nat -> Bool -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx) (res) list<() Maybe(Pair(A)(Nat))>(res)((head) (tail) let res = cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(res); List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res))
+List.find_last.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx) (res) list<(self) Maybe(Pair(A)(Nat))>(res)((head) (tail) let res = cond(head)(indx)<(self) Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(res); List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res))
 
-List.find_last: <A: Type> -> List(A) -> A -> Nat -> Bool -> Maybe(Pair(A)(Nat))
+List.find_last: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
   <A> (list) (cond) List.find_last.aux<A>(list)(cond)(Nat.zero)(Maybe.none<Pair(A)(Nat)>)
 
 List.flatten: <A: Type> -> List(List(A)) -> List(A)
-  <A> (as) as<() List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
+  <A> (as) as<(self) List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
 
 List: (A: Type) -> Type
-  (A) list<P: (x: List(A)) -> Type> -> (nil: P([A;])) -> (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) -> P(list)
-
-List.fold: <A: Type> -> <B: Type> -> B -> A -> B -> B -> List(A) -> B
-  <A> <B> (nil) (cons) (list) list<() B>(nil)((x) (xs) cons(x)(List.fold<A><B>(nil)(cons)(xs)))
-
-List.ifind.aux: <A: Type> -> List(A) -> A -> Nat -> Bool -> Nat -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx) list<() Maybe(Pair(A)(Nat))>(Maybe.none<Pair(A)(Nat)>)((head) (tail) cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(List.ifind.aux<A>(tail)(cond)(Nat.succ(indx))))
-
-List.ifind: <A: Type> -> List(A) -> A -> Nat -> Bool -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) List.ifind.aux<A>(list)(cond)(Nat.zero)
-
-List.imap: <A: Type> -> <B: Type> -> Nat -> A -> B -> List(A) -> List(B)
-  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
-
-List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
-  <A> (sep) (xs) xs<() List(A)>([A;])((x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs))))
-
-List.is_empty: <A: Type> -> List(A) -> Bool
-  <A> (list) list<() Bool>(Bool.true)((x) (xs) Bool.false)
-
-List.length: <A: Type> -> List(A) -> Nat
-  <A> (list) list<() Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
-
-List.map: <A: Type> -> <B: Type> -> A -> B -> List(A) -> List(B)
-  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail)))
+  (A) self<P: (self: List(A)) -> Type> -> (nil: P([A;])) -> (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) -> P(self)
 
 List.nil: <A: Type> -> List(A)
   <A> <P> (nil) (cons) nil
 
+List.cons: <A: Type> -> (head: A) -> (tail: List(A)) -> List(A)
+  <A> (head) (tail) <P> (nil) (cons) cons(head)(tail)
+
+List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
+  <A> <B> (nil) (cons) (list) list<(self) B>(nil)((x) (xs) cons(x)(List.fold<A><B>(nil)(cons)(xs)))
+
+List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) (indx) list<(self) Maybe(Pair(A)(Nat))>(Maybe.none<Pair(A)(Nat)>)((head) (tail) cond(head)(indx)<(self) Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(List.ifind.aux<A>(tail)(cond)(Nat.succ(indx))))
+
+List.ifind: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
+  <A> (list) (cond) List.ifind.aux<A>(list)(cond)(Nat.zero)
+
+List.imap: <A: Type> -> <B: Type> -> (Nat -> A -> B) -> List(A) -> List(B)
+  <A> <B> (fn) (list) list<(self) List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
+
+List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
+  <A> (sep) (xs) xs<(self) List(A)>([A;])((x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs))))
+
+List.is_empty: <A: Type> -> List(A) -> Bool
+  <A> (list) list<(self) Bool>(Bool.true)((x) (xs) Bool.false)
+
+List.length: <A: Type> -> List(A) -> Nat
+  <A> (list) list<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
+
+List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
+  <A> <B> (fn) (list) list<(self) List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail)))
+
 List.push: <A: Type> -> A -> List(A) -> List(A)
-  <A> (val) (list) list<() List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
+  <A> (val) (list) list<(self) List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
 
 List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (xs) as<() List(A)>(xs)((head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs)))
+  <A> (as) (xs) as<(self) List(A)>(xs)((head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs)))
 
 List.reverse: <A: Type> -> List(A) -> List(A)
   <A> (as) List.reverse.aux<A>(as)([A;])
@@ -1071,11 +1080,17 @@ List.take: <A: Type> -> Nat -> List(A) -> List(A)
 List.to_concat: <A: Type> -> (xs: List(A)) -> Concat(A)
   <A> (xs) xs<() Concat(A)>((ys) ys)((head) (tail) (ys) List.cons<A>(head)(List.to_concat<A>(tail)(ys)))
 
-List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> A -> B -> C -> List(A) -> List(B) -> List(C)
+List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> (A -> B -> C) -> List(A) -> List(B) -> List(C)
   <A> <B> <C> (fn) (as) (bs) as<() List(C)>([C;])((a.head) (a.tail) bs<() List(C)>([C;])((b.head) (b.tail) let head = fn(a.head)(b.head); let tail = List.zip_with<A><B><C>(fn)(a.tail)(b.tail); List.cons<C>(head)(tail)))
 
 Map: (A: Type) -> Type
-  (A) map<P: Map(A) -> Type> -> (new: P(Map.new<A>)) -> (tie: (val: Maybe(A)) -> (lft: Map(A)) -> (rgt: Map(A)) -> P(Map.tie<A>(val)(lft)(rgt))) -> P(map)
+  (A) self<P: (self: Map(A)) -> Type> -> (new: P(Map.new<A>)) -> (tie: (val: Maybe(A)) -> (lft: Map(A)) -> (rgt: Map(A)) -> P(Map.tie<A>(val)(lft)(rgt))) -> P(self)
+
+Map.new: <A: Type> -> Map(A)
+  <A> <P> (new) (tie) new
+
+Map.tie: <A: Type> -> (val: Maybe(A)) -> (lft: Map(A)) -> (rgt: Map(A)) -> Map(A)
+  <A> (val) (lft) (rgt) <P> (new) (tie) tie(val)(lft)(rgt)
 
 Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
   <A> (bits) (map) bits<() Maybe(A)>(map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) map.val))((bits.pred) map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) Map.get<A>(bits.pred)(map.lft)))((bits.pred) map<() Maybe(A)>(Maybe.none<A>)((map.val) (map.lft) (map.rgt) Map.get<A>(bits.pred)(map.rgt)))
@@ -1086,38 +1101,32 @@ Map.lookup: <A: Type> -> Bits -> A -> Map(A) -> Pair(A)(Map(A))
 Map.mix: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
   <> (val) (lft) (rgt) <> () (mix) mix(val)(lft)(rgt)
 
-Map.new: <A: Type> -> Map(A)
-  <> <> (new) () new
-
-query: <A: Type> -> A -> Pair(A)(A) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
-  <A> (cpy) (bits) (map) let rec = query<A>; bits<() A -> Pair(A)(A) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)) -> A -> Pair(A)(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>((rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let mval = map.val; mval<() Map(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>((map.lft) (map.rgt) let map = Map.tie<A>(Maybe.none<A>)(map.lft)(map.rgt); let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((mval.value) (map.lft) (map.rgt) let p = cpy(mval.value); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt); let val = Maybe.some<A>(p.snd); Pair.new<Map(A)><Maybe(A)>(map)(val)))(map.lft)(map.rgt)))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.lft); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(p.fst)(map.rgt); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.rgt); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(map.lft)(p.fst); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))(rec)(cpy)(map)
+query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
+  <A> (cpy) (bits) (map) let rec = query<A>; bits<() ((A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))) -> (A -> Pair(A)(A)) -> Map(A) -> Pair(Map(A))(Maybe(A))>((rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let mval = map.val; mval<() Map(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>((map.lft) (map.rgt) let map = Map.tie<A>(Maybe.none<A>)(map.lft)(map.rgt); let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((mval.value) (map.lft) (map.rgt) let p = cpy(mval.value); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt); let val = Maybe.some<A>(p.snd); Pair.new<Map(A)><Maybe(A)>(map)(val)))(map.lft)(map.rgt)))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.lft); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(p.fst)(map.rgt); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))((bits.pred) (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>(let map = Map.new<A>; let val = Maybe.none<A>; Pair.new<Map(A)><Maybe(A)>(map)(val))((map.val) (map.lft) (map.rgt) let p = rec(cpy)(bits.pred)(map.rgt); p<() Pair(Map(A))(Maybe(A))>((p.fst) (p.snd) let map = Map.tie<A>(map.val)(map.lft)(p.fst); let val = p.snd; Pair.new<Map(A)><Maybe(A)>(map)(val))))(rec)(cpy)(map)
 
 Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
   <A> (bits) (val) (map) bits<() Map(A)>(map<() Map(A)>(Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>))((map.val) (map.lft) (map.rgt) Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt)))((bits.pred) map<() Map(A)>(Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>))((map.val) (map.lft) (map.rgt) Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt)))((bits.pred) map<() Map(A)>(Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>)))((map.val) (map.lft) (map.rgt) Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt))))
 
-Map.tie: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
-  <> (val) (lft) (rgt) <> () (tie) tie(val)(lft)(rgt)
-
-Maybe.bind: <A: Type> -> <B: Type> -> Maybe(A) -> A -> Maybe(B) -> Maybe(B)
+Maybe.bind: <A: Type> -> <B: Type> -> Maybe(A) -> (A -> Maybe(B)) -> Maybe(B)
   <A> <B> (m) (f) m<() Maybe(B)>(Maybe.none<B>)((m.val) f(m.val))
 
 Maybe.extract: <A: Type> -> Maybe(A) -> A -> A
   <A> (m) (a) m<() A>(a)((m.value) m.value)
 
-Maybe: Type -> Type
-  (A) maybe<P: Maybe(A) -> Type> -> (none: P(Maybe.none<A>)) -> (some: (value: A) -> P(Maybe.some<A>(value))) -> P(maybe)
+Maybe: (A: Type) -> Type
+  (A) self<P: (self: Maybe(A)) -> Type> -> (none: P(Maybe.none<A>)) -> (some: (value: A) -> P(Maybe.some<A>(value))) -> P(self)
+
+Maybe.none: <A: Type> -> Maybe(A)
+  <A> <P> (none) (some) none
+
+Maybe.some: <A: Type> -> (value: A) -> Maybe(A)
+  <A> (value) <P> (none) (some) some(value)
 
 Maybe.join: <A: Type> -> Maybe(Maybe(A)) -> Maybe(A)
   <A> (m) m<() Maybe(A)>(Maybe.none<A>)((m.value) m.value)
 
-Maybe.map: <A: Type> -> <B: Type> -> A -> B -> Maybe(A) -> Maybe(B)
+Maybe.map: <A: Type> -> <B: Type> -> (A -> B) -> Maybe(A) -> Maybe(B)
   <A> <B> (fn) (maybe) maybe<() Maybe(B)>(Maybe.none<B>)((value) Maybe.some<B>(fn(value)))
-
-Maybe.none: <A: Type> -> Maybe(A)
-  <> <> (none) () none
-
-Maybe.some: <A: Type> -> A -> Maybe(A)
-  <> (value) <> () (some) some(value)
 
 Nat.0: Nat
   Nat.zero
@@ -1317,7 +1326,7 @@ Nat.9: Nat
 Nat.add: Nat -> Nat -> Nat
   (n) (m) n<() Nat>(m)((n.pred) Nat.succ(Nat.add(n.pred)(m)))
 
-Nat.apply: <A: Type> -> Nat -> A -> A -> A -> A
+Nat.apply: <A: Type> -> Nat -> (A -> A) -> A -> A
   <A> (n) (f) (x) n<() A>(x)((n.pred) Nat.apply<A>(n.pred)(f)(f(x)))
 
 Nat.cmp: Nat -> Nat -> Cmp
@@ -1398,6 +1407,9 @@ Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat)
 Nat.succ: Nat -> Nat
   (n) <P> (z) (s) s(n)
 
+Nat.succ_isnt_zero: (n: Nat) -> (e: Equal(Nat)(Nat.succ(n))(Nat.zero)) -> Empty
+  (n) (e) def P = ((x) x<(x3) Type>(Empty)((p) Unit)) :: Nat -> Type; Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><P>(e)(Unit.new)
+
 Nat.sum: Nat -> Nat
   (n) Nat.sum.tco(n)(Nat.zero)
 
@@ -1452,14 +1464,14 @@ Not: (P: Type) -> Type
 Or: (A: Type) -> (B: Type) -> Type
   (A) (B) Either(A)(B)
 
-Pair: Type -> Type -> Type
-  (A) (B) pair<P: Pair(A)(B) -> Type> -> (new: (a: A) -> (b: B) -> P(Pair.new<A><B>(a)(b))) -> P(pair)
+Pair: (A: Type) -> (B: Type) -> Type
+  (A) (B) self<P: (self: Pair(A)(B)) -> Type> -> (new: (a: A) -> (b: B) -> P(Pair.new<A><B>(a)(b))) -> P(self)
+
+Pair.new: <A: Type> -> <B: Type> -> (a: A) -> (b: B) -> Pair(A)(B)
+  <A> <B> (a) (b) <P> (new) new(a)(b)
 
 Pair.fst: <A: Type> -> <B: Type> -> Pair(A)(B) -> A
   <A> <B> (pair) pair<() A>((a) (b) a)
-
-Pair.new: <A: Type> -> <B: Type> -> A -> B -> Pair(A)(B)
-  <A> <B> (a) (b) <P> (pair) pair(a)(b)
 
 Pair.snd: <A: Type> -> <B: Type> -> Pair(A)(B) -> B
   <A> <B> (pair) pair<() B>((a) (b) b)
@@ -1503,7 +1515,7 @@ Parsec.Error.make_trivial: <E: Type> -> Nat -> Maybe(Parsec.Error.Item) -> List(
 Parsec.Error.merge: <E: Type> -> Parsec.Error(E) -> Parsec.Error(E) -> Parsec.Error(E)
   <E> (x) (y) let x.index = Parsec.Error.index<E>(x); let y.index = Parsec.Error.index<E>(y); Nat.cmp(x.index)(y.index)<() Parsec.Error(E)>(y)(x<() Parsec.Error(E)>((x.pos) (x.unx) (x.exp) y<() Parsec.Error(E)>((y.pos) (y.unx) (y.exp) Parsec.Error.make_trivial<E>(x.pos)(x.unx<() Maybe(Parsec.Error.Item)>(y.unx)(() x.unx))(List.concat<Parsec.Error.Item>(x.exp)(y.exp)))((y.pos) (y.msg) y))((x.pos) (x.msg) y<() Parsec.Error(E)>((y.pos) (y.unx) (y.exp) x)((y.pos) (y.msg) Parsec.Error.make_fancy<E>(x.pos)(List.concat<Parsec.Error.Fancy(E)>(x.msg)(y.msg)))))(x)
 
-Parsec.Error.show: <E: Type> -> E -> String -> Parsec.Error(E) -> String
+Parsec.Error.show: <E: Type> -> (E -> String) -> Parsec.Error(E) -> String
   <E> (f) (e) e<() String>((position) (unexpect) (expected) "trivial")((position) (messages) "fancy")
 
 Parsec.Reply.eaten_error: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Error(E) -> Parsec.Reply(S)(E)(A)
@@ -1542,7 +1554,7 @@ Parsec.any_char: <S: Type> -> <E: Type> -> Parsec(S)(E)(Char)
 Parsec.ap: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A -> B) -> Parsec(S)(E)(A) -> Parsec(S)(E)(B)
   <S> <E> <A> <B> (pf) (pa) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pf<X>(s1)((s2) (f) pa<X>(s2)((s3) (a) empty_value(s3)(f(a)))(empty_error)((s3) (a) eaten_value(s3)(f(a)))(eaten_error))(empty_error)((s2) (f) pa<X>(s2)((s3) (a) eaten_value(s3)(f(a)))(eaten_error)((s3) (a) eaten_value(s3)(f(a)))(eaten_error))(eaten_error)
 
-Parsec.bind: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> A -> Parsec(S)(E)(B) -> Parsec(S)(E)(B)
+Parsec.bind: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> (A -> Parsec(S)(E)(B)) -> Parsec(S)(E)(B)
   <S> <E> <A> <B> (pa) (pf) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) pa<X>(s1)((s2) (a) pf(a)<X>(s2)((s3) (b) empty_value(s3)(b))(empty_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(empty_error)((s2) (a) pf(a)<X>(s2)((s3) (b) eaten_value(s3)(b))(eaten_error)((s3) (b) eaten_value(s3)(b))(eaten_error))(eaten_error)
 
 Parsec.char: <S: Type> -> <E: Type> -> Char -> Parsec(S)(E)(Char)
@@ -1558,7 +1570,7 @@ Parsec.fail: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A)
   <S> <E> <A> (msg) <X> (s) () (empty_error) () () s<() X>(() (index) () () let e = List.single<Parsec.Error.Fancy(E)>(Parsec.Error.Fancy.fail<E>(msg)); empty_error(s)(Parsec.Error.make_fancy<E>(index)(e)))
 
 Parsec: (S: Type) -> (E: Type) -> (A: Type) -> Type
-  (S) (E) (A) <B: Type> -> Parsec.State(S)(E) -> Parsec.State(S)(E) -> A -> B -> Parsec.State(S)(E) -> Parsec.Error(E) -> B -> Parsec.State(S)(E) -> A -> B -> Parsec.State(S)(E) -> Parsec.Error(E) -> B -> B
+  (S) (E) (A) <B: Type> -> Parsec.State(S)(E) -> (Parsec.State(S)(E) -> A -> B) -> (Parsec.State(S)(E) -> Parsec.Error(E) -> B) -> (Parsec.State(S)(E) -> A -> B) -> (Parsec.State(S)(E) -> Parsec.Error(E) -> B) -> B
 
 Parsec.get_state: <S: Type> -> <E: Type> -> Parsec(S)(E)(Parsec.State(S)(E))
   <S> <E> <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_value(s1)(s1)
@@ -1566,7 +1578,7 @@ Parsec.get_state: <S: Type> -> <E: Type> -> Parsec(S)(E)(Parsec.State(S)(E))
 Parsec.label: <S: Type> -> <E: Type> -> <A: Type> -> String -> Parsec(S)(E)(A) -> Parsec(S)(E)(A)
   <S> <E> <A> (label) (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)(empty_value)((s2) (e) e<() X>((pos) (us) () empty_error(s2)(let es = List.single<Parsec.Error.Item>(Parsec.Error.Item.label(label)); Parsec.Error.make_trivial<E>(pos)(us)(es)))(() () empty_error(s2)(e)))(eaten_value)(eaten_error)
 
-Parsec.make: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A) -> Parsec(S)(E)(A)
+Parsec.make: <S: Type> -> <E: Type> -> <A: Type> -> (Parsec.State(S)(E) -> Parsec.Reply(S)(E)(A)) -> Parsec(S)(E)(A)
   <S> <E> <A> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) f(s1)<() X>((s2) (a) empty_value(s2)(a))(empty_error)((s2) (a) eaten_value(s2)(a))(eaten_error)
 
 Parsec.many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(List(A))
@@ -1575,7 +1587,7 @@ Parsec.many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)
 Parsec.many_till: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(B) -> Parsec(S)(E)(List(A))
   <S> <E> <A> <B> (p) (q) Parsec.plus<S><E><List(A)>(Parsec.then<S><E><B><List(A)>(q)(Parsec.pure<S><E><List(A)>([A;])))(Parsec.bind<S><E><A><List(A)>(p)((x) Parsec.bind<S><E><List(A)><List(A)>(Parsec.many_till<S><E><A><B>(p)(q))((xs) Parsec.pure<S><E><List(A)>(List.cons<A>(x)(xs)))))
 
-Parsec.map: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> A -> B -> Parsec(S)(E)(A) -> Parsec(S)(E)(B)
+Parsec.map: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> (A -> B) -> Parsec(S)(E)(A) -> Parsec(S)(E)(B)
   <S> <E> <A> <B> (f) (p) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) p<X>(s1)((s2) (a) empty_value(s2)(f(a)))(empty_error)((s2) (a) eaten_value(s2)(f(a)))(eaten_error)
 
 Parsec.observing: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(Either(Parsec.Error(E))(A))
@@ -1608,10 +1620,10 @@ Parsec.skip_many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Pars
 Parsec.take: <S: Type> -> <E: Type> -> <A: Type> -> String -> Nat -> Parsec(S)(E)(String)
   <S> <E> <A> (err) (n) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_n(n)(input)<() X>(empty_error(s1)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((p) p<() X>((took) (rest) let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(n))(error)(state); eaten_value(s2)(took))))
 
-Parsec.take_while: <S: Type> -> <E: Type> -> Char -> Bool -> Parsec(S)(E)(String)
+Parsec.take_while: <S: Type> -> <E: Type> -> (Char -> Bool) -> Parsec(S)(E)(String)
   <S> <E> (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(empty_value(s2)(took))(() () eaten_value(s2)(took))))
 
-Parsec.take_while1: <S: Type> -> <E: Type> -> String -> Char -> Bool -> Parsec(S)(E)(String)
+Parsec.take_while1: <S: Type> -> <E: Type> -> String -> (Char -> Bool) -> Parsec(S)(E)(String)
   <S> <E> (err) (f) <X> (s1) (empty_value) (empty_error) (eaten_value) () s1<() X>((input) (index) (error) (state) String.take_while(f)(input)<() X>((took) (rest) let len = String.length(took); let s2 = Parsec.State.make<S><E>(rest)(Nat.add(index)(len))(error)(state); took<() X>(input<() X>(empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err)))))((head) () empty_error(s2)(Parsec.Error.make_trivial<E>(index)(Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.tokens(String.single(head))))(List.single<Parsec.Error.Item>(Parsec.Error.Item.label(err))))))(() () eaten_value(s2)(took))))
 
 Parsec.test1: String
@@ -1623,7 +1635,7 @@ Parsec.then: <S: Type> -> <E: Type> -> <A: Type> -> <B: Type> -> Parsec(S)(E)(A)
 Parsec.throw: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.Error(E) -> Parsec(S)(E)(A)
   <S> <E> <A> (e) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_error(s1)(e)
 
-Parsec.token: <S: Type> -> <E: Type> -> <A: Type> -> Char -> Maybe(A) -> List(Parsec.Error.Item) -> Parsec(S)(E)(A)
+Parsec.token: <S: Type> -> <E: Type> -> <A: Type> -> (Char -> Maybe(A)) -> List(Parsec.Error.Item) -> Parsec(S)(E)(A)
   <S> <E> <A> (f) (es) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) s1<() X>((input) (index) (error) (state) input<() X>(let unex = Maybe.some<Parsec.Error.Item>(Parsec.Error.Item.end_of_input); empty_error(s1)(Parsec.Error.make_trivial<E>(Nat.zero)(unex)(es)))((c) (cs) f(c)<() X>(let item = Parsec.Error.Item.tokens(String.single(c)); let unex = Maybe.some<Parsec.Error.Item>(item); empty_error(s1)(Parsec.Error.make_trivial<E>(index)(unex)(es)))((x) let s2 = Parsec.State.make<S><E>(cs)(Nat.succ(index))(error)(state); eaten_value(s2)(x))))
 
 Parsec.tokens: <S: Type> -> <E: Type> -> String -> Parsec(S)(E)(String)
@@ -1659,7 +1671,7 @@ Parser.any_char: Parser(Char)
 Parser.ap: <A: Type> -> <B: Type> -> Parser(A -> B) -> Parser(A) -> Parser(B)
   <A> <B> (pf) (pa) Parsec.ap<Unit><Unit><A><B>(pf)(pa)
 
-Parser.bind: <A: Type> -> <B: Type> -> Parser(A) -> A -> Parser(B) -> Parser(B)
+Parser.bind: <A: Type> -> <B: Type> -> Parser(A) -> (A -> Parser(B)) -> Parser(B)
   <A> <B> (pa) (pf) Parsec.bind<Unit><Unit><A><B>(pa)(pf)
 
 Parser.char: Char -> Parser(Char)
@@ -1716,16 +1728,16 @@ Parser.skip_many: <A: Type> -> Parser(A) -> Parser(Unit)
 Parser.take: <A: Type> -> String -> Nat -> Parser(String)
   <A> (err) (n) Parsec.take<Unit><Unit><A>(err)(n)
 
-Parser.take_while: Char -> Bool -> Parser(String)
+Parser.take_while: (Char -> Bool) -> Parser(String)
   (f) Parsec.take_while<Unit><Unit>(f)
 
-Parser.take_while1: String -> Char -> Bool -> Parser(String)
+Parser.take_while1: String -> (Char -> Bool) -> Parser(String)
   (err) (f) Parsec.take_while1<Unit><Unit>(err)(f)
 
 Parser.then: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(B)
   <A> <B> (pa) (pb) Parsec.then<Unit><Unit><A><B>(pa)(pb)
 
-Parser.token: <A: Type> -> Char -> Maybe(A) -> List(Parsec.Error.Item) -> Parser(A)
+Parser.token: <A: Type> -> (Char -> Maybe(A)) -> List(Parsec.Error.Item) -> Parser(A)
   <A> (f) (es) Parsec.token<Unit><Unit><A>(f)(es)
 
 Parser.tokens: String -> Parser(String)
@@ -1771,43 +1783,43 @@ Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B
   <A> <B> (sig) sig<(sig) B(Sigma.fst<A><B>(sig))>((x) (y) y)
 
 String.chunk: Nat -> String -> Maybe(String)
-  (n) (list) n<() Maybe(String)>(Maybe.some<String>(String.nil))((pred) list<() Maybe(String)>(Maybe.none<String>)((head) (tail) Maybe.bind<String><String>(String.chunk(pred)(tail))((x) Maybe.some<String>(String.cons(head)(x)))))
+  (n) (list) n<(x2) Maybe(String)>(Maybe.some<String>(String.nil))((pred) list<(self) Maybe(String)>(Maybe.none<String>)((head) (tail) Maybe.bind<String><String>(String.chunk(pred)(tail))((x) Maybe.some<String>(String.cons(head)(x)))))
 
 String.concat: String -> String -> String
   (as) (bs) as<() String>(bs)((head) (tail) String.cons(head)(String.concat(tail)(bs)))
 
-String.cons: Char -> String -> String
-  (head) (tail) <P> (strnil) (strcons) strcons(head)(tail)
-
 String.drop: Nat -> String -> String
   (n) (list) n<() String>(list)((pred) list<() String>(String.nil)((head) (tail) String.drop(pred)(tail)))
 
-String.drop_until: Char -> Bool -> String -> String
+String.drop_until: (Char -> Bool) -> String -> String
   (cond) String.drop_while((c) Bool.not(cond(c)))
 
-String.drop_while: Char -> Bool -> String -> String
+String.drop_while: (Char -> Bool) -> String -> String
   (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() String>(String.drop_while(cond)(str.tail))(str))
 
 String.eql: String -> String -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<() Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<(self) Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
 
-String.filter: Char -> Bool -> String -> String
-  (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() (x: String) -> String>((t) t)((t) String.cons(str.head)(t))(String.filter(cond)(str.tail)))
+String.filter: (Char -> Bool) -> String -> String
+  (cond) (str) str<(self) String>(String.nil)((str.head) (str.tail) cond(str.head)<(self) (x: String) -> String>((t) t)((t) String.cons(str.head)(t))(String.filter(cond)(str.tail)))
 
 String.flatten: List(String) -> String
-  (as) as<() String>(String.nil)((head) (tail) String.concat(head)(String.flatten(tail)))
+  (as) as<(self) String>(String.nil)((head) (tail) String.concat(head)(String.flatten(tail)))
 
 String: Type
-  string<P: String -> Type> -> (strnil: P(String.nil)) -> (strcons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) -> P(string)
-
-String.is_empty: String -> Bool
-  (str) str<() Bool>(Bool.true)((head) (tail) Bool.false)
-
-String.length: String -> Nat
-  (str) str<() Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
+  self<P: (self: String) -> Type> -> (nil: P(String.nil)) -> (cons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) -> P(self)
 
 String.nil: String
-  <P> (strnil) (strcons) strnil
+  <P> (nil) (cons) nil
+
+String.cons: (head: Char) -> (tail: String) -> String
+  (head) (tail) <P> (nil) (cons) cons(head)(tail)
+
+String.is_empty: String -> Bool
+  (str) str<(self) Bool>(Bool.true)((head) (tail) Bool.false)
+
+String.length: String -> Nat
+  (str) str<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
 
 String.quote: String -> String
   (str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
@@ -1816,40 +1828,40 @@ String.reverse: String -> String
   (str) String.reverse.go(str)(String.nil)
 
 String.reverse.go: String -> String -> String
-  (str) (res) str<() String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
+  (str) (res) str<(self) String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
 
 String.single: (x: Char) -> String
   (x) String.cons(x)(String.nil)
 
 String.tail: String -> String
-  (str) str<() String>(String.nil)((str.head) (str.tail) str.tail)
+  (str) str<(self) String>(String.nil)((str.head) (str.tail) str.tail)
 
 String.take: Nat -> String -> String
-  (n) (list) list<() String>(String.nil)((head) (tail) n<() String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
+  (n) (list) list<(self) String>(String.nil)((head) (tail) n<(x4) String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
 
 String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
-  (n) (str) (res) res<() Maybe(Pair(String)(String))>(n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
+  (n) (str) (res) res<(self) Maybe(Pair(String)(String))>(n<(x3) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<(x5) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
 
 String.take_n: Nat -> String -> Maybe(Pair(String)(String))
-  (n) (str) String.take_n.aux(n)(String.nil)(str)<() Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<(x3) Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
+  (n) (str) String.take_n.aux(n)(String.nil)(str)<(self) Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<(self) Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
 
-String.take_while.aux: Char -> Bool -> String -> String -> Pair(String)(String)
-  (f) (str) (res) res<() Pair(String)(String)>(Pair.new<String><String>(str)(String.nil))((head) (tail) f(head)<() Pair(String)(String)>(String.take_while.aux(f)(String.cons(head)(str))(tail))(Pair.new<String><String>(str)(res)))
+String.take_while.aux: (Char -> Bool) -> String -> String -> Pair(String)(String)
+  (f) (str) (res) res<(self) Pair(String)(String)>(Pair.new<String><String>(str)(String.nil))((head) (tail) f(head)<(self) Pair(String)(String)>(String.take_while.aux(f)(String.cons(head)(str))(tail))(Pair.new<String><String>(str)(res)))
 
-String.take_while: Char -> Bool -> String -> Pair(String)(String)
-  (f) (str) String.take_while.aux(f)(String.nil)(str)<(x2) Pair(String)(String)>((x) (y) Pair.new<String><String>(String.reverse(x))(y))
+String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
+  (f) (str) String.take_while.aux(f)(String.nil)(str)<(self) Pair(String)(String)>((x) (y) Pair.new<String><String>(String.reverse(x))(y))
 
 String.to_bits: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail)))
+  (str) str<(self) Bits>(Bits.nil)((str.head) (str.tail) Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail)))
 
 String.to_list: String -> List(Char)
-  (str) str<() List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
+  (str) str<(self) List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
 
 String.to_set: String -> Set
-  (str) str<() Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
+  (str) str<(self) Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
 
 String.to_stringifier: String -> Stringifier
-  (str) str<() (x: String) -> String>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
+  (str) str<(self) (x: String) -> String>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
 
 Stringifier.concat: Stringifier -> Stringifier -> Stringifier
   (a) (b) (x) a(b(x))
@@ -1861,10 +1873,10 @@ Stringifier.to_string: Stringifier -> String
   (str) str(String.nil)
 
 Subset: (A: Type) -> (B: A -> Type) -> Type
-  (A) (B) subset<P: Subset(A)(B) -> Type> -> (new: (a: A) -> <b: B(a)> -> P(Subset.new<A><B>(a)<b>)) -> P(subset)
+  (A) (B) self<P: (self: Subset(A)(B)) -> Type> -> (new: (a: A) -> <b: B(a)> -> P(Subset.new<A><B>(a)<b>)) -> P(self)
 
 Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
-  <A> <B> (a) <b> <P> (subset) subset(a)<b>
+  <A> <B> (a) <b> <P> (new) new(a)<b>
 
 TA.Constants.ONE_SEC: F64
   F64.parse("24")
@@ -2040,7 +2052,7 @@ TA.Game.get_position_by_pid: TA.Game.PlayerId -> TA.Game.Game -> F64.V3
 TA.Game.init_act: (self: TA.Thing) -> (new_act: F64) -> (new_trg: F64.V3) -> TA.Thing
   (self) (new_act) (new_trg) let self.act = TA.Thing.get_act(self); let self.trg = TA.Thing.get_trg(self); let self.tik = TA.Thing.get_tik(self); let act_eql_0 = F64.eql(self.act)(F64.0); let self = TA.Thing.set_act(self)(Bool.if<TA.Game.ActionId>(act_eql_0)(new_act)(self.act)); let self = TA.Thing.set_trg(self)(Bool.if<F64.V3>(act_eql_0)(new_trg)(self.trg)); let self = TA.Thing.set_tik(self)(Bool.if<F64>(act_eql_0)(F64.0)(self.tik)); self
 
-TA.Game.map_stage: TA.Thing -> TA.Thing -> TA.Game.Game -> TA.Game.Game
+TA.Game.map_stage: (TA.Thing -> TA.Thing) -> TA.Game.Game -> TA.Game.Game
   (fn) (gm) gm<() TA.Game.Game>((gm.stage) let new_stage = List.map<TA.Thing><TA.Thing>(fn)(gm.stage); TA.Game.Game.new(new_stage))
 
 TA.Game.use_shields: (buff: TA.Game.Buff) -> (acc: Pair(F64)(List(TA.Game.Buff))) -> Pair(F64)(List(TA.Game.Buff))
@@ -3795,83 +3807,2225 @@ DORIME_WALK_CYCLE_006: F64
 DORIME_WALK_CYCLE_007: F64
   F64.parse("580")
 
-POSTE_IDLE_000: F64
+DR_STRANGE_CHRONOSTASIS_CAST_000: F64
   F64.parse("581")
 
-PUNCHINGBAG_IDLE_000: F64
+DR_STRANGE_CHRONOSTASIS_CAST_001: F64
   F64.parse("582")
 
-PUNCHINGBAG_IDLE_001: F64
+DR_STRANGE_CHRONOSTASIS_CAST_002: F64
   F64.parse("583")
 
-PUNCHINGBAG_IDLE_002: F64
+DR_STRANGE_CHRONOSTASIS_CAST_003: F64
   F64.parse("584")
 
-PUNCHINGBAG_IDLE_003: F64
+DR_STRANGE_CHRONOSTASIS_CAST_004: F64
   F64.parse("585")
 
-PUNCHINGBAG_IDLE_004: F64
+DR_STRANGE_CHRONOSTASIS_CAST_005: F64
   F64.parse("586")
 
-PUNCHINGBAG_IDLE_005: F64
+DR_STRANGE_CHRONOSTASIS_CAST_006: F64
   F64.parse("587")
 
-PUNCHINGBAG_IDLE_006: F64
+DR_STRANGE_CHRONOSTASIS_CAST_007: F64
   F64.parse("588")
 
-PUNCHINGBAG_IDLE_007: F64
+DR_STRANGE_CHRONOSTASIS_CAST_008: F64
   F64.parse("589")
 
-PUNCHINGBAG_IDLE_008: F64
+DR_STRANGE_CHRONOSTASIS_CAST_009: F64
   F64.parse("590")
 
-PUNCHINGBAG_IDLE_009: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_000: F64
   F64.parse("591")
 
-PUNCHINGBAG_IDLE_010: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_001: F64
   F64.parse("592")
 
-PUNCHINGBAG_IDLE_011: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_002: F64
   F64.parse("593")
 
-PUNCHINGBAG_IDLE_012: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_003: F64
   F64.parse("594")
 
-PUNCHINGBAG_IDLE_013: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_004: F64
   F64.parse("595")
 
-PUNCHINGBAG_IDLE_014: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_005: F64
   F64.parse("596")
 
-PUNCHINGBAG_IDLE_015: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_006: F64
   F64.parse("597")
 
-PUNCHINGBAG_IDLE_016: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_007: F64
   F64.parse("598")
 
-PUNCHINGBAG_IDLE_017: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_008: F64
   F64.parse("599")
 
-PUNCHINGBAG_IDLE_018: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_009: F64
   F64.parse("600")
 
-PUNCHINGBAG_IDLE_019: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_010: F64
   F64.parse("601")
 
-PUNCHINGBAG_IDLE_020: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_011: F64
   F64.parse("602")
 
-PUNCHINGBAG_IDLE_021: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_012: F64
   F64.parse("603")
 
-PUNCHINGBAG_IDLE_022: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_013: F64
   F64.parse("604")
 
-PUNCHINGBAG_IDLE_023: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_014: F64
   F64.parse("605")
 
-WALL_IDLE_000: F64
+DR_STRANGE_CHRONOSTASIS_EFFECT_015: F64
   F64.parse("606")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_016: F64
+  F64.parse("607")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_017: F64
+  F64.parse("608")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_018: F64
+  F64.parse("609")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_019: F64
+  F64.parse("610")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_020: F64
+  F64.parse("611")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_021: F64
+  F64.parse("612")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_022: F64
+  F64.parse("613")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_023: F64
+  F64.parse("614")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_024: F64
+  F64.parse("615")
+
+DR_STRANGE_CHRONOSTASIS_EFFECT_025: F64
+  F64.parse("616")
+
+DR_STRANGE_HURT_000: F64
+  F64.parse("617")
+
+DR_STRANGE_IDLE_000: F64
+  F64.parse("618")
+
+DR_STRANGE_IDLE_001: F64
+  F64.parse("619")
+
+DR_STRANGE_IDLE_002: F64
+  F64.parse("620")
+
+DR_STRANGE_IDLE_003: F64
+  F64.parse("621")
+
+DR_STRANGE_IDLE_004: F64
+  F64.parse("622")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_000: F64
+  F64.parse("623")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_001: F64
+  F64.parse("624")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_002: F64
+  F64.parse("625")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_003: F64
+  F64.parse("626")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_004: F64
+  F64.parse("627")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_005: F64
+  F64.parse("628")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_006: F64
+  F64.parse("629")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_007: F64
+  F64.parse("630")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_008: F64
+  F64.parse("631")
+
+DR_STRANGE_MYSTIC_BEAM_CAST_009: F64
+  F64.parse("632")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_000: F64
+  F64.parse("633")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_001: F64
+  F64.parse("634")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_002: F64
+  F64.parse("635")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_003: F64
+  F64.parse("636")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_004: F64
+  F64.parse("637")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_005: F64
+  F64.parse("638")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_006: F64
+  F64.parse("639")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_007: F64
+  F64.parse("640")
+
+DR_STRANGE_MYSTIC_BEAM_EFFECT_008: F64
+  F64.parse("641")
+
+DR_STRANGE_PORTAL_CAST_000: F64
+  F64.parse("642")
+
+DR_STRANGE_PORTAL_CAST_001: F64
+  F64.parse("643")
+
+DR_STRANGE_PORTAL_CAST_002: F64
+  F64.parse("644")
+
+DR_STRANGE_PORTAL_CAST_003: F64
+  F64.parse("645")
+
+DR_STRANGE_PORTAL_CAST_004: F64
+  F64.parse("646")
+
+DR_STRANGE_PORTAL_CAST_005: F64
+  F64.parse("647")
+
+DR_STRANGE_PORTAL_EFFECT_000: F64
+  F64.parse("648")
+
+DR_STRANGE_PORTAL_EFFECT_001: F64
+  F64.parse("649")
+
+DR_STRANGE_PORTAL_EFFECT_002: F64
+  F64.parse("650")
+
+DR_STRANGE_PORTAL_EFFECT_003: F64
+  F64.parse("651")
+
+DR_STRANGE_PORTAL_EFFECT_004: F64
+  F64.parse("652")
+
+DR_STRANGE_PORTAL_EFFECT_005: F64
+  F64.parse("653")
+
+DR_STRANGE_PORTAL_EFFECT_006: F64
+  F64.parse("654")
+
+DR_STRANGE_PORTAL_EFFECT_007: F64
+  F64.parse("655")
+
+DR_STRANGE_PORTAL_EFFECT_008: F64
+  F64.parse("656")
+
+DR_STRANGE_PORTAL_EFFECT_009: F64
+  F64.parse("657")
+
+DR_STRANGE_PORTAL_EFFECT_010: F64
+  F64.parse("658")
+
+DR_STRANGE_PORTAL_EFFECT_011: F64
+  F64.parse("659")
+
+DR_STRANGE_PORTAL_EFFECT_012: F64
+  F64.parse("660")
+
+DR_STRANGE_PORTAL_EFFECT_013: F64
+  F64.parse("661")
+
+DR_STRANGE_PORTAL_EFFECT_014: F64
+  F64.parse("662")
+
+DR_STRANGE_PORTAL_EFFECT_015: F64
+  F64.parse("663")
+
+DR_STRANGE_PORTAL_EFFECT_016: F64
+  F64.parse("664")
+
+DR_STRANGE_PORTAL_EFFECT_017: F64
+  F64.parse("665")
+
+DR_STRANGE_PORTAL_EFFECT_018: F64
+  F64.parse("666")
+
+DR_STRANGE_PORTAL_EFFECT_019: F64
+  F64.parse("667")
+
+DR_STRANGE_PORTAL_EFFECT_020: F64
+  F64.parse("668")
+
+DR_STRANGE_PORTAL_EFFECT_021: F64
+  F64.parse("669")
+
+DR_STRANGE_PORTAL_EFFECT_022: F64
+  F64.parse("670")
+
+DR_STRANGE_PORTAL_EFFECT_023: F64
+  F64.parse("671")
+
+DR_STRANGE_PORTAL_EFFECT_024: F64
+  F64.parse("672")
+
+DR_STRANGE_PORTAL_EFFECT_025: F64
+  F64.parse("673")
+
+DR_STRANGE_PORTAL_EFFECT_026: F64
+  F64.parse("674")
+
+DR_STRANGE_PORTAL_EFFECT_027: F64
+  F64.parse("675")
+
+DR_STRANGE_PORTAL_EFFECT_028: F64
+  F64.parse("676")
+
+DR_STRANGE_PORTAL_EFFECT_029: F64
+  F64.parse("677")
+
+DR_STRANGE_PORTAL_EFFECT_030: F64
+  F64.parse("678")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_000: F64
+  F64.parse("679")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_001: F64
+  F64.parse("680")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_002: F64
+  F64.parse("681")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_003: F64
+  F64.parse("682")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_004: F64
+  F64.parse("683")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_005: F64
+  F64.parse("684")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_006: F64
+  F64.parse("685")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_007: F64
+  F64.parse("686")
+
+DR_STRANGE_TIME_STONE_POWER_CAST_008: F64
+  F64.parse("687")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_000: F64
+  F64.parse("688")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_001: F64
+  F64.parse("689")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_002: F64
+  F64.parse("690")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_003: F64
+  F64.parse("691")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_004: F64
+  F64.parse("692")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_005: F64
+  F64.parse("693")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_006: F64
+  F64.parse("694")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_007: F64
+  F64.parse("695")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_008: F64
+  F64.parse("696")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_009: F64
+  F64.parse("697")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_010: F64
+  F64.parse("698")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_011: F64
+  F64.parse("699")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_012: F64
+  F64.parse("700")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_013: F64
+  F64.parse("701")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_014: F64
+  F64.parse("702")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_015: F64
+  F64.parse("703")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_016: F64
+  F64.parse("704")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_017: F64
+  F64.parse("705")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_018: F64
+  F64.parse("706")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_019: F64
+  F64.parse("707")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_020: F64
+  F64.parse("708")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_021: F64
+  F64.parse("709")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_022: F64
+  F64.parse("710")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_023: F64
+  F64.parse("711")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_024: F64
+  F64.parse("712")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_025: F64
+  F64.parse("713")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_026: F64
+  F64.parse("714")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_027: F64
+  F64.parse("715")
+
+DR_STRANGE_TIME_STONE_POWER_EFFECT_028: F64
+  F64.parse("716")
+
+DR_STRANGE_WALK_000: F64
+  F64.parse("717")
+
+DR_STRANGE_WALK_001: F64
+  F64.parse("718")
+
+DR_STRANGE_WALK_002: F64
+  F64.parse("719")
+
+DR_STRANGE_WALK_003: F64
+  F64.parse("720")
+
+ERIC_JACQUIN_DASH_000: F64
+  F64.parse("721")
+
+ERIC_JACQUIN_DASH_001: F64
+  F64.parse("722")
+
+ERIC_JACQUIN_DASH_002: F64
+  F64.parse("723")
+
+ERIC_JACQUIN_DASH_003: F64
+  F64.parse("724")
+
+ERIC_JACQUIN_DASH_004: F64
+  F64.parse("725")
+
+ERIC_JACQUIN_DASH_005: F64
+  F64.parse("726")
+
+ERIC_JACQUIN_DASH_006: F64
+  F64.parse("727")
+
+ERIC_JACQUIN_DASH_007: F64
+  F64.parse("728")
+
+ERIC_JACQUIN_DASH_008: F64
+  F64.parse("729")
+
+ERIC_JACQUIN_DASH_009: F64
+  F64.parse("730")
+
+ERIC_JACQUIN_DASH_010: F64
+  F64.parse("731")
+
+ERIC_JACQUIN_DASH_011: F64
+  F64.parse("732")
+
+ERIC_JACQUIN_DASH_012: F64
+  F64.parse("733")
+
+ERIC_JACQUIN_DASH_013: F64
+  F64.parse("734")
+
+ERIC_JACQUIN_DASH_014: F64
+  F64.parse("735")
+
+ERIC_JACQUIN_DASH_015: F64
+  F64.parse("736")
+
+ERIC_JACQUIN_DASH_016: F64
+  F64.parse("737")
+
+ERIC_JACQUIN_DASH_017: F64
+  F64.parse("738")
+
+ERIC_JACQUIN_IDLE_000: F64
+  F64.parse("739")
+
+ERIC_JACQUIN_IDLE_001: F64
+  F64.parse("740")
+
+ERIC_JACQUIN_IDLE_002: F64
+  F64.parse("741")
+
+ERIC_JACQUIN_IDLE_003: F64
+  F64.parse("742")
+
+ERIC_JACQUIN_IDLE_004: F64
+  F64.parse("743")
+
+ERIC_JACQUIN_IDLE_005: F64
+  F64.parse("744")
+
+ERIC_JACQUIN_IDLE_006: F64
+  F64.parse("745")
+
+ERIC_JACQUIN_IDLE_007: F64
+  F64.parse("746")
+
+ERIC_JACQUIN_IDLE_008: F64
+  F64.parse("747")
+
+ERIC_JACQUIN_IDLE_009: F64
+  F64.parse("748")
+
+ERIC_JACQUIN_IDLE_010: F64
+  F64.parse("749")
+
+ERIC_JACQUIN_IDLE_011: F64
+  F64.parse("750")
+
+ERIC_JACQUIN_IDLE_012: F64
+  F64.parse("751")
+
+ERIC_JACQUIN_IDLE_013: F64
+  F64.parse("752")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_000: F64
+  F64.parse("753")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_001: F64
+  F64.parse("754")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_002: F64
+  F64.parse("755")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_003: F64
+  F64.parse("756")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_004: F64
+  F64.parse("757")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_005: F64
+  F64.parse("758")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_006: F64
+  F64.parse("759")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_007: F64
+  F64.parse("760")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_008: F64
+  F64.parse("761")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_009: F64
+  F64.parse("762")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_010: F64
+  F64.parse("763")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_011: F64
+  F64.parse("764")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_012: F64
+  F64.parse("765")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_013: F64
+  F64.parse("766")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_014: F64
+  F64.parse("767")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_015: F64
+  F64.parse("768")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_016: F64
+  F64.parse("769")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_017: F64
+  F64.parse("770")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_018: F64
+  F64.parse("771")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_019: F64
+  F64.parse("772")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_020: F64
+  F64.parse("773")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_021: F64
+  F64.parse("774")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_022: F64
+  F64.parse("775")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_023: F64
+  F64.parse("776")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_024: F64
+  F64.parse("777")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_025: F64
+  F64.parse("778")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_026: F64
+  F64.parse("779")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_027: F64
+  F64.parse("780")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_028: F64
+  F64.parse("781")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_029: F64
+  F64.parse("782")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_000: F64
+  F64.parse("783")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_001: F64
+  F64.parse("784")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_002: F64
+  F64.parse("785")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_003: F64
+  F64.parse("786")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_004: F64
+  F64.parse("787")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_005: F64
+  F64.parse("788")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_006: F64
+  F64.parse("789")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_007: F64
+  F64.parse("790")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_008: F64
+  F64.parse("791")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_009: F64
+  F64.parse("792")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_010: F64
+  F64.parse("793")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_011: F64
+  F64.parse("794")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_012: F64
+  F64.parse("795")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_013: F64
+  F64.parse("796")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_014: F64
+  F64.parse("797")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_015: F64
+  F64.parse("798")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_016: F64
+  F64.parse("799")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_017: F64
+  F64.parse("800")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_018: F64
+  F64.parse("801")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_019: F64
+  F64.parse("802")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_020: F64
+  F64.parse("803")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_021: F64
+  F64.parse("804")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_022: F64
+  F64.parse("805")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_023: F64
+  F64.parse("806")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_024: F64
+  F64.parse("807")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_025: F64
+  F64.parse("808")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_026: F64
+  F64.parse("809")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_027: F64
+  F64.parse("810")
+
+ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_028: F64
+  F64.parse("811")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_000: F64
+  F64.parse("812")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_001: F64
+  F64.parse("813")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_002: F64
+  F64.parse("814")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_003: F64
+  F64.parse("815")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_004: F64
+  F64.parse("816")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_005: F64
+  F64.parse("817")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_006: F64
+  F64.parse("818")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_007: F64
+  F64.parse("819")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_008: F64
+  F64.parse("820")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_009: F64
+  F64.parse("821")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_010: F64
+  F64.parse("822")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_011: F64
+  F64.parse("823")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_012: F64
+  F64.parse("824")
+
+ERIC_JACQUIN_JACQUIN_WRATH_IDLE_013: F64
+  F64.parse("825")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_000: F64
+  F64.parse("826")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_001: F64
+  F64.parse("827")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_002: F64
+  F64.parse("828")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_003: F64
+  F64.parse("829")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_004: F64
+  F64.parse("830")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_005: F64
+  F64.parse("831")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_006: F64
+  F64.parse("832")
+
+ERIC_JACQUIN_JACQUIN_WRATH_WALK_007: F64
+  F64.parse("833")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_000: F64
+  F64.parse("834")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_001: F64
+  F64.parse("835")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_002: F64
+  F64.parse("836")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_003: F64
+  F64.parse("837")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_004: F64
+  F64.parse("838")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_005: F64
+  F64.parse("839")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_006: F64
+  F64.parse("840")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_007: F64
+  F64.parse("841")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_008: F64
+  F64.parse("842")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_009: F64
+  F64.parse("843")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_010: F64
+  F64.parse("844")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_011: F64
+  F64.parse("845")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_012: F64
+  F64.parse("846")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_013: F64
+  F64.parse("847")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_014: F64
+  F64.parse("848")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_015: F64
+  F64.parse("849")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_016: F64
+  F64.parse("850")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_017: F64
+  F64.parse("851")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_018: F64
+  F64.parse("852")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_019: F64
+  F64.parse("853")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_020: F64
+  F64.parse("854")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_021: F64
+  F64.parse("855")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_000: F64
+  F64.parse("856")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_001: F64
+  F64.parse("857")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_002: F64
+  F64.parse("858")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_003: F64
+  F64.parse("859")
+
+ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_004: F64
+  F64.parse("860")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_000: F64
+  F64.parse("861")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_001: F64
+  F64.parse("862")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_002: F64
+  F64.parse("863")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_003: F64
+  F64.parse("864")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_004: F64
+  F64.parse("865")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_005: F64
+  F64.parse("866")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_006: F64
+  F64.parse("867")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_007: F64
+  F64.parse("868")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_008: F64
+  F64.parse("869")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_009: F64
+  F64.parse("870")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_010: F64
+  F64.parse("871")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_011: F64
+  F64.parse("872")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_012: F64
+  F64.parse("873")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_013: F64
+  F64.parse("874")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_014: F64
+  F64.parse("875")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_015: F64
+  F64.parse("876")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_016: F64
+  F64.parse("877")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_017: F64
+  F64.parse("878")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_018: F64
+  F64.parse("879")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_019: F64
+  F64.parse("880")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_020: F64
+  F64.parse("881")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_021: F64
+  F64.parse("882")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_022: F64
+  F64.parse("883")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_023: F64
+  F64.parse("884")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_024: F64
+  F64.parse("885")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_025: F64
+  F64.parse("886")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_026: F64
+  F64.parse("887")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_027: F64
+  F64.parse("888")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_028: F64
+  F64.parse("889")
+
+ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_029: F64
+  F64.parse("890")
+
+ERIC_JACQUIN_TAUNT_000: F64
+  F64.parse("891")
+
+ERIC_JACQUIN_TAUNT_001: F64
+  F64.parse("892")
+
+ERIC_JACQUIN_TAUNT_002: F64
+  F64.parse("893")
+
+ERIC_JACQUIN_TAUNT_003: F64
+  F64.parse("894")
+
+ERIC_JACQUIN_TAUNT_004: F64
+  F64.parse("895")
+
+ERIC_JACQUIN_TAUNT_005: F64
+  F64.parse("896")
+
+ERIC_JACQUIN_TAUNT_006: F64
+  F64.parse("897")
+
+ERIC_JACQUIN_TAUNT_007: F64
+  F64.parse("898")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_000: F64
+  F64.parse("899")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_001: F64
+  F64.parse("900")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_002: F64
+  F64.parse("901")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_003: F64
+  F64.parse("902")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_004: F64
+  F64.parse("903")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_005: F64
+  F64.parse("904")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_006: F64
+  F64.parse("905")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_007: F64
+  F64.parse("906")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_008: F64
+  F64.parse("907")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_009: F64
+  F64.parse("908")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_010: F64
+  F64.parse("909")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_011: F64
+  F64.parse("910")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_012: F64
+  F64.parse("911")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_013: F64
+  F64.parse("912")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_014: F64
+  F64.parse("913")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_015: F64
+  F64.parse("914")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_016: F64
+  F64.parse("915")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_017: F64
+  F64.parse("916")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_018: F64
+  F64.parse("917")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_019: F64
+  F64.parse("918")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_020: F64
+  F64.parse("919")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_021: F64
+  F64.parse("920")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_022: F64
+  F64.parse("921")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_023: F64
+  F64.parse("922")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_024: F64
+  F64.parse("923")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_025: F64
+  F64.parse("924")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_026: F64
+  F64.parse("925")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_027: F64
+  F64.parse("926")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_028: F64
+  F64.parse("927")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_EFFECT_000: F64
+  F64.parse("928")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_EFFECT_001: F64
+  F64.parse("929")
+
+ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_EFFECT_002: F64
+  F64.parse("930")
+
+ERIC_JACQUIN_WALK_000: F64
+  F64.parse("931")
+
+ERIC_JACQUIN_WALK_001: F64
+  F64.parse("932")
+
+ERIC_JACQUIN_WALK_002: F64
+  F64.parse("933")
+
+ERIC_JACQUIN_WALK_003: F64
+  F64.parse("934")
+
+ERIC_JACQUIN_WALK_004: F64
+  F64.parse("935")
+
+ERIC_JACQUIN_WALK_005: F64
+  F64.parse("936")
+
+ERIC_JACQUIN_WALK_006: F64
+  F64.parse("937")
+
+FINN_BMO_S_FLASH_000: F64
+  F64.parse("938")
+
+FINN_BMO_S_FLASH_001: F64
+  F64.parse("939")
+
+FINN_BMO_S_FLASH_002: F64
+  F64.parse("940")
+
+FINN_BMO_S_FLASH_003: F64
+  F64.parse("941")
+
+FINN_BMO_S_FLASH_004: F64
+  F64.parse("942")
+
+FINN_BMO_S_FLASH_005: F64
+  F64.parse("943")
+
+FINN_BMO_S_FLASH_006: F64
+  F64.parse("944")
+
+FINN_BMO_S_FLASH_007: F64
+  F64.parse("945")
+
+FINN_BMO_S_FLASH_008: F64
+  F64.parse("946")
+
+FINN_BMO_S_FLASH_009: F64
+  F64.parse("947")
+
+FINN_BMO_S_FLASH_010: F64
+  F64.parse("948")
+
+FINN_BMO_S_FLASH_011: F64
+  F64.parse("949")
+
+FINN_BMO_S_FLASH_012: F64
+  F64.parse("950")
+
+FINN_BOW_CAST_ANIMATION_000: F64
+  F64.parse("951")
+
+FINN_BOW_CAST_ANIMATION_001: F64
+  F64.parse("952")
+
+FINN_BOW_CAST_ANIMATION_002: F64
+  F64.parse("953")
+
+FINN_BOW_CAST_ANIMATION_003: F64
+  F64.parse("954")
+
+FINN_BOW_CAST_ANIMATION_004: F64
+  F64.parse("955")
+
+FINN_BOW_CAST_ANIMATION_005: F64
+  F64.parse("956")
+
+FINN_BOW_CAST_ANIMATION_006: F64
+  F64.parse("957")
+
+FINN_BOW_PROJECTILE_000: F64
+  F64.parse("958")
+
+FINN_CONTAINMENT_CAST_ANIMATION_000: F64
+  F64.parse("959")
+
+FINN_CONTAINMENT_CAST_ANIMATION_001: F64
+  F64.parse("960")
+
+FINN_CONTAINMENT_CAST_ANIMATION_002: F64
+  F64.parse("961")
+
+FINN_CONTAINMENT_IDLE_000: F64
+  F64.parse("962")
+
+FINN_CONTAINMENT_IDLE_001: F64
+  F64.parse("963")
+
+FINN_CONTAINMENT_IDLE_002: F64
+  F64.parse("964")
+
+FINN_CONTAINMENT_IDLE_003: F64
+  F64.parse("965")
+
+FINN_CONTAINMENT_IDLE_004: F64
+  F64.parse("966")
+
+FINN_EVADE_000: F64
+  F64.parse("967")
+
+FINN_EVADE_001: F64
+  F64.parse("968")
+
+FINN_EVADE_002: F64
+  F64.parse("969")
+
+FINN_EVADE_003: F64
+  F64.parse("970")
+
+FINN_EVADE_004: F64
+  F64.parse("971")
+
+FINN_EVADE_005: F64
+  F64.parse("972")
+
+FINN_HURT_000: F64
+  F64.parse("973")
+
+FINN_IDLE_000: F64
+  F64.parse("974")
+
+FINN_IDLE_001: F64
+  F64.parse("975")
+
+FINN_IDLE_002: F64
+  F64.parse("976")
+
+FINN_IDLE_003: F64
+  F64.parse("977")
+
+FINN_IDLE_004: F64
+  F64.parse("978")
+
+FINN_JAKE_S_FURY_000: F64
+  F64.parse("979")
+
+FINN_JAKE_S_FURY_001: F64
+  F64.parse("980")
+
+FINN_JAKE_S_FURY_002: F64
+  F64.parse("981")
+
+FINN_JAKE_S_FURY_003: F64
+  F64.parse("982")
+
+FINN_JAKE_S_FURY_004: F64
+  F64.parse("983")
+
+FINN_JAKE_S_FURY_005: F64
+  F64.parse("984")
+
+FINN_JAKE_S_FURY_006: F64
+  F64.parse("985")
+
+FINN_JAKE_S_FURY_007: F64
+  F64.parse("986")
+
+FINN_JAKE_S_FURY_008: F64
+  F64.parse("987")
+
+FINN_JAKE_S_FURY_009: F64
+  F64.parse("988")
+
+FINN_JAKE_S_FURY_010: F64
+  F64.parse("989")
+
+FINN_JAKE_S_FURY_011: F64
+  F64.parse("990")
+
+FINN_JAKE_S_FURY_012: F64
+  F64.parse("991")
+
+FINN_JAKE_S_FURY_013: F64
+  F64.parse("992")
+
+FINN_JAKE_S_FURY_014: F64
+  F64.parse("993")
+
+FINN_JAKE_S_FURY_015: F64
+  F64.parse("994")
+
+FINN_JAKE_S_FURY_016: F64
+  F64.parse("995")
+
+FINN_JAKE_S_FURY_017: F64
+  F64.parse("996")
+
+FINN_JAKE_S_FURY_018: F64
+  F64.parse("997")
+
+FINN_JAKE_S_FURY_019: F64
+  F64.parse("998")
+
+FINN_JAKE_S_FURY_020: F64
+  F64.parse("999")
+
+FINN_JAKE_S_FURY_021: F64
+  F64.parse("1000")
+
+FINN_JAKE_S_FURY_022: F64
+  F64.parse("1001")
+
+FINN_JAKE_S_FURY_023: F64
+  F64.parse("1002")
+
+FINN_JAKE_S_FURY_024: F64
+  F64.parse("1003")
+
+FINN_JAKE_S_FURY_025: F64
+  F64.parse("1004")
+
+FINN_TAUNT_000: F64
+  F64.parse("1005")
+
+FINN_TAUNT_001: F64
+  F64.parse("1006")
+
+FINN_TAUNT_002: F64
+  F64.parse("1007")
+
+FINN_TAUNT_003: F64
+  F64.parse("1008")
+
+FINN_TAUNT_004: F64
+  F64.parse("1009")
+
+FINN_TAUNT_005: F64
+  F64.parse("1010")
+
+FINN_TAUNT_006: F64
+  F64.parse("1011")
+
+FINN_TAUNT_007: F64
+  F64.parse("1012")
+
+FINN_TAUNT_008: F64
+  F64.parse("1013")
+
+FINN_TAUNT_009: F64
+  F64.parse("1014")
+
+FINN_TAUNT_010: F64
+  F64.parse("1015")
+
+FINN_TAUNT_011: F64
+  F64.parse("1016")
+
+FINN_TAUNT_012: F64
+  F64.parse("1017")
+
+FINN_TAUNT_013: F64
+  F64.parse("1018")
+
+FINN_TAUNT_014: F64
+  F64.parse("1019")
+
+FINN_TAUNT_015: F64
+  F64.parse("1020")
+
+FINN_TAUNT_016: F64
+  F64.parse("1021")
+
+FINN_TRIPLE_TAKE_AUX_000: F64
+  F64.parse("1022")
+
+FINN_TRIPLE_TAKE_000: F64
+  F64.parse("1023")
+
+FINN_TRIPLE_TAKE_001: F64
+  F64.parse("1024")
+
+FINN_TRIPLE_TAKE_002: F64
+  F64.parse("1025")
+
+FINN_TRIPLE_TAKE_003: F64
+  F64.parse("1026")
+
+FINN_TRIPLE_TAKE_004: F64
+  F64.parse("1027")
+
+FINN_TRIPLE_TAKE_005: F64
+  F64.parse("1028")
+
+FINN_TRIPLE_TAKE_006: F64
+  F64.parse("1029")
+
+FINN_TRIPLE_TAKE_007: F64
+  F64.parse("1030")
+
+FINN_TRIPLE_TAKE_008: F64
+  F64.parse("1031")
+
+FINN_TRIPLE_TAKE_009: F64
+  F64.parse("1032")
+
+FINN_TRIPLE_TAKE_010: F64
+  F64.parse("1033")
+
+FINN_TRIPLE_TAKE_011: F64
+  F64.parse("1034")
+
+FINN_TRIPLE_TAKE_012: F64
+  F64.parse("1035")
+
+FINN_TRIPLE_TAKE_013: F64
+  F64.parse("1036")
+
+FINN_TRIPLE_TAKE_014: F64
+  F64.parse("1037")
+
+FINN_TRIPLE_TAKE_015: F64
+  F64.parse("1038")
+
+FINN_TRIPLE_TAKE_016: F64
+  F64.parse("1039")
+
+FINN_WALK_CYCLE_000: F64
+  F64.parse("1040")
+
+FINN_WALK_CYCLE_001: F64
+  F64.parse("1041")
+
+FINN_WALK_CYCLE_002: F64
+  F64.parse("1042")
+
+FINN_WALK_CYCLE_003: F64
+  F64.parse("1043")
+
+FINN_WALK_CYCLE_004: F64
+  F64.parse("1044")
+
+FINN_WALK_CYCLE_005: F64
+  F64.parse("1045")
+
+FINN_WALK_CYCLE_006: F64
+  F64.parse("1046")
+
+FINN_WALK_CYCLE_007: F64
+  F64.parse("1047")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_000: F64
+  F64.parse("1048")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_001: F64
+  F64.parse("1049")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_002: F64
+  F64.parse("1050")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_003: F64
+  F64.parse("1051")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_004: F64
+  F64.parse("1052")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_005: F64
+  F64.parse("1053")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_006: F64
+  F64.parse("1054")
+
+GON_FREECS_AFTER_ULTIMATE_IDLE_007: F64
+  F64.parse("1055")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_000: F64
+  F64.parse("1056")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_001: F64
+  F64.parse("1057")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_002: F64
+  F64.parse("1058")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_003: F64
+  F64.parse("1059")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_004: F64
+  F64.parse("1060")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_005: F64
+  F64.parse("1061")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_006: F64
+  F64.parse("1062")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_007: F64
+  F64.parse("1063")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_008: F64
+  F64.parse("1064")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_009: F64
+  F64.parse("1065")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_010: F64
+  F64.parse("1066")
+
+GON_FREECS_AFTER_ULTIMATE_WALK_011: F64
+  F64.parse("1067")
+
+GON_FREECS_DESABLED_NEM_FX_000: F64
+  F64.parse("1068")
+
+GON_FREECS_DESABLED_NEM_FX_001: F64
+  F64.parse("1069")
+
+GON_FREECS_DESABLED_NEM_FX_002: F64
+  F64.parse("1070")
+
+GON_FREECS_DESABLED_NEM_FX_003: F64
+  F64.parse("1071")
+
+GON_FREECS_DESABLED_NEM_FX_004: F64
+  F64.parse("1072")
+
+GON_FREECS_DESABLED_NEM_FX_005: F64
+  F64.parse("1073")
+
+GON_FREECS_DESABLED_NEM_FX_006: F64
+  F64.parse("1074")
+
+GON_FREECS_DESABLED_NEM_FX_007: F64
+  F64.parse("1075")
+
+GON_FREECS_DESABLED_NEM_FX_008: F64
+  F64.parse("1076")
+
+GON_FREECS_IDLE_000: F64
+  F64.parse("1077")
+
+GON_FREECS_IDLE_001: F64
+  F64.parse("1078")
+
+GON_FREECS_IDLE_002: F64
+  F64.parse("1079")
+
+GON_FREECS_IDLE_003: F64
+  F64.parse("1080")
+
+GON_FREECS_IDLE_004: F64
+  F64.parse("1081")
+
+GON_FREECS_IDLE_005: F64
+  F64.parse("1082")
+
+GON_FREECS_IDLE_006: F64
+  F64.parse("1083")
+
+GON_FREECS_IDLE_007: F64
+  F64.parse("1084")
+
+GON_FREECS_IDLE_008: F64
+  F64.parse("1085")
+
+GON_FREECS_IDLE_009: F64
+  F64.parse("1086")
+
+GON_FREECS_IDLE_010: F64
+  F64.parse("1087")
+
+GON_FREECS_IDLE_011: F64
+  F64.parse("1088")
+
+GON_FREECS_IDLE_012: F64
+  F64.parse("1089")
+
+GON_FREECS_IDLE_013: F64
+  F64.parse("1090")
+
+GON_FREECS_IDLE_014: F64
+  F64.parse("1091")
+
+GON_FREECS_IDLE_015: F64
+  F64.parse("1092")
+
+GON_FREECS_INTENSIFICATION_FX_000: F64
+  F64.parse("1093")
+
+GON_FREECS_INTENSIFICATION_FX_001: F64
+  F64.parse("1094")
+
+GON_FREECS_INTENSIFICATION_FX_002: F64
+  F64.parse("1095")
+
+GON_FREECS_INTENSIFICATION_FX_003: F64
+  F64.parse("1096")
+
+GON_FREECS_INTENSIFICATION_FX_004: F64
+  F64.parse("1097")
+
+GON_FREECS_INTENSIFICATION_FX_005: F64
+  F64.parse("1098")
+
+GON_FREECS_INTENSIFICATION_FX_006: F64
+  F64.parse("1099")
+
+GON_FREECS_INTENSIFICATION_FX_007: F64
+  F64.parse("1100")
+
+GON_FREECS_INTENSIFICATION_FX_008: F64
+  F64.parse("1101")
+
+GON_FREECS_INTENSIFICATION_000: F64
+  F64.parse("1102")
+
+GON_FREECS_INTENSIFICATION_001: F64
+  F64.parse("1103")
+
+GON_FREECS_INTENSIFICATION_002: F64
+  F64.parse("1104")
+
+GON_FREECS_INTENSIFICATION_003: F64
+  F64.parse("1105")
+
+GON_FREECS_INTENSIFICATION_004: F64
+  F64.parse("1106")
+
+GON_FREECS_INTENSIFICATION_005: F64
+  F64.parse("1107")
+
+GON_FREECS_INTENSIFICATION_006: F64
+  F64.parse("1108")
+
+GON_FREECS_INTENSIFICATION_007: F64
+  F64.parse("1109")
+
+GON_FREECS_INTENSIFICATION_008: F64
+  F64.parse("1110")
+
+GON_FREECS_INTENSIFICATION_009: F64
+  F64.parse("1111")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_000: F64
+  F64.parse("1112")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_001: F64
+  F64.parse("1113")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_002: F64
+  F64.parse("1114")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_003: F64
+  F64.parse("1115")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_004: F64
+  F64.parse("1116")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_005: F64
+  F64.parse("1117")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_006: F64
+  F64.parse("1118")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_007: F64
+  F64.parse("1119")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_008: F64
+  F64.parse("1120")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_009: F64
+  F64.parse("1121")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_010: F64
+  F64.parse("1122")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_011: F64
+  F64.parse("1123")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_012: F64
+  F64.parse("1124")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_013: F64
+  F64.parse("1125")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_014: F64
+  F64.parse("1126")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_015: F64
+  F64.parse("1127")
+
+GON_FREECS_JAJANKEN_PAPER_CASTING_016: F64
+  F64.parse("1128")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_000: F64
+  F64.parse("1129")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_001: F64
+  F64.parse("1130")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_002: F64
+  F64.parse("1131")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_003: F64
+  F64.parse("1132")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_004: F64
+  F64.parse("1133")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_005: F64
+  F64.parse("1134")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_006: F64
+  F64.parse("1135")
+
+GON_FREECS_JAJANKEN_PAPER_PROJECTILE_007: F64
+  F64.parse("1136")
+
+GON_FREECS_JAJANKEN_SCISSORS_000: F64
+  F64.parse("1137")
+
+GON_FREECS_JAJANKEN_SCISSORS_001: F64
+  F64.parse("1138")
+
+GON_FREECS_JAJANKEN_SCISSORS_002: F64
+  F64.parse("1139")
+
+GON_FREECS_JAJANKEN_SCISSORS_003: F64
+  F64.parse("1140")
+
+GON_FREECS_JAJANKEN_SCISSORS_004: F64
+  F64.parse("1141")
+
+GON_FREECS_JAJANKEN_SCISSORS_005: F64
+  F64.parse("1142")
+
+GON_FREECS_JAJANKEN_SCISSORS_006: F64
+  F64.parse("1143")
+
+GON_FREECS_JAJANKEN_SCISSORS_007: F64
+  F64.parse("1144")
+
+GON_FREECS_JAJANKEN_SCISSORS_008: F64
+  F64.parse("1145")
+
+GON_FREECS_JAJANKEN_SCISSORS_009: F64
+  F64.parse("1146")
+
+GON_FREECS_JAJANKEN_SCISSORS_010: F64
+  F64.parse("1147")
+
+GON_FREECS_JAJANKEN_SCISSORS_011: F64
+  F64.parse("1148")
+
+GON_FREECS_JAJANKEN_SCISSORS_012: F64
+  F64.parse("1149")
+
+GON_FREECS_JAJANKEN_SCISSORS_013: F64
+  F64.parse("1150")
+
+GON_FREECS_JAJANKEN_SCISSORS_014: F64
+  F64.parse("1151")
+
+GON_FREECS_JAJANKEN_SCISSORS_015: F64
+  F64.parse("1152")
+
+GON_FREECS_JAJANKEN_SCISSORS_016: F64
+  F64.parse("1153")
+
+GON_FREECS_JAJANKEN_SCISSORS_017: F64
+  F64.parse("1154")
+
+GON_FREECS_JAJANKEN_STONE_000: F64
+  F64.parse("1155")
+
+GON_FREECS_JAJANKEN_STONE_001: F64
+  F64.parse("1156")
+
+GON_FREECS_JAJANKEN_STONE_002: F64
+  F64.parse("1157")
+
+GON_FREECS_JAJANKEN_STONE_003: F64
+  F64.parse("1158")
+
+GON_FREECS_JAJANKEN_STONE_004: F64
+  F64.parse("1159")
+
+GON_FREECS_JAJANKEN_STONE_005: F64
+  F64.parse("1160")
+
+GON_FREECS_JAJANKEN_STONE_006: F64
+  F64.parse("1161")
+
+GON_FREECS_JAJANKEN_STONE_007: F64
+  F64.parse("1162")
+
+GON_FREECS_JAJANKEN_STONE_008: F64
+  F64.parse("1163")
+
+GON_FREECS_JAJANKEN_STONE_009: F64
+  F64.parse("1164")
+
+GON_FREECS_JAJANKEN_STONE_010: F64
+  F64.parse("1165")
+
+GON_FREECS_JAJANKEN_STONE_011: F64
+  F64.parse("1166")
+
+GON_FREECS_JAJANKEN_STONE_012: F64
+  F64.parse("1167")
+
+GON_FREECS_JAJANKEN_STONE_013: F64
+  F64.parse("1168")
+
+GON_FREECS_JAJANKEN_STONE_014: F64
+  F64.parse("1169")
+
+GON_FREECS_JAJANKEN_STONE_015: F64
+  F64.parse("1170")
+
+GON_FREECS_JAJANKEN_STONE_016: F64
+  F64.parse("1171")
+
+GON_FREECS_JAJANKEN_STONE_017: F64
+  F64.parse("1172")
+
+GON_FREECS_JAJANKEN_STONE_018: F64
+  F64.parse("1173")
+
+GON_FREECS_JAJANKEN_STONE_019: F64
+  F64.parse("1174")
+
+GON_FREECS_JAJANKEN_STONE_020: F64
+  F64.parse("1175")
+
+GON_FREECS_JAJANKEN_STONE_021: F64
+  F64.parse("1176")
+
+GON_FREECS_JAJANKEN_STONE_022: F64
+  F64.parse("1177")
+
+GON_FREECS_TAUNT_TEXT_000: F64
+  F64.parse("1178")
+
+GON_FREECS_TAUNT_000: F64
+  F64.parse("1179")
+
+GON_FREECS_TAUNT_001: F64
+  F64.parse("1180")
+
+GON_FREECS_TAUNT_002: F64
+  F64.parse("1181")
+
+GON_FREECS_TAUNT_003: F64
+  F64.parse("1182")
+
+GON_FREECS_TAUNT_004: F64
+  F64.parse("1183")
+
+GON_FREECS_TAUNT_005: F64
+  F64.parse("1184")
+
+GON_FREECS_TAUNT_006: F64
+  F64.parse("1185")
+
+GON_FREECS_TAUNT_007: F64
+  F64.parse("1186")
+
+GON_FREECS_TAUNT_008: F64
+  F64.parse("1187")
+
+GON_FREECS_TAUNT_009: F64
+  F64.parse("1188")
+
+GON_FREECS_TAUNT_010: F64
+  F64.parse("1189")
+
+GON_FREECS_TAUNT_011: F64
+  F64.parse("1190")
+
+GON_FREECS_TAUNT_012: F64
+  F64.parse("1191")
+
+GON_FREECS_TAUNT_013: F64
+  F64.parse("1192")
+
+GON_FREECS_TAUNT_014: F64
+  F64.parse("1193")
+
+GON_FREECS_TAUNT_015: F64
+  F64.parse("1194")
+
+GON_FREECS_TAUNT_016: F64
+  F64.parse("1195")
+
+GON_FREECS_TRANFORMED_IDLE_000: F64
+  F64.parse("1196")
+
+GON_FREECS_TRANFORMED_IDLE_001: F64
+  F64.parse("1197")
+
+GON_FREECS_TRANFORMED_IDLE_002: F64
+  F64.parse("1198")
+
+GON_FREECS_TRANFORMED_IDLE_003: F64
+  F64.parse("1199")
+
+GON_FREECS_TRANFORMED_IDLE_004: F64
+  F64.parse("1200")
+
+GON_FREECS_TRANFORMED_IDLE_005: F64
+  F64.parse("1201")
+
+GON_FREECS_TRANFORMED_IDLE_006: F64
+  F64.parse("1202")
+
+GON_FREECS_TRANFORMED_IDLE_007: F64
+  F64.parse("1203")
+
+GON_FREECS_TRANFORMED_IDLE_008: F64
+  F64.parse("1204")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_000: F64
+  F64.parse("1205")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_001: F64
+  F64.parse("1206")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_002: F64
+  F64.parse("1207")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_003: F64
+  F64.parse("1208")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_004: F64
+  F64.parse("1209")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_005: F64
+  F64.parse("1210")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_006: F64
+  F64.parse("1211")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_007: F64
+  F64.parse("1212")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_008: F64
+  F64.parse("1213")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_009: F64
+  F64.parse("1214")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_010: F64
+  F64.parse("1215")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_011: F64
+  F64.parse("1216")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_012: F64
+  F64.parse("1217")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_013: F64
+  F64.parse("1218")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_014: F64
+  F64.parse("1219")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_015: F64
+  F64.parse("1220")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_016: F64
+  F64.parse("1221")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_017: F64
+  F64.parse("1222")
+
+GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_018: F64
+  F64.parse("1223")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_000: F64
+  F64.parse("1224")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_001: F64
+  F64.parse("1225")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_002: F64
+  F64.parse("1226")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_003: F64
+  F64.parse("1227")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_004: F64
+  F64.parse("1228")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_005: F64
+  F64.parse("1229")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_006: F64
+  F64.parse("1230")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_PROJETIL_007: F64
+  F64.parse("1231")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_000: F64
+  F64.parse("1232")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_001: F64
+  F64.parse("1233")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_002: F64
+  F64.parse("1234")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_003: F64
+  F64.parse("1235")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_004: F64
+  F64.parse("1236")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_005: F64
+  F64.parse("1237")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_006: F64
+  F64.parse("1238")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_007: F64
+  F64.parse("1239")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_008: F64
+  F64.parse("1240")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_009: F64
+  F64.parse("1241")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_010: F64
+  F64.parse("1242")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_011: F64
+  F64.parse("1243")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_012: F64
+  F64.parse("1244")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_013: F64
+  F64.parse("1245")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_014: F64
+  F64.parse("1246")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_015: F64
+  F64.parse("1247")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_000: F64
+  F64.parse("1248")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_001: F64
+  F64.parse("1249")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_002: F64
+  F64.parse("1250")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_003: F64
+  F64.parse("1251")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_004: F64
+  F64.parse("1252")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_005: F64
+  F64.parse("1253")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_006: F64
+  F64.parse("1254")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_007: F64
+  F64.parse("1255")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_008: F64
+  F64.parse("1256")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_009: F64
+  F64.parse("1257")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_010: F64
+  F64.parse("1258")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_011: F64
+  F64.parse("1259")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_012: F64
+  F64.parse("1260")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_013: F64
+  F64.parse("1261")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_014: F64
+  F64.parse("1262")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_015: F64
+  F64.parse("1263")
+
+GON_FREECS_TRANSFORMED_JAJANKEN_STONE_016: F64
+  F64.parse("1264")
+
+GON_FREECS_TRANSFORMED_WALK_000: F64
+  F64.parse("1265")
+
+GON_FREECS_TRANSFORMED_WALK_001: F64
+  F64.parse("1266")
+
+GON_FREECS_TRANSFORMED_WALK_002: F64
+  F64.parse("1267")
+
+GON_FREECS_TRANSFORMED_WALK_003: F64
+  F64.parse("1268")
+
+GON_FREECS_TRANSFORMED_WALK_004: F64
+  F64.parse("1269")
+
+GON_FREECS_TRANSFORMED_WALK_005: F64
+  F64.parse("1270")
+
+GON_FREECS_TRANSFORMED_WALK_006: F64
+  F64.parse("1271")
+
+GON_FREECS_TRANSFORMED_WALK_007: F64
+  F64.parse("1272")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_000: F64
+  F64.parse("1273")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_001: F64
+  F64.parse("1274")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_002: F64
+  F64.parse("1275")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_003: F64
+  F64.parse("1276")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_004: F64
+  F64.parse("1277")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_005: F64
+  F64.parse("1278")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_006: F64
+  F64.parse("1279")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_007: F64
+  F64.parse("1280")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_008: F64
+  F64.parse("1281")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_009: F64
+  F64.parse("1282")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_010: F64
+  F64.parse("1283")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_011: F64
+  F64.parse("1284")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_012: F64
+  F64.parse("1285")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_013: F64
+  F64.parse("1286")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_014: F64
+  F64.parse("1287")
+
+GON_FREECS_ULTIMATE_TRANSFORMATION_015: F64
+  F64.parse("1288")
+
+GON_FREECS_WALK_000: F64
+  F64.parse("1289")
+
+GON_FREECS_WALK_001: F64
+  F64.parse("1290")
+
+GON_FREECS_WALK_002: F64
+  F64.parse("1291")
+
+GON_FREECS_WALK_003: F64
+  F64.parse("1292")
+
+GON_FREECS_WALK_004: F64
+  F64.parse("1293")
+
+GON_FREECS_WALK_005: F64
+  F64.parse("1294")
+
+POSTE_IDLE_000: F64
+  F64.parse("1295")
+
+PUNCHINGBAG_IDLE_000: F64
+  F64.parse("1296")
+
+PUNCHINGBAG_IDLE_001: F64
+  F64.parse("1297")
+
+PUNCHINGBAG_IDLE_002: F64
+  F64.parse("1298")
+
+PUNCHINGBAG_IDLE_003: F64
+  F64.parse("1299")
+
+PUNCHINGBAG_IDLE_004: F64
+  F64.parse("1300")
+
+PUNCHINGBAG_IDLE_005: F64
+  F64.parse("1301")
+
+PUNCHINGBAG_IDLE_006: F64
+  F64.parse("1302")
+
+PUNCHINGBAG_IDLE_007: F64
+  F64.parse("1303")
+
+PUNCHINGBAG_IDLE_008: F64
+  F64.parse("1304")
+
+PUNCHINGBAG_IDLE_009: F64
+  F64.parse("1305")
+
+PUNCHINGBAG_IDLE_010: F64
+  F64.parse("1306")
+
+PUNCHINGBAG_IDLE_011: F64
+  F64.parse("1307")
+
+PUNCHINGBAG_IDLE_012: F64
+  F64.parse("1308")
+
+PUNCHINGBAG_IDLE_013: F64
+  F64.parse("1309")
+
+PUNCHINGBAG_IDLE_014: F64
+  F64.parse("1310")
+
+PUNCHINGBAG_IDLE_015: F64
+  F64.parse("1311")
+
+PUNCHINGBAG_IDLE_016: F64
+  F64.parse("1312")
+
+PUNCHINGBAG_IDLE_017: F64
+  F64.parse("1313")
+
+PUNCHINGBAG_IDLE_018: F64
+  F64.parse("1314")
+
+PUNCHINGBAG_IDLE_019: F64
+  F64.parse("1315")
+
+PUNCHINGBAG_IDLE_020: F64
+  F64.parse("1316")
+
+PUNCHINGBAG_IDLE_021: F64
+  F64.parse("1317")
+
+PUNCHINGBAG_IDLE_022: F64
+  F64.parse("1318")
+
+PUNCHINGBAG_IDLE_023: F64
+  F64.parse("1319")
+
+WALL_IDLE_000: F64
+  F64.parse("1320")
 
 TA.Thing.animate: (self: TA.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TA.Thing
   (self) (boost) (model) (count) (durat) let self = TA.Thing.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TA.Thing.reset(self)(F64.sub(durat)(F64.1)); self
@@ -3915,7 +6069,7 @@ TA.Thing.dash: (self: TA.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: 
 TA.Thing.die: TA.Thing -> F64 -> TA.Thing
   (self) (at_tik) let curr_tik = TA.Thing.get_tik(self); let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_die<() TA.Thing>(TA.Thing.set_die(self)(Bool.true))(self)
 
-TA.Thing.dilma_fun: TA.Thing -> TA.Thing
+TA.Thing.dilma_fun: TA.Game.TxFunction
   (self) let self = TA.Thing.set_mov(self)(F64.parse("2")); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.act)(F64.0))(F64.if<TA.Thing>(TA.Thing.is_walking(self))(TA.Thing.animate(self)(F64.1)(DILMA_WALK_000)(F64.parse("8"))(F64.parse("16")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TA.Thing>(F64.eql(self.act)(F64.1))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_000)(F64.parse("6"))(F64.parse("3"))(F64.parse("7")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_007)(F64.parse("5"))(F64.parse("28"))(F64.parse("14")); let self = TA.Thing.reset(self)(F64.parse("27")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.2))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_000)(F64.parse("17"))(F64.parse("0"))(F64.parse("34")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_016)(F64.parse("3"))(F64.parse("34"))(F64.parse("64")); let self = TA.Thing.reset(self)(F64.parse("63")); let speech = TA.Thing.new_thing; let speech = TA.Thing.set_fun(speech)(TA.Thing.dilma.confusion_fun); let speech = TA.Thing.set_dir(speech)(TA.Thing.targ_dir(self)); let self = TA.Thing.spawn(self)(F64.parse("34"))([TA.Thing; TA.Thing.move(speech)(TA.Thing.at_max_dist(self)(F64.parse("100")))]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_SALUTING_THE_CASSAVA_000)(F64.parse("18"))(F64.parse("54")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_STOCKING_WIND_CASTING_000)(F64.parse("10"))(F64.parse("30")); let wind = TA.Thing.new_thing; let wind = TA.Thing.set_fun(wind)(TA.Thing.dilma.stocking_wind_fun); let wind = TA.Thing.set_pos(wind)(self.pos); let wind = TA.Thing.set_dir(wind)(TA.Thing.targ_dir(self)); let wind = TA.Thing.set_vel(wind)(F64.V3.scale(F64.parse("6"))(TA.Thing.targ_dir(self))); let wind = TA.Thing.set_box(wind)(TA.Game.Hitbox.nbox); let self = TA.Thing.spawn(self)(F64.parse("8"))([TA.Thing; wind]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("5")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16")))(TA.Thing.animate(self)(F64.0)(DILMA_TAUNT_000)(F64.parse("6"))(F64.parse("18"))))))))
 
 TA.Thing.dilma.stocking_wind_fun: TA.Thing -> TA.Thing
@@ -4065,7 +6219,7 @@ TA.Thing.is_using_buff: TA.Thing -> Bits -> Bool
 TA.Thing.is_walking: TA.Thing -> F64
   (this) let this.pad = TA.Thing.get_pad(this); F64.from_bool(F64.ltn(F64.0)(F64.V3.len(this.pad)))
 
-TA.Thing.map_stt_key: TA.Thing -> Bits -> F64 -> F64 -> TA.Thing
+TA.Thing.map_stt_key: TA.Thing -> Bits -> (F64 -> F64) -> TA.Thing
   (self) (stt_key) (func) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() TA.Thing>(TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(F64.0)(stt)))((result.value) TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(func(result.value))(stt)))
 
 TA.Thing.move: TA.Thing -> F64.V3 -> TA.Thing
@@ -4440,7 +6594,7 @@ UFind.new: UFind
 UFind.equivalent: UFind -> Bits -> Bits -> Bool
   (uf) (path1) (path2) UFind.find<Bool>(uf)(path1)((uf) (root1) (rank1) UFind.find<Bool>(uf)(path2)((uf) (root2) (rank2) Bits.eql(root1)(root2)))
 
-UFind.find: <B: Type> -> UFind -> Bits -> UFind -> Bits -> Nat -> B -> B
+UFind.find: <B: Type> -> UFind -> Bits -> (UFind -> Bits -> Nat -> B) -> B
   <B> (uf) (path) (k) let found = Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf); found<() B>((node) (uf) node<() B>((node.rank) k(uf)(path)(node.rank))((node.parent) UFind.find<B>(uf)(node.parent)((uf) (root) (rank) let uf = Map.set<UNode>(path)(UNode.link(root))(uf); k(uf)(root)(rank))))
 
 UFind: Type
@@ -4469,6 +6623,15 @@ Unit.new: Unit
 
 Unit.show: Unit -> String
   (u) "Unit.new"
+
+Vector: (A: Type) -> (len: Nat) -> Type
+  (A) (len) self<P: (len: Nat) -> (self: Vector(A)(len)) -> Type> -> (nil: P(Nat.zero)(Vector.nil<A>)) -> (ext: <len: Nat> -> (x: A) -> (xs: Vector(A)(len)) -> P(Nat.succ(len))(Vector.ext<A><len>(x)(xs))) -> P(len)(self)
+
+Vector.nil: <A: Type> -> Vector(A)(Nat.zero)
+  <A> <P> (nil) (ext) nil
+
+Vector.ext: <A: Type> -> <len: Nat> -> (x: A) -> (xs: Vector(A)(len)) -> Vector(A)(Nat.succ(len))
+  <A> <len> (x) (xs) <P> (nil) (ext) ext<len>(x)(xs)
 
 Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
   <size> (wo) <P> (we) (w0) (w1) w0<size>(wo)
@@ -4565,6 +6728,9 @@ Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
 
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
+
+_a: (x: Nat) -> (y: Nat) -> Nat
+  (x) (y) Nat.add(x)(y)
 
 hello: IO(Unit)
   let uname = "Your name:"; let greet = String.concat("Hello, "); IO.log<Unit>(uname)(() IO.inp<Unit>((name) IO.log<Unit>(greet(name))(() IO.end<Unit>(Unit.new))))

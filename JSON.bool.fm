@@ -1,4 +1,0 @@
-JSON.bool: Bool -> JSON
-  (x)
-  <P> () (bool) () () () ()
-  bool(x)

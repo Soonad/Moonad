@@ -1,3 +1,0 @@
-Pair.new: <A: Type> -> <B: Type> -> A -> B -> Pair(A)(B)
-  <A> <B> (a) (b)
-  <P> (pair) pair(a)(b)
