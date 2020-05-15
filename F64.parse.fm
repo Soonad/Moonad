@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-F64.parse: String -> F64 
-  F64.parse 
-=======
 F64.parse: String -> F64
   F64.parse
->>>>>>> master

@@ -1,2 +1,0 @@
-TaelinArena.Constants.DARTH_VADER_USING_FORCE : Bits 
-  Bits.from_string("0101100001")
