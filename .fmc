@@ -6616,8 +6616,8 @@ Vector.nil: ∀(A:*) ((Vector A) Nat.zero)
 Vector.ext: ∀(A:*) ∀(len:Nat) Π(x:A) Π(xs:((Vector A) len)) ((Vector A) (Nat.succ len))
   ΛA Λlen λx λxs ΛP λnil λext ((<ext len> x) xs)
 
-Vector.len_0_is_nil: Π(vec:((Vector Nat) Nat.zero)) (((Equal ((Vector Nat) Nat.zero)) vec) <Vector.nil Nat>)
-  λvec (((<vec λlen λvec Π(e:(((Equal Nat) len) Nat.zero)) @lft=((<<<<Equal.rewrite Nat> len> Nat.zero> λx ((Vector Nat) x)> e) vec);@rgt=((<<<<Equal.rewrite Nat> len> Nat.zero> λx ((Vector Nat) Nat.zero)> e) <Vector.nil Nat>);@Ret=(((Equal ((Vector Nat) Nat.zero)) lft) rgt);Ret> λe $vec=((<<<<Equal.rewrite Nat> Nat.zero> Nat.zero> λx ((Vector Nat) Nat.zero)> e) <Vector.nil Nat>);<<Equal.to ((Vector Nat) Nat.zero)> vec>) Λlen λx λxs λe ((Empty.absurd ((Nat.succ_isnt_zero len) e)) @lft=((<<<<Equal.rewrite Nat> (Nat.succ len)> Nat.zero> λx ((Vector Nat) x)> e) ((<<Vector.ext Nat> len> x) xs));@rgt=((<<<<Equal.rewrite Nat> (Nat.succ len)> Nat.zero> λx ((Vector Nat) Nat.zero)> e) <Vector.nil Nat>);@Ret=(((Equal ((Vector Nat) Nat.zero)) lft) rgt);Ret)) <<Equal.to Nat> Nat.zero>)
+Vector.len_0_is_nil: ∀(A:*) Π(vec:((Vector A) Nat.zero)) (((Equal ((Vector A) Nat.zero)) vec) <Vector.nil A>)
+  ΛA λvec (((<vec λlen λvec Π(e:(((Equal Nat) len) Nat.zero)) $P0=:Π(x:Nat) * λx ((Vector A) x);$P1=:Π(x:Nat) * λx ((Vector A) Nat.zero);@x0=((<<<<Equal.rewrite Nat> len> Nat.zero> P0> e) vec);@x1=((<<<<Equal.rewrite Nat> len> Nat.zero> P1> e) <Vector.nil A>);(((Equal (:Π(x:Nat) * λx ((Vector A) x) Nat.zero)) x0) x1)> λe $P0=:Π(x:Nat) * λx ((Vector A) Nat.zero);$x0=((<<<<Equal.rewrite Nat> Nat.zero> Nat.zero> P0> e) <Vector.nil A>);<<Equal.to ((Vector A) Nat.zero)> x0>) Λlen λx λxs λe ((Empty.absurd ((Nat.succ_isnt_zero len) e)) $P0=:Π(x:Nat) * λx ((Vector A) x);$P1=:Π(x:Nat) * λx ((Vector A) Nat.zero);@x0=((<<<<Equal.rewrite Nat> len> Nat.zero> P0> e) ((<<Vector.ext A> len> x) xs));@x1=((<<<<Equal.rewrite Nat> len> Nat.zero> P1> e) <Vector.nil A>);(((Equal (:Π(x:Nat) * λx ((Vector A) x) Nat.zero)) x0) x1))) <<Equal.to Nat> Nat.zero>)
 
 Word.0: ∀(size:Nat) Π(:(Word size)) (Word (Nat.succ size))
   Λsize λwo ΛP λwe λw0 λw1 (<w0 size> wo)

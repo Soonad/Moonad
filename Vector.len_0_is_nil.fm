@@ -1,14 +1,18 @@
-Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
+Vector.len_0_is_nil<A: Type>(vec: Vector(A, Nat.zero))
+  : Equal()(vec)(Vector.nil<A>)
   case vec
   : (len, vec)
-    (e: Equal(Nat)(len)(Nat.zero)) ->
-    let lft = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(x)>(e, vec)
-    let rgt = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e, Vector.nil<Nat>)
-    let Ret = Equal()(lft)(rgt)
-    Ret;
+    (e: Equal()(len)(Nat.zero)) ->
+    def P0 = ((x) Vector(A)(x)) :: _
+    def P1 = ((x) Vector(A)(Nat.zero)) :: _
+    let x0 = Equal.rewrite<><><><P0>(e, vec)
+    let x1 = Equal.rewrite<><><><P1>(e, Vector.nil<A>)
+    Equal()(x0)(x1);
   | (e)
-    def vec = Equal.rewrite<Nat><Nat.zero><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e, Vector.nil<Nat>)
-    Equal.to<Vector(Nat, Nat.zero)><vec>;
+    def P0 = ((x) Vector(A)(Nat.zero)) :: _
+    def x0 = Equal.rewrite<><><><P0>(e, Vector.nil<A>)
+    Equal.to<Vector(A, Nat.zero)><x0>;
   | <len> (x, xs, e)
     Empty.absurd(Nat.succ_isnt_zero(len, e), _);
-  | Equal.to<Nat><Nat.zero>;
+  | Equal.to<><>;
+
