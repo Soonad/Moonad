@@ -1,9 +1,0 @@
-String.drop_while: (Char -> Bool) -> String -> String
-  (cond) (str)
-  str<() String>
-  | String.nil;
-  | (str.head) (str.tail)
-    cond(str.head)<() String>
-    | String.drop_while(cond)(str.tail);
-    | str;
-  ;

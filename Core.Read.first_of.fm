@@ -1,9 +1,0 @@
-Core.Read.first_of: <A: Type> -> List(Core.Read(A)) -> Core.Read(A)
-  <A> (reads) (code)
-  reads<() Core.Read.Reply(A)>
-  | Core.Read.fail<A>;
-  | (reads.head) (reads.tail)
-    reads.head(code)<() Core.Read.Reply(A)>
-    | Core.Read.first_of<A>(reads.tail)(code);
-    | Maybe.some<Pair(A)(String)>;
-  ;

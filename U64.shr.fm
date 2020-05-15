@@ -1,4 +1,0 @@
-U64.shr: Nat -> U64 -> U64 //prim//
-  (n) (a)
-  a<() U64> | (a_val)
-  U64.new(Word.shift_right<Nat.64>(n)(a_val));

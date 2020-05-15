@@ -1,2 +1,0 @@
-Parser.choice: <A: Type> -> List(Parser(A)) -> Parser(A)
-  <A> (ps) Parsec.choice<Unit><Unit><A>(ps)

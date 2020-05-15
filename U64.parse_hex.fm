@@ -1,2 +1,0 @@
-U64.parse_hex: String -> U64
-  (str) U64.new(Word.from_bits(Nat.64)(Bits.parse_hex(str)))

@@ -1,3 +1,0 @@
-// The identity function returns its argument.
-Function.id : <A: Type> -> (x: A) -> A
-  <A> (x) x

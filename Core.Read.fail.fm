@@ -1,2 +1,0 @@
-Core.Read.fail: <A: Type> -> Core.Read.Reply(A)
-  <A> Maybe.none<Pair(A)(String)>

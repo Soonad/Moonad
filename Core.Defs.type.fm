@@ -1,5 +1,0 @@
-Core.Defs.type: Core.Defs -> String -> Core
-  (defs) (name)
-  Core.Defs.get_type(defs)(name)<() Core>
-  | Core.ref("<undefined>");
-  | (type) type;

@@ -1,3 +1,0 @@
-Parsec.Error.Item.label: String -> Parsec.Error.Item
-  (xs)
-  <P> () (label) () label(xs)

@@ -1,4 +1,0 @@
-Core.Read.typ: Core.Read(Core.Bind)
-  use skip = Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("Type"))
-  use ctx  = Core.Read.done<Core.Bind>                             
-  Core.typ

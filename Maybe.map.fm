@@ -1,5 +1,0 @@
-Maybe.map: <A: Type> -> <B: Type> -> (A -> B) -> Maybe(A) -> Maybe(B)
-  <A> <B> (fn) (maybe)
-  maybe<() Maybe(B)>
-  | Maybe.none<B>;
-  | (value) Maybe.some<B>(fn(value));

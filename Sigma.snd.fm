@@ -1,4 +1,0 @@
-Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B>(sig))
-  <A> <B> (sig)
-  sig<(sig) B(Sigma.fst<A><B>(sig))>
-  | (x) (y) y;

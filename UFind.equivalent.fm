@@ -1,7 +1,0 @@
-UFind.equivalent: UFind -> Bits -> Bits -> Bool
-  (uf) (path1) (path2)
-  UFind.find<Bool>(uf)(path1)(
-    (uf) (root1) (rank1)
-    UFind.find<Bool>(uf)(path2)(
-      (uf) (root2) (rank2)
-      Bits.eql(root1)(root2)))

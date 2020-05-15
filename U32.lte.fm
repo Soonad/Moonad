@@ -1,6 +1,0 @@
-// a <= b
-U32.lte: U32 -> U32 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.lte<Nat.32>(a_val)(b_val);;

@@ -1,8 +1,0 @@
-U64.mix: U64 -> U64
-  (h)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  let h = U64.mul(h)(U64.mix.const0)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  let h = U64.mul(h)(U64.mix.const1)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  h

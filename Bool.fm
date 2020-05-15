@@ -1,3 +1,33 @@
+// Are both bools true?
+Bool.and: Bool -> Bool -> Bool //prim//
+  (a) (b)
+  case a:
+  | case b:
+    | Bool.true;
+    | Bool.false;;
+  | case b:
+    | Bool.false;
+    | Bool.false;;
+
+// Dependent elimination of Bool.
+Bool.elim : (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
+  (b) <P> (t) (f) b<P>(t)(f)
+
+// Are both booleans equal?
+Bool.eql: Bool -> Bool -> Bool
+  (a) (b)
+  case a:
+  | case b: 
+    | Bool.true;
+    | Bool.false;;
+  | case b:
+    | Bool.false;
+    | Bool.true;;
+
+Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
+  def P = ((b) case b: |Empty; |Unit;) :: Bool -> Type
+  (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
+
 // Booleans.
 // T Bool
 // | true
@@ -5,3 +35,49 @@
 T Bool
 | true;
 | false;
+
+Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A //prim//
+  <A> (x) (ct) (cf)
+  case Bool.eql(x)(Bool.false):
+  | cf;
+  | ct;
+  
+
+// Boolean negation.
+Bool.not: Bool -> Bool //prim//
+  (a)
+  case a:
+  | Bool.false;
+  | Bool.true;
+
+// Boolean negation, fusible.
+Bool.notf(a: Bool): Bool
+  <P> (t) (f)
+  case a
+  : (a) P(Bool.notf(a));
+  | f;
+  | t;
+
+// Is any of the bools true?
+Bool.or: Bool -> Bool -> Bool //prim//
+  (a) (b)
+  case a:
+  | case b:
+    | Bool.true;
+    | Bool.true;
+  ;
+  | case b:
+    | Bool.true;
+    | Bool.false;
+  ;
+
+// Bool that is provably different from the input
+Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
+  (a)
+  a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>
+  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>;
+  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>;
+
+Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
+  (e)
+  Equal.rewrite<Bool><Bool.true><Bool.false><(b) b<() Type>|Unit;|Empty;>(e)(Unit.new)

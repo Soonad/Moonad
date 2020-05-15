@@ -1,3 +1,0 @@
-Core.Defs.get: Core.Defs -> String -> Maybe(Core.Def)
-  (defs) (name)
-  Map.get<Core.Def>(String.to_bits(name))(defs)

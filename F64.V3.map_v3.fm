@@ -1,4 +1,0 @@
-F64.V3.map: (F64 -> F64) -> F64.V3 -> F64.V3
-  (fn) (v)
-  v<() F64.V3> | (v.x) (v.y) (v.z)
-  F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z));

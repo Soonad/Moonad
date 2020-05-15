@@ -1,5 +1,0 @@
-A.inference1: Bool -> Bool
-  (b)
-  case b:
-  | Bool.true;
-  | Bool.false;

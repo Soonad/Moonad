@@ -1,6 +1,0 @@
-Bits.inc: Bits -> Bits
-  (bits)
-  case bits:
-  | Bits.nil;
-  | (bits.pred) Bits.1(bits.pred);
-  | (bits.pred) Bits.0(Bits.inc(bits.pred));

@@ -1,2 +1,0 @@
-UFind.new_node: UFind -> Bits -> UFind
-  (uf) (path) Map.set<UNode>(path)(UNode.root(Nat.zero))(uf)

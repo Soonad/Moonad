@@ -1,4 +1,0 @@
-// a == b
-Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
-  <size> (a) (b)
-  Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)

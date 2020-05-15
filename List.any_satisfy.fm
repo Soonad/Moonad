@@ -1,9 +1,0 @@
-// Do any element satisfy a condition?
-List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list)
-  case list:
-  | Bool.false;
-  | (head) (tail)
-    case cond(head):
-    | Bool.true;
-    | List.any<>(cond)(tail);;

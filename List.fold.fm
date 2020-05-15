@@ -1,6 +1,0 @@
-// Folds over a list.
-List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  <A> <B> (nil) (cons) (list)
-  case list:
-  | nil;
-  | (x) (xs) cons(x)(List.fold<><>(nil)(cons)(xs));

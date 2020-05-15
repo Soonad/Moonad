@@ -1,2 +1,0 @@
-Core.to_bits: Core -> Bits
-  (term) Core.to_bits.go(term)(Nat.0)(Bool.false)(Bits.nil)

@@ -1,5 +1,0 @@
-Maybe.extract: <A: Type> -> Maybe(A) -> A -> A
-  <A> (m) (a)
-  m<() A>
-  | a;
-  | (m.value) m.value;

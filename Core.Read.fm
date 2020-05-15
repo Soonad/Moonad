@@ -1,2 +1,0 @@
-Core.Read: Type -> Type
-  (A) String -> Core.Read.Reply(A)

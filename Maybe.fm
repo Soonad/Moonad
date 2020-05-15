@@ -1,4 +1,29 @@
+Maybe.bind: <A: Type> -> <B: Type> -> Maybe(A) -> (A -> Maybe(B)) -> Maybe(B)
+  <A> <B> (m) (f)
+  m<() Maybe(B)>
+  | Maybe.none<B>;
+  | (m.val) f(m.val);
+
+Maybe.extract: <A: Type> -> Maybe(A) -> A -> A
+  <A> (m) (a)
+  m<() A>
+  | a;
+  | (m.value) m.value;
+
 // The Maybe(A) type can hold a value of type A or nothing.
 T Maybe <A: Type>
 | none;
 | some(value: A);
+
+Maybe.join: <A: Type> -> Maybe(Maybe(A)) -> Maybe(A)
+  <A> (m)
+  m<() Maybe(A)>
+  | Maybe.none<A>;
+  | (m.value) m.value;
+
+Maybe.map: <A: Type> -> <B: Type> -> (A -> B) -> Maybe(A) -> Maybe(B)
+  <A> <B> (fn) (maybe)
+  maybe<() Maybe(B)>
+  | Maybe.none<B>;
+  | (value) Maybe.some<B>(fn(value));
+
