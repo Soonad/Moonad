@@ -1,0 +1,3 @@
+Lang.parse: Π(s:String) ((Parser.type Core) ((<Parser.run_default Core> Lang.core) s))
+  λs ((<Parser.parse Core> Lang.core) s)
+

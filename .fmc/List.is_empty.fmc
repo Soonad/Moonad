@@ -1,0 +1,3 @@
+List.is_empty: ∀(A:*) Π(:(List A)) Bool
+  ΛA λlist ((<list λself Bool> Bool.true) λx λxs Bool.false)
+

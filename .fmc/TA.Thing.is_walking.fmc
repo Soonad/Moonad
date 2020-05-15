@@ -1,0 +1,3 @@
+TA.Thing.is_walking: Π(:TA.Thing) F64
+  λthis @this.pad=(TA.Thing.get_pad this);(F64.from_bool ((F64.ltn F64.0) (F64.V3.len this.pad)))
+

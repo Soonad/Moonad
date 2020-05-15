@@ -1,0 +1,3 @@
+Lang.symbol: String -> Parser(String)
+  (str) Parser.bind<String><String>(Parser.tokens(str))((x) Parser.then<Unit><String>(Lang.space)(Parser.pure<String>(x)))
+

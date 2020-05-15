@@ -1,0 +1,3 @@
+Lang.app: Π(:Π(:Core.Ctx) Core) (Parser Π(:Core.Ctx) Core)
+  $C=Π(:Core.Ctx) Core;λfunc ((<<Parser.bind ((Pair Bool) C)> C> (<Lang.enclose C> Lang.trm)) λx (<x λ (Parser C)> λeras λargm (<Parser.pure C> λctx (((Core.app eras) (func ctx)) (argm ctx)))))
+

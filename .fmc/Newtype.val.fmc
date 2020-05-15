@@ -1,0 +1,3 @@
+Newtype.val: ∀(A:*) ∀(tag:String) Π(x:A) ((Newtype A) tag)
+  ΛA Λtag λx ΛP λval (val x)
+

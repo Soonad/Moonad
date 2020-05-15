@@ -1,0 +1,3 @@
+List.to_concat: ∀(A:*) Π(xs:(List A)) (Concat A)
+  ΛA λxs ((<xs λ (Concat A)> λys ys) λhead λtail λys ((<List.cons A> head) ((<List.to_concat A> tail) ys)))
+

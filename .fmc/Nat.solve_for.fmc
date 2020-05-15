@@ -1,0 +1,3 @@
+Nat.solve_for: Π(x:Nat) ∀(E:Π(x:Nat) *) ∀(P:(E x)) Nat
+  λx ΛE ΛP x
+

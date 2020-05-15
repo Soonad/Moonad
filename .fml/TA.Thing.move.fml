@@ -1,0 +1,3 @@
+TA.Thing.move: TA.Thing -> F64.V3 -> TA.Thing
+  (self) (to_pos) TA.Thing.set_pos(self)(to_pos)
+

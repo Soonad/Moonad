@@ -1,0 +1,3 @@
+TA.Thing.at_dist: TA.Thing -> F64 -> F64.V3
+  (self) (dist) let dir = TA.Thing.targ_dir(self); let pos = TA.Thing.get_pos(self); F64.V3.add(pos)(F64.V3.scale(dist)(dir))
+

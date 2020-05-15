@@ -1,0 +1,3 @@
+TA.Game.Input.cmsg: Π(:String) TA.Game.Input
+  λtxt ΛP λsdir λkey0 λkey1 λkey2 λkey3 λkey4 λkey5 λcmsg (cmsg txt)
+

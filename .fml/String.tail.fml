@@ -1,0 +1,3 @@
+String.tail: String -> String
+  (str) str<(self) String>(String.nil)((str.head) (str.tail) str.tail)
+

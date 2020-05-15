@@ -1,0 +1,3 @@
+Concat.to_list: ∀(A:*) Π(xs:(Concat A)) (List A)
+  ΛA λxs (xs <List.nil A>)
+

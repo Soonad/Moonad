@@ -1,0 +1,3 @@
+Parsec.get_state: ∀(S:*) ∀(E:*) (((Parsec S) E) ((Parsec.State S) E))
+  ΛS ΛE ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error ((empty_value s1) s1)
+

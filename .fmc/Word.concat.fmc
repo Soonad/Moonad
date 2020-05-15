@@ -1,0 +1,3 @@
+Word.concat: ∀(a_size:Nat) ∀(b_size:Nat) Π(:(Word a_size)) Π(:(Word b_size)) (Word ((Nat.add a_size) b_size))
+  Λa_size Λb_size λa λb (((<a λa_size λ (Word ((Nat.add a_size) b_size))> b) Λa.size λa.pred @rest=((<<Word.concat a.size> b_size> a.pred) b);(<Word.0 ((Nat.add a.size) b_size)> rest)) Λa.size λa.pred @rest=((<<Word.concat a.size> b_size> a.pred) b);(<Word.1 ((Nat.add a.size) b_size)> rest))
+

@@ -1,0 +1,3 @@
+TA.Thing.get_sid: Π(thi:TA.Thing) TA.Game.SideId
+  λthi (<thi λ TA.Game.SideId> λthi.fun λthi.pid λthi.mid λthi.act λthi.sid λthi.stt λthi.nam λthi.lit λthi.tik λthi.pos λthi.mov λthi.bst λthi.pad λthi.dir λthi.trg λthi.vel λthi.box λthi.wei λthi.mhp λthi.dmg λthi.knk λthi.buf λthi.chi λthi.hit λthi.rst λthi.die thi.sid)
+

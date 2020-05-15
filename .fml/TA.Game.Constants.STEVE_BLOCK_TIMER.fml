@@ -1,0 +1,3 @@
+TA.Game.Constants.STEVE_BLOCK_TIMER: Bits
+  Bits.from_string("000")
+

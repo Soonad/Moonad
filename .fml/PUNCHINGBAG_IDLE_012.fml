@@ -1,0 +1,3 @@
+PUNCHINGBAG_IDLE_012: F64
+  F64.parse("1308")
+

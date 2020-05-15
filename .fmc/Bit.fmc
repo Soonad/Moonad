@@ -1,0 +1,3 @@
+Bit: *
+  ∀bit(P:Π(:Bit) *) Π(:(P Bit.0)) Π(:(P Bit.1)) (P bit)
+

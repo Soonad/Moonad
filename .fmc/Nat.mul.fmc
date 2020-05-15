@@ -1,0 +1,3 @@
+Nat.mul: Π(:Nat) Π(:Nat) Nat
+  λn λm ((<n λ Nat> Nat.zero) λn.pred ((Nat.add m) ((Nat.mul n.pred) m)))
+

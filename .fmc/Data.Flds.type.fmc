@@ -1,0 +1,3 @@
+Data.Flds.type: Π(:*) Π(:Data.Flds) *
+  λP λflds ((<flds λ *> P) λflds.name λflds.type λflds.flds Π(x:P) ((Data.Flds.type P) flds.flds))
+

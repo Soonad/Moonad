@@ -1,0 +1,3 @@
+Parsec.run_default: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> String -> S -> Either(Parsec.Error(E))(A)
+  <S> <E> <A> (p) (str) (s) Parsec.Reply.to_either<S><E><A>(Parsec.run<S><E><A>(p)(Parsec.State.default<S><E>(str)(s)))
+

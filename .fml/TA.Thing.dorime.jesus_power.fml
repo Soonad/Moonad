@@ -1,0 +1,3 @@
+TA.Thing.dorime.jesus_power: TA.Game.TxFunction
+  (self) let self.pos = TA.Thing.get_pos(self); let self.dir = TA.Thing.get_dir(self); let self = TA.Thing.set_box(self)(TA.Game.Hitbox.nbox); let effs = [TA.Game.Effect; TA.Game.Effect.heal(F64.parse("5"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let self = TA.Thing.cast(self)(F64.0)(hits); let self = TA.Thing.die(self)(F64.parse("6")); self
+

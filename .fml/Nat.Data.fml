@@ -1,0 +1,3 @@
+Nat.Data: Data
+  Data.new("Nat")(Data.Ctrs.ext("z")(Data.Flds.nil)(Data.Ctrs.ext("s")(Data.Flds.ext("pred")(Data.type(Nat.Data))(Data.Flds.nil))(Data.Ctrs.nil)))
+

@@ -1,0 +1,3 @@
+TA.Thing.animate: Π(self:TA.Thing) Π(boost:F64) Π(model:F64) Π(count:F64) Π(durat:F64) TA.Thing
+  λself λboost λmodel λcount λdurat @self=((((((TA.Thing.animate_between self) boost) model) count) F64.0) durat);@self=((TA.Thing.reset self) ((F64.sub durat) F64.1));self
+

@@ -1,0 +1,3 @@
+TA.Game.Hitbox.cbox: F64 -> TA.Game.Hitbox
+  (rad) <P> (nbox) (cbox) (pbox) cbox(rad)
+

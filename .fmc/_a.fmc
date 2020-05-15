@@ -1,0 +1,3 @@
+_a: Π(x:Nat) Π(y:Nat) Nat
+  λx λy ((Nat.add x) y)
+

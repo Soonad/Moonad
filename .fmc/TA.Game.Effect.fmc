@@ -1,0 +1,3 @@
+TA.Game.Effect: *
+  ∀effect(P:Π(:TA.Game.Effect) *) Π(heal:Π(lif:F64) (P (TA.Game.Effect.heal lif))) Π(damage:Π(dmg:F64) (P (TA.Game.Effect.damage dmg))) Π(repulse:Π(mag:F64) (P (TA.Game.Effect.repulse mag))) Π(impulse:Π(mag:F64) Π(dir:F64.V3) (P ((TA.Game.Effect.impulse mag) dir))) Π(slow:Π(dur:F64) Π(val:F64) (P ((TA.Game.Effect.slow dur) val))) Π(haste:Π(dur:F64) Π(val:F64) (P ((TA.Game.Effect.haste dur) val))) Π(shield:Π(dur:F64) Π(val:F64) (P ((TA.Game.Effect.shield dur) val))) Π(silence:Π(dur:F64) (P (TA.Game.Effect.silence dur))) Π(root:Π(dur:F64) (P (TA.Game.Effect.root dur))) Π(stun:Π(dur:F64) (P (TA.Game.Effect.stun dur))) Π(teleport:Π(to_pos:F64.V3) Π(all:F64) (P ((TA.Game.Effect.teleport to_pos) all))) (P effect)
+

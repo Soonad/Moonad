@@ -1,0 +1,3 @@
+Parser.plus: ∀(A:*) Π(:(Parser A)) Π(:(Parser A)) (Parser A)
+  ΛA λp λq ((<<<Parsec.plus Unit> Unit> A> p) q)
+

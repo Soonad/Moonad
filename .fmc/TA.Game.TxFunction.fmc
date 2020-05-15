@@ -1,0 +1,3 @@
+TA.Game.TxFunction: *
+  Π(:TA.Thing) TA.Thing
+

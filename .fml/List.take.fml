@@ -1,0 +1,3 @@
+List.take: <A: Type> -> Nat -> List(A) -> List(A)
+  <A> (n) (list) list<() List(A)>([A;])((head) (tail) n<() List(A)>([A;])((pred) List.cons<A>(head)(List.take<A>(pred)(tail))))
+

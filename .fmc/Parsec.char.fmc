@@ -1,0 +1,3 @@
+Parsec.char: ∀(S:*) ∀(E:*) Π(:Char) (((Parsec S) E) Char)
+  ΛS ΛE λc ((<<<Parsec.token S> E> Char> λx ((<((U16.eql c) x) λ (Maybe Char)> (<Maybe.some Char> c)) <Maybe.none Char>)) (<List.single Parsec.Error.Item> (Parsec.Error.Item.tokens (String.single c))))
+

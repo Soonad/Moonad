@@ -1,0 +1,3 @@
+Sigma.new: ∀(A:*) ∀(B:Π(:A) *) Π(a:A) Π(:(B a)) ((Sigma A) B)
+  ΛA ΛB λa λb ΛP λsigma ((sigma a) b)
+

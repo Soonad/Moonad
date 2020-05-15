@@ -1,0 +1,3 @@
+TA.Game.with_thing.effect: Π(:TA.Game.PlayerId) Π(:TA.Game.TxFunction) Π(:TA.Thing) TA.Thing
+  λpid λfn λthi @thi.pid=(TA.Thing.get_pid thi);((<((F64.eql pid) thi.pid) λ TA.Thing> (fn thi)) thi)
+

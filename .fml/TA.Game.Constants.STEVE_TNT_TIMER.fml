@@ -1,0 +1,3 @@
+TA.Game.Constants.STEVE_TNT_TIMER: Bits
+  Bits.from_string("001")
+

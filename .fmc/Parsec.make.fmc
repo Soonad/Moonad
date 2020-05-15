@@ -1,0 +1,3 @@
+Parsec.make: ∀(S:*) ∀(E:*) ∀(A:*) Π(:Π(:((Parsec.State S) E)) (((Parsec.Reply S) E) A)) (((Parsec S) E) A)
+  ΛS ΛE ΛA λf ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error ((((<(f s1) λ X> λs2 λa ((empty_value s2) a)) empty_error) λs2 λa ((eaten_value s2) a)) eaten_error)
+

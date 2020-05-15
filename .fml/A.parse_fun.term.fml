@@ -1,0 +1,3 @@
+A.parse_fun.term: (str: String) -> (ctx: A.Ctx) -> A.parse_fun.typ0(str)(ctx)
+  (str) (ctx) str<(str) A.parse_fun.typ0(str)(ctx)>(Unit.new)((nam) (nxt) nxt<(str) A.parse_fun.typ1(nam)(str)(ctx)>(A.Ctx.get(nam)(ctx)<() Nat>(Nat.zero)((n) n))((h) (t) (x) A.parse_fun.term(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx))))
+

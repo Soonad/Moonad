@@ -1,0 +1,3 @@
+TA.Game.Command: *
+  ∀command(P:Π(:TA.Game.Command) *) Π(new:Π(pid:TA.Game.PlayerId) Π(inp:TA.Game.Input) (P ((TA.Game.Command.new pid) inp))) (P command)
+

@@ -1,0 +1,3 @@
+TA.Game.Input.sdir: Π(:F64.V3) TA.Game.Input
+  λdir ΛP λsdir λkey0 λkey1 λkey2 λkey3 λkey4 λkey5 λcmsg (sdir dir)
+

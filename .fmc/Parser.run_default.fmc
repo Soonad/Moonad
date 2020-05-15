@@ -1,0 +1,3 @@
+Parser.run_default: ∀(A:*) Π(:(Parser A)) Π(:String) (Parser.Reply A)
+  ΛA λp λs ((<<<Parsec.run Unit> Unit> A> p) (Parser.State.default s))
+

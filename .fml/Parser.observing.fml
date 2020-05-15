@@ -1,0 +1,3 @@
+Parser.observing: <A: Type> -> Parser(A) -> Parser(Either(Parser.Error)(A))
+  <A> (p) Parsec.observing<Unit><Unit><A>(p)
+

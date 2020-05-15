@@ -1,0 +1,3 @@
+Core.Defs.get_type: Core.Defs -> String -> Maybe(Core)
+  (defs) (name) Maybe.map<Core.Def><Core>(Pair.fst<Core><Core>)(Core.Defs.get(defs)(name))
+

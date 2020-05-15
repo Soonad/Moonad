@@ -1,0 +1,3 @@
+Data.type: Data -> Type
+  (data) data<() Type>((data.name) (data.ctrs) self<P: Type> -> Data.Ctrs.type(P)(data.ctrs))
+

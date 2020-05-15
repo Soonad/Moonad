@@ -1,0 +1,3 @@
+Parsec.Reply.eaten_value: ∀(S:*) ∀(E:*) ∀(A:*) Π(:((Parsec.State S) E)) Π(:A) (((Parsec.Reply S) E) A)
+  ΛS ΛE ΛA λstate λvalue ΛP λ λ λeaten_value λ ((eaten_value state) value)
+

@@ -1,0 +1,3 @@
+Nat.35: Nat
+  (Nat.succ Nat.34)
+

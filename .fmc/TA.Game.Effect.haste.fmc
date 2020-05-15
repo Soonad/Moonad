@@ -1,0 +1,3 @@
+TA.Game.Effect.haste: Π(:F64) Π(:F64) TA.Game.Effect
+  λdur λval ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport ((haste dur) val)
+

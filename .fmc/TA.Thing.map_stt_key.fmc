@@ -1,0 +1,3 @@
+TA.Thing.map_stt_key: Π(:TA.Thing) Π(:Bits) Π(:Π(:F64) F64) TA.Thing
+  λself λstt_key λfunc @stt=(TA.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λ TA.Thing> ((TA.Thing.set_stt self) (((<Map.set F64> stt_key) F64.0) stt))) λresult.value ((TA.Thing.set_stt self) (((<Map.set F64> stt_key) (func result.value)) stt)))
+

@@ -1,0 +1,3 @@
+A.fun: Π(str:String) ((A.parse_fun.typ0 (A.parse_fun.filt str)) A.Ctx.nil)
+  λstr ((A.parse_fun.term (A.parse_fun.filt str)) A.Ctx.nil)
+

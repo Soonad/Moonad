@@ -1,0 +1,3 @@
+List.push: ∀(A:*) Π(:A) Π(:(List A)) (List A)
+  ΛA λval λlist ((<list λself (List A)> ((<List.cons A> val) <List.nil A>)) λlist.head λlist.tail ((<List.cons A> list.head) ((<List.push A> val) list.tail)))
+

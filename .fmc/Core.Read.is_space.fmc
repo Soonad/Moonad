@@ -1,0 +1,3 @@
+Core.Read.is_space: Π(:Char) Bool
+  λchr ((Bool.or ((U16.eql chr) ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0))) ((U16.eql chr) Char.newline))
+

@@ -1,0 +1,3 @@
+TA.Game.Hit.new: List(TA.Game.Effect) -> F64.V3 -> F64.V3 -> TA.Game.Hitbox -> TA.Game.Hit
+  (eff) (pos) (dir) (box) <P> (new) new(eff)(pos)(dir)(box)
+

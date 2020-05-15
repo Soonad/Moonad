@@ -1,0 +1,3 @@
+Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  def C = Core.Ctx -> Core; (base) Parser.bind<Maybe(C)><C>(Parser.optional<C>(Parser.choice<C>([Parser(C); Lang.ann(base), Lang.arr(base), Lang.pip(base), Lang.app(base)])))((maybe_term) maybe_term<() Parser(C)>(Parser.pure<C>(base))((post) Lang.pst(post)))
+

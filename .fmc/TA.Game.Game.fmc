@@ -1,0 +1,3 @@
+TA.Game.Game: *
+  ∀game(P:Π(:TA.Game.Game) *) Π(new:Π(stage:(List TA.Thing)) (P (TA.Game.Game.new stage))) (P game)
+

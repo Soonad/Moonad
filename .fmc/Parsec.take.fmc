@@ -1,0 +1,3 @@
+Parsec.take: ∀(S:*) ∀(E:*) ∀(A:*) Π(:String) Π(:Nat) (((Parsec S) E) String)
+  ΛS ΛE ΛA λerr λn ΛX λs1 λempty_value λempty_error λeaten_value λ (<s1 λ X> λinput λindex λerror λstate ((<((String.take_n n) input) λ X> ((empty_error s1) (((<Parsec.Error.make_trivial E> index) (<Maybe.some Parsec.Error.Item> Parsec.Error.Item.end_of_input)) (<List.single Parsec.Error.Item> (Parsec.Error.Item.label err))))) λp (<p λ X> λtook λrest @s2=((((<<Parsec.State.make S> E> rest) ((Nat.add index) n)) error) state);((eaten_value s2) took))))
+

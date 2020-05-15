@@ -1,0 +1,3 @@
+Nat.div_mod.aux: Π(:Nat) Π(:Nat) Π(:Nat) ((Pair Nat) Nat)
+  λn λm λd @p=((Nat.sub_rem n) m);((<p λ ((Pair Nat) Nat)> λp.value (((Nat.div_mod.aux p.value) m) (Nat.succ d))) λp.value ((<<Pair.new Nat> Nat> d) n))
+

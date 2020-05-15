@@ -1,0 +1,3 @@
+U32.lte: Π(:U32) Π(:U32) Bool
+  λa λb (<a λ Bool> λa_val (<b λ Bool> λb_val ((<Word.lte Nat.32> a_val) b_val)))
+

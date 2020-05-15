@@ -1,0 +1,3 @@
+TA.Thing.new_thing: TA.Thing
+  TA.Thing.new((x) x)(F64.0)(F64.0)(F64.0)(F64.0)(Map.new<F64>)(String.nil)([TA.Game.Light;])(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.parse("8"))(F64.1)(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64._1)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(F64.V3.new(F64.0)(F64.0)(F64.0))(TA.Game.Hitbox.cbox(F64.parse("12")))(F64.1)(F64.parse("24"))(F64.0)(F64.V3.new(F64.0)(F64.0)(F64.0))([TA.Game.Buff;])([TA.Thing;])([TA.Game.Hit;])(Bool.false)(Bool.false)
+

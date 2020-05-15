@@ -1,0 +1,3 @@
+TA.Thing.move: Π(:TA.Thing) Π(:F64.V3) TA.Thing
+  λself λto_pos ((TA.Thing.set_pos self) to_pos)
+

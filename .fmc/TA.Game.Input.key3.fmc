@@ -1,0 +1,3 @@
+TA.Game.Input.key3: Π(:F64.V3) TA.Game.Input
+  λpos ΛP λsdir λkey0 λkey1 λkey2 λkey3 λkey4 λkey5 λcmsg (key3 pos)
+

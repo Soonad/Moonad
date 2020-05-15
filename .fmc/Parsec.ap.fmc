@@ -1,0 +1,3 @@
+Parsec.ap: ∀(S:*) ∀(E:*) ∀(A:*) ∀(B:*) Π(:(((Parsec S) E) Π(:A) B)) Π(:(((Parsec S) E) A)) (((Parsec S) E) B)
+  ΛS ΛE ΛA ΛB λpf λpa ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (((((<pf X> s1) λs2 λf (((((<pa X> s2) λs3 λa ((empty_value s3) (f a))) empty_error) λs3 λa ((eaten_value s3) (f a))) eaten_error)) empty_error) λs2 λf (((((<pa X> s2) λs3 λa ((eaten_value s3) (f a))) eaten_error) λs3 λa ((eaten_value s3) (f a))) eaten_error)) eaten_error)
+

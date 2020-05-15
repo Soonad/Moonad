@@ -1,0 +1,3 @@
+TA.Game.Game: Type
+  game<P: TA.Game.Game -> Type> -> (new: (stage: List(TA.Thing)) -> P(TA.Game.Game.new(stage))) -> P(game)
+

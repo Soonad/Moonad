@@ -1,0 +1,3 @@
+A.Var.new: Π(:Char) Π(:Nat) A.Var
+  <<Pair.new Char> Nat>
+

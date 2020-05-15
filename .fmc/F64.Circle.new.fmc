@@ -1,0 +1,3 @@
+F64.Circle.new: Π(:F64.V3) Π(:F64) F64.Circle
+  λpos λrad ΛP λnew ((new pos) rad)
+

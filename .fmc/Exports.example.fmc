@@ -1,0 +1,3 @@
+Exports.example: Exports
+  ((<Exports.add Bool> Bool.true) ((<Exports.add Bool> Bool.false) ((<Exports.add Π(:Bool) Bool> Bool.not) ((<Exports.add Π(:Bool) Π(:Bool) Bool> Bool.and) ((<Exports.add Π(:Bool) Π(:Bool) Bool> Bool.or) Exports.new)))))
+

@@ -1,0 +1,3 @@
+Core.stringify: Π(:Core) String
+  λterm ((Core.stringify.go term) String.nil)
+

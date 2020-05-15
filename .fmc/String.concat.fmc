@@ -1,0 +1,3 @@
+String.concat: Π(:String) Π(:String) String
+  λas λbs ((<as λ String> bs) λhead λtail ((String.cons head) ((String.concat tail) bs)))
+

@@ -1,0 +1,3 @@
+TA.Game.Input: Type
+  input<P: TA.Game.Input -> Type> -> (sdir: (dir: F64.V3) -> P(TA.Game.Input.sdir(dir))) -> (key0: (pos: F64.V3) -> P(TA.Game.Input.key0(pos))) -> (key1: (pos: F64.V3) -> P(TA.Game.Input.key1(pos))) -> (key2: (pos: F64.V3) -> P(TA.Game.Input.key2(pos))) -> (key3: (pos: F64.V3) -> P(TA.Game.Input.key3(pos))) -> (key4: (pos: F64.V3) -> P(TA.Game.Input.key4(pos))) -> (key5: (pos: F64.V3) -> P(TA.Game.Input.key5(pos))) -> (cmsg: (txt: String) -> P(TA.Game.Input.cmsg(txt))) -> P(input)
+

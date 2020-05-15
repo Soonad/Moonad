@@ -1,0 +1,3 @@
+Parser.tokens: String -> Parser(String)
+  (str) Parsec.tokens<Unit><Unit>(str)
+

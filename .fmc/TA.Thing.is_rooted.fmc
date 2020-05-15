@@ -1,0 +1,3 @@
+TA.Thing.is_rooted: Π(self:TA.Thing) Bool
+  λself @self.buf=(TA.Thing.get_buf self);@is_rooted_buff=:Π(:TA.Game.Buff) Bool λbuff ((((((<buff λ Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.true) λbuff.dur Bool.true);@found_buf=((<List.find TA.Game.Buff> is_rooted_buff) self.buf);((<found_buf λ Bool> Bool.false) λvalue Bool.true)
+

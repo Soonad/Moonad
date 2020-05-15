@@ -1,0 +1,3 @@
+TA.Thing.dorime.leptospirose_puddle_pot_fun: TA.Game.TxFunction
+  (self) let self.sid = TA.Thing.get_sid(self); let self.pos = TA.Thing.get_pos(self); let self = TA.Thing.animate_die(self)(F64.0)(DORIME_LEPTOSPIROSE_CURSE_POT_000)(F64.1)(F64.parse("10")); let self = TA.Thing.set_box(self)(TA.Game.Hitbox.cbox(F64.parse("10"))); let pudd = TA.Thing.new_thing; let pudd = TA.Thing.set_sid(pudd)(self.sid); let pudd = TA.Thing.set_fun(pudd)(TA.Thing.dorime.leptospirose_puddle_fun); let pudd = TA.Thing.set_pos(pudd)(self.pos); let self = TA.Thing.spawn(self)(F64.parse("9"))([TA.Thing; pudd]); self
+

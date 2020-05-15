@@ -1,0 +1,3 @@
+A.Var.new: Char -> Nat -> A.Var
+  Pair.new<Char><Nat>
+

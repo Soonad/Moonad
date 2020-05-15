@@ -1,0 +1,3 @@
+F64.Line.new: Π(:F64.V3) Π(:F64.V3) F64.Line
+  λpos λdir ΛP λnew ((new pos) dir)
+

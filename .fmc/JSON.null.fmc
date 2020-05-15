@@ -1,0 +1,3 @@
+JSON.null: JSON
+  ΛP λnull λbool λnumber λstring λarray λobject null
+

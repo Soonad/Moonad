@@ -1,0 +1,3 @@
+F64.gtn: Π(:F64) Π(:F64) Bool
+  λa λb (((<((F64.cmp a) b) λ Bool> Bool.false) Bool.false) Bool.true)
+

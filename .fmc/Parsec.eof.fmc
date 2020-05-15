@@ -1,0 +1,3 @@
+Parsec.eof: ∀(S:*) ∀(E:*) (((Parsec S) E) Unit)
+  ΛS ΛE ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (<s1 λ X> λinput λindex λerror λstate ((<input λ X> ((empty_value s1) Unit.new)) λhead λ ((empty_error s1) (((<Parsec.Error.make_trivial E> index) (<Maybe.some Parsec.Error.Item> (Parsec.Error.Item.tokens (String.single head)))) (<List.single Parsec.Error.Item> Parsec.Error.Item.end_of_input)))))
+

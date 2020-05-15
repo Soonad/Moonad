@@ -1,0 +1,3 @@
+Bits.concat: Π(:Bits) Π(:Bits) Bits
+  λa λb (((<a λ Bits> b) λa.pred (Bits.0 ((Bits.concat a.pred) b))) λa.pred (Bits.1 ((Bits.concat a.pred) b)))
+

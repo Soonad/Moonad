@@ -1,0 +1,3 @@
+List.is_empty: <A: Type> -> List(A) -> Bool
+  <A> (list) list<(self) Bool>(Bool.true)((x) (xs) Bool.false)
+

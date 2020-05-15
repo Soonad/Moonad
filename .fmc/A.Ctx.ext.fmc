@@ -1,0 +1,3 @@
+A.Ctx.ext: Π(:Char) Π(:Nat) Π(:A.Ctx) A.Ctx
+  λnam λx (<List.cons A.Var> ((A.Var.new nam) x))
+

@@ -1,0 +1,3 @@
+Core.Read.done: ∀(A:*) Π(:A) Π(:String) (Core.Read.Reply A)
+  ΛA λx λcode (<Maybe.some ((Pair A) String)> ((<<Pair.new A> String> x) code))
+

@@ -1,0 +1,3 @@
+BENFIX_STEEL_TORNADO_003: F64
+  F64.parse("60")
+

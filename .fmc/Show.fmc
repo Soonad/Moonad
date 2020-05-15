@@ -1,0 +1,3 @@
+Show: Π(x:String) *
+  λx ∀show(P:Π(x:String) Π(:(Show x)) *) Π(msg:Π(x:String) ((P x) (Show.msg x))) ((P x) show)
+

@@ -1,0 +1,3 @@
+TA.Thing.get_stt_value_v3: (self: TA.Thing) -> F64.V3
+  (self) let x = TA.Thing.get_stt_value(self)(TA.Constants.POS_X_KEY); let y = TA.Thing.get_stt_value(self)(TA.Constants.POS_Y_KEY); F64.V3.new(x)(y)(F64.0)
+

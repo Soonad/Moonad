@@ -1,0 +1,3 @@
+TA.Thing.get_stt_value: Π(:TA.Thing) Π(:Bits) F64
+  λself λstt_key @stt=(TA.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λ F64> F64.0) λresult.value result.value)
+

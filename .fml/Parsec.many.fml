@@ -1,0 +1,3 @@
+Parsec.many: <S: Type> -> <E: Type> -> <A: Type> -> Parsec(S)(E)(A) -> Parsec(S)(E)(List(A))
+  <S> <E> <A> (p) Parsec.bind<S><E><Maybe(A)><List(A)>(Parsec.optional<S><E><A>(p))((x) x<() Parsec(S)(E)(List(A))>(Parsec.pure<S><E><List(A)>([A;]))((a) Parsec.map<S><E><List(A)><List(A)>(List.cons<A>(a))(Parsec.many<S><E><A>(p))))
+

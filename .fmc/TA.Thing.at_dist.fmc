@@ -1,0 +1,3 @@
+TA.Thing.at_dist: Π(:TA.Thing) Π(:F64) F64.V3
+  λself λdist @dir=(TA.Thing.targ_dir self);@pos=(TA.Thing.get_pos self);((F64.V3.add pos) ((F64.V3.scale dist) dir))
+

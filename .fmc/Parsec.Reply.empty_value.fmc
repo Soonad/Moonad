@@ -1,0 +1,3 @@
+Parsec.Reply.empty_value: ∀(S:*) ∀(E:*) ∀(A:*) Π(:((Parsec.State S) E)) Π(:A) (((Parsec.Reply S) E) A)
+  ΛS ΛE ΛA λstate λvalue ΛP λempty_value λ λ λ ((empty_value state) value)
+

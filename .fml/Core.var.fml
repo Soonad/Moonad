@@ -1,0 +1,3 @@
+Core.var: String -> Nat -> Bool -> Core
+  (name) (indx) (flip) <> (var) () () () () () () () var(name)(indx)(flip)
+

@@ -1,0 +1,3 @@
+List.any_true: Π(:(List Bool)) Bool
+  λlist ((<List.any Bool> λx x) list)
+

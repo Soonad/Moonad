@@ -1,0 +1,3 @@
+TA.Game.Hitbox: Type
+  hitbox<P: TA.Game.Hitbox -> Type> -> (nbox: P(TA.Game.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(TA.Game.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(TA.Game.Hitbox.pbox(pts))) -> P(hitbox)
+
