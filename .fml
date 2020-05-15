@@ -69,13 +69,16 @@ A.inference0: Word(Nat.4)
   Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>(Word.1<Nat.succ(Nat.zero)>(Word.0<Nat.zero>(Word.nil))))
 
 A.inference1: Bool -> Bool
-  (b) b<() Bool>(Bool.true)(Bool.false)
+  (b) b<(self) Bool>(Bool.true)(Bool.false)
 
 A.nat: Nat
   Nat.mul(Nat.10)(Nat.10)
 
 A.nat_literals: IO(Unit)
   let a = Nat.parse_decimal("123456789123456789123456789123456789"); let b = Nat.parse_decimal("987654321987654321987654321987654321"); let s = Nat.to_string_decimal(Nat.mul(a)(b)); IO.log<Unit>(s)(() IO.end<Unit>(Unit.new))
+
+A.optimal_reduction: Bool
+  def Nat = <P: Type> -> (P -> P) -> P -> P; let suc = ((n) <P> (s) (z) s(n<P>(s)(z))) :: Nat -> Nat; let zer = <P> (s) (z) z :: Nat; let mul = ((a) (b) <P> (s) a<P>(b<P>(s))) :: Nat -> Nat -> Nat; let n0 = zer; let n1 = suc(n0); let n2 = suc(n1); let p0 = n1; let p1 = mul(p0)(n2); let p2 = mul(p1)(n2); let p3 = mul(p2)(n2); let p4 = mul(p3)(n2); let p5 = mul(p4)(n2); let p6 = mul(p5)(n2); let p7 = mul(p6)(n2); let p8 = mul(p7)(n2); let p9 = mul(p8)(n2); let p10 = mul(p9)(n2); let p11 = mul(p10)(n2); let p12 = mul(p11)(n2); let p13 = mul(p12)(n2); let p14 = mul(p13)(n2); let p15 = mul(p14)(n2); let p16 = mul(p15)(n2); let p17 = mul(p16)(n2); let p18 = mul(p17)(n2); let p19 = mul(p18)(n2); let p20 = mul(p19)(n2); let p21 = mul(p20)(n2); let p22 = mul(p21)(n2); let p23 = mul(p22)(n2); let p24 = mul(p23)(n2); let p25 = mul(p24)(n2); let p26 = mul(p25)(n2); let p27 = mul(p26)(n2); let p28 = mul(p27)(n2); let p29 = mul(p28)(n2); let p30 = mul(p29)(n2); let p31 = mul(p30)(n2); let p32 = mul(p31)(n2); suc(p32)<Bool>(Bool.notf)(Bool.true)
 
 A.solve: Nat
   Nat.solve_for(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) succ(<P> (zero) (succ) zero))))))))<(x) let a = Nat.add(Nat.mul(x)(x))(Nat.5); let b = Nat.add(Nat.27)(Nat.27); Equal(Nat)(a)(b)><<P> (to) to>
@@ -108,16 +111,16 @@ Bits.concat: Bits -> Bits -> Bits
   (a) (b) a<() Bits>(b)((a.pred) Bits.0(Bits.concat(a.pred)(b)))((a.pred) Bits.1(Bits.concat(a.pred)(b)))
 
 Bits.eql: Bits -> Bits -> Bool
-  (bs1) bs1<() Bits -> Bool>((bs2) bs2<() Bool>(Bool.true)(() Bool.false)(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred))(() Bool.false))((bs1.pred) (bs2) bs2<() Bool>(Bool.false)(() Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred)))
+  (bs1) bs1<() Bits -> Bool>((bs2) bs2<(x2) Bool>(Bool.true)(() Bool.false)(() Bool.false))((bs1.pred) (bs2) bs2<(x3) Bool>(Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred))(() Bool.false))((bs1.pred) (bs2) bs2<(x3) Bool>(Bool.false)(() Bool.false)((bs2.pred) Bits.eql(bs1.pred)(bs2.pred)))
 
 Bits: Type
   bits<P: Bits -> Type> -> (be: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.0(pred))) -> (b1: (pred: Bits) -> P(Bits.1(pred))) -> P(bits)
 
 Bits.from_string: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<() (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
+  (str) str<(self) Bits>(Bits.nil)((str.head) (str.tail) U16.eql(str.head)(Char.parse("1"))<(self) (x: Unit) -> Bits>(() Bits.1(Bits.from_string(str.tail)))(() Bits.0(Bits.from_string(str.tail)))(Unit.new))
 
 Bits.inc: Bits -> Bits
-  (bits) bits<() Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
+  (bits) bits<(x1) Bits>(Bits.nil)((bits.pred) Bits.1(bits.pred))((bits.pred) Bits.0(Bits.inc(bits.pred)))
 
 Bits.nil: Bits
   <P> (be) (b0) (b1) be
@@ -126,25 +129,25 @@ Bits.parse_hex: String -> Bits
   (str) Bits.parse_hex.go(str)(Bits.nil)
 
 Bits.parse_hex.go: String -> Bits -> Bits
-  (str) (res) str<() Bits>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Bits>(res)((value) let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil)))); let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000); Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))))
+  (str) (res) str<(self) Bits>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Bits>(res)((value) let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil)))); let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000); Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))))
 
 Bits.reverse: Bits -> Bits
   (as) Bits.reverse.go(as)(Bits.nil)
 
 Bits.reverse.go: Bits -> Bits -> Bits
-  (as) (res) as<() Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
+  (as) (res) as<(x2) Bits>(res)((as.pred) Bits.reverse.go(as.pred)(Bits.0(res)))((as.pred) Bits.reverse.go(as.pred)(Bits.1(res)))
 
 Bool.and: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.false))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.false))(b<(self) Bool>(Bool.false)(Bool.false))
 
 Bool.elim: (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
   (b) <P> (t) (f) b<P>(t)(f)
 
 Bool.eql: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.false))(b<() Bool>(Bool.false)(Bool.true))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.false))(b<(self) Bool>(Bool.false)(Bool.true))
 
 Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
-  def P = ((b) b<() Type>(Empty)(Unit)) :: Bool -> Type; (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
+  def P = ((b) b<(self) Type>(Empty)(Unit)) :: Bool -> Type; (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
 
 Bool: Type
   self<P: (self: Bool) -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(self)
@@ -156,16 +159,16 @@ Bool.false: Bool
   <P> (true) (false) false
 
 Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A
-  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<() A>(cf)(ct)
+  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<(self) A>(cf)(ct)
 
 Bool.not: Bool -> Bool
-  (a) a<() Bool>(Bool.false)(Bool.true)
+  (a) a<(self) Bool>(Bool.false)(Bool.true)
 
-Bool.notf: Bool -> Bool
-  (a) <P> (t) (f) a<(self) P(Bool.notf(self))>(f)(t)
+Bool.notf: (a: Bool) -> Bool
+  (a) <P> (t) (f) a<(a) P(Bool.notf(a))>(f)(t)
 
 Bool.or: Bool -> Bool -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)(Bool.true))(b<() Bool>(Bool.true)(Bool.false))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.true))(b<(self) Bool>(Bool.true)(Bool.false))
 
 Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
   (a) a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>)(Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>)
@@ -177,7 +180,7 @@ Char: Type
   U16
 
 Char.hex_value: Char -> Maybe(Nat)
-  (chr) Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9'))<() Maybe(Nat)>(Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0'))))(Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10)))(Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F'))<() Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10)))(Maybe.none<Nat>)))
+  (chr) Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9'))<(self) Maybe(Nat)>(Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0'))))(Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f'))<(self) Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10)))(Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F'))<(self) Maybe(Nat)>(Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10)))(Maybe.none<Nat>)))
 
 Char.new: Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Char
   (b0) (b1) (b2) (b3) (b4) (b5) (b6) (b7) (b8) (b9) (bA) (bB) (bC) (bD) (bE) (bF) let kF = b0<(x16) Word(Nat.zero) -> Word(Nat.succ(Nat.zero))>(Word.0<Nat.zero>)(Word.1<Nat.zero>); let kE = b1<(x17) Word(Nat.succ(Nat.zero)) -> Word(Nat.succ(Nat.succ(Nat.zero)))>(Word.0<Nat.succ(Nat.zero)>)(Word.1<Nat.succ(Nat.zero)>); let kD = b2<(x18) Word(Nat.succ(Nat.succ(Nat.zero))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>(Word.0<Nat.succ(Nat.succ(Nat.zero))>)(Word.1<Nat.succ(Nat.succ(Nat.zero))>); let kC = b3<(x19) Word(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.zero)))>); let kB = b4<(x20) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))>); let kA = b5<(x21) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))>); let k9 = b6<(x22) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))>); let k8 = b7<(x23) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))>); let k7 = b8<(x24) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))>); let k6 = b9<(x25) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))>); let k5 = bA<(x26) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))>); let k4 = bB<(x27) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))>); let k3 = bC<(x28) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))>); let k2 = bD<(x29) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))>); let k1 = bE<(x30) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))>); let k0 = bF<(x31) Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))) -> Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))))>(Word.0<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>)(Word.1<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))>); let k_ = Word.nil; U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
@@ -190,7 +193,7 @@ Char.parse: (str: String) -> Char.parse.type(str)
   (str) str<(str) Char.parse.type(str)>(Unit.new)((str.head) (str.tail) str.head)
 
 Char.parse.type: String -> Type
-  (str) str<() Type>(Unit)((str.head) (str.tail) Char)
+  (str) str<(self) Type>(Unit)((str.head) (str.tail) Char)
 
 Char.quote: Char
   '"'
@@ -226,7 +229,7 @@ Comp.let: String -> Comp -> Comp -> Comp
   (name) (expr) (body) <> () () () (Let) () () Let(name)(expr)(body)
 
 Comp.stringify: Comp -> Stringifier
-  (comp) let lit = String.to_stringifier; let rec = Comp.stringify; comp<() Stringifier>((term.name) lit(term.name))((term.name) (term.body) let lpar = lit("(("); let name = lit(term.name); let rpar = lit(") "); let body = rec(term.body); let lend = lit(")"); (x) lpar(name(rpar(body(lend(x))))))((term.func) (term.argm) let func = rec(term.func); let lpar = lit("("); let argm = rec(term.argm); let rpar = lit(")"); (x) func(lpar(argm(rpar(x)))))((term.name) (term.expr) (term.body) let llet = lit("let "); let name = lit(term.name); let leql = lit(" = "); let expr = rec(term.expr); let spac = lit("; "); let body = rec(term.body); (x) llet(name(leql(expr(spac(body(x)))))))(let lval = lit("true"); (x) lval(x))(let lval = lit("false"); (x) lval(x))
+  (comp) let lit = String.to_stringifier; let rec = Comp.stringify; comp<(x3) Stringifier>((term.name) lit(term.name))((term.name) (term.body) let lpar = lit("(("); let name = lit(term.name); let rpar = lit(") "); let body = rec(term.body); let lend = lit(")"); (x) lpar(name(rpar(body(lend(x))))))((term.func) (term.argm) let func = rec(term.func); let lpar = lit("("); let argm = rec(term.argm); let rpar = lit(")"); (x) func(lpar(argm(rpar(x)))))((term.name) (term.expr) (term.body) let llet = lit("let "); let name = lit(term.name); let leql = lit(" = "); let expr = rec(term.expr); let spac = lit("; "); let body = rec(term.body); (x) llet(name(leql(expr(spac(body(x)))))))(let lval = lit("true"); (x) lval(x))(let lval = lit("false"); (x) lval(x))
 
 Comp.tru: Comp
   <> () () () () (tru) () tru
@@ -283,7 +286,7 @@ Core.Defs.set: String -> Core.Def -> Core.Defs -> Core.Defs
   (name) (val) (defs) let key = String.to_bits(name); Map.set<Core.Def>(key)(val)(defs)
 
 Core.Defs.term: Core.Defs -> String -> Core
-  (defs) (name) Core.Defs.get_term(defs)(name)<() Core>(Core.ref("<undefined>"))((term) term)
+  (defs) (name) Core.Defs.get_term(defs)(name)<(self) Core>(Core.ref("<undefined>"))((term) term)
 
 Core.Defs.type: Core.Defs -> String -> Core
   (defs) (name) Core.Defs.get_type(defs)(name)<() Core>(Core.ref("<undefined>"))((type) type)
@@ -538,7 +541,7 @@ Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
   <A> (s) (x) x(Unit.new)
 
 Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> Either(A)(B) -> (B -> Either(A)(C)) -> Either(A)(C)
-  <A> <B> <C> (e) (f) e<() Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
+  <A> <B> <C> (e) (f) e<(self) Either(A)(C)>((val) Either.left<A><C>(val))((val) f(val))
 
 Either: (A: Type) -> (B: Type) -> Type
   (A) (B) self<P: (self: Either(A)(B)) -> Type> -> (left: (x: A) -> P(Either.left<A><B>(x))) -> (right: (x: B) -> P(Either.right<A><B>(x))) -> P(self)
@@ -766,7 +769,7 @@ F64.div: F64 -> F64 -> F64
   F64.div
 
 F64.eql: F64 -> F64 -> Bool
-  (x) (y) x<(tag) (x3) Bool>((x.word) y<() (x4) Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
+  (x) (y) x<(tag) (x3) Bool>((x.word) y<(tag) (x4) Bool>((y.word) Word.eql<Nat.64>(x.word)(y.word)))
 
 F64.exp: F64 -> F64 -> F64
   F64.exp
@@ -979,49 +982,49 @@ Lang.whitespace: Parser(Unit)
   Parser.then<String><Unit>(Parser.take_while1("whitespace")(Lang.is_space))(Parser.pure<Unit>(Unit.new))
 
 List.all: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list) list<() Bool>(Bool.true)((head) (tail) cond(head)<() Bool>(List.all<A>(cond)(tail))(Bool.false))
+  <A> (cond) (list) list<(self) Bool>(Bool.true)((head) (tail) cond(head)<(self) Bool>(List.all<A>(cond)(tail))(Bool.false))
 
 List.all_true: List(Bool) -> Bool
   (list) List.all<Bool>((x) x)(list)
 
 List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list) list<() Bool>(Bool.false)((head) (tail) cond(head)<() Bool>(Bool.true)(List.any<A>(cond)(tail)))
+  <A> (cond) (list) list<(self) Bool>(Bool.false)((head) (tail) cond(head)<(self) Bool>(Bool.true)(List.any<A>(cond)(tail)))
 
 List.any_true: List(Bool) -> Bool
   (list) List.any<Bool>((x) x)(list)
 
 List.append: <A: Type> -> List(A) -> A -> List(A)
-  <A> (as) (a) as<() List(A)>(List.single<A>(a))((head) (tail) List.cons<A>(head)(List.append<A>(tail)(a)))
+  <A> (as) (a) as<(self) List(A)>(List.single<A>(a))((head) (tail) List.cons<A>(head)(List.append<A>(tail)(a)))
 
 List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
-  <A> (list) (indx) list<() Maybe(A)>(Maybe.none<A>)((head) (tail) indx<() Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
+  <A> (list) (indx) list<(self) Maybe(A)>(Maybe.none<A>)((head) (tail) indx<(x5) Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
 
 List.bind: <A: Type> -> <B: Type> -> List(A) -> (A -> List(B)) -> List(B)
   <A> <B> (xs) (f) List.flatten<B>(List.map<A><List(B)>(f)(xs))
 
 List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
-  <A> (n) (list) n<() Maybe(List(A))>(Maybe.some<List(A)>([A;]))((pred) list<() Maybe(List(A))>(Maybe.none<List(A)>)((head) (tail) Maybe.bind<List(A)><List(A)>(List.chunk<A>(pred)(tail))((x) Maybe.some<List(A)>(List.cons<A>(head)(x)))))
+  <A> (n) (list) n<(x3) Maybe(List(A))>(Maybe.some<List(A)>([A;]))((pred) list<(self) Maybe(List(A))>(Maybe.none<List(A)>)((head) (tail) Maybe.bind<List(A)><List(A)>(List.chunk<A>(pred)(tail))((x) Maybe.some<List(A)>(List.cons<A>(head)(x)))))
 
 List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (bs) as<() List(A)>(bs)((head) (tail) List.cons<A>(head)(List.concat<A>(tail)(bs)))
+  <A> (as) (bs) as<(self) List(A)>(bs)((head) (tail) List.cons<A>(head)(List.concat<A>(tail)(bs)))
 
 List.drop: <A: Type> -> Nat -> List(A) -> List(A)
-  <A> (n) (list) n<() List(A)>(list)((pred) list<() List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
+  <A> (n) (list) n<(x3) List(A)>(list)((pred) list<(self) List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
 
 List.filter: <A: Type> -> (A -> Bool) -> List(A) -> List(A)
-  <A> (cond) (list) list<() List(A)>([A;])((list.head) (list.tail) cond(list.head)<() (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
+  <A> (cond) (list) list<(self) List(A)>([A;])((list.head) (list.tail) cond(list.head)<(self) (x: List(A)) -> List(A)>((t) t)((t) List.cons<A>(list.head)(t))(List.filter<A>(cond)(list.tail)))
 
 List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
-  <A> (cond) (xs) xs<() Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<() Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
+  <A> (cond) (xs) xs<(self) Maybe(A)>(Maybe.none<A>)((head) (tail) cond(head)<(self) Maybe(A)>(Maybe.some<A>(head))(List.find<A>(cond)(tail)))
 
 List.find_last.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx) (res) list<() Maybe(Pair(A)(Nat))>(res)((head) (tail) let res = cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(res); List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res))
+  <A> (list) (cond) (indx) (res) list<(self) Maybe(Pair(A)(Nat))>(res)((head) (tail) let res = cond(head)(indx)<(self) Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(res); List.find_last.aux<A>(tail)(cond)(Nat.succ(indx))(res))
 
 List.find_last: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
   <A> (list) (cond) List.find_last.aux<A>(list)(cond)(Nat.zero)(Maybe.none<Pair(A)(Nat)>)
 
 List.flatten: <A: Type> -> List(List(A)) -> List(A)
-  <A> (as) as<() List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
+  <A> (as) as<(self) List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
 
 List: (A: Type) -> Type
   (A) self<P: (self: List(A)) -> Type> -> (nil: P([A;])) -> (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) -> P(self)
@@ -1033,34 +1036,34 @@ List.cons: <A: Type> -> (head: A) -> (tail: List(A)) -> List(A)
   <A> (head) (tail) <P> (nil) (cons) cons(head)(tail)
 
 List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  <A> <B> (nil) (cons) (list) list<() B>(nil)((x) (xs) cons(x)(List.fold<A><B>(nil)(cons)(xs)))
+  <A> <B> (nil) (cons) (list) list<(self) B>(nil)((x) (xs) cons(x)(List.fold<A><B>(nil)(cons)(xs)))
 
 List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx) list<() Maybe(Pair(A)(Nat))>(Maybe.none<Pair(A)(Nat)>)((head) (tail) cond(head)(indx)<() Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(List.ifind.aux<A>(tail)(cond)(Nat.succ(indx))))
+  <A> (list) (cond) (indx) list<(self) Maybe(Pair(A)(Nat))>(Maybe.none<Pair(A)(Nat)>)((head) (tail) cond(head)(indx)<(self) Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(head)(indx)))(List.ifind.aux<A>(tail)(cond)(Nat.succ(indx))))
 
 List.ifind: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
   <A> (list) (cond) List.ifind.aux<A>(list)(cond)(Nat.zero)
 
 List.imap: <A: Type> -> <B: Type> -> (Nat -> A -> B) -> List(A) -> List(B)
-  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
+  <A> <B> (fn) (list) list<(self) List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(Nat.zero)(list.head))(List.imap<A><B>((n) fn(Nat.succ(n)))(list.tail)))
 
 List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
-  <A> (sep) (xs) xs<() List(A)>([A;])((x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs))))
+  <A> (sep) (xs) xs<(self) List(A)>([A;])((x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs))))
 
 List.is_empty: <A: Type> -> List(A) -> Bool
-  <A> (list) list<() Bool>(Bool.true)((x) (xs) Bool.false)
+  <A> (list) list<(self) Bool>(Bool.true)((x) (xs) Bool.false)
 
 List.length: <A: Type> -> List(A) -> Nat
-  <A> (list) list<() Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
+  <A> (list) list<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
 
 List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
-  <A> <B> (fn) (list) list<() List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail)))
+  <A> <B> (fn) (list) list<(self) List(B)>([B;])((list.head) (list.tail) List.cons<B>(fn(list.head))(List.map<A><B>(fn)(list.tail)))
 
 List.push: <A: Type> -> A -> List(A) -> List(A)
-  <A> (val) (list) list<() List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
+  <A> (val) (list) list<(self) List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
 
 List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (xs) as<() List(A)>(xs)((head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs)))
+  <A> (as) (xs) as<(self) List(A)>(xs)((head) (tail) List.reverse.aux<A>(tail)(List.cons<A>(head)(xs)))
 
 List.reverse: <A: Type> -> List(A) -> List(A)
   <A> (as) List.reverse.aux<A>(as)([A;])
@@ -1403,6 +1406,9 @@ Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat)
 
 Nat.succ: Nat -> Nat
   (n) <P> (z) (s) s(n)
+
+Nat.succ_isnt_zero: (n: Nat) -> (e: Equal(Nat)(Nat.succ(n))(Nat.zero)) -> Empty
+  (n) (e) def P = ((x) x<(x3) Type>(Empty)((p) Unit)) :: Nat -> Type; Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><P>(e)(Unit.new)
 
 Nat.sum: Nat -> Nat
   (n) Nat.sum.tco(n)(Nat.zero)
@@ -1777,7 +1783,7 @@ Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B
   <A> <B> (sig) sig<(sig) B(Sigma.fst<A><B>(sig))>((x) (y) y)
 
 String.chunk: Nat -> String -> Maybe(String)
-  (n) (list) n<() Maybe(String)>(Maybe.some<String>(String.nil))((pred) list<() Maybe(String)>(Maybe.none<String>)((head) (tail) Maybe.bind<String><String>(String.chunk(pred)(tail))((x) Maybe.some<String>(String.cons(head)(x)))))
+  (n) (list) n<(x2) Maybe(String)>(Maybe.some<String>(String.nil))((pred) list<(self) Maybe(String)>(Maybe.none<String>)((head) (tail) Maybe.bind<String><String>(String.chunk(pred)(tail))((x) Maybe.some<String>(String.cons(head)(x)))))
 
 String.concat: String -> String -> String
   (as) (bs) as<() String>(bs)((head) (tail) String.cons(head)(String.concat(tail)(bs)))
@@ -1792,13 +1798,13 @@ String.drop_while: (Char -> Bool) -> String -> String
   (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() String>(String.drop_while(cond)(str.tail))(str))
 
 String.eql: String -> String -> Bool
-  (a) (b) a<() Bool>(b<() Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<() Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
+  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<(self) Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
 
 String.filter: (Char -> Bool) -> String -> String
-  (cond) (str) str<() String>(String.nil)((str.head) (str.tail) cond(str.head)<() (x: String) -> String>((t) t)((t) String.cons(str.head)(t))(String.filter(cond)(str.tail)))
+  (cond) (str) str<(self) String>(String.nil)((str.head) (str.tail) cond(str.head)<(self) (x: String) -> String>((t) t)((t) String.cons(str.head)(t))(String.filter(cond)(str.tail)))
 
 String.flatten: List(String) -> String
-  (as) as<() String>(String.nil)((head) (tail) String.concat(head)(String.flatten(tail)))
+  (as) as<(self) String>(String.nil)((head) (tail) String.concat(head)(String.flatten(tail)))
 
 String: Type
   self<P: (self: String) -> Type> -> (nil: P(String.nil)) -> (cons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) -> P(self)
@@ -1810,10 +1816,10 @@ String.cons: (head: Char) -> (tail: String) -> String
   (head) (tail) <P> (nil) (cons) cons(head)(tail)
 
 String.is_empty: String -> Bool
-  (str) str<() Bool>(Bool.true)((head) (tail) Bool.false)
+  (str) str<(self) Bool>(Bool.true)((head) (tail) Bool.false)
 
 String.length: String -> Nat
-  (str) str<() Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
+  (str) str<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
 
 String.quote: String -> String
   (str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
@@ -1822,40 +1828,40 @@ String.reverse: String -> String
   (str) String.reverse.go(str)(String.nil)
 
 String.reverse.go: String -> String -> String
-  (str) (res) str<() String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
+  (str) (res) str<(self) String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
 
 String.single: (x: Char) -> String
   (x) String.cons(x)(String.nil)
 
 String.tail: String -> String
-  (str) str<() String>(String.nil)((str.head) (str.tail) str.tail)
+  (str) str<(self) String>(String.nil)((str.head) (str.tail) str.tail)
 
 String.take: Nat -> String -> String
-  (n) (list) list<() String>(String.nil)((head) (tail) n<() String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
+  (n) (list) list<(self) String>(String.nil)((head) (tail) n<(x4) String>(String.nil)((pred) String.cons(head)(String.take(pred)(tail))))
 
 String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
-  (n) (str) (res) res<() Maybe(Pair(String)(String))>(n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<() Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
+  (n) (str) (res) res<(self) Maybe(Pair(String)(String))>(n<(x3) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(String.nil)))(() Maybe.none<Pair(String)(String)>))((head) (tail) n<(x5) Maybe(Pair(String)(String))>(Maybe.some<Pair(String)(String)>(Pair.new<String><String>(str)(res)))((pred) String.take_n.aux(pred)(String.cons(head)(str))(tail)))
 
 String.take_n: Nat -> String -> Maybe(Pair(String)(String))
-  (n) (str) String.take_n.aux(n)(String.nil)(str)<() Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<(self) Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
+  (n) (str) String.take_n.aux(n)(String.nil)(str)<(self) Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<(self) Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
 
 String.take_while.aux: (Char -> Bool) -> String -> String -> Pair(String)(String)
-  (f) (str) (res) res<() Pair(String)(String)>(Pair.new<String><String>(str)(String.nil))((head) (tail) f(head)<() Pair(String)(String)>(String.take_while.aux(f)(String.cons(head)(str))(tail))(Pair.new<String><String>(str)(res)))
+  (f) (str) (res) res<(self) Pair(String)(String)>(Pair.new<String><String>(str)(String.nil))((head) (tail) f(head)<(self) Pair(String)(String)>(String.take_while.aux(f)(String.cons(head)(str))(tail))(Pair.new<String><String>(str)(res)))
 
 String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
   (f) (str) String.take_while.aux(f)(String.nil)(str)<(self) Pair(String)(String)>((x) (y) Pair.new<String><String>(String.reverse(x))(y))
 
 String.to_bits: String -> Bits
-  (str) str<() Bits>(Bits.nil)((str.head) (str.tail) Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail)))
+  (str) str<(self) Bits>(Bits.nil)((str.head) (str.tail) Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail)))
 
 String.to_list: String -> List(Char)
-  (str) str<() List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
+  (str) str<(self) List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
 
 String.to_set: String -> Set
-  (str) str<() Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
+  (str) str<(self) Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
 
 String.to_stringifier: String -> Stringifier
-  (str) str<() (x: String) -> String>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
+  (str) str<(self) (x: String) -> String>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
 
 Stringifier.concat: Stringifier -> Stringifier -> Stringifier
   (a) (b) (x) a(b(x))
@@ -6063,7 +6069,7 @@ TA.Thing.dash: (self: TA.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: 
 TA.Thing.die: TA.Thing -> F64 -> TA.Thing
   (self) (at_tik) let curr_tik = TA.Thing.get_tik(self); let should_die = F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1)); should_die<() TA.Thing>(TA.Thing.set_die(self)(Bool.true))(self)
 
-TA.Thing.dilma_fun: TA.Thing -> TA.Thing
+TA.Thing.dilma_fun: TA.Game.TxFunction
   (self) let self = TA.Thing.set_mov(self)(F64.parse("2")); let self.act = TA.Thing.get_act(self); let self.dir = TA.Thing.get_dir(self); let self.pos = TA.Thing.get_pos(self); Bool.if<TA.Thing>(F64.eql(self.act)(F64.0))(F64.if<TA.Thing>(TA.Thing.is_walking(self))(TA.Thing.animate(self)(F64.1)(DILMA_WALK_000)(F64.parse("8"))(F64.parse("16")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16"))))(Bool.if<TA.Thing>(F64.eql(self.act)(F64.1))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_000)(F64.parse("6"))(F64.parse("3"))(F64.parse("7")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_PROTECTION_007)(F64.parse("5"))(F64.parse("28"))(F64.parse("14")); let self = TA.Thing.reset(self)(F64.parse("27")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.2))(let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_000)(F64.parse("17"))(F64.parse("0"))(F64.parse("34")); let self = TA.Thing.animate_between(self)(F64.0)(DILMA_CONFUSION_CASTING_016)(F64.parse("3"))(F64.parse("34"))(F64.parse("64")); let self = TA.Thing.reset(self)(F64.parse("63")); let speech = TA.Thing.new_thing; let speech = TA.Thing.set_fun(speech)(TA.Thing.dilma.confusion_fun); let speech = TA.Thing.set_dir(speech)(TA.Thing.targ_dir(self)); let self = TA.Thing.spawn(self)(F64.parse("34"))([TA.Thing; TA.Thing.move(speech)(TA.Thing.at_max_dist(self)(F64.parse("100")))]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("3")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_SALUTING_THE_CASSAVA_000)(F64.parse("18"))(F64.parse("54")); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("4")))(let self = TA.Thing.animate(self)(F64.0)(DILMA_STOCKING_WIND_CASTING_000)(F64.parse("10"))(F64.parse("30")); let wind = TA.Thing.new_thing; let wind = TA.Thing.set_fun(wind)(TA.Thing.dilma.stocking_wind_fun); let wind = TA.Thing.set_pos(wind)(self.pos); let wind = TA.Thing.set_dir(wind)(TA.Thing.targ_dir(self)); let wind = TA.Thing.set_vel(wind)(F64.V3.scale(F64.parse("6"))(TA.Thing.targ_dir(self))); let wind = TA.Thing.set_box(wind)(TA.Game.Hitbox.nbox); let self = TA.Thing.spawn(self)(F64.parse("8"))([TA.Thing; wind]); self)(Bool.if<TA.Thing>(F64.eql(self.act)(F64.parse("5")))(TA.Thing.animate(self)(F64.1)(DILMA_IDLE_000)(F64.parse("4"))(F64.parse("16")))(TA.Thing.animate(self)(F64.0)(DILMA_TAUNT_000)(F64.parse("6"))(F64.parse("18"))))))))
 
 TA.Thing.dilma.stocking_wind_fun: TA.Thing -> TA.Thing
@@ -6364,178 +6370,178 @@ The.term: <A: Type> -> (x: A) -> The(A)(x)
   <A> (x) <P> (term) term(x)
 
 U16.add: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.add<Nat.16>(a.val)(b.val))
+  (a) (b) a<(x2) U16>((a_val) b<(x3) U16>((b_val) U16.new(Word.add<Nat.16>(a_val)(b_val))))
 
 U16.and: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.and<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.and<Nat.16>(a_val)(b_val))))
 
 U16.div: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.div<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.div<Nat.16>(a_val)(b_val))))
 
 U16.eql: U16 -> U16 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); Word.eql<Nat.16>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.16>(a_val)(b_val)))
 
 U16: Type
-  Newtype(Word(Nat.16))("U16")
+  u16<P: U16 -> Type> -> (new: (a: Word(Nat.16)) -> P(U16.new(a))) -> P(u16)
 
 U16.gte: U16 -> U16 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); Word.gte<Nat.16>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.16>(a_val)(b_val)))
 
 U16.gtn: U16 -> U16 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); Word.gtn<Nat.16>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.16>(a_val)(b_val)))
 
 U16.inc: U16 -> U16
-  (a) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); U16.new(Word.inc<Nat.16>(a.val))
+  (a) a<() U16>((a_val) U16.new(Word.inc<Nat.16>(a_val)))
 
 U16.lte: U16 -> U16 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); Word.lte<Nat.16>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.16>(a_val)(b_val)))
 
 U16.ltn: U16 -> U16 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); Word.ltn<Nat.16>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.16>(a_val)(b_val)))
 
 U16.mod: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.mod<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.mod<Nat.16>(a_val)(b_val))))
 
 U16.mul: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.mul<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.mul<Nat.16>(a_val)(b_val))))
 
 U16.new: Word(Nat.16) -> U16
   (a) <> (u16) u16(a)
 
 U16.or: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.or<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.or<Nat.16>(a_val)(b_val))))
 
 U16.parse_hex: String -> U16
   (str) U16.new(Word.from_bits(Nat.16)(Bits.parse_hex(str)))
 
 U16.pow: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.pow<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.pow<Nat.16>(a_val)(b_val))))
 
 U16.shl: Nat -> U16 -> U16
-  (n) (a) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); U16.new(Word.shift_left<Nat.16>(n)(a.val))
+  (n) (a) a<() U16>((a_val) U16.new(Word.shift_left<Nat.16>(n)(a_val)))
 
 U16.shr: Nat -> U16 -> U16
-  (n) (a) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); U16.new(Word.shift_right<Nat.16>(n)(a.val))
+  (n) (a) a<() U16>((a_val) U16.new(Word.shift_right<Nat.16>(n)(a_val)))
 
 U16.sub: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.sub<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.sub<Nat.16>(a_val)(b_val))))
 
 U16.to_bits: U16 -> Bits
-  (a) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); Word.to_bits<Nat.16>(a.val)
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.16>(a_val))
 
 U16.to_nat: U16 -> Nat
-  (a) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); Word.to_nat<Nat.16>(a.val)
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.16>(a_val))
 
 U16.xor: U16 -> U16 -> U16
-  (a) (b) let a.val = Newtype.elim<Word(Nat.16)><"U16">(a); let b.val = Newtype.elim<Word(Nat.16)><"U16">(b); U16.new(Word.xor<Nat.16>(a.val)(b.val))
+  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.xor<Nat.16>(a_val)(b_val))))
 
 U32.0: U32
   U32.new(Word.0<Nat.31>(Word.0<Nat.30>(Word.0<Nat.29>(Word.0<Nat.28>(Word.0<Nat.27>(Word.0<Nat.26>(Word.0<Nat.25>(Word.0<Nat.24>(Word.0<Nat.23>(Word.0<Nat.22>(Word.0<Nat.21>(Word.0<Nat.20>(Word.0<Nat.19>(Word.0<Nat.18>(Word.0<Nat.17>(Word.0<Nat.16>(Word.0<Nat.15>(Word.0<Nat.14>(Word.0<Nat.13>(Word.0<Nat.12>(Word.0<Nat.11>(Word.0<Nat.10>(Word.0<Nat.9>(Word.0<Nat.8>(Word.0<Nat.7>(Word.0<Nat.6>(Word.0<Nat.5>(Word.0<Nat.4>(Word.0<Nat.3>(Word.0<Nat.2>(Word.0<Nat.1>(Word.0<Nat.0>(Word.nil)))))))))))))))))))))))))))))))))
 
 U32.add: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.add<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.add<Nat.32>(a_val)(b_val))))
 
 U32.and: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.and<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.and<Nat.32>(a_val)(b_val))))
 
 U32.concat: U32 -> U32 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U64.new(Word.concat<Nat.32><Nat.32>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.concat<Nat.32><Nat.32>(a_val)(b_val))))
 
 U32.div: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.div<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.div<Nat.32>(a_val)(b_val))))
 
 U32.eql: U32 -> U32 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); Word.eql<Nat.32>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.32>(a_val)(b_val)))
 
 U32: Type
-  Newtype(Word(Nat.32))("U32")
+  u32<P: U32 -> Type> -> (new: (a: Word(Nat.32)) -> P(U32.new(a))) -> P(u32)
 
 U32.gte: U32 -> U32 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); Word.gte<Nat.32>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.32>(a_val)(b_val)))
 
 U32.gtn: U32 -> U32 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); Word.gtn<Nat.32>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.32>(a_val)(b_val)))
 
 U32.hash2: U32 -> U32 -> U32
-  (a) (b) let mixed = U64.mix(U32.concat(a)(b)); let w64 = Newtype.elim<Word(Nat.64)><"U64">(mixed); U32.new(Word.drop<Nat.32>(Nat.32)(w64))
+  (a) (b) U64.mix(U32.concat(a)(b))<() U32>((w64) U32.new(Word.drop<Nat.32>(Nat.32)(w64)))
 
 U32.inc: U32 -> U32
-  (a) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); U32.new(Word.inc<Nat.32>(a.val))
+  (a) a<() U32>((a_val) U32.new(Word.inc<Nat.32>(a_val)))
 
 U32.lte: U32 -> U32 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); Word.lte<Nat.32>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.32>(a_val)(b_val)))
 
 U32.ltn: U32 -> U32 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); Word.ltn<Nat.32>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.32>(a_val)(b_val)))
 
 U32.mod: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.mod<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.mod<Nat.32>(a_val)(b_val))))
 
 U32.mul: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.mul<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.mul<Nat.32>(a_val)(b_val))))
 
 U32.new: Word(Nat.32) -> U32
   (a) <P> (u32) u32(a)
 
 U32.or: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.or<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.or<Nat.32>(a_val)(b_val))))
 
 U32.parse_hex: String -> U32
   (str) U32.new(Word.from_bits(Nat.32)(Bits.parse_hex(str)))
 
 U32.pow: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.pow<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.pow<Nat.32>(a_val)(b_val))))
 
 U32.shl: Nat -> U32 -> U32
-  (n) (a) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); U32.new(Word.shift_left<Nat.32>(n)(a.val))
+  (n) (a) a<() U32>((a_val) U32.new(Word.shift_left<Nat.32>(n)(a_val)))
 
 U32.shr: Nat -> U32 -> U32
-  (n) (a) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); U32.new(Word.shift_right<Nat.32>(n)(a.val))
+  (n) (a) a<() U32>((a_val) U32.new(Word.shift_right<Nat.32>(n)(a_val)))
 
 U32.sub: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.sub<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.sub<Nat.32>(a_val)(b_val))))
 
 U32.to_bits: U32 -> Bits
-  (a) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); Word.to_bits<Nat.32>(a.val)
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.32>(a_val))
 
 U32.to_nat: U32 -> Nat
-  (a) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); Word.to_nat<Nat.32>(a.val)
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.32>(a_val))
 
 U32.xor: U32 -> U32 -> U32
-  (a) (b) let a.val = Newtype.elim<Word(Nat.32)><"U32">(a); let b.val = Newtype.elim<Word(Nat.32)><"U32">(b); U32.new(Word.xor<Nat.32>(a.val)(b.val))
+  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.xor<Nat.32>(a_val)(b_val))))
 
 U64.0: U64
   U64.parse_hex("0000000000000000")
 
 U64.add: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.add<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.add<Nat.64>(a_val)(b_val))))
 
 U64.and: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.and<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.and<Nat.64>(a_val)(b_val))))
 
 U64.div: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.div<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.div<Nat.64>(a_val)(b_val))))
 
 U64.eql: U64 -> U64 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); Word.eql<Nat.64>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.eql<Nat.64>(a_val)(b_val)))
 
 U64: Type
-  Newtype(Word(Nat.64))("U64")
+  u64<P: U64 -> Type> -> (new: (a: Word(Nat.64)) -> P(U64.new(a))) -> P(u64)
 
 U64.gte: U64 -> U64 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); Word.gte<Nat.64>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gte<Nat.64>(a_val)(b_val)))
 
 U64.gtn: U64 -> U64 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); Word.gtn<Nat.64>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<Nat.64>(a_val)(b_val)))
 
 U64.inc: U64 -> U64
-  (a) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); U64.new(Word.inc<Nat.64>(a.val))
+  (a) a<() U64>((a_val) U64.new(Word.inc<Nat.64>(a_val)))
 
 U64.lte: U64 -> U64 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); Word.lte<Nat.64>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.64>(a_val)(b_val)))
 
 U64.ltn: U64 -> U64 -> Bool
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); Word.ltn<Nat.64>(a.val)(b.val)
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.ltn<Nat.64>(a_val)(b_val)))
 
 U64.mix.const0: U64
   U64.parse_hex("ff51afd7ed558ccd")
@@ -6547,40 +6553,40 @@ U64.mix: U64 -> U64
   (h) let h = U64.xor(h)(U64.shr(Nat.33)(h)); let h = U64.mul(h)(U64.mix.const0); let h = U64.xor(h)(U64.shr(Nat.33)(h)); let h = U64.mul(h)(U64.mix.const1); let h = U64.xor(h)(U64.shr(Nat.33)(h)); h
 
 U64.mod: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.mod<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.mod<Nat.64>(a_val)(b_val))))
 
 U64.mul: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.mul<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.mul<Nat.64>(a_val)(b_val))))
 
 U64.new: Word(Nat.64) -> U64
   (a) <P> (u64) u64(a)
 
 U64.or: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.or<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.or<Nat.64>(a_val)(b_val))))
 
 U64.parse_hex: String -> U64
   (str) U64.new(Word.from_bits(Nat.64)(Bits.parse_hex(str)))
 
 U64.pow: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.pow<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.pow<Nat.64>(a_val)(b_val))))
 
 U64.shl: Nat -> U64 -> U64
-  (n) (a) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); U64.new(Word.shift_left<Nat.64>(n)(a.val))
+  (n) (a) a<() U64>((a_val) U64.new(Word.shift_left<Nat.64>(n)(a_val)))
 
 U64.shr: Nat -> U64 -> U64
-  (n) (a) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); U64.new(Word.shift_right<Nat.64>(n)(a.val))
+  (n) (a) a<() U64>((a_val) U64.new(Word.shift_right<Nat.64>(n)(a_val)))
 
 U64.sub: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.sub<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.sub<Nat.64>(a_val)(b_val))))
 
 U64.to_bits: U64 -> Bits
-  (a) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); Word.to_bits<Nat.64>(a.val)
+  (a) a<() Bits>((a_val) Word.to_bits<Nat.64>(a_val))
 
 U64.to_nat: U64 -> Nat
-  (a) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); Word.to_nat<Nat.64>(a.val)
+  (a) a<() Nat>((a_val) Word.to_nat<Nat.64>(a_val))
 
 U64.xor: U64 -> U64 -> U64
-  (a) (b) let a.val = Newtype.elim<Word(Nat.64)><"U64">(a); let b.val = Newtype.elim<Word(Nat.64)><"U64">(b); U64.new(Word.xor<Nat.64>(a.val)(b.val))
+  (a) (b) a<() U64>((a_val) b<() U64>((b_val) U64.new(Word.xor<Nat.64>(a_val)(b_val))))
 
 UFind.new: UFind
   Map.new<UNode>
@@ -6722,6 +6728,12 @@ Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
 
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
+
+_a: (x: Nat) -> (y: Nat) -> Nat
+  (x) (y) Nat.add(x)(y)
+
+_f: (vec: Vector(Nat)(Nat.zero)) -> Equal(Vector(Nat)(Nat.zero))(vec)(Vector.nil<Nat>)
+  (vec) vec<(len) (vec) (e: Equal(Nat)(len)(Nat.zero)) -> let lft = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(x)>(e)(vec); let rgt = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); let Ret = Equal(Vector(Nat)(Nat.zero))(lft)(rgt); Ret>((e) def vec = Equal.rewrite<Nat><Nat.zero><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); Equal.to<Vector(Nat)(Nat.zero)><vec>)(<len> (x) (xs) (e) Empty.absurd(Nat.succ_isnt_zero(len)(e))(let lft = Equal.rewrite<Nat><Nat.succ(len)><Nat.zero><(x) Vector(Nat)(x)>(e)(Vector.ext<Nat><len>(x)(xs)); let rgt = Equal.rewrite<Nat><Nat.succ(len)><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); let Ret = Equal(Vector(Nat)(Nat.zero))(lft)(rgt); Ret))(Equal.to<Nat><Nat.zero>)
 
 hello: IO(Unit)
   let uname = "Your name:"; let greet = String.concat("Hello, "); IO.log<Unit>(uname)(() IO.inp<Unit>((name) IO.log<Unit>(greet(name))(() IO.end<Unit>(Unit.new))))

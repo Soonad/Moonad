@@ -2,6 +2,6 @@
 Bool.notf(a: Bool): Bool
   <P> (t) (f)
   case a
-  : P(Bool.notf(a));
+  : (a) P(Bool.notf(a));
   | f;
   | t;
