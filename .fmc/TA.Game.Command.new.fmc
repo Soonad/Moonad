@@ -1,3 +1,0 @@
-TA.Game.Command.new: Π(:TA.Game.PlayerId) Π(:TA.Game.Input) TA.Game.Command
-  λpid λinp ΛP λnew ((new pid) inp)
-

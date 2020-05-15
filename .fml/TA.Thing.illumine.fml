@@ -1,3 +1,0 @@
-TA.Thing.illumine: TA.Thing -> F64 -> F64 -> List(TA.Game.Light) -> TA.Thing
-  (self) (from_tik) (to_tik) (lights) let curr_tik = TA.Thing.get_tik(self); F64.is_between(from_tik)(to_tik)(curr_tik)<() TA.Thing>(TA.Thing.set_lit(self)(lights))(TA.Thing.set_lit(self)([TA.Game.Light;]))
-

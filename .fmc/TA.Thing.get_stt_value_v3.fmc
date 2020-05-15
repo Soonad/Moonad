@@ -1,3 +1,0 @@
-TA.Thing.get_stt_value_v3: Π(self:TA.Thing) F64.V3
-  λself @x=((TA.Thing.get_stt_value self) TA.Constants.POS_X_KEY);@y=((TA.Thing.get_stt_value self) TA.Constants.POS_Y_KEY);(((F64.V3.new x) y) F64.0)
-

@@ -1,3 +1,0 @@
-TA.Game.Buff: *
-  ∀buff(P:Π(:TA.Game.Buff) *) Π(shielded:Π(dur:F64) Π(val:F64) (P ((TA.Game.Buff.shielded dur) val))) Π(slowed:Π(dur:F64) Π(val:F64) (P ((TA.Game.Buff.slowed dur) val))) Π(hasted:Π(dur:F64) Π(val:F64) (P ((TA.Game.Buff.hasted dur) val))) Π(silenced:Π(dur:F64) (P (TA.Game.Buff.silenced dur))) Π(rooted:Π(dur:F64) (P (TA.Game.Buff.rooted dur))) Π(stuned:Π(dur:F64) (P (TA.Game.Buff.stuned dur))) (P buff)
-

@@ -1,3 +1,0 @@
-TA.Game.Buff.silenced: Π(:F64) TA.Game.Buff
-  λdur ΛP λshielded λslowed λhasted λsilenced λrooted λstuned (silenced dur)
-

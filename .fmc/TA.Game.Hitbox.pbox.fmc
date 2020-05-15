@@ -1,3 +1,0 @@
-TA.Game.Hitbox.pbox: Π(:(List F64.V3)) TA.Game.Hitbox
-  λpts ΛP λnbox λcbox λpbox (pbox pts)
-

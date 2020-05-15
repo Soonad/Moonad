@@ -1,3 +1,0 @@
-TA.Thing.get_buf: Π(thi:TA.Thing) (List TA.Game.Buff)
-  λthi (<thi λ (List TA.Game.Buff)> λthi.fun λthi.pid λthi.mid λthi.act λthi.sid λthi.stt λthi.nam λthi.lit λthi.tik λthi.pos λthi.mov λthi.bst λthi.pad λthi.dir λthi.trg λthi.vel λthi.box λthi.wei λthi.mhp λthi.dmg λthi.knk λthi.buf λthi.chi λthi.hit λthi.rst λthi.die thi.buf)
-

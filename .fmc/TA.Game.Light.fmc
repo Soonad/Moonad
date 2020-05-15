@@ -1,3 +1,0 @@
-TA.Game.Light: *
-  ∀light(P:Π(:TA.Game.Light) *) Π(new:Π(pos:F64.V3) Π(rad:F64) Π(rng:F64) Π(sub:F64.V3) Π(add:F64.V3) (P (((((TA.Game.Light.new pos) rad) rng) sub) add))) (P light)
-

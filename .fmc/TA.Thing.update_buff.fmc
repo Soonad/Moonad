@@ -1,3 +1,0 @@
-TA.Thing.update_buff: Π(:TA.Thing) Π(:Bits) TA.Thing
-  λself λstt_key @stt=(TA.Thing.get_stt self);@curr_tik=((<Map.get F64> stt_key) stt);((<curr_tik λ TA.Thing> self) λcurr_tik.value ((<((F64.eql curr_tik.value) F64.0) λ TA.Thing> self) ((<((F64.gtn curr_tik.value) F64.0) λ TA.Thing> @new_tik=((F64.sub curr_tik.value) F64.1);@new_stt=(((<Map.set F64> stt_key) new_tik) stt);((TA.Thing.set_stt self) new_stt)) self)))
-

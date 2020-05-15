@@ -1,3 +1,0 @@
-TA.Game.Effect.silence: Π(:F64) TA.Game.Effect
-  λdur ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport (silence dur)
-

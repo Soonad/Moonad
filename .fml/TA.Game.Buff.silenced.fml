@@ -1,3 +1,0 @@
-TA.Game.Buff.silenced: F64 -> TA.Game.Buff
-  (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stuned) silenced(dur)
-

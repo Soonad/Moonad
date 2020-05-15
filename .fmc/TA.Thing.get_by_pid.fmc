@@ -1,3 +1,0 @@
-TA.Thing.get_by_pid: Π(:TA.Game.PlayerId) Π(:TA.Game.Game) (Maybe TA.Thing)
-  λpid λgm (<gm λ (Maybe TA.Thing)> λgm.stage ((<List.find TA.Thing> (TA.Thing.get_by_pid.cond pid)) gm.stage))
-

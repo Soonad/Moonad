@@ -1,3 +1,0 @@
-TA.Game.Hitbox.cbox: Π(:F64) TA.Game.Hitbox
-  λrad ΛP λnbox λcbox λpbox (cbox rad)
-

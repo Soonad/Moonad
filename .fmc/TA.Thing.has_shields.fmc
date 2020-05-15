@@ -1,3 +1,0 @@
-TA.Thing.has_shields: Π(:TA.Thing) Bool
-  λself @self.buf=(TA.Thing.get_buf self);@has_shields=:Π(:TA.Game.Buff) Bool λbuff ((((((<buff λ Bool> λbuff.dur λbuff.val Bool.true) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false);@found_buf=((<List.find TA.Game.Buff> has_shields) self.buf);((<found_buf λ Bool> Bool.false) λvalue Bool.true)
-

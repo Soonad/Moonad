@@ -1,3 +1,0 @@
-TA.Thing.cast: Π(:TA.Thing) Π(:F64) Π(:(List TA.Game.Hit)) TA.Thing
-  λself λat_tik λdo_hit @curr_tik=(TA.Thing.get_tik self);((<((F64.eql curr_tik) at_tik) λ TA.Thing> ((TA.Thing.set_hit self) do_hit)) self)
-

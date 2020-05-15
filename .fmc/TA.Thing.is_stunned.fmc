@@ -1,3 +1,0 @@
-TA.Thing.is_stunned: Π(:TA.Thing) Bool
-  λself @self.buf=(TA.Thing.get_buf self);@is_stunned=:Π(:TA.Game.Buff) Bool λbuff ((((((<buff λ Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.true);@found_buf=((<List.find TA.Game.Buff> is_stunned) self.buf);((<found_buf λ Bool> Bool.false) λvalue Bool.true)
-

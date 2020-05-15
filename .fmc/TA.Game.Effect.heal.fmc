@@ -1,3 +1,0 @@
-TA.Game.Effect.heal: Π(:F64) TA.Game.Effect
-  λlif ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport (heal lif)
-

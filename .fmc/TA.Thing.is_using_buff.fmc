@@ -1,3 +1,0 @@
-TA.Thing.is_using_buff: Π(:TA.Thing) Π(:Bits) Bool
-  λself λstt_key @stt=(TA.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λ Bool> Bool.false) λcurrent_tik ((<((F64.eql current_tik) F64.0) λ Bool> Bool.false) Bool.true))
-

@@ -1,3 +1,0 @@
-TA.Thing.map_stt_key: TA.Thing -> Bits -> (F64 -> F64) -> TA.Thing
-  (self) (stt_key) (func) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() TA.Thing>(TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(F64.0)(stt)))((result.value) TA.Thing.set_stt(self)(Map.set<F64>(stt_key)(func(result.value))(stt)))
-

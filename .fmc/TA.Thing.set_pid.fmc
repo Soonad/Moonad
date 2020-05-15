@@ -1,3 +1,0 @@
-TA.Thing.set_pid: Π(thi:TA.Thing) Π(new_pid:TA.Game.PlayerId) TA.Thing
-  λthi λnew_pid (<thi λ TA.Thing> λthi.fun λthi.pid λthi.mid λthi.act λthi.sid λthi.stt λthi.nam λthi.lit λthi.tik λthi.pos λthi.mov λthi.bst λthi.pad λthi.dir λthi.trg λthi.vel λthi.box λthi.wei λthi.mhp λthi.dmg λthi.knk λthi.buf λthi.chi λthi.hit λthi.rst λthi.die ((((((((((((((((((((((((((TA.Thing.new thi.fun) new_pid) thi.mid) thi.act) thi.sid) thi.stt) thi.nam) thi.lit) thi.tik) thi.pos) thi.mov) thi.bst) thi.pad) thi.dir) thi.trg) thi.vel) thi.box) thi.wei) thi.mhp) thi.dmg) thi.knk) thi.buf) thi.chi) thi.hit) thi.rst) thi.die))
-

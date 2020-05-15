@@ -1,3 +1,0 @@
-TA.Thing.spawn: Π(:TA.Thing) Π(:F64) Π(:(List TA.Thing)) TA.Thing
-  λself λat_tik λchildren @curr_tik=(TA.Thing.get_tik self);((<((F64.eql curr_tik) at_tik) λ TA.Thing> ((TA.Thing.set_chi self) children)) self)
-

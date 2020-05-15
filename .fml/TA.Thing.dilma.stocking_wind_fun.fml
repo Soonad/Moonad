@@ -1,3 +1,0 @@
-TA.Thing.dilma.stocking_wind_fun: TA.Thing -> TA.Thing
-  (self) TA.Thing.animate_die(self)(F64.0)(DILMA_STOCKING_WIND_ANIM_000)(F64.parse("3"))(F64.parse("15"))
-

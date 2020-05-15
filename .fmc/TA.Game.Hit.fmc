@@ -1,3 +1,0 @@
-TA.Game.Hit: *
-  ∀hit(P:Π(:TA.Game.Hit) *) Π(new:Π(eff:(List TA.Game.Effect)) Π(pos:F64.V3) Π(dir:F64.V3) Π(box:TA.Game.Hitbox) (P ((((TA.Game.Hit.new eff) pos) dir) box))) (P hit)
-

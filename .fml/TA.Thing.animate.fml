@@ -1,3 +1,0 @@
-TA.Thing.animate: (self: TA.Thing) -> (boost: F64) -> (model: F64) -> (count: F64) -> (durat: F64) -> TA.Thing
-  (self) (boost) (model) (count) (durat) let self = TA.Thing.animate_between(self)(boost)(model)(count)(F64.0)(durat); let self = TA.Thing.reset(self)(F64.sub(durat)(F64.1)); self
-

@@ -1,3 +1,0 @@
-TA.Thing.dorime.holy_flame_fun: TA.Game.TxFunction
-  (self) let self.pos = TA.Thing.get_pos(self); let self.dir = TA.Thing.get_dir(self); let self = TA.Thing.animate_die(self)(F64.0)(DORIME_HOLY_FLAME_PILLAR_000)(F64.parse("5"))(F64.parse("15")); let self = TA.Thing.set_box(self)(TA.Game.Hitbox.nbox); let effs = [TA.Game.Effect; TA.Game.Effect.damage(F64.parse("3"))]; let hits = [TA.Game.Hit; TA.Game.Hit.new(effs)(self.pos)(self.dir)(TA.Game.Hitbox.cbox(F64.parse("20")))]; let self = TA.Thing.cast(self)(F64.0)(hits); self
-

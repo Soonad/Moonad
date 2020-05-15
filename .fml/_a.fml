@@ -1,3 +1,0 @@
-_a: (x: Nat) -> (y: Nat) -> Nat
-  (x) (y) Nat.add(x)(y)
-

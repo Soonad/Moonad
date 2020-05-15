@@ -1,3 +1,0 @@
-TA.Thing.spawn: TA.Thing -> F64 -> List(TA.Thing) -> TA.Thing
-  (self) (at_tik) (children) let curr_tik = TA.Thing.get_tik(self); F64.eql(curr_tik)(at_tik)<() TA.Thing>(TA.Thing.set_chi(self)(children))(self)
-

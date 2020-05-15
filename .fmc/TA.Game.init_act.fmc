@@ -1,3 +1,0 @@
-TA.Game.init_act: Π(self:TA.Thing) Π(new_act:F64) Π(new_trg:F64.V3) TA.Thing
-  λself λnew_act λnew_trg @self.act=(TA.Thing.get_act self);@self.trg=(TA.Thing.get_trg self);@self.tik=(TA.Thing.get_tik self);@act_eql_0=((F64.eql self.act) F64.0);@self=((TA.Thing.set_act self) (((<Bool.if TA.Game.ActionId> act_eql_0) new_act) self.act));@self=((TA.Thing.set_trg self) (((<Bool.if F64.V3> act_eql_0) new_trg) self.trg));@self=((TA.Thing.set_tik self) (((<Bool.if F64> act_eql_0) F64.0) self.tik));self
-

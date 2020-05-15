@@ -1,3 +1,0 @@
-TA.Game.Hit: Type
-  hit<P: TA.Game.Hit -> Type> -> (new: (eff: List(TA.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: TA.Game.Hitbox) -> P(TA.Game.Hit.new(eff)(pos)(dir)(box))) -> P(hit)
-

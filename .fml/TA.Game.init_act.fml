@@ -1,3 +1,0 @@
-TA.Game.init_act: (self: TA.Thing) -> (new_act: F64) -> (new_trg: F64.V3) -> TA.Thing
-  (self) (new_act) (new_trg) let self.act = TA.Thing.get_act(self); let self.trg = TA.Thing.get_trg(self); let self.tik = TA.Thing.get_tik(self); let act_eql_0 = F64.eql(self.act)(F64.0); let self = TA.Thing.set_act(self)(Bool.if<TA.Game.ActionId>(act_eql_0)(new_act)(self.act)); let self = TA.Thing.set_trg(self)(Bool.if<F64.V3>(act_eql_0)(new_trg)(self.trg)); let self = TA.Thing.set_tik(self)(Bool.if<F64>(act_eql_0)(F64.0)(self.tik)); self
-

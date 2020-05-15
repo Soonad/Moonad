@@ -1,3 +1,0 @@
-TA.Game.Game.new: Π(:(List TA.Thing)) TA.Game.Game
-  λstage ΛP λnew (new stage)
-

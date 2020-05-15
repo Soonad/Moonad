@@ -1,3 +1,0 @@
-TA.Game.with_thing: TA.Game.PlayerId -> TA.Game.TxFunction -> TA.Game.Game -> TA.Game.Game
-  (pid) (fn) (gm) TA.Game.map_stage(TA.Game.with_thing.effect(pid)(fn))(gm)
-

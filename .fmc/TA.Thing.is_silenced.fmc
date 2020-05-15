@@ -1,3 +1,0 @@
-TA.Thing.is_silenced: Π(:TA.Thing) Bool
-  λself @self.buf=(TA.Thing.get_buf self);@is_silenced=:Π(:TA.Game.Buff) Bool λbuff ((((((<buff λ Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.true) λbuff.dur Bool.false) λbuff.dur Bool.true);@found_buf=((<List.find TA.Game.Buff> is_silenced) self.buf);((<found_buf λ Bool> Bool.false) λvalue Bool.true)
-

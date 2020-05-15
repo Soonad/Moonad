@@ -1,3 +1,0 @@
-TA.Thing.handle_shields: (hit_dmg: F64) -> (self: TA.Thing) -> TA.Thing
-  (hit_dmg) (self) let self.buf = TA.Thing.get_buf(self); let self.dmg = TA.Thing.get_dmg(self); let init_val = Pair.new<F64><List(TA.Game.Buff)>(hit_dmg)([TA.Game.Buff;]); let res = List.fold<TA.Game.Buff><Pair(F64)(List(TA.Game.Buff))>(init_val)(TA.Game.use_shields)(self.buf); let res.fst = Pair.fst<F64><List(TA.Game.Buff)>(res); let res.snd = Pair.snd<F64><List(TA.Game.Buff)>(res); let remaining_dmg = F64.add(res.fst)(self.dmg); let remaining_buf = res.snd; let self = TA.Thing.set_dmg(self)(remaining_dmg); let self = TA.Thing.set_buf(self)(remaining_buf); self
-

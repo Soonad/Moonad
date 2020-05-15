@@ -1,3 +1,0 @@
-TA.Thing.dash: Π(self:TA.Thing) Π(speed:F64) Π(from_tik:F64) Π(til_tik:F64) TA.Thing
-  λself λspeed λfrom_tik λtil_tik @rooted=(TA.Thing.is_rooted self);@self.tik=(TA.Thing.get_tik self);(((<Bool.if TA.Thing> rooted) self) @is_between_tik=(((F64.is_between from_tik) til_tik) self.tik);@new_vel=(((<Bool.if F64.V3> is_between_tik) @self.pos=(TA.Thing.get_pos self);@self.trg=(TA.Thing.get_trg self);@self.dir=(TA.Thing.get_dir self);((F64.V3.scale speed) (((F64.V3.look_at self.pos) self.trg) self.dir))) (((F64.V3.new F64.0) F64.0) F64.0));((TA.Thing.set_vel self) new_vel))
-

@@ -1,3 +1,0 @@
-TA.Thing: *
-  ∀thing(P:Π(:TA.Thing) *) Π(new:Π(fun:TA.Game.TxFunction) Π(pid:TA.Game.PlayerId) Π(mid:TA.Game.ModelId) Π(act:TA.Game.ActionId) Π(sid:TA.Game.SideId) Π(stt:(Map F64)) Π(nam:String) Π(lit:(List TA.Game.Light)) Π(tik:F64) Π(pos:F64.V3) Π(mov:F64) Π(bst:F64) Π(pad:F64.V3) Π(dir:F64.V3) Π(trg:F64.V3) Π(vel:F64.V3) Π(box:TA.Game.Hitbox) Π(wei:F64) Π(mhp:F64) Π(dmg:F64) Π(knk:F64.V3) Π(buf:(List TA.Game.Buff)) Π(chi:(List TA.Thing)) Π(hit:(List TA.Game.Hit)) Π(rst:Bool) Π(die:Bool) (P ((((((((((((((((((((((((((TA.Thing.new fun) pid) mid) act) sid) stt) nam) lit) tik) pos) mov) bst) pad) dir) trg) vel) box) wei) mhp) dmg) knk) buf) chi) hit) rst) die))) (P thing)
-

@@ -1,3 +1,0 @@
-TA.Game.with_thing: Π(:TA.Game.PlayerId) Π(:TA.Game.TxFunction) Π(:TA.Game.Game) TA.Game.Game
-  λpid λfn λgm ((TA.Game.map_stage ((TA.Game.with_thing.effect pid) fn)) gm)
-

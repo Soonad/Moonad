@@ -1,3 +1,0 @@
-TA.Game.Effect.stun: F64 -> TA.Game.Effect
-  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport) stun(dur)
-

@@ -1,3 +1,0 @@
-TA.Thing.set_stt_value_v3: (self: TA.Thing) -> (v3: F64.V3) -> TA.Thing
-  (self) (v3) let self.stt = TA.Thing.get_stt(self); v3<() TA.Thing>((v3.x) (v3.y) (v3.z) let insert_x = Map.set<F64>(TA.Constants.POS_X_KEY)(v3.x)(self.stt); let insert_y = Map.set<F64>(TA.Constants.POS_Y_KEY)(v3.y)(self.stt); let self = TA.Thing.set_stt(self)(insert_x); let self = TA.Thing.set_stt(self)(insert_y); self)
-

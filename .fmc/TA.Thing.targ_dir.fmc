@@ -1,3 +1,0 @@
-TA.Thing.targ_dir: Π(:TA.Thing) F64.V3
-  λself @pos=(TA.Thing.get_pos self);@trg=(TA.Thing.get_trg self);@dir=(TA.Thing.get_dir self);(((F64.V3.look_at pos) trg) dir)
-

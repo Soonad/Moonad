@@ -1,3 +1,0 @@
-TA.Thing.dash: (self: TA.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: F64) -> TA.Thing
-  (self) (speed) (from_tik) (til_tik) let rooted = TA.Thing.is_rooted(self); let self.tik = TA.Thing.get_tik(self); Bool.if<TA.Thing>(rooted)(self)(let is_between_tik = F64.is_between(from_tik)(til_tik)(self.tik); let new_vel = Bool.if<F64.V3>(is_between_tik)(let self.pos = TA.Thing.get_pos(self); let self.trg = TA.Thing.get_trg(self); let self.dir = TA.Thing.get_dir(self); F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir)))(F64.V3.new(F64.0)(F64.0)(F64.0)); TA.Thing.set_vel(self)(new_vel))
-

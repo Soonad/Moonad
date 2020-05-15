@@ -1,3 +1,0 @@
-TA.Thing.between_dist: Π(:TA.Thing) Π(:F64) Π(:F64) F64.V3
-  λself λmin_range λmax_range @self_pos=(TA.Thing.get_pos self);@self_trg=(TA.Thing.get_trg self);@dist_trg=((F64.V3.dist self_pos) self_trg);@min=((F64.min max_range) dist_trg);@max=((F64.max min_range) min);((TA.Thing.at_dist self) max)
-

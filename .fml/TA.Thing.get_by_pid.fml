@@ -1,3 +1,0 @@
-TA.Thing.get_by_pid: TA.Game.PlayerId -> TA.Game.Game -> Maybe(TA.Thing)
-  (pid) (gm) gm<() Maybe(TA.Thing)>((gm.stage) List.find<TA.Thing>(TA.Thing.get_by_pid.cond(pid))(gm.stage))
-

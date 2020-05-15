@@ -1,3 +1,0 @@
-TA.Game.Buff.slowed: Π(:F64) Π(:F64) TA.Game.Buff
-  λdur λval ΛP λshielded λslowed λhasted λsilenced λrooted λstuned ((slowed dur) val)
-

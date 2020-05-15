@@ -1,3 +1,0 @@
-TA.Thing.set_stt_value_v3: Π(self:TA.Thing) Π(v3:F64.V3) TA.Thing
-  λself λv3 @self.stt=(TA.Thing.get_stt self);(<v3 λ TA.Thing> λv3.x λv3.y λv3.z @insert_x=(((<Map.set F64> TA.Constants.POS_X_KEY) v3.x) self.stt);@insert_y=(((<Map.set F64> TA.Constants.POS_Y_KEY) v3.y) self.stt);@self=((TA.Thing.set_stt self) insert_x);@self=((TA.Thing.set_stt self) insert_y);self)
-

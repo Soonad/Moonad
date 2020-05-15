@@ -1,3 +1,0 @@
-TA.Thing.at_max_dist: TA.Thing -> F64 -> F64.V3
-  (self) (max_range) let self_pos = TA.Thing.get_pos(self); let self_trg = TA.Thing.get_trg(self); let dist_max = F64.V3.dist(self_pos)(TA.Thing.at_dist(self)(max_range)); let dist_trg = F64.V3.dist(self_pos)(self_trg); let less_than = F64.ltn(dist_trg)(dist_max); F64.if<F64.V3>(F64.from_bool(less_than))(TA.Thing.at_dist(self)(dist_trg))(TA.Thing.at_dist(self)(max_range))
-

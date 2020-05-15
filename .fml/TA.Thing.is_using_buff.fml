@@ -1,3 +1,0 @@
-TA.Thing.is_using_buff: TA.Thing -> Bits -> Bool
-  (self) (stt_key) let stt = TA.Thing.get_stt(self); Map.get<F64>(stt_key)(stt)<() Bool>(Bool.false)((current_tik) F64.eql(current_tik)(F64.0)<() Bool>(Bool.false)(Bool.true))
-

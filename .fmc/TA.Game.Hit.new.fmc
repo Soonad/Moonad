@@ -1,3 +1,0 @@
-TA.Game.Hit.new: Π(:(List TA.Game.Effect)) Π(:F64.V3) Π(:F64.V3) Π(:TA.Game.Hitbox) TA.Game.Hit
-  λeff λpos λdir λbox ΛP λnew ((((new eff) pos) dir) box)
-

@@ -1,3 +1,0 @@
-TA.Thing.create_at: Π(self:TA.Thing) Π(at_tik:F64) Π(new_thing:TA.Game.TxFunction) TA.Thing
-  λself λat_tik λnew_thing @self.tik=(TA.Thing.get_tik self);@self.pid=(TA.Thing.get_pid self);@self.pos=(TA.Thing.get_pos self);(((<Bool.if TA.Thing> ((F64.eql self.tik) at_tik)) @self=((TA.Thing.set_fun self) new_thing);@self=((TA.Thing.set_pid self) self.pid);@self=((TA.Thing.set_pos self) self.pos);self) self)
-

@@ -1,3 +1,0 @@
-TA.Thing.speed_multiplier_of: Π(:TA.Thing) F64
-  λself @bst=(TA.Thing.get_bst self);@buf=(TA.Thing.get_buf self);(((<<List.fold TA.Game.Buff> F64> bst) TA.Game.combine_mov_buffs) buf)
-

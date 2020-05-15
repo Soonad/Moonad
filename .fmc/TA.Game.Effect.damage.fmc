@@ -1,3 +1,0 @@
-TA.Game.Effect.damage: Π(:F64) TA.Game.Effect
-  λdmg ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport (damage dmg)
-
