@@ -6633,9 +6633,6 @@ Vector.nil: <A: Type> -> Vector(A)(Nat.zero)
 Vector.ext: <A: Type> -> <len: Nat> -> (x: A) -> (xs: Vector(A)(len)) -> Vector(A)(Nat.succ(len))
   <A> <len> (x) (xs) <P> (nil) (ext) ext<len>(x)(xs)
 
-Vector.len_0_is_nil: (vec: Vector(Nat)(Nat.zero)) -> Equal(Vector(Nat)(Nat.zero))(vec)(Vector.nil<Nat>)
-  (vec) vec<(len) (vec) (e: Equal(Nat)(len)(Nat.zero)) -> let lft = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(x)>(e)(vec); let rgt = Equal.rewrite<Nat><len><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); let Ret = Equal(Vector(Nat)(Nat.zero))(lft)(rgt); Ret>((e) def vec = Equal.rewrite<Nat><Nat.zero><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); Equal.to<Vector(Nat)(Nat.zero)><vec>)(<len> (x) (xs) (e) Empty.absurd(Nat.succ_isnt_zero(len)(e))(let lft = Equal.rewrite<Nat><Nat.succ(len)><Nat.zero><(x) Vector(Nat)(x)>(e)(Vector.ext<Nat><len>(x)(xs)); let rgt = Equal.rewrite<Nat><Nat.succ(len)><Nat.zero><(x) Vector(Nat)(Nat.zero)>(e)(Vector.nil<Nat>); let Ret = Equal(Vector(Nat)(Nat.zero))(lft)(rgt); Ret))(Equal.to<Nat><Nat.zero>)
-
 Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
   <size> (wo) <P> (we) (w0) (w1) w0<size>(wo)
 
