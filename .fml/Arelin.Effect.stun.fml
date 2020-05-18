@@ -1,0 +1,3 @@
+Arelin.Effect.stun: (dur: F64) -> Arelin.Effect
+  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) stun(dur)
+

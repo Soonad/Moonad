@@ -1,0 +1,3 @@
+Arelin.Effect.teleport_to: (to_pos: F64.V3) -> (all: F64) -> Arelin.Effect
+  (to_pos) (all) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) teleport_to(to_pos)(all)
+

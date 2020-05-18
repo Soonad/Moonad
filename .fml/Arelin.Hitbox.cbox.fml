@@ -1,0 +1,3 @@
+Arelin.Hitbox.cbox: (rad: F64) -> Arelin.Hitbox
+  (rad) <P> (nbox) (cbox) (pbox) cbox(rad)
+

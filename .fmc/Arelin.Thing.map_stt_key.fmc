@@ -1,0 +1,3 @@
+Arelin.Thing.map_stt_key: Π(self:Arelin.Thing) Π(stt_key:Bits) Π(fn:Π(:F64) F64) Arelin.Thing
+  λself λstt_key λfn @stt=(Arelin.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λself Arelin.Thing> ((Arelin.Thing.set_stt self) (((<Map.set F64> stt_key) F64.0) stt))) λvalue ((Arelin.Thing.set_stt self) (((<Map.set F64> stt_key) (fn value)) stt)))
+

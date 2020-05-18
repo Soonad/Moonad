@@ -1,0 +1,3 @@
+Arelin.Game.Hit.hit: (eff: List(Arelin.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: Arelin.Game.Hitbox) -> Arelin.Game.Hit
+  (eff) (pos) (dir) (box) <P> (hit) hit(eff)(pos)(dir)(box)
+

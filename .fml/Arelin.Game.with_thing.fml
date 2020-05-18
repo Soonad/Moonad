@@ -1,0 +1,3 @@
+Arelin.Game.with_thing: (pid: Arelin.Game.PlayerId) -> (fn: Arelin.Game.TxFunction) -> (gm: Arelin.Game) -> Arelin.Game
+  (pid) (fn) (gm) let effect = ((thi) let thi.pid = Arelin.Thing.get_pid(thi); F64.eql(thi.pid)(pid)<(self) Arelin.Thing>(fn(thi))(thi)) :: Arelin.Game.TxFunction; Arelin.Game.map_stage(effect)(gm)
+

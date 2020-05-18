@@ -1,0 +1,3 @@
+Arelin.Hit.hit: Π(eff:(List Arelin.Effect)) Π(pos:F64.V3) Π(dir:F64.V3) Π(box:Arelin.Hitbox) Arelin.Hit
+  λeff λpos λdir λbox ΛP λhit ((((hit eff) pos) dir) box)
+

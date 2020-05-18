@@ -1,0 +1,3 @@
+Arelin.Hitbox.cbox: Π(rad:F64) Arelin.Hitbox
+  λrad ΛP λnbox λcbox λpbox (cbox rad)
+

@@ -1,0 +1,3 @@
+Arelin.Hitbox.pbox: Π(pts:(List F64.V3)) Arelin.Hitbox
+  λpts ΛP λnbox λcbox λpbox (pbox pts)
+

@@ -1,0 +1,3 @@
+Arelin.Hitbox: *
+  ∀self(P:Π(self:Arelin.Hitbox) *) Π(nbox:(P Arelin.Hitbox.nbox)) Π(cbox:Π(rad:F64) (P (Arelin.Hitbox.cbox rad))) Π(pbox:Π(pts:(List F64.V3)) (P (Arelin.Hitbox.pbox pts))) (P self)
+

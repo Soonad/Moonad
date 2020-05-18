@@ -1,0 +1,3 @@
+Arelin.Effect.haste: Π(dur:F64) Π(val:F64) Arelin.Effect
+  λdur λval ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport_to ((haste dur) val)
+

@@ -1,0 +1,3 @@
+Arelin.Effect: *
+  ∀self(P:Π(self:Arelin.Effect) *) Π(heal:Π(lif:F64) (P (Arelin.Effect.heal lif))) Π(damage:Π(dmg:F64) (P (Arelin.Effect.damage dmg))) Π(repulse:Π(mag:F64) (P (Arelin.Effect.repulse mag))) Π(impulse:Π(mag:F64) Π(dir:F64.V3) (P ((Arelin.Effect.impulse mag) dir))) Π(slow:Π(dur:F64) Π(val:F64) (P ((Arelin.Effect.slow dur) val))) Π(haste:Π(dur:F64) Π(val:F64) (P ((Arelin.Effect.haste dur) val))) Π(shield:Π(dur:F64) Π(val:F64) (P ((Arelin.Effect.shield dur) val))) Π(silence:Π(dur:F64) (P (Arelin.Effect.silence dur))) Π(root:Π(dur:F64) (P (Arelin.Effect.root dur))) Π(stun:Π(dur:F64) (P (Arelin.Effect.stun dur))) Π(teleport_to:Π(to_pos:F64.V3) Π(all:F64) (P ((Arelin.Effect.teleport_to to_pos) all))) (P self)
+

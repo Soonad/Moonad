@@ -1,0 +1,3 @@
+Arelin.Thing.at_min_dist: Π(self:Arelin.Thing) Π(min_range:F64) F64.V3
+  λself λmin_range @pos=(Arelin.Thing.get_pos self);@trg=(Arelin.Thing.get_trg self);@dist_min=((F64.V3.dist pos) ((Arelin.Thing.at_dist self) min_range));@dist_trg=((F64.V3.dist pos) trg);((<((F64.gtn dist_trg) dist_min) λself F64.V3> ((Arelin.Thing.at_dist self) dist_trg)) ((Arelin.Thing.at_dist self) min_range))
+

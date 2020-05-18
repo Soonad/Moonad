@@ -1,0 +1,3 @@
+Arelin.Thing.get_die: (thi: Arelin.Thing) -> Bool
+  (thi) thi<(self) Bool>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.die)
+
