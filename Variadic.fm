@@ -1,5 +1,5 @@
-Variadic: Type -> Type -> Nat -> Type
-  (A) (B) (n)
+Variadic: Nat -> Type -> Type -> Type
+  (n) (A) (B)
   n<() Type>
   | B;
-  | (n.pred) A -> Variadic(A)(B)(n.pred);
+  | (n.pred) A -> Variadic(n.pred)(A)(B);

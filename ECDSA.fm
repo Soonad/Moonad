@@ -75,16 +75,26 @@ Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat, Pair(Int, 
     Nat.egcd_aux.tco(r, a, u, v, m, n);
   | Unit.new;
 
+Nat.bitwise_and: Nat -> Nat -> Nat
+  (a) (b)
+  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, Nat.0), Nat.eql(a, Nat.0)))
+  | () Nat.0;
+  | ()
+    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, Nat.2), Nat.0), Nat.eql(Nat.mod(b, Nat.2), Nat.0)), Nat.0, Nat.1)
+    let a = Nat.div(a, Nat.2)   
+    let b = Nat.div(b, Nat.2)   
+    Nat.add(bit, Nat.mul(Nat.2, Nat.bitwise_and(a, b)));
+  | Unit.new;
+
 ecdsa.invert: Nat -> Nat -> Maybe(Nat)
   (number) (modulo)
   Nat.eql(number, Nat.0)<() Maybe(Nat)>
   | Maybe.none<Nat>;
-  | Nat.egcd(Nat.mod(number, modulo), modulo)<() Maybe(Nat)>
-    | (gcd) (p)
-      Nat.eql(gcd, Nat.1)<() Maybe(Nat)>
-      | p<() Maybe(Nat)>
-        | (x) (y) Maybe.some<Nat>(Int.mod_Nat(x, modulo));;
-      | Maybe.none<Nat>;;;
+  | get gcd p = Nat.egcd(Nat.mod(number, modulo), modulo)
+    Nat.eql(gcd, Nat.1)<() Maybe(Nat)>
+    | get x y = p
+      Maybe.some<Nat>(Int.mod_Nat(x, modulo));
+    | Maybe.none<Nat>;;
 
 ecdsa.invertUnsafe: Nat -> Nat -> Nat
   (number) (modulo) Maybe.extract<Nat>(ecdsa.invert(number, modulo), Nat.1)
@@ -129,85 +139,81 @@ Jacobian.base: Jacobian
 
 Jacobian.equal: Jacobian -> Jacobian -> Bool
   (a) (b)
-  a<() Bool>
-  | (a.x) (a.y) (a.z)
-    b<() Bool>
-    | (b.x) (b.y) (b.z)
-      let a.z2 = ecdsa.mod(Nat.mul(a.z, a.z))
-      let a.z3 = ecdsa.mod(Nat.mul(a.z, a.z2))
-      let b.z2 = ecdsa.mod(Nat.mul(b.z, b.z))
-      let b.z3 = ecdsa.mod(Nat.mul(b.z, b.z2))
-      let eq1 = Nat.eql(ecdsa.mod(Nat.mul(a.x, b.z2)), ecdsa.mod(Nat.mul(b.x, a.z2)))
-      let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y, b.z3)), ecdsa.mod(Nat.mul(b.y, a.z3)))
-      Bool.and(eq1, eq2);;
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
+  let a.z2 = ecdsa.mod(Nat.mul(a.z, a.z))
+  let a.z3 = ecdsa.mod(Nat.mul(a.z, a.z2))
+  let b.z2 = ecdsa.mod(Nat.mul(b.z, b.z))
+  let b.z3 = ecdsa.mod(Nat.mul(b.z, b.z2))
+  let eq1 = Nat.eql(ecdsa.mod(Nat.mul(a.x, b.z2)), ecdsa.mod(Nat.mul(b.x, a.z2)))
+  let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y, b.z3)), ecdsa.mod(Nat.mul(b.y, a.z3)))
+  Bool.and(eq1, eq2)
 
 Jacobian.from_point: Point -> Jacobian
   (p)
-  p<() Jacobian>
-  | (p.x) (p.y) Jacobian.new(p.x, p.y, Nat.1);
+  get p.x p.y = p
+  Jacobian.new(p.x, p.y, Nat.1)
 
 Jacobian.to_point: Jacobian -> Point
   (p)
-  p<() Point>
-  | (p.x) (p.y) (p.z)
-    let invz = ecdsa.invertUnsafe(p.z, CURVE.P)
-    let invz2 = Nat.square(invz)
-    let x = ecdsa.mod(Nat.mul(p.x, invz2))
-    let y = ecdsa.mod(Nat.mulVar(Nat.3, p.y, invz2, invz))
-    Point.new(x, y);
+  get p.x p.y p.z = p
+  let invz = ecdsa.invertUnsafe(p.z, CURVE.P)
+  let invz2 = Nat.square(invz)
+  let x = ecdsa.mod(Nat.mul(p.x, invz2))
+  let y = ecdsa.mod(Nat.mulVar(Nat.3, p.y, invz2, invz))
+  Point.new(x, y)
+
+Jacobian.normalizeZ: Jacobian -> Jacobian
+  (p) Jacobian.from_point(Jacobian.to_point(p))
 
 Jacobian.negate: Jacobian -> Jacobian
   (p)
-  p<() Jacobian>
-  | (p.x) (p.y) (p.z) Jacobian.new(p.x, ecdsa.negate(p.y), p.z);
+  get p.x p.y p.z = p
+  Jacobian.new(p.x, ecdsa.negate(p.y), p.z)
 
 Jacobian.double: Jacobian -> Jacobian
   (p)
-  p<() Jacobian>
-  | (p.x) (p.y) (p.z)
-    let A = Nat.square(p.x)
-    let B = Nat.square(p.y)
-    let C = Nat.square(B)
-    let D = Nat.mul(Nat.2, ecdsa.sub(Nat.square(Nat.add(p.x, B)), Nat.add(A, C)))
-    let E = Nat.mul(Nat.3, A)
-    let F = Nat.square(E)
-    let F = Nat.square(E)
-    let x = ecdsa.sub(F, Nat.mul(Nat.2, D))
-    let y = ecdsa.sub(Nat.mul(E, ecdsa.sub(D, x)), Nat.mul(Nat.8, C))
-    let z = ecdsa.mod(Nat.mulVar(Nat.3, Nat.2, p.y, p.z))
-    Jacobian.new(x, y, z);
+  get p.x p.y p.z = p
+  let A = Nat.square(p.x)
+  let B = Nat.square(p.y)
+  let C = Nat.square(B)
+  let D = Nat.mul(Nat.2, ecdsa.sub(Nat.square(Nat.add(p.x, B)), Nat.add(A, C)))
+  let E = Nat.mul(Nat.3, A)
+  let F = Nat.square(E)
+  let F = Nat.square(E)
+  let x = ecdsa.sub(F, Nat.mul(Nat.2, D))
+  let y = ecdsa.sub(Nat.mul(E, ecdsa.sub(D, x)), Nat.mul(Nat.8, C))
+  let z = ecdsa.mod(Nat.mulVar(Nat.3, Nat.2, p.y, p.z))
+  Jacobian.new(x, y, z)
 
 Jacobian.add: Jacobian -> Jacobian -> Jacobian
   (p) (q)
-  p<() Jacobian>
-  | (p.x) (p.y) (p.z)
-    Bool.or(Nat.eql(p.x, Nat.0), Nat.eql(p.y, Nat.0))<() Jacobian>
-    | q;
-    | q<() Jacobian>
-      | (q.x) (q.y) (q.z)
-        Bool.or(Nat.eql(q.x, Nat.0), Nat.eql(q.y, Nat.0))<() Jacobian>
-        | p;
-        |
-          let p.z2 = Nat.square(p.z)
-          let q.z2 = Nat.square(q.z)
-          let U1 = Nat.mul(p.x, q.z2)
-          let U2 = Nat.mul(q.x, p.z2)
-          let S1 = Nat.mulVar(Nat.3, p.y, q.z, q.z2)
-          let S2 = Nat.mulVar(Nat.3, q.y, p.z, p.z2)
-          let H = ecdsa.sub(U2, U1)
-          let r = ecdsa.sub(S2, S1)
-          // H = 0 meaning it's the same point.
-          Nat.eql(H, Nat.0)<() Jacobian>
-          | Nat.eql(r, Nat.0)<() Jacobian>
-            | Jacobian.double(p);
-            | Jacobian.0;;
-          | let HH = ecdsa.mod(Nat.square(H))
-            let HHH = ecdsa.mod(Nat.mul(H, HH))
-            let V = Nat.mul(U1, HH)
-            let x = ecdsa.sub(ecdsa.sub(Nat.square(r), HHH), Nat.mul(Nat.2, V))
-            let y = ecdsa.sub(Nat.mul(r, ecdsa.sub(V, x)), Nat.mul(S1, HHH))
-            let z = ecdsa.mod(Nat.mulVar(Nat.3, p.z, q.z, H))
-            Jacobian.new(x, y, z);;;;;
+  get p.x p.y p.z = p
+  Bool.or(Nat.eql(p.x, Nat.0), Nat.eql(p.y, Nat.0))<() Jacobian>
+  | q;
+  | get q.x q.y q.z = q
+    Bool.or(Nat.eql(q.x, Nat.0), Nat.eql(q.y, Nat.0))<() Jacobian>
+    | p;
+    | let p.z2 = Nat.square(p.z)
+      let q.z2 = Nat.square(q.z)
+      let U1 = Nat.mul(p.x, q.z2)
+      let U2 = Nat.mul(q.x, p.z2)
+      let S1 = Nat.mulVar(Nat.3, p.y, q.z, q.z2)
+      let S2 = Nat.mulVar(Nat.3, q.y, p.z, p.z2)
+      let H = ecdsa.sub(U2, U1)
+      let r = ecdsa.sub(S2, S1)
+      // H = 0 meaning it's the same point.
+      Nat.eql(H, Nat.0)<() Jacobian>
+      | Nat.eql(r, Nat.0)<() Jacobian>
+        | Jacobian.double(p);
+        | Jacobian.0;;
+      | let HH = ecdsa.mod(Nat.square(H))
+        let HHH = ecdsa.mod(Nat.mul(H, HH))
+        let V = Nat.mul(U1, HH)
+        let x = ecdsa.sub(ecdsa.sub(Nat.square(r), HHH), Nat.mul(Nat.2, V))
+        let y = ecdsa.sub(Nat.mul(r, ecdsa.sub(V, x)), Nat.mul(S1, HHH))
+        let z = ecdsa.mod(Nat.mulVar(Nat.3, p.z, q.z, H))
+        Jacobian.new(x, y, z);;;
 
     // Non-constant-time multiplication. Uses double-and-add algorithm.
     // It's faster, but should only be used when you don't care about
@@ -215,19 +221,16 @@ Jacobian.add: Jacobian -> Jacobian -> Jacobian
 Jacobian.mul_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
   (d) (scalar)
   let n = Nat.mod(scalar, CURVE.n)
-  let res = ecdsa.split_scalar(n)<() Jacobian>
-    | (k1) (k2)
-      Int.toNat(k1)<() Jacobian>
-      | (k1neg) (k1)
-        Int.toNat(k2)<() Jacobian>
-        | (k2neg) (k2)
-          Jacobian.mul_unsafe_aux.tco(d, Jacobian.0, Jacobian.0, k1, k2)<() Jacobian>
-          | (k1p) (k2p)
-            let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p), k1p)
-            let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p), k2p)
-            let k2p = k2p<() Jacobian>((k2p.x) (k2p.y) (k2p.z)
-              Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z))
-            Jacobian.add(k1p, k2p);;;;
+  let res =
+    get k1 k2 = ecdsa.split_scalar(n)
+    get k1neg k1 = Int.toNat(k1)
+    get k2neg k2 = Int.toNat(k2)
+    get k1p k2p = Jacobian.mul_unsafe_aux.tco(d, Jacobian.0, Jacobian.0, k1, k2)
+    let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p), k1p)
+    let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p), k2p)
+    let k2p = k2p<() Jacobian>((k2p.x) (k2p.y) (k2p.z)
+      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z))
+    Jacobian.add(k1p, k2p)
   n<() Maybe(Jacobian)>
   | Maybe.none<Jacobian>;
   | () Maybe.some<Jacobian>(res);
@@ -261,17 +264,68 @@ Jacobian.precompute_window: Jacobian -> (w: Nat) -> List(Jacobian)
   (p) (w)
   let windows = ecdsa.window(w)
   let points = Concat.empty<Jacobian>
-  let size = Nat.pow(Nat.2)(Nat.pred(w))
+  let size = Nat.pow(Nat.2, Nat.pred(w))
   Concat.to_list<Jacobian>(Jacobian.precompute_window.tco(p, windows, points, Nat.0, Jacobian.0, size, Nat.0))
 
 Jacobian.precompute_window.tco: Jacobian -> Nat -> Concat(Jacobian) -> Nat -> Jacobian -> Nat -> Nat -> Concat(Jacobian)
   (p) (windows) (points) (window) (base) (size) (i)
-  Bool.if<Unit -> Concat(Jacobian)>(Nat.ltn(window)(windows))
-  | () Bool.if<Concat(Jacobian)>(Nat.ltn(i)(size))
-    | let base = Jacobian.add(base)(p)
-      let points = Concat.push<Jacobian>(base)(points)
-      Jacobian.precompute_window.tco(p)(windows)(points)(window)(base)(size)(Nat.succ(i));
+  Bool.if<Unit -> Concat(Jacobian)>(Nat.ltn(window, windows))
+  | () Bool.if<Concat(Jacobian)>(Nat.ltn(i, size))
+    | let base = Jacobian.add(base, p)
+      let points = Concat.push<Jacobian>(base, points)
+      Jacobian.precompute_window.tco(p, windows, points, window, base, size, Nat.succ(i));
     | let p = Jacobian.double(base)
-      Jacobian.precompute_window.tco(p)(windows)(points)(Nat.succ(window))(Jacobian.0)(size)(Nat.0);;
+      Jacobian.precompute_window.tco(p, windows, points, Nat.succ(window), Jacobian.0, size, Nat.0);;
   | () points;
+  | Unit.new;
+
+Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jacobian, Jacobian)
+  (W) (precomputes) (n)
+    let windows = ecdsa.window(W)
+    let windowSize = Nat.pow(Nat.2, Nat.pred(W))
+    let maxNumber = Nat.pow(Nat.2, W)
+
+    // Create mask with W ones: 0b1111 for W=4 etc.
+    let mask = Nat.pred(Nat.pow(Nat.2, W))
+
+    Jacobian.wNAF.tco(precomputes, Jacobian.0, Jacobian.0, n, W, Nat.0, windows, windowSize, mask, maxNumber)
+
+Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Pair(Jacobian, Jacobian)
+  (precomputes) (p) (f) (n) (W) (window) (windows) (windowSize) (mask) (maxNumber)
+  Bool.if<Unit -> Pair(Jacobian, Jacobian)>(Nat.ltn(window, windows))
+  | () 
+    let offset = Nat.mul(window, windowSize)
+
+    // Extract W bits.
+    let wbits = Nat.bitwise_and(n, mask)
+
+    // Shift number by W bits.
+    let n = Nat.div(n, maxNumber)
+
+    // If the bits are bigger than max size, we'll split those.
+    // +224 => 256 - 32
+    get n wbits =
+      Bool.if<_>(Nat.gtn(wbits, windowSize))
+      | Pair.new<_,_>(Nat.succ(n), Nat.sub(wbits, maxNumber));
+      | Pair.new<_,_>(n, wbits);
+
+    // Check if we're onto Zero point.
+    // Add random point inside current window to f.
+    Bool.if<_>(Nat.eql(wbits, Nat.0))
+    |
+      // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
+      let q = Maybe.extract<_>(List.at<_>(precomputes, offset))(Jacobian.0)
+      let f = Jacobian.add(f, Bool.if<_>(Nat.odd(window), Jacobian.negate(q), q))
+      let window = Nat.succ(window)
+      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber)
+    ;
+    |
+      // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
+      let cached = Maybe.extract<_>(List.at<_>(precomputes, Nat.pred(Nat.add(offset, wbits))))(Jacobian.0)
+      let p = Jacobian.add(p, cached)
+      let window = Nat.succ(window)
+      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber)
+    ;
+  ;
+  | () Pair.new<Jacobian, Jacobian>(p, f);
   | Unit.new;
