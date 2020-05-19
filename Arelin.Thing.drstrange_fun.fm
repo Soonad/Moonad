@@ -81,11 +81,8 @@ Arelin.Thing.drstrange_fun: Arelin.Game.TxFunction
       let pos_p0 = Arelin.Thing.at_dist(self)(F64.parse("70"))
       let pos_p1 = Arelin.Thing.at_dist(self)(F64.parse("-120")) //at_max_dist(self, 200)
 
-      
-      // use pos_p1.x pos_p1.y pos_p1.z = pos_p1<() F64.V3>
-      // use pos_p1.x pos_p1.y pos_p1.z = case pos_p1
-      let portal_0 = 
-        case pos_p1: | (pos_p1.x) (pos_p1.y) (pos_p1.z)
+      let portal_0 =
+        get pos_p1.x pos_p1.y pos_p1.z = pos_p1
         let portal_0 = Arelin.Thing.new_thing
         let portal_0 = Arelin.Thing.set_sid(portal_0)(self.sid)
         let portal_0 = Arelin.Thing.set_fun(portal_0)
@@ -97,10 +94,9 @@ Arelin.Thing.drstrange_fun: Arelin.Game.TxFunction
         let portal_0.stt = Arelin.Thing.get_stt(portal_0)
         Arelin.Thing.set_stt(portal_0)
           | Map.set<>(Arelin.Game.Constants.POS_Y_KEY)(pos_p1.y)(portal_0.stt);
-        ;
       
       let portal_1 = 
-        case pos_p0: | (pos_p0.x) (pos_p0.y) (pos_p0.z)
+        get pos_p0.x pos_p0.y pos_p0.z = pos_p0
         let portal_1 = Arelin.Thing.new_thing
         let portal_1 = Arelin.Thing.set_sid(portal_1)(self.sid)
         let portal_1 = Arelin.Thing.set_fun(portal_1)
@@ -112,7 +108,6 @@ Arelin.Thing.drstrange_fun: Arelin.Game.TxFunction
         let portal_1.stt = Arelin.Thing.get_stt(portal_1)
         Arelin.Thing.set_stt(portal_1)
           | Map.set<>(Arelin.Game.Constants.POS_Y_KEY)(pos_p0.y)(portal_1.stt);
-        ;
      
       let self = Arelin.Thing.spawn(self)(F64.parse("20"))
         | [Arelin.Thing; Arelin.Thing.move(portal_0)(pos_p0)];
