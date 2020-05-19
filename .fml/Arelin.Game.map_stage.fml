@@ -1,3 +1,3 @@
 Arelin.Game.map_stage: (fn: Arelin.Game.TxFunction) -> (gm: Arelin.Game) -> Arelin.Game
-  (fn) (gm) gm<(self) Arelin.Game>((stage) let new_stage = List.map<Arelin.Thing><Arelin.Thing>(fn)(stage); Arelin.Game.game(new_stage))
+  (fn) (gm) gm<(self) Arelin.Game>((stage) let new_stage = List.map<Arelin.Thing><Arelin.Thing>(fn)(stage); Arelin.Game.new(new_stage))
 
