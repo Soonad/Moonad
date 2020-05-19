@@ -1,3 +1,0 @@
-// >=
-Cmp.gtn: Cmp
-  <P> (ltn) (eql) (gtn) gtn

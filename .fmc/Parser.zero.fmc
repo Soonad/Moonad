@@ -1,0 +1,3 @@
+Parser.zero: ∀(A:*) (Parser A)
+  ΛA <<<Parsec.zero Unit> Unit> A>
+

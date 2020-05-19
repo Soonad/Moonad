@@ -1,0 +1,3 @@
+Acc.foldl: ∀(A:*) ∀(B:*) Π(stop:Π(:A) Bool) Π(acc:Π(:B) Π(:A) B) Π(b:B) Π(a:A) ((((Acc A) B) stop) a)
+  ΛA ΛB λstop λacc λb λa (((<(stop a) λb Π(:(((Equal Bool) b) (stop a))) ((((Acc A) B) stop) a)> λeq ((<<<<Equal.rewrite Bool> Bool.true> (stop a)> λX ((<X λ *> B) Π(a:A) ((((Acc A) B) stop) a))> eq) b)) λeq ((<<<<Equal.rewrite Bool> Bool.false> (stop a)> λX ((<X λ *> B) Π(a:A) ((((Acc A) B) stop) a))> eq) λc ((((<<Acc.foldl A> B> stop) acc) ((acc b) a)) c))) <<Equal.to Bool> (stop a)>)
+

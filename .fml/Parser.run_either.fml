@@ -1,0 +1,3 @@
+Parser.run_either: <A: Type> -> Parser(A) -> String -> Either(Parser.Error)(A)
+  <A> (p) (s) let reply = Parsec.run<Unit><Unit><A>(p)(Parser.State.default(s)); reply<() Either(Parser.Error)(A)>(() (x) Either.right<Parser.Error><A>(x))(() (e) Either.left<Parser.Error><A>(e))(() (x) Either.right<Parser.Error><A>(x))(() (e) Either.left<Parser.Error><A>(e))
+

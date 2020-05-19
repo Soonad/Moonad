@@ -1,0 +1,3 @@
+Nat.add: Nat -> Nat -> Nat
+  (n) (m) n<() Nat>(m)((n.pred) Nat.succ(Nat.add(n.pred)(m)))
+

@@ -1,7 +1,0 @@
-F64.Segment : Type 
-  segment<P: F64.Segment -> Type> ->
-  (new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> 
-  P(segment)
-
-
-   

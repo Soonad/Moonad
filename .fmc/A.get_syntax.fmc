@@ -1,0 +1,3 @@
+A.get_syntax: Nat
+  @pair=((<<Pair.new Nat> Nat> Nat.2) Nat.3);(<pair λself Nat> λx λy x)
+

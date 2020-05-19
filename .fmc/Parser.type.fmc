@@ -1,0 +1,3 @@
+Parser.type: Π(A:*) Π(:(Parser.Reply A)) *
+  λA λreply ((((Parsec.type Unit) Unit) A) reply)
+

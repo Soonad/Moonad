@@ -1,0 +1,3 @@
+ecdsa.sub: Nat -> Nat -> Nat
+  (a) (b) ecdsa.mod(Nat.add(a)(ecdsa.negate(b)))
+

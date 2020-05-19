@@ -1,4 +1,0 @@
-Map.tie: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
-  <> (val) (lft) (rgt)
-  <> () (tie)
-  tie(val)(lft)(rgt)

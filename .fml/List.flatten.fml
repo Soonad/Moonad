@@ -1,0 +1,3 @@
+List.flatten: <A: Type> -> List(List(A)) -> List(A)
+  <A> (as) as<(self) List(A)>([A;])((head) (tail) List.concat<A>(head)(List.flatten<A>(tail)))
+

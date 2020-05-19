@@ -1,4 +1,0 @@
-Subset.new: <A: Type> -> <B: A -> Type> -> (a: A) -> <b: B(a)> -> Subset(A)(B)
-  <A> <B> (a) <b>
-  <P> (subset)
-  subset(a)<b>

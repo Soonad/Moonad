@@ -1,5 +1,0 @@
-TaelinArena.Game.Effect.heal: F64 -> TaelinArena.Game.Effect
-  (lif)
-  <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport)
-  heal(lif)
-  

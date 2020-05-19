@@ -1,2 +1,0 @@
-U32.parse_hex: String -> U32
-  (str) U32.new(Word.from_bits(Nat.32)(Bits.parse_hex(str)))

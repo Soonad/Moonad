@@ -1,0 +1,3 @@
+Word.parse_hex: Π(size:Nat) Π(:String) (Word size)
+  λsize λstr ((Word.from_bits size) (Bits.parse_hex str))
+

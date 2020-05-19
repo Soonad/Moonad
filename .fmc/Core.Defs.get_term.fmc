@@ -1,0 +1,3 @@
+Core.Defs.get_term: Π(:Core.Defs) Π(:String) (Maybe Core)
+  λdefs λname ((<<Maybe.map Core.Def> Core> <<Pair.snd Core> Core>) ((Core.Defs.get defs) name))
+

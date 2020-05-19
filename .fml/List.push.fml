@@ -1,0 +1,3 @@
+List.push: <A: Type> -> A -> List(A) -> List(A)
+  <A> (val) (list) list<(self) List(A)>([A; val])((list.head) (list.tail) List.cons<A>(list.head)(List.push<A>(val)(list.tail)))
+

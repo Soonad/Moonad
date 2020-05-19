@@ -1,5 +1,0 @@
-Set.get: Bits -> Set -> Bool
-  (bits) (set)
-  Map.get<Unit>(bits)(set)<() Bool>
-  | Bool.false;
-  | () Bool.true;

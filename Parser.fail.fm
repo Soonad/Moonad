@@ -1,2 +1,0 @@
-Parser.fail: <A: Type> -> String -> Parser(A)
-  <A> (msg) Parsec.fail<Unit><Unit><A>(msg)

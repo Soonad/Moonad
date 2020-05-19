@@ -1,0 +1,3 @@
+Nat.44: Nat
+  (Nat.succ Nat.43)
+

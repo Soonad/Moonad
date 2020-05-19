@@ -1,7 +1,6 @@
 // Comparisons
-Cmp : Type
-  cmp<P: Cmp -> Type> ->
-  P(Cmp.ltn) ->
-  P(Cmp.eql) ->
-  P(Cmp.gtn) ->
-  P(cmp)
+T Cmp
+| ltn;
+| eql;
+| gtn;
+

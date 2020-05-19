@@ -1,3 +1,0 @@
-// The 'false' bool.
-Bool.false: Bool
-  <P> (t) (f) f

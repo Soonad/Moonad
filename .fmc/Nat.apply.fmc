@@ -1,0 +1,3 @@
+Nat.apply: ∀(A:*) Π(:Nat) Π(:Π(:A) A) Π(:A) A
+  ΛA λn λf λx ((<n λ A> x) λn.pred (((<Nat.apply A> n.pred) f) (f x)))
+

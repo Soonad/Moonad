@@ -1,0 +1,3 @@
+Bool.elim: Π(b:Bool) ∀(P:Π(:Bool) *) Π(:(P Bool.true)) Π(:(P Bool.false)) (P b)
+  λb ΛP λt λf ((<b P> t) f)
+

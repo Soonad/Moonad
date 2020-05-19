@@ -1,8 +1,0 @@
-Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
-  <size> (word) (add)
-  word<() () Nat>
-  | Nat.zero;
-  | <size> (word.pred)
-    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2));
-  | <size> (word.pred)
-    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2)));

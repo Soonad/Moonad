@@ -1,8 +1,0 @@
-String.take: Nat -> String -> String
-  (n) (list)
-  case list:
-  | String.nil;
-  | (head) (tail)
-    case n:
-    | String.nil;
-    | (pred) String.cons(head)(String.take(pred)(tail));;

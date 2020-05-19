@@ -1,6 +1,0 @@
-F64.if: <A: Type> -> (x: F64) -> (ct: A) -> (cf: A) -> A
-  <A> (x) (ct) (cf)
-  let bool = F64.eql(x)(F64.0)
-  bool<() A>
-  | cf;
-  | ct;

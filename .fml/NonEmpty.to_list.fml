@@ -1,0 +1,3 @@
+NonEmpty.to_list: <A: Type> -> NonEmpty(A) -> List(A)
+  <A> (xs) xs<() List(A)>((value) [A; value])((head) (tail) List.cons<A>(head)(NonEmpty.to_list<A>(tail)))
+

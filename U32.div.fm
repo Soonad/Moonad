@@ -1,5 +1,0 @@
-U32.div: U32 -> U32 -> U32 //prim//
-  (a) (b)
-  a<() U32> | (a_val)
-  b<() U32> | (b_val)
-  U32.new(Word.div<Nat.32>(a_val)(b_val));;

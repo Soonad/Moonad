@@ -1,4 +1,0 @@
-// The left constructor of the Either type.
-Either.left : <A : Type> -> <B : Type> -> (x : A) -> Either(A)(B)
-  <A> <B> (x)
-  <P> (left) (right) left(x)

@@ -1,0 +1,3 @@
+Nat.to_string_decimal: Nat -> String
+  Nat.to_string_base(Nat.10)
+

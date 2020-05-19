@@ -1,0 +1,3 @@
+Maybe.join: ∀(A:*) Π(:(Maybe (Maybe A))) (Maybe A)
+  ΛA λm ((<m λ (Maybe A)> <Maybe.none A>) λm.value m.value)
+

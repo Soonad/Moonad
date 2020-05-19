@@ -1,0 +1,3 @@
+JSON.null: JSON
+  <P> (null) (bool) (number) (string) (array) (object) null
+

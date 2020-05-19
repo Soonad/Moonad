@@ -1,4 +1,0 @@
-Core.ann: Bool -> Core -> Core -> Core
-  (done) (expr) (type)
-  <> () () () () () () () (ann)
-  ann(done)(expr)(type)

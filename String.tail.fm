@@ -1,5 +1,0 @@
-String.tail: String -> String
-  (str)
-  case str:
-  | String.nil;
-  | (str.head) (str.tail) str.tail;

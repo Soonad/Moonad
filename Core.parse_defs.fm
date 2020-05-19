@@ -1,5 +1,0 @@
-Core.parse_defs: String -> Core.Defs
-  (code)
-  Core.Read.defs(code)<() Core.Defs>
-  | Core.Defs.new;
-  | (got) got<() Core.Defs>((defs) () defs);

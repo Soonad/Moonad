@@ -1,0 +1,3 @@
+List.flatten: ∀(A:*) Π(:(List (List A))) (List A)
+  ΛA λas ((<as λself (List A)> <List.nil A>) λhead λtail ((<List.concat A> head) (<List.flatten A> tail)))
+

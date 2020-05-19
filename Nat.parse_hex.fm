@@ -1,3 +1,0 @@
-//// TODO: error on misformatted Nat
-Nat.parse_hex: String -> Nat
-  (str) Nat.parse_hex.go(str)(Nat.zero) 

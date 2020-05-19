@@ -1,0 +1,3 @@
+Word.neg.aux: <size: Nat> -> Word(size) -> Bool -> Word(size)
+  <size> (word) (inc) word<(size) () Word(size)>(Word.nil)(<size> (pred) inc<() Word(Nat.succ(size))>(Word.0<size>(Word.neg.aux<size>(pred)(Bool.true)))(Word.1<size>(Word.neg.aux<size>(pred)(Bool.false))))(<size> (pred) inc<() Word(Nat.succ(size))>(Word.1<size>(Word.neg.aux<size>(pred)(Bool.false)))(Word.0<size>(Word.neg.aux<size>(pred)(Bool.false))))
+

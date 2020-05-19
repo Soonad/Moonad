@@ -1,0 +1,3 @@
+List.length: <A: Type> -> List(A) -> Nat
+  <A> (list) list<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(List.length<A>(tail)))
+

@@ -1,0 +1,3 @@
+Nat.12: Nat
+  (Nat.succ Nat.11)
+

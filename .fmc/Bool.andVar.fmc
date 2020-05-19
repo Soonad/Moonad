@@ -1,0 +1,3 @@
+Bool.andVar: Π(n:Nat) (((Variadic n) Bool) Bool)
+  ((<<Variadic.foldr Bool> Bool> Bool.and) Bool.true)
+

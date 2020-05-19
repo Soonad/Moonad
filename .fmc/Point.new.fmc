@@ -1,0 +1,3 @@
+Point.new: Π(:Nat) Π(:Nat) Point
+  λx λy ((<<Pair.new Nat> Nat> x) y)
+

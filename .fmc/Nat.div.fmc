@@ -1,0 +1,3 @@
+Nat.div: Π(:Nat) Π(:Nat) Nat
+  λn λm (<<Pair.fst Nat> Nat> ((Nat.div_mod n) m))
+

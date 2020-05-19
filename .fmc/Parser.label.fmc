@@ -1,0 +1,3 @@
+Parser.label: ∀(A:*) Π(:String) Π(:(Parser A)) (Parser A)
+  ΛA λlabel λp ((<<<Parsec.label Unit> Unit> A> label) p)
+

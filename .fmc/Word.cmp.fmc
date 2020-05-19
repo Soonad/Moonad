@@ -1,0 +1,3 @@
+Word.cmp: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) Cmp
+  Λsize λa λb (((<Word.cmp.aux size> a) b) Cmp.eql)
+

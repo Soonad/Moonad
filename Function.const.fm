@@ -1,3 +1,0 @@
-// Given a `x`, returns a function that receives an `y` and returns `x`.
-Function.const: <A: Type> -> (x: A) -> (y: A) -> A
-  <A> (x) (y) x

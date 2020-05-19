@@ -1,8 +1,0 @@
-Parsec.Error.make_fancy:
-  <E: Type> ->
-  Nat ->
-  List(Parsec.Error.Fancy(E)) ->
-  Parsec.Error(E)
-
-  <E> (position) (messages)
-  <P> () (fancy) fancy(position)(messages)

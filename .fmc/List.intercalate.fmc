@@ -1,0 +1,3 @@
+List.intercalate: ∀(A:*) Π(sep:A) Π(xs:(List A)) (List A)
+  ΛA λsep λxs ((<xs λself (List A)> <List.nil A>) λx λxs ((<List.cons A> x) ((<List.cons A> sep) ((<List.intercalate A> sep) xs))))
+

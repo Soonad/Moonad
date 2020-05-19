@@ -1,0 +1,3 @@
+Data.Ctrs.ctr.header.type: Π(P:*) Π(:Data.Ctrs) Π(:(List P)) *
+  λP λctrs λvars ((<ctrs λ *> ((<vars λ *> Unit) λ λ P)) λctrs.name λctrs.flds λctrs.ctrs Π(x:P) (((Data.Ctrs.ctr.header.type P) ctrs.ctrs) ((<List.cons P> x) vars)))
+

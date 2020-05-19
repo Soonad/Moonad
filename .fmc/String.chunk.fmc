@@ -1,0 +1,3 @@
+String.chunk: Π(:Nat) Π(:String) (Maybe String)
+  λn λlist ((<n λx2 (Maybe String)> (<Maybe.some String> String.nil)) λpred ((<list λself (Maybe String)> <Maybe.none String>) λhead λtail ((<<Maybe.bind String> String> ((String.chunk pred) tail)) λx (<Maybe.some String> ((String.cons head) x)))))
+

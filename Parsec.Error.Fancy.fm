@@ -1,9 +1,0 @@
-// A fancy error is where the parser author preempts the internal error system
-// and instead returns a failure message or a value of custom error type E
-
-Parsec.Error.Fancy : Type -> Type
-  (E)
-  parser.error.fancy<P: Parsec.Error.Fancy(E) -> Type> ->
-  (fail:   (msg: String) -> P(Parsec.Error.Fancy.fail<E>(msg))) ->
-  (custom: (err: E) -> P(Parsec.Error.Fancy.custom<E>(err))) ->
-  P(parser.error.fancy)

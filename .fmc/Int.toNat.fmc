@@ -1,0 +1,3 @@
+Int.toNat: Π(:Int) ((Pair Bool) Nat)
+  λa (<a λ ((Pair Bool) Nat)> λa.x λa.y ((<a.y λ ((Pair Bool) Nat)> ((<<Pair.new Bool> Nat> Bool.false) a.x)) λ ((<<Pair.new Bool> Nat> Bool.true) a.y)))
+

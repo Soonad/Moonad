@@ -1,0 +1,3 @@
+Point.new: Nat -> Nat -> Point
+  (x) (y) Pair.new<Nat><Nat>(x)(y)
+

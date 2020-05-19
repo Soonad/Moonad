@@ -1,0 +1,3 @@
+Lang.parse: (s: String) -> Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
+  (s) Parser.parse<Core>(Lang.core)(s)
+

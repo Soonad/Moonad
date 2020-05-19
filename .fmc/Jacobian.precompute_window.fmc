@@ -1,0 +1,3 @@
+Jacobian.precompute_window: Π(:Jacobian) Π(w:Nat) (List Jacobian)
+  λp λw @windows=(ecdsa.window w);@points=<Concat.empty Jacobian>;@size=((Nat.pow Nat.2) (Nat.pred w));(<Concat.to_list Jacobian> (((((((Jacobian.precompute_window.tco p) windows) points) Nat.0) Jacobian.0) size) Nat.0))
+

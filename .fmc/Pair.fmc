@@ -1,0 +1,3 @@
+Pair: Π(A:*) Π(B:*) *
+  λA λB ∀self(P:Π(self:((Pair A) B)) *) Π(new:Π(a:A) Π(b:B) (P ((<<Pair.new A> B> a) b))) (P self)
+

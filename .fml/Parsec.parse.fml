@@ -1,0 +1,3 @@
+Parsec.parse: <S: Type> -> <E: Type> -> <A: Type> -> (p: Parsec(S)(E)(A)) -> (s: Parsec.State(S)(E)) -> Parsec.type(S)(E)(A)(Parsec.run<S><E><A>(p)(s))
+  <S> <E> <A> (p) (s) Parsec.run<S><E><A>(p)(s)<(t) Parsec.type(S)(E)(A)(t)>(() (x) x)(() (e) e)(() (x) x)(() (e) e)
+

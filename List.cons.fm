@@ -1,4 +1,0 @@
-// Appends an element to the start of the list.
-List.cons: <A: Type> -> (head: A) -> (tail: List(A)) -> List(A)
-  <A> (head) (tail)
-  <P> (nil) (cons) cons(head)(tail)

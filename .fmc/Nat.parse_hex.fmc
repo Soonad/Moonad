@@ -1,0 +1,3 @@
+Nat.parse_hex: Π(:String) Nat
+  λstr ((Nat.parse_hex.go str) Nat.zero)
+

@@ -1,0 +1,3 @@
+Parsec.Reply: Type -> Type -> Type -> Type
+  (S) (E) (A) parser_reply<P: Parsec.Reply(S)(E)(A) -> Type> -> (empty_value: (state: Parsec.State(S)(E)) -> (value: A) -> P(Parsec.Reply.empty_value<S><E><A>(state)(value))) -> (empty_error: (state: Parsec.State(S)(E)) -> (error: Parsec.Error(E)) -> P(Parsec.Reply.empty_error<S><E><A>(state)(error))) -> (eaten_value: (state: Parsec.State(S)(E)) -> (value: A) -> P(Parsec.Reply.eaten_value<S><E><A>(state)(value))) -> (eaten_error: (state: Parsec.State(S)(E)) -> (error: Parsec.Error(E)) -> P(Parsec.Reply.eaten_error<S><E><A>(state)(error))) -> P(parser_reply)
+

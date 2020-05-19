@@ -1,0 +1,3 @@
+String.single: Π(x:Char) String
+  λx ((String.cons x) String.nil)
+

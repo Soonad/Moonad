@@ -1,0 +1,3 @@
+Acc: Π(A:*) Π(B:*) Π(stop:Π(:A) Bool) Π(a:A) *
+  λA λB λstop λa ((<(stop a) λ *> B) Π(a:A) ((((Acc A) B) stop) a))
+

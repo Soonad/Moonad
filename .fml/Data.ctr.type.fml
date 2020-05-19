@@ -1,0 +1,3 @@
+Data.ctr.type: Data -> Nat -> Type
+  (data) (nth) data<() Type>((data.name) (data.ctrs) Data.Ctrs.ctr.type(data.ctrs)(data.ctrs)(nth))
+

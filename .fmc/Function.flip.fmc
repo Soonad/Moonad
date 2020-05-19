@@ -1,0 +1,3 @@
+Function.flip: ∀(A:*) ∀(B:*) ∀(C:*) Π(f:Π(:A) Π(:B) C) Π(y:B) Π(x:A) C
+  ΛA ΛB ΛC λf λy λx ((f x) y)
+

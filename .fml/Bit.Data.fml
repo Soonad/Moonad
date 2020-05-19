@@ -1,0 +1,3 @@
+Bit.Data: Data
+  Data.new("Bit")(Data.Ctrs.ext("b0")(Data.Flds.nil)(Data.Ctrs.ext("b1")(Data.Flds.nil)(Data.Ctrs.nil)))
+

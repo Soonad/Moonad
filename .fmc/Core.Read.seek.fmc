@@ -1,0 +1,3 @@
+Core.Read.seek: ∀(A:*) ∀(B:*) Π(:(Core.Read A)) Π(:Π(:A) (Core.Read B)) (Core.Read B)
+  ΛA ΛB λra λrb λcode (((<<Core.Read.bind A> B> ra) rb) (Core.Read.next code))
+

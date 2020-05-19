@@ -1,0 +1,3 @@
+Nat.29: Nat
+  (Nat.succ Nat.28)
+

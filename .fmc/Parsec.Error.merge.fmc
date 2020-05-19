@@ -1,0 +1,3 @@
+Parsec.Error.merge: ∀(E:*) Π(:(Parsec.Error E)) Π(:(Parsec.Error E)) (Parsec.Error E)
+  ΛE λx λy @x.index=(<Parsec.Error.index E> x);@y.index=(<Parsec.Error.index E> y);(((<((Nat.cmp x.index) y.index) λ (Parsec.Error E)> y) ((<x λ (Parsec.Error E)> λx.pos λx.unx λx.exp ((<y λ (Parsec.Error E)> λy.pos λy.unx λy.exp (((<Parsec.Error.make_trivial E> x.pos) ((<x.unx λ (Maybe Parsec.Error.Item)> y.unx) λ x.unx)) ((<List.concat Parsec.Error.Item> x.exp) y.exp))) λy.pos λy.msg y)) λx.pos λx.msg ((<y λ (Parsec.Error E)> λy.pos λy.unx λy.exp x) λy.pos λy.msg ((<Parsec.Error.make_fancy E> x.pos) ((<List.concat (Parsec.Error.Fancy E)> x.msg) y.msg))))) x)
+

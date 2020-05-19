@@ -5,3 +5,4 @@ hello: IO(Unit)
   IO.inp<Unit>              | (name)
   IO.log<Unit>(greet(name)) | ()
   IO.end<Unit>(Unit.new);;;
+

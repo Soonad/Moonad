@@ -1,6 +1,0 @@
-Word.pred: <size: Nat> -> Word(Nat.succ(size)) -> Word(size)
-  <size> (word)
-  word<(size) () Word(Nat.pred(size))>
-  | Word.nil;
-  | <word.size> (word.pred) word.pred;
-  | <word.size> (word.pred) word.pred;

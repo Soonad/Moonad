@@ -1,0 +1,3 @@
+Maybe: (A: Type) -> Type
+  (A) self<P: (self: Maybe(A)) -> Type> -> (none: P(Maybe.none<A>)) -> (some: (value: A) -> P(Maybe.some<A>(value))) -> P(self)
+

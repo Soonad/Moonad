@@ -1,0 +1,3 @@
+U16.lte: Π(:U16) Π(:U16) Bool
+  λa λb (<a λ Bool> λa_val (<b λ Bool> λb_val ((<Word.lte Nat.16> a_val) b_val)))
+

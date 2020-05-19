@@ -1,0 +1,3 @@
+Variadic: Π(:Nat) Π(:*) Π(:*) *
+  λn λA λB ((<n λ *> B) λn.pred Π(:A) (((Variadic n.pred) A) B))
+

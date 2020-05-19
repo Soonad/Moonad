@@ -1,0 +1,3 @@
+Nat.bitwise_and: Nat -> Nat -> Nat
+  (a) (b) Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a)(Nat.0))(Nat.eql(a)(Nat.0)))(() Nat.0)(() let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a)(Nat.2))(Nat.0))(Nat.eql(Nat.mod(b)(Nat.2))(Nat.0)))(Nat.0)(Nat.1); let a = Nat.div(a)(Nat.2); let b = Nat.div(b)(Nat.2); Nat.add(bit)(Nat.mul(Nat.2)(Nat.bitwise_and(a)(b))))(Unit.new)
+

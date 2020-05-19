@@ -1,0 +1,3 @@
+Bool.true: Bool
+  ΛP λtrue λfalse true
+

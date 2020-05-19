@@ -1,3 +1,0 @@
-//// TODO: error on misformatted Nat
-Nat.parse_decimal: String -> Nat
-  (str) Nat.parse_decimal.go(str)(Nat.zero) 

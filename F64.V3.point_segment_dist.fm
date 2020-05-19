@@ -1,3 +1,0 @@
-F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
-  (p) (s)
-  F64.sqrt(F64.V3.point_segment_sqrdist(p)(s))

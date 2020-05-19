@@ -1,0 +1,3 @@
+Point: Type
+  Pair(Nat)(Nat)
+

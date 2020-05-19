@@ -1,0 +1,3 @@
+Concat.empty: ∀(A:*) (Concat A)
+  Λ λxs xs
+

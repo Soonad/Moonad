@@ -1,0 +1,3 @@
+NonEmpty.to_list: ∀(A:*) Π(:(NonEmpty A)) (List A)
+  ΛA λxs ((<xs λ (List A)> λvalue ((<List.cons A> value) <List.nil A>)) λhead λtail ((<List.cons A> head) (<NonEmpty.to_list A> tail)))
+

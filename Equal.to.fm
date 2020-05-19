@@ -1,5 +1,0 @@
-// A proof that a value is equal to itself.
-Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
-  <A> <a>
-  <P> (to)
-  to

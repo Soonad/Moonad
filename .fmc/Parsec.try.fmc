@@ -1,0 +1,3 @@
+Parsec.try: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) (((Parsec S) E) A)
+  ΛS ΛE ΛA λp ΛX λs1 λempty_value λempty_error λeaten_value λ (((((<p X> s1) empty_value) λs2 λe ((empty_error s1) e)) eaten_value) λs2 λe ((empty_error s1) e))
+

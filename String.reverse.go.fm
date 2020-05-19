@@ -1,5 +1,0 @@
-String.reverse.go: String -> String -> String
-  (str) (res)
-  case str:
-  | res;
-  | (str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res));

@@ -1,0 +1,3 @@
+ecdsa.invert: Nat -> Nat -> Maybe(Nat)
+  (number) (modulo) Nat.eql(number)(Nat.0)<() Maybe(Nat)>(Maybe.none<Nat>)(Nat.egcd(Nat.mod(number)(modulo))(modulo)<(self) Maybe(Nat)>((gcd) (p) Nat.eql(gcd)(Nat.1)<() Maybe(Nat)>(p<(self) Maybe(Nat)>((x) (y) Maybe.some<Nat>(Int.mod_Nat(x)(modulo))))(Maybe.none<Nat>)))
+

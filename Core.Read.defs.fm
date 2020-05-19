@@ -1,2 +1,0 @@
-Core.Read.defs: Core.Read(Core.Defs)
-  Core.Read.defs.go(Core.Defs.new)

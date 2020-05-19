@@ -1,0 +1,3 @@
+Int.sub: Π(:Int) Π(:Int) Int
+  λa λb ((Int.add a) (Int.neg b))
+

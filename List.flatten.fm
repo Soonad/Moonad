@@ -1,7 +1,0 @@
-// Flattens a list of lists into a single list.
-List.flatten: <A: Type> -> List(List(A)) -> List(A)
-  <A> (as)
-  case as:
-  | List.nil<>;
-  | (head) (tail)
-    List.concat<>(head)(List.flatten<>(tail));

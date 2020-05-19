@@ -1,0 +1,3 @@
+Nat.square: Π(:Nat) Nat
+  λa ((Nat.mul a) a)
+

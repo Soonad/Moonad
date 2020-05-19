@@ -1,0 +1,3 @@
+Core.is_lam: Π(:Core) Bool
+  λterm ((((((((<term λ Bool> λname λindx λflip Bool.false) λname Bool.false) Bool.false) λeras λself λname λbind λbody Bool.false) λeras λname λbody Bool.true) λeras λfunc λargm Bool.false) λname λexpr λbody Bool.false) λdone λexpr λtype Bool.false)
+

@@ -1,0 +1,3 @@
+Int.new: Nat -> Nat -> Int
+  (x) (y) <P> (new) x<(x) P(Int.new(x)(y))>(new(Nat.zero)(y))((x.pred) y<(y) P(Int.new(Nat.succ(x.pred))(y))>(new(Nat.succ(x.pred))(Nat.zero))((y.pred) Int.new(Nat.sub(x.pred)(y.pred))(Nat.sub(y.pred)(x.pred))<P>(new)))
+

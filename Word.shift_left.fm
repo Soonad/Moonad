@@ -1,3 +1,0 @@
-// TODO Bitwise-shifts a word left
-Word.shift_left: <size: Nat> -> Nat -> Word(size) -> Word(size)
-  Word.shift_left

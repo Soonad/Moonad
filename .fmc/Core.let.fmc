@@ -1,0 +1,3 @@
+Core.let: Π(:String) Π(:Core) Π(:Π(:Core) Core) Core
+  λname λexpr λbody Λ λ λ λ λ λ λ λLet λ (((Let name) expr) body)
+

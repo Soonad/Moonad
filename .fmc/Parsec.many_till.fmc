@@ -1,0 +1,3 @@
+Parsec.many_till: ∀(S:*) ∀(E:*) ∀(A:*) ∀(B:*) Π(:(((Parsec S) E) A)) Π(:(((Parsec S) E) B)) (((Parsec S) E) (List A))
+  ΛS ΛE ΛA ΛB λp λq ((<<<Parsec.plus S> E> (List A)> ((<<<<Parsec.then S> E> B> (List A)> q) (<<<Parsec.pure S> E> (List A)> <List.nil A>))) ((<<<<Parsec.bind S> E> A> (List A)> p) λx ((<<<<Parsec.bind S> E> (List A)> (List A)> ((<<<<Parsec.many_till S> E> A> B> p) q)) λxs (<<<Parsec.pure S> E> (List A)> ((<List.cons A> x) xs)))))
+

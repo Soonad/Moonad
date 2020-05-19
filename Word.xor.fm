@@ -1,3 +1,0 @@
-// TODO bitwise XOR between two words
-Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.xor

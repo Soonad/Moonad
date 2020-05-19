@@ -1,14 +1,20 @@
-Vector: (A: Type) -> (size: Nat) -> Type
-  (A) (size)
-  vector<P: (size: Nat) -> (x: Vector(A)(size)) -> Type> ->
-  (nil: P(Nat.0)(Vector.nil<A>)) ->
-  (cons: <size: Nat> -> (head: A) -> (tail: Vector(A)(size)) -> P(Nat.succ(size))(Vector.cons<A><size>(head)(tail))) ->
-  P(size)(vector)
+T Vector <A: Type>                       ~ (len: Nat)
+| nil                                    ~ (Nat.zero);
+| ext<len: Nat>(x: A, xs: Vector(A,len)) ~ (Nat.succ(len));
 
-Vector.nil: <A: Type> -> Vector(A)(Nat.0)
-  <A>
-  <P> (nil) (cons) nil
-
-Vector.cons: <A: Type> -> <size: Nat> -> (head: A) -> (tail: Vector(A)(size)) -> Vector(A)(Nat.succ(size))
-  <A> <size> (head) (tail)
-  <P> (nil) (cons) cons<size>(head)(tail)
+Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
+  case vec
+  : (len, vec)
+    (e: Equal(Nat)(len)(Nat.zero)) ->
+    def P0 = ((x) Vector(Nat)(x)) :: Nat -> Type
+    def P1 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
+    let x0 = Equal.rewrite<><len><Nat.zero><P0>(e, vec)
+    let x1 = Equal.rewrite<><len><Nat.zero><P1>(e, Vector.nil<Nat>)
+    Equal()(x0)(x1);
+  | (e)
+    def P0 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
+    def x0 = Equal.rewrite<><><><P0>(e, Vector.nil<Nat>)
+    Equal.to<Vector(Nat, Nat.zero)><x0>;
+  | <len> (x, xs, e)
+    Empty.absurd(Nat.succ_isnt_zero(len, e), _);
+  | Equal.to<Nat><Nat.zero>;

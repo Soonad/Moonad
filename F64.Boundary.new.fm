@@ -1,5 +1,0 @@
-F64.Boundary.new: List(F64.V3) -> F64.Boundary
-  (pts)
-  <P> (new)
-  new(pts)
-  

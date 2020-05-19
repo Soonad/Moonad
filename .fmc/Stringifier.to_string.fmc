@@ -1,0 +1,3 @@
+Stringifier.to_string: Π(:Stringifier) String
+  λstr (str String.nil)
+

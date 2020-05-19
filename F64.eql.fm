@@ -1,6 +1,0 @@
-// TODO
-F64.eql : F64 -> F64 -> Bool
-  (x) (y)
-  get x.word = x
-  case y: | (y.word)
-  Word.eql<Nat.64>(x.word)(y.word);

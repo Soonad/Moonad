@@ -1,3 +1,0 @@
-NonEmpty.end: <A: Type> -> (value: A) -> NonEmpty(A)
-  <A> (value)
-  <P> (end) (cons) end(value)

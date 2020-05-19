@@ -1,0 +1,3 @@
+Int.1: Int
+  (Int.fromNat Nat.1)
+

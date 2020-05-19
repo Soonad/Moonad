@@ -1,0 +1,3 @@
+Int.cmp: Π(:Int) Π(:Int) Cmp
+  λa λb (<a λ Cmp> λa.x λa.y (<b λ Cmp> λb.x λb.y ((Nat.cmp ((Nat.add a.x) b.y)) ((Nat.add b.x) a.y))))
+

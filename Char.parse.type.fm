@@ -1,5 +1,0 @@
-Char.parse.type : String -> Type
-  (str)
-  case str:
-  | Unit;
-  | (str.head) (str.tail) Char;

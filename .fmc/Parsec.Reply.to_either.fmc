@@ -1,0 +1,3 @@
+Parsec.Reply.to_either: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec.Reply S) E) A)) ((Either (Parsec.Error E)) A)
+  ΛS ΛE ΛA λreply ((((<reply λ ((Either (Parsec.Error E)) A)> λ λa (<<Either.right (Parsec.Error E)> A> a)) λ λe (<<Either.left (Parsec.Error E)> A> e)) λ λa (<<Either.right (Parsec.Error E)> A> a)) λ λe (<<Either.left (Parsec.Error E)> A> e))
+

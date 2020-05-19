@@ -1,8 +1,0 @@
-F64.compare_numbers: F64 -> F64 -> F64.Ordering
-  (a) (b)
-  Bool.if<F64.Ordering>(F64.eql(a)(b))
-  | F64.Ordering.EQ;
-  | Bool.if<F64.Ordering>(F64.ltn(b)(a))
-    | F64.Ordering.GT;
-    | F64.Ordering.LT;;
-    

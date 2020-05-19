@@ -1,5 +1,0 @@
-NonEmpty.to_list: <A: Type> -> NonEmpty(A) -> List(A)
-  <A> (xs)
-  xs<() List(A)>
-  | (value) List.cons<A>(value)(List.nil<A>);
-  | (head) (tail) List.cons<A>(head)(NonEmpty.to_list<A>(tail));

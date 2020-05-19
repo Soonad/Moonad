@@ -1,0 +1,3 @@
+Jacobian.equal: Jacobian -> Jacobian -> Bool
+  (a) (b) a<(x2) Bool>((a.x) (a.y) (a.z) b<(x5) Bool>((b.x) (b.y) (b.z) let a.z2 = ecdsa.mod(Nat.mul(a.z)(a.z)); let a.z3 = ecdsa.mod(Nat.mul(a.z)(a.z2)); let b.z2 = ecdsa.mod(Nat.mul(b.z)(b.z)); let b.z3 = ecdsa.mod(Nat.mul(b.z)(b.z2)); let eq1 = Nat.eql(ecdsa.mod(Nat.mul(a.x)(b.z2)))(ecdsa.mod(Nat.mul(b.x)(a.z2))); let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y)(b.z3)))(ecdsa.mod(Nat.mul(b.y)(a.z3))); Bool.and(eq1)(eq2)))
+

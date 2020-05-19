@@ -1,0 +1,3 @@
+Word.to_nat: ∀(size:Nat) Π(:(Word size)) Nat
+  Λsize λword ((<Word.to_nat.go size> word) Nat.1)
+

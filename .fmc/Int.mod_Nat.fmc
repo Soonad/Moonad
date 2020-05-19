@@ -1,0 +1,3 @@
+Int.mod_Nat: Π(:Int) Π(:Nat) Nat
+  λa λn (<a λ Nat> λa.x λa.y @b=((Nat.mod a.y) n);@sum=((Nat.add a.x) ((Nat.sub n) b));((Nat.mod sum) n))
+

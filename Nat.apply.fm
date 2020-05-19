@@ -1,5 +1,0 @@
-Nat.apply: <A: Type> -> Nat -> (A -> A) -> A -> A //loop//
-  <A> (n) (f) (x)
-  n<() A>
-  | x;
-  | (n.pred) Nat.apply<A>(n.pred)(f)(f(x));

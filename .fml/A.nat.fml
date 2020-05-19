@@ -1,0 +1,3 @@
+A.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+

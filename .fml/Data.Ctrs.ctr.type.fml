@@ -1,0 +1,3 @@
+Data.Ctrs.ctr.type: Data.Ctrs -> Data.Ctrs -> Nat -> Type
+  (ctr) (ctr0) (nth) ctr<() Type>(Type)((ctr.name) (ctr.flds) (ctr.ctrs) nth<() Type>(<P: Type> -> Data.Ctrs.ctr.header.type(P)(ctr0)([P;]))((nth.pred) Data.Ctrs.ctr.type(ctr.ctrs)(ctr0)(nth.pred)))
+

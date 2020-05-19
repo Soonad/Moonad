@@ -1,0 +1,3 @@
+Int.toNat: Int -> Pair(Bool)(Nat)
+  (a) a<() Pair(Bool)(Nat)>((a.x) (a.y) a.y<() Pair(Bool)(Nat)>(Pair.new<Bool><Nat>(Bool.false)(a.x))(() Pair.new<Bool><Nat>(Bool.true)(a.y)))
+

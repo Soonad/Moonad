@@ -1,0 +1,3 @@
+Int.sub: Int -> Int -> Int
+  (a) (b) Int.add(a)(Int.neg(b))
+

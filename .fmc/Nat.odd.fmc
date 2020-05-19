@@ -1,0 +1,3 @@
+Nat.odd: Π(:Nat) Bool
+  λn ((Nat.eql ((Nat.mod n) Nat.2)) Nat.1)
+

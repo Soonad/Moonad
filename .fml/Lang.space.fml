@@ -1,0 +1,3 @@
+Lang.space: Parser(Unit)
+  Parser.skip_many<Unit>(Parser.choice<Unit>([Parser(Unit); Lang.block_comment, Lang.line_comment, Lang.whitespace]))
+

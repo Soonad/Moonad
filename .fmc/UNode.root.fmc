@@ -1,0 +1,3 @@
+UNode.root: Π(:Nat) UNode
+  λrank Λ λroot λ (root rank)
+

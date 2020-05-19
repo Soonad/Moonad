@@ -1,2 +1,0 @@
-Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A //prim//
-  <A> (s) (x) x(Unit.new)

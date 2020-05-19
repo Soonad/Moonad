@@ -1,0 +1,3 @@
+Data.ctr.type: Π(:Data) Π(:Nat) *
+  λdata λnth (<data λ *> λdata.name λdata.ctrs (((Data.Ctrs.ctr.type data.ctrs) data.ctrs) nth))
+

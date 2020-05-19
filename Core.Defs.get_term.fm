@@ -1,3 +1,0 @@
-Core.Defs.get_term: Core.Defs -> String -> Maybe(Core)
-  (defs) (name)
-  Maybe.map<Core.Def><Core>(Pair.snd<Core><Core>)(Core.Defs.get(defs)(name))

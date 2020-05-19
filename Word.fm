@@ -1,3 +1,109 @@
+Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
+  <size> (wo) <P> (we) (w0) (w1)
+  w0<size>(wo)
+
+Word.1: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
+  <size> (wo) <P> (we) (w0) (w1)
+  w1<size>(wo)
+
+Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
+  <size> (a) (b) (c)
+  ( a<(a.size) () Word(a.size) -> Word(a.size)>
+  | (b) Word.nil;
+  | <a.size> (a.pred) (b)
+    ( b<(b.size) () Word(Nat.pred(b.size)) -> Word(b.size)>
+    | (a.pred)
+      Word.nil;
+    | <b.size> (b.pred) (a.pred)
+      c<() Unit -> Word(Nat.succ(b.size))>
+      | () Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false));  // a=0 b=0 c=0
+      | () Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false));
+      | Unit.new;; // a=0 b=0 c=1
+    | <b.size> (b.pred) (a.pred)
+      c<() Unit -> Word(Nat.succ(b.size))>
+      | () Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true));   // a=0 b=1 c=0
+      | () Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false));  // a=0 b=1 c=1
+      | Unit.new;
+    ;)(a.pred);
+  | <a.size> (a.pred) (b)
+    ( b<(b.size) () Word(Nat.pred(b.size)) -> Word(b.size)>
+    | (a.pred) Word.nil;
+    | <b.size> (b.pred) (a.pred)
+      c<() Unit -> Word(Nat.succ(b.size))>
+      | () Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true));   // a=1 b=0 c=0
+      | () Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.false));
+      | Unit.new;; // a=1 b=0 c=1
+    | <b.size> (b.pred) (a.pred)
+      c<() Unit -> Word(Nat.succ(b.size))>
+      | () Word.1<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true));   // a=1 b=1 c=0
+      | () Word.0<b.size>(Word.add.aux<b.size>(a.pred)(b.pred)(Bool.true));   // a=1 b=1 c=1
+      | Unit.new;
+    ;)(a.pred)
+  ;)(b)
+
+Word.add: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  <size> (a) (b) Word.add.aux<size>(a)(b)(Bool.false)
+
+// TODO bitwise AND between two words
+Word.and: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.and
+
+Word.cmp.aux: <size: Nat> -> Word(size) -> Word(size) -> Cmp -> Cmp
+  <size> (a) (b) (c)
+  ( a<(a.size) () Word(a.size) -> Cmp>
+  | (b) c;
+  | <a.size> (a.pred) (b)
+    ( b<(b.size) () Word(Nat.pred(b.size)) -> Cmp>
+    | (a.pred) c;
+    | <b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(c);
+    | <b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(Cmp.ltn)
+    ; )(a.pred);
+  | <a.size> (a.pred) (b)
+    ( b<(b.size) () Word(Nat.pred(b.size)) -> Cmp>
+    | (a.pred) c;
+    | <b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(Cmp.gtn);
+    | <b.size> (b.pred) (a.pred) Word.cmp.aux<b.size>(a.pred)(b.pred)(c)
+    ; )(a.pred)
+  ; )(b)
+
+Word.cmp: <size: Nat> -> Word(size) -> Word(size) -> Cmp
+  <size> (a) (b)
+  Word.cmp.aux<size>(a)(b)(Cmp.eql)
+
+Word.concat
+  : <a_size: Nat> ->
+    <b_size: Nat> ->
+    Word(a_size) ->
+    Word(b_size) ->
+    Word(Nat.add(a_size)(b_size))
+  <a_size> <b_size> (a) (b)
+  a<(a_size) () Word(Nat.add(a_size)(b_size))>
+  | b;
+  | <a.size> (a.pred)
+    let rest = Word.concat<a.size><b_size>(a.pred)(b)
+    Word.0<Nat.add(a.size)(b_size)>(rest);
+  | <a.size> (a.pred)
+    let rest = Word.concat<a.size><b_size>(a.pred)(b)
+    Word.1<Nat.add(a.size)(b_size)>(rest);
+
+// TODO word division
+Word.div: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.div
+
+Word.drop: <size: Nat> -> (n: Nat) -> Word(Nat.add(n)(size)) -> Word(size)
+  <size> (n) (word)
+  n<(n) Word(Nat.add(n)(size)) -> Word(size)>
+  | (word) word;
+  | (n.pred) (word)
+    let word.pred = Word.pred<Nat.add(n.pred)(size)>(word)
+    Word.drop<size>(n.pred)(word.pred);
+  | word;
+
+// a == b
+Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b)
+  Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
+
 Word: Nat -> Type
   (size)
   word<P: (size: Nat) -> Word(size) -> Type> ->
@@ -5,3 +111,127 @@ Word: Nat -> Type
   (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.0<size>(pred))) ->
   (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.1<size>(pred))) ->
   P(size)(word)
+
+Word.from_bits: (size: Nat) -> Bits -> Word(size)
+  (size) (bits)
+  size<(size) Word(size)>
+  | Word.nil;
+  | (size.pred)
+    bits<() Word(Nat.succ(size.pred))>
+    | Word.0<size.pred>(Word.from_bits(size.pred)(Bits.nil));
+    | (bits.pred) Word.0<size.pred>(Word.from_bits(size.pred)(bits.pred));
+    | (bits.pred) Word.1<size.pred>(Word.from_bits(size.pred)(bits.pred));;
+
+// a >= b
+Word.gte: <size:Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b)
+  Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+
+// a > b
+Word.gtn: <size:Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b)
+  Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+
+Word.inc: <size: Nat> -> Word(size) -> Word(size)
+  <size> (word)
+  word<(size) () Word(size)>
+  | Word.nil;
+  | <size> (pred) Word.1<size>(pred);
+  | <size> (pred) Word.0<size>(Word.inc<size>(pred));
+
+// a <= b
+Word.lte: <size:Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b)
+  Word.cmp<size>(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+
+// a < b
+Word.ltn: <size:Nat> -> Word(size) -> Word(size) -> Bool
+  <size> (a) (b)
+  Word.cmp<size>(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+
+// TODO word modulus
+Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.mod
+
+// TODO Multiplies two words
+Word.mul: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.mul
+
+Word.nil: Word(Nat.zero)
+  <P> (we) (w0) (w1)
+  we
+
+// TODO bitwise OR between two words
+Word.or: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.or
+
+Word.parse_hex: (size: Nat) -> String -> Word(size)
+  (size) (str)
+  Word.from_bits(size)(Bits.parse_hex(str))
+
+// TODO word exponentiation
+Word.pow: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.pow
+
+Word.pred: <size: Nat> -> Word(Nat.succ(size)) -> Word(size)
+  <size> (word)
+  word<(size) () Word(Nat.pred(size))>
+  | Word.nil;
+  | <word.size> (word.pred) word.pred;
+  | <word.size> (word.pred) word.pred;
+
+// TODO Bitwise-shifts a word left
+Word.shift_left: <size: Nat> -> Nat -> Word(size) -> Word(size)
+  Word.shift_left
+
+// TODO Bitwise-shifts a word right
+Word.shift_right: <size: Nat> -> Nat -> Word(size) -> Word(size)
+  Word.shift_right
+
+Word.sub: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  <size> (a) (b) Word.add<size>(a, Word.neg<size>(b))
+
+Word.neg: <size: Nat> -> Word(size) -> Word(size)
+  <size> (word)
+  word<(size) () Word(size)>
+  | Word.nil;
+  | <size> (pred) Word.0<size>(Word.neg.aux<size>(pred, Bool.true));
+  | <size> (pred) Word.1<size>(Word.neg.aux<size>(pred, Bool.false));
+
+Word.neg.aux: <size: Nat> -> Word(size) -> Bool -> Word(size)
+  <size> (word) (inc)
+  word<(size) () Word(size)>
+  | Word.nil;
+  | <size> (pred)
+    inc<() Word(Nat.succ(size))>
+    | Word.0<size>(Word.neg.aux<size>(pred, Bool.true));
+    | Word.1<size>(Word.neg.aux<size>(pred, Bool.false));;
+  | <size> (pred)
+    inc<() Word(Nat.succ(size))>
+    | Word.1<size>(Word.neg.aux<size>(pred, Bool.false));
+    | Word.0<size>(Word.neg.aux<size>(pred, Bool.false));;
+
+Word.to_bits: <size: Nat> -> Word(size) -> Bits
+  <size> (a)
+  a<() () Bits>
+  | Bits.nil;
+  | <size> (pred) Bits.0(Word.to_bits<size>(pred));
+  | <size> (pred) Bits.1(Word.to_bits<size>(pred));
+
+Word.to_nat: <size: Nat> -> Word(size) -> Nat
+  <size> (word)
+  Word.to_nat.go<size>(word)(Nat.1)
+
+Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
+  <size> (word) (add)
+  word<() () Nat>
+  | Nat.zero;
+  | <size> (word.pred)
+    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2));
+  | <size> (word.pred)
+    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2)));
+
+// TODO bitwise XOR between two words
+Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
+  Word.xor
+

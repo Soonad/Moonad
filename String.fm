@@ -1,5 +1,193 @@
-String: Type //prim//
-  string<P: String -> Type> ->
-  (strnil: P(String.nil)) ->
-  (strcons: (head: Char) -> (tail: String) -> P(String.cons(head)(tail))) ->
-  P(string)
+String.chunk: Nat -> String -> Maybe(String)
+  (n) (list)
+  case n:
+  | Maybe.some<>(String.nil);
+  | (pred)
+    case list:
+    | Maybe.none<String>;
+    | (head) (tail)
+      Maybe.bind<String><String>
+      | String.chunk(pred)(tail);
+      | (x) Maybe.some<String>(String.cons(head)(x));
+    ;
+  ;
+
+String.concat: String -> String -> String
+  (as) (bs)
+  as<() String>
+  | bs;
+  | (head) (tail)
+    String.cons(head)(String.concat(tail)(bs));
+
+String.drop: Nat -> String -> String
+  (n) (list)
+  n<() String>
+  | list;
+  | (pred)
+    list<() String>
+    | String.nil;
+    | (head) (tail) String.drop(pred)(tail);;
+
+String.drop_until: (Char -> Bool) -> String -> String
+  (cond) String.drop_while((c) Bool.not(cond(c)))
+
+String.drop_while: (Char -> Bool) -> String -> String
+  (cond) (str)
+  str<() String>
+  | String.nil;
+  | (str.head) (str.tail)
+    cond(str.head)<() String>
+    | String.drop_while(cond)(str.tail);
+    | str;
+  ;
+
+String.eql: String -> String -> Bool
+  (a) (b)
+  case a:
+  | case b:
+    | Bool.true;
+    | (b.head) (b.tail) Bool.false;
+  ;
+  | (a.head) (a.tail)
+    case b:
+    | Bool.false;
+    | (b.head) (b.tail)
+      Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail));
+  ;
+
+String.filter : (Char -> Bool) -> String -> String
+  (cond) (str)
+  case str:
+  | String.nil;
+  | (str.head) (str.tail)
+    case cond(str.head):
+    | (t) t;
+    | (t) String.cons(str.head)(t);
+    | String.filter(cond)(str.tail);;
+
+String.flatten: List(String) -> String
+  (as)
+  case as:
+  | String.nil;
+  | (head) (tail) String.concat(head)(String.flatten(tail));
+
+T String
+| nil;
+| cons(head: Char, tail: String);
+
+String.is_empty: String -> Bool
+  (str)
+  case str:
+  | Bool.true;
+  | (head) (tail) Bool.false;
+
+String.length: String -> Nat
+  (str)
+  case str:
+  | Nat.zero;
+  | (head) (tail) Nat.succ(String.length(tail));
+
+String.quote: String -> String
+  (str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
+
+String.reverse: String -> String
+  (str) String.reverse.go(str)(String.nil)
+
+String.reverse.go: String -> String -> String
+  (str) (res)
+  case str:
+  | res;
+  | (str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res));
+
+// A list with only one element.
+String.single : (x : Char) -> String
+  (x) String.cons(x)(String.nil)
+
+String.tail: String -> String
+  (str)
+  case str:
+  | String.nil;
+  | (str.head) (str.tail) str.tail;
+
+String.take: Nat -> String -> String
+  (n) (list)
+  case list:
+  | String.nil;
+  | (head) (tail)
+    case n:
+    | String.nil;
+    | (pred) String.cons(head)(String.take(pred)(tail));;
+
+String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
+  (n) (str) (res)
+  case res:
+  | case n:
+    | Maybe.some<>(Pair.new<><>(str)(String.nil));
+    | () Maybe.none<Pair(String)(String)>;
+  ;
+  | (head) (tail)
+    case n:
+    | Maybe.some<>(Pair.new<String><String>(str)(res));
+    | (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);
+  ;
+
+String.take_n: Nat -> String -> Maybe(Pair(String)(String))
+  (n) (str)
+  case String.take_n.aux(n)(String.nil)(str):
+  | Maybe.none<Pair(String)(String)>;
+  | (p)
+    get x y = p
+    Maybe.some<>(Pair.new<><>(String.reverse(x))(y))
+  ;
+
+
+String.take_while.aux
+  : (Char -> Bool) ->
+    String ->
+    String ->
+    Pair(String)(String)
+  (f) (str) (res)
+  case res:
+  | Pair.new<><>(str)(String.nil);
+  | (head) (tail)
+    case f(head):
+    | String.take_while.aux(f)(String.cons(head)(str))(tail);
+    | Pair.new<><>(str)(res);
+  ;
+
+String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
+  (f) (str)
+  get x y = String.take_while.aux(f)(String.nil)(str)
+  Pair.new<><>(String.reverse(x))(y)
+
+String.to_bits: String -> Bits
+  (str)
+  case str:
+  | Bits.nil;
+  | (str.head) (str.tail)
+    Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail));
+
+String.to_list: String -> List(Char)
+  (str)
+  case str:
+  | List.nil<>;
+  | (str.head) (str.tail) List.cons<>(str.head)(String.to_list(str.tail));
+
+String.to_set: String -> Set
+  (str)
+  case str:
+  | Set.new;
+  | (str.head) (str.tail)
+    Set.set
+    | U16.to_bits(str.head);
+    | String.to_set(str.tail);
+  ;
+  
+
+String.to_stringifier : String -> Stringifier
+  (str)
+  case str:
+  | (x) x;
+  | (str.head) (str.tail)
+    (x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
+

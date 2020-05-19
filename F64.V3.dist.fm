@@ -1,3 +1,0 @@
-F64.V3.dist: F64.V3 -> F64.V3 -> F64
-  (a) (b)
-  F64.sqrt(F64.V3.sqr_dist(a)(b))
