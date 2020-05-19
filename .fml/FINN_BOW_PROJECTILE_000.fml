@@ -1,0 +1,3 @@
+FINN_BOW_PROJECTILE_000: F64
+  F64.parse("958")
+

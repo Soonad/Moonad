@@ -1,0 +1,3 @@
+DORIME_JESUS_POWER_001: F64
+  F64.parse("501")
+

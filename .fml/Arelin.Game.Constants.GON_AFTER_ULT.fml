@@ -1,0 +1,3 @@
+Arelin.Game.Constants.GON_AFTER_ULT: Bits
+  Bits.from_string("001101111110")
+
