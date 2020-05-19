@@ -1,3 +1,0 @@
-Hitbox.pbox: (pts: List(F64.V3)) -> Hitbox
-  (pts) <P> (nbox) (cbox) (pbox) pbox(pts)
-

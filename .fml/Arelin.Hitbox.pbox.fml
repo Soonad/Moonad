@@ -1,3 +1,0 @@
-Arelin.Hitbox.pbox: (pts: List(F64.V3)) -> Arelin.Hitbox
-  (pts) <P> (nbox) (cbox) (pbox) pbox(pts)
-

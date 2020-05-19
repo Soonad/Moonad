@@ -1,0 +1,9 @@
+Docs.hello: IO(Unit)
+  IO.print("Hello, world!")
+
+Docs.welcome: IO(Unit)
+  do IO.bind IO.end {
+    var name = IO.query("What is your name?");
+    IO.print(String.concat("Welcome, ", name));
+    return Unit.new;
+  }

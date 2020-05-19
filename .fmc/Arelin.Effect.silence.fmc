@@ -1,3 +1,0 @@
-Arelin.Effect.silence: Π(dur:F64) Arelin.Effect
-  λdur ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport_to (silence dur)
-

@@ -1,3 +1,0 @@
-Arelin.Effect.shield: (dur: F64) -> (val: F64) -> Arelin.Effect
-  (dur) (val) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) shield(dur)(val)
-
