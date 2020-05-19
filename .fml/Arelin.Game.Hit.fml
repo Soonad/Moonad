@@ -1,3 +1,3 @@
 Arelin.Game.Hit: Type
-  self<P: (self: Arelin.Game.Hit) -> Type> -> (hit: (eff: List(Arelin.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: Arelin.Game.Hitbox) -> P(Arelin.Game.Hit.hit(eff)(pos)(dir)(box))) -> P(self)
+  self<P: (self: Arelin.Game.Hit) -> Type> -> (new: (eff: List(Arelin.Game.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: Arelin.Game.Hitbox) -> P(Arelin.Game.Hit.new(eff)(pos)(dir)(box))) -> P(self)
 

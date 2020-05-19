@@ -37,17 +37,17 @@ T Arelin.Game.Buff
 | stunned(dur: F64);
 
 T Arelin.Game.Hit 
-| hit(
+| new(
   eff: List(Arelin.Game.Effect), 
   pos: F64.V3, 
   dir: F64.V3, 
   box: Arelin.Game.Hitbox);
 
 T Arelin.Game.Light
-| light(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
+| new(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
 
 T Arelin.Thing 
-| thing(
+| new(
     fun : Arelin.Game.TxFunction,   // transaction function
     pid : Arelin.Game.PlayerId,     // number of playber controlling this
     mid : Arelin.Game.ModelId,      // id of model to be rendered
@@ -80,7 +80,7 @@ Arelin.Game.TxFunction : Type
   Arelin.Thing -> Arelin.Thing 
 
 T Arelin.Game 
-| game(stage: List(Arelin.Thing));
+| new(stage: List(Arelin.Thing));
 
 T Arelin.Game.Input 
 | sdir(dir: F64.V3); // stick direction
@@ -93,10 +93,10 @@ T Arelin.Game.Input
 | cmsg(txt: String); // chat message 
 
 T Arelin.Game.Command
-| command(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
+| new(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
 
 Arelin.Thing.new_thing : Arelin.Thing
-  Arelin.Thing.thing(
+  Arelin.Thing.new(
     ((x) x) :: Arelin.Game.TxFunction, // fun
     F64.0,                             // pid
     F64.0,                             // mid 
@@ -142,7 +142,7 @@ Arelin.Thing.set_fun(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | new_fun;
     | thi.pid;
     | thi.mid;
@@ -188,7 +188,7 @@ Arelin.Thing.set_pid(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | new_pid;
     | thi.mid;
@@ -234,7 +234,7 @@ Arelin.Thing.set_mid(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | new_mid;
@@ -280,7 +280,7 @@ Arelin.Thing.set_act(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -326,7 +326,7 @@ Arelin.Thing.set_sid(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -369,7 +369,7 @@ Arelin.Thing.set_stt(thi: Arelin.Thing, new_stt: Map(F64)) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -412,7 +412,7 @@ Arelin.Thing.set_nam(thi: Arelin.Thing, new_nam: String) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -458,7 +458,7 @@ Arelin.Thing.set_lit(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -501,7 +501,7 @@ Arelin.Thing.set_tik(thi: Arelin.Thing, new_tik: F64) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -544,7 +544,7 @@ Arelin.Thing.set_pos(thi: Arelin.Thing, new_pos: F64.V3) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -587,7 +587,7 @@ Arelin.Thing.set_mov(thi: Arelin.Thing, new_mov: F64) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -630,7 +630,7 @@ Arelin.Thing.set_bst(thi: Arelin.Thing, new_bst: F64) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -673,7 +673,7 @@ Arelin.Thing.set_pad(thi: Arelin.Thing, new_pad: F64.V3) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -716,7 +716,7 @@ Arelin.Thing.set_dir(thi: Arelin.Thing, new_dir: F64.V3) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -759,7 +759,7 @@ Arelin.Thing.set_trg(thi: Arelin.Thing, new_trg: F64.V3) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -802,7 +802,7 @@ Arelin.Thing.set_vel(thi: Arelin.Thing, new_vel: F64.V3) : Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -848,7 +848,7 @@ Arelin.Thing.set_box(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -891,7 +891,7 @@ Arelin.Thing.set_wei(thi: Arelin.Thing, new_wei: F64): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -934,7 +934,7 @@ Arelin.Thing.set_mhp(thi: Arelin.Thing, new_mhp: F64): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -977,7 +977,7 @@ Arelin.Thing.set_dmg(thi: Arelin.Thing, new_dmg: F64): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1020,7 +1020,7 @@ Arelin.Thing.set_knk(thi: Arelin.Thing, new_knk: F64.V3): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1066,7 +1066,7 @@ Arelin.Thing.set_buf(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1112,7 +1112,7 @@ Arelin.Thing.set_chi(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1158,7 +1158,7 @@ Arelin.Thing.set_hit(
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1201,7 +1201,7 @@ Arelin.Thing.set_rst(thi: Arelin.Thing, new_rst: Bool): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1244,7 +1244,7 @@ Arelin.Thing.set_die(thi: Arelin.Thing, new_die: Bool): Arelin.Thing
     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.thing
+    Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1298,7 +1298,7 @@ Arelin.Game.map_stage(
   ) : Arelin.Game 
   get stage = gm 
   let new_stage = List.map<><>(fn)(stage)
-  Arelin.Game.game(new_stage)
+  Arelin.Game.new(new_stage)
  
 Arelin.Game.with_thing(
   pid : Arelin.Game.PlayerId,
@@ -2292,7 +2292,7 @@ Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
   let stage_nil = List.nil<>
   let new_stage = Arelin.fold_with_context<><>(stage_nil, tick, stage, things_id)
 
-  Arelin.Game.game(new_stage)
+  Arelin.Game.new(new_stage)
 
 
   
