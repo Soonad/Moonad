@@ -1,0 +1,3 @@
+Arelin.Thing.is_using_buff: Π(self:Arelin.Thing) Π(stt_key:Bits) Bool
+  λself λstt_key @stt=(Arelin.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λself Bool> Bool.false) λcurrent_tik ((<((F64.eql current_tik) F64.0) λself Bool> Bool.false) Bool.true))
+

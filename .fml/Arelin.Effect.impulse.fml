@@ -1,0 +1,3 @@
+Arelin.Effect.impulse: (mag: F64) -> (dir: F64.V3) -> Arelin.Effect
+  (mag) (dir) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) impulse(mag)(dir)
+

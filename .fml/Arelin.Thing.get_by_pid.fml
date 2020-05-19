@@ -1,0 +1,3 @@
+Arelin.Thing.get_by_pid: (pid: Arelin.Game.PlayerId) -> (gm: Arelin.Game) -> Maybe(Arelin.Thing)
+  (pid) (gm) let cond = ((pid) (thi) let thi.pid = Arelin.Thing.get_pid(thi); F64.eql(pid)(thi.pid)) :: Arelin.Game.PlayerId -> Arelin.Thing -> Bool; gm<(self) Maybe(Arelin.Thing)>((stage) List.find<Arelin.Thing>(cond(pid))(stage))
+

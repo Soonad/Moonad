@@ -1,0 +1,3 @@
+Arelin.Thing.reset: (self: Arelin.Thing) -> (at_tik: F64) -> Arelin.Thing
+  (self) (at_tik) let curr_tik = Arelin.Thing.get_tik(self); F64.gtn(curr_tik)(F64.sub(at_tik)(F64.1))<(self) Arelin.Thing>(Arelin.Thing.set_rst(self)(Bool.true))(self)
+

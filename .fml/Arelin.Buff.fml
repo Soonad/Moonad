@@ -1,0 +1,3 @@
+Arelin.Buff: Type
+  self<P: (self: Arelin.Buff) -> Type> -> (shielded: (dur: F64) -> (val: F64) -> P(Arelin.Buff.shielded(dur)(val))) -> (slowed: (dur: F64) -> (val: F64) -> P(Arelin.Buff.slowed(dur)(val))) -> (hasted: (dur: F64) -> (val: F64) -> P(Arelin.Buff.hasted(dur)(val))) -> (rooted: (dur: F64) -> P(Arelin.Buff.rooted(dur))) -> (stunned: (dur: F64) -> P(Arelin.Buff.stunned(dur))) -> P(self)
+

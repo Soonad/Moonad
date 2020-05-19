@@ -1,0 +1,3 @@
+Hitbox.cbox: (rad: F64) -> Hitbox
+  (rad) <P> (nbox) (cbox) (pbox) cbox(rad)
+

@@ -1,0 +1,3 @@
+Arelin.Buff.stunned: Π(dur:F64) Arelin.Buff
+  λdur ΛP λshielded λslowed λhasted λrooted λstunned (stunned dur)
+

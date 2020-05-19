@@ -1,0 +1,3 @@
+Hitbox: Type
+  self<P: (self: Hitbox) -> Type> -> (nbox: P(Hitbox.nbox)) -> (cbox: (rad: F64) -> P(Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(Hitbox.pbox(pts))) -> P(self)
+

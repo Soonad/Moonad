@@ -1,0 +1,3 @@
+Arelin.Hitbox: Type
+  self<P: (self: Arelin.Hitbox) -> Type> -> (nbox: P(Arelin.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(Arelin.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(Arelin.Hitbox.pbox(pts))) -> P(self)
+

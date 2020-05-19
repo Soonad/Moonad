@@ -1,0 +1,3 @@
+Arelin.Command: Type
+  self<P: (self: Arelin.Command) -> Type> -> (command: (pid: Arelin.Game.PlayerId) -> (inp: Arelin.Game.Input) -> P(Arelin.Command.command(pid)(inp))) -> P(self)
+

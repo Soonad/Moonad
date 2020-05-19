@@ -1,0 +1,3 @@
+Arelin.Input.key2: (pos: F64.V3) -> Arelin.Input
+  (pos) <P> (sdir) (key0) (key1) (key2) (key3) (key4) (key5) (cmsg) key2(pos)
+
