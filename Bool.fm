@@ -81,3 +81,9 @@ Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
 Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
   (e)
   Equal.rewrite<Bool><Bool.true><Bool.false><(b) b<() Type>|Unit;|Empty;>(e)(Unit.new)
+
+Bool.double_negation_theorem(b: Bool): Equal(_, Bool.not(Bool.not(b)), b)
+  case b
+  : (b) Equal(_, Bool.not(Bool.not(b)), b);
+  | Equal.to<_, Bool.true>;
+  | Equal.to<_, Bool.false>;
