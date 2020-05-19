@@ -86,18 +86,51 @@ Nat.bitwise_and: Nat -> Nat -> Nat
     Nat.add(bit, Nat.mul(Nat.2, Nat.bitwise_and(a, b)));
   | Unit.new;
 
-ecdsa.invert: Nat -> Nat -> Maybe(Nat)
+ecdsa.invert: Nat -> Nat -> Nat
   (number) (modulo)
-  Nat.eql(number, Nat.0)<() Maybe(Nat)>
-  | Maybe.none<Nat>;
+  Nat.eql(number, Nat.0)<() Nat>
+  | Nat.0;
   | get gcd p = Nat.egcd(Nat.mod(number, modulo), modulo)
-    Nat.eql(gcd, Nat.1)<() Maybe(Nat)>
+    Nat.eql(gcd, Nat.1)<() Nat>
     | get x y = p
-      Maybe.some<Nat>(Int.mod_Nat(x, modulo));
-    | Maybe.none<Nat>;;
+      Int.mod_Nat(x, modulo);
+    | Nat.0;;
 
-ecdsa.invertUnsafe: Nat -> Nat -> Nat
-  (number) (modulo) Maybe.extract<Nat>(ecdsa.invert(number, modulo), Nat.1)
+ecdsa.invertBatch: List(Nat) -> Nat -> List(Nat)
+  (nums) (modulo)
+  get acc p = ecdsa.invertBatch1.tco(nums, modulo, Nat.1, List.nil<Nat>, List.nil<Nat>)
+  get scratch rest = p
+  let acc = ecdsa.invert(acc, modulo)
+  ecdsa.invertBatch2.tco(rest, modulo, acc, scratch, List.nil<Nat>)
+
+ecdsa.invertBatch1.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> Pair(Nat, Pair(List(Nat), List(Nat)))
+  (nums) (modulo) (acc) (scratch) (rest)
+  nums<_>
+  | Pair.new<_,_>(acc, Pair.new<_,_>(scratch, rest));
+  | (nums.head) (nums.tail)
+    Bool.if<_>(Nat.eql(nums.head, Nat.0))
+    | let scratch = List.cons<_>(Nat.0, scratch)
+      let rest = List.cons<_>(nums.head, rest)
+      ecdsa.invertBatch1.tco(nums.tail, modulo, acc, scratch, rest);
+    | let scratch = List.cons<_>(acc, scratch)
+      let acc = Nat.mod(Nat.mul(acc, nums.head), modulo)
+      let rest = List.cons<_>(nums.head, rest)
+      ecdsa.invertBatch1.tco(nums.tail, modulo, acc, scratch, rest);;
+
+ecdsa.invertBatch2.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> List(Nat)
+  (nums) (modulo) (acc) (scratch) (inverts)
+  nums<() _>
+  | inverts;
+  | (nums.head) (nums.tail)
+    scratch<() _>
+    | inverts; // Should not happen
+    | (scratch.head) (scratch.tail)
+      Bool.if<_>(Nat.eql(nums.head, Nat.0))
+      | let inverts = List.cons<_>(Nat.0, inverts)
+        ecdsa.invertBatch2.tco(nums.tail, modulo, acc, scratch.tail, inverts);
+      | let inverts = List.cons<_>(Nat.mod(Nat.mul(acc, scratch.head), modulo), inverts)
+        let acc = Nat.mod(Nat.mul(acc, nums.head), modulo)
+        ecdsa.invertBatch2.tco(nums.tail, modulo, acc, scratch.tail, inverts);;;
 
 // Split 256-bit K into 2 128-bit (k1, k2) for which k1 + k2 * lambda = K.
 // https://gist.github.com/paulmillr/eb670806793e84df628a7c434a873066
@@ -157,7 +190,7 @@ Jacobian.from_point: Point -> Jacobian
 Jacobian.to_point: Jacobian -> Point
   (p)
   get p.x p.y p.z = p
-  let invz = ecdsa.invertUnsafe(p.z, CURVE.P)
+  let invz = ecdsa.invert(p.z, CURVE.P)
   let invz2 = Nat.square(invz)
   let x = ecdsa.mod(Nat.mul(p.x, invz2))
   let y = ecdsa.mod(Nat.mulVar(Nat.3, p.y, invz2, invz))
@@ -312,20 +345,15 @@ Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -
     // Check if we're onto Zero point.
     // Add random point inside current window to f.
     Bool.if<_>(Nat.eql(wbits, Nat.0))
-    |
-      // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
+    | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       let q = Maybe.extract<_>(List.at<_>(precomputes, offset))(Jacobian.0)
       let f = Jacobian.add(f, Bool.if<_>(Nat.odd(window), Jacobian.negate(q), q))
       let window = Nat.succ(window)
-      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber)
-    ;
-    |
-      // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
+      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
+    | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       let cached = Maybe.extract<_>(List.at<_>(precomputes, Nat.pred(Nat.add(offset, wbits))))(Jacobian.0)
       let p = Jacobian.add(p, cached)
       let window = Nat.succ(window)
-      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber)
-    ;
-  ;
+      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
   | () Pair.new<Jacobian, Jacobian>(p, f);
   | Unit.new;
