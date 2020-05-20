@@ -1,0 +1,3 @@
+Docs.self_equal_theorem: (b: Bool) -> Bool.IsTrue(Bool.eql(b)(b))
+  (b) b<(b) Bool.IsTrue(Bool.eql(b)(b))>(Unit.new)(Unit.new)
+
