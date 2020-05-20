@@ -1,3 +1,3 @@
 Arelin.Thing.is_silenced: Π(self:Arelin.Thing) Bool
-  λself @self.buf=(Arelin.Thing.get_buf self);@is_silence_buff=:Π(:Arelin.Game.Buff) Bool λbuff ((((((<buff λself Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.true) λbuff.dur Bool.false) λbuff.dur Bool.true);((<((<List.find Arelin.Game.Buff> is_silence_buff) self.buf) λself Bool> Bool.false) λsome Bool.true)
+  λself $self.buf=(Arelin.Thing.get_buf self);$is_silence_buff=:Π(:Arelin.Game.Buff) Bool λbuff ((((((<buff λself Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.true) λbuff.dur Bool.false) λbuff.dur Bool.true);((<((<List.find Arelin.Game.Buff> is_silence_buff) self.buf) λself Bool> Bool.false) λsome Bool.true)
 

@@ -1,3 +1,0 @@
-Hitbox: *
-  ∀self(P:Π(self:Hitbox) *) Π(nbox:(P Hitbox.nbox)) Π(cbox:Π(rad:F64) (P (Hitbox.cbox rad))) Π(pbox:Π(pts:(List F64.V3)) (P (Hitbox.pbox pts))) (P self)
-
