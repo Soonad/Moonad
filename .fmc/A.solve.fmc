@@ -1,3 +1,3 @@
 A.solve: Nat
-  <<(Nat.solve_for ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero)))))))) λx @a=((Nat.add ((Nat.mul x) x)) Nat.5);@b=((Nat.add Nat.27) Nat.27);(((Equal Nat) a) b)> ΛP λto to>
+  <<(Nat.solve_for ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc (succ ΛP λzero λsucc zero)))))))) λx $a=((Nat.add ((Nat.mul x) x)) Nat.5);$b=((Nat.add Nat.27) Nat.27);(((Equal Nat) a) b)> ΛP λto to>
 

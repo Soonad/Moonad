@@ -1,3 +1,3 @@
 Lang.trm: (Parser Π(:Core.Ctx) Core)
-  $C=Π(:Core.Ctx) Core;((<<Parser.bind C> C> (<Parser.choice C> ((<List.cons (Parser C)> (<Parser.try C> Lang.all)) ((<List.cons (Parser C)> (<Parser.try C> Lang.lam)) ((<List.cons (Parser C)> (<Parser.try C> Lang.par)) ((<List.cons (Parser C)> Lang.let) ((<List.cons (Parser C)> Lang.typ) ((<List.cons (Parser C)> Lang.var) <List.nil (Parser C)>)))))))) λx (Lang.pst x))
+  @C=Π(:Core.Ctx) Core;((<<Parser.bind C> C> (<Parser.choice C> ((<List.cons (Parser C)> (<Parser.try C> Lang.all)) ((<List.cons (Parser C)> (<Parser.try C> Lang.lam)) ((<List.cons (Parser C)> (<Parser.try C> Lang.par)) ((<List.cons (Parser C)> Lang.let) ((<List.cons (Parser C)> Lang.typ) ((<List.cons (Parser C)> Lang.var) <List.nil (Parser C)>)))))))) λx (Lang.pst x))
 

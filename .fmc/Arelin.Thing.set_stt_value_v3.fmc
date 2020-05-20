@@ -1,3 +1,3 @@
 Arelin.Thing.set_stt_value_v3: Π(self:Arelin.Thing) Π(v3:F64.V3) Arelin.Thing
-  λself λv3 @self.stt=(Arelin.Thing.get_stt self);(<v3 λx3 Arelin.Thing> λv3.x λv3.y λv3.z @insert_x=(((<Map.set F64> Arelin.POS_X_KEY) v3.x) self.stt);@insert_y=(((<Map.set F64> Arelin.POS_Y_KEY) v3.x) self.stt);@self=((Arelin.Thing.set_stt self) insert_x);@self=((Arelin.Thing.set_stt self) insert_y);self)
+  λself λv3 $self.stt=(Arelin.Thing.get_stt self);(<v3 λx3 Arelin.Thing> λv3.x λv3.y λv3.z $insert_x=(((<Map.set F64> Arelin.POS_X_KEY) v3.x) self.stt);$insert_y=(((<Map.set F64> Arelin.POS_Y_KEY) v3.x) self.stt);$self=((Arelin.Thing.set_stt self) insert_x);$self=((Arelin.Thing.set_stt self) insert_y);self)
 
