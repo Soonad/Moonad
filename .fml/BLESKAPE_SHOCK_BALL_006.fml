@@ -1,0 +1,3 @@
+BLESKAPE_SHOCK_BALL_006: F64
+  F64.parse("153")
+

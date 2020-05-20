@@ -1,0 +1,3 @@
+Arelin.Constants.ULT_TIME: Bits
+  Bits.from_string("1001010110")
+

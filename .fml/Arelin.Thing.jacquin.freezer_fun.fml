@@ -1,0 +1,3 @@
+Arelin.Thing.jacquin.freezer_fun: Arelin.Game.TxFunction
+  (self) Arelin.Thing.animate_die(self)(F64.0)(ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_EFFECT_000)(F64.parse("3"))(F64.parse("18"))
+
