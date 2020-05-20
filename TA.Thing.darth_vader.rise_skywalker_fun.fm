@@ -1,8 +1,0 @@
-TA.Thing.darth_vader.rise_skywalker_fun : TA.Game.TxFunction
-  (self)
-  TA.Thing.animate_die
-  | self;
-  | F64.0;
-  | DARTH_VADER_THE_RISE_OF_SKYWALKER_EFFECT_ANIMATION_000;
-  | F64.parse("4");
-  | F64.parse("12");
