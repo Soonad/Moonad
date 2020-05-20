@@ -1,0 +1,3 @@
+Nat.11: Nat
+  Nat.succ(Nat.10)
+

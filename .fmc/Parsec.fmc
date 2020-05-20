@@ -1,0 +1,3 @@
+Parsec: Π(S:*) Π(E:*) Π(A:*) *
+  λS λE λA ∀(B:*) Π(:((Parsec.State S) E)) Π(:Π(:((Parsec.State S) E)) Π(:A) B) Π(:Π(:((Parsec.State S) E)) Π(:(Parsec.Error E)) B) Π(:Π(:((Parsec.State S) E)) Π(:A) B) Π(:Π(:((Parsec.State S) E)) Π(:(Parsec.Error E)) B) B
+

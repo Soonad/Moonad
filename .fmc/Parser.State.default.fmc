@@ -1,0 +1,3 @@
+Parser.State.default: Π(:String) Parser.State
+  λinput ((<<Parsec.State.default Unit> Unit> input) Unit.new)
+

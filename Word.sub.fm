@@ -1,2 +1,0 @@
-Word.sub: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.sub

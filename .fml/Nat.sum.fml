@@ -1,0 +1,3 @@
+Nat.sum: Nat -> Nat
+  (n) Nat.sum.tco(n)(Nat.zero)
+

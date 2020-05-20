@@ -1,0 +1,3 @@
+U32.pow: Π(:U32) Π(:U32) U32
+  λa λb (<a λ U32> λa_val (<b λ U32> λb_val (U32.new ((<Word.pow Nat.32> a_val) b_val))))
+

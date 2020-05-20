@@ -1,0 +1,3 @@
+List.drop: <A: Type> -> Nat -> List(A) -> List(A)
+  <A> (n) (list) n<(x3) List(A)>(list)((pred) list<(self) List(A)>([A;])((head) (tail) List.drop<A>(pred)(tail)))
+

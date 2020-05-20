@@ -1,0 +1,3 @@
+Debug.log: ∀(A:*) Π(s:String) Π(x:Π(:Unit) A) A
+  ΛA λs λx (x Unit.new)
+

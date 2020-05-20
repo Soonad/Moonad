@@ -1,0 +1,3 @@
+Parsec.peek: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) (((Parsec S) E) A)
+  ΛS ΛE ΛA λp ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (((((<p X> s1) λs2 λa ((empty_value s1) a)) empty_error) λs2 λa ((empty_value s1) a)) eaten_error)
+

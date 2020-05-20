@@ -1,0 +1,3 @@
+Maybe.some: <A: Type> -> (value: A) -> Maybe(A)
+  <A> (value) <P> (none) (some) some(value)
+

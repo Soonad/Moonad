@@ -1,5 +1,0 @@
-TA.Game.Hitbox.pbox: List(F64.V3) -> TA.Game.Hitbox
-  (pts)
-  <P> (nbox) (cbox) (pbox)
-  pbox(pts)
-  

@@ -1,0 +1,3 @@
+Parsec.Error.Fancy: Type -> Type
+  (E) parser.error.fancy<P: Parsec.Error.Fancy(E) -> Type> -> (fail: (msg: String) -> P(Parsec.Error.Fancy.fail<E>(msg))) -> (custom: (err: E) -> P(Parsec.Error.Fancy.custom<E>(err))) -> P(parser.error.fancy)
+

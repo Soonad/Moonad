@@ -1,0 +1,3 @@
+Concat.push: ∀(A:*) Π(:A) Π(:(Concat A)) (Concat A)
+  ΛA λval λcon λx (con ((<List.cons A> val) x))
+

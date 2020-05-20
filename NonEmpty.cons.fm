@@ -1,3 +1,0 @@
-NonEmpty.cons: <A: Type> -> (head: A) -> (tail: NonEmpty(A)) -> NonEmpty(A)
-  <A> (head) (tail)
-  <P> (end) (cons) cons(head)(tail)

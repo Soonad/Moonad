@@ -1,3 +1,0 @@
-// TODO word modulus
-Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.mod

@@ -1,0 +1,3 @@
+F64.eql: Π(:F64) Π(:F64) Bool
+  λx λy (<x λtag λx3 Bool> λx.word (<y λtag λx4 Bool> λy.word ((<Word.eql Nat.64> x.word) y.word)))
+

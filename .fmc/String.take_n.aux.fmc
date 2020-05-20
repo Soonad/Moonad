@@ -1,0 +1,3 @@
+String.take_n.aux: Π(:Nat) Π(:String) Π(:String) (Maybe ((Pair String) String))
+  λn λstr λres ((<res λself (Maybe ((Pair String) String))> ((<n λx3 (Maybe ((Pair String) String))> (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> str) String.nil))) λ <Maybe.none ((Pair String) String)>)) λhead λtail ((<n λx5 (Maybe ((Pair String) String))> (<Maybe.some ((Pair String) String)> ((<<Pair.new String> String> str) res))) λpred (((String.take_n.aux pred) ((String.cons head) str)) tail)))
+

@@ -1,0 +1,3 @@
+Empty.show: (e: Empty) -> String
+  (e) e<(self) String>
+

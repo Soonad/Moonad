@@ -1,3 +1,0 @@
-Core.Read.done: <A: Type> -> A -> String -> Core.Read.Reply(A)
-  <A> (x) (code)
-  Maybe.some<Pair(A)(String)>(Pair.new<A><String>(x)(code))

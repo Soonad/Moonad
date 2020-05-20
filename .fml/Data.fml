@@ -1,0 +1,3 @@
+Data: Type
+  self<P: Data -> Type> -> (new: (name: String) -> (ctrs: Data.Ctrs) -> P(Data.new(name)(ctrs))) -> P(self)
+

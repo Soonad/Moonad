@@ -1,0 +1,3 @@
+Nat.36: Nat
+  Nat.succ(Nat.35)
+

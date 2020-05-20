@@ -1,0 +1,3 @@
+Parsec.Error.Fancy.fail: ∀(E:*) Π(:String) (Parsec.Error.Fancy E)
+  ΛE λmsg ΛP λfail λ (fail msg)
+

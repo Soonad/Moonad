@@ -3,3 +3,19 @@ Sigma: (A: Type) -> (B: A -> Type) -> Type
   sigma<P: Sigma(A)(B) -> Type> ->
   (new: (a: A) -> (b: B(a)) -> P(Sigma.new<A><B>(a)(b))) ->
   P(sigma)
+
+Sigma.fst: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> A
+  <A> <B> (sig)
+  sig<() A>
+  | (x) (y) x;
+
+Sigma.new: <A: Type> -> <B: A -> Type> -> (a: A) -> B(a) -> Sigma(A)(B)
+  <A> <B> (a) (b)
+  <P> (sigma)
+  sigma(a)(b)
+
+Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B>(sig))
+  <A> <B> (sig)
+  sig<(sig) B(Sigma.fst<A><B>(sig))>
+  | (x) (y) y;
+

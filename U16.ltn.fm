@@ -1,6 +1,0 @@
-// a < b
-U16.ltn: U16 -> U16 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.ltn<Nat.16>(a_val)(b_val);;

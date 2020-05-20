@@ -1,0 +1,3 @@
+Nat.Type: Type
+  Data.type(Nat.Data)
+

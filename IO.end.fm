@@ -1,4 +1,0 @@
-IO.end: <A: Type> -> A -> IO(A)
-  <A> (x)
-  <P> (end) () ()
-  end(x)

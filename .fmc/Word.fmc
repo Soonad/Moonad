@@ -1,0 +1,3 @@
+Word: Π(:Nat) *
+  λsize ∀word(P:Π(size:Nat) Π(:(Word size)) *) Π(we:((P Nat.zero) Word.nil)) Π(w0:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.0 size> pred))) Π(w1:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.1 size> pred))) ((P size) word)
+

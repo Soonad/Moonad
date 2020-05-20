@@ -188,3 +188,4 @@ Nat.Type: Type
 //     <P> (b0) (b1) b0
 //Bit.Ctr.0: Data.ctr.type(Bit.Data)(Nat.0)
   //Data.ctr(Bit.Data)(Nat.0)
+

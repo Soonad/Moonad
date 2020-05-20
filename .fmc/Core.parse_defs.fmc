@@ -1,0 +1,3 @@
+Core.parse_defs: Π(:String) Core.Defs
+  λcode ((<(Core.Read.defs code) λ Core.Defs> Core.Defs.new) λgot (<got λ Core.Defs> λdefs λ defs))
+

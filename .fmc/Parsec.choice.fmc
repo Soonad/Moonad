@@ -1,0 +1,3 @@
+Parsec.choice: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(List (((Parsec S) E) A))) (((Parsec S) E) A)
+  ΛS ΛE ΛA λps ((<ps λ (((Parsec S) E) A)> <<<Parsec.zero S> E> A>) λhead λtail ((<<<Parsec.plus S> E> A> head) (<<<Parsec.choice S> E> A> tail)))
+

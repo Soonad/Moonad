@@ -1,0 +1,3 @@
+Parsec.map: ∀(S:*) ∀(E:*) ∀(A:*) ∀(B:*) Π(:Π(:A) B) Π(:(((Parsec S) E) A)) (((Parsec S) E) B)
+  ΛS ΛE ΛA ΛB λf λp ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (((((<p X> s1) λs2 λa ((empty_value s2) (f a))) empty_error) λs2 λa ((eaten_value s2) (f a))) eaten_error)
+

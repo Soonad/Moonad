@@ -1,0 +1,65 @@
+Docs.hello: IO(Unit)
+  IO.print("Hello, world!")
+
+Docs.welcome: IO(Unit)
+  do IO.bind IO.end {
+    var name = IO.query("What is your name?");
+    IO.print(String.concat("Welcome, ", name));
+    return Unit.new;
+  }
+
+Docs.bool_show: IO(Unit)
+  IO.print(Bool.show(Bool.true))
+
+Docs.bool_not: IO(Unit)
+  IO.print(Bool.show(Bool.not(Bool.true)))
+
+Docs.bool_not_let: IO(Unit)
+  let a = Bool.true
+  let b = Bool.not(a)
+  IO.print(Bool.show(b))
+
+Docs.unit_show: IO(Unit)
+  IO.print(Unit.show(Unit.new))
+
+Docs.id(T: Type, x: T): T
+  x
+
+Docs.id_test_0: Bool
+  Docs.id(Bool, Bool.true)
+
+Docs.id_test_1: Unit
+  Docs.id(Unit, Unit.new)
+
+Docs.id_test_2: String
+  Docs.id(String, "cat")
+
+Docs.string_or_unit(b: Bool): Type
+  case b:
+  | String;
+  | Unit;
+
+docs.a_string: Docs.string_or_unit(Bool.true)
+  "I'm a string!"
+
+docs.an_unit: Docs.string_or_unit(Bool.false)
+  Unit.new
+
+Docs.crazy(b: Bool): Docs.string_or_unit(b)
+  case b: (self) Docs.string_or_unit(self);
+  | "I'm a string";
+  | Unit.new;
+
+Docs.crazy_test_0: IO(Unit)
+  IO.print(Docs.crazy(Bool.true))
+
+Docs.crazy_string(b: Bool, is_true: Bool.IsTrue(b)): String
+  Docs.crazy(Bool.true)
+
+Docs.crazy_string_example_0: String
+  Docs.crazy_string(Bool.true, Unit.new)
+
+Docs.self_equal_theorem(b: Bool): Bool.IsTrue(Bool.eql(b, b))
+  case b: (b) Bool.IsTrue(Bool.eql(b, b));
+  | Unit.new;
+  | Unit.new;

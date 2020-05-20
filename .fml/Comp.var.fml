@@ -1,0 +1,3 @@
+Comp.var: String -> Comp
+  (name) <P> (var) () () () () () var(name)
+

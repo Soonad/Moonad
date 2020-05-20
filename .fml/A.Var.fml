@@ -1,0 +1,3 @@
+A.Var: Type
+  Pair(Char)(Nat)
+

@@ -1,0 +1,3 @@
+Nat.to_bits: Π(:Nat) Bits
+  λn ((<n λ Bits> (Bits.0 Bits.nil)) λn.pred (Bits.1 (Nat.to_bits n.pred)))
+

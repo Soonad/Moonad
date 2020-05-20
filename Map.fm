@@ -5,3 +5,144 @@
 T Map <A: Type>
 | new;
 | tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
+
+// Returns the element stored at a given key, if any.
+// Example: Map.get<Nat>(my_key)(my_map)
+Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
+  <A> (bits) (map)
+  bits<() Maybe(A)>
+  | map<() Maybe(A)>
+    | Maybe.none<A>;
+    | (map.val) (map.lft) (map.rgt)
+      map.val;;
+  | (bits.pred)
+    map<() Maybe(A)>
+    | Maybe.none<A>;
+    | (map.val) (map.lft) (map.rgt)
+      Map.get<A>(bits.pred)(map.lft);;
+  | (bits.pred)
+    map<() Maybe(A)>
+    | Maybe.none<A>;
+    | (map.val) (map.lft) (map.rgt)
+      Map.get<A>(bits.pred)(map.rgt);;
+
+Map.lookup: <A: Type> -> Bits -> A -> Map(A) -> Pair(A)(Map(A))
+  <A> (bits) (val) (map)
+  bits<() Pair(A)(Map(A))>
+  | map<() Pair(A)(Map(A))>
+    | let map = Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>)
+      Pair.new<A><Map(A)>(val)(map);
+    | (map.val) (map.lft) (map.rgt)
+      let value = Maybe.extract<A>(map.val)(val)
+      let map = Map.tie<A>(Maybe.some<A>(value))(map.lft)(map.rgt)
+      Pair.new<A><Map(A)>(value)(map);;
+  | (bits.pred)
+    map<() Pair(A)(Map(A))>
+    | let p = Map.lookup<A>(bits.pred)(val)(Map.new<A>)
+      p<() Pair(A)(Map(A))>
+      | (p.a) (p.b) 
+        Pair.new<A><Map(A)>(p.a)(Map.tie<A>(Maybe.none<A>)(p.b)(Map.new<A>));;
+    | (map.val) (map.lft) (map.rgt)
+      let p = Map.lookup<A>(bits.pred)(val)(map.lft)
+      p<() Pair(A)(Map(A))>
+      | (p.a) (p.b) 
+        Pair.new<A><Map(A)>(p.a)(Map.tie<A>(map.val)(p.b)(map.rgt));;;
+  | (bits.pred)
+    map<() Pair(A)(Map(A))>
+    | let p = Map.lookup<A>(bits.pred)(val)(Map.new<A>)
+      p<() Pair(A)(Map(A))>
+      | (p.a) (p.b) 
+        Pair.new<A><Map(A)>(p.a)(Map.tie<A>(Maybe.none<A>)(Map.new<A>)(p.b));;
+    | (map.val) (map.lft) (map.rgt)
+      let p = Map.lookup<A>(bits.pred)(val)(map.rgt)
+      p<() Pair(A)(Map(A))>
+      | (p.a) (p.b) 
+        Pair.new<A><Map(A)>(p.a)(Map.tie<A>(map.val)(map.lft)(p.b));;;
+
+Map.mix: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
+  <> (val) (lft) (rgt)
+  <> () (mix)
+  mix(val)(lft)(rgt)
+
+query: <A: Type> -> (A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A))
+  <A> (cpy) (bits) (map)
+  let rec = query<A>
+  bits<() ((A -> Pair(A)(A)) -> Bits -> Map(A) -> Pair(Map(A))(Maybe(A)))
+           -> (A -> Pair(A)(A)) -> Map(A) -> Pair(Map(A))(Maybe(A))>
+  | (rec) (cpy) (map) map<() Pair(Map(A))(Maybe(A))>
+    | let map = Map.new<A>
+      let val = Maybe.none<A>
+      Pair.new<Map(A)><Maybe(A)>(map)(val)
+    ;
+    | (map.val) (map.lft) (map.rgt)
+      let mval = map.val
+      mval<() Map(A) -> Map(A) -> Pair(Map(A))(Maybe(A))>
+      | (map.lft) (map.rgt)
+        let map = Map.tie<A>(Maybe.none<A>)(map.lft)(map.rgt)
+        let val = Maybe.none<A>
+        Pair.new<Map(A)><Maybe(A)>(map)(val)
+      ;
+      | (mval.value) (map.lft) (map.rgt)
+        let p = cpy(mval.value)
+        p<() Pair(Map(A))(Maybe(A))>
+        | (p.fst) (p.snd)
+          let map = Map.tie<A>(Maybe.some<A>(p.fst))(map.lft)(map.rgt)
+          let val = Maybe.some<A>(p.snd)
+          Pair.new<Map(A)><Maybe(A)>(map)(val)
+        ;
+      ;(map.lft)(map.rgt)
+    ;
+  ;
+  | (bits.pred) (rec) (cpy) (map)
+    map<() Pair(Map(A))(Maybe(A))>
+    | let map = Map.new<A>
+      let val = Maybe.none<A>
+      Pair.new<Map(A)><Maybe(A)>(map)(val)
+    ;
+    | (map.val) (map.lft) (map.rgt)
+      let p = rec(cpy)(bits.pred)(map.lft)
+      p<() Pair(Map(A))(Maybe(A))>
+      | (p.fst) (p.snd)
+        let map = Map.tie<A>(map.val)(p.fst)(map.rgt)
+        let val = p.snd
+        Pair.new<Map(A)><Maybe(A)>(map)(val)
+      ;
+    ;
+  ;
+  | (bits.pred) (rec) (cpy) (map)
+    map<() Pair(Map(A))(Maybe(A))>
+    | let map = Map.new<A>
+      let val = Maybe.none<A>
+      Pair.new<Map(A)><Maybe(A)>(map)(val)
+    ;
+    | (map.val) (map.lft) (map.rgt)
+      let p = rec(cpy)(bits.pred)(map.rgt)
+      p<() Pair(Map(A))(Maybe(A))>
+      | (p.fst) (p.snd)
+        let map = Map.tie<A>(map.val)(map.lft)(p.fst)
+        let val = p.snd
+        Pair.new<Map(A)><Maybe(A)>(map)(val)
+      ;
+    ;
+  ;(rec)(cpy)(map)
+
+// Inserts a (key,val) pair in a map.
+// Example: Map.get<Nat>(my_key)(my_val)(my_map)
+Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
+  <A> (bits) (val) (map)
+  bits<() Map(A)>
+  | map<() Map(A)>
+    | Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>);
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt);;
+  | (bits.pred)
+    map<() Map(A)>
+    | Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>);
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt);;
+  | (bits.pred)
+    map<() Map(A)>
+    | Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>));
+    | (map.val) (map.lft) (map.rgt)
+      Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt));;
+

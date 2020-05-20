@@ -1,0 +1,3 @@
+A.parse_fun.filt: String -> String
+  String.filter((c) Bool.or(U16.eql(c)(Char.parse("λ")))(U16.eql(c)(Char.parse("."))))
+

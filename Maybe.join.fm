@@ -1,5 +1,0 @@
-Maybe.join: <A: Type> -> Maybe(Maybe(A)) -> Maybe(A)
-  <A> (m)
-  m<() Maybe(A)>
-  | Maybe.none<A>;
-  | (m.value) m.value;

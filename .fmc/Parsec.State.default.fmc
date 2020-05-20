@@ -1,0 +1,3 @@
+Parsec.State.default: ∀(S:*) ∀(E:*) Π(:String) Π(:S) ((Parsec.State S) E)
+  ΛS ΛE λinput λstate ΛP λmake ((((make input) Nat.zero) <List.nil (Parsec.Error E)>) state)
+

@@ -1,5 +1,0 @@
-String.is_empty: String -> Bool
-  (str)
-  case str:
-  | Bool.true;
-  | (head) (tail) Bool.false;

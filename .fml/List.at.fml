@@ -1,0 +1,3 @@
+List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
+  <A> (list) (indx) list<(self) Maybe(A)>(Maybe.none<A>)((head) (tail) indx<(x5) Maybe(A)>(Maybe.some<A>(head))((pred) List.at<A>(tail)(pred)))
+

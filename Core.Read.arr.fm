@@ -1,8 +1,0 @@
-Core.Read.arr: Core.Bind -> Core.Read(Core.Bind)
-  (bind)
-  use skip = Core.Read.seek<Unit><Core.Bind>(Core.Read.txt("->"))
-  use body = Core.Read.bind<Core.Bind><Core.Bind>(Core.Read.trm) 
-  use ctx = Core.Read.done<Core.Bind>                           
-  Core.all(Bool.false)("")("")
-  | bind(ctx);
-  | (s) (x) body(Core.Ctx.ext("")(x)(Core.Ctx.ext("")(s)(ctx)));

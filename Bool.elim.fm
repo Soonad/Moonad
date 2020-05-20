@@ -1,3 +1,0 @@
-// Dependent elimination of Bool.
-Bool.elim : (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
-  (b) <P> (t) (f) b<P>(t)(f)

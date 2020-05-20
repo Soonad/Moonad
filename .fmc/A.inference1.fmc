@@ -1,0 +1,3 @@
+A.inference1: Π(:Bool) Bool
+  λb ((<b λself Bool> Bool.true) Bool.false)
+

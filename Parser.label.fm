@@ -1,3 +1,0 @@
-Parser.label : <A: Type> -> String -> Parser(A) -> Parser(A)
-  <A> (label) (p)
-  Parsec.label<Unit><Unit><A>(label)(p)

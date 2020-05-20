@@ -1,0 +1,3 @@
+Map.mix: <A: Type> -> Maybe(A) -> Map(A) -> Map(A) -> Map(A)
+  <> (val) (lft) (rgt) <> () (mix) mix(val)(lft)(rgt)
+

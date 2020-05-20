@@ -1,0 +1,3 @@
+Core.to_bits: Π(:Core) Bits
+  λterm ((((Core.to_bits.go term) Nat.0) Bool.false) Bits.nil)
+

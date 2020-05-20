@@ -1,7 +1,0 @@
-Nat.show.aux: Nat -> Nat -> String -> String
-  (n) (base) (str)
-  (Nat.div_mod(n)(base))<() String> | (d) (m)
-  d<() String>
-  | String.cons(Nat.show.digit(m)(base))(str);
-  | (pred) Nat.show.aux(d)(base)(String.cons(Nat.show.digit(m)(base))(str));;
-

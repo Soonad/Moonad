@@ -1,3 +1,11 @@
+// The bit 0.
+Bit.0: Bit
+  <P> (o) (i) o
+
+// The bit 1.
+Bit.1: Bit
+  <P> (o, i) i
+
 // A single Bit.
 // T Bit
 // | Bit.0
@@ -7,3 +15,4 @@ Bit : Type
   P(Bit.0) ->
   P(Bit.1) ->
   P(bit)
+

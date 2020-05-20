@@ -1,7 +1,0 @@
-Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat) //loop//
-  (n) (m)
-  m<() Either(Nat)(Nat)>
-  | Either.left<Nat><Nat>(n);
-  | (m.pred) n<() Either(Nat)(Nat)>
-    | Either.right<Nat><Nat>(Nat.succ(m.pred));
-    | (n.pred) Nat.sub_rem(n.pred)(m.pred);;

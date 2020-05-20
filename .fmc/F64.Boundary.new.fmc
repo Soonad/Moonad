@@ -1,0 +1,3 @@
+F64.Boundary.new: Π(:(List F64.V3)) F64.Boundary
+  λpts ΛP λnew (new pts)
+

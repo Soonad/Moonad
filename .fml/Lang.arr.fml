@@ -1,0 +1,3 @@
+Lang.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  def C = Core.Ctx -> Core; (bind) Parser.then<Unit><C>(Lang.space)(Parser.then<String><C>(Lang.symbol("->"))(Parser.bind<C><C>(Lang.trm)((body) Parser.pure<C>((ctx) let tbind = bind(ctx); let tbody = ((s) (x) body(Core.Ctx.ext(String.nil)(x)(Core.Ctx.ext(String.nil)(s)(ctx)))) :: Core -> Core -> Core; Core.all(Bool.false)(String.nil)(String.nil)(tbind)(tbody)))))
+

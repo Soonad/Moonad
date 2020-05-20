@@ -1,0 +1,3 @@
+Core.Read.is_name.set: Map(Unit)
+  String.to_set(".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz")
+

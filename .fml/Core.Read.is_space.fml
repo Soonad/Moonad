@@ -1,0 +1,3 @@
+Core.Read.is_space: Char -> Bool
+  (chr) Bool.or(U16.eql(chr)(' '))(U16.eql(chr)(Char.newline))
+

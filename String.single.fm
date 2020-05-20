@@ -1,3 +1,0 @@
-// A list with only one element.
-String.single : (x : Char) -> String
-  (x) String.cons(x)(String.nil)

@@ -1,0 +1,3 @@
+JSON.object: (x: List(Pair(String)(JSON))) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) object(x)
+

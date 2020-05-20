@@ -1,0 +1,3 @@
+Data.Flds.type: Type -> Data.Flds -> Type
+  (P) (flds) flds<() Type>(P)((flds.name) (flds.type) (flds.flds) (x: P) -> Data.Flds.type(P)(flds.flds))
+

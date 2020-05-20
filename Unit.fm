@@ -2,3 +2,10 @@ Unit : Type //prim//
   unit<P: Unit -> Type> ->
   (new: P(Unit.new)) ->
   P(unit)
+
+Unit.new : Unit
+  <P> (unit) unit
+
+Unit.show(u: Unit): String
+  "Unit.new"
+

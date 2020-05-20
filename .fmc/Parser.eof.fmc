@@ -1,0 +1,3 @@
+Parser.eof: (Parser Unit)
+  <<Parsec.eof Unit> Unit>
+

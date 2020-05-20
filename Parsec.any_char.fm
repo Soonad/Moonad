@@ -1,4 +1,0 @@
-Parsec.any_char : <S: Type> -> <E: Type> -> Parsec(S)(E)(Char)
-  <S> <E>
-  Parsec.token<S><E><Char>(Maybe.some<Char>)
-  | List.single<Parsec.Error.Item>(Parsec.Error.Item.label("any char"));

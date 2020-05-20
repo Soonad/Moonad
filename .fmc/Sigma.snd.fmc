@@ -1,0 +1,3 @@
+Sigma.snd: ∀(A:*) ∀(B:Π(:A) *) Π(sig:((Sigma A) B)) (B (<<Sigma.fst A> B> sig))
+  ΛA ΛB λsig (<sig λsig (B (<<Sigma.fst A> B> sig))> λx λy y)
+

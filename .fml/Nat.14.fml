@@ -1,0 +1,3 @@
+Nat.14: Nat
+  Nat.succ(Nat.13)
+

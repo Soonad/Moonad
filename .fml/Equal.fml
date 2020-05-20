@@ -1,0 +1,3 @@
+Equal: (A: Type) -> (a: A) -> (b: A) -> Type
+  (A) (a) (b) self<P: (b: A) -> (self: Equal(A)(a)(b)) -> Type> -> (to: P(a)(Equal.to<A><a>)) -> P(b)(self)
+

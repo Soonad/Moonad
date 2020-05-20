@@ -1,4 +1,0 @@
-U32.shl: Nat -> U32 -> U32 //prim//
-  (n) (a)
-  a<() U32> | (a_val)
-  U32.new(Word.shift_left<Nat.32>(n)(a_val));

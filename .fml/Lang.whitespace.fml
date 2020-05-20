@@ -1,0 +1,3 @@
+Lang.whitespace: Parser(Unit)
+  Parser.then<String><Unit>(Parser.take_while1("whitespace")(Lang.is_space))(Parser.pure<Unit>(Unit.new))
+

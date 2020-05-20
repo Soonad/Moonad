@@ -1,0 +1,3 @@
+Word.cmp.aux: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) Π(:Cmp) Cmp
+  Λsize λa λb λc ((((<a λa.size λ Π(:(Word a.size)) Cmp> λb c) Λa.size λa.pred λb ((((<b λb.size λ Π(:(Word (Nat.pred b.size))) Cmp> λa.pred c) Λb.size λb.pred λa.pred (((<Word.cmp.aux b.size> a.pred) b.pred) c)) Λb.size λb.pred λa.pred (((<Word.cmp.aux b.size> a.pred) b.pred) Cmp.ltn)) a.pred)) Λa.size λa.pred λb ((((<b λb.size λ Π(:(Word (Nat.pred b.size))) Cmp> λa.pred c) Λb.size λb.pred λa.pred (((<Word.cmp.aux b.size> a.pred) b.pred) Cmp.gtn)) Λb.size λb.pred λa.pred (((<Word.cmp.aux b.size> a.pred) b.pred) c)) a.pred)) b)
+

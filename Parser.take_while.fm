@@ -1,2 +1,0 @@
-Parser.take_while: (Char -> Bool) -> Parser(String)
-  (f) Parsec.take_while<Unit><Unit>(f)

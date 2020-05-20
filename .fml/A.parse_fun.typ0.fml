@@ -1,0 +1,3 @@
+A.parse_fun.typ0: String -> A.Ctx -> Type
+  (str) (ctx) str<() Type>(Unit)((nam) (nxt) A.parse_fun.typ1(nam)(nxt)(ctx))
+

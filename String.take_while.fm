@@ -1,4 +1,0 @@
-String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
-  (f) (str)
-  get x y = String.take_while.aux(f)(String.nil)(str)
-  Pair.new<><>(String.reverse(x))(y)

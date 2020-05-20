@@ -1,8 +1,0 @@
-String.drop: Nat -> String -> String
-  (n) (list)
-  n<() String>
-  | list;
-  | (pred)
-    list<() String>
-    | String.nil;
-    | (head) (tail) String.drop(pred)(tail);;

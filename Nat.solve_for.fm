@@ -1,2 +1,0 @@
-Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
-  (x) <E> <P> x

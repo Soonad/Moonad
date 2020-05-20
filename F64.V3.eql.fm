@@ -1,8 +1,0 @@
-F64.V3.eql: F64.V3 -> F64.V3 -> Bool
-  (a) (b)
-  a<() Bool> | (a.x) (a.y) (a.z)
-  b<() Bool> | (b.x) (b.y) (b.z)
-  let same_x = F64.eql(a.x)(b.x)
-  let same_y = F64.eql(a.y)(b.y)
-  let same_z = F64.eql(a.z)(b.z)
-  Bool.and(same_x)(Bool.and(same_y)(same_z));;

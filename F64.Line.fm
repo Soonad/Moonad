@@ -1,5 +1,0 @@
-F64.Line : Type
-  line<P: F64.Line -> Type> -> 
-  (new: (pos: F64.V3) -> (dir: F64.V3) -> P(F64.Line.new(pos)(dir))) ->
-  P(line)
-  

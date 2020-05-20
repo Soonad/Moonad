@@ -1,0 +1,3 @@
+Nat.eql: Π(:Nat) Π(:Nat) Bool
+  λa λb (((<((Nat.cmp a) b) λ Bool> Bool.false) Bool.true) Bool.false)
+

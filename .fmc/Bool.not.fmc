@@ -1,0 +1,3 @@
+Bool.not: Π(a:Bool) Bool
+  λa ((<a λself Bool> Bool.false) Bool.true)
+

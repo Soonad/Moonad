@@ -1,0 +1,3 @@
+Core.all: Π(:Bool) Π(:String) Π(:String) Π(:Core) Π(:Π(:Core) Π(:Core) Core) Core
+  λeras λself λname λbind λbody Λ λ λ λ λall λ λ λ λ (((((all eras) self) name) bind) body)
+

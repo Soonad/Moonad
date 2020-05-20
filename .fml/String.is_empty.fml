@@ -1,0 +1,3 @@
+String.is_empty: String -> Bool
+  (str) str<(self) Bool>(Bool.true)((head) (tail) Bool.false)
+

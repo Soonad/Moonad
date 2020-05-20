@@ -1,3 +1,0 @@
-// Converts a list to a concatenation list.
-Concat.to_list: <A: Type> -> (xs: Concat(A)) -> List(A)
-  <A> (xs) xs(List.nil<A>)

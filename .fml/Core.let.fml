@@ -1,0 +1,3 @@
+Core.let: String -> Core -> (Core -> Core) -> Core
+  (name) (expr) (body) <> () () () () () () (Let) () Let(name)(expr)(body)
+

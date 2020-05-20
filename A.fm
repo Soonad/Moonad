@@ -1,0 +1,227 @@
+main_test: F64
+  let pos = F64.V3.new(F64.0)(F64.1)(F64.1)
+  get pos.x pos.y pos.z = pos
+  pos.x
+
+
+
+
+
+
+
+
+
+
+
+A.core_in_core: String
+  let defs = Core.parse_defs("
+  Nat: Type
+    nat<P: Nat -> Type> ->
+    (zero: P(Nat.zero)) ->
+    (succ: (pred: Nat) -> P(Nat.succ(pred))) ->
+    P(nat)
+
+  Nat.zero: Nat
+    <P> (z) (s) z
+
+  Nat.succ: Nat -> Nat
+    (n)
+    <P> (z) (s) s(n)
+
+  main: Nat
+    Nat.succ(Nat.zero)
+  ")
+  let term = Core.Defs.term(defs)("main")
+  let type = Core.Defs.type(defs)("main")
+  Core.typecheck(term)(type)(defs)(Nat.zero)<() String>
+  | (err) err;
+  | (typ) Core.stringify(typ);
+
+A.Var : Type
+  Pair(Char)(Nat)
+
+A.Var.new : Char -> Nat -> A.Var
+  Pair.new<Char><Nat>
+
+A.Ctx : Type
+  List(A.Var)
+
+A.Ctx.nil : A.Ctx
+  List.nil<A.Var>
+
+A.Ctx.ext : Char -> Nat -> A.Ctx -> A.Ctx
+  (nam) (x) List.cons<A.Var>(A.Var.new(nam)(x))
+
+A.Ctx.get : Char -> A.Ctx -> Maybe(Nat)
+  (chr) (ctx)
+  ctx<() Maybe(Nat)>
+  | Maybe.none<Nat>;
+  | (h) (t)
+    h<() Maybe(Nat)>
+    | (nam) (var)
+      U16.eql(nam)(chr)<() Maybe(Nat)>
+      | Maybe.some<Nat>(var);
+      | A.Ctx.get(chr)(t);;;
+
+A.parse_fun.filt : String -> String
+  String.filter((c) Bool.or
+    | U16.eql(c)(Char.parse("λ"));
+    | U16.eql(c)(Char.parse("."));)
+
+A.parse_fun.typ0 : String -> A.Ctx -> Type
+  (str) (ctx)
+  str<() Type>
+  | Unit;
+  | (nam) (nxt) A.parse_fun.typ1(nam)(nxt)(ctx);
+
+A.parse_fun.typ1 : Char -> String -> A.Ctx -> Type
+  (nam) (nxt) (ctx)
+  nxt<() Type>
+  | Nat;
+  | (h) (t) (x: Nat) -> A.parse_fun.typ0(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx));
+
+A.parse_fun.term : (str:String) -> (ctx:A.Ctx) -> A.parse_fun.typ0(str)(ctx)
+  (str) (ctx)
+  str<(str) A.parse_fun.typ0(str)(ctx)>
+  | Unit.new;
+  | (nam) (nxt)
+    nxt<(str) A.parse_fun.typ1(nam)(str)(ctx)>
+    | A.Ctx.get(nam)(ctx)<() Nat>
+      | Nat.zero;
+      | (n) n;;
+    | (h) (t) (x) A.parse_fun.term(String.cons(h)(t))(A.Ctx.ext(nam)(x)(ctx));;
+
+A.fun : (str:String) -> A.parse_fun.typ0(A.parse_fun.filt(str))(A.Ctx.nil)
+  (str) A.parse_fun.term(A.parse_fun.filt(str))(A.Ctx.nil)
+
+A.crazy: Nat -> Nat -> Nat -> Nat
+  A.fun("λx.λy.λz.y")
+
+A.it_works: Equal(Nat)(Nat.1)(A.crazy(Nat.0)(Nat.1)(Nat.2))
+  Equal.to<Nat><Nat.1>
+  
+  
+
+A.equal_mul
+  : Equal(Nat)
+    | Nat.mul(Nat.mul(Nat.32)(Nat.16))(Nat.1);
+    | Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1);
+  Equal.to<Nat><Nat.mul(Nat.mul(Nat.16)(Nat.32))(Nat.1)>
+  
+
+A.floats: F64
+  let f2 = F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010")
+  let f3 = F64.parse_binary("0000000000000000000000000000000000000000000000000001000000000010")
+  F64.div(f3)(f2)
+
+A.get_syntax: Nat
+  let pair = Pair.new<><>(Nat.2)(Nat.3)
+  get x y = pair
+  x
+
+// Big type annotations are avoided
+A.inference0: Word(Nat.4)
+  ( Word.1<>
+  | Word.0<>
+  | Word.1<>
+  | Word.0<>
+  | Word.nil
+  ;;;;)
+
+A.inference1: Bool -> Bool
+  (b)
+  case b:
+  | Bool.true;
+  | Bool.false;
+
+A.nat: Nat
+  Nat.mul(Nat.10)(Nat.10)
+
+A.nat_literals: IO(Unit)
+ let a = Nat.parse_decimal("123456789123456789123456789123456789")
+ let b = Nat.parse_decimal("987654321987654321987654321987654321")
+ let s = Nat.to_string_decimal(Nat.mul(a)(b))
+ IO.log<Unit>(s) | ()
+ IO.end<Unit>(Unit.new);
+
+// An example of optimal reduction asymptotics.
+// Applies the `not` function 2^32+1 times to a boolean.
+// Returns instantly on inets, takes forever on other runtimes.
+// Try with: fmcx A.optimal_reduction
+A.optimal_reduction: Bool
+  def Nat = <P: Type> -> (P -> P) -> P -> P
+  let suc = ((n) <P> (s) (z) s(n<P>(s)(z))) :: Nat -> Nat
+  let zer = (<P> (s) (z) z) :: Nat
+  let mul = ((a) (b) <P> (s) a<P>(b<P>(s))) :: Nat -> Nat -> Nat
+  let n0  = zer
+  let n1  = suc(n0)
+  let n2  = suc(n1)
+  let p0  = n1
+  let p1  = mul(p0)(n2)
+  let p2  = mul(p1)(n2)
+  let p3  = mul(p2)(n2)
+  let p4  = mul(p3)(n2)
+  let p5  = mul(p4)(n2)
+  let p6  = mul(p5)(n2)
+  let p7  = mul(p6)(n2)
+  let p8  = mul(p7)(n2)
+  let p9  = mul(p8)(n2)
+  let p10 = mul(p9)(n2)
+  let p11 = mul(p10)(n2)
+  let p12 = mul(p11)(n2)
+  let p13 = mul(p12)(n2)
+  let p14 = mul(p13)(n2)
+  let p15 = mul(p14)(n2)
+  let p16 = mul(p15)(n2)
+  let p17 = mul(p16)(n2)
+  let p18 = mul(p17)(n2)
+  let p19 = mul(p18)(n2)
+  let p20 = mul(p19)(n2)
+  let p21 = mul(p20)(n2)
+  let p22 = mul(p21)(n2)
+  let p23 = mul(p22)(n2)
+  let p24 = mul(p23)(n2)
+  let p25 = mul(p24)(n2)
+  let p26 = mul(p25)(n2)
+  let p27 = mul(p26)(n2)
+  let p28 = mul(p27)(n2)
+  let p29 = mul(p28)(n2)
+  let p30 = mul(p29)(n2)
+  let p31 = mul(p30)(n2)
+  let p32 = mul(p31)(n2)
+  // Applies the `not` function 2^32+1 times to Bool.true
+  suc(p32)<Bool>(Bool.notf)(Bool.true)
+
+// Statically solves the equation `x * x + 5 = 27 + 27`
+// This results in the constant number 7
+A.solve: Nat
+  Nat.solve_for()<(x)
+    let a = Nat.add(Nat.mul(x)(x))(Nat.5)
+    let b = Nat.add(Nat.27)(Nat.27)
+    Equal()(a)(b) // x * x + 5 = 54
+  ><>
+
+// The synthesizer can generate functions definition like composition
+A.synthesis0
+  : <A:Type> ->
+    <B:Type> ->
+    <C:Type> ->
+    (B -> C) ->
+    (A -> B) ->
+    (A -> C)
+  _
+
+A.tail_calls: Nat
+  let n10   = Nat.10
+  let n100  = Nat.mul(n10)(n10)
+  let n1k   = Nat.mul(n10)(n100)
+  let n10k  = Nat.mul(n10)(n1k)
+  let n100k = Nat.mul(n10)(n10k)
+  let n1m   = Nat.mul(n10)(n100k)
+  let n10m  = Nat.mul(n10)(n1m)
+  Nat.sum(n10m)
+
+A.u32_add: U32
+  let num = U32.inc(U32.inc(U32.0))
+  U32.add(num)(num)
+

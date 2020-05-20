@@ -1,4 +1,0 @@
-Lang.core: Parser(Core)
-  def C = Core.Ctx -> Core
-  Parser.bind<C><Core>(Lang.trm) | (term)
-  Parser.pure<Core>(term(Core.Ctx.nil));

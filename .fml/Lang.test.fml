@@ -1,0 +1,3 @@
+Lang.test: String
+  Parser.run_either<Core>(Lang.core)("(x : A) -> x")<() String>((e) Parser.Error.show(e))((x) Core.stringify(x))
+

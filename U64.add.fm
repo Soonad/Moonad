@@ -1,5 +1,0 @@
-U64.add: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.add<Nat.64>(a_val)(b_val));;

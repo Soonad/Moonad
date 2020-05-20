@@ -1,0 +1,3 @@
+List.any: ∀(A:*) Π(:Π(:A) Bool) Π(:(List A)) Bool
+  ΛA λcond λlist ((<list λself Bool> Bool.false) λhead λtail ((<(cond head) λself Bool> Bool.true) ((<List.any A> cond) tail)))
+
