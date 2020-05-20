@@ -1,3 +1,0 @@
-Arelin.Game.Constants.POS_Y_KEY: Bits
-  Bits.from_string("01110101b")
-
