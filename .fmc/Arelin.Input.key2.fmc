@@ -1,3 +1,0 @@
-Arelin.Input.key2: Π(pos:F64.V3) Arelin.Input
-  λpos ΛP λsdir λkey0 λkey1 λkey2 λkey3 λkey4 λkey5 λcmsg (key2 pos)
-
