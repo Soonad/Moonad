@@ -1,3 +1,3 @@
 F64.if: ∀(A:*) Π(x:F64) Π(ct:A) Π(cf:A) A
-  ΛA λx λct λcf @bool=((F64.eql x) F64.0);((<bool λ A> cf) ct)
+  ΛA λx λct λcf $bool=((F64.eql x) F64.0);((<bool λ A> cf) ct)
 

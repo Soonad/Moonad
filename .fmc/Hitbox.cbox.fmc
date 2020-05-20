@@ -1,3 +1,0 @@
-Hitbox.cbox: Π(rad:F64) Hitbox
-  λrad ΛP λnbox λcbox λpbox (cbox rad)
-

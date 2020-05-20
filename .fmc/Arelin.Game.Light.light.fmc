@@ -1,3 +1,0 @@
-Arelin.Game.Light.light: Π(pos:F64.V3) Π(rad:F64) Π(rng:F64) Π(sub:F64.V3) Π(add:F64.V3) Arelin.Game.Light
-  λpos λrad λrng λsub λadd ΛP λlight (((((light pos) rad) rng) sub) add)
-
