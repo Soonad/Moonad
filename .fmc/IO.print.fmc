@@ -1,0 +1,3 @@
+IO.print: Π(str:String) (IO Unit)
+  λstr ((<IO.log Unit> str) λskip (<IO.end Unit> Unit.new))
+

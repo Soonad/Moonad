@@ -1,3 +1,18 @@
+main_test: F64
+  let pos = F64.V3.new(F64.0)(F64.1)(F64.1)
+  get pos.x pos.y pos.z = pos
+  pos.x
+
+
+
+
+
+
+
+
+
+
+
 A.core_in_core: String
   let defs = Core.parse_defs("
   Nat: Type

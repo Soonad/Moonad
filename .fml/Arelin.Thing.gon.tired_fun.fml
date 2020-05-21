@@ -1,0 +1,3 @@
+Arelin.Thing.gon.tired_fun: Arelin.Game.TxFunction
+  (self) let self = Arelin.Thing.set_mov(self)(F64.parse("2")); let self = Arelin.Thing.end_thing(self)(Arelin.Thing.gon_fun)(F64.mul(Arelin.Constants.ONE_SEC)(F64.parse("5")))(Arelin.Constants.GON_AFTER_ULT); Bool.if<Arelin.Thing>(Arelin.Thing.is_walking(self))(Arelin.Thing.animate(self)(F64.1)(GON_FREECS_AFTER_ULTIMATE_WALK_000)(F64.parse("12"))(F64.parse("24")))(Arelin.Thing.animate(self)(F64.1)(GON_FREECS_AFTER_ULTIMATE_IDLE_000)(F64.parse("8"))(F64.parse("16")))
+

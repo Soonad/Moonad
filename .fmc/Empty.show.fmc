@@ -1,0 +1,3 @@
+Empty.show: Π(e:Empty) String
+  λe <e λself String>
+

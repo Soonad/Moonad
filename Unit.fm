@@ -6,6 +6,6 @@ Unit : Type //prim//
 Unit.new : Unit
   <P> (unit) unit
 
-Unit.show: Unit -> String
-  (u) "Unit.new"
+Unit.show(u: Unit): String
+  "Unit.new"
 
