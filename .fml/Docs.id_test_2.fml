@@ -1,0 +1,3 @@
+Docs.id_test_2: String
+  Docs.id(String)("cat")
+

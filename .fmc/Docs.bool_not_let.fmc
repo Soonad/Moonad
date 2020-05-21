@@ -1,0 +1,3 @@
+Docs.bool_not_let: (IO Unit)
+  $a=Bool.true;$b=(Bool.not a);(IO.print (Bool.show b))
+
