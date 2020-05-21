@@ -1,3 +1,0 @@
-IO.inp: ∀(A:*) Π(:Π(:String) (IO A)) (IO A)
-  ΛA λnxt ΛP λ λ λinp (inp nxt)
-

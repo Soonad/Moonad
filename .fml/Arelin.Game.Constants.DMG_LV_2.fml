@@ -1,0 +1,3 @@
+Arelin.Game.Constants.DMG_LV_2: F64
+  F64.parse("2")
+

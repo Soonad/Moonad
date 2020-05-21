@@ -1,0 +1,3 @@
+Docs.hello: IO(Unit)
+  IO.print("Hello, world!")
+
