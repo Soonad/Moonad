@@ -1,3 +1,3 @@
 Arelin.Thing.init_act: Π(self:Arelin.Thing) Π(new_act:F64) Π(new_trg:F64.V3) Arelin.Thing
-  λself λnew_act λnew_trg @act=(Arelin.Thing.get_act self);@trg=(Arelin.Thing.get_trg self);@tik=(Arelin.Thing.get_tik self);@act=((<((F64.eql act) F64.0) λself F64> new_act) act);@trg=((<((F64.eql act) F64.0) λself F64.V3> new_trg) trg);@tik=((<((F64.eql act) F64.0) λself F64> F64.0) tik);@self=((Arelin.Thing.set_act self) act);@self=((Arelin.Thing.set_trg self) trg);@self=((Arelin.Thing.set_tik self) tik);self
+  λself λnew_act λnew_trg $act=(Arelin.Thing.get_act self);$trg=(Arelin.Thing.get_trg self);$tik=(Arelin.Thing.get_tik self);$act=((<((F64.eql act) F64.0) λself F64> new_act) act);$trg=((<((F64.eql act) F64.0) λself F64.V3> new_trg) trg);$tik=((<((F64.eql act) F64.0) λself F64> F64.0) tik);$self=((Arelin.Thing.set_act self) act);$self=((Arelin.Thing.set_trg self) trg);$self=((Arelin.Thing.set_tik self) tik);self
 

@@ -1,3 +1,0 @@
-Arelin.Hit: Type
-  self<P: (self: Arelin.Hit) -> Type> -> (hit: (eff: List(Arelin.Effect)) -> (pos: F64.V3) -> (dir: F64.V3) -> (box: Arelin.Hitbox) -> P(Arelin.Hit.hit(eff)(pos)(dir)(box))) -> P(self)
-

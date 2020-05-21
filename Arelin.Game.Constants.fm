@@ -8,3 +8,10 @@ Arelin.Game.Constants.MANDO_WEAPON_KEY : Bits Bits.from_string("001101111010")
 Arelin.Game.Constants.GON_AFTER_ULT : Bits Bits.from_string("001101111110")
 Arelin.Game.Constants.DARTH_VADER_USING_FORCE : Bits Bits.from_string("0101100001")
 Arelin.Game.Constants.FORCE_AWAKENS_KEY : Bits Bits.from_string("01101101")
+
+Arelin.Game.Constants.DMG_LV_1: F64 F64.1
+Arelin.Game.Constants.DMG_LV_2: F64 F64.parse("2")
+Arelin.Game.Constants.DMG_LV_3: F64 F64.parse("3")
+Arelin.Game.Constants.DMG_LV_4: F64 F64.parse("4")
+Arelin.Game.Constants.DMG_LV_5: F64 F64.parse("5")
+Arelin.Game.Constants.DMG_LV_6: F64 F64.parse("6")

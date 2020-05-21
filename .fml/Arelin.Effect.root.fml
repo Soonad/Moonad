@@ -1,3 +1,0 @@
-Arelin.Effect.root: (dur: F64) -> Arelin.Effect
-  (dur) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) root(dur)
-
