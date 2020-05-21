@@ -86,7 +86,7 @@ Arelin.Thing.darth_vader_fun : Arelin.Game.TxFunction
   | case F64.eql(self.act, F64.2):
   | #DARTH_VADER_THE_EMPIRE_STRICKES_BACK# 
     let set_timer = 
-      (() F64.mul(F64.parse("5"))(Arelin.Game.Constants.ONE_SEC)) :: F64 -> F64
+      (() F64.mul(F64.parse("5"))(Arelin.Constants.ONE_SEC)) :: F64 -> F64
 
     let self = 
       Arelin.Thing.map_stt_key
