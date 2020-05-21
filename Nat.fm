@@ -283,7 +283,7 @@ Nat.mul: Nat -> Nat -> Nat //prim//
 
 //// TODO: error on misformatted Nat
 Nat.parse_decimal: String -> Nat
-  (str) Nat.parse_decimal.go(str)(Nat.zero) 
+  (str) Nat.parse_decimal.go(str)(Nat.zero)
 
 // TODO: error on misformatted Nat
 Nat.parse_decimal.go: String -> Nat -> Nat //loop//
@@ -308,9 +308,8 @@ Nat.show.aux: Nat -> Nat -> String -> String
   | String.cons(Nat.show.digit(m)(base))(str);
   | (pred) Nat.show.aux(d)(base)(String.cons(Nat.show.digit(m)(base))(str));;
 
-
 Nat.show.digit: Nat -> Nat -> Char
-  (n) (base) 
+  (n) (base)
   let m = Nat.mod(n)(base)
   Nat.eql(m)(Nat.0)<() Char> | Char.parse("0"); |
   Nat.eql(m)(Nat.1)<() Char> | Char.parse("1"); |
@@ -361,9 +360,9 @@ Nat.sub: Nat -> Nat -> Nat //prim//
   (n) (m)
   m<() Nat>
   | n;
-  | (m.pred) 
+  | (m.pred)
     n<() Nat>
-    | Nat.zero; 
+    | Nat.zero;
     | (n.pred) Nat.sub(n.pred)(m.pred);;
 
 Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat) //loop//
@@ -447,7 +446,7 @@ Nat.mulVar: (n: Nat) -> Variadic(n)(Nat)(Nat)
 
 //// TODO: error on misformatted Nat
 Nat.parse_hex: String -> Nat
-  (str) Nat.parse_hex.go(str)(Nat.zero) 
+  (str) Nat.parse_hex.go(str)(Nat.zero)
 
 Nat.parse_hex.go: String -> Nat -> Nat //loop//
   (str) (res)
@@ -468,3 +467,34 @@ Nat.pow: Nat -> Nat -> Nat //prim//
 
 Nat.square: Nat -> Nat
   (a) Nat.mul(a)(a)
+
+// Extended Euclidian algorithm. Given natural numbers a, b, computes GCD(a,b) and
+// Bezout's coefficients; that is, integers x, y such that a*x + b*y = GCD(a,b)
+Nat.egcd: Nat -> Nat -> Pair(Nat, Pair(Int, Int))
+  (a) (b) Nat.egcd_aux.tco(a, b, Int.0, Int.1, Int.1, Int.0)
+
+Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat, Pair(Int, Int))
+  (a) (b) (x) (y) (u) (v)
+  a<() Unit -> Pair(Nat, Pair(Int, Int))>
+  | () Pair.new<Nat, Pair(Int, Int)>(b, Pair.new<Int, Int>(x, y));
+  | (pred) ()
+    let q = Nat.div(b, a)
+    let r = Nat.mod(b, a)
+    let m = Int.sub(x, Int.mul(u, Int.fromNat(q)))
+    let n = Int.sub(y, Int.mul(v, Int.fromNat(q)))
+    Nat.egcd_aux.tco(r, a, u, v, m, n);
+  | Unit.new;
+
+Nat.bitwise_and: Nat -> Nat -> Nat
+  (a) (b)
+  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, Nat.0), Nat.eql(a, Nat.0)))
+  | () Nat.0;
+  | ()
+    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, Nat.2), Nat.0), Nat.eql(Nat.mod(b, Nat.2), Nat.0)), Nat.0, Nat.1)
+    let a = Nat.div(a, Nat.2)
+    let b = Nat.div(b, Nat.2)
+    Nat.add(bit, Nat.mul(Nat.2, Nat.bitwise_and(a, b)));
+  | Unit.new;
+
+Nat.odd: Nat -> Bool
+  (n) Nat.eql(Nat.mod(n, Nat.2), Nat.1)

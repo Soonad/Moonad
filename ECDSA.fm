@@ -41,8 +41,21 @@ ecdsa.negate: Nat -> Nat
 ecdsa.sub: Nat -> Nat -> Nat
   (a) (b) ecdsa.mod(Nat.add(a, ecdsa.negate(b)))
 
-ecdsa.P_DIV4_1: Nat
-  Nat.div(Nat.add(CURVE.P, Nat.1), Nat.4)
+ecdsa.pow_mod: Nat -> Nat -> Nat -> Nat
+  (a) (b) (modulo)
+  ecdsa.pow_mod.tco(a, b, modulo, Nat.1)
+
+ecdsa.pow_mod.tco: Nat -> Nat -> Nat -> Nat -> Nat
+  (a) (b) (modulo) (res)
+  Bool.if<_>(Nat.eql(b)(Nat.0))
+  | res;
+  | let res = Bool.if<_>(Nat.odd(b), Nat.mod(Nat.mul(res, a), modulo), res)
+    let b = Nat.div(b, Nat.2)
+    let a = Nat.mod(Nat.mul(a, a), modulo)
+    ecdsa.pow_mod.tco(a, b, modulo, res);
+
+ecdsa.sqrt: Nat -> Nat
+  (a) ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, Nat.1), Nat.4), CURVE.P)
 
 // RHS of elliptic curve equation
 ecdsa.weistrass: Nat -> Nat
@@ -54,37 +67,6 @@ ecdsa.PRIME_SIZE: Nat
 
 ecdsa.USE_ENDOMORPHISM: Bool
   Nat.eql(CURVE.a, Nat.0)
-
-Nat.odd: Nat -> Bool
-  (n) Nat.eql(Nat.mod(n, Nat.2), Nat.1)
-
-// Extended Euclidian algorithm. Given natural numbers a, b, computes GCD(a,b) and
-// Bezout's coefficients; that is, integers x, y such that a*x + b*y = GCD(a,b)
-Nat.egcd: Nat -> Nat -> Pair(Nat, Pair(Int, Int))
-  (a) (b) Nat.egcd_aux.tco(a, b, Int.0, Int.1, Int.1, Int.0)
-
-Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat, Pair(Int, Int))
-  (a) (b) (x) (y) (u) (v)
-  a<() Unit -> Pair(Nat, Pair(Int, Int))>
-  | () Pair.new<Nat, Pair(Int, Int)>(b, Pair.new<Int, Int>(x, y));
-  | (pred) ()
-    let q = Nat.div(b, a)
-    let r = Nat.mod(b, a)
-    let m = Int.sub(x, Int.mul(u, Int.fromNat(q)))
-    let n = Int.sub(y, Int.mul(v, Int.fromNat(q)))
-    Nat.egcd_aux.tco(r, a, u, v, m, n);
-  | Unit.new;
-
-Nat.bitwise_and: Nat -> Nat -> Nat
-  (a) (b)
-  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, Nat.0), Nat.eql(a, Nat.0)))
-  | () Nat.0;
-  | ()
-    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, Nat.2), Nat.0), Nat.eql(Nat.mod(b, Nat.2), Nat.0)), Nat.0, Nat.1)
-    let a = Nat.div(a, Nat.2)   
-    let b = Nat.div(b, Nat.2)   
-    Nat.add(bit, Nat.mul(Nat.2, Nat.bitwise_and(a, b)));
-  | Unit.new;
 
 ecdsa.invert: Nat -> Nat -> Nat
   (number) (modulo)
@@ -190,11 +172,33 @@ Jacobian.from_point: Point -> Jacobian
 Jacobian.to_point: Jacobian -> Point
   (p)
   get p.x p.y p.z = p
-  let invz = ecdsa.invert(p.z, CURVE.P)
+  Jacobian.to_point.aux(p, ecdsa.invert(p.z, CURVE.P))
+
+Jacobian.to_point.aux: Jacobian -> Nat -> Point
+  (p) (invz)
+  get p.x p.y p.z = p
   let invz2 = Nat.square(invz)
   let x = ecdsa.mod(Nat.mul(p.x, invz2))
   let y = ecdsa.mod(Nat.mulVar(Nat.3, p.y, invz2, invz))
   Point.new(x, y)
+
+Jacobian.to_pointBatch: List(Jacobian) -> List(Point)
+  (ps)
+  let inverts = ecdsa.invertBatch(List.map<Jacobian><Nat>((p)
+    get p.x p.y p.z = p
+    p.z, ps), CURVE.P)
+  Jacobian.to_pointBatch.aux(ps, inverts)
+
+Jacobian.to_pointBatch.aux: List(Jacobian) -> List(Nat) -> List(Point)
+  (ps) (inverts)
+  ps<_>
+  | List.nil<_>;
+  | (ps.head) (ps.tail)
+    inverts<_>
+    | List.nil<_>; // should not happen
+    | (inverts.head) (inverts.tail)
+      let point = Jacobian.to_point.aux(ps.head, inverts.head)
+      List.cons<_>(point, Jacobian.to_pointBatch.aux(ps.tail, inverts.tail));;
 
 Jacobian.normalizeZ: Jacobian -> Jacobian
   (p) Jacobian.from_point(Jacobian.to_point(p))
@@ -326,7 +330,7 @@ Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jac
 Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Pair(Jacobian, Jacobian)
   (precomputes) (p) (f) (n) (W) (window) (windows) (windowSize) (mask) (maxNumber)
   Bool.if<Unit -> Pair(Jacobian, Jacobian)>(Nat.ltn(window, windows))
-  | () 
+  | ()
     let offset = Nat.mul(window, windowSize)
 
     // Extract W bits.

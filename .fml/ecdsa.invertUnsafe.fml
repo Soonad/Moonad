@@ -1,3 +1,0 @@
-ecdsa.invertUnsafe: Nat -> Nat -> Nat
-  (number) (modulo) Maybe.extract<Nat>(ecdsa.invert(number)(modulo))(Nat.1)
-

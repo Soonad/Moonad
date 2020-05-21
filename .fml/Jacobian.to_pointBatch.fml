@@ -1,0 +1,3 @@
+Jacobian.to_pointBatch: List(Jacobian) -> List(Point)
+  (ps) let inverts = ecdsa.invertBatch(List.map<Jacobian><Nat>((p) p<(x2) Nat>((p.x) (p.y) (p.z) p.z))(ps))(CURVE.P); Jacobian.to_pointBatch.aux(ps)(inverts)
+

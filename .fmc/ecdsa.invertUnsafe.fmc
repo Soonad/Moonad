@@ -1,3 +1,0 @@
-ecdsa.invertUnsafe: Π(:Nat) Π(:Nat) Nat
-  λnumber λmodulo ((<Maybe.extract Nat> ((ecdsa.invert number) modulo)) Nat.1)
-
