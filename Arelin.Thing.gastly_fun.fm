@@ -25,7 +25,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.1):
   | #GASTLY_LICK#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GASTLY_ATTACK_LICK_000;
@@ -34,7 +34,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.2):
   | #GASTLY_MEAN_LOOK#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GASTLY_ATTACK_MEAN_LOOK_000;
@@ -43,7 +43,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("3")):
   | #GASTLY_DREAM_EATER#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GASTLY_ATTACK_DREAM_EATER_000;
@@ -52,7 +52,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("4")):
   | #GASTLY_INVISIBILITY#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | GASTLY_ULTIMATE_INVISIBILITY_000;
@@ -62,7 +62,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
   | case F64.eql(self.act, F64.parse("5")):
   | #GASTLY_EVOLVE#
     let self = 
-      Arelin.animate
+      Arelin.Thing.animate
       | self;
       | F64.1;
       | GASTLY_EVOLUTION_000;
@@ -78,7 +78,7 @@ Arelin.Thing.gastly_fun(self: Arelin.Thing): Arelin.Thing
     self 
   ;
   | #GASTLY_TAUNT#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | GASTLY_TAUNT_000;
@@ -112,7 +112,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.1):
   | #HAUNTER_LICK#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | HAUNTER_ATTACK_LICK_000;
@@ -121,7 +121,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.2):
   | #HAUNTER_MEAN_LOOK#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | HAUNTER_ATTACK_MEAN_LOOK_000;
@@ -130,7 +130,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("3")):
   | #HAUNTER_DREAM_EATER#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | HAUNTER_ATTACK_DREAM_EATER_000;
@@ -139,7 +139,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("4")):
   | #HAUNTER_INVISIBILITY#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | HAUNTER_ULTIMATE_INVISIBILITY_000;
@@ -149,7 +149,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
   | case F64.eql(self.act, F64.parse("5")):
   | #HAUNTER_EVOLVE#
     let self = 
-      Arelin.animate
+      Arelin.Thing.animate
       | self;
       | F64.1;
       | HAUNTER_EVOLUTION_000;
@@ -165,7 +165,7 @@ Arelin.Thing.haunter_fun(self: Arelin.Thing): Arelin.Thing
     self 
   ;
   | #HAUNTER_TAUNT#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | HAUNTER_TAUNT_000;
@@ -192,14 +192,14 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
     | Arelin.Thing.animate
       | self;
       | F64.1;
-      | GENGAR_IDLE_000;
+      | FGENGAR_IDLE_000;
       | F64.parse("7");
       | F64.parse("21");
     ;
   ;
   | case F64.eql(self.act, F64.1):
   | #GENGAR_LICK#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GENGAR_ATTACK_LICK_000;
@@ -208,7 +208,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.2):
   | #GENGAR_HYPNOSIS#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GENGAR_ATTACK_HYPNOSIS_000;
@@ -217,7 +217,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("3")):
   | #GENGAR_DREAM_EATER#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.0;
     | GENGAR_ATTACK_DREAM_EATER_000;
@@ -226,7 +226,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("4")):
   | #GENGAR_INVISIBILITY#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | GENGAR_ULTIMATE_INVISIBILITY_000;
@@ -235,7 +235,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
   ;
   | case F64.eql(self.act, F64.parse("5")):
   | #GENGAR_EVOLVE#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | GENGAR_IDLE_000;
@@ -243,7 +243,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
     | F64.parse("14");
   ;
   | #GENGAR_TAUNT#
-    Arelin.animate
+    Arelin.Thing.animate
     | self;
     | F64.1;
     | GENGAR_TAUNT_000;

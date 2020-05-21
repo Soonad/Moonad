@@ -1,3 +1,0 @@
-Hitbox.pbox: Π(pts:(List F64.V3)) Hitbox
-  λpts ΛP λnbox λcbox λpbox (pbox pts)
-

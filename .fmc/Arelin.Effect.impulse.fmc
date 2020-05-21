@@ -1,3 +1,0 @@
-Arelin.Effect.impulse: Π(mag:F64) Π(dir:F64.V3) Arelin.Effect
-  λmag λdir ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport_to ((impulse mag) dir)
-

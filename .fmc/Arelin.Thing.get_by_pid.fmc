@@ -1,3 +1,3 @@
 Arelin.Thing.get_by_pid: Π(pid:Arelin.Game.PlayerId) Π(gm:Arelin.Game) (Maybe Arelin.Thing)
-  λpid λgm @cond=:Π(:Arelin.Game.PlayerId) Π(:Arelin.Thing) Bool λpid λthi @thi.pid=(Arelin.Thing.get_pid thi);((F64.eql pid) thi.pid);(<gm λself (Maybe Arelin.Thing)> λstage ((<List.find Arelin.Thing> (cond pid)) stage))
+  λpid λgm $cond=:Π(:Arelin.Game.PlayerId) Π(:Arelin.Thing) Bool λpid λthi $thi.pid=(Arelin.Thing.get_pid thi);((F64.eql pid) thi.pid);(<gm λself (Maybe Arelin.Thing)> λstage ((<List.find Arelin.Thing> (cond pid)) stage))
 
