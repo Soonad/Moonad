@@ -25,11 +25,11 @@ Arelin.Thing.finn_fun: Arelin.Game.TxFunction
         | F64.parse("34");
       let effs = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_2)
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
       ]
       let eff_crit = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_4)
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_4)
       ]
       let hits = ((effs)
         [ Arelin.Game.Hit;
@@ -52,7 +52,7 @@ Arelin.Thing.finn_fun: Arelin.Game.TxFunction
         | F64.parse("26");
       let effs = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_2)
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
       ]
       let hits = [
         Arelin.Game.Hit;
@@ -73,7 +73,7 @@ Arelin.Thing.finn_fun: Arelin.Game.TxFunction
         | F64.parse("14");
       let effs = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_3)
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_3)
       ]
       let hits = [
         Arelin.Game.Hit;
@@ -111,11 +111,11 @@ Arelin.Thing.finn_fun: Arelin.Game.TxFunction
 
       let effs = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_2)
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
       ]
       let eff_crit = [
         Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Game.Constants.DMG_LV_4),
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_4),
         Arelin.Game.Effect.impulse(F64.parse("10"))(self.dir)
       ]
       let hits = ((effs) (dist)
