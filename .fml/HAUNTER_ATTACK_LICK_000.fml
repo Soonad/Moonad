@@ -1,0 +1,3 @@
+HAUNTER_ATTACK_LICK_000: F64
+  F64.parse("4144")
+

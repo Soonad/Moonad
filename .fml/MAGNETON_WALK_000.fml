@@ -1,0 +1,3 @@
+MAGNETON_WALK_000: F64
+  F64.parse("6556")
+

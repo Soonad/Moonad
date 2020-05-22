@@ -1,0 +1,3 @@
+NILO_KIEZA_RIGHT_ARMED_001: F64
+  F64.parse("7759")
+

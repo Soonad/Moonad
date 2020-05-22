@@ -1,0 +1,3 @@
+KONAN_BLOCK_007: F64
+  F64.parse("5376")
+

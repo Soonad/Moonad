@@ -1,0 +1,3 @@
+LUFFY_BAZOOKA_002: F64
+  F64.parse("6244")
+

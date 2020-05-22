@@ -1,0 +1,3 @@
+RYU_RATETSURUGI_022: F64
+  F64.parse("8910")
+

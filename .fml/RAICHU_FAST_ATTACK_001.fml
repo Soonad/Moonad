@@ -1,0 +1,3 @@
+RAICHU_FAST_ATTACK_001: F64
+  F64.parse("8512")
+

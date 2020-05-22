@@ -1,0 +1,3 @@
+PICHU_ELECTRIC_BALL_004: F64
+  F64.parse("7806")
+

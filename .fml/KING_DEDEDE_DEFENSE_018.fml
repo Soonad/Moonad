@@ -1,0 +1,3 @@
+KING_DEDEDE_DEFENSE_018: F64
+  F64.parse("5143")
+

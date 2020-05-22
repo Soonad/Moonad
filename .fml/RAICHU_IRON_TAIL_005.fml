@@ -1,0 +1,3 @@
+RAICHU_IRON_TAIL_005: F64
+  F64.parse("8526")
+

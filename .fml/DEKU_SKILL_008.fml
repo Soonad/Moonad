@@ -1,0 +1,3 @@
+DEKU_SKILL_008: F64
+  F64.parse("1449")
+

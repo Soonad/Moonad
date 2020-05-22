@@ -1,0 +1,3 @@
+LINK_SELECTION_MASK_009: F64
+  F64.parse("5997")
+

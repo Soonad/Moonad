@@ -1,0 +1,3 @@
+GRENINJA_TAUNT_004: F64
+  F64.parse("3807")
+

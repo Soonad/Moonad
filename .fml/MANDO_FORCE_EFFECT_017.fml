@@ -1,0 +1,3 @@
+MANDO_FORCE_EFFECT_017: F64
+  F64.parse("6667")
+

@@ -1,0 +1,3 @@
+CRONI_GLOOMY_FLUX_CAST_014: F64
+  F64.parse("1007")
+

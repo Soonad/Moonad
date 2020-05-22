@@ -192,7 +192,7 @@ Arelin.Thing.gengar_fun(self: Arelin.Thing): Arelin.Thing
     | Arelin.Thing.animate
       | self;
       | F64.1;
-      | FGENGAR_IDLE_000;
+      | GENGAR_IDLE_000;
       | F64.parse("7");
       | F64.parse("21");
     ;

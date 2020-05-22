@@ -1,0 +1,3 @@
+LARS_WALK_CYCLE_007: F64
+  F64.parse("5829")
+

@@ -1,0 +1,3 @@
+SHONKIE_GUM_SHOT_004: F64
+  F64.parse("9509")
+

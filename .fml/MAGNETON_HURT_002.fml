@@ -1,0 +1,3 @@
+MAGNETON_HURT_002: F64
+  F64.parse("6463")
+

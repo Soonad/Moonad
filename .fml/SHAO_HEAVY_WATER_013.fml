@@ -1,0 +1,3 @@
+SHAO_HEAVY_WATER_013: F64
+  F64.parse("9211")
+

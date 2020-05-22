@@ -1,0 +1,3 @@
+ROBOT_R06_TAUNT_NOKIA_003: F64
+  F64.parse("8787")
+

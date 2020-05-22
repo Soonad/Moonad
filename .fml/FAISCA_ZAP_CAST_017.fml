@@ -1,0 +1,3 @@
+FAISCA_ZAP_CAST_017: F64
+  F64.parse("2951")
+

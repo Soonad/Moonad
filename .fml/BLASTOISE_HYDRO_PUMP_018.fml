@@ -1,0 +1,3 @@
+BLASTOISE_HYDRO_PUMP_018: F64
+  F64.parse("555")
+

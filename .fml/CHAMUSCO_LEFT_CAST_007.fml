@@ -1,0 +1,3 @@
+CHAMUSCO_LEFT_CAST_007: F64
+  F64.parse("811")
+

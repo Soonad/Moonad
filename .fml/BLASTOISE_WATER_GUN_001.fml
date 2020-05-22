@@ -1,0 +1,3 @@
+BLASTOISE_WATER_GUN_001: F64
+  F64.parse("672")
+

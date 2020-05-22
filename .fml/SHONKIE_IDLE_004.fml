@@ -1,0 +1,3 @@
+SHONKIE_IDLE_004: F64
+  F64.parse("9516")
+

@@ -1,0 +1,3 @@
+PICHU_FAST_ATTACK_004: F64
+  F64.parse("7816")
+

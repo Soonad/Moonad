@@ -1,0 +1,3 @@
+FAE_HEALING_ORB_CAST_005: F64
+  F64.parse("2749")
+

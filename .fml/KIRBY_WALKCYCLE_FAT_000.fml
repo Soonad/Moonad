@@ -1,0 +1,3 @@
+KIRBY_WALKCYCLE_FAT_000: F64
+  F64.parse("5357")
+

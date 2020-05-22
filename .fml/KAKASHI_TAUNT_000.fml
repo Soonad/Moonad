@@ -1,0 +1,3 @@
+KAKASHI_TAUNT_000: F64
+  F64.parse("4772")
+

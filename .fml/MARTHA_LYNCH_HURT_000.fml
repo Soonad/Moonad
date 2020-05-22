@@ -1,0 +1,3 @@
+MARTHA_LYNCH_HURT_000: F64
+  F64.parse("6829")
+

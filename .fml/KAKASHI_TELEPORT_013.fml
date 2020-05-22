@@ -1,0 +1,3 @@
+KAKASHI_TELEPORT_013: F64
+  F64.parse("4803")
+

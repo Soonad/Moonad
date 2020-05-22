@@ -1,0 +1,3 @@
+AGENT_PRODDER_DEFENSE_015: F64
+  F64.parse("15")
+

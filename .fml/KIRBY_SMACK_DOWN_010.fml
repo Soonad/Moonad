@@ -1,0 +1,3 @@
+KIRBY_SMACK_DOWN_010: F64
+  F64.parse("5334")
+

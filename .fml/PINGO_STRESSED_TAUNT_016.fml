@@ -1,0 +1,3 @@
+PINGO_STRESSED_TAUNT_016: F64
+  F64.parse("8273")
+

@@ -1,0 +1,3 @@
+MANDO_FORCE_CASTING_007: F64
+  F64.parse("6649")
+

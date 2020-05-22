@@ -1,0 +1,3 @@
+ZOIO_ZOIO_WELL_002: F64
+  F64.parse("11615")
+

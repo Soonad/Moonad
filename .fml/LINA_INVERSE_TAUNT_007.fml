@@ -1,0 +1,3 @@
+LINA_INVERSE_TAUNT_007: F64
+  F64.parse("5923")
+

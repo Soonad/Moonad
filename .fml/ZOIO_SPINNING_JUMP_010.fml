@@ -1,0 +1,3 @@
+ZOIO_SPINNING_JUMP_010: F64
+  F64.parse("11598")
+

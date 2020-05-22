@@ -1,0 +1,3 @@
+ZAGATUR_CLONE_009: F64
+  F64.parse("11331")
+

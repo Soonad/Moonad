@@ -1,0 +1,3 @@
+HATSUNE_MIKU_LETS_GO_002: F64
+  F64.parse("4065")
+

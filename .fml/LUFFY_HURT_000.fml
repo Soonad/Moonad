@@ -1,0 +1,3 @@
+LUFFY_HURT_000: F64
+  F64.parse("6298")
+

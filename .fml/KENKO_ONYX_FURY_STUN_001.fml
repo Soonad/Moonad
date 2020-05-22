@@ -1,0 +1,3 @@
+KENKO_ONYX_FURY_STUN_001: F64
+  F64.parse("5082")
+

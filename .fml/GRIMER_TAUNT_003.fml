@@ -1,0 +1,3 @@
+GRIMER_TAUNT_003: F64
+  F64.parse("3957")
+

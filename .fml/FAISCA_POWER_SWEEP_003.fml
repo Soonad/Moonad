@@ -1,0 +1,3 @@
+FAISCA_POWER_SWEEP_003: F64
+  F64.parse("2873")
+

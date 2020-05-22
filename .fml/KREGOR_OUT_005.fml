@@ -1,0 +1,3 @@
+KREGOR_OUT_005: F64
+  F64.parse("5582")
+

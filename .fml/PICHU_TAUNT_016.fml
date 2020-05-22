@@ -1,0 +1,3 @@
+PICHU_TAUNT_016: F64
+  F64.parse("7851")
+
