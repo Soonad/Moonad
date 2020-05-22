@@ -1,0 +1,3 @@
+Arelin.Thing.jinx.zap_path: (self: Arelin.Thing) -> Arelin.Thing
+  (self) Arelin.Thing.animate_die(self)(F64.0)(JINX_ZAP_PATH_000)(F64.parse("5"))(F64.parse("5"))
+
