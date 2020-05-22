@@ -1,0 +1,3 @@
+Docs.crazy_string: Π(b:Bool) Π(is_true:(Bool.IsTrue b)) String
+  λb λis_true (Docs.crazy Bool.true)
+

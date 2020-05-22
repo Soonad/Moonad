@@ -1,0 +1,3 @@
+Docs.string_or_unit: (b: Bool) -> Type
+  (b) b<(self) Type>(String)(Unit)
+

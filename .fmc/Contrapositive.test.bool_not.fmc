@@ -1,0 +1,3 @@
+Contrapositive.test.bool_not: Π(p:Bool) Π(q:Bool) Π(:(Not (((Equal Bool) (Bool.not p)) (Bool.not q)))) (Not (((Equal Bool) p) q))
+  λp λq λne ((((<<Contrapositive.value Bool> Bool> Bool.not) p) q) ne)
+
