@@ -1,0 +1,3 @@
+Docs.id: (T: Type) -> (x: T) -> T
+  (T) (x) x
+

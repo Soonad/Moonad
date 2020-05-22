@@ -1,0 +1,3 @@
+docs.an_unit: Docs.string_or_unit(Bool.false)
+  Unit.new
+

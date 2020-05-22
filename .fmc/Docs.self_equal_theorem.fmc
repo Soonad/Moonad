@@ -1,0 +1,3 @@
+Docs.self_equal_theorem: Π(b:Bool) (Bool.IsTrue ((Bool.eql b) b))
+  λb ((<b λb (Bool.IsTrue ((Bool.eql b) b))> Unit.new) Unit.new)
+

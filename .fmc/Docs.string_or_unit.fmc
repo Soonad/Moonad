@@ -1,0 +1,3 @@
+Docs.string_or_unit: Π(b:Bool) *
+  λb ((<b λself *> String) Unit)
+
