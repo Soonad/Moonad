@@ -1,0 +1,3 @@
+Not.p_to_nnp: ∀(P:*) Π(:P) (Not (Not P))
+  ΛP λp λnotP (notP p)
+

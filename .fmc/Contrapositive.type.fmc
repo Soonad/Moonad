@@ -1,3 +1,3 @@
-Contrapositive.type: Π(A:*) Π(B:*) Π(f:Π(:A) B) Π(:(Not B)) (Not A)
-  λA λB λf λnotB λa (notB (f a))
+Contrapositive.type: ∀(A:*) ∀(B:*) Π(f:Π(:A) B) Π(:(Not B)) (Not A)
+  ΛA ΛB λf λnotB λa (notB (f a))
 

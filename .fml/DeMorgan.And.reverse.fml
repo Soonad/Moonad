@@ -1,0 +1,3 @@
+DeMorgan.And.reverse: <A: Type> -> <B: Type> -> Or(Not(A))(Not(B)) -> Not(And(A)(B))
+  <A> <B> (or_not) (and) and<(self) Empty>((a) (b) or_not<(self) Empty>((not_a) not_a(a))((not_b) not_b(b)))
+

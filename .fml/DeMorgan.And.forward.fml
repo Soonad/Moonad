@@ -1,0 +1,3 @@
+DeMorgan.And.forward: <A: Type> -> <B: Type> -> Classical.double_negation -> Not(And(A)(B)) -> Or(Not(A))(Not(B))
+  <A> <B> (dn) (n_and) def non_to_nna = ((non) def and_nn = DeMorgan.Or.forward<Not(A)><Not(B)>(non); def and = and_nn<(self) Pair(A)(B)>((nn_a) (nn_b) Pair.new<A><B>(dn<A>(nn_a))(dn<B>(nn_b))) :: And(A)(B); Not.p_to_nnp<And(A)(B)>(and)) :: Not(Or(Not(A))(Not(B))) -> Not(Not(And(A)(B))); def nnn_and = Not.p_to_nnp<Not(And(A)(B))>(n_and); def nn_or_n = Contrapositive.type<Not(Or(Not(A))(Not(B)))><Not(Not(And(A)(B)))>(non_to_nna)(nnn_and); dn<Or(Not(A))(Not(B))>(nn_or_n)
+

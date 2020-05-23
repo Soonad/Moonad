@@ -1,0 +1,3 @@
+Not.p_to_nnp: <P: Type> -> P -> Not(Not(P))
+  <P> (p) (notP) notP(p)
+
