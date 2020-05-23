@@ -1,0 +1,3 @@
+DeMorgan.And.reverse: ∀(A:*) ∀(B:*) Π(:((Or (Not A)) (Not B))) (Not ((And A) B))
+  ΛA ΛB λor_not λand (<and λself Empty> λa λb ((<or_not λself Empty> λnot_a (not_a a)) λnot_b (not_b b)))
+
