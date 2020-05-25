@@ -1,3 +1,0 @@
-Parsec.bind: ∀(S:*) ∀(E:*) ∀(A:*) ∀(B:*) Π(:(((Parsec S) E) A)) Π(:Π(:A) (((Parsec S) E) B)) (((Parsec S) E) B)
-  ΛS ΛE ΛA ΛB λpa λpf ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (((((<pa X> s1) λs2 λa (((((<(pf a) X> s2) λs3 λb ((empty_value s3) b)) empty_error) λs3 λb ((eaten_value s3) b)) eaten_error)) empty_error) λs2 λa (((((<(pf a) X> s2) λs3 λb ((eaten_value s3) b)) eaten_error) λs3 λb ((eaten_value s3) b)) eaten_error)) eaten_error)
-

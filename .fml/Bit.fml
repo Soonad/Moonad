@@ -1,3 +1,0 @@
-Bit: Type
-  bit<P: Bit -> Type> -> P(Bit.0) -> P(Bit.1) -> P(bit)
-

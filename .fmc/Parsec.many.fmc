@@ -1,3 +1,0 @@
-Parsec.many: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) (((Parsec S) E) (List A))
-  ΛS ΛE ΛA λp ((<<<<Parsec.bind S> E> (Maybe A)> (List A)> (<<<Parsec.optional S> E> A> p)) λx ((<x λ (((Parsec S) E) (List A))> (<<<Parsec.pure S> E> (List A)> <List.nil A>)) λa ((<<<<Parsec.map S> E> (List A)> (List A)> (<List.cons A> a)) (<<<Parsec.many S> E> A> p))))
-

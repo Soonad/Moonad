@@ -1,3 +1,0 @@
-Stringifier.concat: Π(:Stringifier) Π(:Stringifier) Stringifier
-  λa λb λx (a (b x))
-

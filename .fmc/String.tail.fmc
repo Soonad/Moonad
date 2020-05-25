@@ -1,3 +1,0 @@
-String.tail: Π(:String) String
-  λstr ((<str λself String> String.nil) λstr.head λstr.tail str.tail)
-

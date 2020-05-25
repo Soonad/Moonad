@@ -1,3 +1,0 @@
-List.not_empty: ∀(A:*) Π(xs:(List A)) *
-  ΛA λxs ((<xs λself *> Empty) λhead λtail Unit)
-

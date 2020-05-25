@@ -1,3 +1,0 @@
-Parser.fail: ∀(A:*) Π(:String) (Parser A)
-  ΛA λmsg (<<<Parsec.fail Unit> Unit> A> msg)
-

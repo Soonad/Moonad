@@ -1,3 +1,0 @@
-Arelin.Thing.update_buff: Π(self:Arelin.Thing) Π(stt_key:Bits) Arelin.Thing
-  λself λstt_key $stt=(Arelin.Thing.get_stt self);((<((<Map.get F64> stt_key) stt) λself Arelin.Thing> self) λvalue ((<((F64.eql value) F64.0) λself Arelin.Thing> $new_tik=((F64.sub value) F64.1);$new_stt=(((<Map.set F64> stt_key) new_tik) stt);((Arelin.Thing.set_stt self) new_stt)) self))
-

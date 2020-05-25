@@ -1,3 +1,0 @@
-Bits.reverse: Π(:Bits) Bits
-  λas ((Bits.reverse.go as) Bits.nil)
-

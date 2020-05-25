@@ -1,3 +1,0 @@
-JSON.string: Π(x:String) JSON
-  λx ΛP λnull λbool λnumber λstring λarray λobject (string x)
-

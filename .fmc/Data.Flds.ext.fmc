@@ -1,3 +1,0 @@
-Data.Flds.ext: Π(:String) Π(:*) Π(:Data.Flds) Data.Flds
-  λname λtype λflds ΛP λnil λext (((ext name) type) flds)
-

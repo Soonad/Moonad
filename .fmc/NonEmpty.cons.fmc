@@ -1,3 +1,0 @@
-NonEmpty.cons: ∀(A:*) Π(head:A) Π(tail:(NonEmpty A)) (NonEmpty A)
-  ΛA λhead λtail ΛP λend λcons ((cons head) tail)
-

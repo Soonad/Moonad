@@ -1,3 +1,0 @@
-Docs.bool_show: IO(Unit)
-  IO.print(Bool.show(Bool.true))
-

@@ -1,3 +1,0 @@
-F64.Circle: *
-  ∀circle(P:Π(:F64.Circle) *) Π(new:Π(pos:F64.V3) Π(rad:F64) (P ((F64.Circle.new pos) rad))) (P circle)
-

@@ -1,3 +1,0 @@
-Bool.notf: (a: Bool) -> Bool
-  (a) <P> (t) (f) a<(a) P(Bool.notf(a))>(f)(t)
-

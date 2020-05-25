@@ -1,3 +1,0 @@
-Parsec.throw: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(Parsec.Error E)) (((Parsec S) E) A)
-  ΛS ΛE ΛA λe ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error ((empty_error s1) e)
-

@@ -1,3 +1,0 @@
-List.to_concat: <A: Type> -> (xs: List(A)) -> Concat(A)
-  <A> (xs) xs<() Concat(A)>((ys) ys)((head) (tail) (ys) List.cons<A>(head)(List.to_concat<A>(tail)(ys)))
-

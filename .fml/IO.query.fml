@@ -1,3 +1,0 @@
-IO.query: (str: String) -> IO(String)
-  (str) IO.log<String>(str)(() IO.get<String>(IO.end<String>))
-

@@ -1,3 +1,0 @@
-Pair: (A: Type) -> (B: Type) -> Type
-  (A) (B) self<P: (self: Pair(A)(B)) -> Type> -> (new: (a: A) -> (b: B) -> P(Pair.new<A><B>(a)(b))) -> P(self)
-

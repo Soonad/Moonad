@@ -1,3 +1,0 @@
-Equal.to: ∀(A:*) ∀(a:A) (((Equal A) a) a)
-  ΛA Λa ΛP λto to
-

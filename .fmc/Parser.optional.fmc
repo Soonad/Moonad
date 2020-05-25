@@ -1,3 +1,0 @@
-Parser.optional: ∀(A:*) Π(:(Parser A)) (Parser (Maybe A))
-  ΛA λp (<<<Parsec.optional Unit> Unit> A> p)
-

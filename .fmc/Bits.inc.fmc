@@ -1,3 +1,0 @@
-Bits.inc: Π(:Bits) Bits
-  λbits (((<bits λx1 Bits> Bits.nil) λbits.pred (Bits.1 bits.pred)) λbits.pred (Bits.0 (Bits.inc bits.pred)))
-

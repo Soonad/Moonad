@@ -1,3 +1,0 @@
-Data.Ctrs.ext: String -> Data.Flds -> Data.Ctrs -> Data.Ctrs
-  (name) (flds) (ctrs) <P> (nil) (ext) ext(name)(flds)(ctrs)
-

@@ -12,12 +12,21 @@ Contrapositive.value
 
 // Proof that (P => Q) => (¬Q => ¬P)
 Contrapositive.type
+<<<<<<< HEAD
     : (A: Type) ->
       (B: Type) ->
       (f: A -> B) ->
       Not(B) ->
       Not(A)
     (A, B, f, notB)
+=======
+    : <A: Type> ->
+      <B: Type> ->
+      (f: A -> B) ->
+      Not(B) ->
+      Not(A)
+    <A, B> (f, notB)
+>>>>>>> upstream/dev-taelin-arena
     ((a) notB(f(a)))
 
 // Test: for (f: Bool -> Bool), f(a) != f(b) => a != b

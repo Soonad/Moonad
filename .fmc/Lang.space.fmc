@@ -1,3 +1,0 @@
-Lang.space: (Parser Unit)
-  (<Parser.skip_many Unit> (<Parser.choice Unit> ((<List.cons (Parser Unit)> Lang.whitespace) ((<List.cons (Parser Unit)> Lang.line_comment) ((<List.cons (Parser Unit)> Lang.block_comment) <List.nil (Parser Unit)>)))))
-

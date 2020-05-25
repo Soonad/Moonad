@@ -1,3 +1,0 @@
-Arelin.Game.Command.new: Π(pid:Arelin.Game.PlayerId) Π(inp:Arelin.Game.Input) Arelin.Game.Command
-  λpid λinp ΛP λnew ((new pid) inp)
-
