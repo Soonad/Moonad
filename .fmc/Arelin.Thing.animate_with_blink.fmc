@@ -1,3 +1,0 @@
-Arelin.Thing.animate_with_blink: Π(self:Arelin.Thing) Π(boost:F64) Π(model_atk:F64) Π(model_idle:F64) Π(count:F64) Π(from:F64) Π(til:F64) Arelin.Thing
-  λself λboost λmodel_atk λmodel_idle λcount λfrom λtil $self=((((((Arelin.Thing.animate_between self) boost) model_atk) count) from) til);$self=((((((Arelin.Thing.animate_between self) boost) model_idle) F64.1) til) ((F64.add til) F64.1));$self=((Arelin.Thing.reset self) til);self
-

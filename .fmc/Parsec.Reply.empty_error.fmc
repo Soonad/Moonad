@@ -1,3 +1,0 @@
-Parsec.Reply.empty_error: ∀(S:*) ∀(E:*) ∀(A:*) Π(:((Parsec.State S) E)) Π(:(Parsec.Error E)) (((Parsec.Reply S) E) A)
-  ΛS ΛE ΛA λstate λerror ΛP λ λempty_error λ λ ((empty_error state) error)
-

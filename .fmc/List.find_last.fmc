@@ -1,3 +1,0 @@
-List.find_last: ∀(A:*) Π(:(List A)) Π(:Π(:A) Π(:Nat) Bool) (Maybe ((Pair A) Nat))
-  ΛA λlist λcond ((((<List.find_last.aux A> list) cond) Nat.zero) <Maybe.none ((Pair A) Nat)>)
-

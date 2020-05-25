@@ -1,3 +1,0 @@
-Data.Ctrs.ctr: Π(ctrs:Data.Ctrs) Π(ctrs0:Data.Ctrs) Π(nth:Nat) (((Data.Ctrs.ctr.type ctrs) ctrs0) nth)
-  λctrs λctrs0 λnth ((<ctrs λctrs (((Data.Ctrs.ctr.type ctrs) ctrs0) nth)> *) λctrs.name λctrs.flds λctrs.ctrs @ctrs=(((Data.Ctrs.ext ctrs.name) ctrs.flds) ctrs.ctrs);((<nth λnth (((Data.Ctrs.ctr.type ctrs) ctrs0) nth)> ΛP (((Data.Ctrs.ctr.header P) ctrs0) <List.nil P>)) λnth.pred (((Data.Ctrs.ctr ctrs.ctrs) ctrs0) nth.pred)))
-

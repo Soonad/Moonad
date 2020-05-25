@@ -1,3 +1,0 @@
-KIRBY_IDLE_FAT_005: F64
-  F64.parse("5314")
-

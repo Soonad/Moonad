@@ -1,3 +1,0 @@
-Equal.chain: ∀(A:*) ∀(a:A) ∀(b:A) ∀(c:A) Π(d:(((Equal A) a) b)) Π(e:(((Equal A) b) c)) (((Equal A) a) c)
-  ΛA Λa Λb Λc λd λe (<e λe.b λc (((Equal A) a) e.b)> d)
-

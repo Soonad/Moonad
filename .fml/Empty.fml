@@ -1,3 +1,0 @@
-Empty: Type
-  self<P: (self: Empty) -> Type> -> P(self)
-

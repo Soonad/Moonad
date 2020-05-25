@@ -1,3 +1,0 @@
-Empty.absurd: Π(x:Empty) Π(P:*) P
-  λx λP <x λ P>
-

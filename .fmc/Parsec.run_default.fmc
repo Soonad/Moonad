@@ -1,3 +1,0 @@
-Parsec.run_default: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) Π(:String) Π(:S) ((Either (Parsec.Error E)) A)
-  ΛS ΛE ΛA λp λstr λs (<<<Parsec.Reply.to_either S> E> A> ((<<<Parsec.run S> E> A> p) ((<<Parsec.State.default S> E> str) s)))
-

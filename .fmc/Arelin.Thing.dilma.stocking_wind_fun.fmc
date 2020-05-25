@@ -1,3 +1,0 @@
-Arelin.Thing.dilma.stocking_wind_fun: Arelin.Game.TxFunction
-  λself (((((Arelin.Thing.animate_die self) F64.0) DILMA_STOCKING_WIND_ANIM_000) (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1) Bit.1)) String.nil))) (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.1)) String.nil))))
-

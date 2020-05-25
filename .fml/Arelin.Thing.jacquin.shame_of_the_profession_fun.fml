@@ -1,3 +1,0 @@
-Arelin.Thing.jacquin.shame_of_the_profession_fun: Arelin.Game.TxFunction
-  (self) Arelin.Thing.animate_die(self)(F64.0)(ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_000)(F64.parse("5"))(F64.parse("10"))
-

@@ -1,3 +1,0 @@
-U64.shr: Π(:Nat) Π(:U64) U64
-  λn λa (<a λ U64> λa_val (U64.new ((<Word.shift_right Nat.64> n) a_val)))
-

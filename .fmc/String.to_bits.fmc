@@ -1,3 +1,0 @@
-String.to_bits: Π(:String) Bits
-  λstr ((<str λself Bits> Bits.nil) λstr.head λstr.tail ((Bits.concat (U16.to_bits str.head)) (String.to_bits str.tail)))
-

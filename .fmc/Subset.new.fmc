@@ -1,3 +1,0 @@
-Subset.new: ∀(A:*) ∀(B:Π(:A) *) Π(a:A) ∀(b:(B a)) ((Subset A) B)
-  ΛA ΛB λa Λb ΛP λnew <(new a) b>
-

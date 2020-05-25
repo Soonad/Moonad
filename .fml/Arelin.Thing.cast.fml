@@ -1,3 +1,0 @@
-Arelin.Thing.cast: (self: Arelin.Thing) -> (at_tik: F64) -> (do_hit: List(Arelin.Game.Hit)) -> Arelin.Thing
-  (self) (at_tik) (do_hit) let self.tik = Arelin.Thing.get_tik(self); F64.eql(self.tik)(at_tik)<(self) Arelin.Thing>(Arelin.Thing.set_hit(self)(do_hit))(self)
-

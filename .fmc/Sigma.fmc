@@ -1,3 +1,0 @@
-Sigma: Π(A:*) Π(B:Π(:A) *) *
-  λA λB ∀sigma(P:Π(:((Sigma A) B)) *) Π(new:Π(a:A) Π(b:(B a)) (P ((<<Sigma.new A> B> a) b))) (P sigma)
-

@@ -1,3 +1,0 @@
-Arelin.Game.combine_mov_buffs: Π(buff:Arelin.Game.Buff) Π(i:F64) F64
-  λbuff λi ((((((<buff λself F64> λbuff.dur λbuff.val i) λbuff.dur λbuff.val ((F64.mul i) buff.val)) λbuff.dur λbuff.val ((F64.mul i) buff.val)) λbuff.dur i) λbuff.dur F64.0) λbuff.dur F64.0)
-

@@ -1,3 +1,0 @@
-Lang.lam: (Parser Π(:Core.Ctx) Core)
-  @C=Π(:Core.Ctx) Core;((<<Parser.bind ((Pair Bool) String)> C> (<Lang.enclose String> (Lang.nam Bool.true))) λx (<x λ (Parser C)> λeras λn ((<<Parser.then Unit> C> Lang.space) ((<<Parser.bind C> C> Lang.trm) λbody (<Parser.pure C> λctx $tbody=:Π(:Core) Core λx (body (((Core.Ctx.ext n) x) ctx));(((Core.lam eras) n) tbody))))))
-

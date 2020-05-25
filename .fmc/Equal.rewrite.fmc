@@ -1,3 +1,0 @@
-Equal.rewrite: ∀(A:*) ∀(a:A) ∀(b:A) ∀(P:Π(:A) *) Π(e:(((Equal A) a) b)) Π(x:(P a)) (P b)
-  ΛA Λa Λb ΛP λe λx (<e λb λa (P b)> x)
-

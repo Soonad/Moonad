@@ -1,3 +1,0 @@
-U32: Type
-  u32<P: U32 -> Type> -> (new: (a: Word(Nat.32)) -> P(U32.new(a))) -> P(u32)
-

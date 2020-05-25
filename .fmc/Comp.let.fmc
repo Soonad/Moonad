@@ -1,3 +1,0 @@
-Comp.let: Π(:String) Π(:Comp) Π(:Comp) Comp
-  λname λexpr λbody Λ λ λ λ λLet λ λ (((Let name) expr) body)
-

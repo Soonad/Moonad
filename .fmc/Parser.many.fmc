@@ -1,3 +1,0 @@
-Parser.many: ∀(A:*) Π(:(Parser A)) (Parser (List A))
-  ΛA λp (<<<Parsec.many Unit> Unit> A> p)
-

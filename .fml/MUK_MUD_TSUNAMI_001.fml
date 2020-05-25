@@ -1,2 +1,0 @@
-MUK_MUD_TSUNAMI_001: F64
-  F64.parse("1505")

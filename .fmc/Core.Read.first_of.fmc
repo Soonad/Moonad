@@ -1,3 +1,0 @@
-Core.Read.first_of: ∀(A:*) Π(:(List (Core.Read A))) (Core.Read A)
-  ΛA λreads λcode ((<reads λ (Core.Read.Reply A)> <Core.Read.fail A>) λreads.head λreads.tail ((<(reads.head code) λ (Core.Read.Reply A)> ((<Core.Read.first_of A> reads.tail) code)) <Maybe.some ((Pair A) String)>))
-

@@ -1,3 +1,0 @@
-Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.xor
-

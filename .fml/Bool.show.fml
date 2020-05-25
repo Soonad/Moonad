@@ -1,3 +1,0 @@
-Bool.show: (b: Bool) -> String
-  (b) b<(self) String>("Bool.true")("Bool.false")
-

@@ -1,3 +1,0 @@
-Arelin.Thing.between_dist: (self: Arelin.Thing) -> (min_range: F64) -> (max_range: F64) -> F64.V3
-  (self) (min_range) (max_range) let pos = Arelin.Thing.get_pos(self); let trg = Arelin.Thing.get_trg(self); let dist_trg = F64.V3.dist(pos)(trg); Arelin.Thing.at_dist(self)(F64.max(min_range)(F64.min(max_range)(dist_trg)))
-

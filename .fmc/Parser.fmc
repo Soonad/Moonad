@@ -1,3 +1,0 @@
-Parser: Π(:*) *
-  λA (((Parsec Unit) Unit) A)
-

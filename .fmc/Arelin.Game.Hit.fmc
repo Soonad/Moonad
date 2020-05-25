@@ -1,3 +1,0 @@
-Arelin.Game.Hit: *
-  ∀self(P:Π(self:Arelin.Game.Hit) *) Π(new:Π(eff:(List Arelin.Game.Effect)) Π(pos:F64.V3) Π(dir:F64.V3) Π(box:Arelin.Game.Hitbox) (P ((((Arelin.Game.Hit.new eff) pos) dir) box))) (P self)
-

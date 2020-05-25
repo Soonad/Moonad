@@ -1,3 +1,0 @@
-Arelin.Thing.is_walking: Π(self:Arelin.Thing) Bool
-  λself $this.pad=(Arelin.Thing.get_pad self);((F64.gtn (F64.V3.len this.pad)) F64.0)
-

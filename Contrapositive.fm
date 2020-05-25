@@ -12,12 +12,12 @@ Contrapositive.value
 
 // Proof that (P => Q) => (¬Q => ¬P)
 Contrapositive.type
-    : (A: Type) ->
-      (B: Type) ->
+    : <A: Type> ->
+      <B: Type> ->
       (f: A -> B) ->
       Not(B) ->
       Not(A)
-    (A, B, f, notB)
+    <A, B> (f, notB)
     ((a) notB(f(a)))
 
 // Test: for (f: Bool -> Bool), f(a) != f(b) => a != b

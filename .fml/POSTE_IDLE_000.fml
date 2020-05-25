@@ -1,3 +1,0 @@
-POSTE_IDLE_000: F64
-  F64.parse("1549")
-

@@ -1,3 +1,0 @@
-Bool.IsFalse: Π(b:Bool) *
-  λb ((<b λself *> Empty) Unit)
-

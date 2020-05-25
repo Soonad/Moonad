@@ -1,3 +1,0 @@
-IO.get: <A: Type> -> (String -> IO(A)) -> IO(A)
-  <A> (nxt) <P> () () (get) get(nxt)
-

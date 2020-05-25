@@ -1,3 +1,0 @@
-Either: Π(A:*) Π(B:*) *
-  λA λB ∀self(P:Π(self:((Either A) B)) *) Π(left:Π(x:A) (P (<<Either.left A> B> x))) Π(right:Π(x:B) (P (<<Either.right A> B> x))) (P self)
-

@@ -1,3 +1,0 @@
-Word.and: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.and
-

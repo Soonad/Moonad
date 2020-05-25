@@ -1,3 +1,0 @@
-A.parse_fun.typ1: Π(:Char) Π(:String) Π(:A.Ctx) *
-  λnam λnxt λctx ((<nxt λ *> Nat) λh λt Π(x:Nat) ((A.parse_fun.typ0 ((String.cons h) t)) (((A.Ctx.ext nam) x) ctx)))
-

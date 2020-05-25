@@ -1,3 +1,0 @@
-Bool.or: (a: Bool) -> (b: Bool) -> Bool
-  (a) (b) a<(self) Bool>(b<(self) Bool>(Bool.true)(Bool.true))(b<(self) Bool>(Bool.true)(Bool.false))
-

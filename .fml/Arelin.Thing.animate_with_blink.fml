@@ -1,3 +1,0 @@
-Arelin.Thing.animate_with_blink: (self: Arelin.Thing) -> (boost: F64) -> (model_atk: F64) -> (model_idle: F64) -> (count: F64) -> (from: F64) -> (til: F64) -> Arelin.Thing
-  (self) (boost) (model_atk) (model_idle) (count) (from) (til) let self = Arelin.Thing.animate_between(self)(boost)(model_atk)(count)(from)(til); let self = Arelin.Thing.animate_between(self)(boost)(model_idle)(F64.1)(til)(F64.add(til)(F64.1)); let self = Arelin.Thing.reset(self)(til); self
-

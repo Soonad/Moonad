@@ -1,3 +1,0 @@
-Parser.take_while1: Π(:String) Π(:Π(:Char) Bool) (Parser String)
-  λerr λf ((<<Parsec.take_while1 Unit> Unit> err) f)
-
