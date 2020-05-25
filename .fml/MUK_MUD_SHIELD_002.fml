@@ -1,3 +1,2 @@
 MUK_MUD_SHIELD_002: F64
-  F64.parse("7635")
-
+  F64.parse("1482")

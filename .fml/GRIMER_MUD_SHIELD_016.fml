@@ -1,3 +1,2 @@
 GRIMER_MUD_SHIELD_016: F64
-  F64.parse("3923")
-
+  F64.parse("1358")

@@ -1,3 +1,2 @@
 GRIMER_TRANSFORMATION_011: F64
-  F64.parse("3980")
-
+  F64.parse("1415")

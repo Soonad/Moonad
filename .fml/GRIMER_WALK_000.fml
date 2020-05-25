@@ -1,3 +1,2 @@
 GRIMER_WALK_000: F64
-  F64.parse("3982")
-
+  F64.parse("1417")

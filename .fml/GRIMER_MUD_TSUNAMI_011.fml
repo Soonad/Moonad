@@ -1,3 +1,2 @@
 GRIMER_MUD_TSUNAMI_011: F64
-  F64.parse("3948")
-
+  F64.parse("1383")
