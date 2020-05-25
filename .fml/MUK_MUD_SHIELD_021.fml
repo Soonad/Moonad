@@ -1,3 +1,7 @@
 MUK_MUD_SHIELD_021: F64
+<<<<<<< HEAD
   F64.parse("7654")
+=======
+  F64.parse("1501")
+>>>>>>> upstream/dev-taelin-arena
 

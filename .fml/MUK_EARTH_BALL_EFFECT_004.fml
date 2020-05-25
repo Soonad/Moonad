@@ -1,3 +1,7 @@
 MUK_EARTH_BALL_EFFECT_004: F64
+<<<<<<< HEAD
   F64.parse("7593")
+=======
+  F64.parse("1440")
+>>>>>>> upstream/dev-taelin-arena
 

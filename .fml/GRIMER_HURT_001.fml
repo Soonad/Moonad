@@ -1,3 +1,7 @@
 GRIMER_HURT_001: F64
+<<<<<<< HEAD
   F64.parse("3879")
+=======
+  F64.parse("1314")
+>>>>>>> upstream/dev-taelin-arena
 
