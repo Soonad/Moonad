@@ -1,3 +1,7 @@
 GRIMER_MUD_TSUNAMI_009: F64
+<<<<<<< HEAD
   F64.parse("3946")
+=======
+  F64.parse("1381")
+>>>>>>> upstream/dev-taelin-arena
 

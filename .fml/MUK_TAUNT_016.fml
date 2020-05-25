@@ -1,3 +1,7 @@
 MUK_TAUNT_016: F64
+<<<<<<< HEAD
   F64.parse("7692")
+=======
+  F64.parse("1539")
+>>>>>>> upstream/dev-taelin-arena
 

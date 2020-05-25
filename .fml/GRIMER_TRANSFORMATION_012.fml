@@ -1,3 +1,7 @@
 GRIMER_TRANSFORMATION_012: F64
+<<<<<<< HEAD
   F64.parse("3981")
+=======
+  F64.parse("1416")
+>>>>>>> upstream/dev-taelin-arena
 

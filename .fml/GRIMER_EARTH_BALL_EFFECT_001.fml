@@ -1,3 +1,7 @@
 GRIMER_EARTH_BALL_EFFECT_001: F64
+<<<<<<< HEAD
   F64.parse("3872")
+=======
+  F64.parse("1307")
+>>>>>>> upstream/dev-taelin-arena
 
