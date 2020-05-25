@@ -1,3 +1,11 @@
 GRIMER_TAUNT_008: F64
+<<<<<<< HEAD
   F64.parse("3550")
+=======
+<<<<<<< HEAD
+  F64.parse("3962")
+=======
+  F64.parse("1397")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

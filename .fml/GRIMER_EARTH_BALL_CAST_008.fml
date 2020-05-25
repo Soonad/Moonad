@@ -1,3 +1,11 @@
 GRIMER_EARTH_BALL_CAST_008: F64
+<<<<<<< HEAD
   F64.parse("3456")
+=======
+<<<<<<< HEAD
+  F64.parse("3868")
+=======
+  F64.parse("1303")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+SQUIRTLE_WALK_005: F64
+  F64.parse("9703")
+

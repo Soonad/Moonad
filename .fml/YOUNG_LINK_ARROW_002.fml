@@ -1,0 +1,3 @@
+YOUNG_LINK_ARROW_002: F64
+  F64.parse("11120")
+

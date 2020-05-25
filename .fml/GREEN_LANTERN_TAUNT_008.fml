@@ -1,0 +1,3 @@
+GREEN_LANTERN_TAUNT_008: F64
+  F64.parse("3669")
+

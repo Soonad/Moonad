@@ -1,3 +1,7 @@
 BLESKAPE_SUPREME_PUNCH_SEQUENCE_023: F64
+<<<<<<< HEAD
   F64.parse("661")
+=======
+  F64.parse("770")
+>>>>>>> dev-taelin-arena
 

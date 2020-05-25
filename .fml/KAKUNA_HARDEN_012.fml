@@ -1,0 +1,3 @@
+KAKUNA_HARDEN_012: F64
+  F64.parse("4825")
+

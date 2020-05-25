@@ -1,3 +1,7 @@
 GON_FREECS_IDLE_013: F64
+<<<<<<< HEAD
   F64.parse("2877")
+=======
+  F64.parse("3289")
+>>>>>>> dev-taelin-arena
 

@@ -1,3 +1,7 @@
 DARTH_VADER_ROGUE_ONE_008: F64
+<<<<<<< HEAD
   F64.parse("935")
+=======
+  F64.parse("1347")
+>>>>>>> dev-taelin-arena
 

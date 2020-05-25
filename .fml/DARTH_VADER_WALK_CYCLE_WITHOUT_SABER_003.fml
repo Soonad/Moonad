@@ -1,3 +1,7 @@
 DARTH_VADER_WALK_CYCLE_WITHOUT_SABER_003: F64
+<<<<<<< HEAD
   F64.parse("1006")
+=======
+  F64.parse("1418")
+>>>>>>> dev-taelin-arena
 

@@ -1,3 +1,7 @@
 DORIME_JESUS_POWER_003: F64
+<<<<<<< HEAD
   F64.parse("1258")
+=======
+  F64.parse("1670")
+>>>>>>> dev-taelin-arena
 

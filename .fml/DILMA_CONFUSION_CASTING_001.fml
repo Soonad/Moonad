@@ -1,3 +1,7 @@
 DILMA_CONFUSION_CASTING_001: F64
+<<<<<<< HEAD
   F64.parse("1077")
+=======
+  F64.parse("1489")
+>>>>>>> dev-taelin-arena
 

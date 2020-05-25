@@ -1,0 +1,3 @@
+GASTLY_EVOLUTION_007: F64
+  F64.parse("3115")
+

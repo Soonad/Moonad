@@ -1,3 +1,7 @@
 BLESKAPE_IDLE_003: F64
+<<<<<<< HEAD
   F64.parse("610")
+=======
+  F64.parse("719")
+>>>>>>> dev-taelin-arena
 

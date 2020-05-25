@@ -1,0 +1,3 @@
+ELLIOT_WALK_CYCLE_005: F64
+  F64.parse("2083")
+

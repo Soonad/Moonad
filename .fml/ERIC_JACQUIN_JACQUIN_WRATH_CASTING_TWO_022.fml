@@ -1,3 +1,7 @@
 ERIC_JACQUIN_JACQUIN_WRATH_CASTING_TWO_022: F64
+<<<<<<< HEAD
   F64.parse("1757")
+=======
+  F64.parse("2169")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+SR_MADRUGA_WALK_007: F64
+  F64.parse("9835")
+

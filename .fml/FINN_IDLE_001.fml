@@ -1,3 +1,7 @@
 FINN_IDLE_001: F64
+<<<<<<< HEAD
   F64.parse("2586")
+=======
+  F64.parse("2998")
+>>>>>>> dev-taelin-arena
 

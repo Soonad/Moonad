@@ -1,0 +1,3 @@
+MIKEGATOR_ATTACK_000: F64
+  F64.parse("7102")
+

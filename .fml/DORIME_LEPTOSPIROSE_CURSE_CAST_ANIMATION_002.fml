@@ -1,3 +1,7 @@
 DORIME_LEPTOSPIROSE_CURSE_CAST_ANIMATION_002: F64
+<<<<<<< HEAD
   F64.parse("1278")
+=======
+  F64.parse("1690")
+>>>>>>> dev-taelin-arena
 

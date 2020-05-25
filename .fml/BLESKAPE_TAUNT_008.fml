@@ -1,3 +1,7 @@
 BLESKAPE_TAUNT_008: F64
+<<<<<<< HEAD
   F64.parse("671")
+=======
+  F64.parse("780")
+>>>>>>> dev-taelin-arena
 

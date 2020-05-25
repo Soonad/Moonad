@@ -1,3 +1,7 @@
 DARTH_VADER_THE_RISE_OF_SKYWALKER_CAST_ANIMATION_WITHOUT_SABER_002: F64
+<<<<<<< HEAD
   F64.parse("995")
+=======
+  F64.parse("1407")
+>>>>>>> dev-taelin-arena
 

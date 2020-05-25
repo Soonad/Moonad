@@ -1,3 +1,7 @@
 FINN_TAUNT_002: F64
+<<<<<<< HEAD
   F64.parse("2618")
+=======
+  F64.parse("3030")
+>>>>>>> dev-taelin-arena
 

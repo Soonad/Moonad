@@ -1,3 +1,7 @@
 DORIME_IDLE_003: F64
+<<<<<<< HEAD
   F64.parse("1253")
+=======
+  F64.parse("1665")
+>>>>>>> dev-taelin-arena
 

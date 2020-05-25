@@ -1,0 +1,3 @@
+PINGADO_SHARP_FANG_008: F64
+  F64.parse("8045")
+

@@ -1,0 +1,3 @@
+ELLIOT_ABSOLUTE_ZERO_018: F64
+  F64.parse("1927")
+

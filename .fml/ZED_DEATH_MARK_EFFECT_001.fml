@@ -1,0 +1,3 @@
+ZED_DEATH_MARK_EFFECT_001: F64
+  F64.parse("11410")
+

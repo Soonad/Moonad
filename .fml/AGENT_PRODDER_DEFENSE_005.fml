@@ -1,0 +1,3 @@
+AGENT_PRODDER_DEFENSE_005: F64
+  F64.parse("5")
+

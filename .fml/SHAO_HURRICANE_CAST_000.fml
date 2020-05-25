@@ -1,0 +1,3 @@
+SHAO_HURRICANE_CAST_000: F64
+  F64.parse("9212")
+

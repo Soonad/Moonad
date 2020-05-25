@@ -1,3 +1,7 @@
 BLESKAPE_DASH_012: F64
+<<<<<<< HEAD
   F64.parse("600")
+=======
+  F64.parse("709")
+>>>>>>> dev-taelin-arena
 

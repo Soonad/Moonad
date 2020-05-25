@@ -1,3 +1,7 @@
 DR_STRANGE_MYSTIC_BEAM_CAST_004: F64
+<<<<<<< HEAD
   F64.parse("1382")
+=======
+  F64.parse("1794")
+>>>>>>> dev-taelin-arena
 

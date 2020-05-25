@@ -1,3 +1,7 @@
 GON_FREECS_JAJANKEN_STONE_010: F64
+<<<<<<< HEAD
   F64.parse("2952")
+=======
+  F64.parse("3364")
+>>>>>>> dev-taelin-arena
 

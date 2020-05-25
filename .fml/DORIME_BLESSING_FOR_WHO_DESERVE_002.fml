@@ -1,3 +1,7 @@
 DORIME_BLESSING_FOR_WHO_DESERVE_002: F64
+<<<<<<< HEAD
   F64.parse("1168")
+=======
+  F64.parse("1580")
+>>>>>>> dev-taelin-arena
 

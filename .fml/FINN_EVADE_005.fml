@@ -1,3 +1,7 @@
 FINN_EVADE_005: F64
+<<<<<<< HEAD
   F64.parse("2583")
+=======
+  F64.parse("2995")
+>>>>>>> dev-taelin-arena
 

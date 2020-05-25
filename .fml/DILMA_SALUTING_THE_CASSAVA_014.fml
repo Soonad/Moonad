@@ -1,3 +1,7 @@
 DILMA_SALUTING_THE_CASSAVA_014: F64
+<<<<<<< HEAD
   F64.parse("1127")
+=======
+  F64.parse("1539")
+>>>>>>> dev-taelin-arena
 

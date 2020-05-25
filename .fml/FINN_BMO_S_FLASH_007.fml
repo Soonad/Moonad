@@ -1,3 +1,7 @@
 FINN_BMO_S_FLASH_007: F64
+<<<<<<< HEAD
   F64.parse("2556")
+=======
+  F64.parse("2968")
+>>>>>>> dev-taelin-arena
 

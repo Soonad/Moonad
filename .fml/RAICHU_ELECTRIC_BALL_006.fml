@@ -1,0 +1,3 @@
+RAICHU_ELECTRIC_BALL_006: F64
+  F64.parse("8507")
+

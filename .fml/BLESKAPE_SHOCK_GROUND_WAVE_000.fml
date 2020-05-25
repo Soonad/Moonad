@@ -1,3 +1,7 @@
 BLESKAPE_SHOCK_GROUND_WAVE_000: F64
+<<<<<<< HEAD
   F64.parse("626")
+=======
+  F64.parse("735")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+PIKACHU_FAST_ATTACK_003: F64
+  F64.parse("7917")
+

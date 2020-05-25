@@ -1,3 +1,7 @@
 DR_STRANGE_CHRONOSTASIS_CAST_005: F64
+<<<<<<< HEAD
   F64.parse("1341")
+=======
+  F64.parse("1753")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+SQUIRTLE_IDLE_011: F64
+  F64.parse("9642")
+

@@ -1,3 +1,7 @@
 DR_STRANGE_PORTAL_CAST_000: F64
+<<<<<<< HEAD
   F64.parse("1397")
+=======
+  F64.parse("1809")
+>>>>>>> dev-taelin-arena
 

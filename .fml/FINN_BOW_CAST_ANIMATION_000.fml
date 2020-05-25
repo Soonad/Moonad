@@ -1,3 +1,7 @@
 FINN_BOW_CAST_ANIMATION_000: F64
+<<<<<<< HEAD
   F64.parse("2562")
+=======
+  F64.parse("2974")
+>>>>>>> dev-taelin-arena
 

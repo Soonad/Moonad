@@ -1,3 +1,7 @@
 DORIME_BLESSING_FOR_WHO_DESERVE_PROJECTILE_000: F64
+<<<<<<< HEAD
   F64.parse("1165")
+=======
+  F64.parse("1577")
+>>>>>>> dev-taelin-arena
 

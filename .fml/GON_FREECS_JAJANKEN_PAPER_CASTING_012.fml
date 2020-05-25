@@ -1,3 +1,7 @@
 GON_FREECS_JAJANKEN_PAPER_CASTING_012: F64
+<<<<<<< HEAD
   F64.parse("2911")
+=======
+  F64.parse("3323")
+>>>>>>> dev-taelin-arena
 

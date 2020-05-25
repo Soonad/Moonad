@@ -1,0 +1,3 @@
+KENKO_JADE_TONING_HEAL_003: F64
+  F64.parse("5044")
+

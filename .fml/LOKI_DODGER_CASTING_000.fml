@@ -1,0 +1,3 @@
+LOKI_DODGER_CASTING_000: F64
+  F64.parse("6091")
+

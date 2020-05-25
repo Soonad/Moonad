@@ -1,0 +1,3 @@
+MOSHY_MECH_FORCE_009: F64
+  F64.parse("7456")
+

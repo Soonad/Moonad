@@ -1,0 +1,3 @@
+SHELDON_IDLE_007: F64
+  F64.parse("9288")
+

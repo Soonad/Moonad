@@ -1,0 +1,3 @@
+KIRBY_SPINNER_KIRBY_002: F64
+  F64.parse("5341")
+

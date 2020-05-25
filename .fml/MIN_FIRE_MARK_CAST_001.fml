@@ -1,0 +1,3 @@
+MIN_FIRE_MARK_CAST_001: F64
+  F64.parse("7188")
+

@@ -1,0 +1,3 @@
+FAE_FAIRY_DUST_000: F64
+  F64.parse("2735")
+

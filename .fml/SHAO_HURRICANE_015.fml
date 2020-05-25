@@ -1,0 +1,3 @@
+SHAO_HURRICANE_015: F64
+  F64.parse("9230")
+

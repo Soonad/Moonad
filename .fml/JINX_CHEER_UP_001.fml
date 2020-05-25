@@ -1,0 +1,3 @@
+JINX_CHEER_UP_001: F64
+  F64.parse("4556")
+

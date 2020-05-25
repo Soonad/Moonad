@@ -1,0 +1,3 @@
+ZOIO_BLOCK_004: F64
+  F64.parse("11541")
+

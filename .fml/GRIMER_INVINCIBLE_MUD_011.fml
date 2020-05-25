@@ -1,3 +1,11 @@
 GRIMER_INVINCIBLE_MUD_011: F64
+<<<<<<< HEAD
   F64.parse("3487")
+=======
+<<<<<<< HEAD
+  F64.parse("3899")
+=======
+  F64.parse("1334")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

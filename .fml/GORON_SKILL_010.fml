@@ -1,0 +1,3 @@
+GORON_SKILL_010: F64
+  F64.parse("3523")
+

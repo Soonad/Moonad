@@ -1,0 +1,3 @@
+HATSUNE_MIKU_WALK_005: F64
+  F64.parse("4130")
+

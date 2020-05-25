@@ -1,3 +1,7 @@
 GON_FREECS_JAJANKEN_PAPER_PROJECTILE_004: F64
+<<<<<<< HEAD
   F64.parse("2920")
+=======
+  F64.parse("3332")
+>>>>>>> dev-taelin-arena
 

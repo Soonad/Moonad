@@ -1,3 +1,7 @@
 ERIC_JACQUIN_JACQUIN_WRATH_CASTING_ONE_006: F64
+<<<<<<< HEAD
   F64.parse("1711")
+=======
+  F64.parse("2123")
+>>>>>>> dev-taelin-arena
 

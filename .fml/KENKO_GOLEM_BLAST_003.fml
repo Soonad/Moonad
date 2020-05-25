@@ -1,0 +1,3 @@
+KENKO_GOLEM_BLAST_003: F64
+  F64.parse("5016")
+

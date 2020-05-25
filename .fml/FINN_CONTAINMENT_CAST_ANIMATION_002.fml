@@ -1,3 +1,7 @@
 FINN_CONTAINMENT_CAST_ANIMATION_002: F64
+<<<<<<< HEAD
   F64.parse("2572")
+=======
+  F64.parse("2984")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+HAUNTER_EVOLUTION_004: F64
+  F64.parse("4171")
+

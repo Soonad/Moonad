@@ -1,3 +1,7 @@
 DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_017: F64
+<<<<<<< HEAD
   F64.parse("1299")
+=======
+  F64.parse("1711")
+>>>>>>> dev-taelin-arena
 

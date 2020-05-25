@@ -1,3 +1,11 @@
 MUK_IDLE_003: F64
+<<<<<<< HEAD
   F64.parse("7190")
+=======
+<<<<<<< HEAD
+  F64.parse("7602")
+=======
+  F64.parse("1449")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

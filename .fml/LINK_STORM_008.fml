@@ -1,0 +1,3 @@
+LINK_STORM_008: F64
+  F64.parse("6019")
+

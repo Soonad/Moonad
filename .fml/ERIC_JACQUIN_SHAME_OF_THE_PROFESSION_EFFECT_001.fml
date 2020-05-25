@@ -1,3 +1,7 @@
 ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_EFFECT_001: F64
+<<<<<<< HEAD
   F64.parse("1809")
+=======
+  F64.parse("2221")
+>>>>>>> dev-taelin-arena
 

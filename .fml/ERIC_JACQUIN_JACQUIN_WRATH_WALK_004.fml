@@ -1,3 +1,7 @@
 ERIC_JACQUIN_JACQUIN_WRATH_WALK_004: F64
+<<<<<<< HEAD
   F64.parse("1782")
+=======
+  F64.parse("2194")
+>>>>>>> dev-taelin-arena
 

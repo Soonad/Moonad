@@ -1,3 +1,7 @@
 DARTH_VADER_THE_EMPIRE_STRICKES_BACK_007: F64
+<<<<<<< HEAD
   F64.parse("952")
+=======
+  F64.parse("1364")
+>>>>>>> dev-taelin-arena
 

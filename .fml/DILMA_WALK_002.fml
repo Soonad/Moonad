@@ -1,3 +1,7 @@
 DILMA_WALK_002: F64
+<<<<<<< HEAD
   F64.parse("1152")
+=======
+  F64.parse("1564")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+IRON_MAN_IDLE_007: F64
+  F64.parse("4227")
+

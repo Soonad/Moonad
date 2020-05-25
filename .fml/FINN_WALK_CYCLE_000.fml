@@ -1,3 +1,7 @@
 FINN_WALK_CYCLE_000: F64
+<<<<<<< HEAD
   F64.parse("2651")
+=======
+  F64.parse("3063")
+>>>>>>> dev-taelin-arena
 

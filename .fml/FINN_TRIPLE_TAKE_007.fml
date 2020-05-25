@@ -1,3 +1,7 @@
 FINN_TRIPLE_TAKE_007: F64
+<<<<<<< HEAD
   F64.parse("2641")
+=======
+  F64.parse("3053")
+>>>>>>> dev-taelin-arena
 

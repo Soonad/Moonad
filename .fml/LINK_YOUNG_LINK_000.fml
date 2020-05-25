@@ -1,0 +1,3 @@
+LINK_YOUNG_LINK_000: F64
+  F64.parse("6074")
+

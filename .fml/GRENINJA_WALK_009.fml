@@ -1,0 +1,3 @@
+GRENINJA_WALK_009: F64
+  F64.parse("3833")
+

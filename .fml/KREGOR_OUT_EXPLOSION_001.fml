@@ -1,0 +1,3 @@
+KREGOR_OUT_EXPLOSION_001: F64
+  F64.parse("5566")
+

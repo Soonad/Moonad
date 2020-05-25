@@ -1,0 +1,3 @@
+CRONI_DARK_BALL_CAST_002: F64
+  F64.parse("970")
+

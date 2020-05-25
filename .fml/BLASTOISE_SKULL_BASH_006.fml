@@ -1,0 +1,3 @@
+BLASTOISE_SKULL_BASH_006: F64
+  F64.parse("623")
+

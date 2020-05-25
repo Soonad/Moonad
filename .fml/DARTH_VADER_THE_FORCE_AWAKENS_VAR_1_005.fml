@@ -1,3 +1,7 @@
 DARTH_VADER_THE_FORCE_AWAKENS_VAR_1_005: F64
+<<<<<<< HEAD
   F64.parse("958")
+=======
+  F64.parse("1370")
+>>>>>>> dev-taelin-arena
 

@@ -1,0 +1,3 @@
+IVY_KLAWS_DIG_CAST_009: F64
+  F64.parse("4349")
+

@@ -1,3 +1,7 @@
 ERIC_JACQUIN_SHUT_YOUR_MOUTH_CASTING_022: F64
+<<<<<<< HEAD
   F64.parse("1835")
+=======
+  F64.parse("2247")
+>>>>>>> dev-taelin-arena
 

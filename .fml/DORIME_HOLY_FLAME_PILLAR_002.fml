@@ -1,3 +1,7 @@
 DORIME_HOLY_FLAME_PILLAR_002: F64
+<<<<<<< HEAD
   F64.parse("1246")
+=======
+  F64.parse("1658")
+>>>>>>> dev-taelin-arena
 

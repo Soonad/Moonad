@@ -1,3 +1,7 @@
 ERIC_JACQUIN_DASH_007: F64
+<<<<<<< HEAD
   F64.parse("1680")
+=======
+  F64.parse("2092")
+>>>>>>> dev-taelin-arena
 

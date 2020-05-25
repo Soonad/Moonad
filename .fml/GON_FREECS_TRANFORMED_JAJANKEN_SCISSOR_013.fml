@@ -1,3 +1,7 @@
 GON_FREECS_TRANFORMED_JAJANKEN_SCISSOR_013: F64
+<<<<<<< HEAD
   F64.parse("3005")
+=======
+  F64.parse("3417")
+>>>>>>> dev-taelin-arena
 

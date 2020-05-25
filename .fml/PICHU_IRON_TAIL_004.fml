@@ -1,0 +1,3 @@
+PICHU_IRON_TAIL_004: F64
+  F64.parse("7825")
+

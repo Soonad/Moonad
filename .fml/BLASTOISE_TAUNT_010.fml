@@ -1,0 +1,3 @@
+BLASTOISE_TAUNT_010: F64
+  F64.parse("649")
+

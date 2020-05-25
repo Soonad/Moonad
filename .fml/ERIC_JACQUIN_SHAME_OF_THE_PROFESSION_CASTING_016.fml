@@ -1,3 +1,7 @@
 ERIC_JACQUIN_SHAME_OF_THE_PROFESSION_CASTING_016: F64
+<<<<<<< HEAD
   F64.parse("1802")
+=======
+  F64.parse("2214")
+>>>>>>> dev-taelin-arena
 

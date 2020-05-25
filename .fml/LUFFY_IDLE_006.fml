@@ -1,0 +1,3 @@
+LUFFY_IDLE_006: F64
+  F64.parse("6305")
+

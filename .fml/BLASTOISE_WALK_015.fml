@@ -1,0 +1,3 @@
+BLASTOISE_WALK_015: F64
+  F64.parse("670")
+

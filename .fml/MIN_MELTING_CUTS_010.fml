@@ -1,0 +1,3 @@
+MIN_MELTING_CUTS_010: F64
+  F64.parse("7234")
+

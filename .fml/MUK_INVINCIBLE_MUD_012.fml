@@ -1,3 +1,11 @@
 MUK_INVINCIBLE_MUD_012: F64
+<<<<<<< HEAD
   F64.parse("7207")
+=======
+<<<<<<< HEAD
+  F64.parse("7619")
+=======
+  F64.parse("1466")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

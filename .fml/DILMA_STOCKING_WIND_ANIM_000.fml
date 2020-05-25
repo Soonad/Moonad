@@ -1,3 +1,7 @@
 DILMA_STOCKING_WIND_ANIM_000: F64
+<<<<<<< HEAD
   F64.parse("1131")
+=======
+  F64.parse("1543")
+>>>>>>> dev-taelin-arena
 

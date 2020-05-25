@@ -1,3 +1,7 @@
 FINN_JAKE_S_FURY_012: F64
+<<<<<<< HEAD
   F64.parse("2602")
+=======
+  F64.parse("3014")
+>>>>>>> dev-taelin-arena
 

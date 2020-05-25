@@ -1,0 +1,3 @@
+LARS_PESCADO_FILLET_004: F64
+  F64.parse("5788")
+

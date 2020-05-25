@@ -1,3 +1,11 @@
 GRIMER_MUD_SHIELD_006: F64
+<<<<<<< HEAD
   F64.parse("3501")
+=======
+<<<<<<< HEAD
+  F64.parse("3913")
+=======
+  F64.parse("1348")
+>>>>>>> upstream/dev-taelin-arena
+>>>>>>> dev-taelin-arena
 

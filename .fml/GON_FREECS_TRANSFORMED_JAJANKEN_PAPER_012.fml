@@ -1,3 +1,7 @@
 GON_FREECS_TRANSFORMED_JAJANKEN_PAPER_012: F64
+<<<<<<< HEAD
   F64.parse("3031")
+=======
+  F64.parse("3443")
+>>>>>>> dev-taelin-arena
 

@@ -1,3 +1,7 @@
 GON_FREECS_ULTIMATE_TRANSFORMATION_013: F64
+<<<<<<< HEAD
   F64.parse("3073")
+=======
+  F64.parse("3485")
+>>>>>>> dev-taelin-arena
 
