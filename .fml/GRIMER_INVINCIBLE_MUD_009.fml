@@ -1,7 +1,0 @@
-GRIMER_INVINCIBLE_MUD_009: F64
-<<<<<<< HEAD
-  F64.parse("3897")
-=======
-  F64.parse("1332")
->>>>>>> upstream/dev-taelin-arena
-

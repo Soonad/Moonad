@@ -1,3 +1,0 @@
-Arelin.Thing.jinx.flaming_bite_end: (self: Arelin.Thing) -> Arelin.Thing
-  (self) Arelin.Thing.animate_die(self)(F64.0)(JINX_FLAMING_BITE_TRAP_END_000)(F64.parse("6"))(F64.parse("12"))
-

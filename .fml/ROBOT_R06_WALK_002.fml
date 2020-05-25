@@ -1,3 +1,0 @@
-ROBOT_R06_WALK_002: F64
-  F64.parse("8811")
-

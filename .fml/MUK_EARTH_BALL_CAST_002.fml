@@ -1,7 +1,0 @@
-MUK_EARTH_BALL_CAST_002: F64
-<<<<<<< HEAD
-  F64.parse("7579")
-=======
-  F64.parse("1426")
->>>>>>> upstream/dev-taelin-arena
-

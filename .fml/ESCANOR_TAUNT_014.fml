@@ -1,3 +1,0 @@
-ESCANOR_TAUNT_014: F64
-  F64.parse("2381")
-

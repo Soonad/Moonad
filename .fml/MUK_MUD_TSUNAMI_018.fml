@@ -1,7 +1,0 @@
-MUK_MUD_TSUNAMI_018: F64
-<<<<<<< HEAD
-  F64.parse("7675")
-=======
-  F64.parse("1522")
->>>>>>> upstream/dev-taelin-arena
-

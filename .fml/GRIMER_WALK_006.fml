@@ -1,7 +1,0 @@
-GRIMER_WALK_006: F64
-<<<<<<< HEAD
-  F64.parse("3988")
-=======
-  F64.parse("1423")
->>>>>>> upstream/dev-taelin-arena
-

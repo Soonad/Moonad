@@ -1,7 +1,0 @@
-GRIMER_TAUNT_007: F64
-<<<<<<< HEAD
-  F64.parse("3961")
-=======
-  F64.parse("1396")
->>>>>>> upstream/dev-taelin-arena
-

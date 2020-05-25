@@ -1,3 +1,0 @@
-DORIME_LEPTOSPIROSE_CURSE_PUDDLE_IDLE_004: F64
-  (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.0)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.0)) String.nil)))))
-

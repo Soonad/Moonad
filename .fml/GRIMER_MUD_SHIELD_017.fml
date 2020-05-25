@@ -1,7 +1,0 @@
-GRIMER_MUD_SHIELD_017: F64
-<<<<<<< HEAD
-  F64.parse("3924")
-=======
-  F64.parse("1359")
->>>>>>> upstream/dev-taelin-arena
-
