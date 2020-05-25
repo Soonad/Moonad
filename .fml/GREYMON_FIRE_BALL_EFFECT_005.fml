@@ -1,3 +1,3 @@
 GREYMON_FIRE_BALL_EFFECT_005: F64
-  F64.parse("3857")
+  F64.parse("3445")
 

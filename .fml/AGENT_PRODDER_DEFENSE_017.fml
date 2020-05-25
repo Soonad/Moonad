@@ -1,0 +1,3 @@
+AGENT_PRODDER_DEFENSE_017: F64
+  F64.parse("17")
+

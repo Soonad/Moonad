@@ -1,3 +1,3 @@
 KENKO_IDLE_006: F64
-  F64.parse("5040")
+  F64.parse("4628")
 

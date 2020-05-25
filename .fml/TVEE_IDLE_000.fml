@@ -1,3 +1,3 @@
 TVEE_IDLE_000: F64
-  F64.parse("10680")
+  F64.parse("10268")
 

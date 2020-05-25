@@ -1,3 +1,3 @@
 ESCANOR_IDLE_000: F64
-  F64.parse("2350")
+  F64.parse("1938")
 

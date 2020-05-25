@@ -1,3 +1,3 @@
 RAY_HEAVENS_CALL_007: F64
-  F64.parse("8604")
+  F64.parse("8192")
 

@@ -1,3 +1,3 @@
 PINGO_STRESSED_TAUNT_002: F64
-  F64.parse("8259")
+  F64.parse("7847")
 

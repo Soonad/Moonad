@@ -1,3 +1,3 @@
 DANTHY_PISTOL_FORM_BOOMSHOT_CAST_006: F64
-  F64.parse("1095")
+  F64.parse("683")
 

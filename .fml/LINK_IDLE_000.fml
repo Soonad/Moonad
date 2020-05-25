@@ -1,3 +1,3 @@
 LINK_IDLE_000: F64
-  F64.parse("5948")
+  F64.parse("5536")
 

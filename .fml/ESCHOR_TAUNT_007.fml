@@ -1,3 +1,3 @@
 ESCHOR_TAUNT_007: F64
-  F64.parse("2612")
+  F64.parse("2200")
 

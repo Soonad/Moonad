@@ -1,3 +1,3 @@
 HAUNTER_TAUNT_008: F64
-  F64.parse("4194")
+  F64.parse("3782")
 

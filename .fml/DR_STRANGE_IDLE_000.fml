@@ -1,3 +1,3 @@
 DR_STRANGE_IDLE_000: F64
-  F64.parse("1785")
+  F64.parse("1373")
 

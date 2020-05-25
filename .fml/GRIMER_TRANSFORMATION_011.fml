@@ -1,7 +1,3 @@
 GRIMER_TRANSFORMATION_011: F64
-<<<<<<< HEAD
-  F64.parse("3980")
-=======
-  F64.parse("1415")
->>>>>>> upstream/dev-taelin-arena
+  F64.parse("3568")
 

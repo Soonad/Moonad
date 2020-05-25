@@ -1,3 +1,3 @@
 DEKU_IDLE_001: F64
-  F64.parse("1432")
+  F64.parse("1020")
 

@@ -1,3 +1,3 @@
 ARACNIDE_RUNNING_STUCK_AREA_001: F64
-  F64.parse("282")
+  F64.parse("284")
 

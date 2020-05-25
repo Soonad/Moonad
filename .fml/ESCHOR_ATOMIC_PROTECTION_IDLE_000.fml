@@ -1,3 +1,3 @@
 ESCHOR_ATOMIC_PROTECTION_IDLE_000: F64
-  F64.parse("2489")
+  F64.parse("2077")
 

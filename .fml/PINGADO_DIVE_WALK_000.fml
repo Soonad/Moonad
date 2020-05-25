@@ -1,3 +1,3 @@
 PINGADO_DIVE_WALK_000: F64
-  F64.parse("8023")
+  F64.parse("7611")
 

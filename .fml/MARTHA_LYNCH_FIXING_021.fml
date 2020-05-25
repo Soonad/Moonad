@@ -1,3 +1,3 @@
 MARTHA_LYNCH_FIXING_021: F64
-  F64.parse("6790")
+  F64.parse("6378")
 

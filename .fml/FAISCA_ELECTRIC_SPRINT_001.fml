@@ -1,3 +1,3 @@
 FAISCA_ELECTRIC_SPRINT_001: F64
-  F64.parse("2815")
+  F64.parse("2403")
 

@@ -1,3 +1,3 @@
 LINK_TAUNT_010: F64
-  F64.parse("6044")
+  F64.parse("5632")
 

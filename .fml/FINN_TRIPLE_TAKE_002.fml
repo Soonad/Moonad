@@ -1,3 +1,3 @@
 FINN_TRIPLE_TAKE_002: F64
-  F64.parse("3048")
+  F64.parse("2636")
 

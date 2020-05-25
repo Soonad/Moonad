@@ -1,3 +1,3 @@
 RAY_IDLE_005: F64
-  F64.parse("8620")
+  F64.parse("8208")
 

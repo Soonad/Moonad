@@ -1,3 +1,3 @@
 GENGAR_ATTACK_LICK_003: F64
-  F64.parse("3200")
+  F64.parse("2788")
 

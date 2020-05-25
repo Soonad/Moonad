@@ -1,3 +1,3 @@
 PPG_LASER_BURST_013: F64
-  F64.parse("8436")
+  F64.parse("8024")
 

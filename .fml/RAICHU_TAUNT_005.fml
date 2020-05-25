@@ -1,3 +1,3 @@
 RAICHU_TAUNT_005: F64
-  F64.parse("8540")
+  F64.parse("8128")
 

@@ -1,3 +1,0 @@
-BENFIX_TRIPLE_ATTACK_2_000: F64
-  F64.parse("502")
-

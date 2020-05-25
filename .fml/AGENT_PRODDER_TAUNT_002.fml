@@ -1,3 +1,3 @@
 AGENT_PRODDER_TAUNT_002: F64
-  F64.parse("156")
+  F64.parse("158")
 

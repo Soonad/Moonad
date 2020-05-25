@@ -1,7 +1,3 @@
 MUK_IDLE_006: F64
-<<<<<<< HEAD
-  F64.parse("7605")
-=======
-  F64.parse("1452")
->>>>>>> upstream/dev-taelin-arena
+  F64.parse("7193")
 

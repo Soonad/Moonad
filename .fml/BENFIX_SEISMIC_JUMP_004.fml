@@ -1,3 +1,0 @@
-BENFIX_SEISMIC_JUMP_004: F64
-  F64.parse("460")
-

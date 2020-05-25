@@ -1,3 +1,3 @@
 TVEE_TAUNT_011: F64
-  F64.parse("10748")
+  F64.parse("10336")
 

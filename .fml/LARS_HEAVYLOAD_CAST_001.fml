@@ -1,3 +1,3 @@
 LARS_HEAVYLOAD_CAST_001: F64
-  F64.parse("5655")
+  F64.parse("5243")
 

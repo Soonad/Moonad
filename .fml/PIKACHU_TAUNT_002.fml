@@ -1,3 +1,3 @@
 PIKACHU_TAUNT_002: F64
-  F64.parse("7940")
+  F64.parse("7528")
 

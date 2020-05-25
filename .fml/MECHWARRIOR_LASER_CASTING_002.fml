@@ -1,3 +1,3 @@
 MECHWARRIOR_LASER_CASTING_002: F64
-  F64.parse("7014")
+  F64.parse("6602")
 

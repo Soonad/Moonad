@@ -1,3 +1,3 @@
 LINA_INVERSE_BURNING_HANDS_CAST_010: F64
-  F64.parse("5840")
+  F64.parse("5428")
 

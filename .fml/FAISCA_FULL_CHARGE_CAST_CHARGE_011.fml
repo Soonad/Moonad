@@ -1,3 +1,3 @@
 FAISCA_FULL_CHARGE_CAST_CHARGE_011: F64
-  F64.parse("2828")
+  F64.parse("2416")
 

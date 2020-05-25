@@ -1,3 +1,3 @@
 AGENT_PRODDER_IDLE_015: F64
-  F64.parse("33")
+  F64.parse("35")
 

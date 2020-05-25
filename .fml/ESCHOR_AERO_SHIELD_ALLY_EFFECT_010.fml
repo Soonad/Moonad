@@ -1,3 +1,3 @@
 ESCHOR_AERO_SHIELD_ALLY_EFFECT_010: F64
-  F64.parse("2430")
+  F64.parse("2018")
 

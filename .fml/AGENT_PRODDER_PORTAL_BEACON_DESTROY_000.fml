@@ -1,3 +1,3 @@
 AGENT_PRODDER_PORTAL_BEACON_DESTROY_000: F64
-  F64.parse("96")
+  F64.parse("98")
 

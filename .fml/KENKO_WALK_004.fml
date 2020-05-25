@@ -1,3 +1,3 @@
 KENKO_WALK_004: F64
-  F64.parse("5123")
+  F64.parse("4711")
 

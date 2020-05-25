@@ -1,3 +1,3 @@
 GASTLY_IDLE_007: F64
-  F64.parse("3127")
+  F64.parse("2715")
 

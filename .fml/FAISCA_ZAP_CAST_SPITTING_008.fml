@@ -1,3 +1,3 @@
 FAISCA_ZAP_CAST_SPITTING_008: F64
-  F64.parse("2932")
+  F64.parse("2520")
 
