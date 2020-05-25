@@ -1,3 +1,0 @@
-Arelin.Game.Buff.shielded: (dur: F64) -> (val: F64) -> Arelin.Game.Buff
-  (dur) (val) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stunned) shielded(dur)(val)
-

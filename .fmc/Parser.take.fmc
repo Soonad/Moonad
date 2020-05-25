@@ -1,3 +1,0 @@
-Parser.take: ∀(A:*) Π(:String) Π(:Nat) (Parser String)
-  ΛA λerr λn ((<<<Parsec.take Unit> Unit> A> err) n)
-

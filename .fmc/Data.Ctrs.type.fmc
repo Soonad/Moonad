@@ -1,3 +1,0 @@
-Data.Ctrs.type: Π(:*) Π(:Data.Ctrs) *
-  λP λctr ((<ctr λ *> P) λctr.name λctr.flds λctr.ctrs Π(ctr:((Data.Flds.type P) ctr.flds)) ((Data.Ctrs.type P) ctr.ctrs))
-

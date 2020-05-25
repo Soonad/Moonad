@@ -1,3 +1,0 @@
-Nat.pred: Π(:Nat) Nat
-  λn ((<n λ Nat> Nat.zero) λn.pred n.pred)
-

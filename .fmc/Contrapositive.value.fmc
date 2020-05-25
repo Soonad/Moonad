@@ -1,3 +1,0 @@
-Contrapositive.value: ∀(A:*) ∀(B:*) Π(f:Π(:A) B) Π(p1:A) Π(p2:A) Π(:(Not (((Equal B) (f p1)) (f p2)))) (Not (((Equal A) p1) p2))
-  ΛA ΛB λf λp1 λp2 λne λe (ne ((((<<Equal.apply_ind A> B> p1) p2) f) e))
-

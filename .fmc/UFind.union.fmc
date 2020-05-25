@@ -1,3 +1,0 @@
-UFind.union: Π(:UFind) Π(:Bits) Π(:Bits) UFind
-  λuf λpath1 λpath2 (((<UFind.find UFind> uf) path1) λuf λroot_path1 λrank1 (((<UFind.find UFind> uf) path2) λuf λroot_path2 λrank2 ((<((Bits.eql root_path1) root_path2) λ UFind> uf) (((<((Nat.cmp rank1) rank2) λ UFind> $uf=(((<Map.set UNode> root_path1) (UNode.link root_path2)) uf);uf) $uf=(((<Map.set UNode> root_path1) (UNode.link root_path2)) uf);$uf=(((<Map.set UNode> root_path2) (UNode.root (Nat.succ rank2))) uf);uf) $uf=(((<Map.set UNode> root_path1) (UNode.root rank2)) uf);$uf=(((<Map.set UNode> root_path2) (UNode.link root_path1)) uf);uf))))
-

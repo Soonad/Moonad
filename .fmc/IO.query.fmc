@@ -1,3 +1,0 @@
-IO.query: Π(str:String) (IO String)
-  λstr ((<IO.log String> str) λ (<IO.get String> <IO.end String>))
-

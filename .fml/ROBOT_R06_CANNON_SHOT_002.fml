@@ -1,3 +1,0 @@
-ROBOT_R06_CANNON_SHOT_002: F64
-  F64.parse("8289")
-

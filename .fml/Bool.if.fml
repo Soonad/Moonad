@@ -1,3 +1,0 @@
-Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A
-  <A> (x) (ct) (cf) Bool.eql(x)(Bool.false)<(self) A>(cf)(ct)
-

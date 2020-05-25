@@ -1,3 +1,0 @@
-Core: *
-  ∀core(P:Π(:Core) *) Π(var:Π(name:String) Π(indx:Nat) Π(flip:Bool) (P (((Core.var name) indx) flip))) Π(ref:Π(name:String) (P (Core.ref name))) Π(typ:(P Core.typ)) Π(all:Π(eras:Bool) Π(self:String) Π(name:String) Π(bind:Core) Π(body:Π(:Core) Π(:Core) Core) (P (((((Core.all eras) self) name) bind) body))) Π(lam:Π(eras:Bool) Π(name:String) Π(body:Π(:Core) Core) (P (((Core.lam eras) name) body))) Π(app:Π(eras:Bool) Π(func:Core) Π(argm:Core) (P (((Core.app eras) func) argm))) Π(let:Π(name:String) Π(expr:Core) Π(body:Π(:Core) Core) (P (((Core.let name) expr) body))) Π(ann:Π(done:Bool) Π(expr:Core) Π(type:Core) (P (((Core.ann done) expr) type))) (P core)
-

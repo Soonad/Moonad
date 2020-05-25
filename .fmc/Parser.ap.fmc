@@ -1,3 +1,0 @@
-Parser.ap: ∀(A:*) ∀(B:*) Π(:(Parser Π(:A) B)) Π(:(Parser A)) (Parser B)
-  ΛA ΛB λpf λpa ((<<<<Parsec.ap Unit> Unit> A> B> pf) pa)
-

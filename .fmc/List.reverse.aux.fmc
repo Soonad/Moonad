@@ -1,3 +1,0 @@
-List.reverse.aux: ∀(A:*) Π(:(List A)) Π(:(List A)) (List A)
-  ΛA λas λxs ((<as λself (List A)> xs) λhead λtail ((<List.reverse.aux A> tail) ((<List.cons A> head) xs)))
-

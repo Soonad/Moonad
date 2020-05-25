@@ -1,3 +1,0 @@
-TVEE_TAUNT_020: F64
-  F64.parse("10345")
-

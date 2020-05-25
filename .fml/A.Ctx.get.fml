@@ -1,3 +1,0 @@
-A.Ctx.get: Char -> A.Ctx -> Maybe(Nat)
-  (chr) (ctx) ctx<() Maybe(Nat)>(Maybe.none<Nat>)((h) (t) h<() Maybe(Nat)>((nam) (var) U16.eql(nam)(chr)<() Maybe(Nat)>(Maybe.some<Nat>(var))(A.Ctx.get(chr)(t))))
-

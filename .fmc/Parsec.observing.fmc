@@ -1,3 +1,0 @@
-Parsec.observing: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) (((Parsec S) E) ((Either (Parsec.Error E)) A))
-  ΛS ΛE ΛA λp ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (((((<p X> s1) λs2 λx ((empty_value s2) (<<Either.right (Parsec.Error E)> A> x))) λs2 λe ((empty_value s2) (<<Either.left (Parsec.Error E)> A> e))) λs2 λx ((eaten_value s2) (<<Either.right (Parsec.Error E)> A> x))) λs2 λe ((eaten_value s2) (<<Either.left (Parsec.Error E)> A> e)))
-

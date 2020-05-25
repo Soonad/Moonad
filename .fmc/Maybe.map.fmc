@@ -1,3 +1,0 @@
-Maybe.map: ∀(A:*) ∀(B:*) Π(:Π(:A) B) Π(:(Maybe A)) (Maybe B)
-  ΛA ΛB λfn λmaybe ((<maybe λ (Maybe B)> <Maybe.none B>) λvalue (<Maybe.some B> (fn value)))
-

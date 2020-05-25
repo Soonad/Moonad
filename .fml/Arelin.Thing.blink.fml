@@ -1,3 +1,0 @@
-Arelin.Thing.blink: (self: Arelin.Thing) -> (at_tik: F64) -> (to_pos: F64.V3) -> Arelin.Thing
-  (self) (at_tik) (to_pos) Arelin.Thing.is_rooted(self)<(self) Arelin.Thing>(self)(F64.eql(at_tik)(Arelin.Thing.get_tik(self))<(self) Arelin.Thing>(Arelin.Thing.set_pos(self)(to_pos))(self))
-

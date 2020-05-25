@@ -1,3 +1,0 @@
-Core.if_all: Π(:Core) (Maybe Core.all.Tuple)
-  λterm ((((((((<term λ (Maybe Core.all.Tuple)> λ λ λ <Maybe.none Core.all.Tuple>) λ <Maybe.none Core.all.Tuple>) <Maybe.none Core.all.Tuple>) λeras λname λself λbind λbody (<Maybe.some Core.all.Tuple> ΛP λfunc (((((func eras) name) self) bind) body))) λ λ λ <Maybe.none Core.all.Tuple>) λ λ λ <Maybe.none Core.all.Tuple>) λ λ λ <Maybe.none Core.all.Tuple>) λ λ λ <Maybe.none Core.all.Tuple>)
-

@@ -1,3 +1,0 @@
-GRIMER_IDLE_005: F64
-  F64.parse("3474")
-

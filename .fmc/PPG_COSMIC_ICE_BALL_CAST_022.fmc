@@ -1,3 +1,0 @@
-PPG_COSMIC_ICE_BALL_CAST_022: F64
-  (F64.parse ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.1) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.0) Bit.1) Bit.0) Bit.1)) ((String.cons ((((((((((((((((Char.new Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.0) Bit.1) Bit.1) Bit.1) Bit.0) Bit.0) Bit.1)) String.nil)))))
-

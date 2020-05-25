@@ -1,3 +1,0 @@
-Docs.unit_show: IO(Unit)
-  IO.print(Unit.show(Unit.new))
-

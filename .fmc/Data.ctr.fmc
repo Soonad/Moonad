@@ -1,3 +1,0 @@
-Data.ctr: Π(data:Data) Π(nth:Nat) ((Data.ctr.type data) nth)
-  λdata λnth (<data λdata ((Data.ctr.type data) nth)> λdata.name λdata.ctrs @data=((Data.new data.name) data.ctrs);(((Data.Ctrs.ctr data.ctrs) data.ctrs) nth))
-

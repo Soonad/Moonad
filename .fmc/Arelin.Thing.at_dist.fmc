@@ -1,3 +1,0 @@
-Arelin.Thing.at_dist: Π(self:Arelin.Thing) Π(dist:F64) F64.V3
-  λself λdist $dir=(Arelin.Thing.get_dir self);$pos=(Arelin.Thing.get_pos self);((F64.V3.add pos) ((F64.V3.scale dist) dir))
-

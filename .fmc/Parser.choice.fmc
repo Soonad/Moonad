@@ -1,3 +1,0 @@
-Parser.choice: ∀(A:*) Π(:(List (Parser A))) (Parser A)
-  ΛA λps (<<<Parsec.choice Unit> Unit> A> ps)
-

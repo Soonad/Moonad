@@ -1,3 +1,0 @@
-Bool.double_negation_theorem: Π(b:Bool) (((Equal Bool) (Bool.not (Bool.not b))) b)
-  λb ((<b λb (((Equal Bool) (Bool.not (Bool.not b))) b)> <<Equal.to Bool> Bool.true>) <<Equal.to Bool> Bool.false>)
-

@@ -1,3 +1,0 @@
-Unit: *
-  ∀unit(P:Π(:Unit) *) Π(new:(P Unit.new)) (P unit)
-

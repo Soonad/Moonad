@@ -1,3 +1,0 @@
-String.quote: Π(:String) String
-  λstr ((String.cons Char.quote) ((String.concat str) (String.single Char.quote)))
-

@@ -1,3 +1,0 @@
-WEEDLE_POISON_STING_003: F64
-  F64.parse("10523")
-

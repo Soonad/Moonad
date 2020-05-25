@@ -1,3 +1,0 @@
-Arelin.Thing.move: Π(self:Arelin.Thing) Π(to_pos:F64.V3) Arelin.Thing
-  λself λto_pos ((Arelin.Thing.set_pos self) to_pos)
-

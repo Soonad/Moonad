@@ -1,3 +1,0 @@
-List.filter: ∀(A:*) Π(:Π(:A) Bool) Π(:(List A)) (List A)
-  ΛA λcond λlist ((<list λself (List A)> <List.nil A>) λlist.head λlist.tail (((<(cond list.head) λself Π(x:(List A)) (List A)> λt t) λt ((<List.cons A> list.head) t)) ((<List.filter A> cond) list.tail)))
-

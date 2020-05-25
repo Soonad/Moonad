@@ -1,3 +1,0 @@
-Nat.is_zero: Π(:Nat) Bool
-  λn ((<n λ Bool> Bool.true) λ Bool.false)
-

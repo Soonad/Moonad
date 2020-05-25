@@ -1,3 +1,0 @@
-Bool.IsTrue: (b: Bool) -> Type
-  (b) b<(self) Type>(Unit)(Empty)
-

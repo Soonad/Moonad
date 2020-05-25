@@ -1,3 +1,0 @@
-DeMorgan.Or.forward: ∀(A:*) ∀(B:*) Π(:(Not ((Or A) B))) ((And (Not A)) (Not B))
-  ΛA ΛB λnot_or ((<<Pair.new Π(x:A) Empty> Π(x:B) Empty> λa (not_or (<<Either.left A> B> a))) λb (not_or (<<Either.right A> B> b)))
-

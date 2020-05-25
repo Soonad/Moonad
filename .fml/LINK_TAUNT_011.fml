@@ -1,3 +1,0 @@
-LINK_TAUNT_011: F64
-  F64.parse("5633")
-

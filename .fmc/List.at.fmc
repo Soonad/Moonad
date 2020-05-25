@@ -1,3 +1,0 @@
-List.at: ∀(A:*) Π(:(List A)) Π(:Nat) (Maybe A)
-  ΛA λlist λindx ((<list λself (Maybe A)> <Maybe.none A>) λhead λtail ((<indx λx5 (Maybe A)> (<Maybe.some A> head)) λpred ((<List.at A> tail) pred)))
-

@@ -1,3 +1,0 @@
-Nat.sub_rem: Π(:Nat) Π(:Nat) ((Either Nat) Nat)
-  λn λm ((<m λ ((Either Nat) Nat)> (<<Either.left Nat> Nat> n)) λm.pred ((<n λ ((Either Nat) Nat)> (<<Either.right Nat> Nat> (Nat.succ m.pred))) λn.pred ((Nat.sub_rem n.pred) m.pred)))
-

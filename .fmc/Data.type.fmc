@@ -1,3 +1,0 @@
-Data.type: Π(:Data) *
-  λdata (<data λ *> λdata.name λdata.ctrs ∀self(P:*) ((Data.Ctrs.type P) data.ctrs))
-

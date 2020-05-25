@@ -1,3 +1,0 @@
-String.to_set: String -> Set
-  (str) str<(self) Set>(Set.new)((str.head) (str.tail) Set.set(U16.to_bits(str.head))(String.to_set(str.tail)))
-

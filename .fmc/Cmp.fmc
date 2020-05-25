@@ -1,3 +1,0 @@
-Cmp: *
-  ∀self(P:Π(self:Cmp) *) Π(ltn:(P Cmp.ltn)) Π(eql:(P Cmp.eql)) Π(gtn:(P Cmp.gtn)) (P self)
-

@@ -1,3 +1,0 @@
-Core.lam: Π(:Bool) Π(:String) Π(:Π(:Core) Core) Core
-  λeras λname λbody Λ λ λ λ λ λlam λ λ λ (((lam eras) name) body)
-

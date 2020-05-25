@@ -1,3 +1,0 @@
-IO.end: ∀(A:*) Π(:A) (IO A)
-  ΛA λx ΛP λend λ λ (end x)
-

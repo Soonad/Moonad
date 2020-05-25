@@ -1,3 +1,0 @@
-Arelin.Game.Buff.silenced: Π(dur:F64) Arelin.Game.Buff
-  λdur ΛP λshielded λslowed λhasted λsilenced λrooted λstunned (silenced dur)
-

@@ -1,3 +1,0 @@
-Data.Ctrs: Type
-  self<P: Data.Ctrs -> Type> -> (nil: P(Data.Ctrs.nil)) -> (ext: (name: String) -> (flds: Data.Flds) -> (ctrs: Data.Ctrs) -> P(Data.Ctrs.ext(name)(flds)(ctrs))) -> P(self)
-

@@ -1,3 +1,0 @@
-Lang.trm: Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core; Parser.bind<C><C>(Parser.choice<C>([Parser(C); Lang.var, Lang.typ, Lang.let, Parser.try<C>(Lang.par), Parser.try<C>(Lang.lam), Parser.try<C>(Lang.all)]))((x) Lang.pst(x))
-

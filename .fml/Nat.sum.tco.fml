@@ -1,3 +1,0 @@
-Nat.sum.tco: Nat -> Nat -> Nat
-  (n) (r) n<() Nat>(r)((n.pred) Nat.sum.tco(n.pred)(Nat.add(n)(r)))
-

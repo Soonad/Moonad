@@ -1,3 +1,0 @@
-List.take: ∀(A:*) Π(:Nat) Π(:(List A)) (List A)
-  ΛA λn λlist ((<list λ (List A)> <List.nil A>) λhead λtail ((<n λ (List A)> <List.nil A>) λpred ((<List.cons A> head) ((<List.take A> pred) tail))))
-

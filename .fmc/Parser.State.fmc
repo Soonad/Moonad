@@ -1,3 +1,0 @@
-Parser.State: *
-  ((Parsec.State Unit) Unit)
-

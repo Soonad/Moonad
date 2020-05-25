@@ -1,3 +1,0 @@
-Parsec.Error: Π(:*) *
-  λE ∀parser.error(P:Π(:(Parsec.Error E)) *) Π(trivial:Π(position:Nat) Π(unexpect:(Maybe Parsec.Error.Item)) Π(expected:(List Parsec.Error.Item)) (P (((<Parsec.Error.make_trivial E> position) unexpect) expected))) Π(fancy:Π(position:Nat) Π(messages:(List (Parsec.Error.Fancy E))) (P ((<Parsec.Error.make_fancy E> position) messages))) (P parser.error)
-

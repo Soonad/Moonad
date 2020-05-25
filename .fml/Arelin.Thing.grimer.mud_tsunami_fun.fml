@@ -1,3 +1,0 @@
-Arelin.Thing.grimer.mud_tsunami_fun: Arelin.Game.TxFunction
-  (self) let self.dir = Arelin.Thing.get_dir(self); let self.pos = Arelin.Thing.get_pos(self); let self = Arelin.Thing.animate(self)(F64.1)(GRIMER_MUD_TSUNAMI_000)(F64.parse("17"))(F64.parse("34")); let effs = [Arelin.Game.Effect; Arelin.Game.Effect.damage(Arelin.Thing.grimer.base_mud_tsunami_dmg)]; let hits = ((size) [Arelin.Game.Hit; Arelin.Game.Hit.new(effs)(self.pos)(self.dir)(Arelin.Game.Hitbox.cbox(size))]) :: F64 -> List(Arelin.Game.Hit); let self = Arelin.Thing.cast(self)(F64.parse("10"))(hits(F64.parse("30"))); let self = Arelin.Thing.cast(self)(F64.parse("20"))(hits(F64.parse("40"))); self
-

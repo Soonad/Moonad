@@ -1,3 +1,0 @@
-Parsec.Reply: Π(:*) Π(:*) Π(:*) *
-  λS λE λA ∀parser_reply(P:Π(:(((Parsec.Reply S) E) A)) *) Π(empty_value:Π(state:((Parsec.State S) E)) Π(value:A) (P ((<<<Parsec.Reply.empty_value S> E> A> state) value))) Π(empty_error:Π(state:((Parsec.State S) E)) Π(error:(Parsec.Error E)) (P ((<<<Parsec.Reply.empty_error S> E> A> state) error))) Π(eaten_value:Π(state:((Parsec.State S) E)) Π(value:A) (P ((<<<Parsec.Reply.eaten_value S> E> A> state) value))) Π(eaten_error:Π(state:((Parsec.State S) E)) Π(error:(Parsec.Error E)) (P ((<<<Parsec.Reply.eaten_error S> E> A> state) error))) (P parser_reply)
-

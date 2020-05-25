@@ -1,3 +1,0 @@
-Core.all.Tuple: Type
-  <P: Type> -> (all: (eras: Bool) -> (self: String) -> (name: String) -> (bind: Core) -> (body: Core -> Core -> Core) -> P) -> P
-
