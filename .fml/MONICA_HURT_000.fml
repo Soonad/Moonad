@@ -1,0 +1,3 @@
+MONICA_HURT_000: F64
+  F64.parse("7275")
+

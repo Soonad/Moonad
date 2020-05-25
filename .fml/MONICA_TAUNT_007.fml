@@ -1,0 +1,3 @@
+MONICA_TAUNT_007: F64
+  F64.parse("7350")
+

@@ -1,3 +1,3 @@
 BENFIX_TAUNT_013: F64
-  F64.parse("74")
+  F64.parse("483")
 

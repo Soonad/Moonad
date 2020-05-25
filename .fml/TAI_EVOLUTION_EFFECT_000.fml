@@ -1,0 +1,3 @@
+TAI_EVOLUTION_EFFECT_000: F64
+  F64.parse("9970")
+

@@ -1,0 +1,3 @@
+KREGOR_RUN_POINT_001: F64
+  F64.parse("5585")
+

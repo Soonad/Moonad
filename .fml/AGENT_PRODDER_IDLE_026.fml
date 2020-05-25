@@ -1,0 +1,3 @@
+AGENT_PRODDER_IDLE_026: F64
+  F64.parse("44")
+

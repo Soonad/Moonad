@@ -1,3 +1,7 @@
 PUNCHINGBAG_IDLE_009: F64
+<<<<<<< HEAD
+  F64.parse("8473")
+=======
   F64.parse("1559")
+>>>>>>> upstream/dev-taelin-arena
 

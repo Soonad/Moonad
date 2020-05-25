@@ -1,0 +1,3 @@
+XULULU_CHILD_TAUNT_001: F64
+  F64.parse("11073")
+

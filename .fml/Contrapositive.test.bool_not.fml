@@ -1,0 +1,3 @@
+Contrapositive.test.bool_not: (p: Bool) -> (q: Bool) -> Not(Equal(Bool)(Bool.not(p))(Bool.not(q))) -> Not(Equal(Bool)(p)(q))
+  (p) (q) (ne) Contrapositive.value<Bool><Bool>(Bool.not)(p)(q)(ne)
+

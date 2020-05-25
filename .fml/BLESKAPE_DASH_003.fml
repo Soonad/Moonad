@@ -1,3 +1,3 @@
 BLESKAPE_DASH_003: F64
-  F64.parse("127")
+  F64.parse("700")
 

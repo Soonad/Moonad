@@ -1,0 +1,3 @@
+RAY_HEAVENS_CALL_008: F64
+  F64.parse("8605")
+

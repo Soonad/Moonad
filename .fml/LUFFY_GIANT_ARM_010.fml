@@ -1,0 +1,3 @@
+LUFFY_GIANT_ARM_010: F64
+  F64.parse("6285")
+

@@ -1,0 +1,3 @@
+LINK_TRIPLE_ATTACK_009: F64
+  F64.parse("6065")
+

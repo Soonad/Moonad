@@ -1,0 +1,3 @@
+LUFFY_BASIC_ATTACK_2_003: F64
+  F64.parse("6240")
+

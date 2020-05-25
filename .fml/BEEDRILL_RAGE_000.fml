@@ -1,0 +1,3 @@
+BEEDRILL_RAGE_000: F64
+  F64.parse("371")
+

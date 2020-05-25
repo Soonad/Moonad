@@ -1,0 +1,3 @@
+ELLIOT_TREMOR_IMPACT_007: F64
+  F64.parse("2077")
+

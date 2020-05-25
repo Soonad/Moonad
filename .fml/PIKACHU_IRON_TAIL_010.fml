@@ -1,0 +1,3 @@
+PIKACHU_IRON_TAIL_010: F64
+  F64.parse("7934")
+

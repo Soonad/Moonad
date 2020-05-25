@@ -1,0 +1,3 @@
+KING_DEDEDE_WALK_004: F64
+  F64.parse("5287")
+

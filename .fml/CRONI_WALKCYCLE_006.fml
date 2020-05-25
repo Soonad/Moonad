@@ -1,0 +1,3 @@
+CRONI_WALKCYCLE_006: F64
+  F64.parse("1087")
+

@@ -1,0 +1,3 @@
+KENKO_DASH_006: F64
+  F64.parse("5007")
+

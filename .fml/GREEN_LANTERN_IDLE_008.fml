@@ -1,0 +1,3 @@
+GREEN_LANTERN_IDLE_008: F64
+  F64.parse("3596")
+

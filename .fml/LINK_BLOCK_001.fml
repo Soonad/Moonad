@@ -1,0 +1,3 @@
+LINK_BLOCK_001: F64
+  F64.parse("5938")
+

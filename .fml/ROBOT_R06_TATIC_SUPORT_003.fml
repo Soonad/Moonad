@@ -1,0 +1,3 @@
+ROBOT_R06_TATIC_SUPORT_003: F64
+  F64.parse("8777")
+

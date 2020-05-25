@@ -1,0 +1,3 @@
+SR_MADRUGA_TAUNT_012: F64
+  F64.parse("9791")
+

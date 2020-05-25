@@ -1,0 +1,3 @@
+KONAN_TAUNT_CAST_007: F64
+  F64.parse("5473")
+

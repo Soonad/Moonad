@@ -1,0 +1,3 @@
+LOKI_TELEPORT_IN_004: F64
+  F64.parse("6222")
+

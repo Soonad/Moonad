@@ -1,3 +1,3 @@
 DORIME_GODS_CHAMBER_HEAL_CIRCLE_005: F64
-  F64.parse("468")
+  F64.parse("1635")
 

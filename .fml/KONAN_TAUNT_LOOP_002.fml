@@ -1,0 +1,3 @@
+KONAN_TAUNT_LOOP_002: F64
+  F64.parse("5477")
+

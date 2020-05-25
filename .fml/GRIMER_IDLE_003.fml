@@ -1,3 +1,7 @@
 GRIMER_IDLE_003: F64
+<<<<<<< HEAD
+  F64.parse("3884")
+=======
   F64.parse("1319")
+>>>>>>> upstream/dev-taelin-arena
 

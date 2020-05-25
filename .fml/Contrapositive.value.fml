@@ -1,0 +1,3 @@
+Contrapositive.value: <A: Type> -> <B: Type> -> (f: A -> B) -> (p1: A) -> (p2: A) -> Not(Equal(B)(f(p1))(f(p2))) -> Not(Equal(A)(p1)(p2))
+  <A> <B> (f) (p1) (p2) (ne) (e) ne(Equal.apply_ind<A><B>(p1)(p2)(f)(e))
+

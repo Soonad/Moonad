@@ -1,0 +1,3 @@
+FAISCA_TAUNT_026: F64
+  F64.parse("2917")
+

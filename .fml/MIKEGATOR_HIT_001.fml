@@ -1,0 +1,3 @@
+MIKEGATOR_HIT_001: F64
+  F64.parse("7134")
+

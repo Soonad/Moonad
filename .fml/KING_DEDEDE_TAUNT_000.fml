@@ -1,0 +1,3 @@
+KING_DEDEDE_TAUNT_000: F64
+  F64.parse("5260")
+

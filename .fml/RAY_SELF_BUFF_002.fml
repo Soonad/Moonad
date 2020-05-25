@@ -1,0 +1,3 @@
+RAY_SELF_BUFF_002: F64
+  F64.parse("8634")
+

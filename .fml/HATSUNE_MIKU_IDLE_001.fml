@@ -1,0 +1,3 @@
+HATSUNE_MIKU_IDLE_001: F64
+  F64.parse("4044")
+
