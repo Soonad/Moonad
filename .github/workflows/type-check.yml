@@ -4,9 +4,9 @@ name: Type check terms
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev-taelin-arena ]
   push:
-    branches: [ master ]
+    branches: [ master, dev-taelin-arena ]
     
 jobs:
   # This workflow contains a single job called "build"
