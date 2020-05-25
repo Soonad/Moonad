@@ -1,0 +1,3 @@
+MUK_MUD_SHIELD_018: F64
+  F64.parse("1498")
+

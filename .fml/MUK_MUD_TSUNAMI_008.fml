@@ -1,0 +1,3 @@
+MUK_MUD_TSUNAMI_008: F64
+  F64.parse("1512")
+

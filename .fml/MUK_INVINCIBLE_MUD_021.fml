@@ -1,0 +1,3 @@
+MUK_INVINCIBLE_MUD_021: F64
+  F64.parse("1475")
+
