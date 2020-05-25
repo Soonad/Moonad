@@ -1,3 +1,0 @@
-Nat.ltn: Π(:Nat) Π(:Nat) Bool
-  λa λb (((<((Nat.cmp a) b) λ Bool> Bool.true) Bool.false) Bool.false)
-

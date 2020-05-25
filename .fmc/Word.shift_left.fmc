@@ -1,3 +1,0 @@
-Word.shift_left: ∀(size:Nat) Π(:Nat) Π(:(Word size)) (Word size)
-  Word.shift_left
-

@@ -1,3 +1,0 @@
-Newtype.elim: ∀(A:*) ∀(tag:String) Π(n:((Newtype A) tag)) A
-  ΛA Λtag λn (<n λ λ A> λx x)
-

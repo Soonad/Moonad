@@ -1,7 +1,0 @@
-ERIC_JACQUIN_TURN_OFF_THE_NIGHT_FREEZER_CASTING_001: F64
-<<<<<<< HEAD
-  F64.parse("1852")
-=======
-  F64.parse("2264")
->>>>>>> dev-taelin-arena
-

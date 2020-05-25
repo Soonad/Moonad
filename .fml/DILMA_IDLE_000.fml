@@ -1,7 +1,0 @@
-DILMA_IDLE_000: F64
-<<<<<<< HEAD
-  F64.parse("1095")
-=======
-  F64.parse("1507")
->>>>>>> dev-taelin-arena
-

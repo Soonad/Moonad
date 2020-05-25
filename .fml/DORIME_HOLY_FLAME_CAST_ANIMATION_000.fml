@@ -1,7 +1,0 @@
-DORIME_HOLY_FLAME_CAST_ANIMATION_000: F64
-<<<<<<< HEAD
-  F64.parse("1236")
-=======
-  F64.parse("1648")
->>>>>>> dev-taelin-arena
-

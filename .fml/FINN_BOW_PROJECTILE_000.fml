@@ -1,7 +1,0 @@
-FINN_BOW_PROJECTILE_000: F64
-<<<<<<< HEAD
-  F64.parse("2569")
-=======
-  F64.parse("2981")
->>>>>>> dev-taelin-arena
-

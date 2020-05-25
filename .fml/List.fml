@@ -1,3 +1,0 @@
-List: (A: Type) -> Type
-  (A) self<P: (self: List(A)) -> Type> -> (nil: P([A;])) -> (cons: (head: A) -> (tail: List(A)) -> P(List.cons<A>(head)(tail))) -> P(self)
-

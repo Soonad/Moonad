@@ -1,7 +1,0 @@
-FINN_EVADE_000: F64
-<<<<<<< HEAD
-  F64.parse("2578")
-=======
-  F64.parse("2990")
->>>>>>> dev-taelin-arena
-

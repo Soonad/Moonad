@@ -1,3 +1,0 @@
-Parsec.throw: <S: Type> -> <E: Type> -> <A: Type> -> Parsec.Error(E) -> Parsec(S)(E)(A)
-  <S> <E> <A> (e) <X> (s1) (empty_value) (empty_error) (eaten_value) (eaten_error) empty_error(s1)(e)
-

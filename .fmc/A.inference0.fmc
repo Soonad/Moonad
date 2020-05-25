@@ -1,3 +1,0 @@
-A.inference0: (Word Nat.4)
-  (<Word.1 (Nat.succ (Nat.succ (Nat.succ Nat.zero)))> (<Word.0 (Nat.succ (Nat.succ Nat.zero))> (<Word.1 (Nat.succ Nat.zero)> (<Word.0 Nat.zero> Word.nil))))
-

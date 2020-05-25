@@ -1,7 +1,0 @@
-FINN_HURT_000: F64
-<<<<<<< HEAD
-  F64.parse("2584")
-=======
-  F64.parse("2996")
->>>>>>> dev-taelin-arena
-

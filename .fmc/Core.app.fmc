@@ -1,3 +1,0 @@
-Core.app: Π(:Bool) Π(:Core) Π(:Core) Core
-  λeras λfunc λargm Λ λ λ λ λ λ λapp λ λ (((app eras) func) argm)
-

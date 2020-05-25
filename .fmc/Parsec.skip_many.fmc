@@ -1,3 +1,0 @@
-Parsec.skip_many: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) (((Parsec S) E) Unit)
-  ΛS ΛE ΛA λp ((<<<Parsec.plus S> E> Unit> ((<<<<Parsec.then S> E> A> Unit> p) (<<<Parsec.skip_many S> E> A> p))) (<<<Parsec.pure S> E> Unit> Unit.new))
-

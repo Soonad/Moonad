@@ -1,3 +1,0 @@
-Parser.bind: <A: Type> -> <B: Type> -> Parser(A) -> (A -> Parser(B)) -> Parser(B)
-  <A> <B> (pa) (pf) Parsec.bind<Unit><Unit><A><B>(pa)(pf)
-

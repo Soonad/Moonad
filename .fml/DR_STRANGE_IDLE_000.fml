@@ -1,7 +1,0 @@
-DR_STRANGE_IDLE_000: F64
-<<<<<<< HEAD
-  F64.parse("1373")
-=======
-  F64.parse("1785")
->>>>>>> dev-taelin-arena
-

@@ -1,7 +1,0 @@
-ERIC_JACQUIN_IDLE_009: F64
-<<<<<<< HEAD
-  F64.parse("1700")
-=======
-  F64.parse("2112")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-Arelin.Thing.dash: Π(self:Arelin.Thing) Π(speed:F64) Π(from_tik:F64) Π(til_tik:F64) Arelin.Thing
-  λself λspeed λfrom_tik λtil_tik ((<(Arelin.Thing.is_rooted self) λself Arelin.Thing> self) $self.tik=(Arelin.Thing.get_tik self);$self.pos=(Arelin.Thing.get_pos self);$self.trg=(Arelin.Thing.get_trg self);$self.dir=(Arelin.Thing.get_dir self);$new_vel=((<(((F64.is_between from_tik) til_tik) self.tik) λself F64.V3> ((F64.V3.scale speed) (((F64.V3.look_at self.pos) self.trg) self.dir))) (((F64.V3.new F64.0) F64.0) F64.0));((Arelin.Thing.set_vel self) new_vel))
-

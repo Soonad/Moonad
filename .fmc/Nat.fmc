@@ -1,3 +1,0 @@
-Nat: *
-  ∀nat(P:Π(:Nat) *) Π(zero:(P Nat.zero)) Π(succ:Π(pred:Nat) (P (Nat.succ pred))) (P nat)
-

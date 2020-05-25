@@ -1,3 +1,0 @@
-Core.Read.var: (Core.Read Core.Bind)
-  ((<<Core.Read.seek Text> Core.Bind> Core.Read.nam) λname (<Core.Read.done Core.Bind> λctx $find_var=:Π(:((Pair String) Core)) Bool λvar (<var λ Bool> λvar_name λ ((String.eql name) var_name));$found_var=((<List.find ((Pair String) Core)> find_var) ctx);((<found_var λ Core> (Core.ref name)) λvar (<var λ Core> λname λterm term))))
-

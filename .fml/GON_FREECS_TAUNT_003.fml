@@ -1,7 +1,0 @@
-GON_FREECS_TAUNT_003: F64
-<<<<<<< HEAD
-  F64.parse("2969")
-=======
-  F64.parse("3381")
->>>>>>> dev-taelin-arena
-

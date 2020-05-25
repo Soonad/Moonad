@@ -1,7 +1,0 @@
-DR_STRANGE_MYSTIC_BEAM_EFFECT_002: F64
-<<<<<<< HEAD
-  F64.parse("1390")
-=======
-  F64.parse("1802")
->>>>>>> dev-taelin-arena
-

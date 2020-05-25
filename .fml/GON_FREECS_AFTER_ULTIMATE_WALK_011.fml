@@ -1,7 +1,0 @@
-GON_FREECS_AFTER_ULTIMATE_WALK_011: F64
-<<<<<<< HEAD
-  F64.parse("2854")
-=======
-  F64.parse("3266")
->>>>>>> dev-taelin-arena
-

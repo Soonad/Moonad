@@ -1,7 +1,0 @@
-DR_STRANGE_WALK_000: F64
-<<<<<<< HEAD
-  F64.parse("1472")
-=======
-  F64.parse("1884")
->>>>>>> dev-taelin-arena
-

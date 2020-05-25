@@ -1,7 +1,0 @@
-GON_FREECS_DESABLED_NEM_FX_002: F64
-<<<<<<< HEAD
-  F64.parse("2857")
-=======
-  F64.parse("3269")
->>>>>>> dev-taelin-arena
-

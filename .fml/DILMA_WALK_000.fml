@@ -1,7 +1,0 @@
-DILMA_WALK_000: F64
-<<<<<<< HEAD
-  F64.parse("1150")
-=======
-  F64.parse("1562")
->>>>>>> dev-taelin-arena
-

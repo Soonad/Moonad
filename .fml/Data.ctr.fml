@@ -1,3 +1,0 @@
-Data.ctr: (data: Data) -> (nth: Nat) -> Data.ctr.type(data)(nth)
-  (data) (nth) data<(data) Data.ctr.type(data)(nth)>((data.name) (data.ctrs) def data = Data.new(data.name)(data.ctrs); Data.Ctrs.ctr(data.ctrs)(data.ctrs)(nth))
-

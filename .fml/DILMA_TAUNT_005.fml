@@ -1,7 +1,0 @@
-DILMA_TAUNT_005: F64
-<<<<<<< HEAD
-  F64.parse("1149")
-=======
-  F64.parse("1561")
->>>>>>> dev-taelin-arena
-

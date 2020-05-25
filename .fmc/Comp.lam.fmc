@@ -1,3 +1,0 @@
-Comp.lam: Π(:String) Π(:Comp) Comp
-  λname λbody Λ λ λlam λ λ λ λ ((lam name) body)
-

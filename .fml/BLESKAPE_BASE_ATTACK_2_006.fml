@@ -1,7 +1,0 @@
-BLESKAPE_BASE_ATTACK_2_006: F64
-<<<<<<< HEAD
-  F64.parse("587")
-=======
-  F64.parse("696")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-F64.V3.dist: Π(:F64.V3) Π(:F64.V3) F64
-  λa λb (F64.sqrt ((F64.V3.sqr_dist a) b))
-

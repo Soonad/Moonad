@@ -1,3 +1,0 @@
-Debug.log: <A: Type> -> (s: String) -> (x: Unit -> A) -> A
-  <A> (s) (x) x(Unit.new)
-

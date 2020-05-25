@@ -1,7 +1,0 @@
-DR_STRANGE_TIME_STONE_POWER_EFFECT_001: F64
-<<<<<<< HEAD
-  F64.parse("1444")
-=======
-  F64.parse("1856")
->>>>>>> dev-taelin-arena
-

@@ -1,7 +1,0 @@
-ERIC_JACQUIN_WALK_006: F64
-<<<<<<< HEAD
-  F64.parse("1889")
-=======
-  F64.parse("2301")
->>>>>>> dev-taelin-arena
-

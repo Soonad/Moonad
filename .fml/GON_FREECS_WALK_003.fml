@@ -1,7 +1,0 @@
-GON_FREECS_WALK_003: F64
-<<<<<<< HEAD
-  F64.parse("3079")
-=======
-  F64.parse("3491")
->>>>>>> dev-taelin-arena
-

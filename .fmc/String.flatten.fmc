@@ -1,3 +1,0 @@
-String.flatten: Π(:(List String)) String
-  λas ((<as λself String> String.nil) λhead λtail ((String.concat head) (String.flatten tail)))
-

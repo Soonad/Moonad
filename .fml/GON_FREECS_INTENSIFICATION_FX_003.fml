@@ -1,7 +1,0 @@
-GON_FREECS_INTENSIFICATION_FX_003: F64
-<<<<<<< HEAD
-  F64.parse("2883")
-=======
-  F64.parse("3295")
->>>>>>> dev-taelin-arena
-

@@ -1,7 +1,0 @@
-DR_STRANGE_PORTAL_EFFECT_023: F64
-<<<<<<< HEAD
-  F64.parse("1426")
-=======
-  F64.parse("1838")
->>>>>>> dev-taelin-arena
-

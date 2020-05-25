@@ -1,3 +1,0 @@
-U32.inc: Π(:U32) U32
-  λa (<a λ U32> λa_val (U32.new (<Word.inc Nat.32> a_val)))
-

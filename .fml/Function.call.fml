@@ -1,3 +1,0 @@
-Function.call: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
-  <A> <B> (x) (f) f(x)
-

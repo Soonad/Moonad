@@ -1,3 +1,0 @@
-Word.pow: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) (Word size)
-  Word.pow
-

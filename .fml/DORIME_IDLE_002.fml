@@ -1,7 +1,0 @@
-DORIME_IDLE_002: F64
-<<<<<<< HEAD
-  F64.parse("1252")
-=======
-  F64.parse("1664")
->>>>>>> dev-taelin-arena
-

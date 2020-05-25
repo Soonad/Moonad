@@ -1,7 +1,0 @@
-GON_FREECS_JAJANKEN_SCISSORS_002: F64
-<<<<<<< HEAD
-  F64.parse("2926")
-=======
-  F64.parse("3338")
->>>>>>> dev-taelin-arena
-

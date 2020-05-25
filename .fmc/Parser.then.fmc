@@ -1,3 +1,0 @@
-Parser.then: ∀(A:*) ∀(B:*) Π(:(Parser A)) Π(:(Parser B)) (Parser B)
-  ΛA ΛB λpa λpb ((<<<<Parsec.then Unit> Unit> A> B> pa) pb)
-

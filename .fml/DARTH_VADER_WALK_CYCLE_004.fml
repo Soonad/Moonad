@@ -1,7 +1,0 @@
-DARTH_VADER_WALK_CYCLE_004: F64
-<<<<<<< HEAD
-  F64.parse("1015")
-=======
-  F64.parse("1427")
->>>>>>> dev-taelin-arena
-

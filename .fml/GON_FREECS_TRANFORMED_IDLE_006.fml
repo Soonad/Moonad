@@ -1,7 +1,0 @@
-GON_FREECS_TRANFORMED_IDLE_006: F64
-<<<<<<< HEAD
-  F64.parse("2989")
-=======
-  F64.parse("3401")
->>>>>>> dev-taelin-arena
-

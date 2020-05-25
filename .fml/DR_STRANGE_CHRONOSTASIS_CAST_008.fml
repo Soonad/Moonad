@@ -1,7 +1,0 @@
-DR_STRANGE_CHRONOSTASIS_CAST_008: F64
-<<<<<<< HEAD
-  F64.parse("1344")
-=======
-  F64.parse("1756")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-Data: *
-  ∀self(P:Π(:Data) *) Π(new:Π(name:String) Π(ctrs:Data.Ctrs) (P ((Data.new name) ctrs))) (P self)
-

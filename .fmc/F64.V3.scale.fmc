@@ -1,3 +1,0 @@
-F64.V3.scale: Π(:F64) Π(:F64.V3) F64.V3
-  λk λv (<v λ F64.V3> λv.x λv.y λv.z $new_x=((F64.mul k) v.x);$new_y=((F64.mul k) v.y);$new_z=((F64.mul k) v.z);(((F64.V3.new new_x) new_y) new_z))
-

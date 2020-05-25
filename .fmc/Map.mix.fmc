@@ -1,3 +1,0 @@
-Map.mix: ∀(A:*) Π(:(Maybe A)) Π(:(Map A)) Π(:(Map A)) (Map A)
-  Λ λval λlft λrgt Λ λ λmix (((mix val) lft) rgt)
-

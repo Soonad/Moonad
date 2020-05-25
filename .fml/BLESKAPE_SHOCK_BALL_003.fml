@@ -1,7 +1,0 @@
-BLESKAPE_SHOCK_BALL_003: F64
-<<<<<<< HEAD
-  F64.parse("614")
-=======
-  F64.parse("723")
->>>>>>> dev-taelin-arena
-

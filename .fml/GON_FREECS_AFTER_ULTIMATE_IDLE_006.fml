@@ -1,7 +1,0 @@
-GON_FREECS_AFTER_ULTIMATE_IDLE_006: F64
-<<<<<<< HEAD
-  F64.parse("2841")
-=======
-  F64.parse("3253")
->>>>>>> dev-taelin-arena
-

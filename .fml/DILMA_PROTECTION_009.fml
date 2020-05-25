@@ -1,7 +1,0 @@
-DILMA_PROTECTION_009: F64
-<<<<<<< HEAD
-  F64.parse("1108")
-=======
-  F64.parse("1520")
->>>>>>> dev-taelin-arena
-

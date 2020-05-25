@@ -1,7 +1,0 @@
-DORIME_WALK_CYCLE_002: F64
-<<<<<<< HEAD
-  F64.parse("1330")
-=======
-  F64.parse("1742")
->>>>>>> dev-taelin-arena
-

@@ -1,7 +1,0 @@
-DR_STRANGE_CHRONOSTASIS_EFFECT_019: F64
-<<<<<<< HEAD
-  F64.parse("1365")
-=======
-  F64.parse("1777")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-Parser.Reply: Type -> Type
-  (A) Parsec.Reply(Unit)(Unit)(A)
-

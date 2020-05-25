@@ -1,3 +1,0 @@
-String.length: String -> Nat
-  (str) str<(self) Nat>(Nat.zero)((head) (tail) Nat.succ(String.length(tail)))
-

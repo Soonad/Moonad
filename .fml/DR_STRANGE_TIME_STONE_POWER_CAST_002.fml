@@ -1,7 +1,0 @@
-DR_STRANGE_TIME_STONE_POWER_CAST_002: F64
-<<<<<<< HEAD
-  F64.parse("1436")
-=======
-  F64.parse("1848")
->>>>>>> dev-taelin-arena
-

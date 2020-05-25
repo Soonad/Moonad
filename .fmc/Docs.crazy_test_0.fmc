@@ -1,3 +1,0 @@
-Docs.crazy_test_0: (IO Unit)
-  (IO.print (Docs.crazy Bool.true))
-

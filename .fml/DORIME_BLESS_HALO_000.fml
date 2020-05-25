@@ -1,7 +1,0 @@
-DORIME_BLESS_HALO_000: F64
-<<<<<<< HEAD
-  F64.parse("1164")
-=======
-  F64.parse("1576")
->>>>>>> dev-taelin-arena
-

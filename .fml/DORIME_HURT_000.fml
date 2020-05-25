@@ -1,7 +1,0 @@
-DORIME_HURT_000: F64
-<<<<<<< HEAD
-  F64.parse("1249")
-=======
-  F64.parse("1661")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-F64.V3.rot_90: Π(:F64.V3) F64.V3
-  λv (<v λ F64.V3> λv.x λv.y λv.z (((F64.V3.new v.y) ((F64.sub F64.0) v.x)) v.z))
-

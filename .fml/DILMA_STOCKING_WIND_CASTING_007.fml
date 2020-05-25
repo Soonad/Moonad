@@ -1,7 +1,0 @@
-DILMA_STOCKING_WIND_CASTING_007: F64
-<<<<<<< HEAD
-  F64.parse("1141")
-=======
-  F64.parse("1553")
->>>>>>> dev-taelin-arena
-

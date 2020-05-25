@@ -1,7 +1,0 @@
-FINN_WALK_CYCLE_005: F64
-<<<<<<< HEAD
-  F64.parse("2656")
-=======
-  F64.parse("3068")
->>>>>>> dev-taelin-arena
-

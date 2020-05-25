@@ -1,3 +1,0 @@
-Char.parse.type: String -> Type
-  (str) str<(self) Type>(Unit)((str.head) (str.tail) Char)
-

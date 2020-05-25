@@ -1,7 +1,0 @@
-GON_FREECS_JAJANKEN_PAPER_CASTING_000: F64
-<<<<<<< HEAD
-  F64.parse("2899")
-=======
-  F64.parse("3311")
->>>>>>> dev-taelin-arena
-

@@ -1,3 +1,0 @@
-Arelin.Game: Type
-  self<P: (self: Arelin.Game) -> Type> -> (new: (stage: List(Arelin.Thing)) -> P(Arelin.Game.new(stage))) -> P(self)
-

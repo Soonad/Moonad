@@ -1,7 +1,0 @@
-ERIC_JACQUIN_TAUNT_005: F64
-<<<<<<< HEAD
-  F64.parse("1848")
-=======
-  F64.parse("2260")
->>>>>>> dev-taelin-arena
-

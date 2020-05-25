@@ -1,7 +1,0 @@
-DORIME_GODS_CHAMBER_HEAL_CIRCLE_IDLE_020: F64
-<<<<<<< HEAD
-  F64.parse("1209")
-=======
-  F64.parse("1621")
->>>>>>> dev-taelin-arena
-

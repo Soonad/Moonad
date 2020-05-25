@@ -1,3 +1,0 @@
-Parsec.Error.Item: *
-  ∀parser.error.tokens(P:Π(:Parsec.Error.Item) *) Π(tokens:Π(xs:String) (P (Parsec.Error.Item.tokens xs))) Π(label:Π(xs:String) (P (Parsec.Error.Item.label xs))) Π(end_of_input:(P Parsec.Error.Item.end_of_input)) (P parser.error.tokens)
-

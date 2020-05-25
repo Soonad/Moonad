@@ -1,3 +1,0 @@
-Parsec.Error.Item.tokens: Π(:String) Parsec.Error.Item
-  λxs ΛP λtokens λ λ (tokens xs)
-

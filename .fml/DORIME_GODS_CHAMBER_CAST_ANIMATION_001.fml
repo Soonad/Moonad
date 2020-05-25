@@ -1,7 +1,0 @@
-DORIME_GODS_CHAMBER_CAST_ANIMATION_001: F64
-<<<<<<< HEAD
-  F64.parse("1181")
-=======
-  F64.parse("1593")
->>>>>>> dev-taelin-arena
-

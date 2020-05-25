@@ -1,7 +1,0 @@
-FINN_IDLE_003: F64
-<<<<<<< HEAD
-  F64.parse("2588")
-=======
-  F64.parse("3000")
->>>>>>> dev-taelin-arena
-

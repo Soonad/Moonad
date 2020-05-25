@@ -1,3 +1,0 @@
-GASTLY_ATTACK_LICK_010: F64
-  F64.parse("3091")
-

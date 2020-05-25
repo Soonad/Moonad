@@ -1,3 +1,0 @@
-Arelin.Game.Effect.damage: Π(dmg:F64) Arelin.Game.Effect
-  λdmg ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport_to (damage dmg)
-

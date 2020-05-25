@@ -1,3 +1,0 @@
-U32.parse_hex: Π(:String) U32
-  λstr (U32.new ((Word.from_bits Nat.32) (Bits.parse_hex str)))
-

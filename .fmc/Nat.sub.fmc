@@ -1,3 +1,0 @@
-Nat.sub: Π(:Nat) Π(:Nat) Nat
-  λn λm ((<m λ Nat> n) λm.pred ((<n λ Nat> Nat.zero) λn.pred ((Nat.sub n.pred) m.pred)))
-
