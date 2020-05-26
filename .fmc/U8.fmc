@@ -1,0 +1,3 @@
+U8: *
+  ∀u8(P:Π(:U8) *) Π(new:Π(a:(Word Nat.8)) (P (U8.new a))) (P u8)
+

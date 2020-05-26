@@ -18,3 +18,19 @@ Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
   | <len> (x, xs, e)
     Empty.absurd(Nat.succ_isnt_zero(len, e), _);
   | Equal.to<Nat><Nat.zero>;
+
+Vector.extract: <A: Type> -> <n: Nat> -> Vector(A, Nat.succ(n)) -> Pair(A, Vector(A, n))
+  <A> <n> (xs) xs<(n) () Bool.if<Type>(Nat.eql(Nat.0, n), Unit, Pair(A, Vector(A, Nat.pred(n))))>
+  | Unit.new;
+  | <n> (head) (tail) Pair.new<A, Vector(A, n)>(head, tail);
+
+Vector.split_at: <A: Type> -> <n: Nat> -> Vector(A, n) -> (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))
+  <A> <n> (xs) xs<(n) () (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))>
+  | (m) Pair.new<Vector(A, Nat.0), Vector(A, Nat.0)>(Vector.nil<A>, Vector.nil<A>);
+  | <n.pred> (head) (tail) (m)
+    m<(m) Pair(Vector(A, Nat.min(Nat.succ(n.pred), m)), Vector(A, Nat.sub(Nat.succ(n.pred), m)))>
+    | Pair.new<Vector(A, Nat.0), Vector(A, Nat.succ(n.pred))>(Vector.nil<A>, Vector.ext<A, n.pred>(head, tail));
+    | (m.pred)
+      get x y = Vector.split_at<A, n.pred>(tail, m.pred)
+      let x = Vector.ext<A, Nat.min(n.pred, m.pred)>(head, x)
+      Pair.new<Vector(A, Nat.succ(Nat.min(n.pred, m.pred))), Vector(A, Nat.sub(n.pred, m.pred))>(x, y);;

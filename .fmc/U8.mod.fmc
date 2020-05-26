@@ -1,0 +1,3 @@
+U8.mod: Π(:U8) Π(:U8) U8
+  λa λb (<a λ U8> λa_val (<b λ U8> λb_val (U8.new ((<Word.mod Nat.8> a_val) b_val))))
+

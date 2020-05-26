@@ -1,0 +1,3 @@
+U8.to_nat: Π(:U8) Nat
+  λa (<a λ Nat> λa_val (<Word.to_nat Nat.8> a_val))
+

@@ -1,0 +1,3 @@
+U8.lte: U8 -> U8 -> Bool
+  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.lte<Nat.8>(a_val)(b_val)))
+

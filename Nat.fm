@@ -358,12 +358,12 @@ Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
 
 Nat.sub: Nat -> Nat -> Nat //prim//
   (n) (m)
-  m<() Nat>
-  | n;
-  | (m.pred)
-    n<() Nat>
-    | Nat.zero;
-    | (n.pred) Nat.sub(n.pred)(m.pred);;
+  n<() Nat>
+  | Nat.0;
+  | (n.pred)
+    m<() Nat>
+    | n;
+    | (m.pred) Nat.sub(n.pred)(m.pred);;
 
 Nat.sub_rem: Nat -> Nat -> Either(Nat)(Nat) //loop//
   (n) (m)
@@ -498,3 +498,12 @@ Nat.bitwise_and: Nat -> Nat -> Nat
 
 Nat.odd: Nat -> Bool
   (n) Nat.eql(Nat.mod(n, Nat.2), Nat.1)
+
+Nat.min: Nat -> Nat -> Nat
+  (a)
+  a<() Nat -> Nat>
+  | (b) Nat.0;
+  | (a.pred) (b)
+    b<() Nat>
+    | Nat.0;
+    | (b.pred) Nat.succ(Nat.min(a.pred, b.pred));;

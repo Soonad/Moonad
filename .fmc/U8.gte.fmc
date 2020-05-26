@@ -1,0 +1,3 @@
+U8.gte: Π(:U8) Π(:U8) Bool
+  λa λb (<a λ Bool> λa_val (<b λ Bool> λb_val ((<Word.gte Nat.8> a_val) b_val)))
+

@@ -58,7 +58,7 @@ ecdsa.sqrt: Nat -> Nat
   (a) ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, Nat.1), Nat.4), CURVE.P)
 
 // RHS of elliptic curve equation
-ecdsa.weistrass: Nat -> Nat
+ecdsa.weierstrass: Nat -> Nat
   (x)
   ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(Nat.3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
 
@@ -361,3 +361,46 @@ Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -
       Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
   | () Pair.new<Jacobian, Jacobian>(p, f);
   | Unit.new;
+
+Point.valid_point: Point -> Bool
+  (p)
+  get x y = p
+  Bool.if<_>(Bool.or(Nat.eql(x, Nat.0), Nat.eql(y, Nat.0)))
+  | Bool.false;
+  | Nat.eql(ecdsa.mod(Nat.square(y)), ecdsa.weierstrass(x));
+
+U8_Vector.to_number: <n: Nat> -> Vector(U8, n) -> Nat
+  <n> (bytes) U8_Vector.to_number.tco<n>(bytes, Nat.0)
+
+U8_Vector.to_number.tco: <n: Nat> -> Vector(U8, n) -> Nat -> Nat
+  <n> (bytes) (res)
+  bytes<() () Unit -> Nat>
+  | () res;
+  | <n> (head) (tail) () U8_Vector.to_number.tco<n>(tail)(Nat.add(U8.to_nat(head), Nat.mul(res, Nat.16)));
+  | Unit.new;
+
+Point.from_compressed_hex: Vector(U8, Nat.33) -> Maybe(Point)
+  (bytes)
+  get head tail = Vector.extract<U8, Nat.32>(bytes)
+  let head = U8.to_nat(head)
+  let x = U8_Vector.to_number<Nat.32>(tail)
+  let sqrY = ecdsa.weierstrass(x)
+  let y = ecdsa.sqrt(sqrY)
+  let is_head_odd = Nat.odd(head)
+  let is_y_odd = Nat.odd(y)
+  let y = Bool.if<_>(Bool.eql(is_head_odd, is_y_odd), y, ecdsa.negate(y))
+  let point = Point.new(x, y)
+  Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
+
+Nat.65: Nat
+  Nat.succ(Nat.64)
+
+Point.from_uncompressed_hex: Vector(U8, Nat.65) -> Maybe(Point)
+  (bytes)
+  get head tail = Vector.extract<U8, Nat.64>(bytes)
+  get x y = Vector.split_at<U8, Nat.64>(tail, Nat.32)
+  let x = U8_Vector.to_number<Nat.32>(x)
+  let y = U8_Vector.to_number<Nat.32>(y)
+  let point = Point.new(x, y)
+  Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
+

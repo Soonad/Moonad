@@ -1,0 +1,3 @@
+Vector.extract: ∀(A:*) ∀(n:Nat) Π(:((Vector A) (Nat.succ n))) ((Pair A) ((Vector A) n))
+  ΛA Λn λxs ((<xs λn λ (((<Bool.if *> ((Nat.eql Nat.0) n)) Unit) ((Pair A) ((Vector A) (Nat.pred n))))> Unit.new) Λn λhead λtail ((<<Pair.new A> ((Vector A) n)> head) tail))
+

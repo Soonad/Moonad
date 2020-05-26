@@ -1,0 +1,3 @@
+Point.valid_point: Point -> Bool
+  (p) p<(self) Bool>((x) (y) Bool.if<Bool>(Bool.or(Nat.eql(x)(Nat.0))(Nat.eql(y)(Nat.0)))(Bool.false)(Nat.eql(ecdsa.mod(Nat.square(y)))(ecdsa.weierstrass(x))))
+

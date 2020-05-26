@@ -1,0 +1,3 @@
+U8.new: Π(:(Word Nat.8)) U8
+  λa Λ λu8 (u8 a)
+
