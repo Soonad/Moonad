@@ -1,0 +1,206 @@
+Arelin.Thing.luffy_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.buf = Arelin.Thing.get_buf(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  
+  case F64.eql(self.act, F64.0):
+  | #HERO_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | LUFFY_RUN_000;
+      | F64.parse("8");
+      | F64.parse("16");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | LUFFY_IDLE_000;
+      | F64.parse("13");
+      | F64.parse("26");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #LUFFY_BASIC_ATTACK#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LUFFY_BASIC_ATTACK_1_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let effs = 
+      [ Arelin.Game.Effect; 
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1)
+      ]
+
+    let hits = 
+      [ Arelin.Game.Hit;
+        Arelin.Game.Hit.new
+        | effs;
+        | Arelin.Thing.at_dist(self, F64.parse("20"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("10"));,
+
+        Arelin.Game.Hit.new
+        | effs;
+        | Arelin.Thing.at_dist(self, F64.parse("40"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("10"));
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+    let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+  
+    self 
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #LUFFY_BAZOOKA#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LUFFY_BAZOOKA_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let effs = 
+      [ Arelin.Game.Effect;
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_3),
+        Arelin.Game.Effect.impulse(F64.parse("10"), self.dir)
+      ]
+
+    let hits = 
+      [  Arelin.Game.Hit;
+         Arelin.Game.Hit.new
+         | effs;
+         | Arelin.Thing.at_dist(self, F64.parse("20"));
+         | self.dir;
+         | Arelin.Game.Hitbox.cbox(F64.parse("10"));,
+
+         Arelin.Game.Hit.new
+         | effs;
+         | Arelin.Thing.at_dist(self, F64.parse("40"));
+         | self.dir;
+         | Arelin.Game.Hitbox.cbox(F64.parse("10"));,
+
+         Arelin.Game.Hit.new
+         | effs;
+         | Arelin.Thing.at_dist(self, F64.parse("60"));
+         | self.dir;
+         | Arelin.Game.Hitbox.cbox(F64.parse("10"));
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #LUFFY_GATLING_GUN#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LUFFY_GATLING_GUN_000;
+      | F64.parse("16");
+      | F64.parse("32");
+
+    let effs = 
+      [ Arelin.Game.Effect;
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1) 
+      ]
+
+    let hits = 
+      [  Arelin.Game.Hit;
+         Arelin.Game.Hit.new
+         | effs;
+         | Arelin.Thing.at_dist(self, F64.parse("30"));
+         | self.dir;
+         | Arelin.Game.Hitbox.cbox(F64.parse("20"));
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+    let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+    let self = Arelin.Thing.cast(self, F64.parse("18"), hits)
+    let self = Arelin.Thing.cast(self, F64.parse("24"), hits)
+    let self = Arelin.Thing.cast(self, F64.parse("30"), hits)
+
+    self
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #LUFFY_GIANT_ARM#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | LUFFY_GIANT_ARM_000;
+      | F64.parse("23");
+      | F64.parse("46");
+
+    let arm = Arelin.Thing.new_thing
+    let arm = Arelin.Thing.set_fun(arm, Arelin.Thing.luffy.giant_arm)
+    let arm = 
+      Arelin.Thing.move
+      | arm;
+      | Arelin.Thing.at_dist(self, F64.parse("80"));
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("36");
+      | [ Arelin.Thing; arm ];
+
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #LUFFY_BLOCK#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LUFFY_BLOCK_000;
+      | F64.1;
+      | F64.parse("15");
+
+    let buff = Arelin.Game.Buff.shielded(F64.parse("15"), F64.parse("1000"))
+
+    let self = Arelin.Thing.set_buf(self, List.cons<>(buff, self.buf))
+
+    self 
+  ;
+  | #LUFFY_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | LUFFY_TAUNT_000;
+    | F64.1;
+    | F64.parse("15");
+  ;;;;;;
+
+Arelin.Thing.luffy.giant_arm(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self) 
+
+  let effs = 
+    [ Arelin.Game.Effect;
+      Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_5),
+      Arelin.Game.Effect.stun(F64.mul(Arelin.Constants.ONE_SEC, F64.parse("3")))
+    ]
+
+  let hits = 
+    [ Arelin.Game.Hit;
+      Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("30"));
+    ]
+
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+
+  self 
