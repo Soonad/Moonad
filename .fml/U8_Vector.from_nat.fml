@@ -1,0 +1,3 @@
+U8_Vector.from_nat: (pad: Nat) -> (n: Nat) -> Vector(U8)(pad)
+  (pad) (n) Vector.reverse<U8><pad>(U8_Vector.from_nat(pad)(n))
+

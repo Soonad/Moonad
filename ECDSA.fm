@@ -63,7 +63,7 @@ ecdsa.weierstrass: Nat -> Nat
   ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(Nat.3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
 
 ecdsa.PRIME_SIZE: Nat
-  Nat.parse_decimal("256")
+  Nat.256
 
 ecdsa.USE_ENDOMORPHISM: Bool
   Nat.eql(CURVE.a, Nat.0)
@@ -379,6 +379,12 @@ U8_Vector.to_number.tco: <n: Nat> -> Vector(U8, n) -> Nat -> Nat
   | <n> (head) (tail) () U8_Vector.to_number.tco<n>(tail)(Nat.add(U8.to_nat(head), Nat.mul(res, Nat.16)));
   | Unit.new;
 
+Nat.65: Nat
+  Nat.succ(Nat.64)
+
+Nat.256: Nat
+  Nat.mul(Nat.16, Nat.16)
+
 Point.from_compressed_hex: Vector(U8, Nat.33) -> Maybe(Point)
   (bytes)
   get head tail = Vector.extract<U8, Nat.32>(bytes)
@@ -392,9 +398,6 @@ Point.from_compressed_hex: Vector(U8, Nat.33) -> Maybe(Point)
   let point = Point.new(x, y)
   Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
 
-Nat.65: Nat
-  Nat.succ(Nat.64)
-
 Point.from_uncompressed_hex: Vector(U8, Nat.65) -> Maybe(Point)
   (bytes)
   get head tail = Vector.extract<U8, Nat.64>(bytes)
@@ -403,4 +406,27 @@ Point.from_uncompressed_hex: Vector(U8, Nat.65) -> Maybe(Point)
   let y = U8_Vector.to_number<Nat.32>(y)
   let point = Point.new(x, y)
   Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
+
+U8_Vector.from_nat: (pad: Nat) -> (n: Nat) -> Vector(U8, pad)
+  (pad) (n) Vector.reverse<U8, pad>(U8_Vector.from_nat(pad, n))
+
+U8_Vector.from_nat.aux: (pad: Nat) -> (n: Nat) -> Vector(U8, pad)
+  (pad) (n)
+  pad<(pad) Vector(U8, pad)>
+  | Vector.nil<U8>;
+  | (pad.pred)
+    get div mod = Nat.div_mod(n, Nat.256)
+    Vector.ext<U8, pad.pred>(U8.from_nat(mod), U8_Vector.from_nat.aux(pad.pred, div));
+
+Point.to_bytes: (p: Point) -> (compressed: Bool) -> Vector(U8, Bool.if<Nat>(compressed, Nat.33, Nat.65))
+ (p) (compressed)
+ get p.x p.y = p
+ let x = U8_Vector.from_nat(Nat.32, p.x)
+ compressed<(b) Vector(U8, Bool.if<Nat>(b, Nat.33, Nat.65))>
+ | let is_odd_byte = U8.from_nat(Bool.if<Nat>(Nat.odd(p.y), Nat.3, Nat.2))
+   Vector.ext<U8, Nat.32>(is_odd_byte, x);
+ | let uncompressed_byte = U8.from_nat(Nat.4)
+   let y = U8_Vector.from_nat(Nat.32, p.y)
+   let uncompressed_vec = Vector.concat<U8, Nat.32, Nat.32>(x, y)
+   Vector.ext<U8, Nat.64>(uncompressed_byte, uncompressed_vec);
 

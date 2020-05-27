@@ -1,0 +1,3 @@
+Vector.reverse.aux: <A: Type> -> <n: Nat> -> <m: Nat> -> Vector(A)(n) -> Vector(A)(m) -> Vector(A)(Nat.add(n)(m))
+  <A> <n> <m> (xs) (ys) xs<(n) () Vector(A)(Nat.add(n)(m))>(ys)(<n.pred> (head) (tail) let ys = Vector.ext<A><m>(head)(ys); let eq = Nat.add_x_succ_y(n.pred)(m); let res = Vector.reverse.aux<A><n.pred><Nat.succ(m)>(tail)(ys); Equal.rewrite<Nat><Nat.add(n.pred)(Nat.succ(m))><Nat.add(Nat.succ(n.pred))(m)><(x) Vector(A)(x)>(eq)(res))
+

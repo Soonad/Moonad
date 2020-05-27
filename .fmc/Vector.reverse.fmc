@@ -1,0 +1,3 @@
+Vector.reverse: ∀(A:*) ∀(n:Nat) Π(:((Vector A) n)) ((Vector A) n)
+  ΛA Λn λxs @eq=(Nat.add_x_0 n);@ys=((<<<Vector.reverse.aux A> n> Nat.0> xs) <Vector.nil A>);((<<<<Equal.rewrite Nat> ((Nat.add n) Nat.zero)> n> λx ((Vector A) x)> eq) ys)
+

@@ -33,4 +33,29 @@ Vector.split_at: <A: Type> -> <n: Nat> -> Vector(A, n) -> (m: Nat) -> Pair(Vecto
     | (m.pred)
       get x y = Vector.split_at<A, n.pred>(tail, m.pred)
       let x = Vector.ext<A, Nat.min(n.pred, m.pred)>(head, x)
-      Pair.new<Vector(A, Nat.succ(Nat.min(n.pred, m.pred))), Vector(A, Nat.sub(n.pred, m.pred))>(x, y);;
+      def x_type = Vector(A, Nat.succ(Nat.min(n.pred, m.pred)))
+      def y_type = Vector(A, Nat.sub(n.pred, m.pred))
+      Pair.new<x_type, y_type>(x, y);;
+
+Vector.reverse.aux: <A: Type> -> <n: Nat> -> <m: Nat> -> Vector(A, n) -> Vector(A, m) -> Vector(A, Nat.add(n, m))
+  <A> <n> <m> (xs) (ys)
+  xs<(n) () Vector(A, Nat.add(n, m))>
+  | ys;
+  | <n.pred> (head) (tail)
+    let ys = Vector.ext<A, m>(head, ys)
+    let eq = Nat.add_x_succ_y(n.pred, m)
+    let res = Vector.reverse.aux<A, n.pred, Nat.succ(m)>(tail, ys);
+    Equal.rewrite<_, Nat.add(n.pred, Nat.succ(m)), Nat.add(Nat.succ(n.pred), m), (x) Vector(A, x)>(eq, res);
+
+Vector.reverse: <A: Type> -> <n: Nat> -> Vector(A, n) -> Vector(A, n)
+  <A> <n> (xs)
+  let eq = Nat.add_x_0(n)
+  let ys = Vector.reverse.aux<A, n, Nat.0>(xs, Vector.nil<A>)
+  Equal.rewrite<_, Nat.add(n, Nat.zero), n, (x) Vector(A, x)>(eq, ys)
+
+Vector.concat: <A: Type> -> <n: Nat> -> <m: Nat>  -> Vector(A, n) -> Vector(A, m) -> Vector(A, Nat.add(n, m))
+  <A> <n> <m> (as) (bs)
+  as<(n) () Vector(A, Nat.add(n, m))>
+  | bs;
+  | <n.pred> (head) (tail)
+    Vector.ext<A, Nat.add(n.pred, m)>(head, Vector.concat<A, n.pred, m>(tail, bs));

@@ -113,6 +113,10 @@ U8.to_bits: U8 -> Bits
   a<() Bits> | (a_val)
   Word.to_bits<Nat.8>(a_val);
 
+U8.from_nat: Nat -> U8
+  // TODO
+  U8.from_nat
+
 U8.to_nat: U8 -> Nat //prim//
   (a)
   a<() Nat> | (a_val)

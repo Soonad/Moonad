@@ -1,0 +1,3 @@
+U8.from_nat: Π(:Nat) U8
+  U8.from_nat
+

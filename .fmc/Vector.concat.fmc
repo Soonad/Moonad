@@ -1,0 +1,3 @@
+Vector.concat: ∀(A:*) ∀(n:Nat) ∀(m:Nat) Π(:((Vector A) n)) Π(:((Vector A) m)) ((Vector A) ((Nat.add n) m))
+  ΛA Λn Λm λas λbs ((<as λn λ ((Vector A) ((Nat.add n) m))> bs) Λn.pred λhead λtail ((<<Vector.ext A> ((Nat.add n.pred) m)> head) ((<<<Vector.concat A> n.pred> m> tail) bs)))
+

@@ -1,0 +1,3 @@
+Nat.256: Nat
+  ((Nat.mul Nat.16) Nat.16)
+

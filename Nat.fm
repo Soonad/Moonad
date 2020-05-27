@@ -507,3 +507,21 @@ Nat.min: Nat -> Nat -> Nat
     b<() Nat>
     | Nat.0;
     | (b.pred) Nat.succ(Nat.min(a.pred, b.pred));;
+
+Nat.add_x_0: (x: Nat) -> Equal(Nat, Nat.add(x, Nat.0), x)
+  (x)
+  x<(x) Equal(Nat, Nat.add(x, Nat.0), x)>
+  | Equal.to<_, Nat.0>;
+  | (x.pred) Equal.apply_ind<_, _>(Nat.add(x.pred, Nat.0)
+                                  ,x.pred
+                                  ,Nat.succ
+                                  ,Nat.add_x_0(x.pred));
+
+Nat.add_x_succ_y: (x: Nat) -> (y: Nat) -> Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))
+  (x) (y)
+  x<(x) Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))>
+  | Equal.to<_, Nat.succ(y)>;
+  | (x.pred) Equal.apply_ind<_, _>(Nat.add(x.pred, Nat.succ(y))
+                                  ,Nat.succ(Nat.add(x.pred, y))
+                                  ,Nat.succ
+                                  ,Nat.add_x_succ_y(x.pred, y));
