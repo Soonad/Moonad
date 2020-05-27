@@ -1,0 +1,146 @@
+Arelin.Thing.king_dedede_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("2"))
+  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let targ_dir = Arelin.Thing.targ_dir(self)
+  
+  case F64.eql(self.act, F64.0):
+  | #DEDEDE_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | KING_DEDEDE_WALK_000;
+      | F64.parse("8");
+      | F64.parse("16");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | KING_DEDEDE_IDLE_000;
+      | F64.parse("4");
+      | F64.parse("16");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #DEDEDE_JET_HARMMER#
+    Arelin.Thing.animate
+    | self;
+    | F64.1;
+    | KING_DEDEDE_JET_HAMMER_SPIN_000;
+    | F64.parse("30");
+    | F64.parse("30");
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #DEDEDE_GORDO_THROW#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | KING_DEDEDE_GORDO_THROW_CAST_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let gordo = Arelin.Thing.new_thing
+    let gordo = 
+      Arelin.Thing.set_fun
+      | gordo;
+      | Arelin.Thing.king_dedede.gordo_throw;
+    let gordo = 
+      Arelin.Thing.set_pos
+      | gordo;
+      | Arelin.Thing.at_dist(self, F64.parse("30"));
+    let gordo = Arelin.Thing.set_dir(gordo, self.dir)
+    let gordo = 
+      Arelin.Thing.set_vel
+      | gordo;
+      | F64.V3.scale(F64.parse("10"), targ_dir);
+    let gordo = Arelin.Thing.set_box(gordo, Arelin.Game.Hitbox.nbox)
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("15");
+      | [ Arelin.Thing; gordo ];
+
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #DEDEDE_FORWARD_SMASH#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | KING_DEDEDE_FORWARD_SMASH_000;
+    | F64.parse("15");
+    | F64.parse("30");
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #DEDEDE_GROUND_POUND#
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | KING_DEDEDE_GROUND_POUND_000;
+      | F64.parse("22");
+      | F64.0;
+      | F64.parse("22");
+
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | KING_DEDEDE_GROUND_POUND_000;
+      | F64.parse("22");
+      | F64.parse("22");
+      | F64.parse("43");
+
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | KING_DEDEDE_GROUND_POUND_000;
+      | F64.parse("22");
+      | F64.parse("43");
+      | F64.parse("64");
+
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | KING_DEDEDE_GROUND_POUND_000;
+      | F64.parse("22");
+      | F64.parse("64");
+      | F64.parse("85");
+
+    let self = Arelin.Thing.reset(self, F64.parse("85"))
+
+    self
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #DEDEDE_EVADE#
+    Arelin.Thing.animate
+    | self;
+    | F64.1;
+    | KING_DEDEDE_IDLE_000;
+    | F64.parse("4");
+    | F64.parse("16");
+
+  ;
+  | #DEDEDE_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | KING_DEDEDE_TAUNT_000;
+    | F64.parse("22");
+    | F64.parse("22");
+  ;;;;;;
+
+Arelin.Thing.king_dedede.gordo_throw(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | KING_DEDEDE_GORDO_THROW_CAST_000;
+  | F64.parse("15");
+  | F64.parse("15");
