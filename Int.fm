@@ -84,13 +84,30 @@ Int.parse_decimal: String -> Int
     | Int.new(Nat.0, Nat.parse_decimal(str.tail));
     | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), Nat.0);;
 
-Int.parse_hex: String -> Int
-  (str) str<() Int>
-  | Int.0;
+Int.parse_hex:
+  (str: String) ->
+    Int.parse_hex_safe(str)<() Type>
+    | Unit;
+    | () Int;
+  (str)
+  Int.parse_hex_safe(str)<
+    (m)
+    m<() Type>
+    | Unit;
+    | () Int;
+  >
+  | Unit.new;
+  | (val) val;
+
+Int.parse_hex_safe: String -> Maybe(Int)
+  (str) str<() Maybe(Int)>
+  | Maybe.none<>;
   | (str.head) (str.tail)
-    U16.eql(str.head, Char.parse("-"))<() Int>
-    | Int.new(Nat.0, Nat.parse_hex(str.tail));
-    | Int.new(Nat.parse_hex(String.cons(str.head, str.tail)), Nat.0);;
+    U16.eql(str.head, Char.parse("-"))<() Maybe(Int)>
+    | use b = Maybe.bind<><>(Nat.parse_hex_safe(str.tail))
+      Maybe.some<>(Int.new(Nat.0, b));
+    | use a = Maybe.bind<><>(Nat.parse_hex_safe(String.cons(str.head, str.tail)))
+      Maybe.some<>(Int.new(a, Nat.0));;
 
 Int.to_string_decimal: Int -> String
   (a)

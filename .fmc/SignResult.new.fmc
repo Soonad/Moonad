@@ -1,0 +1,3 @@
+SignResult.new: Π(:Nat) Π(:Nat) SignResult
+  λx λy ΛP λsignResult ((signResult x) y)
+

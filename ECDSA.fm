@@ -131,10 +131,13 @@ ecdsa.split_scalar: Nat -> Pair(Int, Int)
 
 // Point works in default coordinates
 Point: Type
-  Pair(Nat, Nat)
+  point<P: Point -> Type> ->
+  (new: (x: Nat) -> (y: Nat) -> P(Point.new(x, y))) ->
+  P(point)
 
 Point.new: Nat -> Nat -> Point
-  (x) (y) Pair.new<Nat, Nat>(x, y)
+  (x) (y)
+  <P> (point) point(x, y)
 
 // Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
 Jacobian: Type
@@ -429,4 +432,56 @@ Point.to_bytes: (p: Point) -> (compressed: Bool) -> Vector(U8, Bool.if<Nat>(comp
    let y = U8_Vector.from_nat(Nat.32, p.y)
    let uncompressed_vec = Vector.concat<U8, Nat.32, Nat.32>(x, y)
    Vector.ext<U8, Nat.64>(uncompressed_byte, uncompressed_vec);
+
+SignResult: Type
+  signResult<P: SignResult -> Type> ->
+  (new: (x: Nat) -> (y: Nat) -> P(SignResult.new(x, y))) ->
+  P(signResult)
+
+SignResult.new: Nat -> Nat -> SignResult
+  (x) (y)
+  <P> (signResult) signResult(x, y)
+
+// This function should be type checked but the type checker is looping
+// SignResult.fromHex: String -> Maybe(SignResult)
+//   (str)
+//   def bind = Maybe.bind<Pair(String, String)><SignResult>
+//   def bind2 = Maybe.bind<Nat><SignResult>
+
+//   use pair = bind(String.take_n(Nat.2, str))
+//   get str check1 = pair
+
+//   use pair = bind(String.take_n(Nat.2, str))
+//   get length str = pair
+//   use length = bind2(Nat.parse_hex_safe(length))
+
+//   use pair = bind(String.take_n(Nat.2, str))
+//   get check2 str = pair
+//   Bool.if<Maybe(SignResult)>(
+//     Bool.orVar(Nat.3)
+//     | String.eql(check1, "30");
+//     | Nat.eql(length, Nat.sub(String.length(str), Nat.4));
+//     | String.eql(check2, "02");)
+//   | Maybe.none<SignResult>;
+//   | // r
+//     use pair = bind(String.take_n(Nat.2, str))
+//     get rLen str = pair
+//     use rLen = bind2(Nat.parse_hex_safe(rLen))
+//     use pair = bind(String.take_n(rLen, str))
+//     get r str = pair
+//     use r = bind2(Nat.parse_hex_safe(r))
+//     // s
+//     use pair = bind(String.take_n(Nat.2, str))
+//     get check3 str = pair
+//     (String.eql(check3, "02"))<() Maybe(SignResult)>
+//     | Maybe.none<SignResult>;
+//     | use pair = bind(String.take_n(Nat.2, str))
+//       get sLen str = pair
+//       use sLen = bind2(Nat.parse_hex_safe(sLen))
+//       use pair = bind(String.take_n(sLen, str))
+//       get s str = pair
+//       use s = bind2(Nat.parse_hex_safe(s))
+//       Maybe.some<SignResult>(SignResult.new(r, s))
+//     ;
+//   ;
 
