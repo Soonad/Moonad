@@ -1,3 +1,3 @@
 ecdsa.invert: Π(:Nat) Π(:Nat) Nat
-  λnumber λmodulo ((<((Nat.eql number) Nat.0) λ Nat> Nat.0) (<((Nat.egcd ((Nat.mod number) modulo)) modulo) λself Nat> λgcd λp ((<((Nat.eql gcd) Nat.1) λ Nat> (<p λself Nat> λx λy ((Int.mod_Nat x) modulo))) Nat.0)))
+  λnumber λmodulo ((<((Nat.eql number) Nat.0) λ Nat> Nat.0) (<((Nat.egcd ((Nat.mod number) modulo)) modulo) λx Nat> λgcd λp ((<((Nat.eql gcd) Nat.1) λ Nat> (<p λx Nat> λx λy ((Int.mod_Nat x) modulo))) Nat.0)))
 

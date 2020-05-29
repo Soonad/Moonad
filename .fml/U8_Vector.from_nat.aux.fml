@@ -1,3 +1,3 @@
 U8_Vector.from_nat.aux: (pad: Nat) -> (n: Nat) -> Vector(U8)(pad)
-  (pad) (n) pad<(pad) Vector(U8)(pad)>(Vector.nil<U8>)((pad.pred) Nat.div_mod(n)(Nat.256)<(self) Vector(U8)(Nat.succ(pad.pred))>((div) (mod) Vector.ext<U8><pad.pred>(U8.from_nat(mod))(U8_Vector.from_nat.aux(pad.pred)(div))))
+  (pad) (n) pad<(pad) Vector(U8)(pad)>(Vector.nil<U8>)((pad.pred) Nat.div_mod(n)(Nat.256)<(x) Vector(U8)(Nat.succ(pad.pred))>((div) (mod) Vector.ext<U8><pad.pred>(U8.from_nat(mod))(U8_Vector.from_nat.aux(pad.pred)(div))))
 

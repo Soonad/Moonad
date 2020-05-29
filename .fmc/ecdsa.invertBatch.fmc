@@ -1,3 +1,3 @@
 ecdsa.invertBatch: Π(:(List Nat)) Π(:Nat) (List Nat)
-  λnums λmodulo (<(((((ecdsa.invertBatch1.tco nums) modulo) Nat.1) <List.nil Nat>) <List.nil Nat>) λself (List Nat)> λacc λp (<p λself (List Nat)> λscratch λrest @acc=((ecdsa.invert acc) modulo);(((((ecdsa.invertBatch2.tco rest) modulo) acc) scratch) <List.nil Nat>)))
+  λnums λmodulo (<(((((ecdsa.invertBatch1.tco nums) modulo) Nat.1) <List.nil Nat>) <List.nil Nat>) λx (List Nat)> λacc λp (<p λx (List Nat)> λscratch λrest @acc=((ecdsa.invert acc) modulo);(((((ecdsa.invertBatch2.tco rest) modulo) acc) scratch) <List.nil Nat>)))
 
