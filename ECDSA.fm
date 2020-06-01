@@ -134,6 +134,9 @@ ecdsa.number_to_hex: Nat -> String
   let hex = Nat.show_base(num, Nat.16);
   Bool.if<>(Nat.odd(String.length(hex)), String.cons('0', hex), hex)
 
+ecdsa.parse_byte: String -> Maybe(Nat)
+  (n) Maybe.map<><>(Nat.mul(Nat.2), Nat.parse_hex_safe(n))
+
 // Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
 Jacobian: Type
   jacobian<P: Jacobian -> Type> ->
@@ -420,14 +423,14 @@ SignResult.new: Nat -> Nat -> SignResult
   (r) (s)
   <P> (signResult) signResult(r, s)
 
-SignResult.fromHex: String -> Maybe(SignResult)
+SignResult.from_hex: String -> Maybe(SignResult)
   (str)
   use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
   get str check1 = pair
 
   use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
   get length str = pair
-  use length = Maybe.bind<><>(Nat.parse_hex_safe(length))
+  use length = Maybe.bind<><>(ecdsa.parse_byte(length))
 
   use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
   get check2 str = pair
@@ -440,7 +443,7 @@ SignResult.fromHex: String -> Maybe(SignResult)
   | // r
     use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
     get rLen str = pair
-    use rLen = Maybe.bind<><>(Nat.parse_hex_safe(rLen))
+    use rLen = Maybe.bind<><>(ecdsa.parse_byte(rLen))
     use pair = Maybe.bind<><>(String.take_n(rLen, str))
     get r str = pair
     use r = Maybe.bind<><>(Nat.parse_hex_safe(r))
@@ -451,21 +454,21 @@ SignResult.fromHex: String -> Maybe(SignResult)
     | Maybe.none<SignResult>;
     | use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
       get sLen str = pair
-      use sLen = Maybe.bind<><>(Nat.parse_hex_safe(sLen))
+      use sLen = Maybe.bind<><>(ecdsa.parse_byte(sLen))
       use pair = Maybe.bind<><>(String.take_n(sLen, str))
       get s str = pair
       use s = Maybe.bind<><>(Nat.parse_hex_safe(s))
       Maybe.some<SignResult>(SignResult.new(r, s));;
 
-SignResult.toHex: SignResult -> Bool -> String
+SignResult.to_hex: SignResult -> Bool -> String
   (sig) (compressed)
   get sig.r sig.s = sig
   let s_hex = ecdsa.number_to_hex(sig.s)
   Bool.if<_>(compressed)
   | s_hex;
-  | let r_hex = ecdsa.number_to_hex(sig.r);
+  | let r_hex = ecdsa.number_to_hex(sig.r)
     let r_len_nat = Nat.div(String.length(r_hex), Nat.2)
-    let r_len = ecdsa.number_to_hex(r_len_nat);
+    let r_len = ecdsa.number_to_hex(r_len_nat)
     let s_len_nat = Nat.div(String.length(s_hex), Nat.2)
     let s_len = ecdsa.number_to_hex(s_len_nat)
     let length = ecdsa.number_to_hex(Nat.addVar(Nat.3)(r_len_nat, s_len_nat, Nat.4))
@@ -505,23 +508,3 @@ Nat.65: Nat
 Nat.256: Nat
   Nat.mul(Nat.16, Nat.16)
 
-//
-// // Recovers public key from ECDSA signature
-// // TODO: Ensure proper hash length
-// // Uses following formula:
-// // Q = (r ** -1)(sP - hG)
-// // https://crypto.stackexchange.com/questions/60218
-//static fromSignature(msgHash: Hex, signature: Signature, recovery: number): Point | undefined {
-//  const sign = normalizeSignature(signature);
-//  const { r, s } = sign;
-//  if (r === 0n || s === 0n) return;
-//  const rinv = invert(r, CURVE.n);
-//  const h = typeof msgHash === 'string' ? hexToNumber(msgHash) : arrayToNumber(msgHash);
-//  const P_ = Point.fromHex(`0${2 + (recovery & 1)}${pad64(r)}`);
-//  const sP = JacobianPoint.fromAffine(P_).multiplyUnsafe(s);
-//  const hG = JacobianPoint.BASE.multiply(h).negate();
-//  const Q = sP.add(hG).multiplyUnsafe(rinv);
-//  const point = Q.toAffine();
-//  point.assertValidity();
-//  return point;
-//}
