@@ -1,0 +1,3 @@
+U8_Vector.to_hex: <n: Nat> -> Vector(U8)(n) -> String
+  <n> (bytes) bytes<() () String>(String.nil)(<n.pred> (head) (tail) String.concat(ecdsa.number_to_hex(U8.to_nat(head)))(U8_Vector.to_hex<n.pred>(tail)))
+

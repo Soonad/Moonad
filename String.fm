@@ -182,7 +182,6 @@ String.to_set: String -> Set
     | U16.to_bits(str.head);
     | String.to_set(str.tail);
   ;
-  
 
 String.to_stringifier : String -> Stringifier
   (str)
@@ -191,3 +190,6 @@ String.to_stringifier : String -> Stringifier
   | (str.head) (str.tail)
     (x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
 
+
+String.concatVar: (n: Nat) -> Variadic(n)(String)(String)
+  Variadic.foldr<String><String>(String.concat)(String.nil)

@@ -1,0 +1,3 @@
+SignResult.toHex: SignResult -> Bool -> String
+  (sig) (compressed) sig<(x) String>((sig.r) (sig.s) let s_hex = ecdsa.number_to_hex(sig.s); Bool.if<String>(compressed)(s_hex)(let r_hex = ecdsa.number_to_hex(sig.r); let r_len_nat = Nat.div(String.length(r_hex))(Nat.2); let r_len = ecdsa.number_to_hex(r_len_nat); let s_len_nat = Nat.div(String.length(s_hex))(Nat.2); let s_len = ecdsa.number_to_hex(s_len_nat); let length = ecdsa.number_to_hex(Nat.addVar(Nat.3)(r_len_nat)(s_len_nat)(Nat.4)); String.concatVar(Nat.8)("30")(length)("02")(r_len)(r_hex)("02")(s_len)(s_hex)))
+
