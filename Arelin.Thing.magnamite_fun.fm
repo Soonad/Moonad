@@ -1,0 +1,735 @@
+Arelin.Thing.magnamite_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.sid = Arelin.Thing.get_sid(self)
+  let targ_dir = Arelin.Thing.targ_dir(self)
+  
+  case F64.eql(self.act, F64.0):
+  | #MAGNAMITE_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | MAGNAMITE_WALK_000;
+      | F64.parse("6");
+      | F64.parse("12");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | MAGNAMITE_IDLE_000;
+      | F64.parse("6");
+      | F64.parse("12");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #MAGNAMITE_THUNDER_SHOCK#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNAMITE_THUNDER_SHOCK_CAST_000;
+      | F64.parse("13");
+      | F64.parse("26");
+
+    let thunder = Arelin.Thing.new_thing
+    let thunder = Arelin.Thing.set_sid(thunder, self.sid)
+    let thunder = Arelin.Thing.set_box(thunder, Arelin.Game.Hitbox.nbox)
+    let thunder = 
+      Arelin.Thing.set_fun
+      | thunder;
+      | Arelin.Thing.magnamite.thunder_shock;
+    
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("10");
+      | [ Arelin.Thing;
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("24"));,
+           
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("48"));,
+        ];
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("15");
+      | [ Arelin.Thing;
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("24"));,
+           
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("48"));,
+        ];
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("20");
+      | [ Arelin.Thing;
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("24"));,
+           
+          Arelin.Thing.move
+          | thunder;
+          | Arelin.Thing.at_dist(self, F64.parse("48"));,
+        ];
+    
+    self 
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #MAGNAMITE_THUNDER_WAVE#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNAMITE_THUNDER_WAVE_CAST_000;
+      | F64.parse("14");
+      | F64.parse("28");
+
+    let wave_box = 
+      Arelin.Game.Hitbox.pbox
+      | [ F64.V3;
+          F64.V3.new(F64.parse("6"),  F64.parse("12"),  F64.0),
+          F64.V3.new(F64.parse("50"), F64.parse("30"),  F64.0),
+          F64.V3.new(F64.parse("50"), F64.parse("-30"),  F64.0),
+          F64.V3.new(F64.parse("6"),  F64.parse("-12"), F64.0)
+           
+        ];
+
+    let effs = 
+      [ Arelin.Game.Effect;
+        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2),
+        Arelin.Game.Effect.root(Arelin.Constants.ONE_SEC)
+      ]
+
+    let wave = 
+      [ Arelin.Game.Hit;
+        Arelin.Game.Hit.new
+        | effs;
+        | Arelin.Thing.at_dist(self, F64.parse("10"));
+        | self.dir;
+        | wave_box;
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("8"), wave)
+    let self = Arelin.Thing.cast(self, F64.parse("16"), wave)
+    let self = Arelin.Thing.cast(self, F64.parse("24"), wave)
+   
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #MAGNAMITE_SONIC_BOOM#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNAMITE_SONIC_BOOM_CAST_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let fire = Arelin.Thing.new_thing
+    let fire = Arelin.Thing.set_sid(fire, self.sid)
+    let fire = Arelin.Thing.set_fun(fire, Arelin.Thing.magnamite.sonic_boom)
+    let fire = Arelin.Thing.set_dir(fire, targ_dir)
+    let fire = Arelin.Thing.set_pos(fire, self.pos)
+    let fire = 
+      Arelin.Thing.set_vel
+      | fire;
+      | F64.V3.scale(F64.parse("10"), targ_dir);
+
+    let self = Arelin.Thing.spawn(self, F64.parse("14"), [ Arelin.Thing; fire])
+
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #MAGNAMITE_FLASH_CANNON#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNAMITE_FLASH_CANNON_CAST_000;
+      | F64.parse("11");
+      | F64.parse("22");
+
+    let fire = Arelin.Thing.new_thing
+    let fire = Arelin.Thing.set_sid(fire, self.sid)
+    let fire = Arelin.Thing.set_fun(fire, Arelin.Thing.magnamite.flash_cannon)
+    let fire = Arelin.Thing.set_vel(fire, F64.V3.scale(F64.parse("10"), targ_dir))
+    let fire = Arelin.Thing.set_dir(fire, targ_dir)
+    let fire = Arelin.Thing.set_pos(fire, self.pos)
+
+    let self = Arelin.Thing.spawn(self, F64.parse("18"), [ Arelin.Thing; fire])
+
+    self
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #MAGNAMITE_EVOLVE#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | MAGNAMITE_EVOLUTION_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let self = 
+      Arelin.Thing.create_at
+      | self;
+      | F64.parse("19");
+      | Arelin.Thing.magnamite_fun;
+
+    self 
+  ;
+  | #MAGNAMITE_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | MAGNAMITE_LIGHT_SCREEN_000;
+    | F64.parse("14");
+    | F64.parse("48");
+  ;;;;;;
+
+
+Arelin.Thing.magnamite.thunder_shock(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+
+  let effs = 
+    [ Arelin.Game.Effect; 
+      Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1) 
+    ]
+
+  let hits = 
+    [ Arelin.Game.Hit; 
+      Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+    ]
+
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.die(self, F64.parse("11"))
+
+  self
+
+Arelin.Thing.magnamite.sonic_boom(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+
+  let effs = 
+    [ Arelin.Game.Effect; 
+      Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1) 
+    ]
+
+  let hits = 
+    [ Arelin.Game.Hit; 
+      Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("20"));
+    ]
+
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | MAGNAMITE_SONIC_BOOM_PROJECT_000;
+    | F64.1;
+    | F64.parse("16");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.1, hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+  self
+
+Arelin.Thing.magnamite.flash_cannon(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+
+  let effs = 
+    [ Arelin.Game.Effect; 
+      Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2) 
+    ]
+
+  let hits = 
+    [ Arelin.Game.Hit; 
+      Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+    ]
+
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | MAGNAMITE_FLASH_CANNON_PROJECT_000;
+    | F64.parse("2");
+    | F64.parse("16");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.1, hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+  self
+
+Arelin.Thing.maneton_fun(self: Arelin.Thing): Arelin.Thing
+  let self = 
+    Arelin.Thing.set_box
+    | self;
+    | Arelin.Game.Hitbox.cbox(F64.parse("4"));
+
+  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.sid = Arelin.Thing.get_sid(self)
+  let targ_dir = Arelin.Thing.targ_dir(self)
+  
+  case F64.eql(self.act, F64.0):
+  | #MAGNAMITE_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | MAGNETON_WALK_000;
+      | F64.parse("8");
+      | F64.parse("24");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | MAGNETON_IDLE_000;
+      | F64.parse("7");
+      | F64.parse("21");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #MAGNAMITE_THUNDER_SHOCK#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNETON_THUNDER_SHOCK_CAST_000;
+      | F64.parse("13");
+      | F64.parse("26");
+
+    let thunder_hor = Arelin.Thing.new_thing
+    let thunder_hor = Arelin.Thing.set_box(thunder_hor, Arelin.Game.Hitbox.nbox)
+    let thunder_hor = 
+      Arelin.Thing.set_fun
+      | thunder_hor;
+      | Arelin.Thing.magneton.hor_thunder_shock;
+
+    let thunder_ver = Arelin.Thing.new_thing
+    let thunder_ver = Arelin.Thing.set_box(thunder_ver, Arelin.Game.Hitbox.nbox)
+    let thunder_ver = 
+      Arelin.Thing.set_fun
+      | thunder_ver;
+      | Arelin.Thing.magneton.ver_thunder_shock;
+    
+    let hor_hits = 
+      [ Arelin.Game.Hit;
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("12"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));,
+
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("36"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));,
+
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("60"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));,
+
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("84"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));,
+
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("108"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("11"), hor_hits)
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("22");
+      | [ Arelin.Thing;
+          Arelin.Thing.move
+          | thunder_ver;
+          | Arelin.Thing.at_dist(self, F64.parse("110"));
+        ];
+
+    let ver_hits = 
+      [ Arelin.Game.Hit;
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2),
+            Arelin.Game.Effect.stun(Arelin.Constants.ONE_SEC)
+          ];
+        | Arelin.Thing.at_dist(self, F64.parse("108"));
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+      ]
+
+    let self = Arelin.Thing.cast(self, F64.parse("25"), ver_hits)
+    let self = Arelin.Thing.cast(self, F64.parse("29"), ver_hits)
+    let self = Arelin.Thing.cast(self, F64.parse("32"), ver_hits)
+    
+    self 
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #MAGNETON_THUNDER_WAVE#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNETON_THUNDER_WAVE_CAST_000;
+      | F64.parse("14");
+      | F64.parse("28");
+
+    let wave = Arelin.Thing.new_thing
+    let wave = Arelin.Thing.set_sid(wave, self.sid)
+    let wave = Arelin.Thing.set_fun(wave, Arelin.Thing.magneton.thunder_wave)
+    let wave = Arelin.Thing.set_vel(wave, F64.V3.scale(F64.parse("5"), targ_dir))
+    let wave = Arelin.Thing.set_dir(wave, targ_dir)
+    let wave = 
+      Arelin.Thing.set_pos
+      | wave;
+      | Arelin.Thing.at_dist(self, F64.parse("20"));
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("20");
+      | [ Arelin.Thing; wave ];
+   
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #MAGNETON_SONIC_BOOM#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNETON_SONIC_BOOM_CAST_000;
+      | F64.parse("10");
+      | F64.parse("20");
+
+    let eff = Arelin.Thing.new_thing
+    let eff = Arelin.Thing.set_sid(eff, self.sid)
+    let eff = Arelin.Thing.set_fun(eff, Arelin.Thing.magneton.sonic_boom)
+    let eff = Arelin.Thing.set_vel(eff, F64.V3.scale(F64.parse("10"), targ_dir))
+    let eff = Arelin.Thing.set_dir(eff, targ_dir)
+    let eff = Arelin.Thing.set_pos(eff, self.pos)
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("14");
+      | [ Arelin.Thing; eff ];
+   
+    self  
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #MAGNETON_FLASH_CANNON#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | MAGNETON_FLASH_CANNON_CAST_000;
+      | F64.parse("16");
+      | F64.parse("32");
+
+    let eff = Arelin.Thing.new_thing
+    let eff = Arelin.Thing.set_sid(eff, self.sid)
+    let eff = Arelin.Thing.set_fun(eff, Arelin.Thing.magneton.flash_cannon)
+    let eff = Arelin.Thing.set_vel(eff, F64.V3.scale(F64.parse("10"), targ_dir))
+    let eff = Arelin.Thing.set_dir(eff, targ_dir)
+    let eff = Arelin.Thing.set_pos(eff, self.pos)
+
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("28");
+      | [ Arelin.Thing; eff ];
+   
+    self
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #MAGNETON_LIGHT_SCREEN#
+    let self = 
+      Arelin.Thing.animate_with_blink
+      | self;
+      | F64.0;
+      | MAGNETON_LIGHT_SCREEN_000;
+      | MAGNETON_IDLE_000;
+      | F64.parse("10");
+      | F64.0;
+      | F64.parse("20");
+
+    let self = 
+      Arelin.Thing.blink
+      | self;
+      | F64.parse("10");
+      | Arelin.Thing.at_dist(self, F64.parse("100"));
+
+    self 
+  ;
+  | #MAGNETON_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | MAGNETON_LIGHT_SCREEN_000;
+    | F64.parse("10");
+    | F64.parse("40");
+  ;;;;;;
+
+Arelin.Thing.magneton.hor_thunder_shock(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | MAGNETON_THUNDER_SHOCK_PROJECT_000;
+  | F64.parse("6");
+  | F64.parse("12");
+
+Arelin.Thing.magneton.ver_thunder_shock(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | MAGNETON_THUNDER_SHOCK_EFFECT_000;
+  | F64.parse("7");
+  | F64.parse("14");
+
+Arelin.Thing.magneton.sonic_boom(self: Arelin.Thing): Arelin.Thing
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | MAGNETON_SONIC_BOOM_PROJECT_000;
+    | F64.1;
+    | F64.parse("16");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+
+  let hits = 
+    [ Arelin.Game.Hit;
+      Arelin.Game.Hit.new
+      | [ Arelin.Game.Effect;
+          Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1)
+        ];
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("20"));
+    ]
+  
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.1, hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+  self 
+
+
+Arelin.Thing.magneton.thunder_wave(self: Arelin.Thing): Arelin.Thing
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | MAGNETON_THUNDER_WAVE_PROJECT_000;
+    | F64.1;
+    | F64.parse("16");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+
+  let hits = 
+    [ Arelin.Game.Hit;
+      Arelin.Game.Hit.new
+      | [ Arelin.Game.Effect;
+          Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1)
+        ];
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("25"));
+    ]
+  
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.1, hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+  self
+
+
+Arelin.Thing.magneton.flash_cannon(self: Arelin.Thing): Arelin.Thing
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | MAGNETON_FLASH_CANNON_PROJECT_000;
+    | F64.parse("3");
+    | F64.parse("16");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+
+  let hits = 
+    [ Arelin.Game.Hit;
+      Arelin.Game.Hit.new
+      | [ Arelin.Game.Effect;
+          Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_3)
+        ];
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("15"));
+    ]
+  
+  let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.1, hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+
+  self
+
+Arelin.Thing.magneton.thunder_shock_eff0(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.1;
+  | MAGNETON_THUNDER_SHOCK_PROJECT_000;
+  | F64.parse("6");
+  | F64.parse("12");
+
+Arelin.Thing.magneton.thunder_shock_eff1(self: Arelin.Thing): Arelin.Thing
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.1;
+    | MAGNETON_THUNDER_SHOCK_EFFECT_000;
+    | F64.parse("7");
+    | F64.parse("12");
+
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let self = 
+    Arelin.Thing.cast
+    | self;
+    | F64.0;
+    | [ Arelin.Game.Hit;
+        Arelin.Game.Hit.new
+        | [ Arelin.Game.Effect; 
+            Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2) 
+          ];
+        | self.pos;
+        | self.dir;
+        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+      ];
+   
+    self 
+ 
