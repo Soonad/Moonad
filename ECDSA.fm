@@ -137,6 +137,14 @@ ecdsa.number_to_hex: Nat -> String
 ecdsa.parse_byte: String -> Maybe(Nat)
   (n) Maybe.map<><>(Nat.mul(Nat.2), Nat.parse_hex_safe(n))
 
+ecdsa.truncateHash: String -> Maybe(Nat)
+  (hash)
+  use msg = Maybe.bind<><>(Nat.parse_hex_safe(hash))
+  let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), Nat.2), Nat.8), ecdsa.PRIME_SIZE)
+  let msg = Bool.if<>(Nat.gtn(delta, Nat.0), Nat.div(msg, Nat.pow(Nat.2, delta)), msg)
+  let msg = Bool.if<>(Nat.gte(msg, CURVE.n), Nat.sub(msg, CURVE.n), msg)
+  Maybe.some<>(msg)
+
 // Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
 Jacobian: Type
   jacobian<P: Jacobian -> Type> ->
@@ -152,6 +160,15 @@ Jacobian.0: Jacobian
 
 Jacobian.base: Jacobian
   Jacobian.new(CURVE.Gx, CURVE.Gy, Nat.1)
+
+Jacobian.base.window_size: Nat
+  Nat.8
+
+Jacobian.base.precomputes: List(Jacobian)
+  Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size)
+
+Jacobian.base.mul: Nat -> Jacobian
+  (n) Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
 
 Jacobian.equal: Jacobian -> Jacobian -> Bool
   (a) (b)
@@ -264,10 +281,10 @@ Jacobian.mul_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
     get k1neg k1 = Int.toNat(k1)
     get k2neg k2 = Int.toNat(k2)
     get k1p k2p = Jacobian.mul_unsafe_aux.tco(d, Jacobian.0, Jacobian.0, k1, k2)
-    let k1p = k1neg<() Jacobian>(Jacobian.negate(k1p), k1p)
-    let k2p = k2neg<() Jacobian>(Jacobian.negate(k2p), k2p)
-    let k2p = k2p<() Jacobian>((k2p.x) (k2p.y) (k2p.z)
-      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z))
+    let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
+    let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
+    let k2p = get k2p.x k2p.y k2p.z = k2p
+      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
     Jacobian.add(k1p, k2p)
   n<() Maybe(Jacobian)>
   | Maybe.none<Jacobian>;
@@ -322,7 +339,6 @@ Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jac
 
     // Create mask with W ones: 0b1111 for W=4 etc.
     let mask = Nat.pred(Nat.pow(Nat.2, W))
-
     Jacobian.wNAF.tco(precomputes, Jacobian.0, Jacobian.0, n, W, Nat.0, windows, windowSize, mask, maxNumber)
 
 Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Pair(Jacobian, Jacobian)
@@ -360,6 +376,23 @@ Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -
   | () Pair.new<Jacobian, Jacobian>(p, f);
   | Unit.new;
 
+Jacobian.mul: (scalar: Nat) -> (w: Nat) -> (precomputes: List(Jacobian)) -> Jacobian
+  (scalar) (w) (precomputes)
+    let n = Nat.mod(scalar, CURVE.n)
+    get k1 k2 = ecdsa.split_scalar(n)
+    get k1neg k1 = Int.toNat(k1)
+    get k2neg k2 = Int.toNat(k2)
+    get k1p f1p = Jacobian.wNAF(w, precomputes, k1)
+    get k2p f2p = Jacobian.wNAF(w, precomputes, k2)
+    let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
+    let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
+    let k2p = get k2p.x k2p.y k2p.z = k2p
+      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
+    let point = Jacobian.add(k1p, k2p)
+    let fake  = Jacobian.add(f1p, f2p)
+    get _ _ _ = fake // this is used to force the computation of the fake point, to achieve constant time
+    Jacobian.normalizeZ(point)
+
 // Point works in default coordinates
 Point: Type
   point<P: Point -> Type> ->
@@ -369,6 +402,12 @@ Point: Type
 Point.new: Nat -> Nat -> Point
   (x) (y)
   <P> (point) point(x, y)
+
+Point.base: Point
+  Point.new(CURVE.Gx, CURVE.Gy)
+
+Point.base.mul: Nat -> Point
+  (n) Jacobian.to_point(Jacobian.base.mul(n))
 
 Point.mul_unsafe: Point -> Nat -> Maybe(Point)
   (p) (n) Maybe.map<Jacobian, Point>(Jacobian.to_point, Jacobian.mul_unsafe(Jacobian.from_point(p), n))
@@ -501,10 +540,32 @@ U8_Vector.to_hex: <n: Nat> -> Vector(U8, n) -> String
   | String.nil;
   | <n.pred> (head) (tail)
     String.concat(ecdsa.number_to_hex(U8.to_nat(head)), U8_Vector.to_hex<n.pred>(tail));
-  
+
 Nat.65: Nat
   Nat.succ(Nat.64)
 
 Nat.256: Nat
   Nat.mul(Nat.16, Nat.16)
 
+ecdsa.is_valid_private_key: Nat -> Bool
+  (priv_key) Bool.and(Nat.ltn(Nat.0, priv_key), Nat.ltn(priv_key, CURVE.n))
+
+QRS: Type
+  qrs<P: QRS -> Type> ->
+  (new: (p: Point) -> (r: Nat) -> (s: Nat)-> P(QRS.new(p, r, s))) ->
+  P(qrs)
+
+QRS.new: Point -> Nat -> Nat -> QRS
+  (p) (r) (s)
+  <P> (new) new(p, r, s)
+
+QRS.from_k: (k: Nat) -> (msg: Nat) -> (priv: Nat) -> Maybe(QRS)
+  (k) (msg) (priv)
+  let max = CURVE.n
+  let q = Point.base.mul(k)
+  get q.x q.y = q
+  let r = Nat.mod(q.x, max)
+  let s = Nat.mod(Nat.mul(ecdsa.invert(k, max), (Nat.add(msg, Nat.mul(r, priv)))), max)
+  Bool.if<>(Bool.or(Nat.eql(r, Nat.0), Nat.eql(s, Nat.0)))
+  | Maybe.none<>;
+  | Maybe.some<>(QRS.new(q, r, s));

@@ -1,0 +1,3 @@
+QRS.from_k: Π(k:Nat) Π(msg:Nat) Π(priv:Nat) (Maybe QRS)
+  λk λmsg λpriv @max=CURVE.n;@q=(Point.base.mul k);(<q λx (Maybe QRS)> λq.x λq.y @r=((Nat.mod q.x) max);@s=((Nat.mod ((Nat.mul ((ecdsa.invert k) max)) ((Nat.add msg) ((Nat.mul r) priv)))) max);(((<Bool.if (Maybe QRS)> ((Bool.or ((Nat.eql r) Nat.0)) ((Nat.eql s) Nat.0))) <Maybe.none QRS>) (<Maybe.some QRS> (((QRS.new q) r) s))))
+

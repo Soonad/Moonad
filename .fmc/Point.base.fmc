@@ -1,0 +1,3 @@
+Point.base: Point
+  ((Point.new CURVE.Gx) CURVE.Gy)
+

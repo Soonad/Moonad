@@ -1,0 +1,3 @@
+Point.base.mul: Nat -> Point
+  (n) Jacobian.to_point(Jacobian.base.mul(n))
+

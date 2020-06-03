@@ -1,0 +1,3 @@
+QRS.from_k: (k: Nat) -> (msg: Nat) -> (priv: Nat) -> Maybe(QRS)
+  (k) (msg) (priv) let max = CURVE.n; let q = Point.base.mul(k); q<(x) Maybe(QRS)>((q.x) (q.y) let r = Nat.mod(q.x)(max); let s = Nat.mod(Nat.mul(ecdsa.invert(k)(max))(Nat.add(msg)(Nat.mul(r)(priv))))(max); Bool.if<Maybe(QRS)>(Bool.or(Nat.eql(r)(Nat.0))(Nat.eql(s)(Nat.0)))(Maybe.none<QRS>)(Maybe.some<QRS>(QRS.new(q)(r)(s))))
+
