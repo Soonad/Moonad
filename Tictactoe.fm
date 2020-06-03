@@ -1,0 +1,300 @@
+T Matrix <A : Type>
+| m_nil;
+| m_cons(row: Nat, col: Nat, head: A, tail: Matrix(A));
+
+T Matrix.Line 
+| l0;
+| l1;
+| l2;
+
+Matrix.line_number(line: Matrix.Line): Nat
+  case line:
+  | Nat.0;
+  | Nat.1;
+  | Nat.2;
+
+Matrix.diagonal_up: <A : Type> -> Matrix(A) -> Nat -> Matrix(A)
+  <A> (mx, idx)
+  case mx:
+  | Matrix.m_nil<>;
+  | (row, col, head, tail)
+    case idx:
+    | Matrix.m_nil<>;
+    | (idx.pred)
+      case Nat.eql(row, col):
+      | Matrix.m_cons<>(row, col, head, Matrix.diagonal_up<>(tail, idx.pred));
+      | Matrix.diagonal_up<>(tail, idx.pred);;;
+
+// Gets a row in a matrix
+Matrix.get_row: <A : Type> -> Matrix(A) -> Matrix.Line -> Nat -> Matrix(A)
+  <A> (mx, line, idx)
+  case mx:
+  | Matrix.m_nil<>;
+  | (row, col, head, tail)
+    case idx:
+    | Matrix.m_nil<>;
+    | (idx.pred)
+      case Nat.eql(row, col):
+      | Matrix.m_cons<>(row, col, head, Matrix.get_row<>(tail, line, idx.pred));
+      | Matrix.get_row<>(tail, line, idx.pred);;;
+
+// Gets a column in a matrix
+Matrix.get_col: <A : Type> -> Matrix(A) -> Matrix.Line -> Nat -> Matrix(A)
+  <A> (mx, line, idx)
+  case mx:
+  | Matrix.m_nil<>;
+  | (row, col, head, tail)
+    case idx:
+    | Matrix.m_nil<>;
+    | (idx.pred)
+      case Nat.eql(col, Matrix.line_number(line)):
+      | Matrix.m_cons<>(row, col, head, Matrix.get_col<>(tail, line, idx.pred));
+      | Matrix.get_col<>(tail, line, idx.pred);;;
+
+Matrix.from_list.go: <A : Type> -> List(A) -> Nat -> Nat -> Matrix(A)
+  <A> (xs, row, col)
+  case xs:
+  | Matrix.m_nil<>;
+  | (head, tail)
+    case Nat.eql(row, Nat.0):
+    | Matrix.aux_row<>(xs, Nat.0, col);
+    | case Nat.eql(row, Nat.1):
+      | Matrix.aux_row<>(xs, Nat.1, col);
+      | Matrix.aux_row<>(xs, Nat.2, col);;;
+
+Matrix.from_list: <A : Type> -> List(A) -> Matrix(A)
+  <A> (xs) Matrix.from_list.go<>(xs, Nat.0, Nat.0)
+
+Matrix.aux_row: <A : Type> -> List(A) -> Nat -> Nat -> Matrix(A)
+  <A> (xs, row, col)
+  case xs: 
+  | Matrix.m_nil<>;
+  | (head, tail)
+    case Nat.eql(col, Nat.0):
+    | Matrix.m_cons<>
+      | row;
+      | Nat.0;
+      | head;
+      | Matrix.from_list.go<>(tail, row, Nat.add(col, Nat.1));;
+    | case Nat.eql(col, Nat.1):
+      | Matrix.m_cons<>
+        | row;
+        | Nat.1;
+        | head;
+        | Matrix.from_list.go<>(tail, row, Nat.add(col, Nat.1));;
+      | Matrix.m_cons<>
+        | row;
+        | Nat.2;
+        | head;
+        | Matrix.from_list.go<>(tail, Nat.add(row, Nat.1), Nat.0);;;;
+
+Matrix.filter: <A : Type> -> (A -> Bool) -> Matrix(A) -> Matrix(A)
+  <A> (stm, mx)
+  case mx:
+  | Matrix.m_nil<>;
+  | (row, col, head, tail)
+    case stm(head):
+    | Matrix.m_cons<>(row, col, head, Matrix.filter<>(stm, tail));
+    | Matrix.filter<>(stm, tail);;
+
+Matrix.length: <A : Type> -> Matrix(A) -> Nat
+  <A> (mx)
+  case mx:
+  | Nat.0;
+  | (row, col, head, tail) Nat.succ(Matrix.length<>(tail));
+
+// Transform a matrix in a list
+// Obs: loses info like 'row' and 'col'
+Matrix.to_list: <A : Type> -> Matrix(A) -> List(A)
+  <A> (mx)
+  case mx:
+  | #m_nil# 
+    List.nil<>;
+  | #m_cons# (row, col, head, tail)
+    List.cons<>(head, Matrix.to_list<>(tail)); 
+
+
+T Value
+| e;
+| x;
+| o;
+
+Value.show(v: Value): String
+  case v:
+  | "?";
+  | "X";
+  | "O";
+
+GameMap : Type
+  Matrix(Value)
+
+T GameState
+| new(map: GameMap, is_active: Bool, turn: Value);
+
+Log : Type
+  List(GameMap)
+
+T Diagonal
+| up;
+| down;
+
+// Auxiliary
+// ---------
+// Check if two Values are equal
+is_value_equal(value: Value, match: Value): Bool
+  case value:
+  | #e# 
+    case match:
+    | #e# Bool.true;
+    | #x# Bool.false;
+    | #o# Bool.false;;
+  | #x#
+    case match:
+    | #e# Bool.false;
+    | #x# Bool.true;
+    | #o# Bool.false;;
+  | #o#
+    case match:
+    | #e# Bool.false;
+    | #x# Bool.false;
+    | #o# Bool.true;;
+
+
+
+show_matrix(map: GameMap): String 
+  List.show<>(Value.show, Matrix.to_list<>(map))
+
+equal_x(e: Value): Bool
+  case e:
+  | Bool.false;
+  | Bool.true;
+  | Bool.false;
+
+equal_o(e: Value): Bool
+  case e:
+  | Bool.false;
+  | Bool.false;
+  | Bool.true;
+
+// Game states
+// -----------
+empty_game_map : GameMap
+  Matrix.from_list<>
+  | [ Value;
+      Value.e, Value.e, Value.e, 
+      Value.e, Value.e, Value.e, 
+      Value.e, Value.e, Value.e
+    ];
+
+
+// Actions
+// -------
+get_value_at(map: GameMap, idx: Nat): Value
+  case map:
+  | Value.e;
+  | (row, col, head, tail)
+    case idx:
+    | head;
+    | (idx.pred) get_value_at(tail, idx.pred);;
+
+// Mark value ('x' or 'o') on a cell
+set_value_at(val: Value, idx: Nat, map: GameMap): GameMap
+  case idx:
+  | case map:
+    | Matrix.m_nil<>;
+    | (row, col, head, tail) Matrix.m_cons<>(row, col, val, tail);;
+  | (idx.pred)
+    case map:
+    | Matrix.m_nil<>;
+    | (row, col, head, tail) 
+      Matrix.m_cons<>(row, col, head, set_value_at(val, idx.pred, tail));;
+
+// If possible, adds a new Value on empty cell
+add_value(val: Value, idx: Nat, map: GameMap): GameMap
+  case is_value_equal(Value.e, get_value_at(map, idx)):
+  | set_value_at(val, idx, map);
+  | map;
+
+
+// Check if the values are all equal to value 'x'
+// values: a Matrix of 3 elements
+match_x(vals: Matrix(Value)): Maybe(Matrix(Value))
+  let filter_x = Matrix.filter<>(equal_x, vals) // list of "x" elements
+  let len_filtered = Matrix.length<>(filter_x)
+  case Nat.eql(len_filtered, Nat.3):
+  | Maybe.some<>(vals);
+  | Maybe.none<>;
+
+// Check if the values are all equal to value 'o'
+// values: a Matrix of 3 elements
+match_o(vals: Matrix(Value)): Maybe(Matrix(Value))
+  let filter_o = Matrix.filter<>(equal_o, vals) // list of "x" elements
+  let len_filtered = Matrix.length<>(filter_o)
+  case Nat.eql(len_filtered, Nat.3):
+  | Maybe.some<>(vals);
+  | Maybe.none<>;
+
+// values: a Matrix of 3 elements
+match_x_or_o(vals: Matrix(Value)): Maybe(Matrix(Value))
+  case match_x(vals):
+  | match_o(vals); // check if match 'o'
+  | (val) Maybe.some<>(val);
+
+// Returns a Matrix 1x3 that stands for a given row in a Matrix 3x3
+get_row(map: GameMap, row: Matrix.Line): Matrix(Value)
+  Matrix.get_row<>(map, row, Nat.9)
+
+// Returns a Matrix 1x3 that stands for a given row in a Matrix 3x3
+get_col(map: GameMap, col: Matrix.Line): Matrix(Value)
+  Matrix.get_col<>(map, col, Nat.9)
+
+// Returns a Matrix 1x3
+get_diagonal_up(map: GameMap): Matrix(Value)
+  Matrix.diagonal_up<>(map, Nat.9)
+
+// Returns a Matrix 1x3
+get_diagonal_down(map: GameMap): Matrix(Value)
+  Matrix.from_list<>
+  | [ Value;
+      get_value_at(map, Nat.8),
+      get_value_at(map, Nat.4), 
+      get_value_at(map, Nat.0)  
+    ];
+
+// Retuns if a match was found or not
+check_diagonals(map: Matrix(Value), pos: Diagonal): Maybe(Matrix(Value))
+  let diagonal = 
+    case pos:
+    | #up#   get_diagonal_up(map);
+    | #down# get_diagonal_down(map);
+  match_x_or_o(diagonal)
+
+// Check rows and columns for a match. 
+// Retun a Matrix 1x3 if a match was found, otherwise, return none
+// f: Matrix 3x3 -> Matrix 1x3. 'f' can be get_row or get_col
+check_lines(
+  map: GameMap, 
+  f:  (GameMap -> Matrix.Line -> Matrix(Value)) 
+) : Maybe(Matrix(Value))
+  case match_x_or_o(f(map, Matrix.Line.l0)):
+  | case match_x_or_o(f(map, Matrix.Line.l1)):
+    | match_x_or_o(f(map, Matrix.Line.l2));  // returns the result of line 2
+    | (val_1) Maybe.some<>(val_1);; // winner on line 1
+  | (val_0) Maybe.some<>(val_0); // winner on line 0
+
+// Check a position of victory in a row, column or diagonal
+// Retun a Matrix 1x3 if a match was found, otherwise, return none
+check_victory(map: GameMap): Maybe(Matrix(Value))
+  case check_lines(map, get_row):
+  | case check_lines(map, get_col):
+    | case check_diagonals(map, Diagonal.up):
+      | check_diagonals(map, Diagonal.down);
+      | (diagonal_up.value) Maybe.some<>(diagonal_up.value);;
+    | (col.value) Maybe.some<>(col.value);;
+  | (row.value) Maybe.some<>(row.value);
+
+// Add a new log on map event
+add_event_log(entry: GameMap, log: Log) : Log
+  List.cons<>(entry, log)
+
+
