@@ -1,3 +1,3 @@
 Word.to_nat: <size: Nat> -> Word(size) -> Nat
-  <size> (word) Word.to_nat.go<size>(word)(Nat.succ(Nat.zero))
+  <size> (word) Word.to_nat.go<size>(word)(1)
 

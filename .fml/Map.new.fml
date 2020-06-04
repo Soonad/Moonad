@@ -1,0 +1,3 @@
+Map.new: <A: Type> -> Map(A)
+  <A> <P> (new) (tie) new
+
