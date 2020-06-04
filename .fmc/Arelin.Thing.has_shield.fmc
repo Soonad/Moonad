@@ -1,0 +1,3 @@
+Arelin.Thing.has_shield: Π(self:Arelin.Thing) Bool
+  λself $self.buf=(Arelin.Thing.get_buf self);$is_shield_buff=:Π(:Arelin.Game.Buff) Bool λbuff ((((((<buff λbuff.self Bool> λbuff.dur λbuff.val Bool.true) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false);((<((<List.find Arelin.Game.Buff> is_shield_buff) self.buf) λself.self Bool> Bool.false) λself.value Bool.true)
+

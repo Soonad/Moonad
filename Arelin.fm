@@ -1255,261 +1255,258 @@ Arelin.Thing.animate_between(
     self;
   | #false# self;
 
-//// Performs an animation, reseting to idle when it ends
-//// - self: thing to be animated
-//// - boost: speed multiplier (0 = no move, 1 = normal spd)
-//// - model: id of the first model of the animation
-//// - count: total count of models on the animation
-//// - durat: duration of the animation
-//Arelin.Thing.animate(
-  //self  : Arelin.Thing,
-  //boost : F64,
-  //model : F64,
-  //count : F64,
-  //durat : F64
-  //) : Arelin.Thing
-  //let self = Arelin.Thing.animate_between(self,boost,model,count,F64.0,durat)
-  //let self = Arelin.Thing.reset(self, F64.sub(durat, F64.1))
-  //self 
+// Performs an animation, reseting to idle when it ends
+// - self: thing to be animated
+// - boost: speed multiplier (0 = no move, 1 = normal spd)
+// - model: id of the first model of the animation
+// - count: total count of models on the animation
+// - durat: duration of the animation
+Arelin.Thing.animate(
+  self  : Arelin.Thing,
+  boost : F64,
+  model : F64,
+  count : F64,
+  durat : F64
+  ) : Arelin.Thing
+  let self = Arelin.Thing.animate_between(self,boost,model,count,F64.0,durat)
+  let self = Arelin.Thing.reset(self, F64.sub(durat, F64.1))
+  self 
 
-//// Performs an animation, dying when it ends
-//// - self: thing to be animated
-//// - boost: speed multiplier (0 = no move, 1 = normal spd)
-//// - model: id of the first model of the animation
-//// - count: total count of models on the animation
-//// - durat: duration of the animation
-//Arelin.Thing.animate_die(
-  //self : Arelin.Thing,
-  //boost : F64,
-  //model : F64,
-  //count : F64,
-  //durat : F64
-  //) : Arelin.Thing
-  //let self = Arelin.Thing.animate_between(self,boost,model,count,F64.0,durat)
-  //let self = Arelin.Thing.die(self, F64.sub(durat, F64.1))
-  //self
+// Performs an animation, dying when it ends
+// - self: thing to be animated
+// - boost: speed multiplier (0 = no move, 1 = normal spd)
+// - model: id of the first model of the animation
+// - count: total count of models on the animation
+// - durat: duration of the animation
+Arelin.Thing.animate_die(
+  self : Arelin.Thing,
+  boost : F64,
+  model : F64,
+  count : F64,
+  durat : F64
+  ) : Arelin.Thing
+  let self = Arelin.Thing.animate_between(self,boost,model,count,F64.0,durat)
+  let self = Arelin.Thing.die(self, F64.sub(durat, F64.1))
+  self
   
 
-//// Avoid problems with "ghost frame after blink"
-//// - self: thing to be animated
-//// - boost: speed multiplier (0 = no move, 1 = normal spd)
-//// - model_atk: id of the main model of the animation
-//// - model_idle: idle000 of the character
-//// - count: total count of models on the animation
-//// - from: frame to start animating
-//// - til: last frame to animate
-//Arelin.Thing.animate_with_blink(
-  //self       : Arelin.Thing,
-  //boost      : F64,
-  //model_atk  : F64,
-  //model_idle : F64,
-  //count      : F64,
-  //from       : F64,
-  //til        : F64
-  //) : Arelin.Thing
-  //let self = Arelin.Thing.animate_between(self,boost,model_atk,count,from,til)
-  //let self = 
-    //Arelin.Thing.animate_between(self,boost,model_idle)
-    //| F64.1;
-    //| til;
-    //| F64.add(til,F64.1);
+// Avoid problems with "ghost frame after blink"
+// - self: thing to be animated
+// - boost: speed multiplier (0 = no move, 1 = normal spd)
+// - model_atk: id of the main model of the animation
+// - model_idle: idle000 of the character
+// - count: total count of models on the animation
+// - from: frame to start animating
+// - til: last frame to animate
+Arelin.Thing.animate_with_blink(
+  self       : Arelin.Thing,
+  boost      : F64,
+  model_atk  : F64,
+  model_idle : F64,
+  count      : F64,
+  from       : F64,
+  til        : F64
+  ) : Arelin.Thing
+  let self = Arelin.Thing.animate_between(self,boost,model_atk,count,from,til)
+  let self = 
+    Arelin.Thing.animate_between(self,boost,model_idle)
+    | F64.1;
+    | til;
+    | F64.add(til,F64.1);
+  let self = Arelin.Thing.reset(self, til)
+  self 
 
-  //let self = Arelin.Thing.reset(self, til)
-  //self 
-
-//// Performs a dash between certain frames
-//// - self: thing that will dash
-//// - speed: dash speed in voxels/frame
-//// - from_tik: number of the tik it will start the dash
-//// - til_tik: number of the tik it will stop the dash
-//Arelin.Thing.dash(
-  //self     : Arelin.Thing,
-  //speed    : F64,
-  //from_tik : F64,
-  //til_tik  : F64
-  //) : Arelin.Thing
-  //case Arelin.Thing.is_rooted(self):
-  //| self;
-  //| let self.tik = Arelin.Thing.get_tik(self) 
-    //let self.pos = Arelin.Thing.get_pos(self)
-    //let self.trg = Arelin.Thing.get_trg(self)
-    //let self.dir = Arelin.Thing.get_dir(self)
-    //let new_vel  = 
-      //case F64.is_between(from_tik, til_tik, self.tik):
-      //| F64.V3.scale(speed, F64.V3.look_at(self.pos, self.trg, self.dir));
-      //| F64.V3.new(F64.0, F64.0, F64.0);
-
-    //Arelin.Thing.set_vel(self, new_vel);
+// Performs a dash between certain frames
+// - self: thing that will dash
+// - speed: dash speed in voxels/frame
+// - from_tik: number of the tik it will start the dash
+// - til_tik: number of the tik it will stop the dash
+Arelin.Thing.dash(
+  self     : Arelin.Thing,
+  speed    : F64,
+  from_tik : F64,
+  til_tik  : F64
+  ) : Arelin.Thing
+  case Arelin.Thing.is_rooted(self):
+  | self;
+  | let self.tik = Arelin.Thing.get_tik(self) 
+    let self.pos = Arelin.Thing.get_pos(self)
+    let self.trg = Arelin.Thing.get_trg(self)
+    let self.dir = Arelin.Thing.get_dir(self)
+    let new_vel  = 
+      case F64.is_between(from_tik, til_tik, self.tik):
+      | F64.V3.scale(speed, F64.V3.look_at(self.pos, self.trg, self.dir));
+      | F64.V3.new(F64.0, F64.0, F64.0);
+    Arelin.Thing.set_vel(self, new_vel);
   
-//Arelin.Thing.move(self: Arelin.Thing, to_pos: F64.V3): Arelin.Thing
-  //Arelin.Thing.set_pos(self, to_pos)
+Arelin.Thing.move(self: Arelin.Thing, to_pos: F64.V3): Arelin.Thing
+  Arelin.Thing.set_pos(self, to_pos)
 
-//// Blinks (teleports) to another position
-//// - self: thing that will blink
-//// - at_tik: number of the tik on which the blink happens
-//// - to_pos: position where the thing will blink to
-//Arelin.Thing.blink(
-  //self: Arelin.Thing, 
-  //at_tik: F64, 
-  //to_pos: F64.V3
-  //) : Arelin.Thing
-  //case Arelin.Thing.is_rooted(self):
-  //| self;
-  //| case F64.eql(at_tik, Arelin.Thing.get_tik(self)):
-    //| Arelin.Thing.set_pos(self, to_pos);
-    //| self;;
+// Blinks (teleports) to another position
+// - self: thing that will blink
+// - at_tik: number of the tik on which the blink happens
+// - to_pos: position where the thing will blink to
+Arelin.Thing.blink(
+  self: Arelin.Thing, 
+  at_tik: F64, 
+  to_pos: F64.V3
+  ) : Arelin.Thing
+  case Arelin.Thing.is_rooted(self):
+  | self;
+  | case F64.eql(at_tik, Arelin.Thing.get_tik(self)):
+    | Arelin.Thing.set_pos(self, to_pos);
+    | self;;
 
-//Arelin.Thing.cast(
-  //self   : Arelin.Thing,
-  //at_tik : F64,
-  //do_hit : List(Arelin.Game.Hit)
-  //) : Arelin.Thing
-  //let self.tik = Arelin.Thing.get_tik(self)
-  //case F64.eql(self.tik, at_tik):
-  //| Arelin.Thing.set_hit(self, do_hit); 
-  //| self;
+Arelin.Thing.cast(
+  self   : Arelin.Thing,
+  at_tik : F64,
+  do_hit : List(Arelin.Game.Hit)
+  ) : Arelin.Thing
+  let self.tik = Arelin.Thing.get_tik(self)
+  case F64.eql(self.tik, at_tik):
+  | Arelin.Thing.set_hit(self, do_hit); 
+  | self;
 
-//// Spawns another thing
-//// - self: thing that will create another thing
-//// - at_tik: number of the tik when thing will be created
-//// - at_pos: position on which thing will be created
-//// - thing: thing that will be created
-//Arelin.Thing.spawn(
-  //self: Arelin.Thing, 
-  //at_tik: F64, 
-  //children: List(Arelin.Thing)
-  //) : Arelin.Thing
-  //case F64.eql(Arelin.Thing.get_tik(self), at_tik):
-  //| Arelin.Thing.set_chi(self, children);
-  //| self;
+// Spawns another thing
+// - self: thing that will create another thing
+// - at_tik: number of the tik when thing will be created
+// - at_pos: position on which thing will be created
+// - thing: thing that will be created
+Arelin.Thing.spawn(
+  self: Arelin.Thing, 
+  at_tik: F64, 
+  children: List(Arelin.Thing)
+  ) : Arelin.Thing
+  case F64.eql(Arelin.Thing.get_tik(self), at_tik):
+  | Arelin.Thing.set_chi(self, children);
+  | self;
 
-//// Creates lights at given tick
-//Arelin.Thing.illumine(
-  //self     : Arelin.Thing,
-  //from_tik : F64,
-  //to_tik   : F64,
-  //lights   : List(Arelin.Game.Light) 
-//) : Arelin.Thing
-  //case F64.is_between(from_tik, to_tik, Arelin.Thing.get_tik(self)):
-  //| Arelin.Thing.set_lit(self, lights);
-  //| Arelin.Thing.set_lit(self, List.nil<>); 
+// Creates lights at given tick
+Arelin.Thing.illumine(
+  self     : Arelin.Thing,
+  from_tik : F64,
+  to_tik   : F64,
+  lights   : List(Arelin.Game.Light) 
+) : Arelin.Thing
+  case F64.is_between(from_tik, to_tik, Arelin.Thing.get_tik(self)):
+  | Arelin.Thing.set_lit(self, lights);
+  | Arelin.Thing.set_lit(self, List.nil<>); 
 
 
-//Arelin.Game.combine_mov_buffs(buff: Arelin.Game.Buff, i: F64): F64
-  //case buff:
-  //| #shielded# (buff.dur) (buff.val) i;
-  //| #slowed#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
-  //| #hasted#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
-  //| #silenced# (buff.dur)            i;
-  //| #rooted#   (buff.dur)            F64.0;
-  //| #stuned#   (buff.dur)            F64.0;
+Arelin.Game.combine_mov_buffs(buff: Arelin.Game.Buff, i: F64): F64
+  case buff:
+  | #shielded# i;
+  | #slowed#   F64.mul(i)(buff.val);
+  | #hasted#   F64.mul(i)(buff.val);
+  | #silenced# i;
+  | #rooted#   F64.0;
+  | #stuned#   F64.0;
 
-//Arelin.Thing.speed_multiplier_of(self: Arelin.Thing): F64
-  //let self.bst = Arelin.Thing.get_bst(self)
-  //let self.buf = Arelin.Thing.get_buf(self) 
-  //List.fold<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
+Arelin.Thing.speed_multiplier_of(self: Arelin.Thing): F64
+  let self.bst = Arelin.Thing.get_bst(self)
+  let self.buf = Arelin.Thing.get_buf(self) 
+  List.fold<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
 
-//Arelin.Thing.is_silenced(self: Arelin.Thing): Bool
-  //let self.buf = Arelin.Thing.get_buf(self)
-  //let is_silence_buff = ((buff) 
-    //case buff:
-    //| #shielded# (buff.dur) (buff.val) Bool.false;
-    //| #slowed#   (buff.dur) (buff.val) Bool.false; 
-    //| #hasted#   (buff.dur) (buff.val) Bool.false;
-    //| #silenced# (buff.dur)            Bool.true;
-    //| #rooted#   (buff.dur)            Bool.false;
-    //| #stunned#  (buff.dur)            Bool.true;
-  //) :: Arelin.Game.Buff -> Bool
-  //case List.find<>(is_silence_buff, self.buf):
-  //| #none# Bool.false;
-  //| (some) Bool.true;
+Arelin.Thing.is_silenced(self: Arelin.Thing): Bool
+  let self.buf = Arelin.Thing.get_buf(self)
+  let is_silence_buff = ((buff) 
+    case buff:
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.true;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.true;
+  ) :: Arelin.Game.Buff -> Bool
+  case List.find<>(is_silence_buff, self.buf):
+  | #none# Bool.false;
+  | #some# Bool.true;
 
-//Arelin.Thing.is_stunned(self: Arelin.Thing): Bool
-  //let self.buf = Arelin.Thing.get_buf(self)
-  //let is_stun_buff = ((buff) 
-    //case buff:
-    //| #shielded# (buff.dur) (buff.val) Bool.false;
-    //| #slowed#   (buff.dur) (buff.val) Bool.false; 
-    //| #hasted#   (buff.dur) (buff.val) Bool.false;
-    //| #silenced# (buff.dur)            Bool.false;
-    //| #rooted#   (buff.dur)            Bool.false;
-    //| #stunned#  (buff.dur)            Bool.true;
-  //) :: Arelin.Game.Buff -> Bool
-  //case List.find<>(is_stun_buff, self.buf):
-  //| #none# Bool.false;
-  //| (some) Bool.true;
+Arelin.Thing.is_stunned(self: Arelin.Thing): Bool
+  let self.buf = Arelin.Thing.get_buf(self)
+  let is_stun_buff = ((buff) 
+    case buff:
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.true;
+  ) :: Arelin.Game.Buff -> Bool
+  case List.find<>(is_stun_buff, self.buf):
+  | #none# Bool.false;
+  | #some# Bool.true;
 
-//Arelin.Thing.is_rooted(self: Arelin.Thing): Bool
-  //let self.buf = Arelin.Thing.get_buf(self)
-  //let is_root_buff = ((buff) 
-    //case buff:
-    //| #shielded# (buff.dur) (buff.val) Bool.false;
-    //| #slowed#   (buff.dur) (buff.val) Bool.false; 
-    //| #hasted#   (buff.dur) (buff.val) Bool.false;
-    //| #silenced# (buff.dur)            Bool.false;
-    //| #rooted#   (buff.dur)            Bool.true;
-    //| #stunned#  (buff.dur)            Bool.true;
-  //) :: Arelin.Game.Buff -> Bool
-  //case List.find<>(is_root_buff, self.buf):
-  //| #none# Bool.false;
-  //| (some) Bool.true;
+Arelin.Thing.is_rooted(self: Arelin.Thing): Bool
+  let self.buf = Arelin.Thing.get_buf(self)
+  let is_root_buff = ((buff) 
+    case buff:
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.true;
+    | #stunned#  Bool.true;
+  ) :: Arelin.Game.Buff -> Bool
+  case List.find<>(is_root_buff, self.buf):
+  | #none# Bool.false;
+  | #some# Bool.true;
 
-//Arelin.Thing.has_shield(self: Arelin.Thing): Bool
-  //let self.buf = Arelin.Thing.get_buf(self)
-  //let is_shield_buff = ((buff) 
-    //case buff:
-    //| #shielded# (buff.dur) (buff.val) Bool.true;
-    //| #slowed#   (buff.dur) (buff.val) Bool.false; 
-    //| #hasted#   (buff.dur) (buff.val) Bool.false;
-    //| #silenced# (buff.dur)            Bool.false;
-    //| #rooted#   (buff.dur)            Bool.false;
-    //| #stunned#  (buff.dur)            Bool.false;
-  //) :: Arelin.Game.Buff -> Bool
-  //case List.find<>(is_shield_buff, self.buf):
-  //| #none# Bool.false;
-  //| (some) Bool.true;
+Arelin.Thing.has_shield(self: Arelin.Thing): Bool
+  let self.buf = Arelin.Thing.get_buf(self)
+  let is_shield_buff = ((buff) 
+    case buff:
+    | #shielded# Bool.true;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.false;
+  ) :: Arelin.Game.Buff -> Bool
+  case List.find<>(is_shield_buff, self.buf):
+  | #none# Bool.false;
+  | #some# Bool.true;
 
-//Arelin.Game.use_shields(
-  //buff : Arelin.Game.Buff,
-  //acc  : Pair(F64, List(Arelin.Game.Buff))
-  //) : Pair(F64, List(Arelin.Game.Buff))
-  //let curr_dmg = Pair.fst<><>(acc)
-  //let curr_buf = Pair.snd<><>(acc)
-  //case buff:
-  //| #shielded# (buff.dur) (buff.val) 
-    //case F64.eql(curr_dmg, F64.0):
-    //| acc;
-    //| case F64.compare_numbers(curr_dmg, buff.val):
-      //| #LT# 
-        //let remaining_shield = F64.sub(buff.val, curr_dmg)
-        //let remaining_buf    = 
-          //List.cons<>
-          //| Arelin.Game.Buff.shielded(buff.dur, remaining_shield);
-          //| curr_buf;
+// Arelin.Game.use_shields(
+//   buff : Arelin.Game.Buff,
+//   acc  : Pair(F64, List(Arelin.Game.Buff))
+//   ) : Pair(F64, List(Arelin.Game.Buff))
+//   let curr_dmg = Pair.fst<><>(acc)
+//   let curr_buf = Pair.snd<><>(acc)
+//   case buff:
+//   | #shielded# 
+//     case F64.eql(curr_dmg, F64.0):
+//     | acc;
+//     | case F64.compare_numbers(curr_dmg, buff.val):
+//       | #LT# 
+//         let remaining_shield = F64.sub(buff.val, curr_dmg)
+//         let remaining_buf    = 
+//           List.cons<>
+//           | Arelin.Game.Buff.shielded(buff.dur, remaining_shield);
+//           | curr_buf;
         
-        //Pair.new<><>(F64.0, remaining_buf);
+//         Pair.new<><>(F64.0, remaining_buf);
 
-      //| #EQ# Pair.new<><>(F64.0, curr_buf);
-      //| #GT#
-        //let remaining_dmg = F64.sub(curr_dmg, buff.val)
-        //Pair.new<><>(remaining_dmg, curr_buf);
-    //;
-  //;
-  //| #slowed#   (buff.dur) (buff.val) 
-    //Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  //; 
-  //| #hasted#   (buff.dur) (buff.val) 
-    //Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  //;
-  //| #silenced# (buff.dur)   
-    //Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  //;
-  //| #rooted#   (buff.dur)            
-    //Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  //;
-  //| #stunned#  (buff.dur)            
-    //Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  //;
+//       | #EQ# Pair.new<><>(F64.0, curr_buf);
+//       | #GT#
+//         let remaining_dmg = F64.sub(curr_dmg, buff.val)
+//         Pair.new<><>(remaining_dmg, curr_buf);
+//     ;
+//   ;
+//   | #slowed#   
+//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
+//   ; 
+//   | #hasted#   
+//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
+//   ;
+//   | #silenceair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
+//   ;
+//   | #rooted#   
+//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
+//   ;
+//   | #stunned#  
+//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
+//   ;
 
 //Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
   //let self.buf      = Arelin.Thing.get_buf(self)
@@ -1526,7 +1523,7 @@ Arelin.Thing.animate_between(
   //let self.buf = Arelin.Thing.get_buf(self)
   //let fn = ((buff) (acc) 
     //case buff:
-    //| #shielded# (buff.dur) (buff.val) 
+    //| #shielded# 
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>
@@ -1534,7 +1531,7 @@ Arelin.Thing.animate_between(
         //| acc;
       //;  
     //;
-    //| #slowed#   (buff.dur) (buff.val) 
+    //| #slowed#   
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>
@@ -1542,7 +1539,7 @@ Arelin.Thing.animate_between(
         //| acc;
       //;
     //; 
-    //| #hasted#   (buff.dur) (buff.val) 
+    //| #hasted#   
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>
@@ -1550,7 +1547,7 @@ Arelin.Thing.animate_between(
         //| acc;
       //;
     //;
-    //| #silenced# (buff.dur)            
+    //| #silenced# 
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>
@@ -1558,7 +1555,7 @@ Arelin.Thing.animate_between(
         //| acc;
       //;
     //;
-    //| #rooted#   (buff.dur)            
+    //| #rooted#   
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>
@@ -1566,7 +1563,7 @@ Arelin.Thing.animate_between(
         //| acc;
       //;
     //;
-    //| #stunned#  (buff.dur)           
+    //| #stunned# 
       //case F64.eql(buff.dur, F64.0):
       //| acc;
       //| List.cons<>

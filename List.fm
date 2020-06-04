@@ -128,12 +128,12 @@ List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
     //List.concat<>(head)(List.flatten<>(tail));
 
 
-//// Folds over a list.
-//List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  //<A> <B> (nil) (cons) (list)
-  //case list:
-  //| nil;
-  //| (x) (xs) cons(x)(List.fold<><>(nil)(cons)(xs));
+// Folds over a list.
+List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
+  <A> <B> (nil) (cons) (list)
+  case list:
+  | nil;
+  | cons(list.head)(List.fold<><>(nil)(cons)(list.tail));
 
 //List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
   //<A> (list) (cond) (indx)
