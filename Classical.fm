@@ -1,2 +1,0 @@
-//Classical.double_negation: Type
-    //<P: Type> -> Not(Not(P)) -> P
