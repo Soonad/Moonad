@@ -1,0 +1,3 @@
+F64.V3.polygon_to_segments.transform: Π(:F64.V3) Π(:F64.V3) Π(:F64.V3) F64.V3
+  λpos λdir λpnt (<pnt λpnt.self F64.V3> λpnt.x λpnt.y λpnt.z (<dir λdir.self F64.V3> λdir.x λdir.y λdir.z $a=((F64.atan dir.y) dir.x);$pnt_x_times_cos_a=((F64.mul pnt.x) (F64.cos a));$pnt_y_times_sin_a=((F64.mul pnt.y) (F64.sin a));$pnt_x_times_sin_a=((F64.mul pnt.x) (F64.sin a));$pnt_y_times_cos_a=((F64.mul pnt.y) (F64.cos a));$x=((F64.sub pnt_x_times_cos_a) pnt_y_times_sin_a);$y=((F64.add pnt_x_times_sin_a) pnt_y_times_cos_a);((F64.V3.add pos) (((F64.V3.new x) y) pnt.z))))
+

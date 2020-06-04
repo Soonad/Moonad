@@ -1,0 +1,3 @@
+F64.V3.point_segment_dist: Π(:F64.V3) Π(:F64.Segment) F64
+  λp λs (F64.sqrt ((F64.V3.point_segment_sqrdist p) s))
+
