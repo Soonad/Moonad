@@ -15,3 +15,6 @@ IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)) : IO(B)
   | f(a.val);
   | IO.log<B>(a.str, (x) IO.bind<A,B>(a.nxt(x), f));
   | IO.get<B>((x) IO.bind<A,B>(a.nxt(x), f));
+
+IO.monad: Monad(IO)
+  Monad.new<IO>(IO.bind, IO.end)

@@ -2,7 +2,7 @@ Docs.hello: IO(Unit)
   IO.print("Hello, world!")
 
 Docs.welcome: IO(Unit)
-  do IO.bind IO.end {
+  do IO {
     var name = IO.query("What is your name?");
     IO.print(String.concat("Welcome, ", name));
     return Unit.new;
@@ -39,10 +39,10 @@ Docs.string_or_unit(b: Bool): Type
   | String;
   | Unit;
 
-docs.a_string: Docs.string_or_unit(Bool.true)
+Docs.a_string: Docs.string_or_unit(Bool.true)
   "I'm a string!"
 
-docs.an_unit: Docs.string_or_unit(Bool.false)
+Docs.an_unit: Docs.string_or_unit(Bool.false)
   Unit.new
 
 Docs.crazy(b: Bool): Docs.string_or_unit(b)
