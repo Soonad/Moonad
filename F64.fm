@@ -45,8 +45,8 @@ T F64.Segment
 
 F64.V3.add: F64.V3 -> F64.V3 -> F64.V3 
   (a) (b)
-  case a<() F64.V3>: |
-  case b<() F64.V3>: |
+  case a: |
+  case b: |
   let c.x = F64.add(a.x)(a.x)
   let c.y = F64.add(a.y)(b.y)
   let c.z = F64.add(a.z)(b.z)
@@ -54,24 +54,23 @@ F64.V3.add: F64.V3 -> F64.V3 -> F64.V3
 
 // F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
 //   (c) (b) 
-//   case c<() F64>: | #c.pos c.rad#
-//   case b<() F64>: | #pts#
-//   case b.pts<() F64>:
+//   c<() F64> | (c.pos) (c.rad)
+//   b<() F64> | (pts)
+//   pts<() F64> 
 //   | F64.0;
-//   | F64.0;;;
-  // | #h0 t0#
-  //   t0<() F64>
-  //   | F64.0;
-  //   | #h1 t1#
-  //     let p0 = h0
-  //     let p1 = h1 
-  //     let sg = F64.Segment.new(p0)(p1)
-  //     let cd = F64.V3.point_segment_sqrdist(c.pos)(sg)
-  //     let test = F64.ltn(cd)(F64.mul(cd)(cd))
-  //     test<() F64> 
-  //     | F64.1;
-  //     | let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1))
-  //       F64.V3.circle_boundary_intersects(c)(boun);;;;;
+//   | (h0) (t0)
+//     t0<() F64>
+//     | F64.0;
+//     | (h1) (t1)
+//       let p0 = h0
+//       let p1 = h1 
+//       let sg = F64.Segment.new(p0)(p1)
+//       let cd = F64.V3.point_segment_sqrdist(c.pos)(sg)
+//       let test = F64.ltn(cd)(F64.mul(cd)(cd))
+//       test<() F64> 
+//       | F64.1;
+//       | let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1))
+//         F64.V3.circle_boundary_intersects(c)(boun);;;;;
 
 //// Circle-boundary intersection test
 //// circle_boundary_intersects(c: Circle, b: Boundary): Number
@@ -93,123 +92,65 @@ F64.V3.add: F64.V3 -> F64.V3 -> F64.V3
 ////         circle_boundary_intersects(c, boun)
 
 
-//F64.V3.circle_line_intersection: F64.Circle -> F64.Line -> Maybe(Pair(F64.V3)(F64.V3))
-  //(c) (l)
-  //c<() Maybe(Pair(F64.V3)(F64.V3))>     | (c.pos) (c.rad)
-  //l<() Maybe(Pair(F64.V3)(F64.V3))>     | (l.pos) (l.dir)
-  //c.pos<() Maybe(Pair(F64.V3)(F64.V3))> | (cx) (cy) (cz)
-  //l.pos<() Maybe(Pair(F64.V3)(F64.V3))> | (l.pos.x) (l.pos.y) (l.pos.z)
-  //l.dir<() Maybe(Pair(F64.V3)(F64.V3))> | (dx) (dy) (dz)
-  //let x1 = F64.sub(l.pos.x)(cx)
-  //let y1 = F64.sub(l.pos.y)(cy)
-  //let x2 = F64.sub(F64.add(l.pos.x)(dx))(cx)
-  //let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy)
-  //let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1))
-  //let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd))
-  //F64.lte(de)(F64.0)<() Maybe(Pair(F64.V3)(F64.V3))>
-  //| Maybe.none<Pair(F64.V3)(F64.V3)>;
-  //| let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dx))(dx)
-    //let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dy))(dy)
-    //let px = F64.mul(sx)(F64.sqrt(de))
-    //let py = F64.mul(sy)(F64.sqrt(de))
-    //let qx = F64.mul(dd)(dy)
-    //let qy = F64.mul(F64.sub(F64.0)(dd))(dx)
-    //let ax = F64.sub(qx)(px)
-    //let ay = F64.sub(qy)(py)
-    //let bx = F64.add(qx)(px)
-    //let by = F64.add(qy)(py)
-    //let ux = F64.add(ax)(cx)
-    //let uy = F64.add(ay)(cy)
-    //let vx = F64.add(bx)(cx)
-    //let vy = F64.add(by)(cy)
-    //let fst_v = F64.V3.new(ux)(uy)(F64.0)
-    //let snd_v = F64.V3.new(vx)(vy)(F64.0)
-    //Maybe.some<Pair(F64.V3)(F64.V3)>(Pair.new<F64.V3><F64.V3>(fst_v)(snd_v))
-    //;;;;;;
+F64.V3.circle_line_intersection: F64.Circle -> F64.Line -> Maybe(Pair(F64.V3)(F64.V3))
+  (c) (l)
+  case c: | // Maybe(Pair(F64.V3)(F64.V3)
+  case l: | // Maybe(Pair(F64.V3)(F64.V3)
+  case c.pos: | // F64.V3
+  let cx = c.pos.x
+  let cy = c.pos.y
+  let cz = c.pos.z
+  case l.pos: | // F64.V3
+  case l.dir: | // F64.V3
+  let dx = l.dir.x
+  let dy = l.dir.y
+  let dz = l.dir.z
+  let x1 = F64.sub(l.pos.x)(cx)
+  let y1 = F64.sub(l.pos.y)(cy)
+  let x2 = F64.sub(F64.add(l.pos.x)(dx))(cx)
+  let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy)
+  let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1))
+  let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd))
+  F64.lte(de)(F64.0)<() Maybe(Pair(F64.V3)(F64.V3))>
+  | Maybe.none<Pair(F64.V3)(F64.V3)>;
+  | let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dx))(dx)
+    let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dy))(dy)
+    let px = F64.mul(sx)(F64.sqrt(de))
+    let py = F64.mul(sy)(F64.sqrt(de))
+    let qx = F64.mul(dd)(dy)
+    let qy = F64.mul(F64.sub(F64.0)(dd))(dx)
+    let ax = F64.sub(qx)(px)
+    let ay = F64.sub(qy)(py)
+    let bx = F64.add(qx)(px)
+    let by = F64.add(qy)(py)
+    let ux = F64.add(ax)(cx)
+    let uy = F64.add(ay)(cy)
+    let vx = F64.add(bx)(cx)
+    let vy = F64.add(by)(cy)
+    let fst_v = F64.V3.new(ux)(uy)(F64.0)
+    let snd_v = F64.V3.new(vx)(vy)(F64.0)
+    Maybe.some<Pair(F64.V3)(F64.V3)>(Pair.new<F64.V3><F64.V3>(fst_v)(snd_v))
+    ;;;;;;
 
-
-//// circle_line_intersection(circle: Circle, line: Line)
-//// : Maybe(Pair(V3,V3))
-////   case circle |circle
-////   case line |line
-////   case circle.pos |v3
-////   case line.pos |v3
-////   case line.dir |v3
-////   let cx = circle.pos.x
-////   let cy = circle.pos.y
-////   let dx = line.dir.x
-////   let dy = line.dir.y
-////   let x1 = line.pos.x - cx
-////   let y1 = line.pos.y - cy
-////   let x2 = (line.pos.x + dx) - cx
-////   let y2 = (line.pos.y + dy) - cy
-////   let dd = (x1 * y2) - (x2 * y1)
-////   let de = (circle.rad * circle.rad) - (dd * dd) 
-////   if (de < 0) || (de === 0) then
-////     none(_)
-////   else
-////     let sx = if dy < 0 then 0 - dx else dx
-////     let sy = if dy < 0 then 0 - dy else dy
-////     let px = sx * (de ** 0.5)
-////     let py = sy * (de ** 0.5)
-////     let qx = dd * dy
-////     let qy = (0 - dd) * dx
-////     let ax = qx - px
-////     let ay = qy - py
-////     let bx = qx + px
-////     let by = qy + py
-////     let ux = ax + cx
-////     let uy = ay + cy
-////     let vx = bx + cx
-////     let vy = by + cy
-////     some(_ pair(__ v3(ux,uy,0), v3(vx,vy,0)))
-
-//F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F64) 
-  //(a) (d) (b)
-  //a<() Maybe(F64)> | (a.pos) (a.rad)
-  //b<() Maybe(F64)> | (b.pos) (b.rad)
-  //let r = a.rad 
-  //let c = F64.Circle.new(b.pos)(F64.add(a.rad)(b.rad))
-  //let l = F64.Line.new(a.pos)(F64.V3.norm(d))
-  //let p = F64.V3.circle_line_intersection(c)(l)
-  //p<() Maybe(F64)>
-  //| Maybe.none<F64>;
-  //| (some_pair)
-    //some_pair<() Maybe(F64)> | (fst) (snd)
-    //let d0 = F64.V3.sqr_dist(a.pos)(fst)
-    //let d1 = F64.V3.sqr_dist(a.pos)(snd)
-    //let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd)
-    //let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos))
-    //let ds = F64.V3.sqr_dist(hp)(a.pos)
-    //let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)) 
-    //F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)
-    //;;;; 
-     
-  
-
-
-//// circle_to_circle_hit_dist(a: Circle, d: V3, b: Circle)
-//// : Maybe(Number)
-////   case a |circle
-////   case b |circle
-////   let r = a.rad
-////   let c = circle(b.pos, a.rad + b.rad)
-////   let l = line(a.pos, norm_v3(d))
-////   let p = circle_line_intersection(c, l)
-////   case p
-////   | none => none(_)
-////   | some =>
-////     case p.value as p |pair
-////     let d0 = sqrdist_v3(a.pos, p.fst)
-////     let d1 = sqrdist_v3(a.pos, p.snd)
-////     let hp = if d0 < d1 then p.fst else p.snd
-////     let dt = dot_v3(d, sub_v3(hp, a.pos))
-////     let ds = sqrdist_v3(hp, a.pos)
-////     if dt > 0 then
-////       some(_ ds ** 0.5)
-////     else
-////       none(_)
-
+F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F64) 
+  (a) (d) (b)
+  case a: | //(a.pos) (a.rad), return <() Maybe(F64)> 
+  case b: | //(b.pos) (b.rad), return <() Maybe(F64)> 
+  let r = a.rad 
+  let c = F64.Circle.new(b.pos)(F64.add(a.rad)(b.rad))
+  let l = F64.Line.new(a.pos)(F64.V3.norm(d))
+  let p = F64.V3.circle_line_intersection(c)(l)
+  case p:
+  | Maybe.none<F64>;
+  |  p.value<() Maybe(F64)> | (fst) (snd)
+    let d0 = F64.V3.sqr_dist(a.pos)(fst)
+    let d1 = F64.V3.sqr_dist(a.pos)(snd)
+    let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd)
+    let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos))
+    let ds = F64.V3.sqr_dist(hp)(a.pos)
+    let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)) 
+    F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)
+    ;;;;
 
 F64.V3.dist: F64.V3 -> F64.V3 -> F64
   (a) (b)
@@ -266,53 +207,43 @@ F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
   let a_eql_b  = F64.V3.eql(a, b)
   let diff     = F64.V3.sub(b, a)
   let normdiff = F64.V3.norm(diff)
-  // a_eql_b<() F64.V3> 
-  // | normdiff ;
-  // | c ;;;;
   case a_eql_b:
   | normdiff ;
   | c ;;;;
 
-//// Return true if "a" is less than "b"
-//F64.V3.ltn: F64.V3 -> F64.V3 -> Bool 
-  //(a) (b)
-  //let len_a = F64.V3.len(a)
-  //let len_b = F64.V3.len(b)
-  //Bool.if<Bool>(F64.ltn(len_a)(len_b)) // F64 -> F64 -> Bool
-  //| Bool.true;
-  //| Bool.false;
+// Return true if "a" is less than "b"
+F64.V3.ltn: F64.V3 -> F64.V3 -> Bool 
+  (a) (b)
+  let len_a = F64.V3.len(a)
+  let len_b = F64.V3.len(b)
+  Bool.if<Bool>(F64.ltn(len_a)(len_b)) // F64 -> F64 -> Bool
+  | Bool.true;
+  | Bool.false;
   
-//F64.V3.map: (F64 -> F64) -> F64.V3 -> F64.V3
-  //(fn) (v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z));
+F64.V3.map: (F64 -> F64) -> F64.V3 -> F64.V3
+  (fn) (v)
+  case v: | F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z));
 
-//F64.V3.map_x: (F64 -> F64) -> F64.V3 -> F64.V3
-  //(fn) (v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //F64.V3.new(fn(v.x))(v.y)(v.z);
+F64.V3.map_x: (F64 -> F64) -> F64.V3 -> F64.V3
+  (fn) (v)
+  case v: | F64.V3.new(fn(v.x))(v.y)(v.z);
 
-//F64.V3.map_y: (F64 -> F64) -> F64.V3 -> F64.V3
-  //(fn) (v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //F64.V3.new(v.x)(fn(v.y))(v.z);
+F64.V3.map_y: (F64 -> F64) -> F64.V3 -> F64.V3
+  (fn) (v)
+  case v: | F64.V3.new(v.x)(fn(v.y))(v.z);
 
-//F64.V3.map_z: (F64 -> F64) -> F64.V3 -> F64.V3
-  //(fn) (v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //F64.V3.new(v.x)(v.y)(fn(v.z));
+F64.V3.map_z: (F64 -> F64) -> F64.V3 -> F64.V3
+  (fn) (v)
+  case v: | F64.V3.new(v.x)(v.y)(fn(v.z));
 
-//F64.V3.mul: F64.V3 -> F64.V3 -> F64.V3 
-  //(a) (b)
-  //a<() F64.V3> | (a.x) (a.y) (a.z)
-  //b<() F64.V3> | (b.x) (b.y) (b.z)
-  //let c.x = F64.mul(a.x)(a.x)
-  //let c.y = F64.mul(a.y)(b.y)
-  //let c.z = F64.mul(a.z)(b.z)
-  //F64.V3.new(c.x)(c.y)(c.z);;
-
-
-
+F64.V3.mul: F64.V3 -> F64.V3 -> F64.V3 
+  (a) (b)
+  case a: |
+  case b: |
+  let c.x = F64.mul(a.x)(a.x)
+  let c.y = F64.mul(a.y)(b.y)
+  let c.z = F64.mul(a.z)(b.z)
+  F64.V3.new(c.x)(c.y)(c.z);;
   
 F64.V3.norm: F64.V3 -> F64.V3 
   (v)
@@ -323,35 +254,35 @@ F64.V3.norm: F64.V3 -> F64.V3
   let new_z = F64.div(v.z, len)
   F64.V3.new(new_x, new_y, new_z);
 
-//F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
-  //(p) (s)
-  //F64.sqrt(F64.V3.point_segment_sqrdist(p)(s))
+// F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
+//   (p) (s)
+//   F64.sqrt(F64.V3.point_segment_sqrdist(p)(s))
 
-//// Squared distance between a point and a segment
-//F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
-  //(p) (s)
-  //p<() F64> | (p.x) (p.y) (p.z)
-  //s<() F64> | (a) (b)
-  //a<() F64> | (a.x) (a.y) (a.z)
-  //b<() F64> | (b.x) (b.y) (b.z)
-  //let ab_x_diff_sqrd = F64.pow(F64.sub(a.x)(b.x))(F64.2) 
-  //let ab_y_diff_sqrd = F64.pow(F64.sub(a.y)(b.y))(F64.2)
-  //let pa_x_diff = F64.sub(p.x)(a.x)
-  //let pa_y_diff = F64.sub(p.y)(a.y)
-  //let ba_x_diff = F64.sub(b.x)(a.x)
-  //let ba_y_diff = F64.sub(b.y)(a.y)
-  //let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd)
-  //let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff))
-  //let t = F64.div(t)(l)
-  //let t = F64.max(F64.0)(F64.min(F64.1)(t))
-  //let d = F64.0
-  //let t_times_ba_x_diff = F64.mul(t)(ba_x_diff)
-  //let t_times_ba_y_diff = F64.mul(t)(ba_y_diff)
-  //let k = F64.pow(F64.sub(p.x)(F64.add(a.x)(t_times_ba_x_diff)))(F64.2)
-  //let d = F64.add(d)(k)
-  //let k = F64.pow(F64.sub(p.y)(F64.add(a.y)(t_times_ba_y_diff)))(F64.2)
-  //let d = F64.add(d)(k)
-  //d;;;;
+// // Squared distance between a point and a segment
+// F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
+//   (p) (s)
+//   p<() F64> | (p.x) (p.y) (p.z)
+//   s<() F64> | (a) (b)
+//   a<() F64> | (a.x) (a.y) (a.z)
+//   b<() F64> | (b.x) (b.y) (b.z)
+//   let ab_x_diff_sqrd = F64.pow(F64.sub(a.x)(b.x))(F64.2) 
+//   let ab_y_diff_sqrd = F64.pow(F64.sub(a.y)(b.y))(F64.2)
+//   let pa_x_diff = F64.sub(p.x)(a.x)
+//   let pa_y_diff = F64.sub(p.y)(a.y)
+//   let ba_x_diff = F64.sub(b.x)(a.x)
+//   let ba_y_diff = F64.sub(b.y)(a.y)
+//   let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd)
+//   let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff))
+//   let t = F64.div(t)(l)
+//   let t = F64.max(F64.0)(F64.min(F64.1)(t))
+//   let d = F64.0
+//   let t_times_ba_x_diff = F64.mul(t)(ba_x_diff)
+//   let t_times_ba_y_diff = F64.mul(t)(ba_y_diff)
+//   let k = F64.pow(F64.sub(p.x)(F64.add(a.x)(t_times_ba_x_diff)))(F64.2)
+//   let d = F64.add(d)(k)
+//   let k = F64.pow(F64.sub(p.y)(F64.add(a.y)(t_times_ba_y_diff)))(F64.2)
+//   let d = F64.add(d)(k)
+//   d;;;;
 
 //// point_segment_sqrdist(p: V3, s: Segment) : Number
 ////   case s |segment
