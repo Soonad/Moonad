@@ -1,3 +1,0 @@
-U16.to_nat: U16 -> Nat
-  (a) a<() Nat>((a_val) Word.to_nat<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(a_val))
-

@@ -1,3 +1,0 @@
-U16.to_bits: U16 -> Bits
-  (a) a<() Bits>((a_val) Word.to_bits<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(a_val))
-

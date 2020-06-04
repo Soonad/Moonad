@@ -1,3 +1,0 @@
-U16.ltn: Π(:U16) Π(:U16) Bool
-  λa λb (<a λ Bool> λa_val (<b λ Bool> λb_val ((<Word.ltn (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))))> a_val) b_val)))
-

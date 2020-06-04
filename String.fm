@@ -79,27 +79,25 @@ String.concat(as: String, bs: String): String
   //| Bool.true;
   //| (head) (tail) Bool.false;
 
-//String.length: String -> Nat
-  //(str)
-  //case str:
-  //| Nat.zero;
-  //| (head) (tail) Nat.succ(String.length(tail));
+String.length(str: String) : Nat
+  case str:
+  | Nat.zero;
+  | Nat.succ(String.length(str.tail));
 
 //String.quote: String -> String
   //(str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
 
-//String.reverse: String -> String
-  //(str) String.reverse.go(str)(String.nil)
+String.reverse(str: String) : String
+  String.reverse.go(str,String.nil)
 
-//String.reverse.go: String -> String -> String
-  //(str) (res)
-  //case str:
-  //| res;
-  //| (str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res));
+String.reverse.go(str: String, res: String): String
+  case str:
+  | res;
+  | String.reverse.go(str.tail)(String.cons(str.head)(res));
 
 //// A list with only one element.
-//String.single : (x : Char) -> String
-  //(x) String.cons(x)(String.nil)
+String.single : (x : Char) -> String
+  (x) String.cons(x,String.nil)
 
 //String.tail: String -> String
   //(str)
@@ -116,47 +114,34 @@ String.concat(as: String, bs: String): String
     //| String.nil;
     //| (pred) String.cons(head)(String.take(pred)(tail));;
 
-//String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
-  //(n) (str) (res)
-  //case res:
-  //| case n:
-    //| Maybe.some<>(Pair.new<><>(str)(String.nil));
-    //| () Maybe.none<Pair(String)(String)>;
-  //;
-  //| (head) (tail)
-    //case n:
-    //| Maybe.some<>(Pair.new<String><String>(str)(res));
-    //| (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);
-  //;
+String.take_n(n: Nat, str: String) : Maybe(Pair(String)(String))
+  def m = String.take_n.aux(n)(String.nil)(str)
+  case m:
+  | Maybe.none<Pair(String)(String)>;
+  | get x y = m.value
+    Maybe.some<>(Pair.new<><>(String.reverse(x))(y));
 
-//String.take_n: Nat -> String -> Maybe(Pair(String)(String))
-  //(n) (str)
-  //case String.take_n.aux(n)(String.nil)(str):
-  //| Maybe.none<Pair(String)(String)>;
-  //| (p)
-    //get x y = p
-    //Maybe.some<>(Pair.new<><>(String.reverse(x))(y))
-  //;
+String.take_n.aux(n: Nat, str: String, res: String) : Maybe(Pair(String,String))
+  case res:
+  | case n:
+    | Maybe.some<>(Pair.new<_,_>(str)(String.nil));
+    | Maybe.none<Pair(String)(String)>;;
+  | case n:
+    | Maybe.some<>(Pair.new<String><String>(str)(res));
+    | String.take_n.aux(n.pred)(String.cons(res.head)(str))(res.tail);;
 
 
-//String.take_while.aux
-  //: (Char -> Bool) ->
-    //String ->
-    //String ->
-    //Pair(String)(String)
-  //(f) (str) (res)
-  //case res:
-  //| Pair.new<><>(str)(String.nil);
-  //| (head) (tail)
-    //case f(head):
-    //| String.take_while.aux(f)(String.cons(head)(str))(tail);
-    //| Pair.new<><>(str)(res);
-  //;
+String.take_while.aux.tco(f: Char -> Bool, str: String, res: String): Pair(String,String)
+  case res:
+  | Pair.new<><>(str)(String.nil);
+  | let x = f(res.head)
+    case x:
+    | String.take_while.aux.tco(f,String.cons(res.head)(str))(res.tail);
+    | Pair.new<><>(str,res);;
 
-//String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
-  //(f) (str)
-  //get x y = String.take_while.aux(f)(String.nil)(str)
-  //Pair.new<><>(String.reverse(x))(y)
+String.take_while(f: Char -> Bool, str: String) : Pair(String)(String)
+  get x y = String.take_while.aux.tco(f,String.nil,str)
+  Pair.new<><>(String.reverse(x),y)
 
 //String.to_bits: String -> Bits
   //(str)

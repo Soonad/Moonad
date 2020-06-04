@@ -1,3 +1,0 @@
-Nat.apply.tco: ∀(A:*) Π(n:Nat) Π(f:Π(:A) A) Π(x:A) A
-  ΛA λn λf λx ((<n λn.self A> x) λn.pred (((<Nat.apply.tco A> n.pred) f) (f x)))
-

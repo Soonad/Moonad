@@ -1,3 +1,0 @@
-U16.and: U16 -> U16 -> U16
-  (a) (b) a<() U16>((a_val) b<() U16>((b_val) U16.new(Word.and<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(a_val)(b_val))))
-

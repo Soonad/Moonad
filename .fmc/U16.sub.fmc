@@ -1,3 +1,0 @@
-U16.sub: Π(:U16) Π(:U16) U16
-  λa λb (<a λ U16> λa_val (<b λ U16> λb_val (U16.new ((<Word.sub (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero))))))))))))))))> a_val) b_val))))
-

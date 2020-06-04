@@ -1,3 +1,0 @@
-U16.inc: U16 -> U16
-  (a) a<() U16>((a_val) U16.new(Word.inc<Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero))))))))))))))))>(a_val)))
-

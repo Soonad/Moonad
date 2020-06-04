@@ -1,3 +1,0 @@
-Docs.welcome: IO(Unit)
-  IO.bind<String><Unit>(IO.query("What is your name?"))((name) IO.bind<Unit><Unit>(IO.print(String.concat("Welcome, ")(name)))(() IO.end<Unit>(Unit.new)))
-

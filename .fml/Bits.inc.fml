@@ -1,3 +1,0 @@
-Bits.inc: (a: Bits) -> Bits
-  (a) a<(a.self) Bits>(Bits.nil)((a.pred) Bits.1(a.pred))((a.pred) Bits.0(Bits.inc(a.pred)))
-

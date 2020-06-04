@@ -1,3 +1,0 @@
-String: *
-  ∀self(P:Π(self:String) *) Π(nil:(P String.nil)) Π(cons:Π(head:Char) Π(tail:String) (P ((String.cons head) tail))) (P self)
-

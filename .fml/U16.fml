@@ -1,3 +1,0 @@
-U16: Type
-  u16<P: U16 -> Type> -> (new: (a: Word(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.succ(Nat.zero)))))))))))))))))) -> P(U16.new(a))) -> P(u16)
-

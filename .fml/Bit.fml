@@ -1,3 +1,0 @@
-Bit: Type
-  self<P: (self: Bit) -> Type> -> (b0: P(Bit.b0)) -> (b1: P(Bit.b1)) -> P(self)
-

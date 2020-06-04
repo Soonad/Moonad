@@ -224,9 +224,9 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
 
 
 
-//// A list with only one element.
-//List.single : <A : Type> -> (x : A) -> List(A)
-  //<A> (x) List.cons<A>(x)(List.nil<A>)
+// A list with only one element.
+List.single<A : Type>(x : A) : List(A)
+  List.cons<A>(x)(List.nil<A>)
 
 //// Returns the first elements of a list, discards the rest.
 //List.take: <A: Type> -> Nat -> List(A) -> List(A)

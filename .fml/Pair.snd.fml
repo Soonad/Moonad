@@ -1,3 +1,0 @@
-Pair.snd: <A: Type> -> <B: Type> -> (pair: Pair(A)(B)) -> B
-  <A> <B> (pair) pair<(pair.self) B>((pair.fst) (pair.snd) pair.snd)
-

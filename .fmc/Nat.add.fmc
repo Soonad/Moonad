@@ -1,3 +1,0 @@
-Nat.add: Π(n:Nat) Π(m:Nat) Nat
-  λn λm ((<n λn.self Nat> m) λn.pred (Nat.succ ((Nat.add n.pred) m)))
-

@@ -1,3 +1,0 @@
-Bits.parse_hex: Π(:String) Bits
-  λstr ((Bits.parse_hex.tco str) Bits.nil)
-

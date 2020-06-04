@@ -1,3 +1,0 @@
-Nat.ltn: Π(n:Nat) Π(m:Nat) Bool
-  λn λm (((<((Nat.cmp n) m) λself.self Bool> Bool.true) Bool.false) Bool.false)
-
