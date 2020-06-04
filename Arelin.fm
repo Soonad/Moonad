@@ -1776,159 +1776,152 @@ Arelin.exec_command(cmd: Arelin.Game.Command, gm: Arelin.Game): Arelin.Game
 //   ;
 
 //// Interaction function between two things
-//Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
-  //// Physical interactions
-  //let this.pos = Arelin.Thing.get_pos(this)
-  //let this.dir = Arelin.Thing.get_dir(this)
-  //let this.box = Arelin.Thing.get_box(this)
-  //let this.buf = Arelin.Thing.get_buf(this)
-  //let this.sid = Arelin.Thing.get_sid(this)
-  //let that.pos = Arelin.Thing.get_pos(that)
-  //let that.dir = Arelin.Thing.get_dir(that)
-  //let that.box = Arelin.Thing.get_box(that)
-  //let that.hit = Arelin.Thing.get_hit(that)
-  //let that.sid = Arelin.Thing.get_sid(this)
-  //let out_vec  = 
-    //Arelin.collide_with
-    //|this.pos;
-    //|this.dir;
-    //|this.box;
-    //|that.pos;
-    //|that.dir;
-    //|that.box;
-  //let this = 
-    //case out_vec:
-    //| #none# this;           
-    //| #some# (out_vec.value)  
-      //let new_pos = F64.V3.add(this.pos, out_vec.value)
-      //Arelin.Thing.set_pos(this, new_pos);
-  //let this = 
-    //// Hit by an effect
-    //let apply_hit = ((hit) (this)
-      //case hit:
-      //| (hit.eff) (hit.pos) (hit.dir) (hit.box)
-        //let out_vec = 
-          //Arelin.collide_with  
-          //|this.pos;
-          //|this.dir;
-          //|this.box;
-          //|hit.pos;
-          //|hit.dir;
-          //|hit.box;
+Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
+  // Physical interactions
+  let this.pos = Arelin.Thing.get_pos(this)
+  let this.dir = Arelin.Thing.get_dir(this)
+  let this.box = Arelin.Thing.get_box(this)
+  let this.buf = Arelin.Thing.get_buf(this)
+  let this.sid = Arelin.Thing.get_sid(this)
+  let that.pos = Arelin.Thing.get_pos(that)
+  let that.dir = Arelin.Thing.get_dir(that)
+  let that.box = Arelin.Thing.get_box(that)
+  let that.hit = Arelin.Thing.get_hit(that)
+  let that.sid = Arelin.Thing.get_sid(this)
+  // let out_vec  = 
+  //   Arelin.collide_with
+  //   |this.pos;
+  //   |this.dir;
+  //   |this.box;
+  //   |that.pos;
+  //   |that.dir;
+  //   |that.box;
+  // let this = 
+  //   case out_vec:
+  //   | #none# this;           
+  //   | #some# 
+  //     let new_pos = F64.V3.add(this.pos, out_vec.value)
+  //     Arelin.Thing.set_pos(this, new_pos);
+  let this = 
+    // Hit by an effect
+    let apply_hit = ((hit) (this)
+      case hit:
+      | #hit.eff hit.pos hit.dir hit.box#
+        let out_vec = this
+        // let out_vec = 
+        //   Arelin.collide_with  
+        //   |this.pos;
+        //   |this.dir;
+        //   |this.box;
+        //   |hit.pos;
+        //   |hit.dir;
+        //   |hit.box;
 
-        //case out_vec:
-        //| #none# this;
-        //| #some# (value)
-          //let compare_sid = F64.eql(this.sid, that.sid) 
-          //let apply_eff   = ((eff) (this)
-            //case eff:
-            //| #heal# (eff.lif)
-              //let this.dmg = Arelin.Thing.get_dmg(this)
-              //// IMPORTANT: use commented code. 
-              //// The code is inverted so the puddle on debug mode could heal
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  Arelin.Thing.set_dmg(this, F64.sub(this.dmg, eff.lif));;
-  
-            //| #damage# (eff.dmg)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  Arelin.Thing.handle_shields(eff.dmg, this);;
+        case out_vec:
+        | #none# this;
+        | #some#
+          let compare_sid = F64.eql(this.sid, that.sid) 
+          let apply_eff   = ((eff) (this)
+            case eff:
+            | #heal#
+              let this.dmg = Arelin.Thing.get_dmg(this)
+              // IMPORTANT: use commented code. 
+              // The code is inverted so the puddle on debug mode could heal
+              case compare_sid:
+              | #true#   this;
+              | #false#  Arelin.Thing.set_dmg(this, F64.sub(this.dmg, eff.lif));;
 
-            //| #repulse# (eff.mag)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let v3  = F64.V3.new(F64.1, F64.0, F64.0)
-                //let dir = F64.V3.look_at(hit.pos, this.pos, v3)
-                //let vec = F64.V3.scale(eff.mag, dir)
-                //Arelin.Thing.set_knk(this, vec);;
- 
+            | #damage#
+              case compare_sid:
+              | #true#   this;
+              | #false#  Arelin.Thing.handle_shields(eff.dmg, this);;
+
+            | #repulse#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let v3  = F64.V3.new(F64.1, F64.0, F64.0)
+                let dir = F64.V3.look_at(hit.pos, this.pos, v3)
+                let vec = F64.V3.scale(eff.mag, dir)
+                Arelin.Thing.set_knk(this, vec);;
           
-            //| #impulse# (eff.mag) (eff.dir)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let vec = F64.V3.scale(eff.mag, eff.dir)
-                //Arelin.Thing.set_knk(this, vec);;
+            | #impulse#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let vec = F64.V3.scale(eff.mag, eff.dir)
+                Arelin.Thing.set_knk(this, vec);;
 
-            //| #slow# (eff.dur) (eff.val)  
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.slowed(eff.dur, eff.val);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
+            | #slow# 
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.slowed(eff.dur, eff.val);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
             
-            //| #haste# (eff.dur) (eff.val)  
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.hasted(eff.dur, eff.val);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
+            | #haste#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.hasted(eff.dur, eff.val);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
 
+            | #shield#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.shielded(eff.dur, eff.val);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
 
-            //| #shield# (eff.dur) (eff.val)  
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.shielded(eff.dur, eff.val);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
+            | #silence#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.silenced(eff.dur);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
 
+            | #root#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.rooted(eff.dur);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
 
-            //| #silence# (eff.dur)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.silenced(eff.dur);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
+            | #stun#
+              case compare_sid:
+              | #true#   this;
+              | #false#  
+                let updated_buffs = 
+                  List.cons<>
+                  | Arelin.Game.Buff.stunned(eff.dur);
+                  | this.buf;
+                Arelin.Thing.set_buf(this, updated_buffs);;
 
-            //| #root# (eff.dur)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.rooted(eff.dur);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
+            | #teleport_to#
+              case F64.eql(eff.all, F64.1):
+              | Arelin.Thing.move(this, eff.to_pos);
+              | this;;
 
-            //| #stun# (eff.dur)
-              //case compare_sid:
-              //| #true#   this;
-              //| #false#  
-                //let updated_buffs = 
-                  //List.cons<>
-                  //| Arelin.Game.Buff.stunned(eff.dur);
-                  //| this.buf;
-                
-                //Arelin.Thing.set_buf(this, updated_buffs);;
-
-            //| #teleport_to# (eff.to_pos) (eff.all)
-              //case F64.eql(eff.all, F64.1):
-              //| Arelin.Thing.move(this, eff.to_pos);
-              //| this;;
-        //) :: Arelin.Game.Effect -> Arelin.Thing -> Arelin.Thing
-       //List.fold<><>(this, apply_eff, hit.eff);;
-    //) :: Arelin.Game.Hit -> Arelin.Thing -> Arelin.Thing 
-    //List.fold<><>(this, apply_hit, that.hit)
-  //this  
+        ) :: Arelin.Game.Effect -> Arelin.Thing -> Arelin.Thing
+       List.fold<><>(this, apply_eff, hit.eff);;
+    ) :: Arelin.Game.Hit -> Arelin.Thing -> Arelin.Thing 
+    List.fold<><>(this, apply_hit, that.hit)
+  this  
 
 // Like a fold, but with access to a list of other elements
 Arelin.fold_with_context
