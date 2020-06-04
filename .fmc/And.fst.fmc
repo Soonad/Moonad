@@ -1,0 +1,3 @@
+And.fst: ∀(A:*) ∀(B:*) Π(x:((And A) B)) A
+  ΛA ΛB λx (<<Pair.fst A> B> x)
+

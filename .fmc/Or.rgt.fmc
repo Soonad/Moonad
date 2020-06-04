@@ -1,0 +1,3 @@
+Or.rgt: ∀(A:*) ∀(B:*) Π(x:B) ((Or A) B)
+  ΛA ΛB λx (<<Either.right A> B> x)
+
