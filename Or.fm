@@ -1,3 +1,0 @@
-Or : (A : Type) -> (B : Type) -> Type
-  (A) (B) Either(A)(B)
-
