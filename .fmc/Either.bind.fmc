@@ -1,3 +1,3 @@
-Either.bind: ∀(A:*) ∀(B:*) ∀(C:*) Π(:((Either A) B)) Π(:Π(:B) ((Either A) C)) ((Either A) C)
-  ΛA ΛB ΛC λe λf ((<e λself ((Either A) C)> λval (<<Either.left A> C> val)) λval (f val))
+Either.bind: ∀(A:*) ∀(B:*) ∀(C:*) Π(e:((Either A) B)) Π(f:Π(:B) ((Either A) C)) ((Either A) C)
+  ΛA ΛB ΛC λe λf ((<e λe.self ((Either A) C)> λe.value (<<Either.left A> C> e.value)) λe.value (f e.value))
 

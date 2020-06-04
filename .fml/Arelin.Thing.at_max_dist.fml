@@ -1,3 +1,0 @@
-Arelin.Thing.at_max_dist: (self: Arelin.Thing) -> (max_range: F64) -> F64.V3
-  (self) (max_range) let pos = Arelin.Thing.get_pos(self); let trg = Arelin.Thing.get_trg(self); let dist_max = F64.V3.dist(pos)(Arelin.Thing.at_dist(self)(max_range)); let dist_trg = F64.V3.dist(pos)(trg); F64.ltn(dist_trg)(dist_max)<(self) F64.V3>(Arelin.Thing.at_dist(self)(dist_trg))(Arelin.Thing.at_dist(self)(max_range))
-

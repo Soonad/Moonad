@@ -1,74 +1,75 @@
-// Calls a function in an argument. The most useless function.
-Function.call: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
-  <A> <B> (x) (f)
-  f(x)
 
-// Dependent function composition.
-Function.comp: 
-  <A: Type> ->
-  <B: Type> ->
-  <C: B -> Type> ->
-  (g: (b: B) -> C(b)) ->
-  (f: A -> B) ->
-  (x: A) ->
-  C(f(x))
+//// Calls a function in an argument. The most useless function.
+//Function.call: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
+  //<A> <B> (x) (f)
+  //f(x)
 
-  <A> <B> <C> (g) (f) (x)
-  g(f(x))
+//// Dependent function composition.
+//Function.comp: 
+  //<A: Type> ->
+  //<B: Type> ->
+  //<C: B -> Type> ->
+  //(g: (b: B) -> C(b)) ->
+  //(f: A -> B) ->
+  //(x: A) ->
+  //C(f(x))
 
-// Given a `x`, returns a function that receives an `y` and returns `x`.
-Function.const: <A: Type> -> (x: A) -> (y: A) -> A
-  <A> (x) (y) x
+  //<A> <B> <C> (g) (f) (x)
+  //g(f(x))
 
-// Converts a function that receives a pair into a function of 2 arguments.
-Function.curry:
-  <A: Type> ->
-  <B: Type> ->
-  <C: Type> ->
-  (f: Pair(A)(B) -> C) ->
-  (x: A) ->
-  (y: B) ->
-  C
+//// Given a `x`, returns a function that receives an `y` and returns `x`.
+//Function.const: <A: Type> -> (x: A) -> (y: A) -> A
+  //<A> (x) (y) x
 
-  <A> <B> <C> (f) (x) (y)
-  f(Pair.new<A><B>(x)(y))
+//// Converts a function that receives a pair into a function of 2 arguments.
+//Function.curry:
+  //<A: Type> ->
+  //<B: Type> ->
+  //<C: Type> ->
+  //(f: Pair(A)(B) -> C) ->
+  //(x: A) ->
+  //(y: B) ->
+  //C
 
-// Flips the two first arguments of a function.
-Function.flip
-  : <A: Type> ->
-    <B: Type> ->
-    <C: Type> ->
-    (f: A -> B -> C) ->
-    (y: B) ->
-    (x: A) ->
-    C
-  <A> <B> <C> (f) (y) (x)
-  f(x)(y)
+  //<A> <B> <C> (f) (x) (y)
+  //f(Pair.new<A><B>(x)(y))
 
-// `Function(A, (x) B(x))` is a complex way to write `(x: A) -> B(x)` I guess.
-Function: (A: Type) -> (B: A -> Type) -> Type
-  (A) (B)
-  (x: A) -> B(x)
+//// Flips the two first arguments of a function.
+//Function.flip
+  //: <A: Type> ->
+    //<B: Type> ->
+    //<C: Type> ->
+    //(f: A -> B -> C) ->
+    //(y: B) ->
+    //(x: A) ->
+    //C
+  //<A> <B> <C> (f) (y) (x)
+  //f(x)(y)
 
-// The identity function returns its argument.
-Function.id : <A: Type> -> (x: A) -> A
-  <A> (x) x
+//// `Function(A, (x) B(x))` is a complex way to write `(x: A) -> B(x)` I guess.
+//Function: (A: Type) -> (B: A -> Type) -> Type
+  //(A) (B)
+  //(x: A) -> B(x)
 
-// Function application in reverse order.
-Function.pipe : <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
-  <A> <B> (x) (f)
-  f(x)
+//// The identity function returns its argument.
+//Function.id : <A: Type> -> (x: A) -> A
+  //<A> (x) x
 
-// Converts a function from 2 arguments to a function that receives a pair.
-Function.uncurry :
-  <A: Type> ->
-  <B: Type> ->
-  <C: Type> ->
-  (f: A -> B -> C) ->
-  (p: Pair(A)(B)) ->
-  C
+//// Function application in reverse order.
+//Function.pipe : <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
+  //<A> <B> (x) (f)
+  //f(x)
 
-  <A> <B> <C> (f) (p)
-  p<() C>
-  | (p.fst) (p.snd) f(p.fst)(p.snd);
+//// Converts a function from 2 arguments to a function that receives a pair.
+//Function.uncurry :
+  //<A: Type> ->
+  //<B: Type> ->
+  //<C: Type> ->
+  //(f: A -> B -> C) ->
+  //(p: Pair(A)(B)) ->
+  //C
+
+  //<A> <B> <C> (f) (p)
+  //p<() C>
+  //| (p.fst) (p.snd) f(p.fst)(p.snd);
 

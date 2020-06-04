@@ -1,3 +1,0 @@
-Arelin.Thing.illumine: (self: Arelin.Thing) -> (from_tik: F64) -> (to_tik: F64) -> (lights: List(Arelin.Game.Light)) -> Arelin.Thing
-  (self) (from_tik) (to_tik) (lights) F64.is_between(from_tik)(to_tik)(Arelin.Thing.get_tik(self))<(self) Arelin.Thing>(Arelin.Thing.set_lit(self)(lights))(Arelin.Thing.set_lit(self)([Arelin.Game.Light;]))
-

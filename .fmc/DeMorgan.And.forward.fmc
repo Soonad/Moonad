@@ -1,3 +1,0 @@
-DeMorgan.And.forward: ∀(A:*) ∀(B:*) Π(:Classical.double_negation) Π(:(Not ((And A) B))) ((Or (Not A)) (Not B))
-  ΛA ΛB λdn λn_and @non_to_nna=:Π(:(Not ((Or (Not A)) (Not B)))) (Not (Not ((And A) B))) λnon @and_nn=(<<DeMorgan.Or.forward (Not A)> (Not B)> non);@and=:((And A) B) (<and_nn λself ((Pair A) B)> λnn_a λnn_b ((<<Pair.new A> B> (<dn A> nn_a)) (<dn B> nn_b)));(<Not.p_to_nnp ((And A) B)> and);@nnn_and=(<Not.p_to_nnp (Not ((And A) B))> n_and);@nn_or_n=((<<Contrapositive.type (Not ((Or (Not A)) (Not B)))> (Not (Not ((And A) B)))> non_to_nna) nnn_and);(<dn ((Or (Not A)) (Not B))> nn_or_n)
-

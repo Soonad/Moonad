@@ -1,3 +1,0 @@
-Core.Read.defs.go: Π(:Core.Defs) (Core.Read Core.Defs)
-  λdefs λcode ((<(Core.Read.def code) λ (Core.Read.Reply Core.Defs)> ((<Core.Read.done Core.Defs> defs) code)) λgot (<got λ (Core.Read.Reply Core.Defs)> λpair λcode (<pair λ (Core.Read.Reply Core.Defs)> λname λdef $defs=(((Core.Defs.set name) def) defs);((Core.Read.defs.go defs) code))))
-

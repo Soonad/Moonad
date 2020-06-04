@@ -1,3 +1,0 @@
-Core.Read.one: String -> String -> Core.Read(Bool)
-  (chr0) (chr1) let list = [String; chr1, chr0]; Core.Read.bind<Nat><Bool>(Core.Read.fst(list))((idx) Core.Read.done<Bool>(Bool.not(Nat.is_zero(idx))))
-

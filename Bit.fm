@@ -1,18 +1,9 @@
-// The bit 0.
+T Bit
+| b0;
+| b1;
+
 Bit.0: Bit
-  <P> (o) (i) o
+  Bit.b0
 
-// The bit 1.
 Bit.1: Bit
-  <P> (o, i) i
-
-// A single Bit.
-// T Bit
-// | Bit.0
-// | Bit.1
-Bit : Type
-  bit<P: Bit -> Type> ->
-  P(Bit.0) ->
-  P(Bit.1) ->
-  P(bit)
-
+  Bit.b1

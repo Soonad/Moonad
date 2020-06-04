@@ -1,3 +1,0 @@
-Parser.try: ∀(A:*) Π(:(Parser A)) (Parser A)
-  ΛA λp (<<<Parsec.try Unit> Unit> A> p)
-

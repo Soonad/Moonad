@@ -1,3 +1,0 @@
-Classical.double_negation: *
-  ∀(P:*) Π(:(Not (Not P))) P
-

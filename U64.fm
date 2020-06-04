@@ -1,144 +1,144 @@
-U64.0: U64
-  U64.parse_hex("0000000000000000")
+//U64.0: U64
+  //U64.parse_hex("0000000000000000")
 
-U64.add: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.add<Nat.64>(a_val)(b_val));;
+//U64.add: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.add<Nat.64>(a_val)(b_val));;
 
-U64.and: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.and<Nat.64>(a_val)(b_val));;
+//U64.and: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.and<Nat.64>(a_val)(b_val));;
 
-U64.div: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.div<Nat.64>(a_val)(b_val));;
+//U64.div: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.div<Nat.64>(a_val)(b_val));;
 
-// a == b
-U64.eql: U64 -> U64 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.eql<Nat.64>(a_val)(b_val);;
+//// a == b
+//U64.eql: U64 -> U64 -> Bool //prim//
+  //(a) (b)
+  //a<() Bool> | (a_val)
+  //b<() Bool> | (b_val)
+  //Word.eql<Nat.64>(a_val)(b_val);;
 
-U64: Type //prim//
-  u64<P: U64 -> Type> ->
-  (new: (a: Word(Nat.64)) -> P(U64.new(a))) ->
-  P(u64)
+//U64: Type //prim//
+  //u64<P: U64 -> Type> ->
+  //(new: (a: Word(Nat.64)) -> P(U64.new(a))) ->
+  //P(u64)
 
-// a >= b
-U64.gte: U64 -> U64 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gte<Nat.64>(a_val)(b_val);;
+//// a >= b
+//U64.gte: U64 -> U64 -> Bool //prim//
+  //(a) (b)
+  //a<() Bool> | (a_val)
+  //b<() Bool> | (b_val)
+  //Word.gte<Nat.64>(a_val)(b_val);;
 
-// a > b
-U64.gtn: U64 -> U64 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gtn<Nat.64>(a_val)(b_val);;
+//// a > b
+//U64.gtn: U64 -> U64 -> Bool //prim//
+  //(a) (b)
+  //a<() Bool> | (a_val)
+  //b<() Bool> | (b_val)
+  //Word.gtn<Nat.64>(a_val)(b_val);;
 
-U64.inc: U64 -> U64 //prim//
-  (a)
-  a<() U64> | (a_val)
-  U64.new(Word.inc<Nat.64>(a_val));
+//U64.inc: U64 -> U64 //prim//
+  //(a)
+  //a<() U64> | (a_val)
+  //U64.new(Word.inc<Nat.64>(a_val));
 
-// a <= b
-U64.lte: U64 -> U64 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.lte<Nat.64>(a_val)(b_val);;
+//// a <= b
+//U64.lte: U64 -> U64 -> Bool //prim//
+  //(a) (b)
+  //a<() Bool> | (a_val)
+  //b<() Bool> | (b_val)
+  //Word.lte<Nat.64>(a_val)(b_val);;
 
-// a < b
-U64.ltn: U64 -> U64 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.ltn<Nat.64>(a_val)(b_val);;
+//// a < b
+//U64.ltn: U64 -> U64 -> Bool //prim//
+  //(a) (b)
+  //a<() Bool> | (a_val)
+  //b<() Bool> | (b_val)
+  //Word.ltn<Nat.64>(a_val)(b_val);;
 
-U64.mix.const0: U64
-  U64.parse_hex("ff51afd7ed558ccd")
+//U64.mix.const0: U64
+  //U64.parse_hex("ff51afd7ed558ccd")
 
-U64.mix.const1: U64
-  U64.parse_hex("c4ceb9fe1a85ec53")
+//U64.mix.const1: U64
+  //U64.parse_hex("c4ceb9fe1a85ec53")
 
-U64.mix: U64 -> U64
-  (h)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  let h = U64.mul(h)(U64.mix.const0)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  let h = U64.mul(h)(U64.mix.const1)
-  let h = U64.xor(h)(U64.shr(Nat.33)(h))
-  h
+//U64.mix: U64 -> U64
+  //(h)
+  //let h = U64.xor(h)(U64.shr(Nat.33)(h))
+  //let h = U64.mul(h)(U64.mix.const0)
+  //let h = U64.xor(h)(U64.shr(Nat.33)(h))
+  //let h = U64.mul(h)(U64.mix.const1)
+  //let h = U64.xor(h)(U64.shr(Nat.33)(h))
+  //h
 
-U64.mod: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.mod<Nat.64>(a_val)(b_val));;
+//U64.mod: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.mod<Nat.64>(a_val)(b_val));;
 
-U64.mul: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.mul<Nat.64>(a_val)(b_val));;
+//U64.mul: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.mul<Nat.64>(a_val)(b_val));;
 
-U64.new: Word(Nat.64) -> U64
-  (a)
-  <P> (u64) u64(a)
+//U64.new: Word(Nat.64) -> U64
+  //(a)
+  //<P> (u64) u64(a)
 
-U64.or: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.or<Nat.64>(a_val)(b_val));;
+//U64.or: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.or<Nat.64>(a_val)(b_val));;
 
-U64.parse_hex: String -> U64
-  (str) U64.new(Word.from_bits(Nat.64)(Bits.parse_hex(str)))
+//U64.parse_hex: String -> U64
+  //(str) U64.new(Word.from_bits(Nat.64)(Bits.parse_hex(str)))
 
-U64.pow: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.pow<Nat.64>(a_val)(b_val));;
+//U64.pow: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.pow<Nat.64>(a_val)(b_val));;
 
-U64.shl: Nat -> U64 -> U64 //prim//
-  (n) (a)
-  a<() U64> | (a_val)
-  U64.new(Word.shift_left<Nat.64>(n)(a_val));
+//U64.shl: Nat -> U64 -> U64 //prim//
+  //(n) (a)
+  //a<() U64> | (a_val)
+  //U64.new(Word.shift_left<Nat.64>(n)(a_val));
 
-U64.shr: Nat -> U64 -> U64 //prim//
-  (n) (a)
-  a<() U64> | (a_val)
-  U64.new(Word.shift_right<Nat.64>(n)(a_val));
+//U64.shr: Nat -> U64 -> U64 //prim//
+  //(n) (a)
+  //a<() U64> | (a_val)
+  //U64.new(Word.shift_right<Nat.64>(n)(a_val));
 
-U64.sub: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.sub<Nat.64>(a_val)(b_val));;
+//U64.sub: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.sub<Nat.64>(a_val)(b_val));;
 
-U64.to_bits: U64 -> Bits
-  (a)
-  a<() Bits> | (a_val)
-  Word.to_bits<Nat.64>(a_val);
+//U64.to_bits: U64 -> Bits
+  //(a)
+  //a<() Bits> | (a_val)
+  //Word.to_bits<Nat.64>(a_val);
 
-U64.to_nat: U64 -> Nat //prim//
-  (a)
-  a<() Nat> | (a_val)
-  Word.to_nat<Nat.64>(a_val);
+//U64.to_nat: U64 -> Nat //prim//
+  //(a)
+  //a<() Nat> | (a_val)
+  //Word.to_nat<Nat.64>(a_val);
 
-U64.xor: U64 -> U64 -> U64 //prim//
-  (a) (b)
-  a<() U64> | (a_val)
-  b<() U64> | (b_val)
-  U64.new(Word.xor<Nat.64>(a_val)(b_val));;
+//U64.xor: U64 -> U64 -> U64 //prim//
+  //(a) (b)
+  //a<() U64> | (a_val)
+  //b<() U64> | (b_val)
+  //U64.new(Word.xor<Nat.64>(a_val)(b_val));;
 

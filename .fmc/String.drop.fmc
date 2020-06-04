@@ -1,3 +1,0 @@
-String.drop: Π(:Nat) Π(:String) String
-  λn λlist ((<n λ String> list) λpred ((<list λ String> String.nil) λhead λtail ((String.drop pred) tail)))
-

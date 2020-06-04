@@ -1,126 +1,128 @@
-U16.add: U16 -> U16 -> U16 //prim//
+// TODO: update style
+
+U16.add: U16 -> U16 -> U16
   (a) (b)
   get a_val = a
   get b_val = b
   U16.new(Word.add<?zz>(a_val)(b_val))
 
-U16.and: U16 -> U16 -> U16 //prim//
+U16.and: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.and<Nat.16>(a_val)(b_val));;
+  U16.new(Word.and<16>(a_val)(b_val));;
 
-U16.div: U16 -> U16 -> U16 //prim//
+U16.div: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.div<Nat.16>(a_val)(b_val));;
+  U16.new(Word.div<16>(a_val)(b_val));;
 
 // a == b
-U16.eql: U16 -> U16 -> Bool //prim//
+U16.eql: U16 -> U16 -> Bool
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
-  Word.eql<Nat.16>(a_val)(b_val);;
+  Word.eql<16>(a_val)(b_val);;
 
-U16: Type //prim//
+U16: Type
   u16<P: U16 -> Type> ->
-  (new: (a: Word(Nat.16)) -> P(U16.new(a))) ->
+  (new: (a: Word(16)) -> P(U16.new(a))) ->
   P(u16)
 
 // a >= b
-U16.gte: U16 -> U16 -> Bool //prim//
+U16.gte: U16 -> U16 -> Bool
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
-  Word.gte<Nat.16>(a_val)(b_val);;
+  Word.gte<16>(a_val)(b_val);;
 
 // a > b
-U16.gtn: U16 -> U16 -> Bool //prim//
+U16.gtn: U16 -> U16 -> Bool
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
-  Word.gtn<Nat.16>(a_val)(b_val);;
+  Word.gtn<16>(a_val)(b_val);;
 
-U16.inc: U16 -> U16 //prim//
+U16.inc: U16 -> U16
   (a)
   a<() U16> | (a_val)
-  U16.new(Word.inc<Nat.16>(a_val));
+  U16.new(Word.inc<16>(a_val));
 
 // a <= b
-U16.lte: U16 -> U16 -> Bool //prim//
+U16.lte: U16 -> U16 -> Bool
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
-  Word.lte<Nat.16>(a_val)(b_val);;
+  Word.lte<16>(a_val)(b_val);;
 
 // a < b
-U16.ltn: U16 -> U16 -> Bool //prim//
+U16.ltn: U16 -> U16 -> Bool
   (a) (b)
   a<() Bool> | (a_val)
   b<() Bool> | (b_val)
-  Word.ltn<Nat.16>(a_val)(b_val);;
+  Word.ltn<16>(a_val)(b_val);;
 
-U16.mod: U16 -> U16 -> U16 //prim//
+U16.mod: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.mod<Nat.16>(a_val)(b_val));;
+  U16.new(Word.mod<16>(a_val)(b_val));;
 
-U16.mul: U16 -> U16 -> U16 //prim//
+U16.mul: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.mul<Nat.16>(a_val)(b_val));;
+  U16.new(Word.mul<16>(a_val)(b_val));;
 
-U16.new: Word(Nat.16) -> U16
+U16.new: Word(16) -> U16
   (a)
   <> (u16) u16(a)
 
-U16.or: U16 -> U16 -> U16 //prim//
+U16.or: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.or<Nat.16>(a_val)(b_val));;
+  U16.new(Word.or<16>(a_val)(b_val));;
 
 U16.parse_hex: String -> U16
-  (str) U16.new(Word.from_bits(Nat.16)(Bits.parse_hex(str)))
+  (str) U16.new(Word.from_bits(16)(Bits.parse_hex(str)))
 
-U16.pow: U16 -> U16 -> U16 //prim//
+U16.pow: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.pow<Nat.16>(a_val)(b_val));;
+  U16.new(Word.pow<16>(a_val)(b_val));;
 
-U16.shl: Nat -> U16 -> U16 //prim//
+U16.shl: Nat -> U16 -> U16
   (n) (a)
   a<() U16> | (a_val)
-  U16.new(Word.shift_left<Nat.16>(n)(a_val));
+  U16.new(Word.shift_left<16>(n)(a_val));
 
-U16.shr: Nat -> U16 -> U16 //prim//
+U16.shr: Nat -> U16 -> U16
   (n) (a)
   a<() U16> | (a_val)
-  U16.new(Word.shift_right<Nat.16>(n)(a_val));
+  U16.new(Word.shift_right<16>(n)(a_val));
 
-U16.sub: U16 -> U16 -> U16 //prim//
+U16.sub: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.sub<Nat.16>(a_val)(b_val));;
+  U16.new(Word.sub<16>(a_val)(b_val));;
 
 U16.to_bits: U16 -> Bits
   (a)
   a<() Bits> | (a_val)
-  Word.to_bits<Nat.16>(a_val);
+  Word.to_bits<16>(a_val);
 
-U16.to_nat: U16 -> Nat //prim//
+U16.to_nat: U16 -> Nat
   (a)
   a<() Nat> | (a_val)
-  Word.to_nat<Nat.16>(a_val);
+  Word.to_nat<16>(a_val);
 
-U16.xor: U16 -> U16 -> U16 //prim//
+U16.xor: U16 -> U16 -> U16
   (a) (b)
   a<() U16> | (a_val)
   b<() U16> | (b_val)
-  U16.new(Word.xor<Nat.16>(a_val)(b_val));;
+  U16.new(Word.xor<16>(a_val)(b_val));;
 

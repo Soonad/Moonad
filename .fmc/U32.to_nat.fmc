@@ -1,3 +1,0 @@
-U32.to_nat: Π(:U32) Nat
-  λa (<a λ Nat> λa_val (<Word.to_nat Nat.32> a_val))
-

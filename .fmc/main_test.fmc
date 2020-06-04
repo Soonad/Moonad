@@ -1,3 +1,0 @@
-main_test: F64
-  $pos=(((F64.V3.new F64.0) F64.1) F64.1);(<pos λx1 F64> λpos.x λpos.y λpos.z pos.x)
-

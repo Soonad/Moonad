@@ -1,3 +1,0 @@
-String.reverse.go: Π(:String) Π(:String) String
-  λstr λres ((<str λself String> res) λstr.head λstr.tail ((String.reverse.go str.tail) ((String.cons str.head) res)))
-

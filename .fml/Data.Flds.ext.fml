@@ -1,3 +1,0 @@
-Data.Flds.ext: String -> Type -> Data.Flds -> Data.Flds
-  (name) (type) (flds) <P> (nil) (ext) ext(name)(type)(flds)
-

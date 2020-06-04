@@ -1,3 +1,0 @@
-Parsec.run: ∀(S:*) ∀(E:*) ∀(A:*) Π(:(((Parsec S) E) A)) Π(:((Parsec.State S) E)) (((Parsec.Reply S) E) A)
-  ΛS ΛE ΛA λp λs (((((<p (((Parsec.Reply S) E) A)> s) <<<Parsec.Reply.empty_value S> E> A>) <<<Parsec.Reply.empty_error S> E> A>) <<<Parsec.Reply.eaten_value S> E> A>) <<<Parsec.Reply.eaten_error S> E> A>)
-

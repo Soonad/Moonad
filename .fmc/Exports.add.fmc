@@ -1,3 +1,0 @@
-Exports.add: ∀(A:*) Π(x:A) Π(xs:Exports) Exports
-  ΛA λx λxs ΛP λnew λadd ((<add A> x) ((<xs P> new) add))
-

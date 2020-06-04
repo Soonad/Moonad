@@ -1,3 +1,0 @@
-Parsec.type: Π(S:*) Π(E:*) Π(A:*) Π(:(((Parsec.Reply S) E) A)) *
-  λS λE λA λreply ((((<reply λ *> λ λ A) λ λe (Parsec.Error E)) λ λ A) λ λe (Parsec.Error E))
-

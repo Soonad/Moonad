@@ -1,3 +1,3 @@
-Bits.reverse: Bits -> Bits
-  (as) Bits.reverse.go(as)(Bits.nil)
+Bits.reverse: (a: Bits) -> Bits
+  (a) Bits.reverse.tco(a)(Bits.nil)
 

@@ -1,3 +1,3 @@
-Maybe.join: <A: Type> -> Maybe(Maybe(A)) -> Maybe(A)
-  <A> (m) m<() Maybe(A)>(Maybe.none<A>)((m.value) m.value)
+Maybe.join: <A: Type> -> (m: Maybe(Maybe(A))) -> Maybe(A)
+  <A> (m) m<(m.self) Maybe(A)>(Maybe.none<A>)((m.value) m.value)
 

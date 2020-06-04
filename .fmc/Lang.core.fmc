@@ -1,3 +1,0 @@
-Lang.core: (Parser Core)
-  @C=Π(:Core.Ctx) Core;((<<Parser.bind C> Core> Lang.trm) λterm (<Parser.pure Core> (term Core.Ctx.nil)))
-

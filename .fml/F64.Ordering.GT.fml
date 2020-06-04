@@ -1,3 +1,0 @@
-F64.Ordering.GT: F64.Ordering
-  <P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT) F64.Ordering.GT
-

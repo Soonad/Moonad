@@ -1,3 +1,0 @@
-F64.V3.eql: Π(:F64.V3) Π(:F64.V3) Bool
-  λa λb (<a λ Bool> λa.x λa.y λa.z (<b λ Bool> λb.x λb.y λb.z $same_x=((F64.eql a.x) b.x);$same_y=((F64.eql a.y) b.y);$same_z=((F64.eql a.z) b.z);((Bool.and same_x) ((Bool.and same_y) same_z))))
-

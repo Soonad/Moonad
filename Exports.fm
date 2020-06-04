@@ -1,23 +1,23 @@
-Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
-  <A> (x) (xs)
-  <P> (new) (add) add<A>(x)(xs<P>(new)(add))
+//Exports.add: <A: Type> -> (x: A) -> (xs: Exports) -> Exports
+  //<A> (x) (xs)
+  //<P> (new) (add) add<A>(x)(xs<P>(new)(add))
 
-// Exports the basic boolean functions
-Exports.example: Exports
-  ( Exports.add<Bool>(Bool.true)
-  | Exports.add<Bool>(Bool.false)
-  | Exports.add<Bool -> Bool>(Bool.not)
-  | Exports.add<Bool -> Bool -> Bool>(Bool.and)
-  | Exports.add<Bool -> Bool -> Bool>(Bool.or)
-  | Exports.new
-  ;;;;;)
+//// Exports the basic boolean functions
+//Exports.example: Exports
+  //( Exports.add<Bool>(Bool.true)
+  //| Exports.add<Bool>(Bool.false)
+  //| Exports.add<Bool -> Bool>(Bool.not)
+  //| Exports.add<Bool -> Bool -> Bool>(Bool.and)
+  //| Exports.add<Bool -> Bool -> Bool>(Bool.or)
+  //| Exports.new
+  //;;;;;)
 
-// A list of exports is just a heterogenic list.
-Exports: Type
-  <P: Type> ->
-  (new: P) ->
-  (add: <A: Type> -> (x: A) -> (xs: P) -> P) ->
-  P
+//// A list of exports is just a heterogenic list.
+//Exports: Type
+  //<P: Type> ->
+  //(new: P) ->
+  //(add: <A: Type> -> (x: A) -> (xs: P) -> P) ->
+  //P
 
-Exports.new: Exports
-  <P> (new) (add) new
+//Exports.new: Exports
+  //<P> (new) (add) new

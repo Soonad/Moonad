@@ -46,9 +46,10 @@ docs.an_unit: Docs.string_or_unit(Bool.false)
   Unit.new
 
 Docs.crazy(b: Bool): Docs.string_or_unit(b)
-  case b: (self) Docs.string_or_unit(self);
+  case b:
   | "I'm a string";
   | Unit.new;
+  : Docs.string_or_unit(b.self);
 
 Docs.crazy_test_0: IO(Unit)
   IO.print(Docs.crazy(Bool.true))
@@ -60,6 +61,7 @@ Docs.crazy_string_example_0: String
   Docs.crazy_string(Bool.true, Unit.new)
 
 Docs.self_equal_theorem(b: Bool): Bool.IsTrue(Bool.eql(b, b))
-  case b: (b) Bool.IsTrue(Bool.eql(b, b));
+  case b:
   | Unit.new;
   | Unit.new;
+  : Bool.IsTrue(Bool.eql(b.self, b.self));

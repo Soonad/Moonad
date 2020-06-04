@@ -1,0 +1,3 @@
+Bits.b0: Π(pred:Bits) Bits
+  λpred ΛP λnil λb0 λb1 (b0 pred)
+

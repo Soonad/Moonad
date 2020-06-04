@@ -1,3 +1,0 @@
-Parser.skip_many: ∀(A:*) Π(:(Parser A)) (Parser Unit)
-  ΛA λp (<<<Parsec.skip_many Unit> Unit> A> p)
-

@@ -1,3 +1,0 @@
-Parsec.State: Π(:*) Π(:*) *
-  λS λE ∀parser_state(P:Π(:((Parsec.State S) E)) *) Π(make:Π(input:String) Π(index:Nat) Π(error:(List (Parsec.Error E))) Π(state:S) (P ((((<<Parsec.State.make S> E> input) index) error) state))) (P parser_state)
-

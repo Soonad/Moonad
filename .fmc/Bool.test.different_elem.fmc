@@ -1,3 +1,0 @@
-Bool.test.different_elem: Π(a:Bool) ((Subset Bool) λb (Not (((Equal Bool) a) b)))
-  λa ((<a λself ((Subset Bool) λb (Not (((Equal Bool) self) b)))> <(<<Subset.new Bool> λb (Not (((Equal Bool) Bool.true) b))> Bool.false) Bool.true_isnt_false>) <(<<Subset.new Bool> λb (Not (((Equal Bool) Bool.false) b))> Bool.true) Bool.false_isnt_true>)
-

@@ -1,3 +1,0 @@
-Core.Read.wrd: (Core.Read String)
-  ((<<Core.Read.bind String> String> Core.Read.nam) λnam λcode ((<(String.is_empty nam) λ (Core.Read.Reply String)> <Core.Read.fail String>) ((<Core.Read.done String> nam) code)))
-

@@ -1,3 +1,0 @@
-Core.Read.opt: Π(:String) (Core.Read Bool)
-  λstr λcode ((<((Core.Read.txt str) code) λ (Core.Read.Reply Bool)> ((<Core.Read.done Bool> Bool.false) code)) λgot (<got λ (Core.Read.Reply Bool)> λ λcode ((<Core.Read.done Bool> Bool.true) code)))
-

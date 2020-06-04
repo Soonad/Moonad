@@ -1,3 +1,0 @@
-Data.Ctrs.type: Type -> Data.Ctrs -> Type
-  (P) (ctr) ctr<() Type>(P)((ctr.name) (ctr.flds) (ctr.ctrs) (ctr: Data.Flds.type(P)(ctr.flds)) -> Data.Ctrs.type(P)(ctr.ctrs))
-

@@ -1,3 +1,0 @@
-Arelin.Thing.speed_multiplier_of: Π(self:Arelin.Thing) F64
-  λself $self.bst=(Arelin.Thing.get_bst self);$self.buf=(Arelin.Thing.get_buf self);(((<<List.fold Arelin.Game.Buff> F64> self.bst) Arelin.Game.combine_mov_buffs) self.buf)
-

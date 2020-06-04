@@ -1,3 +1,0 @@
-U32.to_bits: Π(:U32) Bits
-  λa (<a λ Bits> λa_val (<Word.to_bits Nat.32> a_val))
-

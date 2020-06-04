@@ -1,3 +1,0 @@
-Core.Read.trm.base: (Core.Read Core.Bind)
-  $nil=<List.nil (Core.Read Core.Bind)>;$ext=<List.cons (Core.Read Core.Bind)>;$bases=((ext Core.Read.all) ((ext Core.Read.lam) ((ext Core.Read.let) ((ext Core.Read.par) ((ext Core.Read.typ) ((ext Core.Read.var) nil))))));(<Core.Read.first_of Core.Bind> bases)
-

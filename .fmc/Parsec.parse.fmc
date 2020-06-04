@@ -1,3 +1,0 @@
-Parsec.parse: ∀(S:*) ∀(E:*) ∀(A:*) Π(p:(((Parsec S) E) A)) Π(s:((Parsec.State S) E)) ((((Parsec.type S) E) A) ((<<<Parsec.run S> E> A> p) s))
-  ΛS ΛE ΛA λp λs ((((<((<<<Parsec.run S> E> A> p) s) λt ((((Parsec.type S) E) A) t)> λ λx x) λ λe e) λ λx x) λ λe e)
-

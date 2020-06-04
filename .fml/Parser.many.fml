@@ -1,3 +1,0 @@
-Parser.many: <A: Type> -> Parser(A) -> Parser(List(A))
-  <A> (p) Parsec.many<Unit><Unit><A>(p)
-

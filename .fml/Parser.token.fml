@@ -1,3 +1,0 @@
-Parser.token: <A: Type> -> (Char -> Maybe(A)) -> List(Parsec.Error.Item) -> Parser(A)
-  <A> (f) (es) Parsec.token<Unit><Unit><A>(f)(es)
-

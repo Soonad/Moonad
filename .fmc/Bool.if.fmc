@@ -1,3 +1,3 @@
-Bool.if: ∀(A:*) Π(x:Bool) Π(ct:A) Π(cf:A) A
-  ΛA λx λct λcf ((<((Bool.eql x) Bool.false) λself A> cf) ct)
+Bool.if: ∀(A:*) Π(x:Bool) Π(t:A) Π(f:A) A
+  ΛA λx λt λf ((<((Bool.eql x) Bool.false) λself.self A> f) t)
 

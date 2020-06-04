@@ -1,3 +1,5 @@
+// TODO: update style
+
 // The IO type allows representing side-effective computations.
 // You can run a term of type `IO(Unit)` using `fmcio my_term`.
 IO: Type -> Type
@@ -31,8 +33,7 @@ IO.print(str: String): IO(Unit)
   IO.end<Unit>(Unit.new)
 
 IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)) : IO(B)
-  case a
-  : () IO(B);
+  a<() IO(B)>
   | (val) f(val);
   | (str, nxt) IO.log<B>(str, (x) IO.bind<A,B>(nxt(x), f));
   | (nxt) IO.get<B>((x) IO.bind<A,B>(nxt(x), f));

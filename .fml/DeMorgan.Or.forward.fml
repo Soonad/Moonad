@@ -1,3 +1,0 @@
-DeMorgan.Or.forward: <A: Type> -> <B: Type> -> Not(Or(A)(B)) -> And(Not(A))(Not(B))
-  <A> <B> (not_or) Pair.new<(x: A) -> Empty><(x: B) -> Empty>((a) not_or(Either.left<A><B>(a)))((b) not_or(Either.right<A><B>(b)))
-
