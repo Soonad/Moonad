@@ -1,3 +1,0 @@
-Core.Read.fail: ∀(A:*) (Core.Read.Reply A)
-  ΛA <Maybe.none ((Pair A) String)>
-

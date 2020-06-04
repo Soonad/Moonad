@@ -1,3 +1,0 @@
-Arelin.Thing.has_shield: (self: Arelin.Thing) -> Bool
-  (self) let self.buf = Arelin.Thing.get_buf(self); let is_shield_buff = ((buff) buff<(self) Bool>((buff.dur) (buff.val) Bool.true)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.false)) :: Arelin.Game.Buff -> Bool; List.find<Arelin.Game.Buff>(is_shield_buff)(self.buf)<(self) Bool>(Bool.false)((some) Bool.true)
-

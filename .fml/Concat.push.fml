@@ -1,3 +1,0 @@
-Concat.push: <A: Type> -> A -> Concat(A) -> Concat(A)
-  <A> (val) (con) (x) con(List.cons<A>(val)(x))
-

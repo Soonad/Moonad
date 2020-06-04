@@ -1,3 +1,0 @@
-Core.ann: Π(:Bool) Π(:Core) Π(:Core) Core
-  λdone λexpr λtype Λ λ λ λ λ λ λ λ λann (((ann done) expr) type)
-

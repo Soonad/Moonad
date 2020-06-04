@@ -1,3 +1,0 @@
-Core.Read.nam: (Core.Read String)
-  λcode ((<code λ (Core.Read.Reply String)> ((<Core.Read.done String> String.nil) String.nil)) λcode.head λcode.tail ((<(Core.Read.is_name code.head) λ (Core.Read.Reply String)> ((<(Core.Read.nam code.tail) λ (Core.Read.Reply String)> <Core.Read.fail String>) λgot (<got λ (Core.Read.Reply String)> λstr (<Core.Read.done String> ((String.cons code.head) str))))) ((<Core.Read.done String> String.nil) code)))
-

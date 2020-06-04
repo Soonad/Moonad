@@ -1,3 +1,0 @@
-A.inference1: Bool -> Bool
-  (b) b<(self) Bool>(Bool.true)(Bool.false)
-

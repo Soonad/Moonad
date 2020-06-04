@@ -1,3 +1,0 @@
-List.sum: (xs: List(Nat)) -> Nat
-  (xs) xs<(self) Nat>(Nat.zero)((head) (tail) Nat.add(head)(List.sum(tail)))
-

@@ -1,3 +1,0 @@
-Contrapositive.type: <A: Type> -> <B: Type> -> (f: A -> B) -> Not(B) -> Not(A)
-  <A> <B> (f) (notB) (a) notB(f(a))
-

@@ -1,3 +1,0 @@
-Core.to_uid: Π(:Core) Bits
-  λterm ((((Core.to_bits.go term) Nat.0) Bool.true) Bits.nil)
-

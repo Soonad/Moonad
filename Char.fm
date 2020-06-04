@@ -3,29 +3,21 @@ Char: Type
   U16
 
 // Receives a hex char (0-9, a-f, A-F) and returns its value as a Nat.
-Char.hex_value: Char -> Maybe(Nat)
-  (chr)
-  // if ('0' <= chr <= '9') return to_nat(chr - '0');
-  case Bool.and(U16.gte(chr)('0'))(U16.lte(chr)('9')):
-  | Maybe.some<Nat>(U16.to_nat(U16.sub(chr)('0')));
-  // if ('a' <= chr < 'f') return to_nat(chr - 'a') + 10;
-  | case Bool.and(U16.gte(chr)('a'))(U16.lte(chr)('f')):
-    | Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('a')))(Nat.10));
-    // if ('A' <= chr < 'F') return to_nat(chr - 'a') + 10;
-    // else return 0;
-    | case Bool.and(U16.gte(chr)('A'))(U16.lte(chr)('F')):
-      | Maybe.some<Nat>(Nat.add(U16.to_nat(U16.sub(chr)('A')))(Nat.10));
-      | Maybe.none<Nat>;
-    ;
-  ;
+Char.hex_value(chr: Char): Maybe(Nat)
+  if Bool.and(U16.gte(chr,'0'),U16.lte(chr,'9')) then
+    Maybe.some<_>(U16.to_nat(U16.sub(chr,'0')))
+  else if Bool.and(U16.gte(chr,'a'),U16.lte(chr,'f')) then
+    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'a')),10))
+  else if Bool.and(U16.gte(chr,'A'),U16.lte(chr,'F')) then
+    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'A')),10))
+  else
+    Maybe.none<_>
 
 // Creates a character from 16 bits.
 Char.new
-  : Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit ->
-    Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit -> Bit ->
-    Char
-  (b0) (b1) (b2) (b3) (b4) (b5) (b6) (b7)
-  (b8) (b9) (bA) (bB) (bC) (bD) (bE) (bF)
+  (b0:Bit, b1:Bit, b2:Bit, b3:Bit, b4:Bit, b5:Bit, b6:Bit, b7:Bit,
+   b8:Bit, b9:Bit, bA:Bit, bB:Bit, bC:Bit, bD:Bit, bE:Bit, bF:Bit)
+  : U16
   let kF = b0<>(Word.0<>)(Word.1<>)
   let kE = b1<>(Word.0<>)(Word.1<>)
   let kD = b2<>(Word.0<>)(Word.1<>)
@@ -46,36 +38,35 @@ Char.new
   U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
 
 Char.newline: Char
-  Char.new
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.1; | Bit.0; | Bit.1; | Bit.0;
+  Char.new(
+    Bit.0, Bit.0, Bit.0, Bit.0,
+    Bit.0, Bit.0, Bit.0, Bit.0,
+    Bit.0, Bit.0, Bit.0, Bit.0,
+    Bit.1, Bit.0, Bit.1, Bit.0)
 
-// Parses a character. Example: `Char.parse("x")`
-Char.parse : (str : String) -> Char.parse.type(str)
-  (str)
-  str<(str) Char.parse.type(str)>
-  | Unit.new;
-  | (str.head) (str.tail) str.head;
-
-Char.parse.type : String -> Type
-  (str)
+Char.parse.type(str: String): Type
   case str:
   | Unit;
-  | (str.head) (str.tail) Char;
+  | Char;
 
-Char.quote : Char
-  Char.new
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.1; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.1; | Bit.0;
+// Parses a character. Example: `Char.parse("x")`
+Char.parse(str: String): Char.parse.type(str)
+  case str:
+  | Unit.new;
+  | str.head;
+  : Char.parse.type(str.self);
 
-Char.tab: Char
-  Char.new
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.0; | Bit.0; | Bit.0; | Bit.0;
-  | Bit.1; | Bit.0; | Bit.0; | Bit.1;
+//Char.quote : Char
+  //Char.new
+  //| Bit.0; | Bit.0; | Bit.0; | Bit.0;
+  //| Bit.0; | Bit.0; | Bit.0; | Bit.0;
+  //| Bit.0; | Bit.0; | Bit.1; | Bit.0;
+  //| Bit.0; | Bit.0; | Bit.1; | Bit.0;
+
+//Char.tab: Char
+  //Char.new
+  //| Bit.0; | Bit.0; | Bit.0; | Bit.0;
+  //| Bit.0; | Bit.0; | Bit.0; | Bit.0;
+  //| Bit.0; | Bit.0; | Bit.0; | Bit.0;
+  //| Bit.1; | Bit.0; | Bit.0; | Bit.1;
 

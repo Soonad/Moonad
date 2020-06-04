@@ -1,15 +1,15 @@
-Newtype.elim: <A: Type> -> <tag: String> -> (n: Newtype(A)(tag)) -> A
-  <A> <tag> (n)
-  n<() () A>
-  | (x) x;
+//Newtype.elim: <A: Type> -> <tag: String> -> (n: Newtype(A)(tag)) -> A
+  //<A> <tag> (n)
+  //n<() () A>
+  //| (x) x;
 
-Newtype: (A: Type) -> (tag: String) -> Type
-  (A) (tag)
-  newtype<P: (tag: String) -> Newtype(A)(tag) -> Type> ->
-  (val: (x: A) -> P(tag)(Newtype.val<A><tag>(x))) ->
-  P(tag)(newtype)
+//Newtype: (A: Type) -> (tag: String) -> Type
+  //(A) (tag)
+  //newtype<P: (tag: String) -> Newtype(A)(tag) -> Type> ->
+  //(val: (x: A) -> P(tag)(Newtype.val<A><tag>(x))) ->
+  //P(tag)(newtype)
 
-Newtype.val: <A : Type> -> <tag: String> -> (x: A) -> Newtype(A)(tag)
-  <A> <tag> (x)
-  <P> (val) val(x)
+//Newtype.val: <A : Type> -> <tag: String> -> (x: A) -> Newtype(A)(tag)
+  //<A> <tag> (x)
+  //<P> (val) val(x)
 

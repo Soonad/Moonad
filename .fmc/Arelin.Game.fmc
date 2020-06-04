@@ -1,3 +1,0 @@
-Arelin.Game: *
-  ∀self(P:Π(self:Arelin.Game) *) Π(new:Π(stage:(List Arelin.Thing)) (P (Arelin.Game.new stage))) (P self)
-

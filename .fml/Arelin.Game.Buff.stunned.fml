@@ -1,3 +1,0 @@
-Arelin.Game.Buff.stunned: (dur: F64) -> Arelin.Game.Buff
-  (dur) <P> (shielded) (slowed) (hasted) (silenced) (rooted) (stunned) stunned(dur)
-

@@ -1,3 +1,0 @@
-String.is_empty: Π(:String) Bool
-  λstr ((<str λself Bool> Bool.true) λhead λtail Bool.false)
-

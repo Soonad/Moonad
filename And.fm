@@ -1,2 +1,2 @@
-And: (A: Type) -> (B: Type) -> Type
-    (A, B) Pair(A, B)
+//And(A: Type, B: Type): Type
+  //Pair(A, B)

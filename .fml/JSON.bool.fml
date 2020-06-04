@@ -1,3 +1,0 @@
-JSON.bool: (x: Bool) -> JSON
-  (x) <P> (null) (bool) (number) (string) (array) (object) bool(x)
-

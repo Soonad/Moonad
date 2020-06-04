@@ -1,3 +1,0 @@
-List.reverse: <A: Type> -> List(A) -> List(A)
-  <A> (as) List.reverse.aux<A>(as)([A;])
-

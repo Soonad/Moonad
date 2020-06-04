@@ -1,3 +1,0 @@
-List.safe_head: Π(A:*) Π(xs:(List A)) Π(not_empty:(<List.not_empty A> xs)) A
-  λA λxs λnot_empty (((<xs λxs Π(e:(<List.not_empty A> xs)) A> λne ((Empty.absurd ne) A)) λx λxs λne x) not_empty)
-

@@ -1,3 +1,0 @@
-A.it_works: (((Equal Nat) Nat.1) (((A.crazy Nat.0) Nat.1) Nat.2))
-  <<Equal.to Nat> Nat.1>
-

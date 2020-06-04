@@ -1,3 +1,0 @@
-List.sum: Π(xs:(List Nat)) Nat
-  λxs ((<xs λself Nat> Nat.zero) λhead λtail ((Nat.add head) (List.sum tail)))
-

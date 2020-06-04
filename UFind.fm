@@ -1,48 +1,48 @@
-UFind.new : UFind
-  Map.new<UNode>
+//UFind.new : UFind
+  //Map.new<UNode>
 
-UFind.equivalent: UFind -> Bits -> Bits -> Bool
-  (uf) (path1) (path2)
-  UFind.find<Bool>(uf)(path1)(
-    (uf) (root1) (rank1)
-    UFind.find<Bool>(uf)(path2)(
-      (uf) (root2) (rank2)
-      Bits.eql(root1)(root2)))
+//UFind.equivalent: UFind -> Bits -> Bits -> Bool
+  //(uf) (path1) (path2)
+  //UFind.find<Bool>(uf)(path1)(
+    //(uf) (root1) (rank1)
+    //UFind.find<Bool>(uf)(path2)(
+      //(uf) (root2) (rank2)
+      //Bits.eql(root1)(root2)))
 
-UFind.find: <B: Type> -> UFind -> Bits -> (UFind -> Bits -> Nat -> B) -> B
-  <B> (uf) (path) (k)
-  let found = Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf)
-  found<() B>
-  | (node) (uf)
-    node<() B>
-    | (node.rank) k(uf)(path)(node.rank);
-    | (node.parent)
-      UFind.find<B>(uf)(node.parent)
-      | (uf) (root) (rank)
-        let uf = Map.set<UNode>(path)(UNode.link(root))(uf)
-        k(uf)(root)(rank);;;
+//UFind.find: <B: Type> -> UFind -> Bits -> (UFind -> Bits -> Nat -> B) -> B
+  //<B> (uf) (path) (k)
+  //let found = Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf)
+  //found<() B>
+  //| (node) (uf)
+    //node<() B>
+    //| (node.rank) k(uf)(path)(node.rank);
+    //| (node.parent)
+      //UFind.find<B>(uf)(node.parent)
+      //| (uf) (root) (rank)
+        //let uf = Map.set<UNode>(path)(UNode.link(root))(uf)
+        //k(uf)(root)(rank);;;
 
-UFind: Type
-  Map(UNode)
+//UFind: Type
+  //Map(UNode)
 
-UFind.new_node: UFind -> Bits -> UFind
-  (uf) (path) Map.set<UNode>(path)(UNode.root(Nat.zero))(uf)
+//UFind.new_node: UFind -> Bits -> UFind
+  //(uf) (path) Map.set<UNode>(path)(UNode.root(Nat.zero))(uf)
 
-UFind.union: UFind -> Bits -> Bits -> UFind
-  (uf) (path1) (path2)
-  UFind.find<UFind>(uf)(path1)(
-    (uf) (root_path1) (rank1)
-    UFind.find<UFind>(uf)(path2)(
-      (uf) (root_path2) (rank2)
-      Bits.eql(root_path1)(root_path2)<() UFind>
-      | uf;
-      | Nat.cmp(rank1)(rank2)<() UFind>
-        | let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
-          uf;
-        | let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
-          let uf = Map.set<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf)
-          uf;
-        | let uf = Map.set<UNode>(root_path1)(UNode.root(rank2))(uf)
-          let uf = Map.set<UNode>(root_path2)(UNode.link(root_path1))(uf)
-          uf;;))
+//UFind.union: UFind -> Bits -> Bits -> UFind
+  //(uf) (path1) (path2)
+  //UFind.find<UFind>(uf)(path1)(
+    //(uf) (root_path1) (rank1)
+    //UFind.find<UFind>(uf)(path2)(
+      //(uf) (root_path2) (rank2)
+      //Bits.eql(root_path1)(root_path2)<() UFind>
+      //| uf;
+      //| Nat.cmp(rank1)(rank2)<() UFind>
+        //| let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
+          //uf;
+        //| let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf)
+          //let uf = Map.set<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf)
+          //uf;
+        //| let uf = Map.set<UNode>(root_path1)(UNode.root(rank2))(uf)
+          //let uf = Map.set<UNode>(root_path2)(UNode.link(root_path1))(uf)
+          //uf;;))
 

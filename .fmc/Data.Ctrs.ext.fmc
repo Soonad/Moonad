@@ -1,3 +1,0 @@
-Data.Ctrs.ext: Π(:String) Π(:Data.Flds) Π(:Data.Ctrs) Data.Ctrs
-  λname λflds λctrs ΛP λnil λext (((ext name) flds) ctrs)
-

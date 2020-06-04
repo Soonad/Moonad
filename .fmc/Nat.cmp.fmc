@@ -1,3 +1,3 @@
-Nat.cmp: Π(:Nat) Π(:Nat) Cmp
-  λa λb ((<a λ Cmp> ((<b λ Cmp> Cmp.eql) λb.pred Cmp.ltn)) λa.pred ((<b λ Cmp> Cmp.gtn) λb.pred ((Nat.cmp a.pred) b.pred)))
+Nat.cmp: Π(a:Nat) Π(b:Nat) Cmp
+  λa λb ((<a λa.self Cmp> ((<b λb.self Cmp> Cmp.eql) λb.pred Cmp.ltn)) λa.pred ((<b λb.self Cmp> Cmp.gtn) λb.pred ((Nat.cmp a.pred) b.pred)))
 

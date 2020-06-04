@@ -1,3 +1,0 @@
-Nat.show: Π(:Nat) String
-  λn (((Nat.show.aux n) Nat.10) String.nil)
-

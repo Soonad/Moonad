@@ -1,0 +1,3 @@
+Bits.b1: (pred: Bits) -> Bits
+  (pred) <P> (nil) (b0) (b1) b1(pred)
+

@@ -1,3 +1,0 @@
-Bits.reverse.go: Π(:Bits) Π(:Bits) Bits
-  λas λres (((<as λx2 Bits> res) λas.pred ((Bits.reverse.go as.pred) (Bits.0 res))) λas.pred ((Bits.reverse.go as.pred) (Bits.1 res)))
-

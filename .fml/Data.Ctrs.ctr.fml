@@ -1,3 +1,0 @@
-Data.Ctrs.ctr: (ctrs: Data.Ctrs) -> (ctrs0: Data.Ctrs) -> (nth: Nat) -> Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)
-  (ctrs) (ctrs0) (nth) ctrs<(ctrs) Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)>(Type)((ctrs.name) (ctrs.flds) (ctrs.ctrs) def ctrs = Data.Ctrs.ext(ctrs.name)(ctrs.flds)(ctrs.ctrs); nth<(nth) Data.Ctrs.ctr.type(ctrs)(ctrs0)(nth)>(<P> Data.Ctrs.ctr.header(P)(ctrs0)([P;]))((nth.pred) Data.Ctrs.ctr(ctrs.ctrs)(ctrs0)(nth.pred)))
-

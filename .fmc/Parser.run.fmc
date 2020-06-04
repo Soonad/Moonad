@@ -1,3 +1,0 @@
-Parser.run: ∀(A:*) Π(:(Parser A)) Π(:Parser.State) (Parser.Reply A)
-  ΛA λp λs ((<<<Parsec.run Unit> Unit> A> p) s)
-

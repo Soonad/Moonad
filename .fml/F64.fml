@@ -1,3 +1,0 @@
-F64: Type
-  Newtype(Word(Nat.64))("F64")
-

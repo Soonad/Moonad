@@ -1,3 +1,0 @@
-Arelin.Game.Buff.hasted: Π(dur:F64) Π(val:F64) Arelin.Game.Buff
-  λdur λval ΛP λshielded λslowed λhasted λsilenced λrooted λstunned ((hasted dur) val)
-

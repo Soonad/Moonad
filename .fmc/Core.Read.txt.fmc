@@ -1,3 +1,0 @@
-Core.Read.txt: Π(:String) (Core.Read Unit)
-  λstr λcode ((<str λ (Core.Read.Reply Unit)> ((<Core.Read.done Unit> Unit.new) code)) λstr.head λstr.tail ((<code λ (Core.Read.Reply Unit)> <Core.Read.fail Unit>) λcode.head λcode.tail ((<((U16.eql str.head) code.head) λ (Core.Read.Reply Unit)> ((Core.Read.txt str.tail) code.tail)) <Core.Read.fail Unit>)))
-

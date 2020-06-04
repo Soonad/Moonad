@@ -1,3 +1,0 @@
-Parsec.State.default: <S: Type> -> <E: Type> -> String -> S -> Parsec.State(S)(E)
-  <S> <E> (input) (state) <P> (make) make(input)(Nat.zero)([Parsec.Error(E);])(state)
-

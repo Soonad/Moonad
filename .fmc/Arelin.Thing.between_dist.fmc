@@ -1,3 +1,0 @@
-Arelin.Thing.between_dist: Π(self:Arelin.Thing) Π(min_range:F64) Π(max_range:F64) F64.V3
-  λself λmin_range λmax_range $pos=(Arelin.Thing.get_pos self);$trg=(Arelin.Thing.get_trg self);$dist_trg=((F64.V3.dist pos) trg);((Arelin.Thing.at_dist self) ((F64.max min_range) ((F64.min max_range) dist_trg)))
-

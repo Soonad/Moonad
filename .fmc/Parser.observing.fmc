@@ -1,3 +1,0 @@
-Parser.observing: ∀(A:*) Π(:(Parser A)) (Parser ((Either Parser.Error) A))
-  ΛA λp (<<<Parsec.observing Unit> Unit> A> p)
-

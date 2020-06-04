@@ -1,3 +1,0 @@
-A.crazy: Nat -> Nat -> Nat -> Nat
-  A.fun("λx.λy.λz.y")
-

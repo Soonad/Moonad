@@ -1,11 +1,17 @@
-Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
-  <size> (wo) <P> (we) (w0) (w1)
-  w0<size>(wo)
+// TODO: update style
 
-Word.1: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
-  <size> (wo) <P> (we) (w0) (w1)
-  w1<size>(wo)
+T Word                            ~ (n: Nat)
+| nil                             ~ (Nat.zero);
+| w0<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
+| w1<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
 
+Word.0: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
+  Word.w0
+
+Word.1: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
+  Word.w1
+  
+// TODO: improve syntax
 Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
   <size> (a) (b) (c)
   ( a<(a.size) () Word(a.size) -> Word(a.size)>
@@ -44,7 +50,6 @@ Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
 Word.add: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   <size> (a) (b) Word.add.aux<size>(a)(b)(Bool.false)
 
-// TODO bitwise AND between two words
 Word.and: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.and
 
@@ -104,14 +109,6 @@ Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
   <size> (a) (b)
   Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
 
-Word: Nat -> Type
-  (size)
-  word<P: (size: Nat) -> Word(size) -> Type> ->
-  (we: P(Nat.zero)(Word.nil)) ->
-  (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.0<size>(pred))) ->
-  (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.1<size>(pred))) ->
-  P(size)(word)
-
 Word.from_bits: (size: Nat) -> Bits -> Word(size)
   (size) (bits)
   size<(size) Word(size)>
@@ -157,10 +154,6 @@ Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
 Word.mul: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.mul
 
-Word.nil: Word(Nat.zero)
-  <P> (we) (w0) (w1)
-  we
-
 // TODO bitwise OR between two words
 Word.or: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.or
@@ -200,16 +193,16 @@ Word.to_bits: <size: Nat> -> Word(size) -> Bits
 
 Word.to_nat: <size: Nat> -> Word(size) -> Nat
   <size> (word)
-  Word.to_nat.go<size>(word)(Nat.1)
+  Word.to_nat.go<size>(word)(1)
 
 Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
   <size> (word) (add)
   word<() () Nat>
   | Nat.zero;
   | <size> (word.pred)
-    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2));
+    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(2));
   | <size> (word.pred)
-    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2)));
+    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(2)));
 
 // TODO bitwise XOR between two words
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)

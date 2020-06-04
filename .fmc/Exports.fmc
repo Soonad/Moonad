@@ -1,3 +1,0 @@
-Exports: *
-  ∀(P:*) Π(new:P) Π(add:∀(A:*) Π(x:A) Π(xs:P) P) P
-

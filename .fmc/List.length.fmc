@@ -1,3 +1,0 @@
-List.length: ∀(A:*) Π(:(List A)) Nat
-  ΛA λlist ((<list λself Nat> Nat.zero) λhead λtail (Nat.succ (<List.length A> tail)))
-

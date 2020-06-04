@@ -1,3 +1,0 @@
-Core.is_all: Π(:Core) Bool
-  λterm ((((((((<term λ Bool> λname λindx λflip Bool.false) λname Bool.false) Bool.false) λeras λself λname λbind λbody Bool.true) λeras λname λbody Bool.false) λeras λfunc λargm Bool.false) λname λexpr λbody Bool.false) λdone λexpr λtype Bool.false)
-

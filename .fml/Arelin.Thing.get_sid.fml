@@ -1,3 +1,0 @@
-Arelin.Thing.get_sid: (thi: Arelin.Thing) -> Arelin.Game.SideId
-  (thi) thi<(self) Arelin.Game.SideId>((thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die) thi.sid)
-

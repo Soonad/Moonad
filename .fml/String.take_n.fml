@@ -1,3 +1,0 @@
-String.take_n: Nat -> String -> Maybe(Pair(String)(String))
-  (n) (str) String.take_n.aux(n)(String.nil)(str)<(self) Maybe(Pair(String)(String))>(Maybe.none<Pair(String)(String)>)((p) p<(self) Maybe(Pair(String)(String))>((x) (y) Maybe.some<Pair(String)(String)>(Pair.new<String><String>(String.reverse(x))(y))))
-

@@ -1,3 +1,0 @@
-Data.Ctrs: *
-  ∀self(P:Π(:Data.Ctrs) *) Π(nil:(P Data.Ctrs.nil)) Π(ext:Π(name:String) Π(flds:Data.Flds) Π(ctrs:Data.Ctrs) (P (((Data.Ctrs.ext name) flds) ctrs))) (P self)
-

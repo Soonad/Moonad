@@ -1,3 +1,0 @@
-Parser.many_till: ∀(A:*) ∀(B:*) Π(:(Parser A)) Π(:(Parser B)) (Parser (List A))
-  ΛA ΛB λp λq ((<Parser.plus (List A)> ((<<Parser.then B> (List A)> q) (<Parser.pure (List A)> <List.nil A>))) ((<<Parser.bind A> (List A)> p) λx ((<<Parser.bind (List A)> (List A)> ((<<Parser.many_till A> B> p) q)) λxs (<Parser.pure (List A)> ((<List.cons A> x) xs)))))
-

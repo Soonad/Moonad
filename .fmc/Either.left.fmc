@@ -1,3 +1,3 @@
-Either.left: ∀(A:*) ∀(B:*) Π(x:A) ((Either A) B)
-  ΛA ΛB λx ΛP λleft λright (left x)
+Either.left: ∀(A:*) ∀(B:*) Π(value:A) ((Either A) B)
+  ΛA ΛB λvalue ΛP λleft λright (left value)
 

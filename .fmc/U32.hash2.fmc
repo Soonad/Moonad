@@ -1,3 +1,0 @@
-U32.hash2: Π(:U32) Π(:U32) U32
-  λa λb (<(U64.mix ((U32.concat a) b)) λ U32> λw64 (U32.new ((<Word.drop Nat.32> Nat.32) w64)))
-

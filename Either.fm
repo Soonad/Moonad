@@ -1,17 +1,11 @@
-Either.bind
-  : <A: Type> ->
-    <B: Type> ->
-    <C: Type> ->
-    Either(A)(B) ->
-    (B -> Either(A)(C)) ->
-    Either(A)(C)
-  <A> <B> <C> (e) (f)
-  case e:
-  | (val) Either.left<A><C>(val);
-  | (val) f(val);
-
 // A container for either a value of type A or a value of type B.
 T Either <A: Type, B: Type>
-| left(x: A);
-| right(x: B);
+| left(value: A);
+| right(value: B);
+
+Either.bind<A: Type, B: Type, C: Type>(e: Either(A,B), f: B -> Either(A,C)): Either(A,C)
+  case e:
+  | Either.left<A><C>(e.value);
+  | f(e.value);
+
 

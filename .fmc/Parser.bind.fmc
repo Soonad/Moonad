@@ -1,3 +1,0 @@
-Parser.bind: ∀(A:*) ∀(B:*) Π(:(Parser A)) Π(:Π(:A) (Parser B)) (Parser B)
-  ΛA ΛB λpa λpf ((<<<<Parsec.bind Unit> Unit> A> B> pa) pf)
-
