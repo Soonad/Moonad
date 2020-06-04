@@ -125,1206 +125,999 @@ Arelin.Thing.new_thing : Arelin.Thing
     Bool.false)                        // die
 
 //// Getters and setters
-// Arelin.Thing.get_fun(thi: Arelin.Thing): Arelin.Game.TxFunction
-//   case thi:
-//   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-//     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-//     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-//     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-//   thi.fun;
+Arelin.Thing.get_fun(thi: Arelin.Thing): Arelin.Game.TxFunction
+  case thi:
+  | thi.fun;
 
-//Arelin.Thing.set_fun(
-  //thi: Arelin.Thing, 
-  //new_fun: Arelin.Game.TxFunction
-//) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| new_fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_fun(
+  thi: Arelin.Thing, 
+  new_fun: Arelin.Game.TxFunction
+) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | new_fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_pid(thi: Arelin.Thing): Arelin.Game.PlayerId
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.pid;
+Arelin.Thing.get_pid(thi: Arelin.Thing): Arelin.Game.PlayerId
+  case thi:
+  | thi.pid;
 
-//Arelin.Thing.set_pid(
-  //thi: Arelin.Thing, 
-  //new_pid: Arelin.Game.PlayerId
-//) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| new_pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_pid(
+  thi: Arelin.Thing, 
+  new_pid: Arelin.Game.PlayerId
+) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | new_pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_mid(thi: Arelin.Thing): Arelin.Game.ModelId
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.mid;
+Arelin.Thing.get_mid(thi: Arelin.Thing): Arelin.Game.ModelId
+  case thi: 
+  | thi.mid;
 
-//Arelin.Thing.set_mid(
-  //thi: Arelin.Thing, 
-  //new_mid: Arelin.Game.ModelId
-//) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| new_mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;  
+Arelin.Thing.set_mid(
+  thi: Arelin.Thing, 
+  new_mid: Arelin.Game.ModelId
+) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | new_mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;  
 
-//Arelin.Thing.get_act(thi: Arelin.Thing): Arelin.Game.ActionId
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.act;
+Arelin.Thing.get_act(thi: Arelin.Thing): Arelin.Game.ActionId
+  case thi: 
+  | thi.act;
 
-//Arelin.Thing.set_act(
-  //thi: Arelin.Thing, 
-  //new_act: Arelin.Game.ActionId
-//) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| new_act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_act(
+  thi: Arelin.Thing, 
+  new_act: Arelin.Game.ActionId
+) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | new_act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_sid(thi: Arelin.Thing): Arelin.Game.SideId
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.sid;
+Arelin.Thing.get_sid(thi: Arelin.Thing): Arelin.Game.SideId
+  case thi: 
+  | thi.sid;
 
-//Arelin.Thing.set_sid(
-  //thi: Arelin.Thing, 
-  //new_sid: Arelin.Game.SideId
-//) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| new_sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_sid(
+  thi: Arelin.Thing, 
+  new_sid: Arelin.Game.SideId
+) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | new_sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_stt(thi: Arelin.Thing): Map(F64)
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.stt;
+Arelin.Thing.get_stt(thi: Arelin.Thing): Map(F64)
+  case thi: 
+  | thi.stt;
 
-//Arelin.Thing.set_stt(thi: Arelin.Thing, new_stt: Map(F64)) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| new_stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_stt(thi: Arelin.Thing, new_stt: Map(F64)) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | new_stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_nam(thi: Arelin.Thing): String
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.nam;
+Arelin.Thing.get_nam(thi: Arelin.Thing): String
+  case thi: 
+  | thi.nam;
 
-//Arelin.Thing.set_nam(thi: Arelin.Thing, new_nam: String) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| new_nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_nam(thi: Arelin.Thing, new_nam: String) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | new_nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_lit(thi: Arelin.Thing): List(Arelin.Game.Light)
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.lit;
+Arelin.Thing.get_lit(thi: Arelin.Thing): List(Arelin.Game.Light)
+  case thi: 
+  | thi.lit;
 
-//Arelin.Thing.set_lit(
-  //thi: Arelin.Thing, 
-  //new_lit: List(Arelin.Game.Light)
-  //) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| new_lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_lit(
+  thi: Arelin.Thing, 
+  new_lit: List(Arelin.Game.Light)
+  ) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | new_lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_tik(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.tik;
+Arelin.Thing.get_tik(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.tik;
 
-//Arelin.Thing.set_tik(thi: Arelin.Thing, new_tik: F64) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| new_tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_tik(thi: Arelin.Thing, new_tik: F64) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | new_tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_pos(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.pos;
+Arelin.Thing.get_pos(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.pos;
 
-//Arelin.Thing.set_pos(thi: Arelin.Thing, new_pos: F64.V3) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| new_pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_pos(thi: Arelin.Thing, new_pos: F64.V3) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | new_pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_mov(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.mov;
+Arelin.Thing.get_mov(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.mov;
 
-//Arelin.Thing.set_mov(thi: Arelin.Thing, new_mov: F64) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| new_mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_mov(thi: Arelin.Thing, new_mov: F64) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | new_mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_bst(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.bst;
+Arelin.Thing.get_bst(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.bst;
 
-//Arelin.Thing.set_bst(thi: Arelin.Thing, new_bst: F64) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| new_bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_bst(thi: Arelin.Thing, new_bst: F64) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | new_bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_pad(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.pad;
+Arelin.Thing.get_pad(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.pad;
 
-//Arelin.Thing.set_pad(thi: Arelin.Thing, new_pad: F64.V3) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| new_pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_pad(thi: Arelin.Thing, new_pad: F64.V3) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | new_pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_dir(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.dir;
+Arelin.Thing.get_dir(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.dir;
 
-//Arelin.Thing.set_dir(thi: Arelin.Thing, new_dir: F64.V3) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| new_dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_dir(thi: Arelin.Thing, new_dir: F64.V3) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | new_dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_trg(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.trg;
+Arelin.Thing.get_trg(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.trg;
 
-//Arelin.Thing.set_trg(thi: Arelin.Thing, new_trg: F64.V3) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| new_trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_trg(thi: Arelin.Thing, new_trg: F64.V3) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | new_trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_vel(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.vel;
+Arelin.Thing.get_vel(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.vel;
 
-//Arelin.Thing.set_vel(thi: Arelin.Thing, new_vel: F64.V3) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| new_vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_vel(thi: Arelin.Thing, new_vel: F64.V3) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | new_vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_box(thi: Arelin.Thing): Arelin.Game.Hitbox
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.box;
+Arelin.Thing.get_box(thi: Arelin.Thing): Arelin.Game.Hitbox
+  case thi: 
+  | thi.box;
 
-//Arelin.Thing.set_box(
-  //thi: Arelin.Thing, 
-  //new_box: Arelin.Game.Hitbox
-  //) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| new_box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_box(
+  thi: Arelin.Thing, 
+  new_box: Arelin.Game.Hitbox
+  ) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | new_box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_wei(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.wei;
+Arelin.Thing.get_wei(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.wei;
 
-//Arelin.Thing.set_wei(thi: Arelin.Thing, new_wei: F64): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| new_wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_wei(thi: Arelin.Thing, new_wei: F64): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | new_wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_mhp(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.mhp;
+Arelin.Thing.get_mhp(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.mhp;
 
-//Arelin.Thing.set_mhp(thi: Arelin.Thing, new_mhp: F64): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| new_mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_mhp(thi: Arelin.Thing, new_mhp: F64): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | new_mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_dmg(thi: Arelin.Thing): F64
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.dmg;
+Arelin.Thing.get_dmg(thi: Arelin.Thing): F64
+  case thi: 
+  | thi.dmg;
 
-//Arelin.Thing.set_dmg(thi: Arelin.Thing, new_dmg: F64): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| new_dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_dmg(thi: Arelin.Thing, new_dmg: F64): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | new_dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_knk(thi: Arelin.Thing): F64.V3
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.knk;
+Arelin.Thing.get_knk(thi: Arelin.Thing): F64.V3
+  case thi: 
+  | thi.knk;
 
-//Arelin.Thing.set_knk(thi: Arelin.Thing, new_knk: F64.V3): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| new_knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_knk(thi: Arelin.Thing, new_knk: F64.V3): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | new_knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_buf(thi: Arelin.Thing): List(Arelin.Game.Buff)
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.buf;
+Arelin.Thing.get_buf(thi: Arelin.Thing): List(Arelin.Game.Buff)
+  case thi: 
+  | thi.buf;
 
-//Arelin.Thing.set_buf(
-  //thi: Arelin.Thing, 
-  //new_buf: List(Arelin.Game.Buff)
-  //): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| new_buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //;
+Arelin.Thing.set_buf(
+  thi: Arelin.Thing, 
+  new_buf: List(Arelin.Game.Buff)
+  ): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | new_buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ;
 
-//Arelin.Thing.get_chi(thi: Arelin.Thing): List(Arelin.Thing)
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.chi;
+Arelin.Thing.get_chi(thi: Arelin.Thing): List(Arelin.Thing)
+  case thi: 
+  | thi.chi;
 
-//Arelin.Thing.set_chi(
-  //thi: Arelin.Thing, 
-  //new_chi: List(Arelin.Thing)
-  //) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| new_chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| thi.die;
-  //; 
+Arelin.Thing.set_chi(
+  thi: Arelin.Thing, 
+  new_chi: List(Arelin.Thing)
+  ) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | new_chi;
+    | thi.hit;
+    | thi.rst;
+    | thi.die;
+  ; 
 
-//Arelin.Thing.get_hit(thi: Arelin.Thing): List(Arelin.Game.Hit)
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.hit; 
+Arelin.Thing.get_hit(thi: Arelin.Thing): List(Arelin.Game.Hit)
+  case thi: 
+  | thi.hit; 
 
-//Arelin.Thing.set_hit(
-  //thi: Arelin.Thing, 
-  //new_hit: List(Arelin.Game.Hit)
-  //) : Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| new_hit;
-    //| thi.rst;
-    //| thi.die;
-  //; 
+Arelin.Thing.set_hit(
+  thi: Arelin.Thing, 
+  new_hit: List(Arelin.Game.Hit)
+  ) : Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | new_hit;
+    | thi.rst;
+    | thi.die;
+  ; 
 
-//Arelin.Thing.get_rst(thi: Arelin.Thing): Bool
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.rst;
+Arelin.Thing.get_rst(thi: Arelin.Thing): Bool
+  case thi: 
+  | thi.rst;
 
-//Arelin.Thing.set_rst(thi: Arelin.Thing, new_rst: Bool): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| new_rst;
-    //| thi.die;
-  //; 
+Arelin.Thing.set_rst(thi: Arelin.Thing, new_rst: Bool): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | new_rst;
+    | thi.die;
+  ; 
 
-//Arelin.Thing.get_die(thi: Arelin.Thing): Bool
-  //case thi: 
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.die;
+Arelin.Thing.get_die(thi: Arelin.Thing): Bool
+  case thi: 
+  | thi.die;
 
-//Arelin.Thing.set_die(thi: Arelin.Thing, new_die: Bool): Arelin.Thing
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    //Arelin.Thing.new
-    //| thi.fun;
-    //| thi.pid;
-    //| thi.mid;
-    //| thi.act;
-    //| thi.sid;
-    //| thi.stt;
-    //| thi.nam;
-    //| thi.lit;
-    //| thi.tik;
-    //| thi.pos;
-    //| thi.mov;
-    //| thi.bst;
-    //| thi.pad;
-    //| thi.dir;
-    //| thi.trg;
-    //| thi.vel;
-    //| thi.box;
-    //| thi.wei;
-    //| thi.mhp;
-    //| thi.dmg;
-    //| thi.knk;
-    //| thi.buf;
-    //| thi.chi;
-    //| thi.hit;
-    //| thi.rst;
-    //| new_die;
-  //;
+Arelin.Thing.set_die(thi: Arelin.Thing, new_die: Bool): Arelin.Thing
+  case thi:
+  | Arelin.Thing.new
+    | thi.fun;
+    | thi.pid;
+    | thi.mid;
+    | thi.act;
+    | thi.sid;
+    | thi.stt;
+    | thi.nam;
+    | thi.lit;
+    | thi.tik;
+    | thi.pos;
+    | thi.mov;
+    | thi.bst;
+    | thi.pad;
+    | thi.dir;
+    | thi.trg;
+    | thi.vel;
+    | thi.box;
+    | thi.wei;
+    | thi.mhp;
+    | thi.dmg;
+    | thi.knk;
+    | thi.buf;
+    | thi.chi;
+    | thi.hit;
+    | thi.rst;
+    | new_die;
+  ;
 
-//Arelin.Thing.get_by_pid(
-  //pid: Arelin.Game.PlayerId, 
-  //gm: Arelin.Game
-  //) : Maybe(Arelin.Thing)
-  //let cond = ((pid) (thi) 
-    //let thi.pid = Arelin.Thing.get_pid(thi)
-    //F64.eql(pid, thi.pid)) :: Arelin.Game.PlayerId -> Arelin.Thing -> Bool
-  //case gm: 
-  //| (stage) List.find<>(cond(pid), stage);
+Arelin.Thing.get_by_pid(
+  pid: Arelin.Game.PlayerId, 
+  gm: Arelin.Game
+  ) : Maybe(Arelin.Thing)
+  let cond = ((pid) (thi) 
+    let thi.pid = Arelin.Thing.get_pid(thi)
+    F64.eql(pid, thi.pid)) :: Arelin.Game.PlayerId -> Arelin.Thing -> Bool
+  case gm: 
+  | List.find<>(cond(pid), gm.stage);
 
-//Arelin.Game.get_position_by_pid(
-  //pid : Arelin.Game.PlayerId,
-  //gm  : Arelin.Game
-  //) : F64.V3
-  //case Arelin.Thing.get_by_pid(pid, gm):
-  //| #none# F64.V3.new(F64.0,F64.0,F64.0);
-  //| #some# (thi) Arelin.Thing.get_pos(thi);
+Arelin.Game.get_position_by_pid(
+  pid : Arelin.Game.PlayerId,
+  gm  : Arelin.Game
+  ) : F64.V3
+  let thi = Arelin.Thing.get_by_pid(pid, gm)
+  case thi:
+  | #none# F64.V3.new(F64.0,F64.0,F64.0);
+  | #some# Arelin.Thing.get_pos(thi.value);
 
 
-//Arelin.Game.map_stage(
-  //fn: Arelin.Game.TxFunction, 
-  //gm: Arelin.Game
-  //) : Arelin.Game 
-  //get stage = gm 
-  //let new_stage = List.map<><>(fn)(stage)
-  //Arelin.Game.new(new_stage)
+Arelin.Game.map_stage(
+  fn: Arelin.Game.TxFunction, 
+  gm: Arelin.Game
+  ) : Arelin.Game 
+  get stage = gm 
+  let new_stage = List.map<><>(fn)(stage)
+  Arelin.Game.new(new_stage)
  
-//Arelin.Game.with_thing(
-  //pid : Arelin.Game.PlayerId,
-  //fn  : Arelin.Game.TxFunction,
-  //gm  : Arelin.Game
-  //) : Arelin.Game
-  //let effect = ((thi)
-    //let thi.pid = Arelin.Thing.get_pid(thi)
-    //case F64.eql(thi.pid, pid):
-    //| #true#  fn(thi);
-    //| #false# thi;
-  //) :: Arelin.Game.TxFunction 
-  //Arelin.Game.map_stage(effect, gm)
+Arelin.Game.with_thing(
+  pid : Arelin.Game.PlayerId,
+  fn  : Arelin.Game.TxFunction,
+  gm  : Arelin.Game
+  ) : Arelin.Game
+  let effect = ((thi)
+    let thi.pid = Arelin.Thing.get_pid(thi)
+    case F64.eql(thi.pid, pid):
+    | #true#  fn(thi);
+    | #false# thi;
+  ) :: Arelin.Game.TxFunction 
+  Arelin.Game.map_stage(effect, gm)
 
-//// Returns the direction the thing is looking to
-//Arelin.Thing.targ_dir(self: Arelin.Thing): F64.V3
-  //let pos = Arelin.Thing.get_pos(self)
-  //let trg = Arelin.Thing.get_trg(self)
-  //let dir = Arelin.Thing.get_dir(self)
-  //F64.V3.look_at(pos, trg, dir)
+// Returns the direction the thing is looking to
+// Arelin.Thing.targ_dir(self: Arelin.Thing): F64.V3
+//   let pos = Arelin.Thing.get_pos(self)
+//   let trg = Arelin.Thing.get_trg(self)
+//   let dir = Arelin.Thing.get_dir(self)
+//   F64.V3.look_at(pos, trg, dir)
 
-//// Returns the position at a given distance towards targ_dir
-//Arelin.Thing.at_dist(self: Arelin.Thing, dist: F64): F64.V3
-  //let dir = Arelin.Thing.get_dir(self)
-  //let pos = Arelin.Thing.get_pos(self)
-  //F64.V3.add(pos, F64.V3.scale(dist, dir))
+// Returns the position at a given distance towards targ_dir
+// Arelin.Thing.at_dist(self: Arelin.Thing, dist: F64): F64.V3
+//   let dir = Arelin.Thing.get_dir(self)
+//   let pos = Arelin.Thing.get_pos(self)
+//   F64.V3.add(pos, F64.V3.scale(dist, dir))
 
 //// Return the position within a maximum range towards targ_dir
 //Arelin.Thing.at_max_dist(self: Arelin.Thing, max_range: F64): F64.V3

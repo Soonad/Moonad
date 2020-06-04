@@ -94,16 +94,14 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
     //| List.filter<>(cond)(list.tail);
   //;
 
-////Finds the first occurrence that satisfies a condition
-//List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
-  //<A> (cond) (xs)
-  //case xs:
-  //| Maybe.none<>;
-  //| (head) (tail)
-    //case cond(head):
-    //| Maybe.some<>(head);
-    //| List.find<>(cond)(tail);;
-
+//Finds the first occurrence that satisfies a condition
+List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
+  <A> (cond) (xs)
+  case xs:
+  | Maybe.none<>;
+  | case cond(xs.head):
+    | Maybe.some<>(xs.head);
+    | List.find<>(cond)(xs.tail);;
 
 //List.find_last.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
   //<A> (list) (cond) (indx) (res)
@@ -182,13 +180,12 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
   //| (head) (tail)
     //Nat.succ(List.length<A>(tail));
 
-//// Applies a function to all elements of the list.
-//List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
-  //<A> <B> (fn) (list)
-  //case list:
-  //| List.nil<>;
-  //| (list.head) (list.tail)
-    //List.cons<>(fn(list.head))(List.map<><>(fn)(list.tail));
+// Applies a function to all elements of the list.
+List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
+  <A> <B> (fn) (list)
+  case list:
+  | List.nil<>;
+  | List.cons<>(fn(list.head))(List.map<><>(fn)(list.tail));
 
 //// Pushes a value to the end of the list
 //List.push: <A: Type> -> A -> List(A) -> List(A)

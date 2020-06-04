@@ -334,17 +334,17 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
   //let sqr  = F64.pow(sqr)(expo)
   //sqr;
 
-//F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 
-  //(a) (b) (c)
-  //a<() F64.V3> | (a.x) (a.y) (a.z)
-  //b<() F64.V3> | (a.x) (a.y) (a.z)
-  //c<() F64.V3> | (a.x) (a.y) (a.z)
-  //let a_eql_b  = F64.V3.eql(a)(b)
-  //let diff     = F64.V3.sub(b)(a)
-  //let normdiff = F64.V3.norm(diff)
-  //a_eql_b<() F64.V3> 
-  //| normdiff ;
-  //| c ;;;;
+// F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 
+//   (a) (b) (c)
+//   a<() F64.V3> | (a.x) (a.y) (a.z)
+//   b<() F64.V3> | (a.x) (a.y) (a.z)
+//   c<() F64.V3> | (a.x) (a.y) (a.z)
+//   let a_eql_b  = F64.V3.eql(a)(b)
+//   let diff     = F64.V3.sub(b)(a)
+//   let normdiff = F64.V3.norm(diff)
+//   a_eql_b<() F64.V3> 
+//   | normdiff ;
+//   | c ;;;;
    
 
 //// Return true if "a" is less than "b"
@@ -674,11 +674,12 @@ F64._1 : F64
   //F64.div
 
 //// TODO
-//F64.eql : F64 -> F64 -> Bool
-  //(x) (y)
-  //get x.word = x
-  //case y: | (y.word)
-  //Word.eql<Nat.64>(x.word)(y.word);
+F64.eql : F64 -> F64 -> Bool
+  (x) (y)
+  get x.word = x
+  case y: 
+  | get y.word = y
+    Word.eql<42.64>(x.word)(y.word);
 
 //// Exponential function.
 //F64.exp: F64 -> F64 -> F64 //prim//
