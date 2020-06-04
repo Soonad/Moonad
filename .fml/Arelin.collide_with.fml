@@ -1,0 +1,3 @@
+Arelin.collide_with: (a_pos: F64.V3) -> (a_dir: F64.V3) -> (a_box: Arelin.Game.Hitbox) -> (b_pos: F64.V3) -> (b_dir: F64.V3) -> (b_box: Arelin.Game.Hitbox) -> Maybe(F64.V3)
+  (a_pos) (a_dir) (a_box) (b_pos) (b_dir) (b_box) a_box<(a_box.self) Maybe(F64.V3)>(Maybe.none<F64.V3>)((a_box.rad) b_box<(b_box.self) Maybe(F64.V3)>(Maybe.none<F64.V3>)((b_box.rad) let dst = F64.V3.dist(a_pos)(b_pos); let rad = F64.add(a_box.rad)(b_box.rad); Bool.and(F64.gtn(dst)(F64.0))(F64.ltn(dst)(rad))<(self.self) Maybe(F64.V3)>(let out_dir = F64.V3.norm(F64.V3.sub(a_pos)(b_pos)); let out_vec = F64.V3.scale(F64.sub(rad)(dst))(out_dir); Maybe.some<F64.V3>(out_vec))(Maybe.none<F64.V3>))((b_box.pts) let nil = Maybe.none<F64.V3>; nil))((a_box.pts) Maybe.none<F64.V3>)
+

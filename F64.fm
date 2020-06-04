@@ -426,132 +426,67 @@ F64.V3.norm: F64.V3 -> F64.V3
 ////   let d = d + k
 ////   d
 
-//F64.V3.polygon_to_segments.cons: 
-  //F64.V3 -> //pos
-  //F64.V3 -> //dir
-  //F64.V3 -> //pt_b
-  //(Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)) -> //segs
-  //Maybe(F64.V3) -> //pt_a
-  //Maybe(F64.V3) -> //pt_0
-  //List(F64.Segment)
+// F64.V3.polygon_to_segments.cons: 
+//   F64.V3 -> //pos
+//   F64.V3 -> //dir
+//   F64.V3 -> //pt_b
+//   (Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)) -> //segs
+//   Maybe(F64.V3) -> //pt_a
+//   Maybe(F64.V3) -> //pt_0
+//   List(F64.Segment)
+//   (pos) (dir) (pt_b) (segs) (pt_a) (pt_0)
+//   case pt_a<() List(F64.Segment)>:
+//   | segs(Maybe.some<F64.V3>(pt_b))(Maybe.some<F64.V3>(pt_b));
+//   | let pt_0 = 
+//     case pt_0<() Maybe(F64.V3)>:
+//     | Maybe.some<F64.V3>(pt_b); 
+//     | pt_0;
+//     let p0 = F64.V3.polygon_to_segments.transform(pos, dir, pt_a.value)
+//     let p1 = F64.V3.polygon_to_segments.transform(pos, dir, pt_b)
+//     let sg = F64.Segment.new(p0, p1)
+//     List.cons<F64.Segment>(sg)(segs(Maybe.some<F64.V3>(pt_b))(pt_0));
 
-  //(pos) (dir) (pt_b) (segs) (pt_a) (pt_0)
-  //pt_a<() List(F64.Segment)>
-  //| segs(Maybe.some<F64.V3>(pt_b))(Maybe.some<F64.V3>(pt_b));
-  //| (pt_a.value)
-    //let pt_0 = 
-    //pt_0<() Maybe(F64.V3)> 
-    //| Maybe.some<F64.V3>(pt_b); 
-    //| (pt_0.value) pt_0;
-    //let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value)
-    //let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_b)
-    //let sg = F64.Segment.new(p0)(p1)
-    //List.cons<F64.Segment>(sg)(segs(Maybe.some<F64.V3>(pt_b))(pt_0));  
+// F64.V3.polygon_to_segments: 
+//   F64.V3 -> 
+//   F64.V3 -> 
+//   List(F64.V3) -> 
+//   List(F64.Segment)
+//   (pos) (dir) (pts)
+//   List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
+//   |F64.V3.polygon_to_segments.nil(pos, dir);
+//   |F64.V3.polygon_to_segments.cons(pos, dir);
+//   |pts;
+//   |Maybe.none<F64.V3>;
+//   |Maybe.none<F64.V3>;
 
-////   let cons = (pt_b, segs, pt_a, pt_0) =>
-////     case pt_a
-////     with pt_b : V3
-////     with pt_0 : Maybe(V3)
-////     |none =>
-////       segs(some(_ pt_b), some(_ pt_b))
-////     |some =>
-////       let pt_0 = case pt_0 |none some(_ pt_b) |some pt_0
-////       let p0 = transform(pt_a.value)
-////       let p1 = transform(pt_b)
-////       let sg = segment(p0, p1)
-////       cons(_ sg, segs(some(_ pt_b), pt_0))
+// F64.V3.polygon_to_segments.nil: 
+//   F64.V3 -> //pos
+//   F64.V3 -> //dir 
+//   Maybe(F64.V3) -> 
+//   Maybe(F64.V3) -> 
+//   List(F64.Segment)
+//   (pos) (dir) (pt_a) (pt_0)
+//   case pt_0<() List(F64.Segment)>:
+//   | List.nil<F64.Segment>; 
+//   | case pt_a<() List(F64.Segment)>:
+//     | List.nil<F64.Segment>;
+//     | let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value)
+//       let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_0.value)
+//       let sg = F64.Segment.new(p0)(p1)
+//       List.cons<F64.Segment>(sg)(List.nil<F64.Segment>);;
 
-//F64.V3.polygon_to_segments: 
-  //F64.V3 -> 
-  //F64.V3 -> 
-  //List(F64.V3) -> 
-  //List(F64.Segment)
-  //(pos) (dir) (pts)
-  //List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
-  //|F64.V3.polygon_to_segments.nil(pos)(dir);
-  //|F64.V3.polygon_to_segments.cons(pos)(dir);
-  //|pts;
-  //|Maybe.none<F64.V3>;
-  //|Maybe.none<F64.V3>;
-
-
-//// Polygon to segments
-//// polygon_to_segments(pos: V3, dir: V3, pts: List(V3)) : List(Segment)
-////   let transform = (pnt: V3) =>
-////     case pnt |v3
-////     case dir |v3
-////     let a = atan(dir.y, dir.x)
-////     let x = (pnt.x * cos(a)) - (pnt.y * sin(a))
-////     let y = (pnt.x * sin(a)) + (pnt.y * cos(a))
-////     let z = pnt.z
-////     add_v3(pos, v3(x,y,z))
-////   let nil = (pt_a, pt_0) =>
-////     case pt_0
-////     |none => nil(_)
-////     |some => case pt_a
-////       |none => nil(_)
-////       |some =>
-////         let p0 = transform(pt_a.value)
-////         let p1 = transform(pt_0.value)
-////         let sg = segment(p0, p1)
-////         cons(_ sg, nil(_))
-////   let cons = (pt_b, segs, pt_a, pt_0) =>
-////     case pt_a
-////     with pt_b : V3
-////     with pt_0 : Maybe(V3)
-////     |none =>
-////       segs(some(_ pt_b), some(_ pt_b))
-////     |some =>
-////       let pt_0 = case pt_0 |none some(_ pt_b) |some pt_0
-////       let p0 = transform(pt_a.value)
-////       let p1 = transform(pt_b)
-////       let sg = segment(p0, p1)
-////       cons(_ sg, segs(some(_ pt_b), pt_0))
-////   fold(V3; Maybe(V3) -> Maybe(V3) -> List(Segment);
-////     nil, cons, pts, none(_), none(_))
-
-//F64.V3.polygon_to_segments.nil: 
-  //F64.V3 -> //pos
-  //F64.V3 -> //dir 
-  //Maybe(F64.V3) -> 
-  //Maybe(F64.V3) -> 
-  //List(F64.Segment)
-
-  //(pos) (dir) (pt_a) (pt_0)
-  //pt_0<() List(F64.Segment)> 
-  //| List.nil<F64.Segment>; 
-  //| (pt_0.value)
-    //pt_a<() List(F64.Segment)>
-    //| List.nil<F64.Segment>;
-    //| (pt_a.value)
-      //let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value)
-      //let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_0.value)
-      //let sg = F64.Segment.new(p0)(p1)
-      //List.cons<F64.Segment>(sg)(List.nil<F64.Segment>);;
-  
-//// let nil = (pt_a, pt_0) =>
-////     case pt_0
-////     |none => nil(_)
-////     |some => case pt_a
-////       |none => nil(_)
-////       |some =>
-////         let p0 = transform(pt_a.value)
-////         let p1 = transform(pt_0.value)
-////         let sg = segment(p0, p1)
-////         cons(_ sg, nil(_))  
-
-//F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
-  //(pos) (dir) (pnt)
-  //pnt<() F64.V3> | (pnt.x) (pnt.y) (pnt.z)
-  //dir<() F64.V3> | (dir.x) (dir.y) (dir.z)
-  //let a = F64.atan(dir.y)(dir.x)
-  //let pnt_x_times_cos_a = F64.mul(pnt.x)(F64.cos(a))
-  //let pnt_y_times_sin_a = F64.mul(pnt.y)(F64.sin(a))
-  //let pnt_x_times_sin_a = F64.mul(pnt.x)(F64.sin(a))
-  //let pnt_y_times_cos_a = F64.mul(pnt.y)(F64.cos(a))
-  //let x = F64.sub(pnt_x_times_cos_a)(pnt_y_times_sin_a)
-  //let y = F64.add(pnt_x_times_sin_a)(pnt_y_times_cos_a)
-  //F64.V3.add(pos)(F64.V3.new(x)(y)(pnt.z));;
+// F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
+//   (pos) (dir) (pnt)
+//   case pnt<() F64.V3>: |
+//   case dir<() F64.V3>: |
+//   let a = F64.atan(dir.y, dir.x)
+//   let pnt_x_times_cos_a = F64.mul(pnt.x, F64.cos(a))
+//   let pnt_y_times_sin_a = F64.mul(pnt.y, F64.sin(a))
+//   let pnt_x_times_sin_a = F64.mul(pnt.x, F64.sin(a))
+//   let pnt_y_times_cos_a = F64.mul(pnt.y, F64.cos(a))
+//   let x = F64.sub(pnt_x_times_cos_a, pnt_y_times_sin_a)
+//   let y = F64.add(pnt_x_times_sin_a, pnt_y_times_cos_a)
+//   F64.V3.add(pos, F64.V3.new(x, y, pnt.z));;
   
 //F64.V3.rot_90: F64.V3 -> F64.V3 
   //(v)
