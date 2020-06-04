@@ -24,17 +24,10 @@ T F64.Boundary
 //   P(f64)
 
 T F64
-| new (a: Word(42.64));
+| new (a: Word(64));
 
-F64.V3 : Type
-  v3<P: F64.V3 -> Type> ->
-  (new: (x: F64) -> (y: F64) -> (z: F64) -> P(F64.V3.new(x)(y)(z))) ->
-  P(v3)
-
-F64.V3.new: F64 -> F64 -> F64 -> F64.V3
-  (x) (y) (z)
-  <P> (new)
-  new(x)(y)(z)
+T F64.V3
+| new(x: F64, y: F64, z: F64);
 
 T F64.Circle
 | new(pos: F64.V3, rad: F64);
@@ -48,16 +41,16 @@ T F64.Ordering
 | GT;
 
 T F64.Segment
-| new (a: F64.V3, b: F64.V3);
-   
+| new(a: F64.V3, b: F64.V3);
+
 F64.V3.add: F64.V3 -> F64.V3 -> F64.V3 
   (a) (b)
-  case a: |
-  case b: |
-  let c.x = F64.add(a.x, a.x)
-  let c.y = F64.add(a.y, b.y)
-  let c.z = F64.add(a.z, b.z)
-  F64.V3.new(c.x, c.y, c.z);;
+  case a<() F64.V3>: |
+  case b<() F64.V3>: |
+  let c.x = F64.add(a.x)(a.x)
+  let c.y = F64.add(a.y)(b.y)
+  let c.z = F64.add(a.z)(b.z)
+  F64.V3.new(c.x)(c.y)(c.z);;
 
 // F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
 //   (c) (b) 
@@ -65,19 +58,20 @@ F64.V3.add: F64.V3 -> F64.V3 -> F64.V3
 //   case b<() F64>: | #pts#
 //   case b.pts<() F64>:
 //   | F64.0;
-//   | #h0 t0#
-//     t0<() F64>
-//     | F64.0;
-//     | (h1) (t1)
-//       let p0 = h0
-//       let p1 = h1 
-//       let sg = F64.Segment.new(p0)(p1)
-//       let cd = F64.V3.point_segment_sqrdist(c.pos)(sg)
-//       let test = F64.ltn(cd)(F64.mul(cd)(cd))
-//       test<() F64> 
-//       | F64.1;
-//       | let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1))
-//         F64.V3.circle_boundary_intersects(c)(boun);;;;;
+//   | F64.0;;;
+  // | #h0 t0#
+  //   t0<() F64>
+  //   | F64.0;
+  //   | #h1 t1#
+  //     let p0 = h0
+  //     let p1 = h1 
+  //     let sg = F64.Segment.new(p0)(p1)
+  //     let cd = F64.V3.point_segment_sqrdist(c.pos)(sg)
+  //     let test = F64.ltn(cd)(F64.mul(cd)(cd))
+  //     test<() F64> 
+  //     | F64.1;
+  //     | let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1))
+  //       F64.V3.circle_boundary_intersects(c)(boun);;;;;
 
 //// Circle-boundary intersection test
 //// circle_boundary_intersects(c: Circle, b: Boundary): Number
@@ -519,7 +513,7 @@ F64.cmp: F64 -> F64 -> Cmp
   // let b.word = Newtype.elim<><>(b)
   // case F64.eql(a)(b):
   // | Cmp.eql;
-  // | case Word.ltn<42.64>(a.word)(b.word):
+  // | case Word.ltn<64>(a.word)(b.word):
   //   | Cmp.ltn;
   //   | Cmp.gtn;
   // ;
@@ -546,7 +540,7 @@ F64.eql : F64 -> F64 -> Bool
   get x.word = x
   case y: 
   | get y.word = y
-    Word.eql<42.64>(x.word)(y.word);
+    Word.eql<64>(x.word)(y.word);
 
 //// Exponential function.
 //F64.exp: F64 -> F64 -> F64 //prim//
@@ -615,7 +609,7 @@ F64.mod: F64 -> F64 -> F64 //prim//
 F64.mul: F64 -> F64 -> F64 //prim//
   F64.mul
 
-// F64.new: Word(42.64) -> F64
+// F64.new: Word(64) -> F64
 //   (a)
 //   <> (f64) f64(a)
 
@@ -624,7 +618,7 @@ F64.parse: String -> F64
   F64.parse
 
 F64.parse_binary: String -> F64
-  (str) F64.new(Word.from_bits(42.64)(Bits.from_string(str)))
+  (str) F64.new(Word.from_bits(64)(Bits.from_string(str)))
 
 F64.pi : F64
   F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")

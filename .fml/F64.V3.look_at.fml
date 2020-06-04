@@ -1,3 +1,3 @@
 F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
-  (a) (b) (c) a<(a.) F64.V3>((a.x) (a.y) (a.z) b<(b.) F64.V3>((b.x) (b.y) (b.z) c<(c.) F64.V3>((c.x) (c.y) (c.z) let a_eql_b = F64.V3.eql(a)(b); let diff = F64.V3.sub(b)(a); let normdiff = F64.V3.norm(diff); a_eql_b<(a_eql_b.self) F64.V3>(normdiff)(c))))
+  (a) (b) (c) a<(a.self) F64.V3>((a.x) (a.y) (a.z) b<(b.self) F64.V3>((b.x) (b.y) (b.z) c<(c.self) F64.V3>((c.x) (c.y) (c.z) let a_eql_b = F64.V3.eql(a)(b); let diff = F64.V3.sub(b)(a); let normdiff = F64.V3.norm(diff); a_eql_b<(a_eql_b.self) F64.V3>(normdiff)(c))))
 
