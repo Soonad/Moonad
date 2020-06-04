@@ -1,11 +1,11 @@
 
-//// A Map from bitstrings to values.
-//// T Map<A>
-//// | new
-//// | tie(val: Maybe(A), lft: Map(A), rgt: Map(A))
-//T Map <A: Type>
-//| new;
-//| tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
+// A Map from bitstrings to values.
+// T Map<A>
+// | new
+// | tie(val: Maybe(A), lft: Map(A), rgt: Map(A))
+T Map <A: Type>
+| new;
+| tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
 
 //// Returns the element stored at a given key, if any.
 //// Example: Map.get<Nat>(my_key)(my_map)

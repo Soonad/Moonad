@@ -1,0 +1,3 @@
+Map.tie: ∀(A:*) Π(val:(Maybe A)) Π(lft:(Map A)) Π(rgt:(Map A)) (Map A)
+  ΛA λval λlft λrgt ΛP λnew λtie (((tie val) lft) rgt)
+

@@ -1,0 +1,3 @@
+Arelin.Game.Buff.rooted: Π(dur:F64) Arelin.Game.Buff
+  λdur ΛP λshielded λslowed λhasted λsilenced λrooted λstunned (rooted dur)
+

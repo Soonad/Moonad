@@ -1,0 +1,3 @@
+And.new: ∀(A:*) ∀(B:*) Π(x:A) Π(y:B) ((And A) B)
+  ΛA ΛB λx λy ((<<Pair.new A> B> x) y)
+

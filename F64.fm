@@ -1,18 +1,17 @@
-//F64.0 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000000")
+F64.0 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000000")
 
-//F64.1 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111100")
+F64.1 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111100")
 
-//F64.180 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000010110011000000010")
+F64.180 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000010110011000000010")
+
+F64.2 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010")
   
-
-//F64.2 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000000000000000000010")
-  
-//F64.256 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000010")
+F64.256 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000010")
   
 //F64.Boundary : Type 
   //boundary<P: F64.Boundary -> Type> ->
@@ -24,6 +23,30 @@
   //<P> (new)
   //new(pts)
   
+//// TODO An IEEE-754 compliant 64-bit floating point.
+// F64: Type //prim//
+//   Newtype(Word(Nat.64))("F64")
+//   f64<P: F64 -> Type> ->
+//   (new: (a: Word(Nat.64)) -> P(F64.new(a))) ->
+//   P(f64)
+
+T F64
+| new (a: Word(42.64));
+// | new(a: Word(Nat.64));
+
+// T Pair <A: Type> <B: Type>
+// | new(fst: A, snd: B);
+
+F64.V3 : Type
+  v3<P: F64.V3 -> Type> ->
+  (new: (x: F64) -> (y: F64) -> (z: F64) -> P(F64.V3.new(x)(y)(z))) ->
+  P(v3)
+
+F64.V3.new: F64 -> F64 -> F64 -> F64.V3
+  (x) (y) (z)
+  <P> (new)
+  new(x)(y)(z)
+
 //F64.Circle : Type 
   //circle<P: F64.Circle -> Type> -> 
   //(new: (pos: F64.V3) -> (rad: F64) -> P(F64.Circle.new(pos)(rad))) ->
@@ -257,33 +280,29 @@
 ////       none(_)
 
 
-//F64.V3.dist: F64.V3 -> F64.V3 -> F64
-  //(a) (b)
-  //F64.sqrt(F64.V3.sqr_dist(a)(b))
+// F64.V3.dist: F64.V3 -> F64.V3 -> F64
+//   (a) (b)
+//   F64.sqrt(F64.V3.sqr_dist(a)(b))
 
-//F64.V3.dot: F64.V3 -> F64.V3 -> F64
-  //(a) (b)
-  //a<() F64> | (a.x) (a.y) (a.z)
-  //b<() F64> | (b.x) (b.y) (b.z)
-  //let res = F64.0
-  //let res = F64.add(res)(F64.mul(a.x)(b.x))
-  //let res = F64.add(res)(F64.mul(a.y)(b.y))
-  //let res = F64.add(res)(F64.mul(a.z)(b.z))
-  //res;;
+// F64.V3.dot: F64.V3 -> F64.V3 -> F64
+//   (a) (b)
+//   a<() F64> | (a.x) (a.y) (a.z)
+//   b<() F64> | (b.x) (b.y) (b.z)
+//   let res = F64.0
+//   let res = F64.add(res)(F64.mul(a.x)(b.x))
+//   let res = F64.add(res)(F64.mul(a.y)(b.y))
+//   let res = F64.add(res)(F64.mul(a.z)(b.z))
+//   res;;
 
-//F64.V3.eql: F64.V3 -> F64.V3 -> Bool
-  //(a) (b)
-  //a<() Bool> | (a.x) (a.y) (a.z)
-  //b<() Bool> | (b.x) (b.y) (b.z)
-  //let same_x = F64.eql(a.x)(b.x)
-  //let same_y = F64.eql(a.y)(b.y)
-  //let same_z = F64.eql(a.z)(b.z)
-  //Bool.and(same_x)(Bool.and(same_y)(same_z));;
+// F64.V3.eql: F64.V3 -> F64.V3 -> Bool
+//   (a) (b)
+//   a<() Bool> | (a.x) (a.y) (a.z)
+//   b<() Bool> | (b.x) (b.y) (b.z)
+//   let same_x = F64.eql(a.x)(b.x)
+//   let same_y = F64.eql(a.y)(b.y)
+//   let same_z = F64.eql(a.z)(b.z)
+//   Bool.and(same_x)(Bool.and(same_y)(same_z));;
 
-//F64.V3 : Type
-  //v3<P: F64.V3 -> Type> ->
-  //(new: (x: F64) -> (y: F64) -> (z: F64) -> P(F64.V3.new(x)(y)(z))) ->
-  //P(v3)
 
 
 
@@ -367,10 +386,7 @@
   //F64.V3.new(c.x)(c.y)(c.z);;
 
 
-//F64.V3.new: F64 -> F64 -> F64 -> F64.V3
-  //(x) (y) (z)
-  //<P> (new)
-  //new(x)(y)(z)
+
   
 //F64.V3.norm: F64.V3 -> F64.V3 
   //(v)
@@ -609,8 +625,8 @@
   //F64.V3.new(c.x)(c.y)(c.z);;
 
 
-//F64._1 : F64
-  //F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111101")
+F64._1 : F64
+  F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111101")
 
 //// Arccos function.
 //F64.acos: F64 -> F64 //prim//
@@ -676,12 +692,6 @@
   //let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x)(F64.0)))(F64.1)(F64.0)
   //F64.sub(F64.sub(x)(F64.mod(x)(F64.1)))(ltn_zero)
 
-//// TODO An IEEE-754 compliant 64-bit floating point.
-//F64: Type //prim//
-  //Newtype(Word(Nat.64))("F64")
-  ////f64<P: F64 -> Type> ->
-  ////(new: (a: Word(Nat.64)) -> P(F64.new(a))) ->
-  ////P(f64)
 
 //F64.from_bool: Bool -> F64 
   //(b)
@@ -738,15 +748,16 @@
 //F64.mul: F64 -> F64 -> F64 //prim//
   //F64.mul
 
-//F64.new: Word(Nat.64) -> F64
-  //(a)
-  //<> (f64) f64(a)
+// F64.new: Word(42.64) -> F64
+//   (a)
+//   <> (f64) f64(a)
 
-//F64.parse: String -> F64
-  //F64.parse
+// TODO
+F64.parse: String -> F64
+  F64.parse
 
-//F64.parse_binary: String -> F64
-  //(str) F64.new(Word.from_bits(Nat.64)(Bits.from_string(str)))
+F64.parse_binary: String -> F64
+  (str) F64.new(Word.from_bits(42.64)(Bits.from_string(str)))
 
 //F64.pi : F64
   //F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")

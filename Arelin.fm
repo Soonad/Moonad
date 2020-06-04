@@ -1,137 +1,137 @@
-//Arelin.Game.PlayerId : Type 
-   //F64
+Arelin.Game.PlayerId : Type 
+   F64
 
-//Arelin.Game.ModelId : Type 
-  //F64
+Arelin.Game.ModelId : Type 
+  F64
 
-//Arelin.Game.ActionId : Type
-  //F64
+Arelin.Game.ActionId : Type
+  F64
 
-//Arelin.Game.SideId : Type
-  //F64
+Arelin.Game.SideId : Type
+  F64
 
-//T Arelin.Game.Hitbox 
-//| nbox;
-//| cbox(rad: F64);
-//| pbox(pts: List(F64.V3));
+T Arelin.Game.Hitbox 
+| nbox;
+| cbox(rad: F64);
+| pbox(pts: List(F64.V3));
 
-//T Arelin.Game.Effect 
-//| heal(lif: F64);
-//| damage(dmg: F64);
-//| repulse(mag: F64);
-//| impulse(mag: F64, dir: F64.V3);
-//| slow(dur: F64, val: F64);
-//| haste(dur: F64, val: F64);
-//| shield(dur: F64, val: F64);
-//| silence(dur: F64);
-//| root(dur: F64);
-//| stun(dur: F64);
-//| teleport_to(to_pos: F64.V3, all: F64); //1: everyone, 0: only team mates
+T Arelin.Game.Effect 
+| heal(lif: F64);
+| damage(dmg: F64);
+| repulse(mag: F64);
+| impulse(mag: F64, dir: F64.V3);
+| slow(dur: F64, val: F64);
+| haste(dur: F64, val: F64);
+| shield(dur: F64, val: F64);
+| silence(dur: F64);
+| root(dur: F64);
+| stun(dur: F64);
+| teleport_to(to_pos: F64.V3, all: F64); //1: everyone, 0: only team mates
 
-//T Arelin.Game.Buff 
-//| shielded(dur: F64, val: F64); // shields are hit before hp
-//| slowed(dur: F64, val: F64);
-//| hasted(dur: F64, val: F64);
-//| silenced(dur: F64);
-//| rooted(dur: F64);
-//| stunned(dur: F64);
+T Arelin.Game.Buff 
+| shielded(dur: F64, val: F64); // shields are hit before hp
+| slowed(dur: F64, val: F64);
+| hasted(dur: F64, val: F64);
+| silenced(dur: F64);
+| rooted(dur: F64);
+| stunned(dur: F64);
 
-//T Arelin.Game.Hit 
-//| new(
-  //eff: List(Arelin.Game.Effect), 
-  //pos: F64.V3, 
-  //dir: F64.V3, 
-  //box: Arelin.Game.Hitbox);
+T Arelin.Game.Hit 
+| new(
+  eff: List(Arelin.Game.Effect), 
+  pos: F64.V3, 
+  dir: F64.V3, 
+  box: Arelin.Game.Hitbox);
 
-//T Arelin.Game.Light
-//| new(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
+T Arelin.Game.Light
+| new(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
 
-//T Arelin.Thing 
-//| new(
-    //fun : Arelin.Game.TxFunction,   // transaction function
-    //pid : Arelin.Game.PlayerId,     // number of playber controlling this
-    //mid : Arelin.Game.ModelId,      // id of model to be rendered
-    //act : Arelin.Game.ActionId,     // number of performing action
-    //sid : Arelin.Game.SideId,       // player side
-    //stt : Map(F64),                 // an arbitrary state
-    //nam : String,                   // name of thing
-    //lit : List(Arelin.Game.Light),  // list of lights to render
-    //tik : F64,                      // ticks passed since last act change
-    //pos : F64.V3,                   // in-game position
-    //mov : F64,                      // movement speed
-    //bst : F64,                      // movement speed multiplier 
-    //pad : F64.V3,                   // analog pad direction (len = 0 to 1)
-    //dir : F64.V3,                   // facing direction (len = 1)
-    //trg : F64.V3,                   // targeted position
-    //vel : F64.V3,                   // dash velocity vector
-    //box : Arelin.Game.Hitbox,       // hitbox (space occupied)
-    //wei : F64,                      // weight (affects friction)
-    //mhp : F64,                      // max health points
-    //dmg : F64,                      // damage taken
-    //knk : F64.V3,                   // launch direction and intensity
-    //buf : List(Arelin.Game.Buff),   // buffs and nerfs (status effects) applied
-    //chi : List(Arelin.Thing),       // children to be created on next tick
-    //hit : List(Arelin.Game.Hit),    // hits done by this 
-    //rst : Bool,                     // should this reset to idle?
-    //die : Bool                      // should this be removed? 
-  //);
+T Arelin.Thing 
+| new(
+    fun : Arelin.Game.TxFunction,   // transaction function
+    pid : Arelin.Game.PlayerId,     // number of playber controlling this
+    mid : Arelin.Game.ModelId,      // id of model to be rendered
+    act : Arelin.Game.ActionId,     // number of performing action
+    sid : Arelin.Game.SideId,       // player side
+    stt : Map(F64),                 // an arbitrary state
+    nam : String,                   // name of thing
+    lit : List(Arelin.Game.Light),  // list of lights to render
+    tik : F64,                      // ticks passed since last act change
+    pos : F64.V3,                   // in-game position
+    mov : F64,                      // movement speed
+    bst : F64,                      // movement speed multiplier 
+    pad : F64.V3,                   // analog pad direction (len = 0 to 1)
+    dir : F64.V3,                   // facing direction (len = 1)
+    trg : F64.V3,                   // targeted position
+    vel : F64.V3,                   // dash velocity vector
+    box : Arelin.Game.Hitbox,       // hitbox (space occupied)
+    wei : F64,                      // weight (affects friction)
+    mhp : F64,                      // max health points
+    dmg : F64,                      // damage taken
+    knk : F64.V3,                   // launch direction and intensity
+    buf : List(Arelin.Game.Buff),   // buffs and nerfs (status effects) applied
+    chi : List(Arelin.Thing),       // children to be created on next tick
+    hit : List(Arelin.Game.Hit),    // hits done by this 
+    rst : Bool,                     // should this reset to idle?
+    die : Bool                      // should this be removed? 
+  );
 
-//Arelin.Game.TxFunction : Type
-  //Arelin.Thing -> Arelin.Thing 
+Arelin.Game.TxFunction : Type
+  Arelin.Thing -> Arelin.Thing 
 
-//T Arelin.Game 
-//| new(stage: List(Arelin.Thing));
+T Arelin.Game 
+| new(stage: List(Arelin.Thing));
 
-//T Arelin.Game.Input 
-//| sdir(dir: F64.V3); // stick direction
-//| key0(pos: F64.V3); // left down
-//| key1(pos: F64.V3); // middle down
-//| key2(pos: F64.V3); // right down
-//| key3(pos: F64.V3); // space down
-//| key4(pos: F64.V3); // extra down
-//| key5(pos: F64.V3); // shift down
-//| cmsg(txt: String); // chat message 
+T Arelin.Game.Input 
+| sdir(dir: F64.V3); // stick direction
+| key0(pos: F64.V3); // left down
+| key1(pos: F64.V3); // middle down
+| key2(pos: F64.V3); // right down
+| key3(pos: F64.V3); // space down
+| key4(pos: F64.V3); // extra down
+| key5(pos: F64.V3); // shift down
+| cmsg(txt: String); // chat message 
 
-//T Arelin.Game.Command
-//| new(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
+T Arelin.Game.Command
+| new(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
 
-//Arelin.Thing.new_thing : Arelin.Thing
-  //Arelin.Thing.new(
-    //((x) x) :: Arelin.Game.TxFunction, // fun
-    //F64.0,                             // pid
-    //F64.0,                             // mid 
-    //F64.0,                             // act
-    //F64.0,                             // sid 
-    //Map.new<>,                         // stt 
-    //List.nil<>,                        // nam
-    //List.nil<>,                        // lit
-    //F64.0,                             // tik
-    //F64.V3.new(F64.0,F64.0,F64.0),     // pos
-    //F64.parse("8"),                    // mov
-    //F64.1,                             // bst 
-    //F64.V3.new(F64.0,F64.0,F64.0),     // pad
-    //F64.V3.new(F64.0,F64._1,F64.0),    // dir
-    //F64.V3.new(F64.0,F64.0,F64.0),     // trg
-    //F64.V3.new(F64.0,F64.0,F64.0),     // vel
-    //Arelin.Game.Hitbox.nbox,           // box
-    //F64.1,                             // wei
-    //F64.parse("24"),                   // mhp
-    //F64.0,                             // dmg
-    //F64.V3.new(F64.0,F64.0,F64.0),     // knk
-    //List.nil<>,                        // buf
-    //List.nil<>,                        // chi
-    //List.nil<>,                        // hit
-    //Bool.false,                        // rst
-    //Bool.false)                        // die
+Arelin.Thing.new_thing : Arelin.Thing
+  Arelin.Thing.new(
+    ((x) x) :: Arelin.Game.TxFunction, // fun
+    F64.0,                             // pid
+    F64.0,                             // mid 
+    F64.0,                             // act
+    F64.0,                             // sid 
+    Map.new<>,                         // stt 
+    List.nil<>,                        // nam
+    List.nil<>,                        // lit
+    F64.0,                             // tik
+    F64.V3.new(F64.0,F64.0,F64.0),     // pos
+    F64.parse("8"),                    // mov
+    F64.1,                             // bst 
+    F64.V3.new(F64.0,F64.0,F64.0),     // pad
+    F64.V3.new(F64.0,F64._1,F64.0),    // dir
+    F64.V3.new(F64.0,F64.0,F64.0),     // trg
+    F64.V3.new(F64.0,F64.0,F64.0),     // vel
+    Arelin.Game.Hitbox.nbox,           // box
+    F64.1,                             // wei
+    F64.parse("24"),                   // mhp
+    F64.0,                             // dmg
+    F64.V3.new(F64.0,F64.0,F64.0),     // knk
+    List.nil<>,                        // buf
+    List.nil<>,                        // chi
+    List.nil<>,                        // hit
+    Bool.false,                        // rst
+    Bool.false)                        // die
 
 //// Getters and setters
-//Arelin.Thing.get_fun(thi: Arelin.Thing): Arelin.Game.TxFunction
-  //case thi:
-  //| (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    //(thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    //(thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    //(thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  //thi.fun;
+// Arelin.Thing.get_fun(thi: Arelin.Thing): Arelin.Game.TxFunction
+//   case thi:
+//   | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
+//     (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
+//     (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
+//     (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
+//   thi.fun;
 
 //Arelin.Thing.set_fun(
   //thi: Arelin.Thing, 
