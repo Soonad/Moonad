@@ -31,7 +31,7 @@ F64.256 : F64
 //   P(f64)
 
 T F64
-| new (a: Word(42.64));
+| new (a: Word(64));
 // | new(a: Word(Nat.64));
 
 // T Pair <A: Type> <B: Type>
@@ -566,7 +566,7 @@ F64.cmp: F64 -> F64 -> Cmp
   // let b.word = Newtype.elim<><>(b)
   // case F64.eql(a)(b):
   // | Cmp.eql;
-  // | case Word.ltn<42.64>(a.word)(b.word):
+  // | case Word.ltn<64>(a.word)(b.word):
   //   | Cmp.ltn;
   //   | Cmp.gtn;
   // ;
@@ -593,7 +593,7 @@ F64.eql : F64 -> F64 -> Bool
   get x.word = x
   case y: 
   | get y.word = y
-    Word.eql<42.64>(x.word)(y.word);
+    Word.eql<64>(x.word)(y.word);
 
 //// Exponential function.
 //F64.exp: F64 -> F64 -> F64 //prim//
@@ -662,7 +662,7 @@ F64.mod: F64 -> F64 -> F64 //prim//
 F64.mul: F64 -> F64 -> F64 //prim//
   F64.mul
 
-// F64.new: Word(42.64) -> F64
+// F64.new: Word(64) -> F64
 //   (a)
 //   <> (f64) f64(a)
 
@@ -671,7 +671,7 @@ F64.parse: String -> F64
   F64.parse
 
 F64.parse_binary: String -> F64
-  (str) F64.new(Word.from_bits(42.64)(Bits.from_string(str)))
+  (str) F64.new(Word.from_bits(64)(Bits.from_string(str)))
 
 F64.pi : F64
   F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")
