@@ -1,0 +1,3 @@
+Arelin.Thing.at_min_dist: (self: Arelin.Thing) -> (min_range: F64) -> F64.V3
+  (self) (min_range) let pos = Arelin.Thing.get_pos(self); let trg = Arelin.Thing.get_trg(self); let dist_min = F64.V3.dist(pos)(Arelin.Thing.at_dist(self)(min_range)); let dist_trg = F64.V3.dist(pos)(trg); F64.gtn(dist_trg)(dist_min)<(self.self) F64.V3>(Arelin.Thing.at_dist(self)(dist_trg))(Arelin.Thing.at_dist(self)(min_range))
+

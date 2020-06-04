@@ -1,0 +1,3 @@
+Arelin.Thing.at_dist: (self: Arelin.Thing) -> (dist: F64) -> F64.V3
+  (self) (dist) let dir = Arelin.Thing.get_dir(self); let pos = Arelin.Thing.get_pos(self); F64.V3.add(pos)(F64.V3.scale(dist)(dir))
+

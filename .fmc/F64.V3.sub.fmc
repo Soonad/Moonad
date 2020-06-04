@@ -1,0 +1,3 @@
+F64.V3.sub: Π(:F64.V3) Π(:F64.V3) F64.V3
+  λa λb (<a λa. F64.V3> λa.x λa.y λa.z (<b λb. F64.V3> λb.x λb.y λb.z $c.x=((F64.sub a.x) a.x);$c.y=((F64.sub a.y) b.y);$c.z=((F64.sub a.z) b.z);(((F64.V3.new c.x) c.y) c.z)))
+

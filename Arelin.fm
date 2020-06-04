@@ -1107,158 +1107,153 @@ Arelin.Game.with_thing(
   Arelin.Game.map_stage(effect, gm)
 
 // Returns the direction the thing is looking to
-// Arelin.Thing.targ_dir(self: Arelin.Thing): F64.V3
-//   let pos = Arelin.Thing.get_pos(self)
-//   let trg = Arelin.Thing.get_trg(self)
-//   let dir = Arelin.Thing.get_dir(self)
-//   F64.V3.look_at(pos, trg, dir)
+Arelin.Thing.targ_dir(self: Arelin.Thing): F64.V3
+  let pos = Arelin.Thing.get_pos(self)
+  let trg = Arelin.Thing.get_trg(self)
+  let dir = Arelin.Thing.get_dir(self)
+  F64.V3.look_at(pos, trg, dir)
 
 // Returns the position at a given distance towards targ_dir
-// Arelin.Thing.at_dist(self: Arelin.Thing, dist: F64): F64.V3
-//   let dir = Arelin.Thing.get_dir(self)
-//   let pos = Arelin.Thing.get_pos(self)
-//   F64.V3.add(pos, F64.V3.scale(dist, dir))
+Arelin.Thing.at_dist(self: Arelin.Thing, dist: F64): F64.V3
+  let dir = Arelin.Thing.get_dir(self)
+  let pos = Arelin.Thing.get_pos(self)
+  F64.V3.add(pos, F64.V3.scale(dist, dir))
 
-//// Return the position within a maximum range towards targ_dir
-//Arelin.Thing.at_max_dist(self: Arelin.Thing, max_range: F64): F64.V3
-  //let pos = Arelin.Thing.get_pos(self)
-  //let trg = Arelin.Thing.get_trg(self)
-  //let dist_max = F64.V3.dist(pos, Arelin.Thing.at_dist(self, max_range))
-  //let dist_trg = F64.V3.dist(pos, trg)
-  //case F64.ltn(dist_trg, dist_max):
-  //| Arelin.Thing.at_dist(self, dist_trg);
-  //| Arelin.Thing.at_dist(self, max_range);
+// Return the position within a maximum range towards targ_dir
+Arelin.Thing.at_max_dist(self: Arelin.Thing, max_range: F64): F64.V3
+  let pos = Arelin.Thing.get_pos(self)
+  let trg = Arelin.Thing.get_trg(self)
+  let dist_max = F64.V3.dist(pos, Arelin.Thing.at_dist(self, max_range))
+  let dist_trg = F64.V3.dist(pos, trg)
+  case F64.ltn(dist_trg, dist_max):
+  | Arelin.Thing.at_dist(self, dist_trg);
+  | Arelin.Thing.at_dist(self, max_range);
 
-//// Return the position within a mininum range towards targ_dir
-//Arelin.Thing.at_min_dist(self: Arelin.Thing, min_range: F64): F64.V3
-  //let pos = Arelin.Thing.get_pos(self)
-  //let trg = Arelin.Thing.get_trg(self)
-  //let dist_min = F64.V3.dist(pos, Arelin.Thing.at_dist(self, min_range))
-  //let dist_trg = F64.V3.dist(pos, trg)
-  //case F64.gtn(dist_trg, dist_min):
-  //| Arelin.Thing.at_dist(self, dist_trg);
-  //| Arelin.Thing.at_dist(self, min_range);
+// Return the position within a mininum range towards targ_dir
+Arelin.Thing.at_min_dist(self: Arelin.Thing, min_range: F64): F64.V3
+  let pos = Arelin.Thing.get_pos(self)
+  let trg = Arelin.Thing.get_trg(self)
+  let dist_min = F64.V3.dist(pos, Arelin.Thing.at_dist(self, min_range))
+  let dist_trg = F64.V3.dist(pos, trg)
+  case F64.gtn(dist_trg, dist_min):
+  | Arelin.Thing.at_dist(self, dist_trg);
+  | Arelin.Thing.at_dist(self, min_range);
 
-//// Return the position within a mininum and maximun range towards look_dir
-//Arelin.Thing.between_dist(
-  //self: Arelin.Thing, 
-  //min_range: F64, 
-  //max_range: F64
-  //) : F64.V3   
-  //let pos      = Arelin.Thing.get_pos(self)
-  //let trg      = Arelin.Thing.get_trg(self)
-  //let dist_trg = F64.V3.dist(pos, trg) 
-  //Arelin.Thing.at_dist(self, F64.max(min_range, F64.min(max_range, dist_trg)))
+// Return the position within a mininum and maximun range towards look_dir
+Arelin.Thing.between_dist(
+  self: Arelin.Thing, 
+  min_range: F64, 
+  max_range: F64
+  ) : F64.V3   
+  let pos      = Arelin.Thing.get_pos(self)
+  let trg      = Arelin.Thing.get_trg(self)
+  let dist_trg = F64.V3.dist(pos, trg) 
+  Arelin.Thing.at_dist(self, F64.max(min_range, F64.min(max_range, dist_trg)))
 
-//// Sets a thing's act
-//Arelin.Thing.init_act(
-  //self: Arelin.Thing, 
-  //new_act: F64, 
-  //new_trg: F64.V3
-  //) : Arelin.Thing
-  //let act = Arelin.Thing.get_act(self)
-  //let trg = Arelin.Thing.get_trg(self)
-  //let tik = Arelin.Thing.get_tik(self) 
-  //let act = 
-    //case F64.eql(act, F64.0):
-    //| new_act;
-    //| act;
+// Sets a thing's act
+Arelin.Thing.init_act(
+  self: Arelin.Thing, 
+  new_act: F64, 
+  new_trg: F64.V3
+  ) : Arelin.Thing
+  let act = Arelin.Thing.get_act(self)
+  let trg = Arelin.Thing.get_trg(self)
+  let tik = Arelin.Thing.get_tik(self) 
+  let check_act = 
+    case F64.eql(act, F64.0):
+    | new_act;
+    | act;
+  let check_trg = 
+    case F64.eql(act, F64.0):
+    | new_trg;
+    | trg;
+  let check_tik = 
+    case F64.eql(act, F64.0):
+    | F64.0;
+    | tik;
+  let self = Arelin.Thing.set_act(self, check_act)
+  let self = Arelin.Thing.set_trg(self, check_trg)
+  let self = Arelin.Thing.set_tik(self, check_tik)
+  self
 
-  //let trg = 
-    //case F64.eql(act, F64.0):
-    //| new_trg;
-    //| trg;
+// Is this thing walking?
+Arelin.Thing.is_walking(self: Arelin.Thing): Bool
+  let this.pad = Arelin.Thing.get_pad(self)
+  F64.gtn(F64.V3.len(this.pad), F64.0)
 
-  //let tik = 
-    //case F64.eql(act, F64.0):
-    //| F64.0;
-    //| tik;
-
-  //let self = Arelin.Thing.set_act(self, act)
-  //let self = Arelin.Thing.set_trg(self, trg)
-  //let self = Arelin.Thing.set_tik(self, tik)
-  //self 
-
-//// Is this thing walking?
-//Arelin.Thing.is_walking(self: Arelin.Thing): Bool
-  //let this.pad = Arelin.Thing.get_pad(self)
-  //F64.gtn(F64.V3.len(this.pad), F64.0)
-
-//// Spawns another thing
-//// - self: thing that will create another thing
-//// - at_tik: number of the tik when thing will be created
-//// - at_pos: position on which thing will be created
-//// - thing: thing that will be created
-//Arelin.Thing.create_at(
-  //self      : Arelin.Thing,
-  //at_tik    : F64,
-  //new_thing : Arelin.Game.TxFunction 
-  //) : Arelin.Thing
-  //let self.tik = Arelin.Thing.get_tik(self)
-  //case F64.eql(self.tik, at_tik):
-  //| let self.pid = Arelin.Thing.get_pid(self)
-    //let self.pos = Arelin.Thing.get_pos(self)
-    //let self = Arelin.Thing.set_fun(self, new_thing)
-    //let self = Arelin.Thing.set_pid(self, self.pid)
-    //let self = Arelin.Thing.set_pos(self, self.pos)
-    //self;
-  //| self;
+// Spawns another thing
+// - self: thing that will create another thing
+// - at_tik: number of the tik when thing will be created
+// - at_pos: position on which thing will be created
+// - thing: thing that will be created
+Arelin.Thing.create_at(
+  self      : Arelin.Thing,
+  at_tik    : F64,
+  new_thing : Arelin.Game.TxFunction 
+  ) : Arelin.Thing
+  let self.tik = Arelin.Thing.get_tik(self)
+  case F64.eql(self.tik, at_tik):
+  | let self.pid = Arelin.Thing.get_pid(self)
+    let self.pos = Arelin.Thing.get_pos(self)
+    let self = Arelin.Thing.set_fun(self, new_thing)
+    let self = Arelin.Thing.set_pid(self, self.pid)
+    let self = Arelin.Thing.set_pos(self, self.pos)
+    self;
+  | self;
 
 
-//// Resets to a given tick
-//Arelin.Thing.reset(self: Arelin.Thing, at_tik: F64): Arelin.Thing
-  //let curr_tik = Arelin.Thing.get_tik(self)
-  //case F64.gtn(curr_tik, F64.sub(at_tik, F64.1)):
-  //| #true#  Arelin.Thing.set_rst(self, Bool.true);
-  //| #false# self;
+// Resets to a given tick
+Arelin.Thing.reset(self: Arelin.Thing, at_tik: F64): Arelin.Thing
+  let curr_tik = Arelin.Thing.get_tik(self)
+  case F64.gtn(curr_tik, F64.sub(at_tik, F64.1)):
+  | #true#  Arelin.Thing.set_rst(self, Bool.true);
+  | #false# self;
 
-//// Dies at a given tick
-//Arelin.Thing.die(self: Arelin.Thing, at_tik: F64): Arelin.Thing
-  //let curr_tik = Arelin.Thing.get_tik(self)
-  //case F64.gtn(curr_tik, F64.sub(at_tik, F64.1)):
-  //| #true#  Arelin.Thing.set_die(self, Bool.true);
-  //| #false# self;
+// Dies at a given tick
+Arelin.Thing.die(self: Arelin.Thing, at_tik: F64): Arelin.Thing
+  let curr_tik = Arelin.Thing.get_tik(self)
+  case F64.gtn(curr_tik, F64.sub(at_tik, F64.1)):
+  | #true#  Arelin.Thing.set_die(self, Bool.true);
+  | #false# self;
 
-//// Performs an animation, reseting to idle when it ends
-//// - self: thing to be animated
-//// - boost: speed multiplier (0 = no move, 1 = normal spd)
-//// - model: id of the first model of the animation
-//// - count: total count of models on the animation
-//// - from: frame to start animating
-//// - til: last frame to animate
-//Arelin.Thing.animate_between(
-  //self  : Arelin.Thing,
-  //boost : F64,
-  //model : F64,
-  //count : F64,
-  //from  : F64,
-  //til   : F64
-  //) : Arelin.Thing
-  //let self.tik = Arelin.Thing.get_tik(self)
-  //let self.pad = Arelin.Thing.get_pad(self)
-  //let self.act = Arelin.Thing.get_act(self)
-  //let self.dir = Arelin.Thing.get_dir(self)
-  //case F64.is_between(from,til, self.tik):
-  //| #true#   
-    //let pad_len = F64.V3.len(self.pad)
-    //let new_dir =  
-      //case Bool.and(F64.gtn(self.act, F64.0), F64.eql(pad_len, F64.0)):
-      //| Arelin.Thing.targ_dir(self); 
-      //| case F64.gtn(pad_len, F64.0):
-        //| F64.V3.norm(self.pad);
-        //| self.dir;;
-    
-    //let new_mid = 
-      //let duration = F64.sub(til, from)
-      //let curr_tik = F64.sub(self.tik, from)
-      //let curr_tim = F64.div(curr_tik, duration)
-      //F64.add(model, F64.mod(F64.floor(F64.mul(curr_tim, count)), count))
-    
-    //let self = Arelin.Thing.set_bst(self, boost)
-    //let self = Arelin.Thing.set_dir(self, new_dir)
-    //let self = Arelin.Thing.set_mid(self, new_mid)
-    //self;
-  //| #false#  self;
+// Performs an animation, reseting to idle when it ends
+// - self: thing to be animated
+// - boost: speed multiplier (0 = no move, 1 = normal spd)
+// - model: id of the first model of the animation
+// - count: total count of models on the animation
+// - from: frame to start animating
+// - til: last frame to animate
+Arelin.Thing.animate_between(
+  self  : Arelin.Thing,
+  boost : F64,
+  model : F64,
+  count : F64,
+  from  : F64,
+  til   : F64
+  ) : Arelin.Thing
+  let self.tik = Arelin.Thing.get_tik(self)
+  let self.pad = Arelin.Thing.get_pad(self)
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  case F64.is_between(from,til, self.tik):
+  | #true#   
+    let pad_len = F64.V3.len(self.pad)
+    let new_dir =  
+      case Bool.and(F64.gtn(self.act, F64.0), F64.eql(pad_len, F64.0)):
+      | Arelin.Thing.targ_dir(self); 
+      | case F64.gtn(pad_len, F64.0):
+        | F64.V3.norm(self.pad);
+        | self.dir;;
+    let new_mid = 
+      let duration = F64.sub(til, from)
+      let curr_tik = F64.sub(self.tik, from)
+      let curr_tim = F64.div(curr_tik, duration)
+      F64.add(model, F64.mod(F64.floor(F64.mul(curr_tim, count)), count))
+    let self = Arelin.Thing.set_bst(self, boost)
+    let self = Arelin.Thing.set_dir(self, new_dir)
+    let self = Arelin.Thing.set_mid(self, new_mid)
+    self;
+  | #false# self;
 
 //// Performs an animation, reseting to idle when it ends
 //// - self: thing to be animated

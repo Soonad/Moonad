@@ -112,14 +112,14 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
 
    
 
-//F64.V3.add: F64.V3 -> F64.V3 -> F64.V3 
-  //(a) (b)
-  //a<() F64.V3> | (a.x) (a.y) (a.z)
-  //b<() F64.V3> | (b.x) (b.y) (b.z)
-  //let c.x = F64.add(a.x)(a.x)
-  //let c.y = F64.add(a.y)(b.y)
-  //let c.z = F64.add(a.z)(b.z)
-  //F64.V3.new(c.x)(c.y)(c.z);;
+F64.V3.add: F64.V3 -> F64.V3 -> F64.V3 
+  (a) (b)
+  case a: |
+  case b: |
+  let c.x = F64.add(a.x, a.x)
+  let c.y = F64.add(a.y, b.y)
+  let c.z = F64.add(a.z, b.z)
+  F64.V3.new(c.x, c.y, c.z);;
 
 
 //F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
@@ -280,32 +280,28 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
 ////       none(_)
 
 
-// F64.V3.dist: F64.V3 -> F64.V3 -> F64
-//   (a) (b)
-//   F64.sqrt(F64.V3.sqr_dist(a)(b))
+F64.V3.dist: F64.V3 -> F64.V3 -> F64
+  (a) (b)
+  F64.sqrt(F64.V3.sqr_dist(a)(b))
 
-// F64.V3.dot: F64.V3 -> F64.V3 -> F64
-//   (a) (b)
-//   a<() F64> | (a.x) (a.y) (a.z)
-//   b<() F64> | (b.x) (b.y) (b.z)
-//   let res = F64.0
-//   let res = F64.add(res)(F64.mul(a.x)(b.x))
-//   let res = F64.add(res)(F64.mul(a.y)(b.y))
-//   let res = F64.add(res)(F64.mul(a.z)(b.z))
-//   res;;
+F64.V3.dot: F64.V3 -> F64.V3 -> F64
+  (a) (b)
+  case a: |
+  case b: |
+  let res = F64.0
+  let res = F64.add(res, F64.mul(a.x, b.x))
+  let res = F64.add(res, F64.mul(a.y, b.y))
+  let res = F64.add(res, F64.mul(a.z, b.z))
+  res;;
 
-// F64.V3.eql: F64.V3 -> F64.V3 -> Bool
-//   (a) (b)
-//   a<() Bool> | (a.x) (a.y) (a.z)
-//   b<() Bool> | (b.x) (b.y) (b.z)
-//   let same_x = F64.eql(a.x)(b.x)
-//   let same_y = F64.eql(a.y)(b.y)
-//   let same_z = F64.eql(a.z)(b.z)
-//   Bool.and(same_x)(Bool.and(same_y)(same_z));;
-
-
-
-
+F64.V3.eql: F64.V3 -> F64.V3 -> Bool
+  (a) (b)
+  case a: | 
+  case b: |
+  let same_x = F64.eql(a.x)(b.x)
+  let same_y = F64.eql(a.y)(b.y)
+  let same_z = F64.eql(a.z)(b.z)
+  Bool.and(same_x)(Bool.and(same_y)(same_z));;
 
 
 //F64.V3.get_x: F64.V3 -> F64
@@ -323,29 +319,31 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
   //v<() F64> | (v.x) (v.y) (v.z)
   //v.z;
   
-//F64.V3.len: F64.V3 -> F64
-  //(v)
-  //v<() F64> | (v.x) (v.y) (v.z)
-  //let sqr  = F64.0
-  //let sqr  = F64.add(sqr)(F64.mul(v.x)(v.x))
-  //let sqr  = F64.add(sqr)(F64.mul(v.y)(v.y))
-  //let sqr  = F64.add(sqr)(F64.mul(v.z)(v.z))
-  //let expo = F64.div(F64.1)(F64.add(F64.1)(F64.1))
-  //let sqr  = F64.pow(sqr)(expo)
-  //sqr;
+F64.V3.len: F64.V3 -> F64
+  (v)
+  case v: |
+  let sqr  = F64.0
+  let sqr  = F64.add(sqr, F64.mul(v.x, v.x))
+  let sqr  = F64.add(sqr, F64.mul(v.y, v.y))
+  let sqr  = F64.add(sqr, F64.mul(v.z, v.z))
+  let expo = F64.div(F64.1, F64.add(F64.1, F64.1))
+  let sqr  = F64.pow(sqr, expo)
+  sqr;
 
-// F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 
-//   (a) (b) (c)
-//   a<() F64.V3> | (a.x) (a.y) (a.z)
-//   b<() F64.V3> | (a.x) (a.y) (a.z)
-//   c<() F64.V3> | (a.x) (a.y) (a.z)
-//   let a_eql_b  = F64.V3.eql(a)(b)
-//   let diff     = F64.V3.sub(b)(a)
-//   let normdiff = F64.V3.norm(diff)
-//   a_eql_b<() F64.V3> 
-//   | normdiff ;
-//   | c ;;;;
-   
+F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 
+  (a) (b) (c)
+  case a: |
+  case b: |
+  case c: |
+  let a_eql_b  = F64.V3.eql(a, b)
+  let diff     = F64.V3.sub(b, a)
+  let normdiff = F64.V3.norm(diff)
+  // a_eql_b<() F64.V3> 
+  // | normdiff ;
+  // | c ;;;;
+  case a_eql_b:
+  | normdiff ;
+  | c ;;;;
 
 //// Return true if "a" is less than "b"
 //F64.V3.ltn: F64.V3 -> F64.V3 -> Bool 
@@ -388,14 +386,14 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
 
 
   
-//F64.V3.norm: F64.V3 -> F64.V3 
-  //(v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //let len = F64.V3.len(v)
-  //let new_x = F64.div(v.x)(len)
-  //let new_y = F64.div(v.y)(len)
-  //let new_z = F64.div(v.z)(len)
-  //F64.V3.new(new_x)(new_y)(new_z);
+F64.V3.norm: F64.V3 -> F64.V3 
+  (v)
+  case v: |
+  let len = F64.V3.len(v)
+  let new_x = F64.div(v.x, len)
+  let new_y = F64.div(v.y, len)
+  let new_z = F64.div(v.z, len)
+  F64.V3.new(new_x, new_y, new_z);
 
 //F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
   //(p) (s)
@@ -597,65 +595,65 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
   //let new_y = F64.add(F64.add(p.y)(x_diff_times_sin))(y_diff_times_cos)
   //F64.V3.new(new_x)(new_y)(v.z);;
 
-//F64.V3.scale: F64 -> F64.V3 -> F64.V3 
-  //(k) (v)
-  //v<() F64.V3> | (v.x) (v.y) (v.z)
-  //let new_x = F64.mul(k)(v.x)
-  //let new_y = F64.mul(k)(v.y)
-  //let new_z = F64.mul(k)(v.z)
-  //F64.V3.new(new_x)(new_y)(new_z);
+F64.V3.scale: F64 -> F64.V3 -> F64.V3 
+  (k) (v)
+  case v: |
+  let new_x = F64.mul(k, v.x)
+  let new_y = F64.mul(k, v.y)
+  let new_z = F64.mul(k, v.z)
+  F64.V3.new(new_x, new_y, new_z);
 
-//F64.V3.sqr_dist: F64.V3 -> F64.V3 -> F64 
-  //(a) (b)
-  //a<() F64> | (a.x) (a.y) (a.z)
-  //b<() F64> | (b.x) (b.y) (b.z)
-  //let two    = F64.add(F64.1)(F64.1)
-  //let x_diff = F64.pow(F64.sub(a.x)(b.x))(two)
-  //let y_diff = F64.pow(F64.sub(a.y)(b.y))(two)
-  //let z_diff = F64.pow(F64.sub(a.z)(b.z))(two)
-  //F64.add(x_diff)(F64.add(y_diff)(z_diff));;
+F64.V3.sqr_dist: F64.V3 -> F64.V3 -> F64 
+  (a) (b)
+  case a: |
+  case b: |
+  let two    = F64.add(F64.1, F64.1)
+  let x_diff = F64.pow(F64.sub(a.x, b.x), two)
+  let y_diff = F64.pow(F64.sub(a.y, b.y), two)
+  let z_diff = F64.pow(F64.sub(a.z, b.z), two)
+  F64.add(x_diff, F64.add(y_diff, z_diff));;
 
-//F64.V3.sub: F64.V3 -> F64.V3 -> F64.V3 
-  //(a) (b)
-  //a<() F64.V3> | (a.x) (a.y) (a.z)
-  //b<() F64.V3> | (b.x) (b.y) (b.z)
-  //let c.x = F64.sub(a.x)(a.x)
-  //let c.y = F64.sub(a.y)(b.y)
-  //let c.z = F64.sub(a.z)(b.z)
-  //F64.V3.new(c.x)(c.y)(c.z);;
+F64.V3.sub: F64.V3 -> F64.V3 -> F64.V3 
+  (a) (b)
+  case a: |
+  case b: |
+  let c.x = F64.sub(a.x)(a.x)
+  let c.y = F64.sub(a.y)(b.y)
+  let c.z = F64.sub(a.z)(b.z)
+  F64.V3.new(c.x)(c.y)(c.z);;
 
 
 F64._1 : F64
   F64.parse_binary("0000000000000000000000000000000000000000000000000000111111111101")
 
-//// Arccos function.
-//F64.acos: F64 -> F64 //prim//
-  //F64.acos
+// Arccos function.
+F64.acos: F64 -> F64 //prim//
+  F64.acos
 
-//// TODO Adds two 64-bit floats.
-//F64.add: F64 -> F64 -> F64 //prim//
-  //F64.add
+// TODO Adds two 64-bit floats.
+F64.add: F64 -> F64 -> F64 //prim//
+  F64.add
 
-//// Arcsine function.
-//F64.asin: F64 -> F64 //prim//
-  //F64.asin
+// Arcsine function.
+F64.asin: F64 -> F64 //prim//
+  F64.asin
 
-//// Arctan function.
-//F64.atan: F64 -> F64 -> F64 //prim//
-  //F64.atan
+// Arctan function.
+F64.atan: F64 -> F64 -> F64 //prim//
+  F64.atan
 
-//// TODO
-//F64.cmp: F64 -> F64 -> Cmp 
-  //F64.cmp
-  ////(a) (b)
-  ////let a.word = Newtype.elim<><>(a)
-  ////let b.word = Newtype.elim<><>(b)
-  ////case F64.eql(a)(b):
-  ////| Cmp.eql;
-  ////| case Word.ltn<Nat.64>(a.word)(b.word):
-    ////| Cmp.ltn;
-    ////| Cmp.gtn;
-  ////;
+// TODO
+F64.cmp: F64 -> F64 -> Cmp 
+  F64.cmp
+  // (a) (b)
+  // let a.word = Newtype.elim<><>(a)
+  // let b.word = Newtype.elim<><>(b)
+  // case F64.eql(a)(b):
+  // | Cmp.eql;
+  // | case Word.ltn<42.64>(a.word)(b.word):
+  //   | Cmp.ltn;
+  //   | Cmp.gtn;
+  // ;
 
 //F64.compare_numbers: F64 -> F64 -> F64.Ordering
   //(a) (b)
@@ -669,9 +667,9 @@ F64._1 : F64
 //F64.cos: F64 -> F64 //prim//
   //F64.cos
 
-//// TODO Divides two 64-bit floats.
-//F64.div: F64 -> F64 -> F64 //prim//
-  //F64.div
+// TODO Divides two 64-bit floats.
+F64.div: F64 -> F64 -> F64 //prim//
+  F64.div
 
 //// TODO
 F64.eql : F64 -> F64 -> Bool
@@ -688,66 +686,65 @@ F64.eql : F64 -> F64 -> Bool
 //// floor(x : Number) : Number
 ////   (x - (x % 1)) - (if x < 0 then 1 else 0)
 
-//F64.floor: F64 -> F64
-  //(x)
-  //let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x)(F64.0)))(F64.1)(F64.0)
-  //F64.sub(F64.sub(x)(F64.mod(x)(F64.1)))(ltn_zero)
+F64.floor: F64 -> F64
+  (x)
+  let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x, F64.0)))(F64.1)(F64.0)
+  F64.sub(F64.sub(x, F64.mod(x, F64.1)), ltn_zero)
 
-
-//F64.from_bool: Bool -> F64 
-  //(b)
-  //b<() F64>
-  //| F64.1;
-  //| F64.0;
+F64.from_bool: Bool -> F64 
+  (b)
+  case b:
+  | F64.1;
+  | F64.0;
   
-//F64.gte: F64 -> F64 -> Bool
-  //(a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+F64.gte: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
   
-//F64.gtn: F64 -> F64 -> Bool
-  //(a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+F64.gtn: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
   
-//F64.if: <A: Type> -> (x: F64) -> (ct: A) -> (cf: A) -> A
-  //<A> (x) (ct) (cf)
-  //let bool = F64.eql(x)(F64.0)
-  //bool<() A>
-  //| cf;
-  //| ct;
+F64.if: <A: Type> -> (x: F64) -> (ct: A) -> (cf: A) -> A
+  <A> (x) (ct) (cf)
+  let bool = F64.eql(x)(F64.0)
+  case bool:
+  | cf;
+  | ct;
 
-//// Is x inside the a..b range, with `b` exclusive?
-//// is_between(a: Number, b: Number, x: Number) : Number
-////   (a === x) || ((a < x) && (x < b))
-//F64.is_between: F64 -> F64 -> F64 -> Bool
-  //(a) (b) (x)
-  //let a_eql_x = F64.eql(a)(x) 
-  //let a_ltn_x = F64.ltn(a)(x)
-  //let x_ltn_b = F64.ltn(x)(b)
-  //Bool.or(a_eql_x)(Bool.and(a_ltn_x)(x_ltn_b))
+// Is x inside the a..b range, with `b` exclusive?
+// is_between(a: Number, b: Number, x: Number) : Number
+//   (a === x) || ((a < x) && (x < b))
+F64.is_between: F64 -> F64 -> F64 -> Bool
+  (a) (b) (x)
+  let a_eql_x = F64.eql(a, x) 
+  let a_ltn_x = F64.ltn(a, x)
+  let x_ltn_b = F64.ltn(x, b)
+  Bool.or(a_eql_x, Bool.and(a_ltn_x, x_ltn_b))
 
-//// Logarithm function.
-//F64.log: F64 -> F64 //prim//
-  //F64.log
+// Logarithm function.
+F64.log: F64 -> F64 //prim//
+  F64.log
 
-//F64.lte: F64 -> F64 -> Bool
-  //(a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+F64.lte: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
   
-//F64.ltn: F64 -> F64 -> Bool
-  //(a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+F64.ltn: F64 -> F64 -> Bool
+  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
   
-//// TODO
-//F64.max: F64 -> F64 -> F64 //prim//
-  //F64.max
+// TODO
+F64.max: F64 -> F64 -> F64 //prim//
+  F64.max
 
-//// TODO
-//F64.min: F64 -> F64 -> F64 //prim//
-  //F64.min
+// TODO
+F64.min: F64 -> F64 -> F64 //prim//
+  F64.min
   
-//// Modulus of two 64-bit floats.
-//F64.mod: F64 -> F64 -> F64 //prim//
-  //F64.mod
+// Modulus of two 64-bit floats.
+F64.mod: F64 -> F64 -> F64 //prim//
+  F64.mod
 
-//// TODO Multiplies two 64-bit floats.
-//F64.mul: F64 -> F64 -> F64 //prim//
-  //F64.mul
+// TODO Multiplies two 64-bit floats.
+F64.mul: F64 -> F64 -> F64 //prim//
+  F64.mul
 
 // F64.new: Word(42.64) -> F64
 //   (a)
@@ -760,26 +757,26 @@ F64.parse: String -> F64
 F64.parse_binary: String -> F64
   (str) F64.new(Word.from_bits(42.64)(Bits.from_string(str)))
 
-//F64.pi : F64
-  //F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")
+F64.pi : F64
+  F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")
   
-//// Power function
-//F64.pow: F64 -> F64 -> F64 //prim//
-  //F64.pow
+// Power function
+F64.pow: F64 -> F64 -> F64 //prim//
+  F64.pow
   
-//// Sine function.
-//F64.sin: F64 -> F64 //prim//
-  //F64.sin
+// Sine function.
+F64.sin: F64 -> F64 //prim//
+  F64.sin
 
-//// Square root function.
-//F64.sqrt: F64 -> F64 //prim//
-  //(n) F64.pow(n)(F64.div(F64.1)(F64.2))
+// Square root function.
+F64.sqrt: F64 -> F64 //prim//
+  (n) F64.pow(n)(F64.div(F64.1, F64.2))
 
-//// Subtracts two 64-bit floats.
-//F64.sub: F64 -> F64 -> F64 //prim//
-  //F64.sub
+// Subtracts two 64-bit floats.
+F64.sub: F64 -> F64 -> F64 //prim//
+  F64.sub
 
-//// Tangent function.
-//F64.tan: F64 -> F64 //prim//
-  //F64.tan
+// Tangent function.
+F64.tan: F64 -> F64 //prim//
+  F64.tan
 
