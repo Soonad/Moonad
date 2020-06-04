@@ -1,29 +1,7 @@
-// TODO: update style
-
-// The IO type allows representing side-effective computations.
-// You can run a term of type `IO(Unit)` using `fmcio my_term`.
-IO: Type -> Type
-  (A)
-  io<P : IO(A) -> Type> ->
-  (end: (val: A) -> P(IO.end<A>(val))) ->
-  (log: (str: String) -> (nxt: Unit -> IO(A)) -> P(IO.log<A>(str)(nxt))) ->
-  (get: (nxt: String -> IO(A)) -> P(IO.get<A>(nxt))) ->
-  P(io)
-
-IO.end: <A: Type> -> A -> IO(A)
-  <A> (x)
-  <P> (end) () ()
-  end(x)
-
-IO.get: <A: Type> -> (String -> IO(A)) -> IO(A)
-  <A> (nxt)
-  <P> () () (get)
-  get(nxt)
-
-IO.log: <A: Type> -> String -> (Unit -> IO(A)) -> IO(A)
-  <A> (str) (nxt)
-  <P> () (log) ()
-  log(str)(nxt)
+T IO (A: Type)
+| end(val: A);
+| log(str: String, nxt: Unit -> IO(A));
+| get(nxt: String -> IO(A));
 
 IO.query(str: String): IO(String)
   IO.log<String>(str, () IO.get<String>(IO.end<String>))
@@ -33,7 +11,7 @@ IO.print(str: String): IO(Unit)
   IO.end<Unit>(Unit.new)
 
 IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)) : IO(B)
-  a<() IO(B)>
-  | (val) f(val);
-  | (str, nxt) IO.log<B>(str, (x) IO.bind<A,B>(nxt(x), f));
-  | (nxt) IO.get<B>((x) IO.bind<A,B>(nxt(x), f));
+  case a:
+  | f(a.val);
+  | IO.log<B>(a.str, (x) IO.bind<A,B>(a.nxt(x), f));
+  | IO.get<B>((x) IO.bind<A,B>(a.nxt(x), f));
