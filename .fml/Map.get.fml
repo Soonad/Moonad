@@ -1,0 +1,3 @@
+Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
+  <A> (bits) (map) bits<() Maybe(A)>(<P> (none) (some) none)((self.pred) map<() Maybe(A)>(<P> (none) (some) none)((self.val) (self.lft) (self.rgt) Maybe.none<A>))((self.pred) map<() Maybe(A)>(<P> (none) (some) none)((self.val) (self.lft) (self.rgt) Maybe.none<A>))
+

@@ -7,25 +7,25 @@ T Map <A: Type>
 | new;
 | tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
 
-//// Returns the element stored at a given key, if any.
-//// Example: Map.get<Nat>(my_key)(my_map)
-//Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
-  //<A> (bits) (map)
-  //bits<() Maybe(A)>
-  //| map<() Maybe(A)>
-    //| Maybe.none<A>;
-    //| (map.val) (map.lft) (map.rgt)
-      //map.val;;
-  //| (bits.pred)
-    //map<() Maybe(A)>
-    //| Maybe.none<A>;
-    //| (map.val) (map.lft) (map.rgt)
-      //Map.get<A>(bits.pred)(map.lft);;
-  //| (bits.pred)
-    //map<() Maybe(A)>
-    //| Maybe.none<A>;
-    //| (map.val) (map.lft) (map.rgt)
-      //Map.get<A>(bits.pred)(map.rgt);;
+// Returns the element stored at a given key, if any.
+// Example: Map.get<Nat>(my_key)(my_map)
+Map.get: <A: Type> -> Bits -> Map(A) -> Maybe(A)
+  <A> (bits) (map)
+  case bits<() Maybe(A)>:
+  | case map<() Maybe(A)>:
+    | Maybe.none<A>;
+    | #map.val, map.lft, map.rgt#
+      map.val;;
+  | #bits.pred#
+    case map<() Maybe(A)>:
+    | Maybe.none<A>;
+    | #map.val, map.lft, map.rgt#
+      Map.get<A>(bits.pred)(map.lft);;
+  | #bits.pred#
+    case map<() Maybe(A)>:
+    | Maybe.none<A>;
+    | #map.val, map.lft, map.rgt#
+      Map.get<A>(bits.pred)(map.rgt);;
 
 //Map.lookup: <A: Type> -> Bits -> A -> Map(A) -> Pair(A)(Map(A))
   //<A> (bits) (val) (map)
@@ -127,23 +127,24 @@ T Map <A: Type>
     //;
   //;(rec)(cpy)(map)
 
-//// Inserts a (key,val) pair in a map.
-//// Example: Map.get<Nat>(my_key)(my_val)(my_map)
-//Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
-  //<A> (bits) (val) (map)
-  //bits<() Map(A)>
-  //| map<() Map(A)>
-    //| Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>);
-    //| (map.val) (map.lft) (map.rgt)
-      //Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt);;
-  //| (bits.pred)
-    //map<() Map(A)>
-    //| Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>);
-    //| (map.val) (map.lft) (map.rgt)
-      //Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt);;
-  //| (bits.pred)
-    //map<() Map(A)>
-    //| Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>));
-    //| (map.val) (map.lft) (map.rgt)
-      //Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt));;
+// TODO: not working
+// Inserts a (key,val) pair in a map.
+// Example: Map.get<Nat>(my_key)(my_val)(my_map)
+// Map.set: <A: Type> -> Bits -> A -> Map(A) -> Map(A)
+//   <A> (bits) (val) (map)
+//   case bits<() Map(A)>:
+//   | case map<() Map(A)>:
+//     | Map.tie<A>(Maybe.some<A>(val))(Map.new<A>)(Map.new<A>);
+//     | #map.val map.lft map.rgt#
+//       Map.tie<A>(Maybe.some<A>(val))(map.lft)(map.rgt);;
+//   | #bits.pred#
+//     case map<() Map(A)>:
+//     | Map.tie<A>(Maybe.none<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>))(Map.new<A>);
+//     | #map.val map.lft map.rgt#
+//       Map.tie<A>(map.val)(Map.set<A>(bits.pred)(val)(map.lft))(map.rgt);;
+//   | #bits.pred#
+//     case map<() Map(A)>:
+//     | Map.tie<A>(Maybe.none<A>)(Map.new<A>)(Map.set<A>(bits.pred)(val)(Map.new<A>));
+//     | #map.val map.lft map.rgt#
+//       Map.tie<A>(map.val)(map.lft)(Map.set<A>(bits.pred)(val)(map.rgt));;
 

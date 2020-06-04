@@ -1467,318 +1467,313 @@ Arelin.Thing.has_shield(self: Arelin.Thing): Bool
   | #none# Bool.false;
   | #some# Bool.true;
 
-// Arelin.Game.use_shields(
-//   buff : Arelin.Game.Buff,
-//   acc  : Pair(F64, List(Arelin.Game.Buff))
-//   ) : Pair(F64, List(Arelin.Game.Buff))
-//   let curr_dmg = Pair.fst<><>(acc)
-//   let curr_buf = Pair.snd<><>(acc)
-//   case buff:
-//   | #shielded# 
-//     case F64.eql(curr_dmg, F64.0):
-//     | acc;
-//     | case F64.compare_numbers(curr_dmg, buff.val):
-//       | #LT# 
-//         let remaining_shield = F64.sub(buff.val, curr_dmg)
-//         let remaining_buf    = 
-//           List.cons<>
-//           | Arelin.Game.Buff.shielded(buff.dur, remaining_shield);
-//           | curr_buf;
+Arelin.Game.use_shields(
+  buff : Arelin.Game.Buff,
+  acc  : Pair(F64, List(Arelin.Game.Buff))
+  ) : Pair(F64, List(Arelin.Game.Buff))
+  let curr_dmg = Pair.fst<><>(acc)
+  let curr_buf = Pair.snd<><>(acc)
+  case buff:
+  | #shielded#
+    case F64.eql(curr_dmg, F64.0):
+    | acc;
+    | case F64.compare_numbers(curr_dmg, buff.val):
+      | #LT# 
+        let remaining_shield = F64.sub(buff.val, curr_dmg)
+        let remaining_buf    = 
+          List.cons<>
+          | Arelin.Game.Buff.shielded(buff.dur, remaining_shield);
+          | curr_buf;
         
-//         Pair.new<><>(F64.0, remaining_buf);
+        Pair.new<><>(F64.0, remaining_buf);
 
-//       | #EQ# Pair.new<><>(F64.0, curr_buf);
-//       | #GT#
-//         let remaining_dmg = F64.sub(curr_dmg, buff.val)
-//         Pair.new<><>(remaining_dmg, curr_buf);
-//     ;
-//   ;
-//   | #slowed#   
-//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-//   ; 
-//   | #hasted#   
-//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-//   ;
-//   | #silenceair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-//   ;
-//   | #rooted#   
-//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-//   ;
-//   | #stunned#  
-//     Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-//   ;
+      | #EQ# Pair.new<><>(F64.0, curr_buf);
+      | #GT#
+        let remaining_dmg = F64.sub(curr_dmg, buff.val)
+        Pair.new<><>(remaining_dmg, curr_buf);
+    ;
+  ;
+  | #slowed#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf)); 
+  | #hasted#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #silenced# Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #rooted#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #stunned#  Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
 
-//Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
-  //let self.buf      = Arelin.Thing.get_buf(self)
-  //let self.dmg      = Arelin.Thing.get_dmg(self)
-  //let init_val      = Pair.new<><>(hit_dmg, List.nil<>)
-  //let res           = List.fold<><>(init_val, Arelin.Game.use_shields, self.buf)
-  //let remaining_dmg = F64.add(Pair.fst<><>(res), self.dmg)
-  //let remaining_buf = Pair.snd<><>(res)
-  //let self          = Arelin.Thing.set_dmg(self, remaining_dmg)
-  //let self          = Arelin.Thing.set_buf(self, remaining_buf)
-  //self 
 
-//Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
-  //let self.buf = Arelin.Thing.get_buf(self)
-  //let fn = ((buff) (acc) 
-    //case buff:
-    //| #shielded# 
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.shielded(F64.sub(buff.dur, F64.1), buff.val); 
-        //| acc;
-      //;  
-    //;
-    //| #slowed#   
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.slowed(F64.sub(buff.dur, F64.1), buff.val);
-        //| acc;
-      //;
-    //; 
-    //| #hasted#   
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.hasted(F64.sub(buff.dur, F64.1), buff.val);
-        //| acc;
-      //;
-    //;
-    //| #silenced# 
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.silenced(F64.sub(buff.dur, F64.1));
-        //| acc;
-      //;
-    //;
-    //| #rooted#   
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.rooted(F64.sub(buff.dur, F64.1));
-        //| acc;
-      //;
-    //;
-    //| #stunned# 
-      //case F64.eql(buff.dur, F64.0):
-      //| acc;
-      //| List.cons<>
-        //| Arelin.Game.Buff.stunned(F64.sub(buff.dur, F64.1));
-        //| acc;
-      //;
-    //;
-  //) :: Arelin.Game.Buff -> List(Arelin.Game.Buff) -> List(Arelin.Game.Buff)
-  //let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
-  //Arelin.Thing.set_buf(self, new_buf)
+Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
+  let self.buf      = Arelin.Thing.get_buf(self)
+  let self.dmg      = Arelin.Thing.get_dmg(self)
+  let init_val      = Pair.new<><>(hit_dmg, List.nil<>)
+  let res           = List.fold<><>(init_val, Arelin.Game.use_shields, self.buf)
+  let remaining_dmg = F64.add(Pair.fst<><>(res), self.dmg)
+  let remaining_buf = Pair.snd<><>(res)
+  let self          = Arelin.Thing.set_dmg(self, remaining_dmg)
+  let self          = Arelin.Thing.set_buf(self, remaining_buf)
+  self 
+
+Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
+  let self.buf = Arelin.Thing.get_buf(self)
+  let fn = ((buff) (acc) 
+    case buff:
+    | #shielded# 
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.shielded(F64.sub(buff.dur, F64.1), buff.val); 
+        | acc;
+      ;  
+    ;
+    | #slowed#   
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.slowed(F64.sub(buff.dur, F64.1), buff.val);
+        | acc;
+      ;
+    ; 
+    | #hasted#   
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.hasted(F64.sub(buff.dur, F64.1), buff.val);
+        | acc;
+      ;
+    ;
+    | #silenced# 
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.silenced(F64.sub(buff.dur, F64.1));
+        | acc;
+      ;
+    ;
+    | #rooted#   
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.rooted(F64.sub(buff.dur, F64.1));
+        | acc;
+      ;
+    ;
+    | #stunned# 
+      case F64.eql(buff.dur, F64.0):
+      | acc;
+      | List.cons<>
+        | Arelin.Game.Buff.stunned(F64.sub(buff.dur, F64.1));
+        | acc;
+      ;
+    ;
+  ) :: Arelin.Game.Buff -> List(Arelin.Game.Buff) -> List(Arelin.Game.Buff)
+  let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
+  Arelin.Thing.set_buf(self, new_buf)
   
 
-
-//// Ends an animation/transformation/thing after some ticks
-//// - self: thing that will end after a while
-//// - tx: the new animation to use when it ends
-//// - after_tiks: numbers of ticks passed until the end
-//// - stt_key: the key in the stt map
-//Arelin.Thing.end_thing(
-  //self       : Arelin.Thing,
-  //tx         : Arelin.Game.TxFunction,
-  //after_tiks : F64,
-  //stt_key    : Bits 
-  //) : Arelin.Thing
-  //let self.stt    = Arelin.Thing.get_stt(self)
-  //let current_tik = Map.get<>(stt_key, self.stt)
-  //let empty_stt   = Map.set<>(stt_key, after_tiks, self.stt)
-  //case current_tik:
-  //| #none# Arelin.Thing.set_stt(self, empty_stt);
-  //| #some# (current_tik.value) 
-    //case F64.eql(current_tik.value, F64.0):
-    //| let self.pid = Arelin.Thing.get_pid(self)
-      //let self.pos = Arelin.Thing.get_pos(self)
-      //let self     = Arelin.Thing.set_fun(self, tx)
-      //let self     = Arelin.Thing.set_pid(self, self.pid)
-      //let self     = Arelin.Thing.set_pos(self, self.pos)
-      //let self     = Arelin.Thing.set_stt(self, empty_stt)
-      //self;  
+// TODO: depends on Map.set
+// Ends an animation/transformation/thing after some ticks
+// - self: thing that will end after a while
+// - tx: the new animation to use when it ends
+// - after_tiks: numbers of ticks passed until the end
+// - stt_key: the key in the stt map
+// Arelin.Thing.end_thing(
+//   self       : Arelin.Thing,
+//   tx         : Arelin.Game.TxFunction,
+//   after_tiks : F64,
+//   stt_key    : Bits 
+//   ) : Arelin.Thing
+//   let self.stt    = Arelin.Thing.get_stt(self)
+//   let current_tik = Map.get<>(stt_key, self.stt)
+//   let empty_stt   = Map.set<>(stt_key, after_tiks, self.stt)
+//   case current_tik:
+//   | #none# Arelin.Thing.set_stt(self, empty_stt);
+//   | #some#
+//     case F64.eql(current_tik.value, F64.0):
+//     | let self.pid = Arelin.Thing.get_pid(self)
+//       let self.pos = Arelin.Thing.get_pos(self)
+//       let self     = Arelin.Thing.set_fun(self, tx)
+//       let self     = Arelin.Thing.set_pid(self, self.pid)
+//       let self     = Arelin.Thing.set_pos(self, self.pos)
+//       let self     = Arelin.Thing.set_stt(self, empty_stt)
+//       self;  
     
-    //| let new_stt = 
-        //Map.set<>
-        //| stt_key;
-        //| case F64.gtn(current_tik.value, F64.0):
-          //| F64.sub(current_tik.value, F64.1);
-          //| F64.0;;
-        //| self.stt;
-      //Arelin.Thing.set_stt(self, new_stt);; 
+//     | let new_stt = 
+//         Map.set<>
+//         | stt_key;
+//         | case F64.gtn(current_tik.value, F64.0):
+//           | F64.sub(current_tik.value, F64.1);
+//           | F64.0;;
+//         | self.stt;
+//       Arelin.Thing.set_stt(self, new_stt);; 
 
-//Arelin.Thing.get_stt_value(self: Arelin.Thing, stt_key: Bits): F64
-  //let stt = Arelin.Thing.get_stt(self)
-  //case Map.get<>(stt_key, stt):
-  //| #none# F64.0;
-  //| #some# (value) value;
+Arelin.Thing.get_stt_value(self: Arelin.Thing, stt_key: Bits): F64
+  let stt = Arelin.Thing.get_stt(self)
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
+  | #none# F64.0;
+  | #some# get_stt.value;
 
-//// this should be renamed
-//Arelin.POS_X_KEY : Bits
-  //// 01011101b
-  //(Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
-//Arelin.POS_Y_KEY : Bits
-  //// 01110101b
-  //(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
+// this should be renamed
+Arelin.POS_X_KEY : Bits
+  // 01011101b
+  (Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
 
-//Arelin.Thing.get_stt_value_v3(self: Arelin.Thing): F64.V3
-  //let x = Arelin.Thing.get_stt_value(self, Arelin.POS_X_KEY)
-  //let y = Arelin.Thing.get_stt_value(self, Arelin.POS_Y_KEY)
-  //// let z = Arelin.Thing.get_stt_value(self, Arelin.POS_Z_KEY)
-  //F64.V3.new(x,y,F64.0) 
+Arelin.POS_Y_KEY : Bits
+  // 01110101b
+  (Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
 
-//Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
-  //let self.stt = Arelin.Thing.get_stt(self)
-  //case v3:
-  //| (v3.x) (v3.y) (v3.z)
-    //let insert_x = Map.set<>(Arelin.POS_X_KEY, v3.x, self.stt)
-    //let insert_y = Map.set<>(Arelin.POS_Y_KEY, v3.x, self.stt)
-    //let self     = Arelin.Thing.set_stt(self, insert_x)
-    //let self     = Arelin.Thing.set_stt(self, insert_y)
-    //self 
-  //;
+Arelin.Thing.get_stt_value_v3(self: Arelin.Thing): F64.V3
+  let x = Arelin.Thing.get_stt_value(self, Arelin.POS_X_KEY)
+  let y = Arelin.Thing.get_stt_value(self, Arelin.POS_Y_KEY)
+  // let z = Arelin.Thing.get_stt_value(self, Arelin.POS_Z_KEY)
+  F64.V3.new(x,y,F64.0) 
 
-//Arelin.Thing.is_using_buff(self: Arelin.Thing, stt_key: Bits): Bool
-  //let stt = Arelin.Thing.get_stt(self)
-  //case Map.get<>(stt_key, stt):
-  //| #none# Bool.false;
-  //| #some# (current_tik)
-    //case F64.eql(current_tik, F64.0):
-    //| Bool.false;
-    //| Bool.true;;
+// TODO: depends on Map.set
+// Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
+//   let self.stt = Arelin.Thing.get_stt(self)
+//   case v3:
+//   | let insert_x = Map.set<>(Arelin.POS_X_KEY, v3.x, self.stt)
+//     let insert_y = Map.set<>(Arelin.POS_Y_KEY, v3.x, self.stt)
+//     let self     = Arelin.Thing.set_stt(self, insert_x)
+//     let self     = Arelin.Thing.set_stt(self, insert_y)
+//     self 
+//   ;
 
-//Arelin.Thing.map_stt_key(
-  //self    : Arelin.Thing,
-  //stt_key : Bits,
-  //fn      : F64 -> F64
-  //) : Arelin.Thing
-  //let stt = Arelin.Thing.get_stt(self)
-  //case Map.get<>(stt_key, stt):
-  //| #none# 
-    //Arelin.Thing.set_stt
-    //| self;
-    //| Map.set<>(stt_key, F64.0, stt);;
-  //| #some# (value)
-    //Arelin.Thing.set_stt 
-    //| self;
-    //| Map.set<>(stt_key, fn(value), stt);;
+Arelin.Thing.is_using_buff(self: Arelin.Thing, stt_key: Bits): Bool
+  let stt = Arelin.Thing.get_stt(self)
+  let get_stt = Map.get<>(stt_key, stt);
+  case get_stt:
+  | #none# Bool.false;
+  | #some#
+    case F64.eql(get_stt.value, F64.0):
+    | Bool.false;
+    | Bool.true;;
+
+// TODO: depends on Map.set
+// Arelin.Thing.map_stt_key(
+//   self    : Arelin.Thing,
+//   stt_key : Bits,
+//   fn      : F64 -> F64
+//   ) : Arelin.Thing
+//   let stt = Arelin.Thing.get_stt(self)
+//   let get_stt = Map.get<>(stt_key, stt)
+//   case get_stt:
+//   | #none# 
+//     Arelin.Thing.set_stt
+//     | self;
+//     | Map.set<>(stt_key, F64.0, stt);;
+//   | #some#
+//     Arelin.Thing.set_stt 
+//     | self;
+//     | Map.set<>(stt_key, fn(get_stt.value), stt);;
 
  
+// TODO: depends on Map.set
+// Update a stt_key until the value associated to it ends. Used along with will_set_buff
+// - self: thing with stt (usually character)
+// - stt_key: the key in the stt map
+// Arelin.Thing.update_buff(self: Arelin.Thing, stt_key: Bits): Arelin.Thing
+//   let stt = Arelin.Thing.get_stt(self)
+//   let get_stt = Map.get<>(stt_key, stt)
+//   case get_stt:
+//   | #none# self;
+//   | #some#
+//     case F64.eql(get_stt.value, F64.0):
+//     | let new_tik = F64.sub(value, F64.1)
+//       let new_stt = Map.set<>(stt_key, new_tik, stt)
+//       Arelin.Thing.set_stt(self, new_stt);
+//     | self;;
 
-//// Update a stt_key until the value associated to it ends. Used along with will_set_buff
-//// - self: thing with stt (usually character)
-//// - stt_key: the key in the stt map
-//Arelin.Thing.update_buff(self: Arelin.Thing, stt_key: Bits): Arelin.Thing
-  //let stt = Arelin.Thing.get_stt(self)
-  //case Map.get<>(stt_key, stt):
-  //| #none# self;
-  //| #some# (value)
-    //case F64.eql(value, F64.0):
-    //| let new_tik = F64.sub(value, F64.1)
-      //let new_stt = Map.set<>(stt_key, new_tik, stt)
-      //Arelin.Thing.set_stt(self, new_stt);
-    //| self;;
+Arelin.exec_command(cmd: Arelin.Game.Command, gm: Arelin.Game): Arelin.Game
+  case cmd:
+  | #cmd.pid, cmd.inp#
+    let fn = ((this)
+      let silenced = Arelin.Thing.is_silenced(this)
+      let stunned  = Arelin.Thing.is_stunned(this)
+      case stunned:
+      | #true# 
+        case cmd.inp:
+        | #sdir# Arelin.Thing.init_act(this, F64.0, cmd.inp.dir); 
+        | #key0# this; 
+        | #key1# this; 
+        | #key2# this; 
+        | #key3# this; 
+        | #key4# this; 
+        | #key5# this; 
+        | #cmsg# this;
+      ;
+      | #false#
+        case silenced:
+        | #true#
+          case cmd.inp:
+          | #sdir# Arelin.Thing.set_pad(this, cmd.inp.dir); 
+          | #key0# this; 
+          | #key1# this; 
+          | #key2# this; 
+          | #key3# this; 
+          | #key4# this; 
+          | #key5# this; 
+          | #cmsg# this;
+        ;          
+        | #false#
+          case cmd.inp:
+          | #sdir# Arelin.Thing.set_pad(this, cmd.inp.dir); 
+          | #key0# Arelin.Thing.init_act(this,          F64.1, cmd.inp.pos); 
+          | #key1# Arelin.Thing.init_act(this, F64.parse("2"), cmd.inp.pos); 
+          | #key2# Arelin.Thing.init_act(this, F64.parse("3"), cmd.inp.pos); 
+          | #key3# Arelin.Thing.init_act(this, F64.parse("4"), cmd.inp.pos); 
+          | #key4# Arelin.Thing.init_act(this, F64.parse("5"), cmd.inp.pos); 
+          | #key5# Arelin.Thing.init_act(this, F64.parse("6"), cmd.inp.pos); 
+          | #cmsg# this;
+        ;
+      ;
+    ) :: Arelin.Game.TxFunction 
+    Arelin.Game.with_thing(cmd.pid, fn, gm);
 
-
-
-//Arelin.exec_command(cmd: Arelin.Game.Command, gm: Arelin.Game): Arelin.Game
-  //case cmd:
-  //| (cmd.pid) (cmd.inp)
-    //let fn = ((this)
-      //let silenced = Arelin.Thing.is_silenced(this)
-      //let stunned  = Arelin.Thing.is_stunned(this)
-      //case stunned:
-      //| #true# 
-        //case cmd.inp:
-        //| #sdir# (dir) Arelin.Thing.init_act(this, F64.0, dir); 
-        //| #key0# (pos) this; 
-        //| #key1# (pos) this; 
-        //| #key2# (pos) this; 
-        //| #key3# (pos) this; 
-        //| #key4# (pos) this; 
-        //| #key5# (pos) this; 
-        //| #cmsg# (txt) this;
-      //;
-      //| #false#
-        //case silenced:
-        //| #true#
-          //case cmd.inp:
-          //| #sdir# (dir) Arelin.Thing.set_pad(this, dir); 
-          //| #key0# (pos) this; 
-          //| #key1# (pos) this; 
-          //| #key2# (pos) this; 
-          //| #key3# (pos) this; 
-          //| #key4# (pos) this; 
-          //| #key5# (pos) this; 
-          //| #cmsg# (txt) this;
-        //;          
-        //| #false#
-          //case cmd.inp:
-          //| #sdir# (dir) Arelin.Thing.set_pad(this, dir); 
-          //| #key0# (pos) Arelin.Thing.init_act(this,          F64.1, pos); 
-          //| #key1# (pos) Arelin.Thing.init_act(this, F64.parse("2"), pos); 
-          //| #key2# (pos) Arelin.Thing.init_act(this, F64.parse("3"), pos); 
-          //| #key3# (pos) Arelin.Thing.init_act(this, F64.parse("4"), pos); 
-          //| #key4# (pos) Arelin.Thing.init_act(this, F64.parse("5"), pos); 
-          //| #key5# (pos) Arelin.Thing.init_act(this, F64.parse("6"), pos); 
-          //| #cmsg# (txt) this;
-        //;
-      //;
-    //) :: Arelin.Game.TxFunction 
-    //Arelin.Game.with_thing(cmd.pid, fn, gm);
-
-//// Checks if two boxes collide, returns outwards vector
-//Arelin.collide_with(
-  //a_pos : F64.V3,
-  //a_dir : F64.V3,
-  //a_box : Arelin.Game.Hitbox,
-  //b_pos : F64.V3,
-  //b_dir : F64.V3,
-  //b_box : Arelin.Game.Hitbox
-//) : Maybe(F64.V3)
-  //case a_box:
-  //| #nbox# Maybe.none<>;
-  //| #cbox# (a_box.rad)
-    //case b_box:
-    //| #nbox# Maybe.none<>;
-    //| #cbox# (b_box.rad)
-      //let dst = F64.V3.dist(a_pos, b_pos)
-      //let rad = F64.add(a_box.rad, b_box.rad)
-      //case Bool.and(F64.gtn(dst, F64.0), F64.ltn(dst, rad)):
-      //| let out_dir = F64.V3.norm(F64.V3.sub(a_pos, b_pos))
-        //let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir)
-        //Maybe.some<>(out_vec);
-      //| Maybe.none<>;;
-    //| #pbox# (b_box.pts)
-      //let nil = Maybe.none<>
-      //let cons = ((segment) (result)
-        //case result:
-        //| #none# 
-          //case segment:
-          //| (segment.a) (segment.b)
-            //let dst = F64.V3.point_segment_dist(a_pos, segment)
-            //let rad = a_box.rad 
-            //case F64.ltn(dst, rad):
-            //| #true#
-              //let out_dir = 
-                //F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a, segment.b)))
-              //let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir) 
-              //Maybe.some<>(out_vec);
-            //| #false# Maybe.none<>;;
-          //;
-        //| #some# (value) Maybe.some<>(value); 
-      //) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
-      //let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
-      //List.fold<><>(nil,cons,segs);;
-  //| #pbox# (a_box.pts)
-    ////TODO
-    //Maybe.none<>
-  //;
+// Checks if two boxes collide, returns outwards vector
+// Arelin.collide_with(
+//   a_pos : F64.V3,
+//   a_dir : F64.V3,
+//   a_box : Arelin.Game.Hitbox,
+//   b_pos : F64.V3,
+//   b_dir : F64.V3,
+//   b_box : Arelin.Game.Hitbox
+// ) : Maybe(F64.V3)
+//   case a_box:
+//   | #nbox# Maybe.none<>;
+//   | #cbox#
+//     case b_box:
+//     | #nbox# Maybe.none<>;
+//     | #cbox#
+//       let dst = F64.V3.dist(a_pos, b_pos)
+//       let rad = F64.add(a_box.rad, b_box.rad)
+//       case Bool.and(F64.gtn(dst, F64.0), F64.ltn(dst, rad)):
+//       | let out_dir = F64.V3.norm(F64.V3.sub(a_pos, b_pos))
+//         let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir)
+//         Maybe.some<>(out_vec);
+//       | Maybe.none<>;;
+//     | #pbox#
+//       let nil = Maybe.none<>
+//       let cons = ((segment) (result)
+//         case result:
+//         | #none# 
+//           case segment:
+//           | let dst = F64.V3.point_segment_dist(a_pos, segment)
+//             let rad = a_box.rad 
+//             case F64.ltn(dst, rad):
+//             | #true#
+//               let out_dir = 
+//                 F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a, segment.b)))
+//               let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir) 
+//               Maybe.some<>(out_vec);
+//             | #false# Maybe.none<>;;
+//           ;
+//         | #some# Maybe.some<>(result.value); 
+//       ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
+//       let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
+//       List.fold<><>(nil,cons,segs);;
+//   | #pbox#
+//     //TODO
+//     Maybe.none<>
+//   ;
 
 //// Interaction function between two things
 //Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
@@ -1935,149 +1930,146 @@ Arelin.Thing.has_shield(self: Arelin.Thing): Bool
     //List.fold<><>(this, apply_hit, that.hit)
   //this  
 
-    
-//// Like a fold, but with access to a list of other elements
-//Arelin.fold_with_context
-  //: <A : Type>                  -> 
-    //<B : Type>                  ->
-    //(i : B)                     ->
-    //(f: A -> List(A) -> B -> B) ->
-    //(xs : List(A))              -> 
-    //(ys : List(A) -> List(A))   ->
-    //B 
-  //<A> <B> (i) (f) (xs) (ys)
-  //xs<() B>
-  //| i;
-  //| (xs.head) (xs.tail)
-    //let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A)
-    //let rest = Arelin.fold_with_context<A><B>(i)(f)(xs.tail)(ys2)
-    //f(xs.head)(ys(xs.tail))(rest);
+// Like a fold, but with access to a list of other elements
+Arelin.fold_with_context
+  : <A : Type>                  -> 
+    <B : Type>                  ->
+    (i : B)                     ->
+    (f: A -> List(A) -> B -> B) ->
+    (xs : List(A))              -> 
+    (ys : List(A) -> List(A))   ->
+    B 
+  <A> <B> (i) (f) (xs) (ys)
+  case xs<() B>:
+  | i;
+  | let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A)
+    let rest = Arelin.fold_with_context<A><B>(i)(f)(xs.tail)(ys2)
+    f(xs.head)(ys(xs.tail))(rest);
 
 
-
-//Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
-  //// Interaction function
-  //let intr = ((that) (this) Arelin.interact_with(this, that)) 
-  //:: Arelin.Thing -> Arelin.Thing -> Arelin.Thing 
+Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
+  // Interaction function
+  // let intr = ((that) (this) 
+  //  Arelin.interact_with(this, that)
+  // ) :: Arelin.Thing -> Arelin.Thing -> Arelin.Thing 
   
-  //// For each thing in the game...
-  //let tick = ((this) (others) (res)
+  // For each thing in the game...
+  let tick = ((this) (others) (res)
     
-    //// Removes past hits
-    //let this = Arelin.Thing.set_hit(this, List.nil<>)
+    // Removes past hits
+    let this = Arelin.Thing.set_hit(this, List.nil<>)
 
-    //// Resets   
-    //let rst = Arelin.Thing.get_rst(this)
-    //let this = 
-      //case rst:
-      //| #true#
-        //let new_vel = F64.V3.new(F64.0,F64.0,F64.0)
-        //let new_bst = F64.1
-        //let new_box = Arelin.Game.Hitbox.cbox(F64.mul(F64.parse("3"), F64.parse("4")))
-        //let new_act = F64.0
-        //let new_tik = F64.0
-        //let new_lit = List.nil<Arelin.Game.Light>
-        //let new_rst = Bool.false 
-        //let this = Arelin.Thing.set_vel(this, new_vel)
-        //let this = Arelin.Thing.set_bst(this, new_bst)
-        //let this = Arelin.Thing.set_box(this, new_box)
-        //let this = Arelin.Thing.set_act(this, new_act)
-        //let this = Arelin.Thing.set_tik(this, new_tik)
-        //let this = Arelin.Thing.set_lit(this, new_lit)
-        //let this = Arelin.Thing.set_rst(this, new_rst)
-        //this;
-      //| #false# this;  
+    // Resets   
+    let rst = Arelin.Thing.get_rst(this)
+    let this = 
+      case rst:
+      | #true#
+        let new_vel = F64.V3.new(F64.0,F64.0,F64.0)
+        let new_bst = F64.1
+        let new_box = Arelin.Game.Hitbox.cbox(F64.mul(F64.parse("3"), F64.parse("4")))
+        let new_act = F64.0
+        let new_tik = F64.0
+        let new_lit = List.nil<Arelin.Game.Light>
+        let new_rst = Bool.false 
+        let this = Arelin.Thing.set_vel(this, new_vel)
+        let this = Arelin.Thing.set_bst(this, new_bst)
+        let this = Arelin.Thing.set_box(this, new_box)
+        let this = Arelin.Thing.set_act(this, new_act)
+        let this = Arelin.Thing.set_tik(this, new_tik)
+        let this = Arelin.Thing.set_lit(this, new_lit)
+        let this = Arelin.Thing.set_rst(this, new_rst)
+        this;
+      | #false# this;  
 
-    //// Integrates position with walk vector
-    //let boost = Arelin.Thing.speed_multiplier_of(this)
-    //let pos   = Arelin.Thing.get_pos(this)
-    //let mov   = Arelin.Thing.get_mov(this)
-    //let pad   = Arelin.Thing.get_pad(this)
-    //let this  = 
-      //Arelin.Thing.set_pos 
-      //|this;
-      //|F64.V3.add(pos, F64.V3.scale(F64.mul(mov, boost), pad));
+    // Integrates position with walk vector
+    let boost = Arelin.Thing.speed_multiplier_of(this)
+    let pos   = Arelin.Thing.get_pos(this)
+    let mov   = Arelin.Thing.get_mov(this)
+    let pad   = Arelin.Thing.get_pad(this)
+    let this  = 
+      Arelin.Thing.set_pos 
+      |this;
+      |F64.V3.add(pos, F64.V3.scale(F64.mul(mov, boost), pad));
 
-    //// Decreases duration of all buffs, removes from list if dur=0
-    //let this = Arelin.Thing.update_buff_dur(this)
+    // Decreases duration of all buffs, removes from list if dur=0
+    let this = Arelin.Thing.update_buff_dur(this)
 
-    //// Integrates position with knockback
-    //let pos = Arelin.Thing.get_pos(this)
-    //let knk = Arelin.Thing.get_knk(this)
-    //let wei = Arelin.Thing.get_wei(this)
-    //let new_pos = F64.V3.add(pos, knk)
-    //let knk_len = F64.V3.len(knk)
-    //let new_knk = 
-      //case F64.gtn(knk_len, F64.0):
-      //| #true#
-        //let force = F64.max(F64.sub(knk_len, wei), F64.0)
-        //F64.V3.scale(force, F64.V3.norm(knk));
+    // Integrates position with knockback
+    let pos = Arelin.Thing.get_pos(this)
+    let knk = Arelin.Thing.get_knk(this)
+    let wei = Arelin.Thing.get_wei(this)
+    let new_pos = F64.V3.add(pos, knk)
+    let knk_len = F64.V3.len(knk)
+    let new_knk = 
+      case F64.gtn(knk_len, F64.0):
+      | #true#
+        let force = F64.max(F64.sub(knk_len, wei), F64.0)
+        F64.V3.scale(force, F64.V3.norm(knk));
+      | #false# knk;
+    let this = Arelin.Thing.set_pos(this)(new_pos)
+    let this = Arelin.Thing.set_knk(this)(new_knk)
 
-      //| #false# knk;
-    //let this = Arelin.Thing.set_pos(this)(new_pos)
-    //let this = Arelin.Thing.set_knk(this)(new_knk)
+    // Calls the transaction function
+    let fun = Arelin.Thing.get_fun(this)
+    let this = fun(this)
 
-    //// Calls the transaction function
-    //let fun = Arelin.Thing.get_fun(this)
-    //let this = fun(this)
+    // Calls the interaction function with all other things
+    // let this = List.fold<><>(this, intr, others)
 
-    //// Calls the interaction function with all other things
-    //let this = List.fold<><>(this, intr, others)
+    // Increments tik counter
+    let tik  = Arelin.Thing.get_tik(this)
+    let this = Arelin.Thing.set_tik(this, F64.add(tik, F64.1))
 
-    //// Increments tik counter
-    //let tik  = Arelin.Thing.get_tik(this)
-    //let this = Arelin.Thing.set_tik(this, F64.add(tik, F64.1))
+    // Spawns children
+    let this_chi = Arelin.Thing.get_chi(this)
+    let chi_init = ((chi) 
+      Arelin.Thing.get_fun(chi)(chi)
+    ) :: Arelin.Thing -> Arelin.Thing
+    let chi_list = List.map<><>(chi_init, this_chi)
+    let this = Arelin.Thing.set_chi(this, List.nil<>)
 
-    //// Spawns children
-    //let this_chi = Arelin.Thing.get_chi(this)
-    //let chi_init = ((chi) 
-      //Arelin.Thing.get_fun(chi)(chi)
-    //) :: Arelin.Thing -> Arelin.Thing
-    //let chi_list = List.map<><>(chi_init, this_chi)
-    //let this = Arelin.Thing.set_chi(this, List.nil<>)
+    // Keeps inside map
+    let this_pos = Arelin.Thing.get_pos(this)
+    let pos_x = F64.V3.get_z(this_pos)
+    let pos_y = F64.V3.get_y(this_pos)
+    let pos_z = F64.V3.get_z(this_pos)
+    let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256"))
+    let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160"))
+    let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256"))
+    let this  = Arelin.Thing.set_pos(this, F64.V3.new(new_x, new_y, new_z))
 
-    //// Keeps inside map
-    //let this_pos = Arelin.Thing.get_pos(this)
-    //let pos_x = F64.V3.get_z(this_pos)
-    //let pos_y = F64.V3.get_y(this_pos)
-    //let pos_z = F64.V3.get_z(this_pos)
-    //let new_x = F64.min(F64.max(F64.parse("-256"))(pos_x))(F64.parse("256"))
-    //let new_y = F64.min(F64.max(F64.parse("-160"))(pos_y))(F64.parse("160"))
-    //let new_z = F64.min(F64.max(F64.0)(pos_z))(F64.parse("256"))
-    //let this  = Arelin.Thing.set_pos(this, F64.V3.new(new_x, new_y, new_z))
+    // Bounds HP
+    let dmg = Arelin.Thing.get_dmg(this)
+    let mhp = Arelin.Thing.get_mhp(this)
+    let new_dmg = F64.max(F64.0, F64.min(mhp, dmg))
+    let this = Arelin.Thing.set_dmg(this)(new_dmg)
 
-    //// Bounds HP
-    //let dmg = Arelin.Thing.get_dmg(this)
-    //let mhp = Arelin.Thing.get_mhp(this)
-    //let new_dmg = F64.max(F64.0, F64.min(mhp, dmg))
-    //let this = Arelin.Thing.set_dmg(this)(new_dmg)
+    // Dies when 0 is 0
+    let sid = Arelin.Thing.get_sid(this)
+    let dmg = Arelin.Thing.get_dmg(this)
+    let mhp = Arelin.Thing.get_mhp(this)
+    let no_hp = Bool.false
+      // Bool.and(F64.gtn(sid)(F64.0))(F64.gte(dmg)(mhp))
 
-    //// Dies when 0 is 0
-    //let sid = Arelin.Thing.get_sid(this)
-    //let dmg = Arelin.Thing.get_dmg(this)
-    //let mhp = Arelin.Thing.get_mhp(this)
-    //let no_hp = Bool.false
-      //// Bool.and(F64.gtn(sid)(F64.0))(F64.gte(dmg)(mhp))
+    let die = Arelin.Thing.get_die(this)
+    let xs = 
+      case Bool.or(die, no_hp): 
+      | #true#   res;
+      | #false#  List.cons<>(this, res);
 
-    //let die = Arelin.Thing.get_die(this)
-    //let xs = 
-      //case Bool.or(die, no_hp): 
-      //| #true#   res;
-      //| #false#  List.cons<>(this, res);
+    List.concat<>(chi_list, xs)
 
-    //List.concat<>(chi_list, xs)
+  ) :: Arelin.Thing -> 
+       List(Arelin.Thing) ->
+       List(Arelin.Thing) ->
+       List(Arelin.Thing)
 
-  //) :: Arelin.Thing -> 
-       //List(Arelin.Thing) ->
-       //List(Arelin.Thing) ->
-       //List(Arelin.Thing)
+  let things_id = ((x) x) :: List(Arelin.Thing) -> List(Arelin.Thing)
+  get stage     = gm
+  let stage_nil = List.nil<>
+  let new_stage = Arelin.fold_with_context<><>(stage_nil, tick, stage, things_id)
 
-  //let things_id = ((x) x) :: List(Arelin.Thing) -> List(Arelin.Thing)
-  //get stage     = gm
-  //let stage_nil = List.nil<>
-  //let new_stage = Arelin.fold_with_context<><>(stage_nil, tick, stage, things_id)
-
-  //Arelin.Game.new(new_stage)
+  Arelin.Game.new(new_stage)
 
 
   

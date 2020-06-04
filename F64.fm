@@ -66,49 +66,33 @@ F64.V3.new: F64 -> F64 -> F64 -> F64.V3
   //(pos) (dir)
   //<P> (new)
   //new(pos)(dir)
-  
-//// T Ordering 
-//// | LT 
-//// | EQ 
-//// | GT 
-
-//F64.Ordering.EQ: F64.Ordering
-  //<P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT)
-  //F64.Ordering.EQ
-//// T Ordering 
-//// | LT 
-//// | EQ 
-//// | GT 
-
-//F64.Ordering.GT: F64.Ordering
-  //<P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT)
-  //F64.Ordering.GT
-//// T Ordering 
-//// | LT 
-//// | EQ 
-//// | GT 
-
-//F64.Ordering.LT: F64.Ordering
-  //<P> (F64.Ordering.LT) (F64.Ordering.EQ) (F64.Ordering.GT)
-  //F64.Ordering.LT
-//F64.Ordering : Type
-  //F64.ordering<P: F64.Ordering -> Type> ->
-  //(LT: P(F64.Ordering.LT)) ->
-  //(EQ: P(F64.Ordering.EQ)) ->
-  //(GT: P(F64.Ordering.GT)) ->
-  //P(F64.ordering)
-//F64.Segment : Type 
-  //segment<P: F64.Segment -> Type> ->
-  //(new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> 
-  //P(segment)
 
 
-   
+F64.Ordering : Type
+  F64.ordering<P: F64.Ordering -> Type> ->
+  (LT: P(F64.Ordering.LT)) ->
+  (EQ: P(F64.Ordering.EQ)) ->
+  (GT: P(F64.Ordering.GT)) ->
+  P(F64.ordering)
 
-//F64.Segment.new: F64.V3 -> F64.V3 -> F64.Segment
-  //(a) (b)
-  //<P> (new)
-  //new(a)(b)
+T F64.Ordering
+| LT;
+| EQ;
+| GT;
+
+
+// F64.Segment : Type 
+//   segment<P: F64.Segment -> Type> ->
+//   (new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> 
+//   P(segment)
+
+T F64.Segment
+| new (a: F64.V3, b: F64.V3);
+
+F64.Segment.new: F64.V3 -> F64.V3 -> F64.Segment
+  (a) (b)
+  <P> (new)
+  new(a)(b)
 
    
 
@@ -304,20 +288,17 @@ F64.V3.eql: F64.V3 -> F64.V3 -> Bool
   Bool.and(same_x)(Bool.and(same_y)(same_z));;
 
 
-//F64.V3.get_x: F64.V3 -> F64
-  //(v)
-  //v<() F64> | (v.x) (v.y) (v.z)
-  //v.x;
+F64.V3.get_x: F64.V3 -> F64
+  (v)
+  case v: | v.x;
   
-//F64.V3.get_y: F64.V3 -> F64
-  //(v)
-  //v<() F64> | (v.x) (v.y) (v.z)
-  //v.y;
+F64.V3.get_y: F64.V3 -> F64
+  (v)
+  case v: | v.y;
   
-//F64.V3.get_z: F64.V3 -> F64
-  //(v)
-  //v<() F64> | (v.x) (v.y) (v.z)
-  //v.z;
+F64.V3.get_z: F64.V3 -> F64
+  (v)
+  case v: | v.z;
   
 F64.V3.len: F64.V3 -> F64
   (v)
@@ -655,13 +636,13 @@ F64.cmp: F64 -> F64 -> Cmp
   //   | Cmp.gtn;
   // ;
 
-//F64.compare_numbers: F64 -> F64 -> F64.Ordering
-  //(a) (b)
-  //Bool.if<F64.Ordering>(F64.eql(a)(b))
-  //| F64.Ordering.EQ;
-  //| Bool.if<F64.Ordering>(F64.ltn(b)(a))
-    //| F64.Ordering.GT;
-    //| F64.Ordering.LT;;
+F64.compare_numbers: F64 -> F64 -> F64.Ordering
+  (a) (b)
+  Bool.if<F64.Ordering>(F64.eql(a)(b))
+  | F64.Ordering.EQ;
+  | Bool.if<F64.Ordering>(F64.ltn(b)(a))
+    | F64.Ordering.GT;
+    | F64.Ordering.LT;;
     
 //// Cosine function.
 //F64.cos: F64 -> F64 //prim//
