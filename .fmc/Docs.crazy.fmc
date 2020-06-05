@@ -1,3 +1,0 @@
-Docs.crazy: Π(b:Bool) (Docs.string_or_unit b)
-  λb ((<b λb.self (Docs.string_or_unit b.self)> "I'm a string") Unit.new)
-

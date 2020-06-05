@@ -1,3 +1,0 @@
-Docs.crazy_string: (b: Bool) -> (is_true: Bool.IsTrue(b)) -> String
-  (b) (is_true) Docs.crazy(Bool.true)
-

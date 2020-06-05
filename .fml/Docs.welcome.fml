@@ -1,3 +1,3 @@
 Docs.welcome: IO(Unit)
-  Monad.bind<IO>(IO.monad)<String><Unit>(IO.query("What is your name?"))((name) Monad.bind<IO>(IO.monad)<Unit><Unit>(IO.print(String.concat("Welcome, ")(name)))(() Monad.pure<IO>(IO.monad)<Unit>(Unit.new)))
+  Monad.bind<IO>(IO.monad)<String><Unit>(IO.query("What is your name?"))((name) IO.print(String.concat("Welcome, ")(name)))
 
