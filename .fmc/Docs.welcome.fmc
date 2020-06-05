@@ -1,7 +1,3 @@
 Docs.welcome: (IO Unit)
-<<<<<<< HEAD
-  ((<<IO.bind String> Unit> (IO.query "What is your name?")) λname ((<<IO.bind Unit> Unit> (IO.print ((String.concat "Welcome, ") name))) λ (<IO.end Unit> Unit.new)))
-=======
   ((<<(<Monad.bind IO> IO.monad) String> Unit> (IO.query "What is your name?")) λname ((<<(<Monad.bind IO> IO.monad) Unit> Unit> (IO.print ((String.concat "Welcome, ") name))) λ (<(<Monad.pure IO> IO.monad) Unit> Unit.new)))
->>>>>>> master
 
