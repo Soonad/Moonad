@@ -1,0 +1,3 @@
+Monad.new: ∀(M:Π(:*) *) Π(bind:∀(A:*) ∀(B:*) Π(:(M A)) Π(:Π(:A) (M B)) (M B)) Π(pure:∀(A:*) Π(:A) (M A)) (Monad M)
+  ΛM λbind λpure ΛP λnew ((new bind) pure)
+
