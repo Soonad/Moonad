@@ -37,22 +37,20 @@ T F64.Ordering
 T F64.Segment
 | new(a: F64.V3, b: F64.V3);
 
-F64.V3.add: F64.V3 -> F64.V3 -> F64.V3 
-  (a) (b)
-  case a: |
-  case b: |
-  let c.x = F64.add(a.x)(a.x)
-  let c.y = F64.add(a.y)(b.y)
-  let c.z = F64.add(a.z)(b.z)
-  F64.V3.new(c.x)(c.y)(c.z);;
+F64.V3.add(a: F64.V3, b: F64.V3): F64.V3 
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
+  let c.x = F64.add(a.x, a.x)
+  let c.y = F64.add(a.y, b.y)
+  let c.z = F64.add(a.z, b.z)
+  F64.V3.new(c.x, c.y, c.z)
 
-F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
-  (c) (b) 
-  case c: | //(c.pos) (c.rad)
-  case b: | //(pts)
+F64.V3.circle_boundary_intersects(c: F64.Circle, b: F64.Boundary): F64
+  get c.pos c.rad = c
+  get b.pts = b
   case b.pts:
   | F64.0;
-  | #b.pts.head b.pts.tail# //(h0) (t0)
+  | #b.pts.head b.pts.tail#
     let h0 = b.pts.head
     let t0 = b.pts.tail
     case t0:
@@ -62,219 +60,205 @@ F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
       let t1 = t0.tail
       let p0 = h0
       let p1 = h1 
-      let sg = F64.Segment.new(p0)(p1)
-      let cd = F64.V3.point_segment_sqrdist(c.pos)(sg)
-      let test = F64.ltn(cd)(F64.mul(cd)(cd))
+      let sg = F64.Segment.new(p0, p1)
+      let cd = F64.V3.point_segment_sqrdist(c.pos, sg)
+      let test = F64.ltn(cd, F64.mul(cd, cd))
       case test:
       | F64.1;
-      | let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1))
-        F64.V3.circle_boundary_intersects(c)(boun);;;;;
+      | let boun = F64.Boundary.new(List.cons<F64.V3>(h1, t1))
+        F64.V3.circle_boundary_intersects(c, boun);;;
 
 
-F64.V3.circle_line_intersection: F64.Circle -> F64.Line -> Maybe(Pair(F64.V3)(F64.V3))
-  (c) (l)
-  case c: | // Maybe(Pair(F64.V3)(F64.V3)
-  case l: | // Maybe(Pair(F64.V3)(F64.V3)
-  case c.pos: | // F64.V3
+F64.V3.circle_line_intersection(c: F64.Circle, l: F64.Line): Maybe(Pair(F64.V3, F64.V3))
+  get c.pos c.rad = c
+  get l.pos l.dir = l
+  get c.pos.x c.pos.y c.pos.z = c.pos
   let cx = c.pos.x
   let cy = c.pos.y
   let cz = c.pos.z
-  case l.pos: | // F64.V3
-  case l.dir: | // F64.V3
+  get l.pos.x l.pos.y l.pos.z = l.pos
+  get l.dir.x l.dir.y l.dir.z = l.dir
   let dx = l.dir.x
   let dy = l.dir.y
   let dz = l.dir.z
-  let x1 = F64.sub(l.pos.x)(cx)
-  let y1 = F64.sub(l.pos.y)(cy)
-  let x2 = F64.sub(F64.add(l.pos.x)(dx))(cx)
-  let y2 = F64.sub(F64.add(l.pos.y)(dy))(cy)
-  let dd = F64.sub(F64.mul(x1)(y2))(F64.mul(x2)(y1))
-  let de = F64.sub(F64.mul(c.rad)(c.rad))(F64.mul(dd)(dd))
-  F64.lte(de)(F64.0)<() Maybe(Pair(F64.V3)(F64.V3))>
-  | Maybe.none<Pair(F64.V3)(F64.V3)>;
-  | let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dx))(dx)
-    let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy)(F64.0)))(F64.sub(F64.0)(dy))(dy)
-    let px = F64.mul(sx)(F64.sqrt(de))
-    let py = F64.mul(sy)(F64.sqrt(de))
-    let qx = F64.mul(dd)(dy)
-    let qy = F64.mul(F64.sub(F64.0)(dd))(dx)
-    let ax = F64.sub(qx)(px)
-    let ay = F64.sub(qy)(py)
-    let bx = F64.add(qx)(px)
-    let by = F64.add(qy)(py)
-    let ux = F64.add(ax)(cx)
-    let uy = F64.add(ay)(cy)
-    let vx = F64.add(bx)(cx)
-    let vy = F64.add(by)(cy)
-    let fst_v = F64.V3.new(ux)(uy)(F64.0)
-    let snd_v = F64.V3.new(vx)(vy)(F64.0)
-    Maybe.some<Pair(F64.V3)(F64.V3)>(Pair.new<F64.V3><F64.V3>(fst_v)(snd_v))
-    ;;;;;;
+  let x1 = F64.sub(l.pos.x, cx)
+  let y1 = F64.sub(l.pos.y, cy)
+  let x2 = F64.sub(F64.add(l.pos.x, dx), cx)
+  let y2 = F64.sub(F64.add(l.pos.y, dy), cy)
+  let dd = F64.sub(F64.mul(x1, y2), F64.mul(x2, y1))
+  let de = F64.sub(F64.mul(c.rad, c.rad), F64.mul(dd, dd))
+  case F64.lte(de, F64.0):
+  | Maybe.none<Pair(F64.V3, F64.V3)>;
+  | let sx = F64.if<F64>(F64.from_bool(F64.ltn(dy, F64.0)), F64.sub(F64.0, dx), dx)
+    let sy = F64.if<F64>(F64.from_bool(F64.ltn(dy, F64.0)), F64.sub(F64.0, dy), dy)
+    let px = F64.mul(sx, F64.sqrt(de))
+    let py = F64.mul(sy, F64.sqrt(de))
+    let qx = F64.mul(dd, dy)
+    let qy = F64.mul(F64.sub(F64.0, dd), dx)
+    let ax = F64.sub(qx, px)
+    let ay = F64.sub(qy, py)
+    let bx = F64.add(qx, px)
+    let by = F64.add(qy, py)
+    let ux = F64.add(ax, cx)
+    let uy = F64.add(ay, cy)
+    let vx = F64.add(bx, cx)
+    let vy = F64.add(by, cy)
+    let fst_v = F64.V3.new(ux, uy, F64.0)
+    let snd_v = F64.V3.new(vx, vy, F64.0)
+    Maybe.some<Pair(F64.V3, F64.V3)>(Pair.new<F64.V3><F64.V3>(fst_v, snd_v))
+  ;
 
-F64.V3.circle_to_circle_hit_dist: F64.Circle -> F64.V3 -> F64.Circle -> Maybe(F64) 
-  (a) (d) (b)
-  case a: | //(a.pos) (a.rad), return <() Maybe(F64)> 
-  case b: | //(b.pos) (b.rad), return <() Maybe(F64)> 
+F64.V3.circle_to_circle_hit_dist(a: F64.Circle, d: F64.V3, b: F64.Circle): Maybe(F64) 
+  get a.pos a.rad = a
+  get b.pos b.rad = b
   let r = a.rad 
-  let c = F64.Circle.new(b.pos)(F64.add(a.rad)(b.rad))
-  let l = F64.Line.new(a.pos)(F64.V3.norm(d))
-  let p = F64.V3.circle_line_intersection(c)(l)
+  let c = F64.Circle.new(b.pos, F64.add(a.rad, b.rad))
+  let l = F64.Line.new(a.pos, F64.V3.norm(d))
+  let p = F64.V3.circle_line_intersection(c, l)
   case p:
   | Maybe.none<F64>;
-  |  p.value<() Maybe(F64)> | (fst) (snd)
-    let d0 = F64.V3.sqr_dist(a.pos)(fst)
-    let d1 = F64.V3.sqr_dist(a.pos)(snd)
-    let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0)(d1)))(fst)(snd)
-    let dt = F64.V3.dot(d)(F64.V3.sub(hp)(a.pos))
-    let ds = F64.V3.sqr_dist(hp)(a.pos)
-    let cmp_res = F64.from_bool(F64.gtn(dt)(F64.0)) 
-    F64.if<Maybe(F64)>(cmp_res)(Maybe.some<F64>(F64.sqrt(ds)))(Maybe.none<F64>)
-    ;;;;
+  | get fst snd = p.value
+    let d0 = F64.V3.sqr_dist(a.pos, fst)
+    let d1 = F64.V3.sqr_dist(a.pos, snd)
+    let hp = F64.if<F64.V3>(F64.from_bool(F64.ltn(d0, d1)), fst, snd)
+    let dt = F64.V3.dot(d, F64.V3.sub(hp, a.pos))
+    let ds = F64.V3.sqr_dist(hp, a.pos)
+    let cmp_res = F64.from_bool(F64.gtn(dt, F64.0)) 
+    F64.if<Maybe(F64)>(cmp_res, Maybe.some<F64>(F64.sqrt(ds)), Maybe.none<F64>)
+  ;
 
-F64.V3.dist: F64.V3 -> F64.V3 -> F64
-  (a) (b)
-  F64.sqrt(F64.V3.sqr_dist(a)(b))
+F64.V3.dist(a: F64.V3, b: F64.V3): F64
+  F64.sqrt(F64.V3.sqr_dist(a, b))
 
-F64.V3.dot: F64.V3 -> F64.V3 -> F64
-  (a) (b)
-  case a: |
-  case b: |
+F64.V3.dot(a: F64.V3, b: F64.V3): F64
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
   let res = F64.0
   let res = F64.add(res, F64.mul(a.x, b.x))
   let res = F64.add(res, F64.mul(a.y, b.y))
   let res = F64.add(res, F64.mul(a.z, b.z))
-  res;;
+  res
 
-F64.V3.eql: F64.V3 -> F64.V3 -> Bool
-  (a) (b)
-  case a: | 
-  case b: |
-  let same_x = F64.eql(a.x)(b.x)
-  let same_y = F64.eql(a.y)(b.y)
-  let same_z = F64.eql(a.z)(b.z)
-  Bool.and(same_x)(Bool.and(same_y)(same_z));;
+F64.V3.eql(a: F64.V3, b: F64.V3): Bool
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
+  let same_x = F64.eql(a.x, b.x)
+  let same_y = F64.eql(a.y, b.y)
+  let same_z = F64.eql(a.z, b.z)
+  Bool.and(same_x, Bool.and(same_y, same_z))
 
 
-F64.V3.get_x: F64.V3 -> F64
-  (v)
-  case v: | v.x;
+F64.V3.get_x(v: F64.V3): F64
+  get v.x v.y v.z = v 
+  v.x
   
-F64.V3.get_y: F64.V3 -> F64
-  (v)
-  case v: | v.y;
+F64.V3.get_y(v: F64.V3): F64
+  get v.x v.y v.z = v 
+  v.y
   
-F64.V3.get_z: F64.V3 -> F64
-  (v)
-  case v: | v.z;
+F64.V3.get_z(v: F64.V3): F64
+  get v.x v.y v.z = v 
+  v.z
   
-F64.V3.len: F64.V3 -> F64
-  (v)
-  case v: |
+F64.V3.len(v: F64.V3): F64
+  get v.x v.y v.z = v 
   let sqr  = F64.0
   let sqr  = F64.add(sqr, F64.mul(v.x, v.x))
   let sqr  = F64.add(sqr, F64.mul(v.y, v.y))
   let sqr  = F64.add(sqr, F64.mul(v.z, v.z))
   let expo = F64.div(F64.1, F64.add(F64.1, F64.1))
   let sqr  = F64.pow(sqr, expo)
-  sqr;
+  sqr
 
-F64.V3.look_at: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3 
-  (a) (b) (c)
-  case a: |
-  case b: |
-  case c: |
+F64.V3.look_at(a: F64.V3, b: F64.V3, c: F64.V3): F64.V3 
+  get a.x a.y a.z = a 
+  get b.x b.y b.z = b 
+  get c.x c.y c.z = c 
   let a_eql_b  = F64.V3.eql(a, b)
   let diff     = F64.V3.sub(b, a)
   let normdiff = F64.V3.norm(diff)
   case a_eql_b:
   | normdiff ;
-  | c ;;;;
+  | c ;
 
 // Return true if "a" is less than "b"
-F64.V3.ltn: F64.V3 -> F64.V3 -> Bool 
-  (a) (b)
+F64.V3.ltn(a: F64.V3, b: F64.V3): Bool
   let len_a = F64.V3.len(a)
   let len_b = F64.V3.len(b)
-  Bool.if<Bool>(F64.ltn(len_a)(len_b)) // F64 -> F64 -> Bool
+  Bool.if<Bool>(F64.ltn(len_a, len_b))
   | Bool.true;
   | Bool.false;
   
-F64.V3.map: (F64 -> F64) -> F64.V3 -> F64.V3
-  (fn) (v)
-  case v: | F64.V3.new(fn(v.x))(fn(v.y))(fn(v.z));
+F64.V3.map(fn: F64 -> F64, v: F64.V3): F64.V3
+  get v.x v.y v.z = v 
+  F64.V3.new(fn(v.x), fn(v.y), fn(v.z))
 
-F64.V3.map_x: (F64 -> F64) -> F64.V3 -> F64.V3
-  (fn) (v)
-  case v: | F64.V3.new(fn(v.x))(v.y)(v.z);
+F64.V3.map_x(fn: F64 -> F64, v: F64.V3): F64.V3
+  get v.x v.y v.z = v 
+  F64.V3.new(fn(v.x), v.y, v.z)
 
-F64.V3.map_y: (F64 -> F64) -> F64.V3 -> F64.V3
-  (fn) (v)
-  case v: | F64.V3.new(v.x)(fn(v.y))(v.z);
+F64.V3.map_y(fn: F64 -> F64, v: F64.V3): F64.V3
+  get v.x v.y v.z = v 
+  F64.V3.new(v.x, fn(v.y), v.z)
 
-F64.V3.map_z: (F64 -> F64) -> F64.V3 -> F64.V3
-  (fn) (v)
-  case v: | F64.V3.new(v.x)(v.y)(fn(v.z));
+F64.V3.map_z(fn: F64 -> F64, v: F64.V3): F64.V3
+  get v.x v.y v.z = v 
+  F64.V3.new(v.x, v.y, fn(v.z))
 
-F64.V3.mul: F64.V3 -> F64.V3 -> F64.V3 
-  (a) (b)
-  case a: |
-  case b: |
-  let c.x = F64.mul(a.x)(a.x)
-  let c.y = F64.mul(a.y)(b.y)
-  let c.z = F64.mul(a.z)(b.z)
-  F64.V3.new(c.x)(c.y)(c.z);;
+F64.V3.mul(a: F64.V3, b: F64.V3): F64.V3
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
+  let c.x = F64.mul(a.x, a.x)
+  let c.y = F64.mul(a.y, b.y)
+  let c.z = F64.mul(a.z, b.z)
+  F64.V3.new(c.x, c.y, c.z)
   
-F64.V3.norm: F64.V3 -> F64.V3 
-  (v)
-  case v: |
+F64.V3.norm(v: F64.V3): F64.V3
+  get v.x v.y v.z = v
   let len = F64.V3.len(v)
   let new_x = F64.div(v.x, len)
   let new_y = F64.div(v.y, len)
   let new_z = F64.div(v.z, len)
-  F64.V3.new(new_x, new_y, new_z);
+  F64.V3.new(new_x, new_y, new_z)
 
-F64.V3.point_segment_dist: F64.V3 -> F64.Segment -> F64
-  (p) (s)
-  F64.sqrt(F64.V3.point_segment_sqrdist(p)(s))
+F64.V3.point_segment_dist(p: F64.V3, s: F64.Segment): F64
+  F64.sqrt(F64.V3.point_segment_sqrdist(p, s))
 
 // Squared distance between a point and a segment
-F64.V3.point_segment_sqrdist: F64.V3 -> F64.Segment -> F64
-  (p) (s)
-  case p: | // p.x p.y p.z
-  case s: | // (a) (b)
-  case s.a: |
-  case s.b: |
-  let ab_x_diff_sqrd = F64.pow(F64.sub(s.a.x)(s.b.x))(F64.2) 
-  let ab_y_diff_sqrd = F64.pow(F64.sub(s.a.y)(s.b.y))(F64.2)
-  let pa_x_diff = F64.sub(p.x)(s.a.x)
-  let pa_y_diff = F64.sub(p.y)(s.a.y)
-  let ba_x_diff = F64.sub(s.b.x)(s.a.x)
-  let ba_y_diff = F64.sub(s.b.y)(s.a.y)
-  let l = F64.add(ab_x_diff_sqrd)(ab_y_diff_sqrd)
-  let t = F64.add(F64.mul(pa_x_diff)(ba_x_diff))(F64.mul(pa_y_diff)(ba_y_diff))
-  let t = F64.div(t)(l)
-  let t = F64.max(F64.0)(F64.min(F64.1)(t))
+F64.V3.point_segment_sqrdist(p: F64.V3, s: F64.Segment): F64
+  get p.x p.y p.z = p
+  get s.a s.b = s
+  get s.a.x s.a.y s.a.z = s.a
+  get s.b.x s.b.y s.b.z = s.b
+  let ab_x_diff_sqrd = F64.pow(F64.sub(s.a.x, s.b.x), F64.2) 
+  let ab_y_diff_sqrd = F64.pow(F64.sub(s.a.y, s.b.y), F64.2)
+  let pa_x_diff = F64.sub(p.x, s.a.x)
+  let pa_y_diff = F64.sub(p.y, s.a.y)
+  let ba_x_diff = F64.sub(s.b.x, s.a.x)
+  let ba_y_diff = F64.sub(s.b.y, s.a.y)
+  let l = F64.add(ab_x_diff_sqrd, ab_y_diff_sqrd)
+  let t = F64.add(F64.mul(pa_x_diff, ba_x_diff), F64.mul(pa_y_diff, ba_y_diff))
+  let t = F64.div(t, l)
+  let t = F64.max(F64.0, F64.min(F64.1, t))
   let d = F64.0
-  let t_times_ba_x_diff = F64.mul(t)(ba_x_diff)
-  let t_times_ba_y_diff = F64.mul(t)(ba_y_diff)
-  let k = F64.pow(F64.sub(p.x)(F64.add(s.a.x)(t_times_ba_x_diff)))(F64.2)
-  let d = F64.add(d)(k)
-  let k = F64.pow(F64.sub(p.y)(F64.add(s.a.y)(t_times_ba_y_diff)))(F64.2)
-  let d = F64.add(d)(k)
-  d;;;;
+  let t_times_ba_x_diff = F64.mul(t, ba_x_diff)
+  let t_times_ba_y_diff = F64.mul(t, ba_y_diff)
+  let k = F64.pow(F64.sub(p.x, F64.add(s.a.x, t_times_ba_x_diff)), F64.2)
+  let d = F64.add(d, k)
+  let k = F64.pow(F64.sub(p.y, F64.add(s.a.y, t_times_ba_y_diff)), F64.2)
+  let d = F64.add(d, k)
+  d
 
-
-F64.V3.polygon_to_segments.cons: 
-  F64.V3 -> //pos
-  F64.V3 -> //dir
-  F64.V3 -> //pt_b
-  (Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)) -> //segs
-  Maybe(F64.V3) -> //pt_a
-  Maybe(F64.V3) -> //pt_0
+F64.V3.polygon_to_segments.cons(
+  pos: F64.V3,
+  dir: F64.V3, //dir
+  pt_b: F64.V3, //pt_b
+  segs: (Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)),
+  pt_a: Maybe(F64.V3),
+  pt_0: Maybe(F64.V3)):
   List(F64.Segment)
-  (pos) (dir) (pt_b) (segs) (pt_a) (pt_0)
   case pt_a:
-  | segs(Maybe.some<F64.V3>(pt_b))(Maybe.some<F64.V3>(pt_b));
+  | segs(Maybe.some<F64.V3>(pt_b), Maybe.some<F64.V3>(pt_b));
   | let pt_0 = 
     case pt_0:
     | Maybe.some<F64.V3>(pt_b); 
@@ -282,14 +266,13 @@ F64.V3.polygon_to_segments.cons:
     let p0 = F64.V3.polygon_to_segments.transform(pos, dir, pt_a.value)
     let p1 = F64.V3.polygon_to_segments.transform(pos, dir, pt_b)
     let sg = F64.Segment.new(p0, p1)
-    List.cons<F64.Segment>(sg)(segs(Maybe.some<F64.V3>(pt_b))(pt_0));
+    List.cons<F64.Segment>(sg, segs(Maybe.some<F64.V3>(pt_b), pt_0));
 
-F64.V3.polygon_to_segments: 
-  F64.V3 -> 
-  F64.V3 -> 
-  List(F64.V3) -> 
+F64.V3.polygon_to_segments(
+  pos: F64.V3,
+  dir: F64.V3,
+  pts: List(F64.V3)):
   List(F64.Segment)
-  (pos) (dir) (pts)
   List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
   |F64.V3.polygon_to_segments.nil(pos, dir);
   |F64.V3.polygon_to_segments.cons(pos, dir);
@@ -297,26 +280,24 @@ F64.V3.polygon_to_segments:
   |Maybe.none<F64.V3>;
   |Maybe.none<F64.V3>;
 
-F64.V3.polygon_to_segments.nil: 
-  F64.V3 -> //pos
-  F64.V3 -> //dir 
-  Maybe(F64.V3) -> 
-  Maybe(F64.V3) -> 
+F64.V3.polygon_to_segments.nil(
+  pos: F64.V3,
+  dir: F64.V3,
+  pt_a: Maybe(F64.V3),
+  pt_0: Maybe(F64.V3)):
   List(F64.Segment)
-  (pos) (dir) (pt_a) (pt_0)
   case pt_0:
   | List.nil<F64.Segment>; 
   | case pt_a:
     | List.nil<F64.Segment>;
-    | let p0 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_a.value)
-      let p1 = F64.V3.polygon_to_segments.transform(pos)(dir)(pt_0.value)
-      let sg = F64.Segment.new(p0)(p1)
-      List.cons<F64.Segment>(sg)(List.nil<F64.Segment>);;
+    | let p0 = F64.V3.polygon_to_segments.transform(pos, dir, pt_a.value)
+      let p1 = F64.V3.polygon_to_segments.transform(pos, dir, pt_0.value)
+      let sg = F64.Segment.new(p0, p1)
+      List.cons<F64.Segment>(sg, List.nil<F64.Segment>);;
 
-F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
-  (pos) (dir) (pnt)
-  case pnt: |
-  case dir: |
+F64.V3.polygon_to_segments.transform(pos: F64.V3, dir: F64.V3, pnt: F64.V3): F64.V3
+  get pnt.x pnt.y pnt.z = pnt
+  get dir.x dir.y dir.z = dir
   let a = F64.atan(dir.y, dir.x)
   let pnt_x_times_cos_a = F64.mul(pnt.x, F64.cos(a))
   let pnt_y_times_sin_a = F64.mul(pnt.y, F64.sin(a))
@@ -324,56 +305,52 @@ F64.V3.polygon_to_segments.transform: F64.V3 -> F64.V3 -> F64.V3 -> F64.V3
   let pnt_y_times_cos_a = F64.mul(pnt.y, F64.cos(a))
   let x = F64.sub(pnt_x_times_cos_a, pnt_y_times_sin_a)
   let y = F64.add(pnt_x_times_sin_a, pnt_y_times_cos_a)
-  F64.V3.add(pos, F64.V3.new(x, y, pnt.z));;
+  F64.V3.add(pos, F64.V3.new(x, y, pnt.z))
   
-F64.V3.rot_90: F64.V3 -> F64.V3 
-  (v)
-  case v: | F64.V3.new(v.y)(F64.sub(F64.0)(v.x))(v.z);
+F64.V3.rot_90(v: F64.V3): F64.V3
+  get v.x v.y v.z = v
+  F64.V3.new(v.y, F64.sub(F64.0, v.x), v.z)
 
 // Rotates a vector on the x-y plane around an arbitrary point
-F64.V3.rotate: F64 -> F64.V3 -> F64.V3 -> F64.V3
-  (a) (v) (p)
-  case v: |
-  case p: |
-  let rad = F64.mul(a)(F64.div(F64.pi)(F64.180))
+F64.V3.rotate(a: F64, v: F64.V3, p: F64.V3): F64.V3
+  get v.x v.y v.z = v
+  get p.x p.y p.z = p
+  let rad = F64.mul(a, F64.div(F64.pi, F64.180))
   let sin = F64.sin(rad)
   let cos = F64.cos(rad)
-  let x_diff = F64.sub(v.x)(p.x)
-  let y_diff = F64.sub(v.y)(p.y)
-  let x_diff_times_cos = F64.mul(x_diff)(cos)
-  let x_diff_times_sin = F64.mul(x_diff)(sin)
-  let y_diff_times_cos = F64.mul(y_diff)(cos)
-  let y_diff_times_sin = F64.mul(y_diff)(sin)
-  let new_x = F64.sub(F64.add(p.x)(x_diff_times_cos))(y_diff_times_sin)
-  let new_y = F64.add(F64.add(p.y)(x_diff_times_sin))(y_diff_times_cos)
-  F64.V3.new(new_x)(new_y)(v.z);;
+  let x_diff = F64.sub(v.x, p.x)
+  let y_diff = F64.sub(v.y, p.y)
+  let x_diff_times_cos = F64.mul(x_diff, cos)
+  let x_diff_times_sin = F64.mul(x_diff, sin)
+  let y_diff_times_cos = F64.mul(y_diff, cos)
+  let y_diff_times_sin = F64.mul(y_diff, sin)
+  let new_x = F64.sub(F64.add(p.x, x_diff_times_cos), y_diff_times_sin)
+  let new_y = F64.add(F64.add(p.y, x_diff_times_sin), y_diff_times_cos)
+  F64.V3.new(new_x, new_y, v.z)
 
-F64.V3.scale: F64 -> F64.V3 -> F64.V3 
-  (k) (v)
-  case v: |
+F64.V3.scale(k: F64, v: F64.V3): F64.V3
+  get v.x v.y v.z = v
   let new_x = F64.mul(k, v.x)
   let new_y = F64.mul(k, v.y)
   let new_z = F64.mul(k, v.z)
-  F64.V3.new(new_x, new_y, new_z);
+  F64.V3.new(new_x, new_y, new_z)
 
-F64.V3.sqr_dist: F64.V3 -> F64.V3 -> F64 
-  (a) (b)
-  case a: |
-  case b: |
+F64.V3.sqr_dist(a: F64.V3, b: F64.V3): F64 
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
   let two    = F64.add(F64.1, F64.1)
   let x_diff = F64.pow(F64.sub(a.x, b.x), two)
   let y_diff = F64.pow(F64.sub(a.y, b.y), two)
   let z_diff = F64.pow(F64.sub(a.z, b.z), two)
-  F64.add(x_diff, F64.add(y_diff, z_diff));;
+  F64.add(x_diff, F64.add(y_diff, z_diff))
 
-F64.V3.sub: F64.V3 -> F64.V3 -> F64.V3 
-  (a) (b)
-  case a: |
-  case b: |
-  let c.x = F64.sub(a.x)(a.x)
-  let c.y = F64.sub(a.y)(b.y)
-  let c.z = F64.sub(a.z)(b.z)
-  F64.V3.new(c.x)(c.y)(c.z);;
+F64.V3.sub(a: F64.V3, b: F64.V3): F64.V3 
+  get a.x a.y a.z = a
+  get b.x b.y b.z = b
+  let c.x = F64.sub(a.x, a.x)
+  let c.y = F64.sub(a.y, b.y)
+  let c.z = F64.sub(a.z, b.z)
+  F64.V3.new(c.x, c.y, c.z)
 
 
 F64._1 : F64
@@ -401,18 +378,17 @@ F64.cmp: F64 -> F64 -> Cmp
   // (a) (b)
   // let a.word = Newtype.elim<><>(a)
   // let b.word = Newtype.elim<><>(b)
-  // case F64.eql(a)(b):
+  // case F64.eql(a, b):
   // | Cmp.eql;
-  // | case Word.ltn<64>(a.word)(b.word):
+  // | case Word.ltn<64>(a.word, b.word):
   //   | Cmp.ltn;
   //   | Cmp.gtn;
   // ;
 
-F64.compare_numbers: F64 -> F64 -> F64.Ordering
-  (a) (b)
-  Bool.if<F64.Ordering>(F64.eql(a)(b))
+F64.compare_numbers(a: F64, b: F64): F64.Ordering
+  Bool.if<F64.Ordering>(F64.eql(a, b))
   | F64.Ordering.EQ;
-  | Bool.if<F64.Ordering>(F64.ltn(b)(a))
+  | Bool.if<F64.Ordering>(F64.ltn(b, a))
     | F64.Ordering.GT;
     | F64.Ordering.LT;;
     
@@ -424,61 +400,53 @@ F64.cos: F64 -> F64 //prim//
 F64.div: F64 -> F64 -> F64 //prim//
   F64.div
 
-//// TODO
-F64.eql : F64 -> F64 -> Bool
-  (x) (y)
+// TODO
+F64.eql(x: F64, y: F64): Bool
   get x.word = x
   case y: 
   | get y.word = y
-    Word.eql<64>(x.word)(y.word);
+    Word.eql<64>(x.word, y.word);
 
-//// Exponential function.
+// TODO Exponential function.
 F64.exp: F64 -> F64 -> F64 //prim//
   F64.exp
 
-F64.floor: F64 -> F64
-  (x)
-  let ltn_zero = F64.if<F64>(F64.from_bool(F64.ltn(x, F64.0)))(F64.1)(F64.0)
+F64.floor(x: F64): F64
+  let ltn_zero = F64.if<_>(F64.from_bool(F64.ltn(x, F64.0)), F64.1, F64.0)
   F64.sub(F64.sub(x, F64.mod(x, F64.1)), ltn_zero)
 
-F64.from_bool: Bool -> F64 
-  (b)
+F64.from_bool(b: Bool): F64 
   case b:
   | F64.1;
   | F64.0;
   
-F64.gte: F64 -> F64 -> Bool
-  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.true)
+F64.gte(a: F64, b: F64): Bool
+  F64.cmp(a, b)<_>(Bool.false, Bool.true, Bool.true)
   
-F64.gtn: F64 -> F64 -> Bool
-  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
+F64.gtn(a: F64, b: F64): Bool
+  F64.cmp(a, b)<_>(Bool.false, Bool.false, Bool.true)
   
-F64.if: <A: Type> -> (x: F64) -> (ct: A) -> (cf: A) -> A
-  <A> (x) (ct) (cf)
-  let bool = F64.eql(x)(F64.0)
-  case bool:
+F64.if<A: Type>(x: F64, ct: A, cf: A): A
+  case F64.eql(x, F64.0):
   | cf;
   | ct;
 
 // Is x inside the a..b range, with `b` exclusive?
-// is_between(a: Number, b: Number, x: Number) : Number
-//   (a === x) || ((a < x) && (x < b))
-F64.is_between: F64 -> F64 -> F64 -> Bool
-  (a) (b) (x)
+F64.is_between(a: F64, b: F64, x: F64): Bool
   let a_eql_x = F64.eql(a, x) 
   let a_ltn_x = F64.ltn(a, x)
   let x_ltn_b = F64.ltn(x, b)
   Bool.or(a_eql_x, Bool.and(a_ltn_x, x_ltn_b))
 
-// Logarithm function.
+// TODO: Logarithm function.
 F64.log: F64 -> F64 //prim//
   F64.log
 
-F64.lte: F64 -> F64 -> Bool
-  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.true)(Bool.false)
+F64.lte(a: F64, b: F64): Bool
+  F64.cmp(a, b)<_>(Bool.true, Bool.true, Bool.false)
   
-F64.ltn: F64 -> F64 -> Bool
-  (a) (b) F64.cmp(a)(b)<() Bool>(Bool.true)(Bool.false)(Bool.false)
+F64.ltn(a: F64, b: F64): Bool
+  F64.cmp(a, b)<_>(Bool.true, Bool.false, Bool.false)
   
 // TODO
 F64.max: F64 -> F64 -> F64 //prim//
@@ -500,29 +468,29 @@ F64.mul: F64 -> F64 -> F64 //prim//
 F64.parse: String -> F64
   F64.parse
 
-F64.parse_binary: String -> F64
-  (str) F64.new(Word.from_bits(64)(Bits.from_string(str)))
+F64.parse_binary(str: String): F64
+  F64.new(Word.from_bits(64, Bits.from_string(str)))
 
 F64.pi : F64
   F64.parse_binary("0001100010110100001000100010101011011111100001001001000000000010")
   
-// Power function
+// TODO Power function
 F64.pow: F64 -> F64 -> F64 //prim//
   F64.pow
   
-// Sine function.
+// TODO Sine function.
 F64.sin: F64 -> F64 //prim//
   F64.sin
 
 // Square root function.
-F64.sqrt: F64 -> F64 //prim//
-  (n) F64.pow(n)(F64.div(F64.1, F64.2))
+F64.sqrt(n: F64): F64 //prim//
+  F64.pow(n, F64.div(F64.1, F64.2))
 
-// Subtracts two 64-bit floats.
+// TODO Subtracts two 64-bit floats.
 F64.sub: F64 -> F64 -> F64 //prim//
   F64.sub
 
-// Tangent function.
+//  TODO Tangent function.
 F64.tan: F64 -> F64 //prim//
   F64.tan
 

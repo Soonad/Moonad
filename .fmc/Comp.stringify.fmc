@@ -1,0 +1,3 @@
+Comp.stringify: Π(:Comp) Stringifier
+  λcomp $lit=String.to_stringifier;$rec=Comp.stringify;$term=comp;((((((<term λterm.self Stringifier> λterm.name (lit term.name)) λterm.name λterm.body $lpar=(lit "((");$name=(lit term.name);$rpar=(lit ") ");$body=(rec term.body);$lend=(lit ")");λx (lpar (name (rpar (body (lend x)))))) λterm.func λterm.argm $func=(rec term.func);$lpar=(lit "(");$argm=(rec term.argm);$rpar=(lit ")");λx (func (lpar (argm (rpar x))))) λterm.name λterm.expr λterm.body $llet=(lit "let ");$name=(lit term.name);$leql=(lit " = ");$expr=(rec term.expr);$spac=(lit "; ");$body=(rec term.body);λx (llet (name (leql (expr (spac (body x))))))) $lval=(lit "true");λx (lval x)) $lval=(lit "false");λx (lval x))
+

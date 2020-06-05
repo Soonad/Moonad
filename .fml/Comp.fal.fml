@@ -1,0 +1,3 @@
+Comp.fal: Comp
+  <P> (var) (lam) (app) (let) (tru) (fal) fal
+

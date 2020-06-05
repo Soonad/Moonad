@@ -1,0 +1,3 @@
+String.to_stringifier: String -> Stringifier
+  (str) str<(str.self) (x: String) -> String>((x) x)((str.head) (str.tail) (x) String.cons(str.head)(String.to_stringifier(str.tail)(x)))
+

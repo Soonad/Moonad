@@ -1,0 +1,3 @@
+hello: (IO Unit)
+  $uname="Your name:";$greet=(String.concat "Hello, ");((<IO.log Unit> uname) λ (<IO.get Unit> λname ((<IO.log Unit> (greet name)) λ (<IO.end Unit> Unit.new))))
+

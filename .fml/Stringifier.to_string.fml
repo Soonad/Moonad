@@ -1,0 +1,3 @@
+Stringifier.to_string: Stringifier -> String
+  (str) str(String.nil)
+
