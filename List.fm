@@ -131,11 +131,10 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
 
 
 //// Folds over a list.
-//List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  //<A> <B> (nil) (cons) (list)
-  //case list:
-  //| nil;
-  //| (x) (xs) cons(x)(List.fold<><>(nil)(cons)(xs));
+List.fold<A: Type, B: Type>(init: B, acc: A -> B -> B, xs: List(A)): B
+  case xs:
+  | init;
+  | acc(xs.head, List.fold<><>(init, acc, xs.tail));
 
 //List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
   //<A> (list) (cond) (indx)

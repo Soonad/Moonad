@@ -1,12 +1,10 @@
+// A concatenation String.
+Stringifier: Type
+  String -> String
 
-//// A concatenation string.
-//Stringifier.concat : Stringifier -> Stringifier -> Stringifier
-  //(a) (b) (x) a(b(x))
+Stringifier.to_string(str: Stringifier): String
+  str(String.nil)
 
-//// A concatenation String.
-//Stringifier: Type
-  //String -> String
-
-//Stringifier.to_string: Stringifier -> String
-  //(str) str(String.nil)
-
+// A concatenation string.
+Stringifier.concat(a: Stringifier , b: Stringifier): Stringifier
+  (x) a(b(x))
