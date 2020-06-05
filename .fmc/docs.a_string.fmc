@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 docs.a_string: (Docs.string_or_unit Bool.true)
+=======
+Docs.a_string: (Docs.string_or_unit Bool.true)
+>>>>>>> master
   "I'm a string!"
 
