@@ -1,3 +1,0 @@
-Logic.destructive_dilemma: ∀(P:*) ∀(Q:*) ∀(R:*) ∀(S:*) Π(f:Π(:P) Q) Π(g:Π(:R) S) Π(c:((Or (Not Q)) (Not S))) ((Or (Not P)) (Not R))
-  ΛP ΛQ ΛR ΛS λf λg λc ((<c λ ((Or Π(x:P) Empty) Π(x:R) Empty)> λx (<<Or.lft Π(x:P) Empty> Π(x:R) Empty> λp (x (f p)))) λx (<<Or.rgt Π(x:P) Empty> Π(x:R) Empty> λr (x (g r))))
-

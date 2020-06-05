@@ -1,3 +1,0 @@
-Word.drop: ∀(size:Nat) Π(n:Nat) Π(:(Word ((Nat.add n) size))) (Word size)
-  Λsize λn λword (((<n λn Π(:(Word ((Nat.add n) size))) (Word size)> λword word) λn.pred λword $word.pred=(<Word.pred ((Nat.add n.pred) size)> word);((<Word.drop size> n.pred) word.pred)) word)
-

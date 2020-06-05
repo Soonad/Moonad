@@ -1,3 +1,0 @@
-IO.log: <A: Type> -> (str: String) -> (nxt: Unit -> IO(A)) -> IO(A)
-  <A> (str) (nxt) <P> (end) (log) (get) log(str)(nxt)
-

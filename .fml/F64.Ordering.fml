@@ -1,3 +1,0 @@
-F64.Ordering: Type
-  self<P: (self: F64.Ordering) -> Type> -> (LT: P(F64.Ordering.LT)) -> (EQ: P(F64.Ordering.EQ)) -> (GT: P(F64.Ordering.GT)) -> P(self)
-

@@ -1,3 +1,0 @@
-F64.parse_binary: Π(:String) F64
-  λstr (F64.new ((Word.from_bits 64) (Bits.from_string str)))
-

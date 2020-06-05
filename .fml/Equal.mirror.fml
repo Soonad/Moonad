@@ -1,3 +1,0 @@
-Equal.mirror: <A: Type> -> <a: A> -> <b: A> -> (e: Equal(A)(a)(b)) -> Equal(A)(b)(a)
-  <A> <a> <b> (e) e<(e.b) (e.self) Equal(A)(e.b)(a)>(Equal.to<A><a>)
-

@@ -1,3 +1,0 @@
-U64: *
-  ∀self(P:Π(self:U64) *) Π(new:Π(a:(Word 64)) (P (U64.new a))) (P self)
-

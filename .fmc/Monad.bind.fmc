@@ -1,3 +1,0 @@
-Monad.bind: ∀(M:Π(:*) *) Π(m:(Monad M)) ∀(A:*) ∀(B:*) Π(:(M A)) Π(:Π(:A) (M B)) (M B)
-  ΛM λm (<m λm.self ∀(A:*) ∀(B:*) Π(:(M A)) Π(:Π(:A) (M B)) (M B)> λm.bind λm.pure m.bind)
-

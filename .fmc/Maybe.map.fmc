@@ -1,3 +1,0 @@
-Maybe.map: ∀(A:*) ∀(B:*) Π(f:Π(:A) B) Π(m:(Maybe A)) (Maybe B)
-  ΛA ΛB λf λm ((<m λm.self (Maybe B)> <Maybe.none B>) λm.value (<Maybe.some B> (f m.value)))
-

@@ -1,3 +1,0 @@
-Word.ltn: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) Bool
-  Λsize λa λb (((<((<Word.cmp size> a) b) λ Bool> Bool.true) Bool.false) Bool.false)
-

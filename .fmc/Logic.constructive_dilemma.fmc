@@ -1,3 +1,0 @@
-Logic.constructive_dilemma: ∀(P:*) ∀(Q:*) ∀(R:*) ∀(S:*) Π(f:Π(:P) Q) Π(g:Π(:R) S) Π(c:((Or P) R)) ((Or Q) S)
-  ΛP ΛQ ΛR ΛS λf λg λc ((<c λ ((Or Q) S)> λx (<<Or.lft Q> S> (f x))) λx (<<Or.rgt Q> S> (g x)))
-

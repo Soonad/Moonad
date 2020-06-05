@@ -1,3 +1,0 @@
-Map.set: ∀(A:*) Π(bits:Bits) Π(val:A) Π(map:(Map A)) (Map A)
-  ΛA λbits λval λmap (((<bits λbits.self (Map A)> ((<map λmap.self (Map A)> (((<Map.tie A> (<Maybe.some A> val)) <Map.new A>) <Map.new A>)) λmap.val λmap.lft λmap.rgt (((<Map.tie A> (<Maybe.some A> val)) map.lft) map.rgt))) λbits.pred ((<map λmap.self (Map A)> (((<Map.tie A> <Maybe.none A>) (((<Map.set A> bits.pred) val) <Map.new A>)) <Map.new A>)) λmap.val λmap.lft λmap.rgt (((<Map.tie A> map.val) (((<Map.set A> bits.pred) val) map.lft)) map.rgt))) λbits.pred ((<map λmap.self (Map A)> (((<Map.tie A> <Maybe.none A>) <Map.new A>) (((<Map.set A> bits.pred) val) <Map.new A>))) λmap.val λmap.lft λmap.rgt (((<Map.tie A> map.val) map.lft) (((<Map.set A> bits.pred) val) map.rgt))))
-

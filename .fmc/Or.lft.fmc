@@ -1,3 +1,0 @@
-Or.lft: ∀(A:*) ∀(B:*) Π(x:A) ((Or A) B)
-  ΛA ΛB λx (<<Either.left A> B> x)
-

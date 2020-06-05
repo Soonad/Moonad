@@ -1,3 +1,0 @@
-Equal: Π(A:*) Π(a:A) Π(b:A) *
-  λA λa λb ∀self(P:Π(b:A) Π(self:(((Equal A) a) b)) *) Π(to:((P a) <<Equal.to A> a>)) ((P b) self)
-

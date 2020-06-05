@@ -1,3 +1,0 @@
-Pair.fst: ∀(A:*) ∀(B:*) Π(pair:((Pair A) B)) A
-  ΛA ΛB λpair (<pair λpair.self A> λpair.fst λpair.snd pair.fst)
-

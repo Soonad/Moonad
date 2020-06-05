@@ -1,3 +1,0 @@
-Logic.modus_ponens: ∀(P:*) ∀(Q:*) Π(implies:Π(:P) Q) Π(p:P) Q
-  ΛP ΛQ λimplies λp (implies p)
-

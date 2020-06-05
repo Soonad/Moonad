@@ -1,3 +1,0 @@
-F64.from_bool: Π(:Bool) F64
-  λb ((<b λb.self F64> F64.1) F64.0)
-

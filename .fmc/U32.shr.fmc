@@ -1,3 +1,0 @@
-U32.shr: Π(n:Nat) Π(a:U32) U32
-  λn λa (<a λself U32> λa_val (U32.new ((<Word.shift_right 32> n) a_val)))
-

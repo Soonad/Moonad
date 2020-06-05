@@ -1,3 +1,0 @@
-U32.to_nat: (a: U32) -> Nat
-  (a) a<(self) Nat>((a_val) Word.to_nat<32>(a_val))
-

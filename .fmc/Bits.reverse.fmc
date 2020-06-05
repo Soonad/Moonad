@@ -1,3 +1,0 @@
-Bits.reverse: Π(a:Bits) Bits
-  λa ((Bits.reverse.tco a) Bits.nil)
-

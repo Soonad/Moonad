@@ -1,3 +1,0 @@
-Bool.not: (a: Bool) -> Bool
-  (a) a<(a.self) Bool>(Bool.false)(Bool.true)
-

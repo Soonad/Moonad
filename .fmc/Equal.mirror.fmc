@@ -1,3 +1,0 @@
-Equal.mirror: ∀(A:*) ∀(a:A) ∀(b:A) Π(e:(((Equal A) a) b)) (((Equal A) b) a)
-  ΛA Λa Λb λe (<e λe.b λe.self (((Equal A) e.b) a)> <<Equal.to A> a>)
-

@@ -1,3 +1,0 @@
-Word.pred: ∀(size:Nat) Π(:(Word (Nat.succ size))) (Word size)
-  Λsize λword (((<word λsize λ (Word (Nat.pred size))> Word.nil) Λword.size λword.pred word.pred) Λword.size λword.pred word.pred)
-

@@ -1,3 +1,0 @@
-F64.V3.norm: Π(:F64.V3) F64.V3
-  λv (<v λv.self F64.V3> λv.x λv.y λv.z $len=(F64.V3.len v);$new_x=((F64.div v.x) len);$new_y=((F64.div v.y) len);$new_z=((F64.div v.z) len);(((F64.V3.new new_x) new_y) new_z))
-

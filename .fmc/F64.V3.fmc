@@ -1,3 +1,0 @@
-F64.V3: *
-  ∀self(P:Π(self:F64.V3) *) Π(new:Π(x:F64) Π(y:F64) Π(z:F64) (P (((F64.V3.new x) y) z))) (P self)
-

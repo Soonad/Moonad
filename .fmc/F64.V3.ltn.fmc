@@ -1,3 +1,0 @@
-F64.V3.ltn: Π(:F64.V3) Π(:F64.V3) Bool
-  λa λb $len_a=(F64.V3.len a);$len_b=(F64.V3.len b);(((<Bool.if Bool> ((F64.ltn len_a) len_b)) Bool.true) Bool.false)
-

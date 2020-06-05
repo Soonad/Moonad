@@ -1,3 +1,0 @@
-U64: Type
-  self<P: (self: U64) -> Type> -> (new: (a: Word(64)) -> P(U64.new(a))) -> P(self)
-
