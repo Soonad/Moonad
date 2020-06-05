@@ -21,7 +21,3 @@ Exports: Type
 
 Exports.new: Exports
   <P> (new) (add) new
-
-// T Exports <P: Type>
-// | new;
-// | add<A: Type>(x: A, xs: P);
