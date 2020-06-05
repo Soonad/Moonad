@@ -1,3 +1,0 @@
-Docs.bool_not: IO(Unit)
-  IO.print(Bool.show(Bool.not(Bool.true)))
-

@@ -1,3 +1,0 @@
-Docs.bool_not_let: IO(Unit)
-  let a = Bool.true; let b = Bool.not(a); IO.print(Bool.show(b))
-

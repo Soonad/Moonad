@@ -5,63 +5,33 @@ Docs.welcome: IO(Unit)
   do IO {
     var name = IO.query("What is your name?");
     IO.print(String.concat("Welcome, ", name));
-    return Unit.new;
   }
 
-Docs.bool_show: IO(Unit)
-  IO.print(Bool.show(Bool.true))
-
-Docs.bool_not: IO(Unit)
+Docs.bool_test_0: IO(Unit)
   IO.print(Bool.show(Bool.not(Bool.true)))
 
-Docs.bool_not_let: IO(Unit)
-  let a = Bool.true
-  let b = Bool.not(a)
-  IO.print(Bool.show(b))
+Docs.bool_test_1: Bool
+  Bool.not(Bool.true)
 
-Docs.unit_show: IO(Unit)
-  IO.print(Unit.show(Unit.new))
+Docs.true_is_true: Equal(Bool, Bool.true, Bool.true)
+  Equal.to<Bool, Bool.true>
 
-Docs.id(T: Type, x: T): T
-  x
-
-Docs.id_test_0: Bool
-  Docs.id(Bool, Bool.true)
-
-Docs.id_test_1: Unit
-  Docs.id(Unit, Unit.new)
-
-Docs.id_test_2: String
-  Docs.id(String, "cat")
-
-Docs.string_or_unit(b: Bool): Type
+Docs.not_not_is_b(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
   case b:
-  | String;
-  | Unit;
+  | Equal.to<Bool, Bool.true>;
+  | Equal.to<Bool, Bool.false>;
+  : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);
 
-Docs.a_string: Docs.string_or_unit(Bool.true)
-  "I'm a string!"
+Docs.nat_test: Nat
+  Nat.add(123456789, 987654321)
 
-Docs.an_unit: Docs.string_or_unit(Bool.false)
-  Unit.new
+Docs.0_plus_a_is_a(a: Nat): Equal(Nat, Nat.add(0, a), a)
+  Equal.to<Nat, a>
 
-Docs.crazy(b: Bool): Docs.string_or_unit(b)
-  case b:
-  | "I'm a string";
-  | Unit.new;
-  : Docs.string_or_unit(b.self);
-
-Docs.crazy_test_0: IO(Unit)
-  IO.print(Docs.crazy(Bool.true))
-
-Docs.crazy_string(b: Bool, is_true: Bool.IsTrue(b)): String
-  Docs.crazy(Bool.true)
-
-Docs.crazy_string_example_0: String
-  Docs.crazy_string(Bool.true, Unit.new)
-
-Docs.self_equal_theorem(b: Bool): Bool.IsTrue(Bool.eql(b, b))
-  case b:
-  | Unit.new;
-  | Unit.new;
-  : Bool.IsTrue(Bool.eql(b.self, b.self));
+Docs.a_plus_0_is_a(a: Nat): Equal(Nat, Nat.add(a, 0), a)
+  case a:
+  | Equal.to<Nat, Nat.zero>;
+  | let ind = Docs.a_plus_0_is_a(a.pred)
+    let app = Equal.apply<Nat, Nat, Nat.add(a.pred, Nat.zero), a.pred, Nat.succ, ind>
+    app;
+  : Equal(Nat, Nat.add(a.self, 0), a.self);
