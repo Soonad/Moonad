@@ -1,0 +1,3 @@
+Docs.a_string: (Docs.string_or_unit Bool.true)
+  "I'm a string!"
+

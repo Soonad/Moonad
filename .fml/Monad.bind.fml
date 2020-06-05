@@ -1,0 +1,3 @@
+Monad.bind: <M: Type -> Type> -> (m: Monad(M)) -> <A: Type> -> <B: Type> -> M(A) -> (A -> M(B)) -> M(B)
+  <M> (m) m<(m.self) <A: Type> -> <B: Type> -> M(A) -> (A -> M(B)) -> M(B)>((m.bind) (m.pure) m.bind)
+

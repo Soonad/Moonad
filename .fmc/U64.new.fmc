@@ -1,0 +1,3 @@
+U64.new: Π(a:(Word 64)) U64
+  λa ΛP λnew (new a)
+
