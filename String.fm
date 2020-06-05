@@ -182,10 +182,10 @@ String.concat(as: String, bs: String): String
   //;
   
 
-//String.to_stringifier : String -> Stringifier
-  //(str)
-  //case str:
-  //| (x) x;
-  //| (str.head) (str.tail)
-    //(x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
+String.to_stringifier : String -> Stringifier
+  (str)
+  case str:
+  | (x) x;
+  | //(str.head) (str.tail)
+    (x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
 
