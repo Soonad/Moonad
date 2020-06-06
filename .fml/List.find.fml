@@ -1,0 +1,3 @@
+List.find: <A: Type> -> (cond: A -> Bool) -> (xs: List(A)) -> Maybe(A)
+  <A> (cond) (xs) xs<(xs.self) Maybe(A)>(Maybe.none<A>)((xs.head) (xs.tail) cond(xs.head)<(self.self) Maybe(A)>(Maybe.some<A>(xs.head))(List.find<A>(cond)(xs.tail)))
+

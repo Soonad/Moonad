@@ -1,0 +1,3 @@
+Or.lft: <A: Type> -> <B: Type> -> (x: A) -> Or(A)(B)
+  <A> <B> (x) Either.left<A><B>(x)
+

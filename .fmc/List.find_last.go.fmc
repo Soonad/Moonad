@@ -1,0 +1,3 @@
+List.find_last.go: ∀(A:*) Π(xs:(List A)) Π(f:Π(:A) Π(:Nat) Bool) Π(n:Nat) Π(res:(Maybe ((Pair A) Nat))) (Maybe ((Pair A) Nat))
+  ΛA λxs λf λn λres ((<xs λxs.self (Maybe ((Pair A) Nat))> res) λxs.head λxs.tail $res=((<((f xs.head) n) λself.self (Maybe ((Pair A) Nat))> (<Maybe.some ((Pair A) Nat)> ((<<Pair.new A> Nat> xs.head) n))) res);((((<List.find_last.go A> xs.tail) f) (Nat.succ n)) res))
+

@@ -1,0 +1,3 @@
+U32.new: (a: Word(32)) -> U32
+  (a) <P> (new) new(a)
+

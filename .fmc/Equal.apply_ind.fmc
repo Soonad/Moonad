@@ -1,3 +1,0 @@
-Equal.apply_ind: ∀(A:*) ∀(B:*) Π(a:A) Π(b:A) Π(f:Π(:A) B) Π(e:(((Equal A) a) b)) (((Equal B) (f a)) (f b))
-  ΛA ΛB λa λb λf λe (<e λe.b λe.self (((Equal B) (f a)) (f e.b))> <<Equal.to B> (f a)>)
-

@@ -2,7 +2,7 @@
 T Equal <A: Type> (a: A) ~ (b: A)
 | to                     ~ (a);
 
-Equal.apply_ind<A: Type, B: Type>(a: A, b: A, f: A -> B, e: Equal(A,a,b)): Equal(B, f(a), f(b))
+Equal.apply<A: Type, B: Type, a: A, b: A, f: A -> B, e: Equal(A,a,b)>: Equal(B, f(a), f(b))
   case e:
   | Equal.to<B><f(a)>;
   : Equal(B, f(a), f(e.b));
@@ -22,7 +22,7 @@ Equal.rewrite<A: Type, a: A, b: A, P: A -> Type>(e: Equal(A,a,b), x: P(a)): P(b)
   | x;
   : P(e.b);
 
-Equal.apply<A: Type, B: A -> Type, a: A, b: A>(f: (x: A) -> B(x), e: Equal(A, a, b))
+Equal.applyd<A: Type, B: A -> Type, a: A, b: A>(f: (x: A) -> B(x), e: Equal(A, a, b))
   : Equal(B(a), f(a), Equal.rewrite<A,b,a,B>(Equal.mirror<A,a,b>(e))(f(b)))
   case e:
   | Equal.to<B(a)><f(a)>;

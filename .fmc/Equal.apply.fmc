@@ -1,3 +1,3 @@
-Equal.apply: ∀(A:*) ∀(B:Π(:A) *) ∀(a:A) ∀(b:A) Π(f:Π(x:A) (B x)) Π(e:(((Equal A) a) b)) (((Equal (B a)) (f a)) ((<<<<Equal.rewrite A> b> a> B> (<<<Equal.mirror A> a> b> e)) (f b)))
-  ΛA ΛB Λa Λb λf λe (<e λe.b λe.self (((Equal (B a)) (f a)) ((<<<<Equal.rewrite A> e.b> a> B> (<<<Equal.mirror A> a> e.b> e.self)) (f e.b)))> <<Equal.to (B a)> (f a)>)
+Equal.apply: ∀(A:*) ∀(B:*) ∀(a:A) ∀(b:A) ∀(f:Π(:A) B) ∀(e:(((Equal A) a) b)) (((Equal B) (f a)) (f b))
+  ΛA ΛB Λa Λb Λf Λe (<e λe.b λe.self (((Equal B) (f a)) (f e.b))> <<Equal.to B> (f a)>)
 

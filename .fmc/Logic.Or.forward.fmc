@@ -1,0 +1,3 @@
+Logic.Or.forward: ∀(A:*) ∀(B:*) Π(x:(Not ((Or A) B))) ((And (Not A)) (Not B))
+  ΛA ΛB λx ((<<And.new Π(x:A) Empty> Π(x:B) Empty> λa (x (<<Or.lft A> B> a))) λb (x (<<Or.rgt A> B> b)))
+

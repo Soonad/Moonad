@@ -1,0 +1,3 @@
+String.run_builder: (lb: String.Builder) -> String
+  (lb) lb(String.nil)
+

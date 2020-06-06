@@ -1,0 +1,3 @@
+U32.to_bits: Π(a:U32) Bits
+  λa (<a λself Bits> λa_val (<Word.to_bits 32> a_val))
+

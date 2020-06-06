@@ -1,0 +1,3 @@
+String.drop: (n: Nat) -> (xs: String) -> String
+  (n) (xs) n<(n.self) String>(xs)((n.pred) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) String.drop(n.pred)(xs.tail)))
+

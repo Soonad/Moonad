@@ -1,191 +1,274 @@
+// A monomorphic specialization of List(Char) for performance/compilation
 T String
 | nil;
 | cons(head: Char, tail: String);
 
-//String.chunk: Nat -> String -> Maybe(String)
-  //(n) (list)
-  //case n:
-  //| Maybe.some<>(String.nil);
-  //| (pred)
-    //case list:
-    //| Maybe.none<String>;
-    //| (head) (tail)
-      //Maybe.bind<String><String>
-      //| String.chunk(pred)(tail);
-      //| (x) Maybe.some<String>(String.cons(head)(x));
-    //;
-  //;
+// Basic Functions
+// ===============
 
+String.to_list(str: String): List(Char)
+  case str:
+  | List.nil<>;
+  | List.cons<>(str.head)(String.to_list(str.tail));
+
+String.eql(a: String, b: String): Bool
+  case a:
+  | case b: | Bool.true; | Bool.false;;
+  | case b:
+    | Bool.false;
+    | Bool.and(U16.eql(a.head,b.head),String.eql(a.tail,b.tail));;
+
+String.to_bits(str: String): Bits
+  case str:
+  | Bits.nil;
+  | Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail));
+
+// A proposition that a string is not the empty string
+String.not_empty(xs: String) : Type
+  case xs:
+  | Empty;
+  | Unit;
+
+// A theorem that String.cons isn't String.nil
+String.cons_isnt_nil(x:Char, xs: String)
+  : Not(Equal(String,String.cons(x,xs), String.nil))
+  def P = String.not_empty
+  (e) Equal.rewrite<String, String.cons(x,xs), String.nil,P>(e, Unit.new)
+
+// A theorem that a string made with String.cons is not the empty string
+String.cons_isnt_empty(x: Char, xs: String): String.not_empty(String.cons(x,xs))
+  def y = String.cons(x,xs)
+  case y:
+  with e : Equal(String,y,y.self) = Equal.to<String,y>;
+  | Empty.absurd(String.cons_isnt_nil(x,xs,e),_);
+  | Unit.new;
+
+// Concatenates two strings.
 String.concat(as: String, bs: String): String
   case as:
   | bs;
-  | String.cons(as.head, String.concat(as.tail, bs));
+  | String.cons(as.head, String.concat(as.tail,bs));
 
-//String.drop: Nat -> String -> String
-  //(n) (list)
-  //n<() String>
-  //| list;
-  //| (pred)
-    //list<() String>
-    //| String.nil;
-    //| (head) (tail) String.drop(pred)(tail);;
+// Get the head of a nonempty string
+String.head(xs: String, not_empty: String.not_empty(xs)) : Char
+  case xs:
+  with ne : String.not_empty(xs.self) = not_empty;
+  | Empty.absurd(ne, Char);
+  | xs.head;
 
-//String.drop_until: (Char -> Bool) -> String -> String
-  //(cond) String.drop_while((c) Bool.not(cond(c)))
+// Get the tail of a nonempty string
+String.tail(xs: String, not_empty: String.not_empty(xs)) : String
+  case xs:
+  with ne : String.not_empty(xs.self) = not_empty;
+  | Empty.absurd(ne, String);
+  | xs.tail;
 
-//String.drop_while: (Char -> Bool) -> String -> String
-  //(cond) (str)
-  //str<() String>
-  //| String.nil;
-  //| (str.head) (str.tail)
-    //cond(str.head)<() String>
-    //| String.drop_while(cond)(str.tail);
-    //| str;
-  //;
+// Get the all characters of a nonempty string except the last one
+String.init(xs: String, not_empty: String.not_empty(xs)) : String
+  case xs:
+  with ne : String.not_empty(xs.self) = not_empty;
+  | Empty.absurd(ne, String);
+  | case xs.tail:
+    with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<String,xs.tail>;
+    | String.nil;
+    | def cne = String.cons_isnt_empty(xs.tail.head,xs.tail.tail)
+      def xne = Equal.rewrite<_,_,_,(x) String.not_empty(x)>(e,cne)
+      String.cons(xs.head,String.init(xs.tail,xne));;
 
-//String.eql: String -> String -> Bool
-  //(a) (b)
-  //case a:
-  //| case b:
-    //| Bool.true;
-    //| (b.head) (b.tail) Bool.false;
-  //;
-  //| (a.head) (a.tail)
-    //case b:
-    //| Bool.false;
-    //| (b.head) (b.tail)
-      //Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail));
-  //;
+// Get the last character of a nonempty string
+String.last(xs: String, not_empty: String.not_empty(xs)) : Char
+  case xs:
+  with ne : String.not_empty(xs.self) = not_empty;
+  | Empty.absurd(ne, Char);
+  | case xs.tail:
+    with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<String,xs.tail>;
+    | xs.head;
+    | def cne = String.cons_isnt_empty(xs.tail.head,xs.tail.tail)
+      def xne = Equal.rewrite<_,_,_,(x) String.not_empty(x)>(e,cne)
+      String.last(xs.tail,xne);;
 
-//String.filter : (Char -> Bool) -> String -> String
-  //(cond) (str)
-  //case str:
-  //| String.nil;
-  //| (str.head) (str.tail)
-    //case cond(str.head):
-    //| (t) t;
-    //| (t) String.cons(str.head)(t);
-    //| String.filter(cond)(str.tail);;
+String.null(xs: String) : Bool
+  case xs:
+  | Bool.true;
+  | Bool.false;
 
-//String.flatten: List(String) -> String
-  //(as)
-  //case as:
-  //| String.nil;
-  //| (head) (tail) String.concat(head)(String.flatten(tail));
+// Computes the length of the string.
+String.length(xs: String): Nat
+  String.length.go(xs,0)
 
-//String.is_empty: String -> Bool
-  //(str)
-  //case str:
-  //| Bool.true;
-  //| (head) (tail) Bool.false;
+String.length(xs: String, n: Nat): Nat
+  case xs:
+  | 0;
+  | String.length(xs.tail,Nat.succ(n));
 
-//String.length: String -> Nat
-  //(str)
-  //case str:
-  //| Nat.zero;
-  //| (head) (tail) Nat.succ(String.length(tail));
+// Appends character to the end of the string.
+String.append(as: String, a: Char): String
+  case as:
+  | String.pure(a);
+  | String.cons(as.head,String.append(as.tail, a));
 
-//String.quote: String -> String
-  //(str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
+// String transformations
+// ====================
 
-//String.reverse: String -> String
-  //(str) String.reverse.go(str)(String.nil)
+// Applies a function to all characters of the string.
+String.map(f: Char -> Char, as: String): String
+  case as:
+  | String.nil;
+  | String.cons(f(as.head),String.map(f,as.tail));
 
-//String.reverse.go: String -> String -> String
-  //(str) (res)
-  //case str:
-  //| res;
-  //| (str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res));
+// Map over a string with the index
+String.imap(f: Nat -> Char -> Char, xs: String): String
+  case xs:
+  | String.nil;
+  | String.cons(f(0,xs.head),String.imap((n) f(Nat.succ(n)),xs.tail));
 
-//// A list with only one element.
-//String.single : (x : Char) -> String
-  //(x) String.cons(x)(String.nil)
+// Reverse the order of the characters of the string
+String.reverse(xs: String) : String
+  String.reverse.go(xs,String.nil)
 
-//String.tail: String -> String
-  //(str)
-  //case str:
-  //| String.nil;
-  //| (str.head) (str.tail) str.tail;
+String.reverse.go(xs: String, res: String): String
+  case xs:
+  | res;
+  | String.reverse.go(xs.tail,String.cons(xs.head,res));
 
-//String.take: Nat -> String -> String
-  //(n) (list)
-  //case list:
-  //| String.nil;
-  //| (head) (tail)
-    //case n:
-    //| String.nil;
-    //| (pred) String.cons(head)(String.take(pred)(tail));;
+// insert separators between characters, i.e. `[A,B,C] ~> [A,sep,B,sep,C]`
+String.intersperse(sep: Char, xs: String): String
+  case xs:
+  | String.nil;
+  | case xs.tail:
+    | String.pure(xs.head);
+    | String.cons(xs.head,String.cons(sep,String.intersperse(sep,xs.tail)));;
 
-//String.take_n.aux: Nat -> String -> String -> Maybe(Pair(String)(String))
-  //(n) (str) (res)
-  //case res:
-  //| case n:
-    //| Maybe.some<>(Pair.new<><>(str)(String.nil));
-    //| () Maybe.none<Pair(String)(String)>;
-  //;
-  //| (head) (tail)
-    //case n:
-    //| Maybe.some<>(Pair.new<String><String>(str)(res));
-    //| (pred) String.take_n.aux(pred)(String.cons(head)(str))(tail);
-  //;
+// insert separators between characters, i.e. `[A,B,C] ~> [A,sep,B,sep,C]`
+String.intercalate(sep: String, xs: List(String)): String
+  String.flatten(List.intersperse<>(sep,xs))
 
-//String.take_n: Nat -> String -> Maybe(Pair(String)(String))
-  //(n) (str)
-  //case String.take_n.aux(n)(String.nil)(str):
-  //| Maybe.none<Pair(String)(String)>;
-  //| (p)
-    //get x y = p
-    //Maybe.some<>(Pair.new<><>(String.reverse(x))(y))
-  //;
+// Reducing Strings
+// ==============
 
+// Folds over a string, right associative
+String.foldr<B: Type>(b: B, f: Char -> B -> B, xs: String): B
+  String.foldr.go<>(b,f,xs,(x) x)
 
-//String.take_while.aux
-  //: (Char -> Bool) ->
-    //String ->
-    //String ->
-    //Pair(String)(String)
-  //(f) (str) (res)
-  //case res:
-  //| Pair.new<><>(str)(String.nil);
-  //| (head) (tail)
-    //case f(head):
-    //| String.take_while.aux(f)(String.cons(head)(str))(tail);
-    //| Pair.new<><>(str)(res);
-  //;
+String.foldr.go<B: Type>(b: B, f: Char -> B -> B, xs: String, g: B -> B): B
+  case xs:
+  | g(b);
+  | String.foldr.go<>(b,f,xs.tail,(x) f(xs.head,x));
 
-//String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
-  //(f) (str)
-  //get x y = String.take_while.aux(f)(String.nil)(str)
-  //Pair.new<><>(String.reverse(x))(y)
+// Folds over a string, left associative
+String.foldl<B: Type>(b: B, f: B -> Char -> B, xs: String): B
+  case xs:
+  | b;
+  | String.foldl<>(f(b,xs.head),f,xs.tail);
 
-//String.to_bits: String -> Bits
-  //(str)
-  //case str:
-  //| Bits.nil;
-  //| (str.head) (str.tail)
-    //Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail));
+// Special folds
+// =============
 
-//String.to_list: String -> List(Char)
-  //(str)
-  //case str:
-  //| List.nil<>;
-  //| (str.head) (str.tail) List.cons<>(str.head)(String.to_list(str.tail));
+// Flattens a list of strings into a single string.
+String.flatten(xs: List(String)): String
+  case xs:
+  | String.nil;
+  | String.concat(xs.head, String.flatten(xs.tail));
 
-//String.to_set: String -> Set
-  //(str)
-  //case str:
-  //| Set.new;
-  //| (str.head) (str.tail)
-    //Set.set
-    //| U16.to_bits(str.head);
-    //| String.to_set(str.tail);
-  //;
-  
+// Do all characters satisfy a condition?
+String.all(cond: Char -> Bool, string: String): Bool
+  case string:
+  | Bool.true;
+  | case cond(string.head):
+    | String.all(cond)(string.tail);
+    | Bool.false;;
 
-//String.to_stringifier : String -> Stringifier
-  //(str)
-  //case str:
-  //| (x) x;
-  //| (str.head) (str.tail)
-    //(x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
+/// Does any character satisfy a condition?
+String.any (cond: Char -> Bool, string: String): Bool
+  case string:
+  | Bool.false;
+  | case cond(string.head):
+    | Bool.true;
+    | String.any(cond)(string.tail);;
 
+// Print a string
+String.show(xs: String): String
+  String.Builder.cons('"',String.to_builder(xs))(String.pure('"'))
+
+// String monad
+// ==========
+
+// A string with only one character.
+String.pure(x : Char) : String
+  String.cons(x)(String.nil)
+
+// The bind function of the string Monad.
+String.bind(xs: String, f: Char -> String): String
+  case xs:
+  | String.nil;
+  | String.concat(f(xs.head), String.bind(xs.tail,f));
+
+// Substrings
+// ========
+
+// Removes the first characters of a string.
+String.drop(n: Nat, xs: String):  String
+  case n:
+  | xs;
+  | case xs:
+    | String.nil;
+    | String.drop(n.pred,xs.tail);;
+
+// Remove characters while a condition is true
+String.drop_while(f: Char -> Bool, xs: String): String
+  case xs:
+  | String.nil;
+  | case f(xs.head):
+    | String.drop_while(f,xs.tail);
+    | xs;;
+
+String.drop_until(f: Char -> Bool, xs: String): String
+  String.drop_while((c) Bool.not(f(c)), xs)
+
+// Removes all characters that do not satisfy a condition.
+String.filter(f: Char -> Bool, xs: String): String
+  case xs:
+  | String.nil;
+  | case f(xs.head):
+    | String.cons(xs.head,String.filter(f, xs.tail));
+    | String.filter(f, xs.tail);;
+
+// Returns the first characters of a string, discards the rest.
+String.take(n: Nat, xs: String): String
+  case xs:
+  | String.nil;
+  | case n:
+    | String.nil;
+    | String.cons(xs.head,String.take(n.pred, xs.tail));;
+
+// String.Builder
+// ============
+
+// A lazy String constructor, useful for efficient concatenation
+String.Builder: Type
+  String -> String
+
+// construct a new builder (it's just the identity function)
+String.Builder.new : String.Builder
+  (x) x
+
+// turn a builder into a String
+String.run_builder(lb: String.Builder): String
+  lb(String.nil)
+
+// concatenate two string builders
+String.Builder.concat(a: String.Builder, b: String.Builder): String.Builder
+   (x) a(b(x))
+
+// prepend an character
+String.Builder.cons(c: Char, lb: String.Builder) : String.Builder
+  (x) lb(String.cons(c,x))
+
+// convert a string to a builder
+String.to_builder(string: String) : String.Builder
+  String.to_builder.go(string, String.Builder.new)
+
+String.to_builder.go(string: String, lb: String.Builder) : String.Builder
+  case string:
+  | lb;
+  | String.to_builder.go(string.tail)(String.Builder.cons(string.head, lb));
