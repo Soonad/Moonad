@@ -1,0 +1,3 @@
+String.null: Π(xs:String) Bool
+  λxs ((<xs λxs.self Bool> Bool.true) λxs.head λxs.tail Bool.false)
+

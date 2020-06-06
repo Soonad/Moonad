@@ -1,0 +1,3 @@
+String.map: (f: Char -> Char) -> (as: String) -> String
+  (f) (as) as<(as.self) String>(String.nil)((as.head) (as.tail) String.cons(f(as.head))(String.map(f)(as.tail)))
+

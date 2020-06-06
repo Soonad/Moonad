@@ -1,0 +1,3 @@
+String.foldl: ∀(B:*) Π(b:B) Π(f:Π(:B) Π(:Char) B) Π(xs:String) B
+  ΛB λb λf λxs ((<xs λxs.self B> b) λxs.head λxs.tail (((<String.foldl B> ((f b) xs.head)) f) xs.tail))
+

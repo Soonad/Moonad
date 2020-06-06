@@ -1,0 +1,3 @@
+String.length: Π(xs:String) Π(n:Nat) Nat
+  λxs λn ((<xs λxs.self Nat> 0) λxs.head λxs.tail ((String.length xs.tail) (Nat.succ n)))
+

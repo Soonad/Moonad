@@ -1,0 +1,3 @@
+List.null: <A: Type> -> (xs: List(A)) -> Bool
+  <A> (xs) xs<(xs.self) Bool>(Bool.true)((xs.head) (xs.tail) Bool.false)
+

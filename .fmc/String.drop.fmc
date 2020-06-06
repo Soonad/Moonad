@@ -1,0 +1,3 @@
+String.drop: Π(n:Nat) Π(xs:String) String
+  λn λxs ((<n λn.self String> xs) λn.pred ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((String.drop n.pred) xs.tail)))
+

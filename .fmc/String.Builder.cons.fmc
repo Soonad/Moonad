@@ -1,0 +1,3 @@
+String.Builder.cons: Π(c:Char) Π(lb:String.Builder) String.Builder
+  λc λlb λx (lb ((String.cons c) x))
+

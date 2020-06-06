@@ -1,0 +1,3 @@
+String.take: (n: Nat) -> (xs: String) -> String
+  (n) (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) n<(n.self) String>(String.nil)((n.pred) String.cons(xs.head)(String.take(n.pred)(xs.tail))))
+

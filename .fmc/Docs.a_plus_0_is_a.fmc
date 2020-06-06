@@ -1,0 +1,3 @@
+Docs.a_plus_0_is_a: Π(a:Nat) (((Equal Nat) ((Nat.add a) 0)) a)
+  λa ((<a λa.self (((Equal Nat) ((Nat.add a.self) 0)) a.self)> <<Equal.to Nat> Nat.zero>) λa.pred $ind=(Docs.a_plus_0_is_a a.pred);$app=<<<<<<Equal.apply Nat> Nat> ((Nat.add a.pred) Nat.zero)> a.pred> Nat.succ> ind>;app)
+

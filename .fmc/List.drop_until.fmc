@@ -1,0 +1,3 @@
+List.drop_until: ∀(A:*) Π(f:Π(:A) Bool) Π(xs:(List A)) (List A)
+  ΛA λf λxs ((<List.drop_while A> λc (Bool.not (f c))) xs)
+

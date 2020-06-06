@@ -1,0 +1,3 @@
+String.intersperse: Π(sep:Char) Π(xs:String) String
+  λsep λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((<xs.tail λxs.tail.self String> (String.pure xs.head)) λxs.tail.head λxs.tail.tail ((String.cons xs.head) ((String.cons sep) ((String.intersperse sep) xs.tail)))))
+

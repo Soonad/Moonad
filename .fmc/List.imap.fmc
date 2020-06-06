@@ -1,0 +1,3 @@
+List.imap: ∀(A:*) ∀(B:*) Π(f:Π(:Nat) Π(:A) B) Π(xs:(List A)) (List B)
+  ΛA ΛB λf λxs ((<xs λxs.self (List B)> <List.nil B>) λxs.head λxs.tail ((<List.cons B> ((f 0) xs.head)) ((<<List.imap A> B> λn (f (Nat.succ n))) xs.tail)))
+
