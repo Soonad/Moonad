@@ -1,0 +1,3 @@
+String.to_list: Π(str:String) (List Char)
+  λstr ((<str λstr.self (List Char)> <List.nil Char>) λstr.head λstr.tail ((<List.cons Char> str.head) (String.to_list str.tail)))
+

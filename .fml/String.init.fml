@@ -1,0 +1,3 @@
+String.init: (xs: String) -> (not_empty: String.not_empty(xs)) -> String
+  (xs) (not_empty) xs<(xs.self) (ne: String.not_empty(xs.self)) -> String>((ne) Empty.absurd(ne)(String))((xs.head) (xs.tail) (ne) xs.tail<(xs.tail.self) (e: Equal(String)(xs.tail.self)(xs.tail)) -> String>((e) String.nil)((xs.tail.head) (xs.tail.tail) (e) def cne = String.cons_isnt_empty(xs.tail.head)(xs.tail.tail); def xne = Equal.rewrite<String><String.cons(xs.tail.head)(xs.tail.tail)><xs.tail><(x) String.not_empty(x)>(e)(cne); String.cons(xs.head)(String.init(xs.tail)(xne)))(Equal.to<String><xs.tail>))(not_empty)
+

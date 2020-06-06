@@ -1,0 +1,3 @@
+List.tail: ∀(A:*) Π(xs:(List A)) Π(not_empty:(<List.not_empty A> xs)) (List A)
+  ΛA λxs λnot_empty (((<xs λxs.self Π(ne:(<List.not_empty A> xs.self)) (List A)> λne ((Empty.absurd ne) (List A))) λxs.head λxs.tail λne xs.tail) not_empty)
+

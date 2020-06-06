@@ -1,0 +1,3 @@
+List.zip_with: ∀(A:*) ∀(B:*) ∀(C:*) Π(f:Π(:A) Π(:B) C) Π(as:(List A)) Π(bs:(List B)) (List C)
+  ΛA ΛB ΛC λf λas λbs ((<as λas.self (List C)> <List.nil C>) λas.head λas.tail ((<bs λbs.self (List C)> <List.nil C>) λbs.head λbs.tail ((<List.cons C> ((f as.head) bs.head)) (((<<<List.zip_with A> B> C> f) as.tail) bs.tail))))
+

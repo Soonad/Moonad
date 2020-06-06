@@ -1,0 +1,3 @@
+String.to_builder.go: Π(string:String) Π(lb:String.Builder) String.Builder
+  λstring λlb ((<string λstring.self String.Builder> lb) λstring.head λstring.tail ((String.to_builder.go string.tail) ((String.Builder.cons string.head) lb)))
+
