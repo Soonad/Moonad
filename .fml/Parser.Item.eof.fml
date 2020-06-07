@@ -1,0 +1,3 @@
+Parser.Item.eof: Parser.Item
+  <P> (tokens) (label) (eof) eof
+

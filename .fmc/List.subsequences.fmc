@@ -1,0 +1,3 @@
+List.subsequences: ∀(A:*) Π(xs:(List A)) (List (List A))
+  ΛA λxs ((<List.cons (List A)> <List.nil A>) (<List.subsequences.go A> xs))
+

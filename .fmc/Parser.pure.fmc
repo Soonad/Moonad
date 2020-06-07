@@ -1,0 +1,3 @@
+Parser.pure: ∀(A:*) Π(a:A) (Parser A)
+  ΛA λa λs1 ((<Parser.Reply.val A> s1) a)
+

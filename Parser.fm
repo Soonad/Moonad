@@ -114,14 +114,14 @@ Parser.take(lbl: String, n: Nat) : Parser(String)
     def e = Parser.Error.new(Nat.add(pos,len),Maybe.some<>(Parser.Item.eof),l);
     Parser.Reply.err<>(s2,e);
 
-Parser.take_while<A: Type>(f: Char -> Bool): Parser(String)
+Parser.take_while(f: Char -> Bool): Parser(String)
   (s1)
   get pos str errs = s1
   get took rest = String.span(f,str)
   def len = String.length(took)
   Parser.Reply.val<>(Parser.State.make(Nat.add(pos,len),rest,errs),took)
 
-Parser.take_while1<A: Type>(lbl: String, f: Char -> Bool): Parser(String)
+Parser.take_while1(lbl: String, f: Char -> Bool): Parser(String)
   (s1)
   get pos str errs = s1
   get took rest = String.span(f,str)
@@ -191,3 +191,15 @@ Parser.parse<A: Type>(p: Parser(A), s: String): Parser.type(A, Parser.run<A>(p,s
   | x.value;
   | x.error;
   : Parser.type(A,x.self);
+
+//Parser.test : String
+//  def p   = Parser.take_while((x) Bool.true)
+//  Parser.run<String>(p, "foobar")<() String>
+//  | (s,x) x;
+//  | (s,e) "Error";
+//
+//Parser.testIO : IO(Unit)
+//  do IO {
+//    IO.print(Parser.test);
+//  }
+

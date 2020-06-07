@@ -1,0 +1,3 @@
+Parser.testIO: IO(Unit)
+  IO.print("foobar")
+

@@ -1,0 +1,3 @@
+Nat.to_base: Π(base:Nat) Π(nat:Nat) (List Nat)
+  λbase λnat (((Nat.to_base.go base) nat) <List.nil Nat>)
+

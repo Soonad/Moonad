@@ -1,0 +1,3 @@
+Parser.take_while1: (lbl: String) -> (f: Char -> Bool) -> Parser(String)
+  (lbl) (f) (s1) s1<(self) Parser.Reply(String)>((pos) (str) (errs) String.span(f)(str)<(self) Parser.Reply(String)>((took) (rest) def len = String.length(took); def s2 = Parser.State.make(Nat.add(pos)(len))(rest)(errs); def l = List.pure<Parser.Item>(Parser.Item.label(lbl)); str<(str.self) Parser.Reply(String)>(Parser.Reply.err<String>(s2)(Parser.Error.new(pos)(Maybe.some<Parser.Item>(Parser.Item.eof))(l)))((str.head) (str.tail) len<(self.self) Parser.Reply(String)>(def unx = Maybe.some<Parser.Item>(Parser.Item.tokens(String.pure(str.head))); Parser.Reply.err<String>(s2)(Parser.Error.new(pos)(unx)(l)))((self.pred) Parser.Reply.val<String>(s2)(took)))))
+

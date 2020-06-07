@@ -1,0 +1,3 @@
+UFind.new_node: Π(uf:UFind) Π(path:Bits) UFind
+  λuf λpath (((<Map.set UNode> path) (UNode.root Nat.zero)) uf)
+

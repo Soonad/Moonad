@@ -1,0 +1,3 @@
+Parser.State: *
+  ∀self(P:Π(self:Parser.State) *) Π(make:Π(pos:Nat) Π(str:String) Π(errs:(List Parser.Error)) (P (((Parser.State.make pos) str) errs))) (P self)
+

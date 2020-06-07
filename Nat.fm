@@ -206,7 +206,7 @@ Nat.to_string(n: Nat): String
   | String.cons(Char.parse("s"), Nat.to_string(n.pred));
 
 Nat.to_string_base(base: Nat, nat: Nat): String
-  List.fold<Nat, String>
+  List.foldr<Nat, String>
   | String.nil;
   | (n) (str) String.cons(Nat.apply<Char>(n, U16.inc, Char.parse("0")), str);
   | Nat.to_base(base, nat);

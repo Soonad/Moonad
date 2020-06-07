@@ -1,3 +1,3 @@
-String.length: (xs: String) -> (n: Nat) -> Nat
-  (xs) (n) xs<(xs.self) Nat>(0)((xs.head) (xs.tail) String.length(xs.tail)(Nat.succ(n)))
+String.length: (xs: String) -> Nat
+  (xs) String.length.go(xs)(0)
 

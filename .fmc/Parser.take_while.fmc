@@ -1,0 +1,3 @@
+Parser.take_while: Π(f:Π(:Char) Bool) (Parser String)
+  λf λs1 (<s1 λself (Parser.Reply String)> λpos λstr λerrs (<((String.span f) str) λself (Parser.Reply String)> λtook λrest @len=(String.length took);((<Parser.Reply.val String> (((Parser.State.make ((Nat.add pos) len)) rest) errs)) took)))
+

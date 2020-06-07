@@ -1,0 +1,3 @@
+Parser.test: String
+  @p=(Parser.take_while λx Bool.true);((<((<Parser.run String> p) "foobar") λ String> λs λx x) λs λe "Error")
+

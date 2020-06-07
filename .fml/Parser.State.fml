@@ -1,0 +1,3 @@
+Parser.State: Type
+  self<P: (self: Parser.State) -> Type> -> (make: (pos: Nat) -> (str: String) -> (errs: List(Parser.Error)) -> P(Parser.State.make(pos)(str)(errs))) -> P(self)
+

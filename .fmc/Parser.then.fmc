@@ -1,0 +1,3 @@
+Parser.then: ∀(A:*) ∀(B:*) Π(pa:(Parser A)) Π(pb:(Parser B)) (Parser B)
+  ΛA ΛB λpa λpb λs1 ((<(pa s1) λa.self (Parser.Reply B)> λa.state λa.value (pb a.state)) λa.state λa.error ((<Parser.Reply.err B> a.state) a.error))
+

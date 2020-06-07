@@ -1,0 +1,3 @@
+Parser.Error.msg: (pos: Nat) -> (msgs: List(String)) -> Parser.Error
+  (pos) (msgs) <P> (new) (msg) msg(pos)(msgs)
+

@@ -1,0 +1,3 @@
+Parser.map: <A: Type> -> <B: Type> -> (f: A -> B) -> (p: Parser(A)) -> Parser(B)
+  <A> <B> (f) (p) (s1) p(s1)<(self.self) Parser.Reply(B)>((self.state) (self.value) Parser.Reply.val<B>(self.state)(f(self.value)))((self.state) (self.error) Parser.Reply.err<B>(self.state)(self.error))
+

@@ -1,0 +1,3 @@
+String.split_at: Π(n:Nat) Π(xs:String) ((Pair String) String)
+  λn λxs ((<xs λxs.self ((Pair String) String)> ((<<Pair.new String> String> String.nil) String.nil)) λxs.head λxs.tail ((<n λn.self ((Pair String) String)> ((<<Pair.new String> String> String.nil) xs)) λn.pred ((<n.pred λn.pred.self ((Pair String) String)> ((<<Pair.new String> String> String.nil) xs)) λn.pred.pred (<((String.split_at n.pred) xs.tail) λself ((Pair String) String)> λy λz ((<<Pair.new String> String> ((String.cons xs.head) y)) z)))))
+

@@ -1,0 +1,3 @@
+Parser.parse: <A: Type> -> (p: Parser(A)) -> (s: String) -> Parser.type(A)(Parser.run<A>(p)(s))
+  <A> (p) (s) Parser.run<A>(p)(s)<(x.self) Parser.type(A)(x.self)>((x.state) (x.value) x.value)((x.state) (x.error) x.error)
+

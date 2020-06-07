@@ -1,0 +1,3 @@
+Parser.try: ∀(A:*) Π(p:(Parser A)) (Parser A)
+  ΛA λp λs1 ((<(p s1) λself.self (Parser.Reply A)> λself.state λself.value ((<Parser.Reply.val A> self.state) self.value)) λself.state λself.error ((<Parser.Reply.err A> s1) self.error))
+

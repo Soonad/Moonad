@@ -1,0 +1,3 @@
+Parser.State.merge: (x: Parser.State) -> (y: Parser.State) -> Parser.State
+  (x) (y) x<(x.self) Parser.State>((x.pos) (x.str) (x.errs) y<(y.self) Parser.State>((y.pos) (y.str) (y.errs) Nat.cmp(x.pos)(y.pos)<(self.self) Parser.State>(y)(Parser.State.make(x.pos)(x.str)(List.concat<Parser.Error>(x.errs)(y.errs)))(x)))
+

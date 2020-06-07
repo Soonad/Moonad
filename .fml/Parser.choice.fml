@@ -1,0 +1,3 @@
+Parser.choice: <A: Type> -> (ps: List(Parser(A))) -> Parser(A)
+  <A> (ps) ps<(ps.self) Parser(A)>(Parser.zero<A>)((ps.head) (ps.tail) Parser.plus<A>(ps.head)(Parser.choice<A>(ps.tail)))
+

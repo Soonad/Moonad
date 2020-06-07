@@ -1,0 +1,3 @@
+Parser.token: <A: Type> -> (f: Char -> Maybe(A)) -> (es: List(Parser.Item)) -> Parser(A)
+  <A> (f) (es) (s1) s1<(self) Parser.Reply(A)>((pos) (str) (errs) str<(str.self) Parser.Reply(A)>(def e = Parser.Error.new(pos)(Maybe.some<Parser.Item>(Parser.Item.eof))(es); Parser.Reply.err<A>(s1)(e))((str.head) (str.tail) f(str.head)<(self.self) Parser.Reply(A)>(def unx = Maybe.some<Parser.Item>(Parser.Item.tokens(String.pure(str.head))); Parser.Reply.err<A>(s1)(Parser.Error.new(pos)(unx)(es)))((self.value) def s2 = Parser.State.make(Nat.succ(pos))(str.tail)(errs); Parser.Reply.val<A>(s2)(self.value))))
+

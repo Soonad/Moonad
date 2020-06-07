@@ -1,0 +1,3 @@
+List.or: (list: List(Bool)) -> Bool
+  (list) List.any<Bool>((x) x)(list)
+
