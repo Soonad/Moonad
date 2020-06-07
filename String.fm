@@ -23,6 +23,13 @@ String.to_bits(str: String): Bits
   | Bits.nil;
   | Bits.concat(U16.to_bits(str.head))(String.to_bits(str.tail));
 
+//String.to_set(str: String): Set
+//  case str:
+//  | Set.new;
+//  | Set.set
+//    | U16.to_bits(str.head);
+//    | String.to_set(str.tail);;
+
 // A proposition that a string is not the empty string
 String.not_empty(xs: String) : Type
   case xs:
@@ -96,10 +103,10 @@ String.null(xs: String) : Bool
 String.length(xs: String): Nat
   String.length.go(xs,0)
 
-String.length(xs: String, n: Nat): Nat
+String.length.go(xs: String, n: Nat): Nat
   case xs:
   | 0;
-  | String.length(xs.tail,Nat.succ(n));
+  | String.length.go(xs.tail,Nat.succ(n));
 
 // Appends character to the end of the string.
 String.append(as: String, a: Char): String
@@ -164,7 +171,7 @@ String.foldl<B: Type>(b: B, f: B -> Char -> B, xs: String): B
 // Special folds
 // =============
 
-// Flattens a list of strings into a single string.
+// Flattens a string of strings into a single string.
 String.flatten(xs: List(String)): String
   case xs:
   | String.nil;
@@ -233,6 +240,14 @@ String.filter(f: Char -> Bool, xs: String): String
     | String.cons(xs.head,String.filter(f, xs.tail));
     | String.filter(f, xs.tail);;
 
+String.span(f: Char -> Bool, xs: String): Pair(String,String)
+  case xs:
+  | Pair.new<,>(String.nil,String.nil);
+  | case f(xs.head):
+    | get y z = String.span(f,xs.tail)
+      Pair.new<,>(String.cons(xs.head,y),z);
+    | Pair.new<,>(String.nil,xs);;
+
 // Returns the first characters of a string, discards the rest.
 String.take(n: Nat, xs: String): String
   case xs:
@@ -240,6 +255,16 @@ String.take(n: Nat, xs: String): String
   | case n:
     | String.nil;
     | String.cons(xs.head,String.take(n.pred, xs.tail));;
+
+String.split_at(n : Nat, xs: String) : Pair(String,String)
+  case xs:
+  | Pair.new<,>(String.nil,String.nil);
+  | case n:
+    | Pair.new<,>(String.nil,xs);
+    | case n.pred:
+      | Pair.new<,>(String.nil,xs);
+      | get y z = String.split_at(n.pred,xs.tail)
+        Pair.new<,>(String.cons(xs.head,y),z);;;
 
 // String.Builder
 // ============
@@ -272,3 +297,213 @@ String.to_builder.go(string: String, lb: String.Builder) : String.Builder
   case string:
   | lb;
   | String.to_builder.go(string.tail)(String.Builder.cons(string.head, lb));
+
+//// Returns the character at given position.
+//String.at(string: String, index: Nat): Maybe(A)
+//  case string:
+//  | Maybe.none<>;
+//  | case index:
+//    | Maybe.some<>(string.head);
+//    | String.at<>(string.tail)(index.pred);;
+//
+//String.chunk(n: Nat, xs: String): Maybe(String)
+//  case n:
+//  | Maybe.some<>(String.nil<>);
+//  | case xs:
+//    | Maybe.none<>;
+//    | Maybe.bind<,>(String.chunk<>(n.pred,xs.tail))
+//      | (x) Maybe.some<>(String.cons<>(xs.head,x));;;
+//
+//// Indexing Strings
+//// ==============
+//
+////Finds the first occurrence that satisfies a condition
+//String.find(cond: A -> Bool, xs: String): Maybe(A)
+//  case xs:
+//  | Maybe.none<>;
+//  | case cond(xs.head):
+//    | Maybe.some<>(xs.head);
+//    | String.find<>(cond)(xs.tail);;
+//
+//// Finds the last character that satisfies a condition and its index.
+//String.find_last(xs: String, f: A -> Nat -> Bool): Maybe(Pair(A)(Nat))
+//  String.find_last.go<A>(xs,f,Nat.zero,Maybe.none<>)
+//
+//String.find_last.go(
+//  xs: String,
+//  f: A -> Nat -> Bool,
+//  n: Nat,
+//  res: Maybe(Pair(A,Nat))
+//): Maybe(Pair(A,Nat))
+//  case xs:
+//  | res;
+//  | let res = case f(xs.head,n):
+//      | Maybe.some<>(Pair.new<,>(xs.head,n));
+//      | res;
+//    String.find_last.go<>(xs.tail,f,Nat.succ(n),res);
+//
+//// Finds the first character that satisfies a condition and its index.
+//String.ifind(xs: String, f: A -> Nat -> Bool): Maybe(Pair(A,Nat))
+//  String.ifind.go<A>(xs,f,Nat.zero)
+//
+//String.ifind.go(xs: String, f: A -> Nat -> Bool, i: Nat): Maybe(Pair(A,Nat))
+//  case xs:
+//  | Maybe.none<>;
+//  | case f(xs.head,i):
+//    | Maybe.some<>(Pair.new<,>(xs.head)(i));
+//    | String.ifind.go<>(xs.tail,f,Nat.succ(i));;
+//
+//// Zipping strings
+//// =============
+//
+//// Given two strings `xs` and `ys`, applies `f(xs[i],ys[i])` for all `i`.
+//String.zip_with<A: Type, B: Type, C: Type>(f: A -> B -> C, as: String, bs: String)
+//  : String
+//  case as:
+//  | String.nil<>;
+//  | case bs:
+//    | String.nil<>;
+//    | String.cons<>(f(as.head,bs.head),String.zip_with<,,>(f,as.tail,bs.tail));;
+//
+//
+//
+//
+////// A String constructor, useful for efficient concatenation
+////String.Builder: Type
+////  String -> String
+////
+////String.Builder.concat(a: String.Builder, b: String.Builder): String.Builder
+////   (x) a(b(x))
+////
+////String.Builder.cons(c: Char, s: String.Builder) : String.Builder
+////  (x) s(String.cons(c,x))
+////
+////String.run_builder(s: String.Builder): String
+////  s(String.nil)
+////
+////String.Builder.new: String.Builder
+////  (x) x
+////
+////String.to_builder(list: String) : String.Builder
+////  String.to_builder.go(list, String.Builder.new)
+////
+////String.to_builder.go(list: String, lb: String.Builder) : String.Builder
+////  case list:
+////  | lb;
+////  | String.to_builder.go(list.tail)(String.Builder.cons(list.head, lb));
+////
+/////// Appends element to the end of the list.
+////String.append(as: String, a: Char): String
+////  String.append.go(as,a,String.Builder.new)
+////
+////String.append.go(as: String, a: Char, sb: String.Builder): String
+////  case as:
+////  | sb(String.pure(a));
+////  | String.append.go(as.tail, a, String.Builder.cons(as.head,sb));
+////
+////String.chunk(n: Nat, str: String): Maybe(String)
+////  String.chunk.go(n,str, Maybe.none<>)
+////
+////String.chunk.go(n: Nat, str: String, chunk: Maybe(String)): Maybe(String)
+////  case n:
+////  | chunk;
+////  | case str:
+////    | Maybe.none<String>;
+////    | let chunk2 = Maybe.map<><>(String.cons(str.head),chunk)
+////      String.chunk.go(n.pred,str.tail, chunk2);;
+////
+////String.concat(as: String, bs: String): String
+////  String.concat.go(as,bs,String.Builder.new)
+////
+////String.concat.go(as: String, bs: String, lb: String.Builder): String
+////  case as:
+////  | lb(bs);
+////  | String.concat.go(as.tail,bs, String.Builder.cons(as.head,lb));
+////
+////String.drop(n: Nat, xs: String):  String
+////  case n:
+////  | xs;
+////  | case xs:
+////    | String.nil;
+////    | String.drop(n.pred,xs.tail);;
+////
+////String.drop_while(f: Char -> Bool, str: String): String
+////  case str:
+////  | String.nil;
+////  | case f(str.head):
+////    | String.drop_while(f,str.tail);
+////    | str;;
+////
+////String.drop_until(f: Char -> Bool, xs: String): String
+////  String.drop_while((c) Bool.not(f(c)), xs)
+////
+////
+//////String.filter : (Char -> Bool) -> String -> String
+////  //(cond) (str)
+////  //case str:
+////  //| String.nil;
+////  //| (str.head) (str.tail)
+////    //case cond(str.head):
+////    //| (t) t;
+////    //| (t) String.cons(str.head)(t);
+////    //| String.filter(cond)(str.tail);;
+////
+//////String.flatten: List(String) -> String
+////  //(as)
+////  //case as:
+////  //| String.nil;
+////  //| (head) (tail) String.concat(head)(String.flatten(tail));
+////
+//////String.is_empty: String -> Bool
+////  //(str)
+////  //case str:
+////  //| Bool.true;
+////  //| (head) (tail) Bool.false;
+////
+////String.length(str: String) : Nat
+////  case str:
+////  | Nat.zero;
+////  | Nat.succ(String.length(str.tail));
+////
+//////String.length.go
+////
+//////String.quote: String -> String
+////  //(str) String.cons(Char.quote)(String.concat(str)(String.single(Char.quote)))
+////
+////String.reverse(str: String) : String
+////  String.reverse.go(str,String.nil)
+////
+////String.reverse.go(str: String, res: String): String
+////  case str:
+////  | res;
+////  | String.reverse.go(str.tail,String.cons(str.head,res));
+////
+//////// A list with only one element.
+////String.pure : (x : Char) -> String
+////  (x) String.cons(x,String.nil)
+////
+//////String.tail: String -> String
+////  //(str)
+////  //case str:
+////  //| String.nil;
+////  //| (str.head) (str.tail) str.tail;
+////
+//////String.take: Nat -> String -> String
+////  //(n) (list)
+////  //case list:
+////  //| String.nil;
+////  //| (head) (tail)
+////    //case n:
+////    //| String.nil;
+////    //| (pred) String.cons(head)(String.take(pred)(tail));;
+////
+////
+////  
+////
+//////String.to_stringifier : String -> Stringifier
+////  //(str)
+////  //case str:
+////  //| (x) x;
+////  //| (str.head) (str.tail)
+////    //(x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
+////

@@ -3,7 +3,7 @@ T List <A: Type>
 | nil;
 | cons(head: A, tail: List(A));
 
-// Basic Functions
+// Basic Theorems
 // ===============
 
 // A proposition that a list is not the empty list
@@ -15,7 +15,7 @@ List.not_empty<A: Type>(xs: List(A)) : Type
 // A theorem that List.cons isn't List.nil
 List.cons_isnt_nil<A: Type>(x:A, xs: List(A))
   : Not(Equal(List(A),List.cons<A>(x,xs), List.nil<A>))
-  def P = List.not_empty<A>
+  def P = ((x) case x: | Empty; | Unit;) :: List(A) -> Type
   (e) Equal.rewrite<List(A), List.cons<A>(x,xs), List.nil<A>,P>(e, Unit.new)
 
 // A theorem that a list made with List.cons is not the empty list
@@ -28,6 +28,9 @@ List.cons_isnt_empty<A: Type>(
   with e : Equal(List(A),y,y.self) = Equal.to<List(A),y>;
   | Empty.absurd(List.cons_isnt_nil<A>(x,xs,e),_);
   | Unit.new;
+
+// Basic Functions
+// ===============
 
 // Concatenates two lists.
 List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
@@ -72,6 +75,11 @@ List.last<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
     | def cne = List.cons_isnt_empty<A>(xs.tail.head,xs.tail.tail)
       def xne = Equal.rewrite<_,_,_,(x) List.not_empty<A>(x)>(e,cne)
       List.last<>(xs.tail,xne);;
+
+List.uncons<A: Type>(xs: List(A)): Maybe(Pair(A,List(A)))
+  case xs:
+  | Maybe.none<>;
+  | Maybe.some<>(Pair.new<,>(xs.head,xs.tail));
 
 List.null<A: Type>(xs: List(A)) : Bool
   case xs:
@@ -130,6 +138,18 @@ List.intersperse<A: Type>(sep: A, xs: List(A)): List(A)
 List.intercalate<A: Type>(sep: List(A), xs: List(List(A))): List(A)
   List.flatten<A>(List.intersperse<List(A)>(sep,xs))
 
+List.subsequences<A: Type>(xs: List(A)): List(List(A))
+  List.cons<>(List.nil<>,List.subsequences.go<>(xs))
+
+List.subsequences.go<A: Type>(xs: List(A)): List(List(A))
+  case xs:
+  | List.nil<>;
+  | let f = ((ys,r) List.cons<>(ys,List.cons<>(List.cons<>(xs.head,ys),r)))
+        :: List(A) -> List(List(A)) -> List(List(A))
+    List.cons<>
+    | List.pure<>(xs.head);
+    | List.foldr<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
+
 // Reducing Lists
 // ==============
 
@@ -142,11 +162,23 @@ List.foldr.go<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A), g: B -> B): B
   | g(b);
   | List.foldr.go<,>(b,f,xs.tail,(x) f(xs.head,x));
 
+List.foldr1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+  case xs:
+  with ne : List.not_empty<>(xs.self) = ne;
+  | Empty.absurd(ne,A);
+  | List.foldr<A,A>(xs.head,f,xs.tail);
+
 // Folds over a list, left associative
 List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B
   case xs:
   | b;
   | List.foldl<,>(f(b,xs.head),f,xs.tail);
+
+List.foldl1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+  case xs:
+  with ne : List.not_empty<>(xs.self) = ne;
+  | Empty.absurd(ne,A);
+  | List.foldl<A,A>(xs.head,f,xs.tail);
 
 // Special folds
 // =============
@@ -166,7 +198,7 @@ List.all<A: Type>(cond: A -> Bool, list: List(A)): Bool
     | Bool.false;;
 
 // Are all elements true?
-List.all_true(list: List(Bool)): Bool
+List.and(list: List(Bool)): Bool
   List.all<>((x) x)(list)
 
 /// Do any element satisfy a condition?
@@ -178,8 +210,25 @@ List.any <A: Type>(cond: A -> Bool, list: List(A)): Bool
     | List.any<>(cond)(list.tail);;
 
 // Is any element true?
-List.any_true(list: List(Bool)): Bool
+List.or(list: List(Bool)): Bool
   List.any<>((x) x)(list)
+
+// Add the total of a list of natural numbers
+List.sum(xs: List(Nat)) : Nat
+  List.sum.go(xs, Nat.zero)
+
+List.sum.go(xs: List(Nat), n: Nat) : Nat
+  case xs:
+  | Nat.zero;
+  | List.sum.go(xs.tail,Nat.add(xs.head,n));
+
+List.product(xs: List(Nat)) : Nat
+  List.product.go(xs, Nat.zero)
+
+List.product.go(xs: List(Nat), n: Nat) : Nat
+  case xs:
+  | Nat.zero;
+  | List.product.go(xs.tail,Nat.mul(xs.head,n));
 
 // Print a list
 List.show<A: Type>(f: A -> String, xs: List(A)): String
@@ -191,16 +240,6 @@ List.show.go<A: Type>(f: A -> String, xs: List(A), sb: String.Builder): String
   | List.show.go<>(f,xs.tail)
     | String.Builder.concat(String.to_builder(f(xs.head)))
       | String.Builder.cons(',',sb);;;
-
-// Add the total of a list of natural numbers
-List.sum(xs: List(Nat)) : Nat
-  List.sum.go(xs, Nat.zero)
-
-List.sum.go(xs: List(Nat), n: Nat) : Nat
-  case xs:
-  | Nat.zero;
-  | List.sum.go(xs.tail,Nat.add(xs.head,n));
-
 
 // List monad
 // ==========
@@ -224,6 +263,14 @@ List.drop<A: Type>(n: Nat, xs: List(A)):  List(A)
     | List.nil<>;
     | List.drop<>(n.pred,xs.tail);;
 
+// Returns the first elements of a list, discards the rest.
+List.take<A: Type>(n: Nat, xs: List(A)): List(A)
+  case xs:
+  | List.nil<>;
+  | case n:
+    | List.nil<>;
+    | List.cons<>(xs.head,List.take<>(n.pred, xs.tail));;
+
 // Remove elements while a condition is true
 List.drop_while<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   case xs:
@@ -231,6 +278,23 @@ List.drop_while<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   | case f(xs.head):
     | List.drop_while<>(f,xs.tail);
     | xs;;
+
+List.take_while<A: Type>(f: A -> Bool, xs: List(A)) : List(A)
+  case xs:
+  | List.nil<>;
+  | case f(xs.head):
+    | List.cons<>(xs.head,List.take_while<>(f,xs.tail));
+    | List.nil<>;;
+
+List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
+  case xs:
+  | Pair.new<,>(List.nil<>,List.nil<>);
+  | case n:
+    | Pair.new<,>(List.nil<>,xs);
+    | case n.pred:
+      | Pair.new<,>(List.nil<>,xs);
+      | get y z = List.split_at<>(n.pred,xs.tail)
+        Pair.new<,>(List.cons<>(xs.head,y),z);;;
 
 List.drop_until<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   List.drop_while<>((c) Bool.not(f(c)), xs)
@@ -243,42 +307,13 @@ List.filter<A: Type>(f: A -> Bool, xs: List(A)): List(A)
     | List.cons<>(xs.head,List.filter<>(f, xs.tail));
     | List.filter<>(f, xs.tail);;
 
-// Returns the first elements of a list, discards the rest.
-List.take<A: Type>(n: Nat, xs: List(A)): List(A)
+List.span<A: Type>(f: A -> Bool, xs: List(A)): Pair(List(A),List(A))
   case xs:
-  | List.nil<>;
-  | case n:
-    | List.nil<>;
-    | List.cons<>(xs.head,List.take<>(n.pred, xs.tail));;
-
-////String.take_n(n: Nat, str: String) : Maybe(Pair(String)(String))
-////  def m = String.take_n.go(n)(String.nil)(str)
-////  case m:
-////  | Maybe.none<Pair(String)(String)>;
-////  | get x y = m.value
-////    Maybe.some<>(Pair.new<><>(String.reverse(x))(y));
-////
-////String.take_n.go(n: Nat, str: String, res: String) : Maybe(Pair(String,String))
-////  case res:
-////  | case n:
-////    | Maybe.some<>(Pair.new<_,_>(str)(String.nil));
-////    | Maybe.none<Pair(String)(String)>;;
-////  | case n:
-////    | Maybe.some<>(Pair.new<String><String>(str)(res));
-////    | String.take_n.go(n.pred)(String.cons(res.head)(str))(res.tail);;
-////
-////
-////String.take_while.go(f: Char -> Bool, str: String, res: String): Pair(String,String)
-////  case res:
-////  | Pair.new<><>(str)(String.nil);
-////  | let x = f(res.head)
-////    case x:
-////    | String.take_while.go(f,String.cons(res.head)(str))(res.tail);
-////    | Pair.new<><>(str,res);;
-////
-////String.take_while(f: Char -> Bool, str: String) : Pair(String)(String)
-////  get x y = String.take_while.go(f,String.nil,str)
-////  Pair.new<><>(String.reverse(x),y)
+  | Pair.new<,>(List.nil<>,List.nil<>);
+  | case f(xs.head):
+    | get y z = List.span<>(f,xs.tail)
+      Pair.new<,>(List.cons<>(xs.head,y),z);
+    | Pair.new<,>(List.nil<>,xs);;
 
 // List.Builder
 // ============
@@ -378,3 +413,5 @@ List.zip_with<A: Type, B: Type, C: Type>(f: A -> B -> C, as: List(A), bs: List(B
   | case bs:
     | List.nil<>;
     | List.cons<>(f(as.head,bs.head),List.zip_with<,,>(f,as.tail,bs.tail));;
+
+
