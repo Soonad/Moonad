@@ -7,27 +7,26 @@ T Comp
 | tru;
 | fal;
 
-Comp.stringify(comp: Comp): String.Builder
+Comp.stringify(term: Comp): String.Builder
   let lit = String.to_builder
   let rec = Comp.stringify
-  let term = comp
   case term:
-  |#var# //(term.name)
+  |#var(term.name)#
     lit(term.name);
-  |#lam# //(term.name) (term.body)
+  |#lam(term.name, term.body)#
     let lpar = lit("((")
     let name = lit(term.name)
     let rpar = lit(") ")
     let body = rec(term.body)
     let lend = lit(")")
     (x) lpar(name(rpar(body(lend(x)))));
-  |#app# //(term.func) (term.argm)
+  |#app(term.func, term.argm)#
     let func = rec(term.func)
     let lpar = lit("(")
     let argm = rec(term.argm)
     let rpar = lit(")")
     (x) func(lpar(argm(rpar(x))));
-  |#let# //(term.name) (term.expr) (term.body)
+  |#let(term.name, term.expr, term.body)#
     let llet = lit("let ")
     let name = lit(term.name)
     let leql = lit(" = ")
