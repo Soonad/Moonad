@@ -1,3 +1,3 @@
 Docs.nat_test: Nat
-  ((Nat.add 123456789) 987654321)
+  ((Nat.add 123) 321)
 
