@@ -1,0 +1,3 @@
+String.intersperse: (sep: Char) -> (xs: String) -> String
+  (sep) (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) xs.tail<(xs.tail.self) String>(String.pure(xs.head))((xs.tail.head) (xs.tail.tail) String.cons(xs.head)(String.cons(sep)(String.intersperse(sep)(xs.tail)))))
+

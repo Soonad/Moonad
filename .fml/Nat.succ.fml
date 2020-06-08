@@ -1,0 +1,3 @@
+Nat.succ: (pred: Nat) -> Nat
+  (pred) <P> (zero) (succ) succ(pred)
+

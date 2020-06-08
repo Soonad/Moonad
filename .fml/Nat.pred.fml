@@ -1,0 +1,3 @@
+Nat.pred: (n: Nat) -> Nat
+  (n) n<(n.self) Nat>(Nat.zero)((n.pred) n.pred)
+

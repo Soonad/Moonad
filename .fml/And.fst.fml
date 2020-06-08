@@ -1,0 +1,3 @@
+And.fst: <A: Type> -> <B: Type> -> (x: And(A)(B)) -> A
+  <A> <B> (x) Pair.fst<A><B>(x)
+

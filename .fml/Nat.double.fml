@@ -1,0 +1,3 @@
+Nat.double: (n: Nat) -> Nat
+  (n) n<(n.self) Nat>(Nat.zero)((n.pred) Nat.succ(Nat.succ(Nat.double(n.pred))))
+

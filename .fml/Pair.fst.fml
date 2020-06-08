@@ -1,0 +1,3 @@
+Pair.fst: <A: Type> -> <B: Type> -> (pair: Pair(A)(B)) -> A
+  <A> <B> (pair) pair<(pair.self) A>((pair.fst) (pair.snd) pair.fst)
+

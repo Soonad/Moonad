@@ -1,0 +1,3 @@
+Function.curry: <A: Type> -> <B: Type> -> <C: Type> -> (f: Pair(A)(B) -> C) -> (x: A) -> (y: B) -> C
+  <A> <B> <C> (f) (x) (y) f(Pair.new<A><B>(x)(y))
+

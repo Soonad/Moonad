@@ -1,0 +1,3 @@
+String.concat: (as: String) -> (bs: String) -> String
+  (as) (bs) as<(as.self) String>(bs)((as.head) (as.tail) String.cons(as.head)(String.concat(as.tail)(bs)))
+

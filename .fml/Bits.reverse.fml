@@ -1,0 +1,3 @@
+Bits.reverse: (a: Bits) -> Bits
+  (a) Bits.reverse.tco(a)(Bits.nil)
+

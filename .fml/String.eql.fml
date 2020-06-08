@@ -1,0 +1,3 @@
+String.eql: (a: String) -> (b: String) -> Bool
+  (a) (b) a<(a.self) Bool>(b<(b.self) Bool>(Bool.true)((b.head) (b.tail) Bool.false))((a.head) (a.tail) b<(b.self) Bool>(Bool.false)((b.head) (b.tail) Bool.and(U16.eql(a.head)(b.head))(String.eql(a.tail)(b.tail))))
+

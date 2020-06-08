@@ -1,0 +1,3 @@
+Nat.is_zero: (n: Nat) -> Bool
+  (n) n<(n.self) Bool>(Bool.true)((n.pred) Bool.false)
+

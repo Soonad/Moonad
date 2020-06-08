@@ -1,0 +1,3 @@
+String.intercalate: (sep: String) -> (xs: List(String)) -> String
+  (sep) (xs) String.flatten(List.intersperse<String>(sep)(xs))
+

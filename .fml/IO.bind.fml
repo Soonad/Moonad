@@ -1,0 +1,3 @@
+IO.bind: <A: Type> -> <B: Type> -> (a: IO(A)) -> (f: A -> IO(B)) -> IO(B)
+  <A> <B> (a) (f) a<(a.self) IO(B)>((a.val) f(a.val))((a.str) (a.nxt) IO.log<B>(a.str)((x) IO.bind<A><B>(a.nxt(x))(f)))((a.nxt) IO.get<B>((x) IO.bind<A><B>(a.nxt(x))(f)))
+

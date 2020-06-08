@@ -1,0 +1,3 @@
+Maybe.extract: <A: Type> -> (m: Maybe(A)) -> (a: A) -> A
+  <A> (m) (a) m<(m.self) A>(a)((m.value) m.value)
+

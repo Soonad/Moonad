@@ -1,0 +1,3 @@
+Sigma.snd: <A: Type> -> <B: A -> Type> -> (sig: Sigma(A)(B)) -> B(Sigma.fst<A><B>(sig))
+  <A> <B> (sig) sig<(sig.self) B(Sigma.fst<A><B>(sig.self))>((sig.fst) (sig.snd) sig.snd)
+

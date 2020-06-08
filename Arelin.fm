@@ -2,7 +2,7 @@
    //F64
 
 Arelin.Game.ModelId : Type 
-  Bool
+  Bits
 
 Arelin.Game.ActionId : Type
   Bool

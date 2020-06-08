@@ -1,0 +1,3 @@
+List.any: <A: Type> -> (cond: A -> Bool) -> (list: List(A)) -> Bool
+  <A> (cond) (list) list<(list.self) Bool>(Bool.false)((list.head) (list.tail) cond(list.head)<(self.self) Bool>(Bool.true)(List.any<A>(cond)(list.tail)))
+

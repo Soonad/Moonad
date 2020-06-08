@@ -1,0 +1,3 @@
+Maybe.bind: <A: Type> -> <B: Type> -> (m: Maybe(A)) -> (f: A -> Maybe(B)) -> Maybe(B)
+  <A> <B> (m) (f) m<(m.self) Maybe(B)>(Maybe.none<B>)((m.value) f(m.value))
+

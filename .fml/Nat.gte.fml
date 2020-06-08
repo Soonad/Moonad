@@ -1,0 +1,3 @@
+Nat.gte: (n: Nat) -> (m: Nat) -> Bool
+  (n) (m) Nat.cmp(n)(m)<(self.self) Bool>(Bool.false)(Bool.true)(Bool.true)
+
