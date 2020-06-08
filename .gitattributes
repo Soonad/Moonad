@@ -1,2 +1,2 @@
-*.fmc
-*.fml
+*.fmc linguist-generated=true
+*.fml linguist-generated=true
