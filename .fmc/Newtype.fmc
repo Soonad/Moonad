@@ -1,0 +1,3 @@
+Newtype: Π(A:*) Π(tag:String) *
+  λA λtag ∀self(P:Π(tag:String) Π(self:((Newtype A) tag)) *) Π(new:∀(tag:String) Π(val:A) ((P tag) (<<Newtype.new A> tag> val))) ((P tag) self)
+

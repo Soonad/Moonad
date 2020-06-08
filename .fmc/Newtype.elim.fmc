@@ -1,0 +1,3 @@
+Newtype.elim: ∀(A:*) ∀(tag:String) Π(x:((Newtype A) tag)) A
+  ΛA Λtag λx (<x λx.tag λx.self A> Λx.tag λx.val x.val)
+

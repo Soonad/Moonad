@@ -1,0 +1,3 @@
+Function.id: ∀(A:*) Π(x:A) A
+  ΛA λx x
+
