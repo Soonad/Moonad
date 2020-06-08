@@ -23,7 +23,7 @@ Docs.not_not_is_b(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
   : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);
 
 Docs.nat_test: Nat
-  Nat.add(123456789, 987654321)
+  Nat.add(123, 321)
 
 Docs.0_plus_a_is_a(a: Nat): Equal(Nat, Nat.add(0, a), a)
   Equal.to<Nat, a>
