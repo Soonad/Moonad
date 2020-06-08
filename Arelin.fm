@@ -1567,42 +1567,40 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
   let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
   Arelin.Thing.set_buf(self, new_buf)
   
-
-// TODO: depends on Map.set
 // Ends an animation/transformation/thing after some ticks
 // - self: thing that will end after a while
 // - tx: the new animation to use when it ends
 // - after_tiks: numbers of ticks passed until the end
 // - stt_key: the key in the stt map
-// Arelin.Thing.end_thing(
-//   self       : Arelin.Thing,
-//   tx         : Arelin.Game.TxFunction,
-//   after_tiks : F64,
-//   stt_key    : Bits 
-//   ) : Arelin.Thing
-//   let self.stt    = Arelin.Thing.get_stt(self)
-//   let current_tik = Map.get<>(stt_key, self.stt)
-//   let empty_stt   = Map.set<>(stt_key, after_tiks, self.stt)
-//   case current_tik:
-//   | #none# Arelin.Thing.set_stt(self, empty_stt);
-//   | #some#
-//     case F64.eql(current_tik.value, F64.0):
-//     | let self.pid = Arelin.Thing.get_pid(self)
-//       let self.pos = Arelin.Thing.get_pos(self)
-//       let self     = Arelin.Thing.set_fun(self, tx)
-//       let self     = Arelin.Thing.set_pid(self, self.pid)
-//       let self     = Arelin.Thing.set_pos(self, self.pos)
-//       let self     = Arelin.Thing.set_stt(self, empty_stt)
-//       self;  
+Arelin.Thing.end_thing(
+  self       : Arelin.Thing,
+  tx         : Arelin.Game.TxFunction,
+  after_tiks : F64,
+  stt_key    : Bits 
+  ) : Arelin.Thing
+  let self.stt    = Arelin.Thing.get_stt(self)
+  let current_tik = Map.get<>(stt_key, self.stt)
+  let empty_stt   = Map.set<>(stt_key, after_tiks, self.stt)
+  case current_tik:
+  | #none# Arelin.Thing.set_stt(self, empty_stt);
+  | #some#
+    case F64.eql(current_tik.value, F64.0):
+    | let self.pid = Arelin.Thing.get_pid(self)
+      let self.pos = Arelin.Thing.get_pos(self)
+      let self     = Arelin.Thing.set_fun(self, tx)
+      let self     = Arelin.Thing.set_pid(self, self.pid)
+      let self     = Arelin.Thing.set_pos(self, self.pos)
+      let self     = Arelin.Thing.set_stt(self, empty_stt)
+      self;  
     
-//     | let new_stt = 
-//         Map.set<>
-//         | stt_key;
-//         | case F64.gtn(current_tik.value, F64.0):
-//           | F64.sub(current_tik.value, F64.1);
-//           | F64.0;;
-//         | self.stt;
-//       Arelin.Thing.set_stt(self, new_stt);; 
+    | let new_stt = 
+        Map.set<>
+        | stt_key;
+        | case F64.gtn(current_tik.value, F64.0):
+          | F64.sub(current_tik.value, F64.1);
+          | F64.0;;
+        | self.stt;
+      Arelin.Thing.set_stt(self, new_stt);; 
 
 Arelin.Thing.get_stt_value(self: Arelin.Thing, stt_key: Bits): F64
   let stt = Arelin.Thing.get_stt(self)
@@ -1611,31 +1609,27 @@ Arelin.Thing.get_stt_value(self: Arelin.Thing, stt_key: Bits): F64
   | #none# F64.0;
   | #some# get_stt.value;
 
-// this should be renamed
-Arelin.POS_X_KEY : Bits
-  // 01011101b
-  (Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
+Arelin.Constants.POS_X_KEY : Bits
+  Bits.from_string("01011101")
 
-Arelin.POS_Y_KEY : Bits
-  // 01110101b
-  (Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
+Arelin.Constants.POS_Y_KEY : Bits
+  Bits.from_string("01110101")
 
 Arelin.Thing.get_stt_value_v3(self: Arelin.Thing): F64.V3
-  let x = Arelin.Thing.get_stt_value(self, Arelin.POS_X_KEY)
-  let y = Arelin.Thing.get_stt_value(self, Arelin.POS_Y_KEY)
-  // let z = Arelin.Thing.get_stt_value(self, Arelin.POS_Z_KEY)
+  let x = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_X_KEY)
+  let y = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_Y_KEY)
+  // let z = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_Z_KEY)
   F64.V3.new(x,y,F64.0) 
 
-// TODO: depends on Map.set
-// Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
-//   let self.stt = Arelin.Thing.get_stt(self)
-//   case v3:
-//   | let insert_x = Map.set<>(Arelin.POS_X_KEY, v3.x, self.stt)
-//     let insert_y = Map.set<>(Arelin.POS_Y_KEY, v3.x, self.stt)
-//     let self     = Arelin.Thing.set_stt(self, insert_x)
-//     let self     = Arelin.Thing.set_stt(self, insert_y)
-//     self 
-//   ;
+Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
+  let self.stt = Arelin.Thing.get_stt(self)
+  case v3:
+  | let insert_x = Map.set<>(Arelin.Constants.POS_X_KEY, v3.x, self.stt)
+    let insert_y = Map.set<>(Arelin.Constants.POS_Y_KEY, v3.x, self.stt)
+    let self     = Arelin.Thing.set_stt(self, insert_x)
+    let self     = Arelin.Thing.set_stt(self, insert_y)
+    self 
+  ;
 
 Arelin.Thing.is_using_buff(self: Arelin.Thing, stt_key: Bits): Bool
   let stt = Arelin.Thing.get_stt(self)
@@ -1647,40 +1641,37 @@ Arelin.Thing.is_using_buff(self: Arelin.Thing, stt_key: Bits): Bool
     | Bool.false;
     | Bool.true;;
 
-// TODO: depends on Map.set
-// Arelin.Thing.map_stt_key(
-//   self    : Arelin.Thing,
-//   stt_key : Bits,
-//   fn      : F64 -> F64
-//   ) : Arelin.Thing
-//   let stt = Arelin.Thing.get_stt(self)
-//   let get_stt = Map.get<>(stt_key, stt)
-//   case get_stt:
-//   | #none# 
-//     Arelin.Thing.set_stt
-//     | self;
-//     | Map.set<>(stt_key, F64.0, stt);;
-//   | #some#
-//     Arelin.Thing.set_stt 
-//     | self;
-//     | Map.set<>(stt_key, fn(get_stt.value), stt);;
+Arelin.Thing.map_stt_key(
+  self    : Arelin.Thing,
+  stt_key : Bits,
+  fn      : F64 -> F64
+  ) : Arelin.Thing
+  let stt = Arelin.Thing.get_stt(self)
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
+  | #none# 
+    Arelin.Thing.set_stt
+    | self;
+    | Map.set<>(stt_key, F64.0, stt);;
+  | #some#
+    Arelin.Thing.set_stt 
+    | self;
+    | Map.set<>(stt_key, fn(get_stt.value), stt);;
 
- 
-// TODO: depends on Map.set
 // Update a stt_key until the value associated to it ends. Used along with will_set_buff
 // - self: thing with stt (usually character)
 // - stt_key: the key in the stt map
-// Arelin.Thing.update_buff(self: Arelin.Thing, stt_key: Bits): Arelin.Thing
-//   let stt = Arelin.Thing.get_stt(self)
-//   let get_stt = Map.get<>(stt_key, stt)
-//   case get_stt:
-//   | #none# self;
-//   | #some#
-//     case F64.eql(get_stt.value, F64.0):
-//     | let new_tik = F64.sub(value, F64.1)
-//       let new_stt = Map.set<>(stt_key, new_tik, stt)
-//       Arelin.Thing.set_stt(self, new_stt);
-//     | self;;
+Arelin.Thing.update_buff(self: Arelin.Thing, stt_key: Bits): Arelin.Thing
+  let stt = Arelin.Thing.get_stt(self)
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
+  | #none# self;
+  | #some#
+    case F64.eql(get_stt.value, F64.0):
+    | let new_tik = F64.sub(get_stt.value, F64.1)
+      let new_stt = Map.set<>(stt_key, new_tik, stt)
+      Arelin.Thing.set_stt(self, new_stt);
+    | self;;
 
 Arelin.exec_command(cmd: Arelin.Game.Command, gm: Arelin.Game): Arelin.Game
   case cmd:
@@ -1752,25 +1743,24 @@ Arelin.collide_with(
       | Maybe.none<>;;
     | #pbox#
       let nil = Maybe.none<>
-      // let cons = ((segment) (result)
-      //   case result:
-      //   | #none# 
-      //     case segment:
-      //     | let dst = F64.V3.point_segment_dist(a_pos, segment)
-      //       let rad = a_box.rad 
-      //       case F64.ltn(dst, rad):
-      //       | #true#
-      //         let out_dir = 
-      //           F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a, segment.b)))
-      //         let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir) 
-      //         Maybe.some<>(out_vec);
-      //       | #false# Maybe.none<>;;
-      //     ;
-      //   | #some# Maybe.some<>(result.value); 
-      // ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
-      // let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
-      // List.fold<><>(nil,cons,segs);;
-     nil;; // TODO: delete this after fixing the code above
+      let cons = ((segment) (result)
+        case result:
+        | #none# 
+          case segment:
+          | let dst = F64.V3.point_segment_dist(a_pos, segment)
+            let rad = a_box.rad 
+            case F64.ltn(dst, rad):
+            | #true#
+              let out_dir = 
+                F64.V3.rot_90(F64.V3.norm(F64.V3.sub(segment.a, segment.b)))
+              let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir) 
+              Maybe.some<>(out_vec);
+            | #false# Maybe.none<>;;
+          ;
+        | #some# Maybe.some<>(result.value); 
+      ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
+      let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
+      List.fold<><>(nil,cons,segs);;
   | #pbox# Maybe.none<>; // TODO
 
 //// Interaction function between two things
@@ -1786,36 +1776,33 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
   let that.box = Arelin.Thing.get_box(that)
   let that.hit = Arelin.Thing.get_hit(that)
   let that.sid = Arelin.Thing.get_sid(this)
-  // TODO: depents on Arelin.collide_with
-  // let out_vec  = 
-  //   Arelin.collide_with
-  //   |this.pos;
-  //   |this.dir;
-  //   |this.box;
-  //   |that.pos;
-  //   |that.dir;
-  //   |that.box;
-  // let this = 
-  //   case out_vec:
-  //   | #none# this;           
-  //   | #some# 
-  //     let new_pos = F64.V3.add(this.pos, out_vec.value)
-  //     Arelin.Thing.set_pos(this, new_pos);
+  let out_vec  = 
+    Arelin.collide_with
+    |this.pos;
+    |this.dir;
+    |this.box;
+    |that.pos;
+    |that.dir;
+    |that.box;
+  let this = 
+    case out_vec:
+    | #none# this;
+    | #some# 
+      let new_pos = F64.V3.add(this.pos, out_vec.value)
+      Arelin.Thing.set_pos(this, new_pos);
   let this = 
     // Hit by an effect
     let apply_hit = ((hit) (this)
       case hit:
       | #hit.eff hit.pos hit.dir hit.box#
-        let out_vec = this
-        // TODO: depents on Arelin.collide_with
-        // let out_vec = 
-        //   Arelin.collide_with  
-        //   |this.pos;
-        //   |this.dir;
-        //   |this.box;
-        //   |hit.pos;
-        //   |hit.dir;
-        //   |hit.box;
+        let out_vec = 
+          Arelin.collide_with  
+          |this.pos;
+          |this.dir;
+          |this.box;
+          |hit.pos;
+          |hit.dir;
+          |hit.box;
 
         case out_vec:
         | #none# this;
