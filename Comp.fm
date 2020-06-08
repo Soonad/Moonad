@@ -7,9 +7,8 @@ T Comp
 | tru;
 | fal;
 
-Comp.stringify: Comp -> Stringifier
-  (comp)
-  let lit = String.to_stringifier
+Comp.stringify(comp: Comp): String.Builder
+  let lit = String.to_builder
   let rec = Comp.stringify
   let term = comp
   case term:
