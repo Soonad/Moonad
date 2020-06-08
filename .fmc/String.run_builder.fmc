@@ -1,0 +1,3 @@
+String.run_builder: Π(lb:String.Builder) String
+  λlb (lb String.nil)
+

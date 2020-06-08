@@ -1,0 +1,3 @@
+List.pure: <A: Type> -> (x: A) -> List(A)
+  <A> (x) [A; x]
+

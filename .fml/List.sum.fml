@@ -1,0 +1,3 @@
+List.sum: (xs: List(Nat)) -> Nat
+  (xs) List.sum.go(xs)(Nat.zero)
+

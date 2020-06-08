@@ -1,0 +1,3 @@
+UNode.link: Π(parent:Bits) UNode
+  λparent ΛP λroot λlink (link parent)
+

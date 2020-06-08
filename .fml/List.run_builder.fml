@@ -1,0 +1,3 @@
+List.run_builder: <A: Type> -> (lb: List.Builder(A)) -> List(A)
+  <A> (lb) lb([A;])
+

@@ -1,0 +1,3 @@
+String.reverse.go: Π(xs:String) Π(res:String) String
+  λxs λres ((<xs λxs.self String> res) λxs.head λxs.tail ((String.reverse.go xs.tail) ((String.cons xs.head) res)))
+

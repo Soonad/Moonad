@@ -28,26 +28,26 @@ Nat.sub(n: Nat, m: Nat): Nat
   case m:
   | n;
   | case n:
-    | Nat.zero; 
-    | Nat.sub(n.pred)(m.pred);;
+    | Nat.zero;
+    | Nat.sub(n.pred, m.pred);;
 
-Nat.sub_rem(n: Nat, m: Nat): Either(Nat)(Nat)
+Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
   case m:
   | Either.left<_,_>(n);
   | case n:
     | Either.right<_,_>(Nat.succ(m.pred));
-    | Nat.sub_rem(n.pred)(m.pred);;
+    | Nat.sub_rem(n.pred, m.pred);;
 
 Nat.div(n: Nat, m: Nat): Nat
   Pair.fst<_,_>(Nat.div_mod(n, m))
 
-Nat.div_mod.aux(n: Nat, m: Nat, d: Nat): Pair(Nat)(Nat)
+Nat.div_mod.aux(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
   let p = Nat.sub_rem(n,m)
   case p:
   | Nat.div_mod.aux(p.value,m,Nat.succ(d));
   | Pair.new<_,_>(d,n);
 
-Nat.div_mod(n: Nat, m: Nat): Pair(Nat)(Nat)
+Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
   Nat.div_mod.aux(n,m,Nat.zero)
 
 Nat.double(n: Nat): Nat
@@ -86,7 +86,7 @@ Nat.gtn(n: Nat, m: Nat): Bool
   | Bool.true;
 
 Nat.induction(n: Nat): <P: Nat -> Type> -> (z: P(Nat.zero)) -> (s: ((m:Nat) -> P(m) -> P(Nat.succ(m)))) -> P(n)
-  <P> (z) (s) n<P>(z)((pred) s(pred)(Nat.induction(pred)<P>(z)(s)))
+  <P> (z) (s) n<P>(z, (pred) s(pred, Nat.induction(pred)<P>(z, s)))
 
 Nat.is_zero(n: Nat): Bool
   case n:
@@ -101,128 +101,115 @@ Nat.mul(n: Nat, m: Nat): Nat
   | Nat.zero;
   | Nat.add(m, Nat.mul(n.pred, m));
 
-// TODO: error on misformatted Nat
-//Nat.parse_decimal(str: String): Nat
-  //Nat.parse_decimal.go(str, Nat.zero) 
+//TODO: error on misformatted Nat
+Nat.parse_decimal(str: String): Nat
+  Nat.parse_decimal.go(str, Nat.zero)
 
-//// TODO: error on misformatted Nat
-//Nat.parse_decimal.go: String -> Nat -> Nat //loop//
-  //(str) (res)
-  //str<() Nat>
-  //| res;
-  //| (str.head) (str.tail)
-    //let dig = Nat.sub(U16.to_nat(str.head))(Nat.48)
-    //let res = Nat.add(dig)(Nat.mul(Nat.10)(res))
-    //Nat.parse_decimal.go(str.tail)(res);
+Nat.parse_decimal.go(str: String, res: Nat): Nat
+  case str:
+  | res;
+  | let dig = Nat.sub(U16.to_nat(str.head), 48)
+    let res = Nat.add(dig, Nat.mul(10, res))
+    Nat.parse_decimal.go(str.tail, res);
 
 Nat.pred(n: Nat): Nat
   case n:
   | Nat.zero;
   | n.pred;
 
-//Nat.show.aux: Nat -> Nat -> String -> String
-  //(n) (base) (str)
-  //(Nat.div_mod(n)(base))<() String> | (d) (m)
-  //d<() String>
-  //| String.cons(Nat.show.digit(m)(base))(str);
-  //| (pred) Nat.show.aux(d)(base)(String.cons(Nat.show.digit(m)(base))(str));;
+Nat.show.aux(n: Nat, base: Nat, str: String): String
+  (Nat.div_mod(n, base))<() String> | (d) (m)
+  d<() String>
+  | String.cons(Nat.show.digit(m, base), str);
+  | (pred) Nat.show.aux(d, base, String.cons(Nat.show.digit(m, base), str));;
 
-//Nat.show.digit: Nat -> Nat -> Char
-  //(n) (base) 
-  //let m = Nat.mod(n)(base)
-  //Nat.eql(m)(Nat.0)<() Char> | Char.parse("0"); |
-  //Nat.eql(m)(Nat.1)<() Char> | Char.parse("1"); |
-  //Nat.eql(m)(Nat.2)<() Char> | Char.parse("2"); |
-  //Nat.eql(m)(Nat.3)<() Char> | Char.parse("3"); |
-  //Nat.eql(m)(Nat.4)<() Char> | Char.parse("4"); |
-  //Nat.eql(m)(Nat.5)<() Char> | Char.parse("5"); |
-  //Nat.eql(m)(Nat.6)<() Char> | Char.parse("6"); |
-  //Nat.eql(m)(Nat.7)<() Char> | Char.parse("7"); |
-  //Nat.eql(m)(Nat.8)<() Char> | Char.parse("8"); |
-  //Nat.eql(m)(Nat.9)<() Char> | Char.parse("9"); |
-  //Nat.eql(m)(Nat.10)<() Char> | Char.parse("a"); |
-  //Nat.eql(m)(Nat.11)<() Char> | Char.parse("b"); |
-  //Nat.eql(m)(Nat.12)<() Char> | Char.parse("c"); |
-  //Nat.eql(m)(Nat.13)<() Char> | Char.parse("d"); |
-  //Nat.eql(m)(Nat.14)<() Char> | Char.parse("e"); |
-  //Nat.eql(m)(Nat.15)<() Char> | Char.parse("f"); |
-    //Char.parse("#");;;;;;;;;;;;;;;;
-    //// TODO: use absurd to cancel this case
-////  Nat.eql(m)(Nat.16)<() Char> | Char.parse("g"); |
-////  Nat.eql(m)(Nat.17)<() Char> | Char.parse("h"); |
-////  Nat.eql(m)(Nat.18)<() Char> | Char.parse("i"); |
-////  Nat.eql(m)(Nat.19)<() Char> | Char.parse("j"); |
-////  Nat.eql(m)(Nat.20)<() Char> | Char.parse("k"); |
-////  Nat.eql(m)(Nat.21)<() Char> | Char.parse("l"); |
-////  Nat.eql(m)(Nat.22)<() Char> | Char.parse("m"); |
-////  Nat.eql(m)(Nat.23)<() Char> | Char.parse("n"); |
-////  Nat.eql(m)(Nat.24)<() Char> | Char.parse("o"); |
-////  Nat.eql(m)(Nat.25)<() Char> | Char.parse("p"); |
-////  Nat.eql(m)(Nat.26)<() Char> | Char.parse("q"); |
-////  Nat.eql(m)(Nat.27)<() Char> | Char.parse("r"); |
-////  Nat.eql(m)(Nat.28)<() Char> | Char.parse("s"); |
-////  Nat.eql(m)(Nat.30)<() Char> | Char.parse("t"); |
-////  Nat.eql(m)(Nat.31)<() Char> | Char.parse("u"); |
-////  Nat.eql(m)(Nat.32)<() Char> | Char.parse("v"); |
+Nat.show.digit(n: Nat, base: Nat): Char
+  let m = Nat.mod(n, base)
+  case Nat.eql(m, 0):  | Char.parse("0"); |
+  case Nat.eql(m, 1):  | Char.parse("1"); |
+  case Nat.eql(m, 2):  | Char.parse("2"); |
+  case Nat.eql(m, 3):  | Char.parse("3"); |
+  case Nat.eql(m, 4):  | Char.parse("4"); |
+  case Nat.eql(m, 5):  | Char.parse("5"); |
+  case Nat.eql(m, 6):  | Char.parse("6"); |
+  case Nat.eql(m, 7):  | Char.parse("7"); |
+  case Nat.eql(m, 8):  | Char.parse("8"); |
+  case Nat.eql(m, 9):  | Char.parse("9"); |
+  case Nat.eql(m, 10): | Char.parse("a"); |
+  case Nat.eql(m, 11): | Char.parse("b"); |
+  case Nat.eql(m, 12): | Char.parse("c"); |
+  case Nat.eql(m, 13): | Char.parse("d"); |
+  case Nat.eql(m, 14): | Char.parse("e"); |
+  case Nat.eql(m, 15): | Char.parse("f"); |
+    Char.parse("#");;;;;;;;;;;;;;;;
+   // TODO: use absurd to cancel this case
+ // case Nat.eql(m, 16): | Char.parse("g"); |
+ // case Nat.eql(m, 17): | Char.parse("h"); |
+ // case Nat.eql(m, 18): | Char.parse("i"); |
+ // case Nat.eql(m, 19): | Char.parse("j"); |
+ // case Nat.eql(m, 20): | Char.parse("k"); |
+ // case Nat.eql(m, 21): | Char.parse("l"); |
+ // case Nat.eql(m, 22): | Char.parse("m"); |
+ // case Nat.eql(m, 23): | Char.parse("n"); |
+ // case Nat.eql(m, 24): | Char.parse("o"); |
+ // case Nat.eql(m, 25): | Char.parse("p"); |
+ // case Nat.eql(m, 26): | Char.parse("q"); |
+ // case Nat.eql(m, 27): | Char.parse("r"); |
+ // case Nat.eql(m, 28): | Char.parse("s"); |
+ // case Nat.eql(m, 30): | Char.parse("t"); |
+ // case Nat.eql(m, 31): | Char.parse("u"); |
+ // case Nat.eql(m, 32): | Char.parse("v"); |
 
+Nat.show_base: Nat -> Nat -> String
+  (n) (base) Nat.show.aux(n, base, "")
 
-//Nat.show: Nat -> String
-  //(n) Nat.show.aux(n)(Nat.10)("")
-
-//Nat.show_base: Nat -> Nat -> String
-  //(n) (base) Nat.show.aux(n)(base)("")
+Nat.show(n: Nat): String
+  Nat.show_base(n, 10)
 
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
 
-Nat.succ_isnt_zero(n: Nat, e: Equal(Nat)(Nat.succ(n))(Nat.zero)): Empty
+Nat.succ_isnt_zero(n: Nat, e: Equal(Nat, Nat.succ(n), Nat.zero)): Empty
   def P = ((x) case x: | Empty; | Unit;) :: Nat -> Type
-  Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><P>(e)(Unit.new)
+  Equal.rewrite<Nat, Nat.succ(n), Nat.zero, P>(e, Unit.new)
 
-//Nat.sum: Nat -> Nat
-  //(n) Nat.sum.tco(n)(Nat.zero)
+Nat.sum(n: Nat): Nat
+  Nat.sum.go(n, Nat.zero)
 
-//Nat.sum.tco: Nat -> Nat -> Nat //loop//
-  //(n) (r)
-  //n<() Nat>
-  //| r;
-  //| (n.pred) Nat.sum.tco(n.pred)(Nat.add(n)(r));
+Nat.sum.go(n: Nat , r: Nat): Nat //loop//
+  case n:
+  | r;
+  | Nat.sum.go(n.pred, Nat.add(n, r));
 
-//Nat.to_base: Nat -> Nat -> List(Nat)
-  //(base) (nat)
-  //Nat.to_base.go(base)(nat)(List.nil<Nat>)
+Nat.to_base(base: Nat, nat: Nat): List(Nat)
+  Nat.to_base.go(base, nat, List.nil<Nat>)
 
-//Nat.to_base.go: Nat -> Nat -> List(Nat) -> List(Nat) //loop//
-  //(base) (nat) (res)
-  //Nat.div_mod(nat)(base)<() List(Nat)>
-  //| (div) (rem)
-    //let res = List.cons<Nat>(rem)(res)
-    //div<() List(Nat)>
-    //| res;
-    //| (div.pred) Nat.to_base.go(base)(div)(res);;
+Nat.to_base.go(base: Nat, nat: Nat, res: List(Nat)): List(Nat) //loop//
+  case Nat.div_mod(nat, base) as p:
+  | let res = List.cons<Nat>(p.snd, res)
+    case p.fst<() List(Nat)>:
+    | res;
+    | Nat.to_base.go(base, p.fst, res);;
 
 ////base(123, [])
 ////base(12, [3])
 ////base(1, [2,3])
 
-//Nat.to_bits: Nat -> Bits
-  //(n)
-  //n<() Bits>
-  //| Bits.0(Bits.nil);
-  //| (n.pred) Bits.1(Nat.to_bits(n.pred));
+Nat.to_bits(n: Nat): Bits
+  case n:
+  | Bits.0(Bits.nil);
+  | Bits.1(Nat.to_bits(n.pred));
 
-//Nat.to_string: Nat -> String
-  //(n)
-  //n<() String>
-  //| String.cons(Char.parse("z"))(String.nil);
-  //| (n.pred) String.cons(Char.parse("s"))(Nat.to_string(n.pred));
+Nat.to_string(n: Nat): String
+  case n:
+  | String.cons(Char.parse("z"), String.nil);
+  | String.cons(Char.parse("s"), Nat.to_string(n.pred));
 
-//Nat.to_string_base: Nat -> Nat -> String
-  //(base) (nat)
-  //List.fold<Nat><String>
-  //| String.nil;
-  //| (n) (str) String.cons(Nat.apply<Char>(n)(U16.inc)(Char.parse("0")))(str);
-  //| Nat.to_base(base)(nat);
+Nat.to_string_base(base: Nat, nat: Nat): String
+  List.fold<Nat, String>
+  | String.nil;
+  | (n) (str) String.cons(Nat.apply<Char>(n, U16.inc, Char.parse("0")), str);
+  | Nat.to_base(base, nat);
 
-//Nat.to_string_decimal: Nat -> String
-  //Nat.to_string_base(Nat.10)
+Nat.to_string_decimal: Nat -> String
+  Nat.to_string_base(10)

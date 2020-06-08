@@ -1,0 +1,3 @@
+String.intercalate: Π(sep:String) Π(xs:(List String)) String
+  λsep λxs (String.flatten ((<List.intersperse String> sep) xs))
+

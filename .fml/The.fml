@@ -1,0 +1,3 @@
+The: (A: Type) -> (x: A) -> Type
+  (A) (x) self<P: (x: A) -> (self: The(A)(x)) -> Type> -> (term: (x: A) -> P(x)(The.term<A>(x))) -> P(x)(self)
+

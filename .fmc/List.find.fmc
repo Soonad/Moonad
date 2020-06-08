@@ -1,0 +1,3 @@
+List.find: ∀(A:*) Π(cond:Π(:A) Bool) Π(xs:(List A)) (Maybe A)
+  ΛA λcond λxs ((<xs λxs.self (Maybe A)> <Maybe.none A>) λxs.head λxs.tail ((<(cond xs.head) λself.self (Maybe A)> (<Maybe.some A> xs.head)) ((<List.find A> cond) xs.tail)))
+

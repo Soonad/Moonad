@@ -1,3 +1,3 @@
 U16: *
-  ∀u16(P:Π(:U16) *) Π(new:Π(a:(Word 16)) (P (U16.new a))) (P u16)
+  ∀self(P:Π(self:U16) *) Π(new:Π(a:(Word 16)) (P (U16.new a))) (P self)
 

@@ -37,11 +37,11 @@ Bool.eql(a: Bool, b: Bool): Bool
 
 // Dependent elimination of Bool.
 Bool.elim(b: Bool): <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
-  <P> (t) (f) b<P>(t)(f)
+  <P> (t) (f) b<P>(t, f)
 
 // If-then-else
 Bool.if <A: Type> (x: Bool) (t: A) (f: A) : A
-  case Bool.eql(x)(Bool.false):
+  case Bool.eql(x, Bool.false):
   | f;
   | t;
 
@@ -77,19 +77,19 @@ Bool.false_isnt_true: Not(Equal(Bool, Bool.false, Bool.true))
   (e) Equal.rewrite<Bool, Bool.false, Bool.true, P>(e, Unit.new)
 
 //// Proof that true != false
-Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
-  (e) Equal.rewrite<Bool,Bool.true,Bool.false><(b) case b: |Unit; |Empty;>(e)(Unit.new)
+Bool.true_isnt_false: Not(Equal(Bool, Bool.true, Bool.false))
+  (e) Equal.rewrite<Bool,Bool.true,Bool.false, (b) case b: |Unit; |Empty;>(e, Unit.new)
 
 // Bool that is provably different from the input
-//Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
-  //(a)
-  //a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>
-  //| Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>;
-  //| Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>;
+Bool.test.different_elem: (a: Bool) -> Subset(Bool, (b) Not(Equal(Bool, a, b)))
+  (a)
+  a<(self) Subset(Bool, (b) Not(Equal(Bool, self, b)))>
+  | Subset.new<Bool, (b) Not(Equal(Bool, Bool.true, b))>(Bool.false)<Bool.true_isnt_false>;
+  | Subset.new<Bool, (b) Not(Equal(Bool, Bool.false, b))>(Bool.true)<Bool.false_isnt_true>;
 
-//// Proof that not(not(b)) == b
-//Bool.double_negation_theorem(b: Bool): Equal(_, Bool.not(Bool.not(b)), b)
-  //case b:
-  //| Equal.to<_, Bool.true>;
-  //| Equal.to<_, Bool.false>;
-  //: Equal(_, Bool.not(Bool.not(b)), b);
+// Proof that not(not(b)) == b
+Bool.double_negation_theorem(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
+  case b:
+  | Equal.to<_, Bool.true>;
+  | Equal.to<_, Bool.false>;
+  : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);

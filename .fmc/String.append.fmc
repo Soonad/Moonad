@@ -1,0 +1,3 @@
+String.append: Π(as:String) Π(a:Char) String
+  λas λa ((<as λas.self String> (String.pure a)) λas.head λas.tail ((String.cons as.head) ((String.append as.tail) a)))
+

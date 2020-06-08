@@ -1,3 +1,3 @@
-U16.gtn: U16 -> U16 -> Bool
-  (a) (b) a<() Bool>((a_val) b<() Bool>((b_val) Word.gtn<16>(a_val)(b_val)))
+U16.gtn: (a: U16) -> (b: U16) -> Bool
+  (a) (b) a<(self) Bool>((a_val) b<(self) Bool>((b_val) Word.gtn<16>(a_val)(b_val)))
 

@@ -1,0 +1,3 @@
+List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> (f: A -> B -> C) -> (as: List(A)) -> (bs: List(B)) -> List(C)
+  <A> <B> <C> (f) (as) (bs) as<(as.self) List(C)>([C;])((as.head) (as.tail) bs<(bs.self) List(C)>([C;])((bs.head) (bs.tail) List.cons<C>(f(as.head)(bs.head))(List.zip_with<A><B><C>(f)(as.tail)(bs.tail))))
+

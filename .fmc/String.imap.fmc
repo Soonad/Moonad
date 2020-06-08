@@ -1,0 +1,3 @@
+String.imap: Π(f:Π(:Nat) Π(:Char) Char) Π(xs:String) String
+  λf λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((String.cons ((f 0) xs.head)) ((String.imap λn (f (Nat.succ n))) xs.tail)))
+

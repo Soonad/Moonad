@@ -1,0 +1,3 @@
+F64.Segment.new: Π(a:F64.V3) Π(b:F64.V3) F64.Segment
+  λa λb ΛP λnew ((new a) b)
+

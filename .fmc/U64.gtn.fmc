@@ -1,0 +1,3 @@
+U64.gtn: Π(a:U64) Π(b:U64) Bool
+  λa λb (<a λself Bool> λa_val (<b λself Bool> λb_val ((<Word.gtn 64> a_val) b_val)))
+

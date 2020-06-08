@@ -1,0 +1,3 @@
+String.take: Π(n:Nat) Π(xs:String) String
+  λn λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((<n λn.self String> String.nil) λn.pred ((String.cons xs.head) ((String.take n.pred) xs.tail))))
+

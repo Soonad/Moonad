@@ -1,0 +1,3 @@
+Or.rgt: <A: Type> -> <B: Type> -> (x: B) -> Or(A)(B)
+  <A> <B> (x) Either.right<A><B>(x)
+

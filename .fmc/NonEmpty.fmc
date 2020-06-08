@@ -1,0 +1,3 @@
+NonEmpty: Π(A:*) *
+  λA ∀self(P:Π(self:(NonEmpty A)) *) Π(end:Π(value:A) (P (<NonEmpty.end A> value))) Π(cons:Π(head:A) Π(tail:(NonEmpty A)) (P ((<NonEmpty.cons A> head) tail))) (P self)
+

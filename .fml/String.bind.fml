@@ -1,0 +1,3 @@
+String.bind: (xs: String) -> (f: Char -> String) -> String
+  (xs) (f) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) String.concat(f(xs.head))(String.bind(xs.tail)(f)))
+

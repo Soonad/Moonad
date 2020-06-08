@@ -1,0 +1,3 @@
+U32.add: Π(a:U32) Π(b:U32) U32
+  λa λb (<a λself U32> λa_val (<b λself U32> λb_val (U32.new ((<Word.add 32> a_val) b_val))))
+

@@ -1,0 +1,3 @@
+Monad: (M: Type -> Type) -> Type
+  (M) self<P: (self: Monad(M)) -> Type> -> (new: (bind: <A: Type> -> <B: Type> -> M(A) -> (A -> M(B)) -> M(B)) -> (pure: <A: Type> -> A -> M(A)) -> P(Monad.new<M>(bind)(pure))) -> P(self)
+

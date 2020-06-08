@@ -1,0 +1,3 @@
+Nat.sum.go: (n: Nat) -> (r: Nat) -> Nat
+  (n) (r) n<(n.self) Nat>(r)((n.pred) Nat.sum.go(n.pred)(Nat.add(n)(r)))
+
