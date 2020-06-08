@@ -1,0 +1,3 @@
+Bits.parse_hex: String -> Bits
+  (str) Bits.parse_hex.tco(str)(Bits.nil)
+

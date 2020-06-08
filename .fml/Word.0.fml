@@ -1,0 +1,3 @@
+Word.0: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size))
+  Word.w0
+

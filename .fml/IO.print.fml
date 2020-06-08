@@ -1,0 +1,3 @@
+IO.print: (str: String) -> IO(Unit)
+  (str) IO.log<Unit>(str)((skip) IO.end<Unit>(Unit.new))
+

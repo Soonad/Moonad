@@ -1,0 +1,3 @@
+List.concat: <A: Type> -> (as: List(A)) -> (bs: List(A)) -> List(A)
+  <A> (as) (bs) as<(as.self) List(A)>(bs)((as.head) (as.tail) List.cons<A>(as.head)(List.concat<A>(as.tail)(bs)))
+

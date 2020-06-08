@@ -1,0 +1,3 @@
+Empty.absurd: (x: Empty) -> (P: Type) -> P
+  (x) (P) x<(x.self) P>
+

@@ -1,0 +1,3 @@
+U16.sub: (a: U16) -> (b: U16) -> U16
+  (a) (b) a<(self) U16>((a_val) b<(self) U16>((b_val) U16.new(Word.sub<16>(a_val)(b_val))))
+

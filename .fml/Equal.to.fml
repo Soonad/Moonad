@@ -1,0 +1,3 @@
+Equal.to: <A: Type> -> <a: A> -> Equal(A)(a)(a)
+  <A> <a> <P> (to) to
+

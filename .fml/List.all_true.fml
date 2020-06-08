@@ -1,0 +1,3 @@
+List.all_true: (list: List(Bool)) -> Bool
+  (list) List.all<Bool>((x) x)(list)
+
