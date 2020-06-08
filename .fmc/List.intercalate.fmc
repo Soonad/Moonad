@@ -1,0 +1,3 @@
+List.intercalate: ∀(A:*) Π(sep:(List A)) Π(xs:(List (List A))) (List A)
+  ΛA λsep λxs (<List.flatten A> ((<List.intersperse (List A)> sep) xs))
+

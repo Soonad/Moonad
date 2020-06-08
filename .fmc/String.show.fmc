@@ -1,0 +1,3 @@
+String.show: Π(xs:String) String
+  λxs (((String.Builder.cons '"') (String.to_builder xs)) (String.pure '"'))
+

@@ -1,0 +1,3 @@
+String.foldr: <B: Type> -> (b: B) -> (f: Char -> B -> B) -> (xs: String) -> B
+  <B> (b) (f) (xs) String.foldr.go<B>(b)(f)(xs)((x) x)
+

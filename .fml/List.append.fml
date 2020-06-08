@@ -1,0 +1,3 @@
+List.append: <A: Type> -> (as: List(A)) -> (a: A) -> List(A)
+  <A> (as) (a) as<(as.self) List(A)>(List.pure<A>(a))((as.head) (as.tail) List.cons<A>(as.head)(List.append<A>(as.tail)(a)))
+

@@ -1,0 +1,3 @@
+List.reverse.go: ∀(A:*) Π(xs:(List A)) Π(res:(List A)) (List A)
+  ΛA λxs λres ((<xs λxs.self (List A)> res) λxs.head λxs.tail ((<List.reverse.go A> xs.tail) ((<List.cons A> xs.head) res)))
+

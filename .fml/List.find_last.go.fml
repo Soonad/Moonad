@@ -1,0 +1,3 @@
+List.find_last.go: <A: Type> -> (xs: List(A)) -> (f: A -> Nat -> Bool) -> (n: Nat) -> (res: Maybe(Pair(A)(Nat))) -> Maybe(Pair(A)(Nat))
+  <A> (xs) (f) (n) (res) xs<(xs.self) Maybe(Pair(A)(Nat))>(res)((xs.head) (xs.tail) let res = f(xs.head)(n)<(self.self) Maybe(Pair(A)(Nat))>(Maybe.some<Pair(A)(Nat)>(Pair.new<A><Nat>(xs.head)(n)))(res); List.find_last.go<A>(xs.tail)(f)(Nat.succ(n))(res))
+

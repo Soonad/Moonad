@@ -1,0 +1,3 @@
+List.null: ∀(A:*) Π(xs:(List A)) Bool
+  ΛA λxs ((<xs λxs.self Bool> Bool.true) λxs.head λxs.tail Bool.false)
+

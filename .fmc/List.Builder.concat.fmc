@@ -1,0 +1,3 @@
+List.Builder.concat: ∀(A:*) Π(a:(List.Builder A)) Π(b:(List.Builder A)) (List.Builder A)
+  ΛA λa λb λx (a (b x))
+

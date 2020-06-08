@@ -1,0 +1,3 @@
+List.show.go: ∀(A:*) Π(f:Π(:A) String) Π(xs:(List A)) Π(sb:String.Builder) String
+  ΛA λf λxs λsb ((<xs λxs.self String> (sb (String.pure ']'))) λxs.head λxs.tail (((<List.show.go A> f) xs.tail) ((String.Builder.concat (String.to_builder (f xs.head))) ((String.Builder.cons ',') sb))))
+
