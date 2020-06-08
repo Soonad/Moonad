@@ -1,3 +1,0 @@
-List.foldr: ∀(A:*) ∀(B:*) Π(b:B) Π(f:Π(:A) Π(:B) B) Π(xs:(List A)) B
-  ΛA ΛB λb λf λxs ((((<<List.foldr.go A> B> b) f) xs) λx x)
-

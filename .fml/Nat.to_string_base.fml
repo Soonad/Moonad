@@ -1,0 +1,3 @@
+Nat.to_string_base: (base: Nat) -> (nat: Nat) -> String
+  (base) (nat) List.fold<Nat><String>(String.nil)((n) (str) String.cons(Nat.apply<Char>(n)(U16.inc)(Char.parse("0")))(str))(Nat.to_base(base)(nat))
+

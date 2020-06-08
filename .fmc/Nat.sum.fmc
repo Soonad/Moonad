@@ -1,0 +1,3 @@
+Nat.sum: Π(n:Nat) Nat
+  λn ((Nat.sum.go n) Nat.zero)
+

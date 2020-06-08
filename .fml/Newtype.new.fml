@@ -1,0 +1,3 @@
+Newtype.new: <A: Type> -> <tag: String> -> (val: A) -> Newtype(A)(tag)
+  <A> <tag> (val) <P> (new) new<tag>(val)
+
