@@ -1,0 +1,3 @@
+Char.parse.type: Π(str:String) *
+  λstr ((<str λstr.self *> Unit) λstr.head λstr.tail Char)
+

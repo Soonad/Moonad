@@ -1,0 +1,3 @@
+IO.log: ∀(A:*) Π(str:String) Π(nxt:Π(:Unit) (IO A)) (IO A)
+  ΛA λstr λnxt ΛP λend λlog λget ((log str) nxt)
+

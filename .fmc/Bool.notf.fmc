@@ -1,0 +1,3 @@
+Bool.notf: Π(a:Bool) Bool
+  λa ΛP λt λf ((<a λa.self (P (Bool.notf a.self))> f) t)
+

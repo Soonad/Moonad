@@ -1,0 +1,3 @@
+Word.nil: (Word Nat.zero)
+  ΛP λnil λw0 λw1 nil
+

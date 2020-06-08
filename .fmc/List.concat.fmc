@@ -1,0 +1,3 @@
+List.concat: ∀(A:*) Π(as:(List A)) Π(bs:(List A)) (List A)
+  ΛA λas λbs ((<as λas.self (List A)> bs) λas.head λas.tail ((<List.cons A> as.head) ((<List.concat A> as.tail) bs)))
+

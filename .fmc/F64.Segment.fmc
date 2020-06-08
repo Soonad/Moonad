@@ -1,0 +1,3 @@
+F64.Segment: *
+  ∀self(P:Π(self:F64.Segment) *) Π(new:Π(a:F64.V3) Π(b:F64.V3) (P ((F64.Segment.new a) b))) (P self)
+

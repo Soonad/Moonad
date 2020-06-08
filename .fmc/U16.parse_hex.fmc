@@ -1,0 +1,3 @@
+U16.parse_hex: Π(str:String) U16
+  λstr (U16.new ((Word.from_bits 16) (Bits.parse_hex str)))
+

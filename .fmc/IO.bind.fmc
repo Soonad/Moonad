@@ -1,0 +1,3 @@
+IO.bind: ∀(A:*) ∀(B:*) Π(a:(IO A)) Π(f:Π(:A) (IO B)) (IO B)
+  ΛA ΛB λa λf (((<a λa.self (IO B)> λa.val (f a.val)) λa.str λa.nxt ((<IO.log B> a.str) λx ((<<IO.bind A> B> (a.nxt x)) f))) λa.nxt (<IO.get B> λx ((<<IO.bind A> B> (a.nxt x)) f)))
+

@@ -1,0 +1,3 @@
+Nat.apply: ∀(A:*) Π(n:Nat) Π(f:Π(:A) A) Π(x:A) A
+  Nat.apply.tco
+

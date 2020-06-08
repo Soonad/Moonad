@@ -1,0 +1,3 @@
+U16.mul: Π(a:U16) Π(b:U16) U16
+  λa λb (<a λself U16> λa_val (<b λself U16> λb_val (U16.new ((<Word.mul 16> a_val) b_val))))
+

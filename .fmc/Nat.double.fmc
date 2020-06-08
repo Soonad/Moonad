@@ -1,0 +1,3 @@
+Nat.double: Π(n:Nat) Nat
+  λn ((<n λn.self Nat> Nat.zero) λn.pred (Nat.succ (Nat.succ (Nat.double n.pred))))
+

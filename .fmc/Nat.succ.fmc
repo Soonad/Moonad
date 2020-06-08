@@ -1,0 +1,3 @@
+Nat.succ: Π(pred:Nat) Nat
+  λpred ΛP λzero λsucc (succ pred)
+

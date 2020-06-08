@@ -1,0 +1,3 @@
+Word.gte: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) Bool
+  Λsize λa λb (((<((<Word.cmp size> a) b) λ Bool> Bool.false) Bool.true) Bool.true)
+

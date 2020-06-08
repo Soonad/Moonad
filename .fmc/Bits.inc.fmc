@@ -1,0 +1,3 @@
+Bits.inc: Π(a:Bits) Bits
+  λa (((<a λa.self Bits> Bits.nil) λa.pred (Bits.1 a.pred)) λa.pred (Bits.0 (Bits.inc a.pred)))
+
