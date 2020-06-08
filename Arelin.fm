@@ -1,14 +1,14 @@
 //Arelin.Game.PlayerId : Type 
    //F64
 
-//Arelin.Game.ModelId : Type 
-  //F64
+Arelin.Game.ModelId : Type 
+  Bool
 
-//Arelin.Game.ActionId : Type
-  //F64
+Arelin.Game.ActionId : Type
+  Bool
 
-//Arelin.Game.SideId : Type
-  //F64
+Arelin.Game.SideId : Type
+  Bool
 
 //T Arelin.Game.Hitbox 
 //| nbox;
