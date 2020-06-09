@@ -1,0 +1,3 @@
+JSON: *
+  ∀self(P:Π(self:JSON) *) Π(null:(P JSON.null)) Π(bool:Π(x:Bool) (P (JSON.bool x))) Π(number:Π(x:F64) (P (JSON.number x))) Π(string:Π(x:String) (P (JSON.string x))) Π(array:Π(x:(List JSON)) (P (JSON.array x))) Π(object:Π(x:(List ((Pair String) JSON))) (P (JSON.object x))) (P self)
+

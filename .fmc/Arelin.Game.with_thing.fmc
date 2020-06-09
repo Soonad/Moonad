@@ -1,0 +1,3 @@
+Arelin.Game.with_thing: Π(pid:Arelin.Game.PlayerId) Π(fn:Arelin.Game.TxFunction) Π(gm:Arelin.Game) Arelin.Game
+  λpid λfn λgm $effect=:Arelin.Game.TxFunction λthi $thi.pid=(Arelin.Thing.get_pid thi);((<((F64.eql thi.pid) pid) λself.self Arelin.Thing> (fn thi)) thi);((Arelin.Game.map_stage effect) gm)
+

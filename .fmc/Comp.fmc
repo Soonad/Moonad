@@ -1,0 +1,3 @@
+Comp: *
+  ∀self(P:Π(self:Comp) *) Π(var:Π(name:String) (P (Comp.var name))) Π(lam:Π(name:String) Π(body:Comp) (P ((Comp.lam name) body))) Π(app:Π(func:Comp) Π(argm:Comp) (P ((Comp.app func) argm))) Π(let:Π(name:String) Π(expr:Comp) Π(body:Comp) (P (((Comp.let name) expr) body))) Π(tru:(P Comp.tru)) Π(fal:(P Comp.fal)) (P self)
+

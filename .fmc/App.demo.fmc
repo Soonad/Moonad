@@ -1,0 +1,3 @@
+App.demo: (App Nat)
+  ((((<App.new Nat> 0) λstate $count=(Nat.to_string_decimal state);(App.Render.text ((String.concat "Count: ") count))) λinput λstate ((<input λinput.self Nat> λinput.keycode (Nat.succ state)) λinput.post (Nat.succ state))) λstate state)
+

@@ -1,0 +1,3 @@
+Arelin.Game.Input: *
+  ∀self(P:Π(self:Arelin.Game.Input) *) Π(sdir:Π(dir:F64.V3) (P (Arelin.Game.Input.sdir dir))) Π(key0:Π(pos:F64.V3) (P (Arelin.Game.Input.key0 pos))) Π(key1:Π(pos:F64.V3) (P (Arelin.Game.Input.key1 pos))) Π(key2:Π(pos:F64.V3) (P (Arelin.Game.Input.key2 pos))) Π(key3:Π(pos:F64.V3) (P (Arelin.Game.Input.key3 pos))) Π(key4:Π(pos:F64.V3) (P (Arelin.Game.Input.key4 pos))) Π(key5:Π(pos:F64.V3) (P (Arelin.Game.Input.key5 pos))) Π(cmsg:Π(txt:String) (P (Arelin.Game.Input.cmsg txt))) (P self)
+

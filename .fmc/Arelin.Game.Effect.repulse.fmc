@@ -1,0 +1,3 @@
+Arelin.Game.Effect.repulse: Π(mag:F64) Arelin.Game.Effect
+  λmag ΛP λheal λdamage λrepulse λimpulse λslow λhaste λshield λsilence λroot λstun λteleport_to (repulse mag)
+

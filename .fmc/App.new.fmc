@@ -1,0 +1,3 @@
+App.new: ∀(S:*) Π(init:S) Π(draw:Π(:S) App.Render) Π(when:Π(:App.Input) Π(:S) S) Π(tick:Π(:S) S) (App S)
+  ΛS λinit λdraw λwhen λtick ΛP λnew ((((new init) draw) when) tick)
+

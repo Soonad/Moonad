@@ -1,0 +1,3 @@
+Arelin.Thing.is_walking: (self: Arelin.Thing) -> Bool
+  (self) let this.pad = Arelin.Thing.get_pad(self); F64.gtn(F64.V3.len(this.pad))(F64.0)
+

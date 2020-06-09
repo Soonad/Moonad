@@ -1,0 +1,3 @@
+Comp.let: (name: String) -> (expr: Comp) -> (body: Comp) -> Comp
+  (name) (expr) (body) <P> (var) (lam) (app) (let) (tru) (fal) let(name)(expr)(body)
+

@@ -1,0 +1,3 @@
+App.Render: Type
+  self<P: (self: App.Render) -> Type> -> (text: (str: String) -> P(App.Render.text(str))) -> P(self)
+

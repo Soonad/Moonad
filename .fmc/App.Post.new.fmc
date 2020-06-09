@@ -1,0 +1,3 @@
+App.Post.new: Π(date:U64) Π(auth:String) Π(head:String) Π(body:String) App.Post
+  λdate λauth λhead λbody ΛP λnew ((((new date) auth) head) body)
+

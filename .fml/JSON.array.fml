@@ -1,0 +1,3 @@
+JSON.array: (x: List(JSON)) -> JSON
+  (x) <P> (null) (bool) (number) (string) (array) (object) array(x)
+
