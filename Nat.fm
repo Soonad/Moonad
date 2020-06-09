@@ -117,22 +117,6 @@ Nat.pred(n: Nat): Nat
   | Nat.zero;
   | n.pred;
 
-Nat.show.dec(n: Nat): Char
-  case Nat.eql(n, 0): | '0'; |
-  case Nat.eql(n, 1): | '1'; |
-  case Nat.eql(n, 2): | '2'; |
-  case Nat.eql(n, 3): | '3'; |
-  case Nat.eql(n, 4): | '4'; |
-  case Nat.eql(n, 5): | '5'; |
-  case Nat.eql(n, 6): | '6'; |
-  case Nat.eql(n, 7): | '7'; |
-  case Nat.eql(n, 8): | '8'; |
-  case Nat.eql(n, 9): | '9';
-  | '#';;;;;;;;;;
-
-Nat.show(n: Nat): String
-  String.from_list(List.map<,>(Nat.show.dec,Nat.to_base(10,n)))
-
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
 
@@ -180,3 +164,6 @@ Nat.to_string_base(base: Nat, nat: Nat): String
 
 Nat.to_string_decimal: Nat -> String
   Nat.to_string_base(10)
+
+Nat.show(n: Nat): String
+  Nat.to_string_decimal(10)
