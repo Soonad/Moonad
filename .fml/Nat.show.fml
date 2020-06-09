@@ -1,3 +1,3 @@
 Nat.show: (n: Nat) -> String
-  (n) String.from_list(List.map<Nat><Char>(Nat.show.dec)(Nat.to_base(10)(n)))
+  (n) Nat.to_string_decimal(10)
 

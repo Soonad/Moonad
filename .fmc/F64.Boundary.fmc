@@ -1,3 +1,3 @@
 F64.Boundary: *
-  ∀self(P:Π(self:F64.Boundary) *) Π(new:Π(pts:(List F64.V3)) (P (F64.Boundary.new pts))) (P self)
+  ∀self_F64.Boundary(P:Π(self:F64.Boundary) *) Π(new:Π(pts:(List F64.V3)) (P (F64.Boundary.new pts))) (P self_F64.Boundary)
 

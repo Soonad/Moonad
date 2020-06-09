@@ -1,3 +1,3 @@
 Nat: Type
-  self<P: (self: Nat) -> Type> -> (zero: P(Nat.zero)) -> (succ: (pred: Nat) -> P(Nat.succ(pred))) -> P(self)
+  self_Nat<P: (self: Nat) -> Type> -> (zero: P(Nat.zero)) -> (succ: (pred: Nat) -> P(Nat.succ(pred))) -> P(self_Nat)
 

@@ -1,3 +1,3 @@
 Word: Π(n:Nat) *
-  λn ∀self(P:Π(n:Nat) Π(self:(Word n)) *) Π(nil:((P Nat.zero) Word.nil)) Π(w0:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.w0 size> pred))) Π(w1:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.w1 size> pred))) ((P n) self)
+  λn ∀self_Word(P:Π(n:Nat) Π(self:(Word n)) *) Π(nil:((P Nat.zero) Word.nil)) Π(w0:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.w0 size> pred))) Π(w1:∀(size:Nat) Π(pred:(Word size)) ((P (Nat.succ size)) (<Word.w1 size> pred))) ((P n) self_Word)
 

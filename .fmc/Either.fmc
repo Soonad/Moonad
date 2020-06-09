@@ -1,3 +1,3 @@
 Either: Π(A:*) Π(B:*) *
-  λA λB ∀self(P:Π(self:((Either A) B)) *) Π(left:Π(value:A) (P (<<Either.left A> B> value))) Π(right:Π(value:B) (P (<<Either.right A> B> value))) (P self)
+  λA λB ∀self_Either(P:Π(self:((Either A) B)) *) Π(left:Π(value:A) (P (<<Either.left A> B> value))) Π(right:Π(value:B) (P (<<Either.right A> B> value))) (P self_Either)
 

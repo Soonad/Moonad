@@ -1,3 +1,3 @@
 Either: (A: Type) -> (B: Type) -> Type
-  (A) (B) self<P: (self: Either(A)(B)) -> Type> -> (left: (value: A) -> P(Either.left<A><B>(value))) -> (right: (value: B) -> P(Either.right<A><B>(value))) -> P(self)
+  (A) (B) self_Either<P: (self: Either(A)(B)) -> Type> -> (left: (value: A) -> P(Either.left<A><B>(value))) -> (right: (value: B) -> P(Either.right<A><B>(value))) -> P(self_Either)
 

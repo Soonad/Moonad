@@ -1,3 +1,3 @@
 Bits: Type
-  self<P: (self: Bits) -> Type> -> (nil: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.b0(pred))) -> (b1: (pred: Bits) -> P(Bits.b1(pred))) -> P(self)
+  self_Bits<P: (self: Bits) -> Type> -> (nil: P(Bits.nil)) -> (b0: (pred: Bits) -> P(Bits.b0(pred))) -> (b1: (pred: Bits) -> P(Bits.b1(pred))) -> P(self_Bits)
 

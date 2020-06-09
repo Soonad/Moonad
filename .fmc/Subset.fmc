@@ -1,3 +1,3 @@
 Subset: Π(A:*) Π(B:Π(:A) *) *
-  λA λB ∀self(P:Π(self:((Subset A) B)) *) Π(new:Π(a:A) ∀(b:(B a)) (P <(<<Subset.new A> B> a) b>)) (P self)
+  λA λB ∀self_Subset(P:Π(self:((Subset A) B)) *) Π(new:Π(a:A) ∀(b:(B a)) (P <(<<Subset.new A> B> a) b>)) (P self_Subset)
 

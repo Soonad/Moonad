@@ -11,9 +11,6 @@ String.to_list(str: String): List(Char)
   | List.nil<>;
   | List.cons<>(str.head)(String.to_list(str.tail));
 
-string_is_list : Equal(Type,String,List(Char))
-  Equal.to<Type,String>
-
 String.from_list(xs: List(Char)) : String
   case xs:
   | String.nil;

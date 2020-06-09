@@ -1,3 +1,0 @@
-string_is_list: (((Equal *) String) (List Char))
-  <<Equal.to *> String>
-

@@ -1,3 +1,3 @@
 Nat: *
-  ∀self(P:Π(self:Nat) *) Π(zero:(P Nat.zero)) Π(succ:Π(pred:Nat) (P (Nat.succ pred))) (P self)
+  ∀self_Nat(P:Π(self:Nat) *) Π(zero:(P Nat.zero)) Π(succ:Π(pred:Nat) (P (Nat.succ pred))) (P self_Nat)
 

@@ -1,3 +1,3 @@
 Parser.Item: *
-  ∀self(P:Π(self:Parser.Item) *) Π(tokens:Π(xs:String) (P (Parser.Item.tokens xs))) Π(label:Π(xs:String) (P (Parser.Item.label xs))) Π(eof:(P Parser.Item.eof)) (P self)
+  ∀self_Parser.Item(P:Π(self:Parser.Item) *) Π(tokens:Π(xs:String) (P (Parser.Item.tokens xs))) Π(label:Π(xs:String) (P (Parser.Item.label xs))) Π(eof:(P Parser.Item.eof)) (P self_Parser.Item)
 

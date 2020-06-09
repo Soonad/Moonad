@@ -1,3 +1,3 @@
 Monad: Π(M:Π(:*) *) *
-  λM ∀self(P:Π(self:(Monad M)) *) Π(new:Π(bind:∀(A:*) ∀(B:*) Π(:(M A)) Π(:Π(:A) (M B)) (M B)) Π(pure:∀(A:*) Π(:A) (M A)) (P ((<Monad.new M> bind) pure))) (P self)
+  λM ∀self_Monad(P:Π(self:(Monad M)) *) Π(new:Π(bind:∀(A:*) ∀(B:*) Π(:(M A)) Π(:Π(:A) (M B)) (M B)) Π(pure:∀(A:*) Π(:A) (M A)) (P ((<Monad.new M> bind) pure))) (P self_Monad)
 

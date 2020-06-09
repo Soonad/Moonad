@@ -1,3 +1,0 @@
-string_is_list: Equal(Type)(String)(List(Char))
-  Equal.to<Type><String>
-

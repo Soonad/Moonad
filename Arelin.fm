@@ -102,8 +102,8 @@ Arelin.Thing.new_thing : Arelin.Thing
     F64.0,                             // mid 
     F64.0,                             // act
     F64.0,                             // sid 
-    Map.new<>,                         // stt 
-    List.nil<>,                        // nam
+    Map.new<>,                         // stt
+    String.nil,                        // nam
     List.nil<>,                        // lit
     F64.0,                             // tik
     F64.V3.new(F64.0,F64.0,F64.0),     // pos
