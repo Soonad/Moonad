@@ -1,0 +1,30 @@
+Module: Type
+  Map(Export)
+  
+Module.new: Module
+  Map.new<Export>
+
+Module.type(key: String, mod: Module): Type
+  case Map.get<Export>(String.to_bits(key), mod) as got:
+  | Unit;
+  | Export.T(got.value);
+
+Module.get(key: String, mod: Module): Module.type(key, mod)
+  case Map.get<Export>(String.to_bits(key), mod) as got:
+  | Unit.new;
+  | Export.value(got.value);
+  : case got.self:
+    | Unit;
+    | Export.T(got.self.value);;
+
+Module.set(key: String, val: Export, mod: Module): Module
+  Map.set<Export>(String.to_bits(key), val, mod)
+
+Module.from(defs: List(Pair(String, Export))): Module
+  case defs:
+  | Module.new;
+  | case defs.head:
+    | def key = defs.head.fst 
+      def val = defs.head.snd
+      def mod = Module.from(defs.tail)
+      Module.set(key, val, mod);;

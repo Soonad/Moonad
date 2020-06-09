@@ -1,3 +1,19 @@
+//A.my_lib: Module
+  //Module.from({
+    //"nat": Export.new(Nat, 42),
+    //"yes": Export.new(Bool, Bool.true),
+    //"no": Export.new(Bool, Bool.false),
+  //})
+
+//my_nat: Nat
+  //Module.get("nat", my_lib)
+
+
+
+
+//A: List(Pair(String, Bool))
+  //{"foo": Bool.true, "bar": Bool.false}
+
 //Fun: Type
   //Nat -> Nat
 

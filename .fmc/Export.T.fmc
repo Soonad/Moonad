@@ -1,0 +1,3 @@
+Export.T: Π(ex:Export) *
+  λex (<ex λex.self *> λex.T λex.value ex.T)
+

@@ -1,0 +1,3 @@
+Export: *
+  ∀self(P:Π(self:Export) *) Π(new:Π(T:*) Π(value:T) (P ((Export.new T) value))) (P self)
+

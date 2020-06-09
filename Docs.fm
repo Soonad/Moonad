@@ -55,3 +55,13 @@ Docs.a_plus_0_is_a(a: Nat): Equal(Nat, Nat.add(a, 0), a)
     let app = Equal.apply<Nat, Nat, Nat.add(a.pred, Nat.zero), a.pred, Nat.succ, ind>
     app;
   : Equal(Nat, Nat.add(a.self, 0), a.self);
+
+Docs.my_lib: Module
+  Module.from({
+    "nat": Export.new(Nat, 42),
+    "yep": Export.new(Bool, Bool.true),
+    "nop": Export.new(Bool, Bool.false),
+  })
+
+Docs.my_nat: Nat
+  Module.get("nat", Docs.my_lib)

@@ -1,3 +1,0 @@
-ex: <A: Type> -> <B: Type> -> (x: A) -> (y: B) -> A
-  <A> <B> (x) (y) x
-
