@@ -1,0 +1,3 @@
+Parser.bind: ∀(A:*) ∀(B:*) Π(pa:(Parser A)) Π(pf:Π(:A) (Parser B)) (Parser B)
+  ΛA ΛB λpa λpf λs1 ((<(pa s1) λa.self (Parser.Reply B)> λa.state λa.value ((pf a.value) a.state)) λa.state λa.error ((<Parser.Reply.err B> a.state) a.error))
+

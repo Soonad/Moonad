@@ -1,0 +1,3 @@
+Parser.bind: <A: Type> -> <B: Type> -> (pa: Parser(A)) -> (pf: A -> Parser(B)) -> Parser(B)
+  <A> <B> (pa) (pf) (s1) pa(s1)<(a.self) Parser.Reply(B)>((a.state) (a.value) pf(a.value)(a.state))((a.state) (a.error) Parser.Reply.err<B>(a.state)(a.error))
+

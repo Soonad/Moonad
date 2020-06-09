@@ -1,0 +1,3 @@
+Parser.Error.new: (pos: Nat) -> (unx: Maybe(Parser.Item)) -> (exp: List(Parser.Item)) -> Parser.Error
+  (pos) (unx) (exp) <P> (new) (msg) new(pos)(unx)(exp)
+

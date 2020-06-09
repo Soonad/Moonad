@@ -1,0 +1,3 @@
+Nat.show.dec: (n: Nat) -> Char
+  (n) Nat.eql(n)(0)<(self.self) Char>('0')(Nat.eql(n)(1)<(self.self) Char>('1')(Nat.eql(n)(2)<(self.self) Char>('2')(Nat.eql(n)(3)<(self.self) Char>('3')(Nat.eql(n)(4)<(self.self) Char>('4')(Nat.eql(n)(5)<(self.self) Char>('5')(Nat.eql(n)(6)<(self.self) Char>('6')(Nat.eql(n)(7)<(self.self) Char>('7')(Nat.eql(n)(8)<(self.self) Char>('8')(Nat.eql(n)(9)<(self.self) Char>('9')('#'))))))))))
+

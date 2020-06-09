@@ -1,0 +1,3 @@
+Parser.fail: ∀(A:*) Π(msg:String) (Parser A)
+  ΛA λmsg λs1 (<s1 λself (Parser.Reply A)> λpos λstr λerrs ((<Parser.Reply.err A> s1) ((Parser.Error.msg pos) (<List.pure String> msg))))
+

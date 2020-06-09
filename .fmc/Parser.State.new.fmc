@@ -1,0 +1,3 @@
+Parser.State.new: Π(input:String) Parser.State
+  λinput (((Parser.State.make Nat.zero) input) <List.nil Parser.Error>)
+

@@ -1,0 +1,3 @@
+Parser.Reply.val: ∀(A:*) Π(state:Parser.State) Π(value:A) (Parser.Reply A)
+  ΛA λstate λvalue ΛP λval λerr ((val state) value)
+

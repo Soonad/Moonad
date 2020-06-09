@@ -1,0 +1,3 @@
+Parser.State.consumed: (x: Parser.State) -> (y: Parser.State) -> Bool
+  (x) (y) x<(x.self) Bool>((x.pos) (x.str) (x.errs) y<(y.self) Bool>((y.pos) (y.str) (y.errs) Nat.gtn(y.pos)(x.pos)))
+

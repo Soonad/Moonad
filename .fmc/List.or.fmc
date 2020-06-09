@@ -1,0 +1,3 @@
+List.or: Π(list:(List Bool)) Bool
+  λlist ((<List.any Bool> λx x) list)
+

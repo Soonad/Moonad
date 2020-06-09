@@ -1,3 +1,0 @@
-List.all_true: Π(list:(List Bool)) Bool
-  λlist ((<List.all Bool> λx x) list)
-

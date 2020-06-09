@@ -1,0 +1,3 @@
+List.split_at: ∀(A:*) Π(n:Nat) Π(xs:(List A)) ((Pair (List A)) (List A))
+  ΛA λn λxs ((<xs λxs.self ((Pair (List A)) (List A))> ((<<Pair.new (List A)> (List A)> <List.nil A>) <List.nil A>)) λxs.head λxs.tail ((<n λn.self ((Pair (List A)) (List A))> ((<<Pair.new (List A)> (List A)> <List.nil A>) xs)) λn.pred ((<n.pred λn.pred.self ((Pair (List A)) (List A))> ((<<Pair.new (List A)> (List A)> (<List.pure A> xs.head)) xs.tail)) λn.pred.pred (<((<List.split_at A> n.pred) xs.tail) λself ((Pair (List A)) (List A))> λy λz ((<<Pair.new (List A)> (List A)> ((<List.cons A> xs.head) y)) z)))))
+

@@ -1,0 +1,3 @@
+Nat.show.dec: Π(n:Nat) Char
+  λn ((<((Nat.eql n) 0) λself.self Char> '0') ((<((Nat.eql n) 1) λself.self Char> '1') ((<((Nat.eql n) 2) λself.self Char> '2') ((<((Nat.eql n) 3) λself.self Char> '3') ((<((Nat.eql n) 4) λself.self Char> '4') ((<((Nat.eql n) 5) λself.self Char> '5') ((<((Nat.eql n) 6) λself.self Char> '6') ((<((Nat.eql n) 7) λself.self Char> '7') ((<((Nat.eql n) 8) λself.self Char> '8') ((<((Nat.eql n) 9) λself.self Char> '9') '#'))))))))))
+

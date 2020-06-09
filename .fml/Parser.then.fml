@@ -1,0 +1,3 @@
+Parser.then: <A: Type> -> <B: Type> -> (pa: Parser(A)) -> (pb: Parser(B)) -> Parser(B)
+  <A> <B> (pa) (pb) (s1) pa(s1)<(a.self) Parser.Reply(B)>((a.state) (a.value) pb(a.state))((a.state) (a.error) Parser.Reply.err<B>(a.state)(a.error))
+

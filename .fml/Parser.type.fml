@@ -1,0 +1,3 @@
+Parser.type: (A: Type) -> (r: Parser.Reply(A)) -> Type
+  (A) (r) r<(r.self) Type>((r.state) (r.value) A)((r.state) (r.error) Parser.Error)
+

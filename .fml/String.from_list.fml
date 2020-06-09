@@ -1,0 +1,3 @@
+String.from_list: (xs: List(Char)) -> String
+  (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) String.cons(xs.head)(String.from_list(xs.tail)))
+

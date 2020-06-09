@@ -1,3 +1,3 @@
 Nat.show: Π(n:Nat) String
-  λn ((Nat.show_base n) 10)
+  λn (String.from_list ((<<List.map Nat> Char> Nat.show.dec) ((Nat.to_base 10) n)))
 

@@ -1,3 +1,0 @@
-List.any_true: (list: List(Bool)) -> Bool
-  (list) List.any<Bool>((x) x)(list)
-
