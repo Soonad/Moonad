@@ -92,7 +92,7 @@ List.length<A: Type>(xs: List(A)): Nat
 
 List.length<A: Type>(xs: List(A), n: Nat): Nat
   case xs:
-  | Nat.zero;
+  | n;
   | List.length<A>(xs.tail,Nat.succ(n));
 
 // Appends element to the end of the list.
@@ -292,7 +292,7 @@ List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
   | case n:
     | Pair.new<,>(List.nil<>,xs);
     | case n.pred:
-      | Pair.new<,>(List.nil<>,xs);
+      | Pair.new<,>(List.pure<>(xs.head),xs.tail);
       | get y z = List.split_at<>(n.pred,xs.tail)
         Pair.new<,>(List.cons<>(xs.head,y),z);;;
 

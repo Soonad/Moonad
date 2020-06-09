@@ -1,3 +1,3 @@
 Parser.label: ∀(A:*) Π(lbl:String) Π(p:(Parser A)) (Parser A)
-  ΛA λlbl λp λs1 ((<(p s1) λx.self (Parser.Reply A)> λx.state λx.value ((<Parser.Reply.val A> x.state) x.value)) λx.state λx.error @exp=(<List.pure Parser.Item> (Parser.Item.label lbl));((<x.error λe.self (Parser.Reply A)> λe.pos λe.unx λe.exp ((<Parser.Reply.err A> x.state) (((Parser.Error.new e.pos) e.unx) exp))) λe.pos λe.msgs ((<Parser.Reply.err A> x.state) (((Parser.Error.new e.pos) <Maybe.none Parser.Item>) exp))))
+  ΛA λlbl λp λs1 ((<(p s1) λx.self (Parser.Reply A)> λx.state λx.value ((<Parser.Reply.val A> x.state) x.value)) λx.state λx.error ((<x.error λe.self (Parser.Reply A)> λe.pos λe.unx λe.exp ((<Parser.Reply.err A> x.state) (((Parser.Error.new e.pos) e.unx) (<List.pure Parser.Item> (Parser.Item.label lbl))))) λe.pos λe.msgs ((<Parser.Reply.err A> x.state) (((Parser.Error.new e.pos) <Maybe.none Parser.Item>) (<List.pure Parser.Item> (Parser.Item.label lbl))))))
 

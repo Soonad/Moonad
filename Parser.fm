@@ -60,6 +60,21 @@ Parser.token<A: Type>(f: Char -> Maybe(A), es: List(Parser.Item)) : Parser(A)
     | def s2 = Parser.State.make(Nat.succ(pos), str.tail, errs);
       Parser.Reply.val<>(s2,self.value);;
 
+Parser.tokens(match: String): Parser(String)
+  (s1) get pos str errs = s1
+  def len_m = String.length(match)
+  get took rest = String.split_at(len_m,str)
+  def len_t = String.length(took)
+  def s2 = Parser.State.make(Nat.add(pos,len_t),rest,errs)
+  def lbl = List.pure<>(Parser.Item.tokens(match));
+  case Nat.ltn(len_t,len_m):
+  | def unx = Maybe.some<>(Parser.Item.eof);
+    Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));
+  | case String.eql(match,took):
+    | Parser.Reply.val<>(s2,took);
+    | def unx = Maybe.some<>(Parser.Item.tokens(took))
+      Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));;
+
 Parser.try<A: Type>(p: Parser(A)): Parser(A)
   (s1)
   case p(s1):
@@ -192,9 +207,15 @@ Parser.parse<A: Type>(p: Parser(A), s: String): Parser.type(A, Parser.run<A>(p,s
   | x.error;
   : Parser.type(A,x.self);
 
+Parser.Item.show(e: Parser.Item): String
+  case e:
+  | String.flatten(["tokens(",String.pure('"'),e.xs,String.pure('"'),")"]);
+  | String.flatten(["label(",String.pure('"'),e.xs,String.pure('"'),")"]);
+  | "end_of_input";
+
 //Parser.test : String
-//  def p   = Parser.take_while((x) Bool.true)
-//  Parser.run<String>(p, "foobar")<() String>
+//  def p   = Parser.tokens("x")
+//  Parser.run<String>(p,"x")<() String>
 //  | (s,x) x;
 //  | (s,e) "Error";
 //

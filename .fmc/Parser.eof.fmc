@@ -1,3 +1,3 @@
 Parser.eof: (Parser Unit)
-  λs1 (<s1 λself (Parser.Reply Unit)> λpos λstr λerrs ((<str λstr.self (Parser.Reply Unit)> ((<Parser.Reply.val Unit> s1) Unit.new)) λstr.head λstr.tail @unx=(<Maybe.some Parser.Item> (Parser.Item.tokens (String.pure str.head)));@err=(((Parser.Error.new pos) unx) (<List.pure Parser.Item> Parser.Item.eof));((<Parser.Reply.err Unit> s1) err)))
+  λs1 (<s1 λself (Parser.Reply Unit)> λpos λstr λerrs ((<str λstr.self (Parser.Reply Unit)> ((<Parser.Reply.val Unit> s1) Unit.new)) λstr.head λstr.tail ((<Parser.Reply.err Unit> s1) (((Parser.Error.new pos) (<Maybe.some Parser.Item> (Parser.Item.tokens (String.pure str.head)))) (<List.pure Parser.Item> Parser.Item.eof)))))
 

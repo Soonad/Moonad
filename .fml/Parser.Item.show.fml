@@ -1,0 +1,3 @@
+Parser.Item.show: (e: Parser.Item) -> String
+  (e) e<(e.self) String>((e.xs) String.flatten([String; ")", String.pure('"'), e.xs, String.pure('"'), "tokens("]))((e.xs) String.flatten([String; ")", String.pure('"'), e.xs, String.pure('"'), "label("]))("end_of_input")
+

@@ -1,3 +1,0 @@
-Parser.test: String
-  def p = Parser.take_while((x) Bool.true); Parser.run<String>(p)("foobar")<() String>((s) (x) x)((s) (e) "Error")
-

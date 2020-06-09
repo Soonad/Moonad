@@ -11,6 +11,14 @@ String.to_list(str: String): List(Char)
   | List.nil<>;
   | List.cons<>(str.head)(String.to_list(str.tail));
 
+string_is_list : Equal(Type,String,List(Char))
+  Equal.to<Type,String>
+
+String.from_list(xs: List(Char)) : String
+  case xs:
+  | String.nil;
+  | String.cons(xs.head,String.from_list(xs.tail));
+
 String.eql(a: String, b: String): Bool
   case a:
   | case b: | Bool.true; | Bool.false;;
@@ -105,7 +113,7 @@ String.length(xs: String): Nat
 
 String.length.go(xs: String, n: Nat): Nat
   case xs:
-  | 0;
+  | n;
   | String.length.go(xs.tail,Nat.succ(n));
 
 // Appends character to the end of the string.
@@ -262,7 +270,7 @@ String.split_at(n : Nat, xs: String) : Pair(String,String)
   | case n:
     | Pair.new<,>(String.nil,xs);
     | case n.pred:
-      | Pair.new<,>(String.nil,xs);
+      | Pair.new<,>(String.pure(xs.head),xs.tail);
       | get y z = String.split_at(n.pred,xs.tail)
         Pair.new<,>(String.cons(xs.head,y),z);;;
 

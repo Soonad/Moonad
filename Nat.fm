@@ -117,54 +117,21 @@ Nat.pred(n: Nat): Nat
   | Nat.zero;
   | n.pred;
 
-Nat.show.aux(n: Nat, base: Nat, str: String): String
-  (Nat.div_mod(n, base))<() String> | (d) (m)
-  d<() String>
-  | String.cons(Nat.show.digit(m, base), str);
-  | (pred) Nat.show.aux(d, base, String.cons(Nat.show.digit(m, base), str));;
-
-Nat.show.digit(n: Nat, base: Nat): Char
-  let m = Nat.mod(n, base)
-  case Nat.eql(m, 0):  | Char.parse("0"); |
-  case Nat.eql(m, 1):  | Char.parse("1"); |
-  case Nat.eql(m, 2):  | Char.parse("2"); |
-  case Nat.eql(m, 3):  | Char.parse("3"); |
-  case Nat.eql(m, 4):  | Char.parse("4"); |
-  case Nat.eql(m, 5):  | Char.parse("5"); |
-  case Nat.eql(m, 6):  | Char.parse("6"); |
-  case Nat.eql(m, 7):  | Char.parse("7"); |
-  case Nat.eql(m, 8):  | Char.parse("8"); |
-  case Nat.eql(m, 9):  | Char.parse("9"); |
-  case Nat.eql(m, 10): | Char.parse("a"); |
-  case Nat.eql(m, 11): | Char.parse("b"); |
-  case Nat.eql(m, 12): | Char.parse("c"); |
-  case Nat.eql(m, 13): | Char.parse("d"); |
-  case Nat.eql(m, 14): | Char.parse("e"); |
-  case Nat.eql(m, 15): | Char.parse("f"); |
-    Char.parse("#");;;;;;;;;;;;;;;;
-   // TODO: use absurd to cancel this case
- // case Nat.eql(m, 16): | Char.parse("g"); |
- // case Nat.eql(m, 17): | Char.parse("h"); |
- // case Nat.eql(m, 18): | Char.parse("i"); |
- // case Nat.eql(m, 19): | Char.parse("j"); |
- // case Nat.eql(m, 20): | Char.parse("k"); |
- // case Nat.eql(m, 21): | Char.parse("l"); |
- // case Nat.eql(m, 22): | Char.parse("m"); |
- // case Nat.eql(m, 23): | Char.parse("n"); |
- // case Nat.eql(m, 24): | Char.parse("o"); |
- // case Nat.eql(m, 25): | Char.parse("p"); |
- // case Nat.eql(m, 26): | Char.parse("q"); |
- // case Nat.eql(m, 27): | Char.parse("r"); |
- // case Nat.eql(m, 28): | Char.parse("s"); |
- // case Nat.eql(m, 30): | Char.parse("t"); |
- // case Nat.eql(m, 31): | Char.parse("u"); |
- // case Nat.eql(m, 32): | Char.parse("v"); |
-
-Nat.show_base: Nat -> Nat -> String
-  (n) (base) Nat.show.aux(n, base, "")
+Nat.show.dec(n: Nat): Char
+  case Nat.eql(n, 0): | '0'; |
+  case Nat.eql(n, 1): | '1'; |
+  case Nat.eql(n, 2): | '2'; |
+  case Nat.eql(n, 3): | '3'; |
+  case Nat.eql(n, 4): | '4'; |
+  case Nat.eql(n, 5): | '5'; |
+  case Nat.eql(n, 6): | '6'; |
+  case Nat.eql(n, 7): | '7'; |
+  case Nat.eql(n, 8): | '8'; |
+  case Nat.eql(n, 9): | '9';
+  | '#';;;;;;;;;;
 
 Nat.show(n: Nat): String
-  Nat.show_base(n, 10)
+  String.from_list(List.map<,>(Nat.show.dec,Nat.to_base(10,n)))
 
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
