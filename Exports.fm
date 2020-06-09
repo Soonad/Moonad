@@ -2,7 +2,7 @@
   //<A> (x) (xs)
   //<P> (new) (add) add<A>(x)(xs<P>(new)(add))
 
-//// Exports the basic boolean functions
+// Exports the basic boolean functions
 //Exports.example: Exports
   //( Exports.add<Bool>(Bool.true)
   //| Exports.add<Bool>(Bool.false)
@@ -12,7 +12,7 @@
   //| Exports.new
   //;;;;;)
 
-//// A list of exports is just a heterogenic list.
+// A list of exports is just a heterogenic list.
 //Exports: Type
   //<P: Type> ->
   //(new: P) ->
