@@ -1,0 +1,3 @@
+Docs.List.head: ∀(A:*) Π(xs:(List A)) Π(not_empty:(<List.not_empty A> xs)) A
+  ΛA λxs λnot_empty (((<xs λxs.self Π(ne:(<List.not_empty A> xs.self)) A> λne ((Empty.absurd ne) A)) λxs.head λxs.tail λne xs.head) not_empty)
+

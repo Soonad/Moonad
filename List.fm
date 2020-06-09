@@ -148,25 +148,28 @@ List.subsequences.go<A: Type>(xs: List(A)): List(List(A))
         :: List(A) -> List(List(A)) -> List(List(A))
     List.cons<>
     | List.pure<>(xs.head);
-    | List.foldr<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
+    | List.fold<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
 
 // Reducing Lists
 // ==============
 
 // Folds over a list, right associative
-List.foldr<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
-  List.foldr.go<,>(b,f,xs,(x) x)
+List.fold<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
+  List.fold.go<,>(b,f,xs,(x) x)
 
-List.foldr.go<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A), g: B -> B): B
+List.fold.go<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A), g: B -> B): B
   case xs:
   | g(b);
-  | List.foldr.go<,>(b,f,xs.tail,(x) f(xs.head,x));
+  | List.fold.go<,>(b,f,xs.tail,(x) f(xs.head,x));
 
-List.foldr1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+List.foldr<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
+  List.fold<,>(b,f,xs)
+
+List.fold1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
   case xs:
   with ne : List.not_empty<>(xs.self) = ne;
   | Empty.absurd(ne,A);
-  | List.foldr<A,A>(xs.head,f,xs.tail);
+  | List.fold<A,A>(xs.head,f,xs.tail);
 
 // Folds over a list, left associative
 List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B

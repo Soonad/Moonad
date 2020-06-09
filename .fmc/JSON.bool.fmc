@@ -1,0 +1,3 @@
+JSON.bool: Π(x:Bool) JSON
+  λx ΛP λnull λbool λnumber λstring λarray λobject (bool x)
+

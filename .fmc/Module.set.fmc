@@ -1,0 +1,3 @@
+Module.set: Π(key:String) Π(val:Export) Π(mod:Module) Module
+  λkey λval λmod (((<Map.set Export> (String.to_bits key)) val) mod)
+

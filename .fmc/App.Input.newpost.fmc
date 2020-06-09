@@ -1,0 +1,3 @@
+App.Input.newpost: Π(post:App.Post) App.Input
+  λpost ΛP λkeypress λnewpost (newpost post)
+

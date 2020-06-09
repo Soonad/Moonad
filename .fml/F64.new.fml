@@ -1,0 +1,3 @@
+F64.new: (a: Word(64)) -> F64
+  (a) <P> (new) new(a)
+

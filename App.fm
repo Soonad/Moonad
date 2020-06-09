@@ -1,0 +1,45 @@
+// A rendered interface
+T App.Render
+| text(str: String);
+
+// A Moonad post
+T App.Post
+| new(date: U64, auth: String, head: String, body: String);
+
+// User inputs
+T App.Input
+| keypress(keycode: U16);
+| newpost(post: App.Post);
+
+// Moonad applications
+T App (S: Type)
+| new(
+  init: S,
+  draw: S -> App.Render,
+  when: App.Input -> S -> S,
+  tick: S -> S);
+
+// A demo application
+App.demo: App(Nat)
+
+  // Initial state of the app
+  def init
+    0
+
+  // Render function
+  def draw(state)
+    let count = Nat.to_string_decimal(state)
+    App.Render.text(String.concat("Count: ", count))
+
+  // User input callback
+  def when(input, state)
+    case input:
+    | keypress => Nat.succ(state);
+    | newpost  => Nat.succ(state);
+
+  // Thread loop
+  def tick(state)
+    state
+
+  // Creates the app
+  App.new<>(init, draw, when, tick)

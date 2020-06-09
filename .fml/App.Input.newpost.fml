@@ -1,0 +1,3 @@
+App.Input.newpost: (post: App.Post) -> App.Input
+  (post) <P> (keypress) (newpost) newpost(post)
+

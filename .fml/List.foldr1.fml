@@ -1,3 +1,0 @@
-List.foldr1: <A: Type> -> (f: A -> A -> A) -> (xs: List(A)) -> (ne: List.not_empty<A>(xs)) -> A
-  <A> (f) (xs) (ne) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> A>((ne) Empty.absurd(ne)(A))((xs.head) (xs.tail) (ne) List.foldr<A><A>(xs.head)(f)(xs.tail))(ne)
-

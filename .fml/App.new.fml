@@ -1,0 +1,3 @@
+App.new: <S: Type> -> (init: S) -> (draw: S -> App.Render) -> (when: App.Input -> S -> S) -> (tick: S -> S) -> App(S)
+  <S> (init) (draw) (when) (tick) <P> (new) new(init)(draw)(when)(tick)
+

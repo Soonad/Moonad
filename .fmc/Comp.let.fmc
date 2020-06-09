@@ -1,0 +1,3 @@
+Comp.let: Π(name:String) Π(expr:Comp) Π(body:Comp) Comp
+  λname λexpr λbody ΛP λvar λlam λapp λlet λtru λfal (((let name) expr) body)
+
