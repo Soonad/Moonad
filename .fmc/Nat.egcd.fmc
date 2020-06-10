@@ -1,3 +1,3 @@
-Nat.egcd: Π(:Nat) Π(:Nat) ((Pair Nat) ((Pair Int) Int))
-  λa λb ((((((Nat.egcd_aux.tco a) b) Int.0) Int.1) Int.1) Int.0)
+Nat.egcd: Π(a:Nat) Π(b:Nat) ((Pair Nat) ((Pair Int) Int))
+  λa λb ((((((Nat.egcd.aux a) b) Int.0) Int.1) Int.1) Int.0)
 

@@ -1,3 +1,3 @@
 Nat.add_x_0: (x: Nat) -> Equal(Nat)(Nat.add(x)(0))(x)
-  (x) x<(x) Equal(Nat)(Nat.add(x)(0))(x)>(Equal.to<Nat><0>)((x.pred) Equal.apply<Nat><Nat><Nat.add(x.pred)(0)><x.pred><Nat.succ><Nat.add_x_0(x.pred)>)
+  (x) x<(x.self) Equal(Nat)(Nat.add(x.self)(0))(x.self)>(Equal.to<Nat><Nat.add(Nat.zero)(0)>)((x.pred) Equal.apply<Nat><Nat><Nat.add(x.pred)(0)><x.pred><Nat.succ><Nat.add_x_0(x.pred)>)
 

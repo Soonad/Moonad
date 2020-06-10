@@ -1,3 +1,3 @@
-Int.parse_hex_safe: String -> Maybe(Int)
-  (str) str<() Maybe(Int)>(Maybe.none<Int>)((str.head) (str.tail) U16.eql(str.head)(Char.parse("-"))<() Maybe(Int)>(Maybe.bind<Nat><Int>(Nat.parse_hex_safe(str.tail))((b) Maybe.some<Int>(Int.new(0)(b))))(Maybe.bind<Nat><Int>(Nat.parse_hex_safe(String.cons(str.head)(str.tail)))((a) Maybe.some<Int>(Int.new(a)(0)))))
+Int.parse_hex_safe: (str: String) -> Maybe(Int)
+  (str) str<(str.self) Maybe(Int)>(Maybe.none<Int>)((str.head) (str.tail) U16.eql(str.head)(Char.parse("-"))<(self.self) Maybe(Int)>(Maybe.bind<Nat><Int>(Nat.parse_hex_safe(str.tail))((b) Maybe.some<Int>(Int.new(0)(b))))(Maybe.bind<Nat><Int>(Nat.parse_hex_safe(String.cons(str.head)(str.tail)))((a) Maybe.some<Int>(Int.new(a)(0)))))
 

@@ -1,14 +1,13 @@
-Variadic: Nat -> Type -> Type -> Type
-  (n) (A) (B)
-  n<() Type>
+Variadic(n: Nat, A: Type, B: Type): Type
+  case n:
   | B;
-  | (n.pred) A -> Variadic(n.pred)(A)(B);
+  | A -> Variadic(n.pred, A, B);
 
-Variadic.foldr: <A: Type> -> <B: Type> -> (acc: A -> B -> B) -> (b: B) -> (n: Nat) -> Variadic(n)(A)(B)
-  <A> <B> (acc) (b) Variadic.foldr.go<A><B>(acc)(b)((r) r)
+Variadic.foldr<A: Type, B: Type>(acc: A -> B -> B, b: B, n: Nat): Variadic(n, A, B)
+  Variadic.foldr.go<A, B>(acc, b, (r) r, n)
 
-Variadic.foldr.go: <A: Type> -> <B: Type> -> (acc: A -> B -> B) -> (b: B) -> (k: B -> B) -> (n: Nat) -> Variadic(n)(A)(B)
-  <A> <B> (acc) (b) (k) (n)
-  n<(n) Variadic(n)(A)(B)>
+Variadic.foldr.go<A: Type, B: Type>(acc: A -> B -> B, b: B, k: B -> B, n: Nat): Variadic(n, A, B)
+  case n:
   | k(b);
-  | (n.pred) (a) Variadic.foldr.go<A><B>(acc)(b)((r) k(acc(a)(r)))(n.pred);
+  | (a) Variadic.foldr.go<A, B>(acc, b, (r) k(acc(a, r)), n.pred);
+  : Variadic(n.self, A, B);

@@ -1,3 +1,3 @@
-Nat.parse_hex_safe.go: Π(:String) Π(:Nat) (Maybe Nat)
-  λstr λres ((<str λ (Maybe Nat)> (<Maybe.some Nat> res)) λstr.head λstr.tail ((<<Maybe.bind Nat> Nat> (Char.hex_value str.head)) λdig $res=((Nat.add dig) ((Nat.mul 16) res));((Nat.parse_hex_safe.go str.tail) res)))
+Nat.parse_hex_safe.go: Π(str:String) Π(res:Nat) (Maybe Nat)
+  λstr λres ((<str λstr.self (Maybe Nat)> (<Maybe.some Nat> res)) λstr.head λstr.tail ((<<Maybe.bind Nat> Nat> (Char.hex_value str.head)) λdig $res=((Nat.add dig) ((Nat.mul 16) res));((Nat.parse_hex_safe.go str.tail) res)))
 

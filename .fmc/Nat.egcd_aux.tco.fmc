@@ -1,3 +1,0 @@
-Nat.egcd_aux.tco: Π(:Nat) Π(:Nat) Π(:Int) Π(:Int) Π(:Int) Π(:Int) ((Pair Nat) ((Pair Int) Int))
-  λa λb λx λy λu λv (((<a λ Π(:Unit) ((Pair Nat) ((Pair Int) Int))> λ ((<<Pair.new Nat> ((Pair Int) Int)> b) ((<<Pair.new Int> Int> x) y))) λpred λ $q=((Nat.div b) a);$r=((Nat.mod b) a);$m=((Int.sub x) ((Int.mul u) (Int.fromNat q)));$n=((Int.sub y) ((Int.mul v) (Int.fromNat q)));((((((Nat.egcd_aux.tco r) a) u) v) m) n)) Unit.new)
-

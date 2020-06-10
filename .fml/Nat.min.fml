@@ -1,3 +1,3 @@
-Nat.min: Nat -> Nat -> Nat
-  (a) a<() Nat -> Nat>((b) 0)((a.pred) (b) b<() Nat>(0)((b.pred) Nat.succ(Nat.min(a.pred)(b.pred))))
+Nat.min: (a: Nat) -> Nat -> Nat
+  (a) a<(a.self) (x: Nat) -> Nat>((b) 0)((a.pred) (b) b<(b.self) Nat>(0)((b.pred) Nat.succ(Nat.min(a.pred)(b.pred))))
 

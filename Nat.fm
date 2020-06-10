@@ -173,17 +173,17 @@ Nat.to_string_decimal: Nat -> String
 Nat.show(n: Nat): String
   Nat.to_string_decimal(10)
 
-Nat.addVar: (n: Nat) -> Variadic(n)(Nat)(Nat)
-  Variadic.foldr<Nat><Nat>(Nat.add)(0)
+Nat.addVar: (n: Nat) -> Variadic(n, Nat, Nat)
+  Variadic.foldr<,>(Nat.add, 0)
 
-Nat.addAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(0))(n)
-  Acc.foldl<Nat><Nat>(Nat.eql(0))(Nat.add)(0)
+Nat.addAcc: (n: Nat) -> Acc(Nat, Nat, Nat.eql(0), n)
+  Acc.foldl<,>(Nat.eql(0), Nat.add, 0)
 
-Nat.mulAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(1))(n)
-  Acc.foldl<Nat><Nat>(Nat.eql(1))(Nat.mul)(1)
+Nat.mulAcc: (n: Nat) -> Acc(Nat, Nat, Nat.eql(1), n)
+  Acc.foldl<,>(Nat.eql(1), Nat.mul, 1)
 
-Nat.mulVar: (n: Nat) -> Variadic(n)(Nat)(Nat)
-  Variadic.foldr<Nat><Nat>(Nat.mul)(1)
+Nat.mulVar: (n: Nat) -> Variadic(n, Nat, Nat)
+  Variadic.foldr<,>(Nat.mul, 1)
 
 Nat.parse_hex:
   (str: String) ->
@@ -201,80 +201,70 @@ Nat.parse_hex:
   | (val) val;
 
 Nat.parse_hex_safe: String -> Maybe(Nat)
-  (str) Nat.parse_hex_safe.go(str)(Nat.zero)
+  (str) Nat.parse_hex_safe.go(str, Nat.zero)
 
-Nat.parse_hex_safe.go: String -> Nat -> Maybe(Nat)
-  (str) (res)
-  str<() Maybe(Nat)>
+Nat.parse_hex_safe.go(str: String, res: Nat): Maybe(Nat)
+  case str:
   | Maybe.some<Nat>(res);
-  | (str.head) (str.tail)
-    use dig = Maybe.bind<Nat><Nat>(Char.hex_value(str.head))
-    let res = Nat.add(dig)(Nat.mul(16)(res))
-    Nat.parse_hex_safe.go(str.tail)(res);
+  | use dig = Maybe.bind<,>(Char.hex_value(str.head))
+    let res = Nat.add(dig, Nat.mul(16, res))
+    Nat.parse_hex_safe.go(str.tail, res);
 
-Nat.pow: Nat -> Nat -> Nat //prim//
-  (a) (b)
-  b<() Nat>
+Nat.pow(a: Nat, b: Nat): Nat //prim//
+  case b:
   | 1;
-  | (b.pred) Nat.mul(a)(Nat.pow(a)(b.pred));
+  | Nat.mul(a, Nat.pow(a, b.pred));
 
-Nat.square: Nat -> Nat
-  (a) Nat.mul(a)(a)
+Nat.square(a: Nat): Nat
+  Nat.mul(a, a)
 
 // Extended Euclidian algorithm. Given natural numbers a, b, computes GCD(a,b) and
 // Bezout's coefficients; that is, integers x, y such that a*x + b*y = GCD(a,b)
-Nat.egcd: Nat -> Nat -> Pair(Nat, Pair(Int, Int))
-  (a) (b) Nat.egcd_aux.tco(a, b, Int.0, Int.1, Int.1, Int.0)
+Nat.egcd(a: Nat, b: Nat): Pair(Nat, Pair(Int, Int))
+   Nat.egcd.aux(a, b, Int.0, Int.1, Int.1, Int.0)
 
-Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat, Pair(Int, Int))
-  (a) (b) (x) (y) (u) (v)
-  a<() Unit -> Pair(Nat, Pair(Int, Int))>
-  | () Pair.new<Nat, Pair(Int, Int)>(b, Pair.new<Int, Int>(x, y));
-  | (pred) ()
-    let q = Nat.div(b, a)
+Nat.egcd.aux(a: Nat, b: Nat, x: Int, y: Int, u: Int, v: Int): Pair(Nat, Pair(Int, Int))
+  case a:
+  | Pair.new<,>(b, Pair.new<,>(x, y));
+  | let q = Nat.div(b, a)
     let r = Nat.mod(b, a)
     let m = Int.sub(x, Int.mul(u, Int.fromNat(q)))
     let n = Int.sub(y, Int.mul(v, Int.fromNat(q)))
-    Nat.egcd_aux.tco(r, a, u, v, m, n);
-  | Unit.new;
+    Nat.egcd.aux(r, a, u, v, m, n);
 
-Nat.bitwise_and: Nat -> Nat -> Nat
-  (a) (b)
-  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, 0), Nat.eql(a, 0)))
-  | () 0;
-  | ()
-    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, 2), 0), Nat.eql(Nat.mod(b, 2), 0)), 0, 1)
+Nat.bitwise_and(a: Nat, b: Nat): Nat
+  case Bool.or(Nat.eql(a, 0), Nat.eql(a, 0)):
+  | 0;
+  | let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, 2), 0), Nat.eql(Nat.mod(b, 2), 0)), 0, 1)
     let a = Nat.div(a, 2)
     let b = Nat.div(b, 2)
     Nat.add(bit, Nat.mul(2, Nat.bitwise_and(a, b)));
-  | Unit.new;
 
-Nat.odd: Nat -> Bool
-  (n) Nat.eql(Nat.mod(n, 2), 1)
+Nat.odd(n: Nat): Bool
+  Nat.eql(Nat.mod(n, 2), 1)
 
-Nat.min: Nat -> Nat -> Nat
-  (a)
-  a<() Nat -> Nat>
+Nat.min(a: Nat): Nat -> Nat
+  case a:
   | (b) 0;
-  | (a.pred) (b)
-    b<() Nat>
+  | (b)
+    case b:
     | 0;
-    | (b.pred) Nat.succ(Nat.min(a.pred, b.pred));;
+    | Nat.succ(Nat.min(a.pred, b.pred));;
 
-Nat.add_x_0: (x: Nat) -> Equal(Nat, Nat.add(x, 0), x)
-  (x)
-  x<(x) Equal(Nat, Nat.add(x, 0), x)>
-  | Equal.to<_, 0>;
-  | (x.pred) Equal.apply<_, _, Nat.add(x.pred, 0)
-                                  ,x.pred
-                                  ,Nat.succ
-                                  ,Nat.add_x_0(x.pred)>;
+Nat.add_x_0(x: Nat): Equal(Nat, Nat.add(x, 0), x)
+  case x:
+  | Equal.to<,>;
+  | def a = Nat.add(x.pred, 0)
+    def b = x.pred
+    def eq = Nat.add_x_0(x.pred)
+    Equal.apply<_, _, a, b, Nat.succ, eq>;
+  : Equal(Nat, Nat.add(x.self, 0), x.self);
 
-Nat.add_x_succ_y: (x: Nat) -> (y: Nat) -> Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))
-  (x) (y)
-  x<(x) Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))>
-  | Equal.to<_, Nat.succ(y)>;
-  | (x.pred) Equal.apply<_, _, Nat.add(x.pred, Nat.succ(y))
-                                  ,Nat.succ(Nat.add(x.pred, y))
-                                  ,Nat.succ
-                                  ,Nat.add_x_succ_y(x.pred, y)>;
+Nat.add_x_succ_y(x: Nat, y: Nat): Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))
+  case x:
+  | Equal.to<,>;
+  | def a = Nat.add(x.pred, Nat.succ(y))
+    def b = Nat.succ(Nat.add(x.pred, y))
+    def eq = Nat.add_x_succ_y(x.pred, y)
+    Equal.apply<_, _, a, b, Nat.succ, eq>;
+  : Equal(Nat, Nat.add(x.self, Nat.succ(y)), Nat.succ(Nat.add(x.self, y)));

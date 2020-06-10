@@ -1,3 +1,3 @@
-Int.fromNat: Nat -> Int
+Int.fromNat: (n: Nat) -> Int
   (n) Int.new(n)(0)
 

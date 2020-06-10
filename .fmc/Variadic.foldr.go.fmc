@@ -1,3 +1,3 @@
 Variadic.foldr.go: ∀(A:*) ∀(B:*) Π(acc:Π(:A) Π(:B) B) Π(b:B) Π(k:Π(:B) B) Π(n:Nat) (((Variadic n) A) B)
-  ΛA ΛB λacc λb λk λn ((<n λn (((Variadic n) A) B)> (k b)) λn.pred λa ((((<<Variadic.foldr.go A> B> acc) b) λr (k ((acc a) r))) n.pred))
+  ΛA ΛB λacc λb λk λn ((<n λn.self (((Variadic n.self) A) B)> (k b)) λn.pred λa ((((<<Variadic.foldr.go A> B> acc) b) λr (k ((acc a) r))) n.pred))
 

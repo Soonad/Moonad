@@ -1,3 +1,3 @@
-Nat.min: Π(:Nat) Π(:Nat) Nat
-  λa ((<a λ Π(:Nat) Nat> λb 0) λa.pred λb ((<b λ Nat> 0) λb.pred (Nat.succ ((Nat.min a.pred) b.pred))))
+Nat.min: Π(a:Nat) Π(:Nat) Nat
+  λa ((<a λa.self Π(x:Nat) Nat> λb 0) λa.pred λb ((<b λb.self Nat> 0) λb.pred (Nat.succ ((Nat.min a.pred) b.pred))))
 

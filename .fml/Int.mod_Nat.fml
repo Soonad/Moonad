@@ -1,3 +1,3 @@
-Int.mod_Nat: Int -> Nat -> Nat
-  (a) (n) a<() Nat>((a.x) (a.y) let b = Nat.mod(a.y)(n); let sum = Nat.add(a.x)(Nat.sub(n)(b)); Nat.mod(sum)(n))
+Int.mod_Nat: (a: Int) -> (n: Nat) -> Nat
+  (a) (n) a<(a.) Nat>((a.x) (a.y) let b = Nat.mod(a.y)(n); let sum = Nat.add(a.x)(Nat.sub(n)(b)); Nat.mod(sum)(n))
 

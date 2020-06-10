@@ -1,3 +1,3 @@
-Int.neg: Π(:Int) Int
-  λa (<a λ Int> λa.x λa.y ((Int.new a.y) a.x))
+Int.neg: Π(a:Int) Int
+  λa (<a λa. Int> λa.x λa.y ((Int.new a.y) a.x))
 

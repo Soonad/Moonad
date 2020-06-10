@@ -1,3 +1,0 @@
-Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat)(Pair(Int)(Int))
-  (a) (b) (x) (y) (u) (v) a<() Unit -> Pair(Nat)(Pair(Int)(Int))>(() Pair.new<Nat><Pair(Int)(Int)>(b)(Pair.new<Int><Int>(x)(y)))((pred) () let q = Nat.div(b)(a); let r = Nat.mod(b)(a); let m = Int.sub(x)(Int.mul(u)(Int.fromNat(q))); let n = Int.sub(y)(Int.mul(v)(Int.fromNat(q))); Nat.egcd_aux.tco(r)(a)(u)(v)(m)(n))(Unit.new)
-
