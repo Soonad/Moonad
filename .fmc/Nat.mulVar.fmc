@@ -1,3 +1,3 @@
 Nat.mulVar: Π(n:Nat) (((Variadic n) Nat) Nat)
-  ((<<Variadic.foldr Nat> Nat> Nat.mul) Nat.1)
+  ((<<Variadic.foldr Nat> Nat> Nat.mul) 1)
 

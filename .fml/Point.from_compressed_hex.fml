@@ -1,3 +1,3 @@
-Point.from_compressed_hex: Vector(U8)(Nat.33) -> Maybe(Point)
-  (bytes) Vector.extract<U8><Nat.32>(bytes)<(x) Maybe(Point)>((head) (tail) let head = U8.to_nat(head); let x = U8_Vector.to_number<Nat.32>(tail); let sqrY = ecdsa.weierstrass(x); let y = ecdsa.sqrt(sqrY); let is_head_odd = Nat.odd(head); let is_y_odd = Nat.odd(y); let y = Bool.if<Nat>(Bool.eql(is_head_odd)(is_y_odd))(y)(ecdsa.negate(y)); let point = Point.new(x)(y); Bool.if<Maybe(Point)>(Point.valid_point(point))(Maybe.some<Point>(point))(Maybe.none<Point>))
+Point.from_compressed_hex: Vector(U8)(33) -> Maybe(Point)
+  (bytes) Vector.extract<U8><32>(bytes)<(x) Maybe(Point)>((head) (tail) let head = U8.to_nat(head); let x = U8_Vector.to_number<32>(tail); let sqrY = ecdsa.weierstrass(x); let y = ecdsa.sqrt(sqrY); let is_head_odd = Nat.odd(head); let is_y_odd = Nat.odd(y); let y = Bool.if<Nat>(Bool.eql(is_head_odd)(is_y_odd))(y)(ecdsa.negate(y)); let point = Point.new(x)(y); Bool.if<Maybe(Point)>(Point.valid_point(point))(Maybe.some<Point>(point))(Maybe.none<Point>))
 

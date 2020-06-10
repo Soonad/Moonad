@@ -1,3 +1,3 @@
 U16.shr: (n: Nat) -> (a: U16) -> U16
-  (n) (a) a<(self) U16>((a_val) U16.new(Word.shift_right<16>(n)(a_val)))
+  (n) (a) a<(x) U16>((a_val) U16.new(Word.shift_right<16>(n)(a_val)))
 

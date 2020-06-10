@@ -1,3 +1,3 @@
-U8.xor: U8 -> U8 -> U8
-  (a) (b) a<() U8>((a_val) b<() U8>((b_val) U8.new(Word.xor<Nat.8>(a_val)(b_val))))
+U8.xor: (a: U8) -> (b: U8) -> U8
+  (a) (b) a<(x) U8>((a_val) b<(x) U8>((b_val) U8.new(Word.xor<8>(a_val)(b_val))))
 

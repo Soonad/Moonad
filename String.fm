@@ -516,3 +516,19 @@ String.to_builder.go(string: String, lb: String.Builder) : String.Builder
 ////  //| (str.head) (str.tail)
 ////    //(x) String.cons(str.head)(String.to_stringifier(str.tail)(x));
 ////
+
+String.take_n(n: Nat, str: String): Maybe(Pair(String, String))
+  case String.take_n.aux(n, String.nil, str) as m:
+  | Maybe.none<Pair(String, String)>;
+  | get x y = m.value
+    Maybe.some<>(Pair.new<,>(String.reverse(x), y));
+
+String.take_n.aux(n: Nat, str: String, res: String): Maybe(Pair(String, String))
+  case res:
+  | case n:
+    | Maybe.some<>(Pair.new<,>(str, String.nil));
+    | Maybe.none<Pair(String, String)>;;
+  | case n:
+    | Maybe.some<>(Pair.new<String, String>(str, res));
+    | String.take_n.aux(n.pred, String.cons(res.head, str), res.tail);;
+

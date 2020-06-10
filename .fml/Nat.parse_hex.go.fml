@@ -1,3 +1,0 @@
-Nat.parse_hex.go: String -> Nat -> Nat
-  (str) (res) str<() Nat>(res)((str.head) (str.tail) Char.hex_value(str.head)<() Nat>(res)((dig) let res = Nat.add(dig)(Nat.mul(Nat.16)(res)); Nat.parse_hex.go(str.tail)(res)))
-

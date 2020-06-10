@@ -1,3 +1,0 @@
-A.get_syntax: Nat
-  let pair = Pair.new<Nat><Nat>(Nat.2)(Nat.3); pair<(x) Nat>((x) (y) x)
-

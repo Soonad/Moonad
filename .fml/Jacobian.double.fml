@@ -1,3 +1,3 @@
 Jacobian.double: Jacobian -> Jacobian
-  (p) p<(x1) Jacobian>((p.x) (p.y) (p.z) let A = Nat.square(p.x); let B = Nat.square(p.y); let C = Nat.square(B); let D = Nat.mul(Nat.2)(ecdsa.sub(Nat.square(Nat.add(p.x)(B)))(Nat.add(A)(C))); let E = Nat.mul(Nat.3)(A); let F = Nat.square(E); let F = Nat.square(E); let x = ecdsa.sub(F)(Nat.mul(Nat.2)(D)); let y = ecdsa.sub(Nat.mul(E)(ecdsa.sub(D)(x)))(Nat.mul(Nat.8)(C)); let z = ecdsa.mod(Nat.mulVar(Nat.3)(Nat.2)(p.y)(p.z)); Jacobian.new(x)(y)(z))
+  (p) p<(x1) Jacobian>((p.x) (p.y) (p.z) let A = Nat.square(p.x); let B = Nat.square(p.y); let C = Nat.square(B); let D = Nat.mul(2)(ecdsa.sub(Nat.square(Nat.add(p.x)(B)))(Nat.add(A)(C))); let E = Nat.mul(3)(A); let F = Nat.square(E); let F = Nat.square(E); let x = ecdsa.sub(F)(Nat.mul(2)(D)); let y = ecdsa.sub(Nat.mul(E)(ecdsa.sub(D)(x)))(Nat.mul(8)(C)); let z = ecdsa.mod(Nat.mulVar(3)(2)(p.y)(p.z)); Jacobian.new(x)(y)(z))
 

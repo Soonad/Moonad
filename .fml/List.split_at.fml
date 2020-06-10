@@ -1,3 +1,3 @@
 List.split_at: <A: Type> -> (n: Nat) -> (xs: List(A)) -> Pair(List(A))(List(A))
-  <A> (n) (xs) xs<(xs.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>([A;])([A;]))((xs.head) (xs.tail) n<(n.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>([A;])(xs))((n.pred) n.pred<(n.pred.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>(List.pure<A>(xs.head))(xs.tail))((n.pred.pred) List.split_at<A>(n.pred)(xs.tail)<(self) Pair(List(A))(List(A))>((y) (z) Pair.new<List(A)><List(A)>(List.cons<A>(xs.head)(y))(z)))))
+  <A> (n) (xs) xs<(xs.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>([A;])([A;]))((xs.head) (xs.tail) n<(n.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>([A;])(xs))((n.pred) n.pred<(n.pred.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>(List.pure<A>(xs.head))(xs.tail))((n.pred.pred) List.split_at<A>(n.pred)(xs.tail)<(x) Pair(List(A))(List(A))>((y) (z) Pair.new<List(A)><List(A)>(List.cons<A>(xs.head)(y))(z)))))
 

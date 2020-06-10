@@ -1,3 +1,0 @@
-Nat.parse_hex.go: Π(:String) Π(:Nat) Nat
-  λstr λres ((<str λ Nat> res) λstr.head λstr.tail ((<(Char.hex_value str.head) λ Nat> res) λdig @res=((Nat.add dig) ((Nat.mul Nat.16) res));((Nat.parse_hex.go str.tail) res)))
-

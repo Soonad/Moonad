@@ -1,3 +1,0 @@
-String.take_while: (Char -> Bool) -> String -> Pair(String)(String)
-  (f) (str) String.take_while.aux(f)(String.nil)(str)<(x) Pair(String)(String)>((x) (y) Pair.new<String><String>(String.reverse(x))(y))
-

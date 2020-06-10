@@ -25,11 +25,16 @@ Nat.cmp(a: Nat, b: Nat): Cmp
     | Nat.cmp(a.pred, b.pred);;
 
 Nat.sub(n: Nat, m: Nat): Nat
-  case m:
-  | n;
-  | case n:
-    | Nat.zero;
+  case n:
+  | 0;
+  | case m:
+    | n;
     | Nat.sub(n.pred, m.pred);;
+  // case m:
+  // | n;
+  // | case n:
+  //   | Nat.zero;
+  //   | Nat.sub(n.pred, m.pred);;
 
 Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
   case m:
@@ -169,16 +174,16 @@ Nat.show(n: Nat): String
   Nat.to_string_decimal(10)
 
 Nat.addVar: (n: Nat) -> Variadic(n)(Nat)(Nat)
-  Variadic.foldr<Nat><Nat>(Nat.add)(Nat.0)
+  Variadic.foldr<Nat><Nat>(Nat.add)(0)
 
-Nat.addAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(Nat.0))(n)
-  Acc.foldl<Nat><Nat>(Nat.eql(Nat.0))(Nat.add)(Nat.0)
+Nat.addAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(0))(n)
+  Acc.foldl<Nat><Nat>(Nat.eql(0))(Nat.add)(0)
 
-Nat.mulAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(Nat.1))(n)
-  Acc.foldl<Nat><Nat>(Nat.eql(Nat.1))(Nat.mul)(Nat.1)
+Nat.mulAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(1))(n)
+  Acc.foldl<Nat><Nat>(Nat.eql(1))(Nat.mul)(1)
 
 Nat.mulVar: (n: Nat) -> Variadic(n)(Nat)(Nat)
-  Variadic.foldr<Nat><Nat>(Nat.mul)(Nat.1)
+  Variadic.foldr<Nat><Nat>(Nat.mul)(1)
 
 Nat.parse_hex:
   (str: String) ->
@@ -204,13 +209,13 @@ Nat.parse_hex_safe.go: String -> Nat -> Maybe(Nat)
   | Maybe.some<Nat>(res);
   | (str.head) (str.tail)
     use dig = Maybe.bind<Nat><Nat>(Char.hex_value(str.head))
-    let res = Nat.add(dig)(Nat.mul(Nat.16)(res))
+    let res = Nat.add(dig)(Nat.mul(16)(res))
     Nat.parse_hex_safe.go(str.tail)(res);
 
 Nat.pow: Nat -> Nat -> Nat //prim//
   (a) (b)
   b<() Nat>
-  | Nat.1;
+  | 1;
   | (b.pred) Nat.mul(a)(Nat.pow(a)(b.pred));
 
 Nat.square: Nat -> Nat
@@ -235,41 +240,41 @@ Nat.egcd_aux.tco: Nat -> Nat -> Int -> Int -> Int -> Int -> Pair(Nat, Pair(Int, 
 
 Nat.bitwise_and: Nat -> Nat -> Nat
   (a) (b)
-  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, Nat.0), Nat.eql(a, Nat.0)))
-  | () Nat.0;
+  Bool.if<Unit -> Nat>(Bool.or(Nat.eql(a, 0), Nat.eql(a, 0)))
+  | () 0;
   | ()
-    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, Nat.2), Nat.0), Nat.eql(Nat.mod(b, Nat.2), Nat.0)), Nat.0, Nat.1)
-    let a = Nat.div(a, Nat.2)
-    let b = Nat.div(b, Nat.2)
-    Nat.add(bit, Nat.mul(Nat.2, Nat.bitwise_and(a, b)));
+    let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, 2), 0), Nat.eql(Nat.mod(b, 2), 0)), 0, 1)
+    let a = Nat.div(a, 2)
+    let b = Nat.div(b, 2)
+    Nat.add(bit, Nat.mul(2, Nat.bitwise_and(a, b)));
   | Unit.new;
 
 Nat.odd: Nat -> Bool
-  (n) Nat.eql(Nat.mod(n, Nat.2), Nat.1)
+  (n) Nat.eql(Nat.mod(n, 2), 1)
 
 Nat.min: Nat -> Nat -> Nat
   (a)
   a<() Nat -> Nat>
-  | (b) Nat.0;
+  | (b) 0;
   | (a.pred) (b)
     b<() Nat>
-    | Nat.0;
+    | 0;
     | (b.pred) Nat.succ(Nat.min(a.pred, b.pred));;
 
-Nat.add_x_0: (x: Nat) -> Equal(Nat, Nat.add(x, Nat.0), x)
+Nat.add_x_0: (x: Nat) -> Equal(Nat, Nat.add(x, 0), x)
   (x)
-  x<(x) Equal(Nat, Nat.add(x, Nat.0), x)>
-  | Equal.to<_, Nat.0>;
-  | (x.pred) Equal.apply_ind<_, _>(Nat.add(x.pred, Nat.0)
+  x<(x) Equal(Nat, Nat.add(x, 0), x)>
+  | Equal.to<_, 0>;
+  | (x.pred) Equal.apply<_, _, Nat.add(x.pred, 0)
                                   ,x.pred
                                   ,Nat.succ
-                                  ,Nat.add_x_0(x.pred));
+                                  ,Nat.add_x_0(x.pred)>;
 
 Nat.add_x_succ_y: (x: Nat) -> (y: Nat) -> Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))
   (x) (y)
   x<(x) Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))>
   | Equal.to<_, Nat.succ(y)>;
-  | (x.pred) Equal.apply_ind<_, _>(Nat.add(x.pred, Nat.succ(y))
+  | (x.pred) Equal.apply<_, _, Nat.add(x.pred, Nat.succ(y))
                                   ,Nat.succ(Nat.add(x.pred, y))
                                   ,Nat.succ
-                                  ,Nat.add_x_succ_y(x.pred, y));
+                                  ,Nat.add_x_succ_y(x.pred, y)>;

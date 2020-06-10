@@ -1,3 +1,3 @@
 Int.fromNat: Π(:Nat) Int
-  λn ((Int.new n) Nat.0)
+  λn ((Int.new n) 0)
 

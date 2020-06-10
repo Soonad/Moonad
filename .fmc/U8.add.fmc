@@ -1,3 +1,3 @@
-U8.add: Π(:U8) Π(:U8) U8
-  λa λb (<a λx U8> λa_val (<b λx U8> λb_val (U8.new ((<Word.add Nat.8> a_val) b_val))))
+U8.add: Π(a:U8) Π(b:U8) U8
+  λa λb (<a λx U8> λa_val (<b λx U8> λb_val (U8.new ((<Word.add 8> a_val) b_val))))
 

@@ -1,9 +1,9 @@
 // Params: a, b
 CURVE.a: Nat
-  Nat.0
+  0
 
 CURVE.b: Nat
-  Nat.7
+  7
 
 // Field over which we'll do calculations
 CURVE.P: Nat
@@ -34,8 +34,8 @@ ecdsa.mod: Nat -> Nat
 ecdsa.negate: Nat -> Nat
   (a)
   let a = ecdsa.mod(a)
-  Nat.eql(a, Nat.0)<() Nat>
-  | Nat.0;
+  Nat.eql(a, 0)<() Nat>
+  | 0;
   | Nat.sub(CURVE.P, a);
 
 ecdsa.sub: Nat -> Nat -> Nat
@@ -43,44 +43,44 @@ ecdsa.sub: Nat -> Nat -> Nat
 
 ecdsa.pow_mod: Nat -> Nat -> Nat -> Nat
   (a) (b) (modulo)
-  ecdsa.pow_mod.tco(a, b, modulo, Nat.1)
+  ecdsa.pow_mod.tco(a, b, modulo, 1)
 
 ecdsa.pow_mod.tco: Nat -> Nat -> Nat -> Nat -> Nat
   (a) (b) (modulo) (res)
-  Bool.if<_>(Nat.eql(b)(Nat.0))
+  Bool.if<_>(Nat.eql(b, 0))
   | res;
   | let res = Bool.if<_>(Nat.odd(b), Nat.mod(Nat.mul(res, a), modulo), res)
-    let b = Nat.div(b, Nat.2)
+    let b = Nat.div(b, 2)
     let a = Nat.mod(Nat.mul(a, a), modulo)
     ecdsa.pow_mod.tco(a, b, modulo, res);
 
 ecdsa.sqrt: Nat -> Nat
-  (a) ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, Nat.1), Nat.4), CURVE.P)
+  (a) ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, 1), 4), CURVE.P)
 
 // RHS of elliptic curve equation
 ecdsa.weierstrass: Nat -> Nat
   (x)
-  ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(Nat.3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
+  ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
 
 ecdsa.PRIME_SIZE: Nat
-  Nat.256
+  256
 
 ecdsa.USE_ENDOMORPHISM: Bool
-  Nat.eql(CURVE.a, Nat.0)
+  Nat.eql(CURVE.a, 0)
 
 ecdsa.invert: Nat -> Nat -> Nat
   (number) (modulo)
-  Nat.eql(number, Nat.0)<() Nat>
-  | Nat.0;
+  Nat.eql(number, 0)<() Nat>
+  | 0;
   | get gcd p = Nat.egcd(Nat.mod(number, modulo), modulo)
-    Nat.eql(gcd, Nat.1)<() Nat>
+    Nat.eql(gcd, 1)<() Nat>
     | get x y = p
       Int.mod_Nat(x, modulo);
-    | Nat.0;;
+    | 0;;
 
 ecdsa.invertBatch: List(Nat) -> Nat -> List(Nat)
   (nums) (modulo)
-  get acc p = ecdsa.invertBatch1.tco(nums, modulo, Nat.1, List.nil<Nat>, List.nil<Nat>)
+  get acc p = ecdsa.invertBatch1.tco(nums, modulo, 1, List.nil<Nat>, List.nil<Nat>)
   get scratch rest = p
   let acc = ecdsa.invert(acc, modulo)
   ecdsa.invertBatch2.tco(rest, modulo, acc, scratch, List.nil<Nat>)
@@ -90,8 +90,8 @@ ecdsa.invertBatch1.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> Pai
   nums<_>
   | Pair.new<_,_>(acc, Pair.new<_,_>(scratch, rest));
   | (nums.head) (nums.tail)
-    Bool.if<_>(Nat.eql(nums.head, Nat.0))
-    | let scratch = List.cons<_>(Nat.0, scratch)
+    Bool.if<_>(Nat.eql(nums.head, 0))
+    | let scratch = List.cons<_>(0, scratch)
       let rest = List.cons<_>(nums.head, rest)
       ecdsa.invertBatch1.tco(nums.tail, modulo, acc, scratch, rest);
     | let scratch = List.cons<_>(acc, scratch)
@@ -107,8 +107,8 @@ ecdsa.invertBatch2.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> Lis
     scratch<() _>
     | inverts; // Should not happen
     | (scratch.head) (scratch.tail)
-      Bool.if<_>(Nat.eql(nums.head, Nat.0))
-      | let inverts = List.cons<_>(Nat.0, inverts)
+      Bool.if<_>(Nat.eql(nums.head, 0))
+      | let inverts = List.cons<_>(0, inverts)
         ecdsa.invertBatch2.tco(nums.tail, modulo, acc, scratch.tail, inverts);
       | let inverts = List.cons<_>(Nat.mod(Nat.mul(acc, scratch.head), modulo), inverts)
         let acc = Nat.mod(Nat.mul(acc, nums.head), modulo)
@@ -131,17 +131,17 @@ ecdsa.split_scalar: Nat -> Pair(Int, Int)
 
 ecdsa.number_to_hex: Nat -> String
   (num)
-  let hex = Nat.show_base(num, Nat.16);
+  let hex = Nat.to_string_base(num, 16);
   Bool.if<>(Nat.odd(String.length(hex)), String.cons('0', hex), hex)
 
 ecdsa.parse_byte: String -> Maybe(Nat)
-  (n) Maybe.map<><>(Nat.mul(Nat.2), Nat.parse_hex_safe(n))
+  (n) Maybe.map<,>(Nat.mul(2), Nat.parse_hex_safe(n))
 
 ecdsa.truncateHash: String -> Maybe(Nat)
   (hash)
-  use msg = Maybe.bind<><>(Nat.parse_hex_safe(hash))
-  let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), Nat.2), Nat.8), ecdsa.PRIME_SIZE)
-  let msg = Bool.if<>(Nat.gtn(delta, Nat.0), Nat.div(msg, Nat.pow(Nat.2, delta)), msg)
+  use msg = Maybe.bind<,>(Nat.parse_hex_safe(hash))
+  let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), 2), 8), ecdsa.PRIME_SIZE)
+  let msg = Bool.if<>(Nat.gtn(delta, 0), Nat.div(msg, Nat.pow(2, delta)), msg)
   let msg = Bool.if<>(Nat.gte(msg, CURVE.n), Nat.sub(msg, CURVE.n), msg)
   Maybe.some<>(msg)
 
@@ -156,13 +156,13 @@ Jacobian.new: Nat -> Nat -> Nat -> Jacobian
   <P> (point) point(x, y, z)
 
 Jacobian.0: Jacobian
-  Jacobian.new(Nat.0, Nat.0, Nat.1)
+  Jacobian.new(0, 0, 1)
 
 Jacobian.base: Jacobian
-  Jacobian.new(CURVE.Gx, CURVE.Gy, Nat.1)
+  Jacobian.new(CURVE.Gx, CURVE.Gy, 1)
 
 Jacobian.base.window_size: Nat
-  Nat.8
+  8
 
 Jacobian.base.precomputes: List(Jacobian)
   Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size)
@@ -185,7 +185,7 @@ Jacobian.equal: Jacobian -> Jacobian -> Bool
 Jacobian.from_point: Point -> Jacobian
   (p)
   get p.x p.y = p
-  Jacobian.new(p.x, p.y, Nat.1)
+  Jacobian.new(p.x, p.y, 1)
 
 Jacobian.to_point: Jacobian -> Point
   (p)
@@ -197,12 +197,12 @@ Jacobian.to_point.aux: Jacobian -> Nat -> Point
   get p.x p.y p.z = p
   let invz2 = Nat.square(invz)
   let x = ecdsa.mod(Nat.mul(p.x, invz2))
-  let y = ecdsa.mod(Nat.mulVar(Nat.3, p.y, invz2, invz))
+  let y = ecdsa.mod(Nat.mulVar(3, p.y, invz2, invz))
   Point.new(x, y)
 
 Jacobian.to_pointBatch: List(Jacobian) -> List(Point)
   (ps)
-  let inverts = ecdsa.invertBatch(List.map<Jacobian><Nat>((p)
+  let inverts = ecdsa.invertBatch(List.map<Jacobian, Nat>((p)
     get p.x p.y p.z = p
     p.z, ps), CURVE.P)
   Jacobian.to_pointBatch.aux(ps, inverts)
@@ -232,42 +232,42 @@ Jacobian.double: Jacobian -> Jacobian
   let A = Nat.square(p.x)
   let B = Nat.square(p.y)
   let C = Nat.square(B)
-  let D = Nat.mul(Nat.2, ecdsa.sub(Nat.square(Nat.add(p.x, B)), Nat.add(A, C)))
-  let E = Nat.mul(Nat.3, A)
+  let D = Nat.mul(2, ecdsa.sub(Nat.square(Nat.add(p.x, B)), Nat.add(A, C)))
+  let E = Nat.mul(3, A)
   let F = Nat.square(E)
   let F = Nat.square(E)
-  let x = ecdsa.sub(F, Nat.mul(Nat.2, D))
-  let y = ecdsa.sub(Nat.mul(E, ecdsa.sub(D, x)), Nat.mul(Nat.8, C))
-  let z = ecdsa.mod(Nat.mulVar(Nat.3, Nat.2, p.y, p.z))
+  let x = ecdsa.sub(F, Nat.mul(2, D))
+  let y = ecdsa.sub(Nat.mul(E, ecdsa.sub(D, x)), Nat.mul(8, C))
+  let z = ecdsa.mod(Nat.mulVar(3, 2, p.y, p.z))
   Jacobian.new(x, y, z)
 
 Jacobian.add: Jacobian -> Jacobian -> Jacobian
   (p) (q)
   get p.x p.y p.z = p
-  Bool.or(Nat.eql(p.x, Nat.0), Nat.eql(p.y, Nat.0))<() Jacobian>
+  Bool.or(Nat.eql(p.x, 0), Nat.eql(p.y, 0))<() Jacobian>
   | q;
   | get q.x q.y q.z = q
-    Bool.or(Nat.eql(q.x, Nat.0), Nat.eql(q.y, Nat.0))<() Jacobian>
+    Bool.or(Nat.eql(q.x, 0), Nat.eql(q.y, 0))<() Jacobian>
     | p;
     | let p.z2 = Nat.square(p.z)
       let q.z2 = Nat.square(q.z)
       let U1 = Nat.mul(p.x, q.z2)
       let U2 = Nat.mul(q.x, p.z2)
-      let S1 = Nat.mulVar(Nat.3, p.y, q.z, q.z2)
-      let S2 = Nat.mulVar(Nat.3, q.y, p.z, p.z2)
+      let S1 = Nat.mulVar(3, p.y, q.z, q.z2)
+      let S2 = Nat.mulVar(3, q.y, p.z, p.z2)
       let H = ecdsa.sub(U2, U1)
       let r = ecdsa.sub(S2, S1)
       // H = 0 meaning it's the same point.
-      Nat.eql(H, Nat.0)<() Jacobian>
-      | Nat.eql(r, Nat.0)<() Jacobian>
+      Nat.eql(H, 0)<() Jacobian>
+      | Nat.eql(r, 0)<() Jacobian>
         | Jacobian.double(p);
         | Jacobian.0;;
       | let HH = ecdsa.mod(Nat.square(H))
         let HHH = ecdsa.mod(Nat.mul(H, HH))
         let V = Nat.mul(U1, HH)
-        let x = ecdsa.sub(ecdsa.sub(Nat.square(r), HHH), Nat.mul(Nat.2, V))
+        let x = ecdsa.sub(ecdsa.sub(Nat.square(r), HHH), Nat.mul(2, V))
         let y = ecdsa.sub(Nat.mul(r, ecdsa.sub(V, x)), Nat.mul(S1, HHH))
-        let z = ecdsa.mod(Nat.mulVar(Nat.3, p.z, q.z, H))
+        let z = ecdsa.mod(Nat.mulVar(3, p.z, q.z, H))
         Jacobian.new(x, y, z);;;
 
     // Non-constant-time multiplication. Uses double-and-add algorithm.
@@ -292,32 +292,32 @@ Jacobian.mul_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
 
 Jacobian.mul_unsafe_aux.tco: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian, Jacobian)
   (d) (k1p) (k2p) (k1) (k2)
-  Bool.or(Nat.gtn(k1, Nat.0), Nat.gtn(k2, Nat.0))<() Unit -> Pair(Jacobian, Jacobian)>
+  Bool.or(Nat.gtn(k1, 0), Nat.gtn(k2, 0))<() Unit -> Pair(Jacobian, Jacobian)>
   | ()
     let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p, d), k1p)
     let k2p = Nat.odd(k2)<() Jacobian>(Jacobian.add(k2p, d), k2p)
     let d = Jacobian.double(d)
-    let k1 = Nat.div(k1, Nat.2)
-    let k2 = Nat.div(k2, Nat.2)
+    let k1 = Nat.div(k1, 2)
+    let k2 = Nat.div(k2, 2)
     Jacobian.mul_unsafe_aux.tco(d, k1p, k2p, k1, k2);
   | () Pair.new<Jacobian, Jacobian>(k1p, k2p);
   | Unit.new;
 
 ecdsa.window: Nat -> Nat
   (n) ecdsa.USE_ENDOMORPHISM<() Nat>
-  | Nat.add(Nat.2, Nat.div(Nat.parse_decimal("128"), n));
-  | Nat.add(Nat.1, Nat.div(Nat.parse_decimal("256"), n));
+  | Nat.add(2, Nat.div(Nat.parse_decimal("128"), n));
+  | Nat.add(1, Nat.div(Nat.parse_decimal("256"), n));
 
 ecdsa.size: Nat -> Nat
-  (n) Nat.mul(ecdsa.window(n), Nat.pow(Nat.2, Nat.pred(n)))
+  (n) Nat.mul(ecdsa.window(n), Nat.pow(2, Nat.pred(n)))
 
 //Jacobian.precompute_window: Jacobian -> (w: Nat) -> Vector(Jacobian, ecdsa.size(w))
 Jacobian.precompute_window: Jacobian -> (w: Nat) -> List(Jacobian)
   (p) (w)
   let windows = ecdsa.window(w)
   let points = Concat.empty<Jacobian>
-  let size = Nat.pow(Nat.2, Nat.pred(w))
-  Concat.to_list<Jacobian>(Jacobian.precompute_window.tco(p, windows, points, Nat.0, Jacobian.0, size, Nat.0))
+  let size = Nat.pow(2, Nat.pred(w))
+  Concat.to_list<Jacobian>(Jacobian.precompute_window.tco(p, windows, points, 0, Jacobian.0, size, 0))
 
 Jacobian.precompute_window.tco: Jacobian -> Nat -> Concat(Jacobian) -> Nat -> Jacobian -> Nat -> Nat -> Concat(Jacobian)
   (p) (windows) (points) (window) (base) (size) (i)
@@ -327,19 +327,19 @@ Jacobian.precompute_window.tco: Jacobian -> Nat -> Concat(Jacobian) -> Nat -> Ja
       let points = Concat.push<Jacobian>(base, points)
       Jacobian.precompute_window.tco(p, windows, points, window, base, size, Nat.succ(i));
     | let p = Jacobian.double(base)
-      Jacobian.precompute_window.tco(p, windows, points, Nat.succ(window), Jacobian.0, size, Nat.0);;
+      Jacobian.precompute_window.tco(p, windows, points, Nat.succ(window), Jacobian.0, size, 0);;
   | () points;
   | Unit.new;
 
 Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jacobian, Jacobian)
   (W) (precomputes) (n)
     let windows = ecdsa.window(W)
-    let windowSize = Nat.pow(Nat.2, Nat.pred(W))
-    let maxNumber = Nat.pow(Nat.2, W)
+    let windowSize = Nat.pow(2, Nat.pred(W))
+    let maxNumber = Nat.pow(2, W)
 
     // Create mask with W ones: 0b1111 for W=4 etc.
-    let mask = Nat.pred(Nat.pow(Nat.2, W))
-    Jacobian.wNAF.tco(precomputes, Jacobian.0, Jacobian.0, n, W, Nat.0, windows, windowSize, mask, maxNumber)
+    let mask = Nat.pred(Nat.pow(2, W))
+    Jacobian.wNAF.tco(precomputes, Jacobian.0, Jacobian.0, n, W, 0, windows, windowSize, mask, maxNumber)
 
 Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Pair(Jacobian, Jacobian)
   (precomputes) (p) (f) (n) (W) (window) (windows) (windowSize) (mask) (maxNumber)
@@ -362,14 +362,14 @@ Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -
 
     // Check if we're onto Zero point.
     // Add random point inside current window to f.
-    Bool.if<_>(Nat.eql(wbits, Nat.0))
+    Bool.if<_>(Nat.eql(wbits, 0))
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
-      let q = Maybe.extract<_>(List.at<_>(precomputes, offset))(Jacobian.0)
+      let q = Maybe.extract<_>(List.at<_>(precomputes, offset), Jacobian.0)
       let f = Jacobian.add(f, Bool.if<_>(Nat.odd(window), Jacobian.negate(q), q))
       let window = Nat.succ(window)
       Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
-      let cached = Maybe.extract<_>(List.at<_>(precomputes, Nat.pred(Nat.add(offset, wbits))))(Jacobian.0)
+      let cached = Maybe.extract<_>(List.at<_>(precomputes, Nat.pred(Nat.add(offset, wbits))), Jacobian.0)
       let p = Jacobian.add(p, cached)
       let window = Nat.succ(window)
       Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
@@ -415,15 +415,15 @@ Point.mul_unsafe: Point -> Nat -> Maybe(Point)
 Point.valid_point: Point -> Bool
   (p)
   get x y = p
-  Bool.if<_>(Bool.or(Nat.eql(x, Nat.0), Nat.eql(y, Nat.0)))
+  Bool.if<_>(Bool.or(Nat.eql(x, 0), Nat.eql(y, 0)))
   | Bool.false;
   | Nat.eql(ecdsa.mod(Nat.square(y)), ecdsa.weierstrass(x));
 
-Point.from_compressed_hex: Vector(U8, Nat.33) -> Maybe(Point)
+Point.from_compressed_hex: Vector(U8, 33) -> Maybe(Point)
   (bytes)
-  get head tail = Vector.extract<U8, Nat.32>(bytes)
+  get head tail = Vector.extract<U8, 32>(bytes)
   let head = U8.to_nat(head)
-  let x = U8_Vector.to_number<Nat.32>(tail)
+  let x = U8_Vector.to_number<32>(tail)
   let sqrY = ecdsa.weierstrass(x)
   let y = ecdsa.sqrt(sqrY)
   let is_head_odd = Nat.odd(head)
@@ -432,26 +432,26 @@ Point.from_compressed_hex: Vector(U8, Nat.33) -> Maybe(Point)
   let point = Point.new(x, y)
   Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
 
-Point.from_uncompressed_hex: Vector(U8, Nat.65) -> Maybe(Point)
+Point.from_uncompressed_hex: Vector(U8, 65) -> Maybe(Point)
   (bytes)
-  get head tail = Vector.extract<U8, Nat.64>(bytes)
-  get x y = Vector.split_at<U8, Nat.64>(tail, Nat.32)
-  let x = U8_Vector.to_number<Nat.32>(x)
-  let y = U8_Vector.to_number<Nat.32>(y)
+  get head tail = Vector.extract<U8, 64>(bytes)
+  get x y = Vector.split_at<U8, 64>(tail, 32)
+  let x = U8_Vector.to_number<32>(x)
+  let y = U8_Vector.to_number<32>(y)
   let point = Point.new(x, y)
   Bool.if<_>(Point.valid_point(point), Maybe.some<_>(point), Maybe.none<_>)
 
-Point.to_bytes: (p: Point) -> (compressed: Bool) -> Vector(U8, Bool.if<Nat>(compressed, Nat.33, Nat.65))
+Point.to_bytes: (p: Point) -> (compressed: Bool) -> Vector(U8, Bool.if<Nat>(compressed, 33, 65))
  (p) (compressed)
  get p.x p.y = p
- let x = U8_Vector.from_nat(Nat.32, p.x)
- compressed<(b) Vector(U8, Bool.if<Nat>(b, Nat.33, Nat.65))>
- | let is_odd_byte = U8.from_nat(Bool.if<Nat>(Nat.odd(p.y), Nat.3, Nat.2))
-   Vector.ext<U8, Nat.32>(is_odd_byte, x);
- | let uncompressed_byte = U8.from_nat(Nat.4)
-   let y = U8_Vector.from_nat(Nat.32, p.y)
-   let uncompressed_vec = Vector.concat<U8, Nat.32, Nat.32>(x, y)
-   Vector.ext<U8, Nat.64>(uncompressed_byte, uncompressed_vec);
+ let x = U8_Vector.from_nat(32, p.x)
+ compressed<(b) Vector(U8, Bool.if<Nat>(b, 33, 65))>
+ | let is_odd_byte = U8.from_nat(Bool.if<Nat>(Nat.odd(p.y), 3, 2))
+   Vector.ext<U8, 32>(is_odd_byte, x);
+ | let uncompressed_byte = U8.from_nat(4)
+   let y = U8_Vector.from_nat(32, p.y)
+   let uncompressed_vec = Vector.concat<U8, 32, 32>(x, y)
+   Vector.ext<U8, 64>(uncompressed_byte, uncompressed_vec);
 
 SignResult: Type
   signResult<P: SignResult -> Type> ->
@@ -464,39 +464,39 @@ SignResult.new: Nat -> Nat -> SignResult
 
 SignResult.from_hex: String -> Maybe(SignResult)
   (str)
-  use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+  use pair = Maybe.bind<,>(String.take_n(2, str))
   get str check1 = pair
 
-  use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+  use pair = Maybe.bind<,>(String.take_n(2, str))
   get length str = pair
-  use length = Maybe.bind<><>(ecdsa.parse_byte(length))
+  use length = Maybe.bind<,>(ecdsa.parse_byte(length))
 
-  use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+  use pair = Maybe.bind<,>(String.take_n(2, str))
   get check2 str = pair
   Bool.if<Maybe(SignResult)>(
-    Bool.orVar(Nat.3)
+    Bool.orVar(3)
     | String.eql(check1, "30");
-    | Nat.eql(length, Nat.sub(String.length(str), Nat.4));
+    | Nat.eql(length, Nat.sub(String.length(str), 4));
     | String.eql(check2, "02");)
   | Maybe.none<SignResult>;
   | // r
-    use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+    use pair = Maybe.bind<,>(String.take_n(2, str))
     get rLen str = pair
-    use rLen = Maybe.bind<><>(ecdsa.parse_byte(rLen))
-    use pair = Maybe.bind<><>(String.take_n(rLen, str))
+    use rLen = Maybe.bind<,>(ecdsa.parse_byte(rLen))
+    use pair = Maybe.bind<,>(String.take_n(rLen, str))
     get r str = pair
-    use r = Maybe.bind<><>(Nat.parse_hex_safe(r))
+    use r = Maybe.bind<,>(Nat.parse_hex_safe(r))
     // s
-    use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+    use pair = Maybe.bind<,>(String.take_n(2, str))
     get check3 str = pair
     (String.eql(check3, "02"))<() Maybe(SignResult)>
     | Maybe.none<SignResult>;
-    | use pair = Maybe.bind<><>(String.take_n(Nat.2, str))
+    | use pair = Maybe.bind<,>(String.take_n(2, str))
       get sLen str = pair
-      use sLen = Maybe.bind<><>(ecdsa.parse_byte(sLen))
-      use pair = Maybe.bind<><>(String.take_n(sLen, str))
+      use sLen = Maybe.bind<,>(ecdsa.parse_byte(sLen))
+      use pair = Maybe.bind<,>(String.take_n(sLen, str))
       get s str = pair
-      use s = Maybe.bind<><>(Nat.parse_hex_safe(s))
+      use s = Maybe.bind<,>(Nat.parse_hex_safe(s))
       Maybe.some<SignResult>(SignResult.new(r, s));;
 
 SignResult.to_hex: SignResult -> Bool -> String
@@ -506,21 +506,21 @@ SignResult.to_hex: SignResult -> Bool -> String
   Bool.if<_>(compressed)
   | s_hex;
   | let r_hex = ecdsa.number_to_hex(sig.r)
-    let r_len_nat = Nat.div(String.length(r_hex), Nat.2)
+    let r_len_nat = Nat.div(String.length(r_hex), 2)
     let r_len = ecdsa.number_to_hex(r_len_nat)
-    let s_len_nat = Nat.div(String.length(s_hex), Nat.2)
+    let s_len_nat = Nat.div(String.length(s_hex), 2)
     let s_len = ecdsa.number_to_hex(s_len_nat)
-    let length = ecdsa.number_to_hex(Nat.addVar(Nat.3)(r_len_nat, s_len_nat, Nat.4))
-    String.concatVar(Nat.8)("30", length, "02", r_len, r_hex, "02", s_len, s_hex);
+    let length = ecdsa.number_to_hex(Nat.addVar(3, r_len_nat, s_len_nat, 4))
+    String.concatVar(8, "30", length, "02", r_len, r_hex, "02", s_len, s_hex);
 
 U8_Vector.to_number: <n: Nat> -> Vector(U8, n) -> Nat
-  <n> (bytes) U8_Vector.to_number.tco<n>(bytes, Nat.0)
+  <n> (bytes) U8_Vector.to_number.tco<n>(bytes, 0)
 
 U8_Vector.to_number.tco: <n: Nat> -> Vector(U8, n) -> Nat -> Nat
   <n> (bytes) (res)
   bytes<() () Unit -> Nat>
   | () res;
-  | <n> (head) (tail) () U8_Vector.to_number.tco<n>(tail)(Nat.add(U8.to_nat(head), Nat.mul(res, Nat.16)));
+  | <n> (head) (tail) () U8_Vector.to_number.tco<n>(tail, Nat.add(U8.to_nat(head), Nat.mul(res, 16)));
   | Unit.new;
 
 U8_Vector.from_nat: (pad: Nat) -> (n: Nat) -> Vector(U8, pad)
@@ -531,7 +531,7 @@ U8_Vector.from_nat.aux: (pad: Nat) -> (n: Nat) -> Vector(U8, pad)
   pad<(pad) Vector(U8, pad)>
   | Vector.nil<U8>;
   | (pad.pred)
-    get div mod = Nat.div_mod(n, Nat.256)
+    get div mod = Nat.div_mod(n, 256)
     Vector.ext<U8, pad.pred>(U8.from_nat(mod), U8_Vector.from_nat.aux(pad.pred, div));
 
 U8_Vector.to_hex: <n: Nat> -> Vector(U8, n) -> String
@@ -541,14 +541,14 @@ U8_Vector.to_hex: <n: Nat> -> Vector(U8, n) -> String
   | <n.pred> (head) (tail)
     String.concat(ecdsa.number_to_hex(U8.to_nat(head)), U8_Vector.to_hex<n.pred>(tail));
 
-Nat.65: Nat
-  Nat.succ(Nat.64)
+65: Nat
+  Nat.succ(64)
 
-Nat.256: Nat
-  Nat.mul(Nat.16, Nat.16)
+256: Nat
+  Nat.mul(16, 16)
 
 ecdsa.is_valid_private_key: Nat -> Bool
-  (priv_key) Bool.and(Nat.ltn(Nat.0, priv_key), Nat.ltn(priv_key, CURVE.n))
+  (priv_key) Bool.and(Nat.ltn(0, priv_key), Nat.ltn(priv_key, CURVE.n))
 
 QRS: Type
   qrs<P: QRS -> Type> ->
@@ -566,6 +566,6 @@ QRS.from_k: (k: Nat) -> (msg: Nat) -> (priv: Nat) -> Maybe(QRS)
   get q.x q.y = q
   let r = Nat.mod(q.x, max)
   let s = Nat.mod(Nat.mul(ecdsa.invert(k, max), (Nat.add(msg, Nat.mul(r, priv)))), max)
-  Bool.if<>(Bool.or(Nat.eql(r, Nat.0), Nat.eql(s, Nat.0)))
+  Bool.if<>(Bool.or(Nat.eql(r, 0), Nat.eql(s, 0)))
   | Maybe.none<>;
   | Maybe.some<>(QRS.new(q, r, s));

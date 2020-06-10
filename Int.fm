@@ -14,7 +14,7 @@ Int.new: Nat -> Nat -> Int
     | (y.pred) Int.new(Nat.sub(x.pred, y.pred), Nat.sub(y.pred, x.pred))<P>(new);;
 
 Int.fromNat: Nat -> Int
-  (n) Int.new(n, Nat.0)
+  (n) Int.new(n, 0)
 
 // true is negative, false is positive
 Int.toNat: Int -> Pair(Bool, Nat)
@@ -26,10 +26,10 @@ Int.toNat: Int -> Pair(Bool, Nat)
     | () Pair.new<Bool, Nat>(Bool.true, a.y);;
 
 Int.0: Int
-  Int.fromNat(Nat.0)
+  Int.fromNat(0)
 
 Int.1: Int
-  Int.fromNat(Nat.1)
+  Int.fromNat(1)
 
 Int.add: Int -> Int -> Int
   (a) (b)
@@ -81,8 +81,8 @@ Int.parse_decimal: String -> Int
   | Int.0;
   | (str.head) (str.tail)
     U16.eql(str.head, Char.parse("-"))<() Int>
-    | Int.new(Nat.0, Nat.parse_decimal(str.tail));
-    | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), Nat.0);;
+    | Int.new(0, Nat.parse_decimal(str.tail));
+    | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), 0);;
 
 Int.parse_hex:
   (str: String) ->
@@ -105,9 +105,9 @@ Int.parse_hex_safe: String -> Maybe(Int)
   | (str.head) (str.tail)
     U16.eql(str.head, Char.parse("-"))<() Maybe(Int)>
     | use b = Maybe.bind<><>(Nat.parse_hex_safe(str.tail))
-      Maybe.some<>(Int.new(Nat.0, b));
+      Maybe.some<>(Int.new(0, b));
     | use a = Maybe.bind<><>(Nat.parse_hex_safe(String.cons(str.head, str.tail)))
-      Maybe.some<>(Int.new(a, Nat.0));;
+      Maybe.some<>(Int.new(a, 0));;
 
 Int.to_string_decimal: Int -> String
   (a)

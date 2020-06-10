@@ -1,3 +1,3 @@
 U64.shl: Π(n:Nat) Π(a:U64) U64
-  λn λa (<a λself U64> λa_val (U64.new ((<Word.shift_left 64> n) a_val)))
+  λn λa (<a λx U64> λa_val (U64.new ((<Word.shift_left 64> n) a_val)))
 

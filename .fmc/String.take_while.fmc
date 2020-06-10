@@ -1,3 +1,0 @@
-String.take_while: Π(:Π(:Char) Bool) Π(:String) ((Pair String) String)
-  λf λstr (<(((String.take_while.aux f) String.nil) str) λx ((Pair String) String)> λx λy ((<<Pair.new String> String> (String.reverse x)) y))
-

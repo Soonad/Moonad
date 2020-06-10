@@ -1,3 +1,3 @@
 Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jacobian)(Jacobian)
-  (W) (precomputes) (n) let windows = ecdsa.window(W); let windowSize = Nat.pow(Nat.2)(Nat.pred(W)); let maxNumber = Nat.pow(Nat.2)(W); let mask = Nat.pred(Nat.pow(Nat.2)(W)); Jacobian.wNAF.tco(precomputes)(Jacobian.0)(Jacobian.0)(n)(W)(Nat.0)(windows)(windowSize)(mask)(maxNumber)
+  (W) (precomputes) (n) let windows = ecdsa.window(W); let windowSize = Nat.pow(2)(Nat.pred(W)); let maxNumber = Nat.pow(2)(W); let mask = Nat.pred(Nat.pow(2)(W)); Jacobian.wNAF.tco(precomputes)(Jacobian.0)(Jacobian.0)(n)(W)(0)(windows)(windowSize)(mask)(maxNumber)
 

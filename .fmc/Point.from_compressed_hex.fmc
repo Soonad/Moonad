@@ -1,3 +1,3 @@
-Point.from_compressed_hex: Π(:((Vector U8) Nat.33)) (Maybe Point)
-  λbytes (<(<<Vector.extract U8> Nat.32> bytes) λx (Maybe Point)> λhead λtail @head=(U8.to_nat head);@x=(<U8_Vector.to_number Nat.32> tail);@sqrY=(ecdsa.weierstrass x);@y=(ecdsa.sqrt sqrY);@is_head_odd=(Nat.odd head);@is_y_odd=(Nat.odd y);@y=(((<Bool.if Nat> ((Bool.eql is_head_odd) is_y_odd)) y) (ecdsa.negate y));@point=((Point.new x) y);(((<Bool.if (Maybe Point)> (Point.valid_point point)) (<Maybe.some Point> point)) <Maybe.none Point>))
+Point.from_compressed_hex: Π(:((Vector U8) 33)) (Maybe Point)
+  λbytes (<(<<Vector.extract U8> 32> bytes) λx (Maybe Point)> λhead λtail $head=(U8.to_nat head);$x=(<U8_Vector.to_number 32> tail);$sqrY=(ecdsa.weierstrass x);$y=(ecdsa.sqrt sqrY);$is_head_odd=(Nat.odd head);$is_y_odd=(Nat.odd y);$y=(((<Bool.if Nat> ((Bool.eql is_head_odd) is_y_odd)) y) (ecdsa.negate y));$point=((Point.new x) y);(((<Bool.if (Maybe Point)> (Point.valid_point point)) (<Maybe.some Point> point)) <Maybe.none Point>))
 

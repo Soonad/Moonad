@@ -1,3 +1,3 @@
 U32.shl: (n: Nat) -> (a: U32) -> U32
-  (n) (a) a<(self) U32>((a_val) U32.new(Word.shift_left<32>(n)(a_val)))
+  (n) (a) a<(x) U32>((a_val) U32.new(Word.shift_left<32>(n)(a_val)))
 

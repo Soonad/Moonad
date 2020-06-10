@@ -1,130 +1,110 @@
-U8.add: U8 -> U8 -> U8 //prim//
-  (a) (b)
+T U8
+| new(a: Word(8));
+
+U8.add(a: U8, b: U8): U8
+  get a_val = a 
+  get b_val = b 
+  U8.new(Word.add<>(a_val, b_val))
+
+U8.and(a: U8, b: U8): U8
   get a_val = a
-  get b_val = b
-  U8.new(Word.add<?zz>(a_val)(b_val))
+  get b_val = b 
+  U8.new(Word.and<>(a_val, b_val))
 
-U8.and: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.and<Nat.8>(a_val)(b_val));;
+U8.concat(a: U8, b: U8): U16
+  get a_val = a
+  get b_val = b 
+  U16.new(Word.concat<><>(a_val, b_val))
 
-U8.div: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.div<Nat.8>(a_val)(b_val));;
+U8.div(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.div<>(a_val, b_val))
 
 // a == b
-U8.eql: U8 -> U8 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.eql<Nat.8>(a_val)(b_val);;
-
-U8: Type //prim//
-  u8<P: U8 -> Type> ->
-  (new: (a: Word(Nat.8)) -> P(U8.new(a))) ->
-  P(u8)
+U8.eql(a: U8, b: U8): Bool
+  get a_val = a
+  get b_val = b 
+  Word.eql<>(a_val, b_val)
 
 // a >= b
-U8.gte: U8 -> U8 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gte<Nat.8>(a_val)(b_val);;
+U8.gte(a: U8, b: U8): Bool
+  get a_val = a
+  get b_val = b 
+  Word.gte<>(a_val, b_val)
 
 // a > b
-U8.gtn: U8 -> U8 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.gtn<Nat.8>(a_val)(b_val);;
+U8.gtn(a: U8, b: U8): Bool
+  get a_val = a
+  get b_val = b 
+  Word.gtn<>(a_val, b_val)
 
-U8.inc: U8 -> U8 //prim//
-  (a)
-  a<() U8> | (a_val)
-  U8.new(Word.inc<Nat.8>(a_val));
+U8.inc(a: U8): U8
+  get a_val = a 
+  U8.new(Word.inc<>(a_val))
 
 // a <= b
-U8.lte: U8 -> U8 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.lte<Nat.8>(a_val)(b_val);;
+U8.lte(a: U8, b: U8): Bool
+  get a_val = a
+  get b_val = b 
+  Word.lte<>(a_val, b_val)
 
 // a < b
-U8.ltn: U8 -> U8 -> Bool //prim//
-  (a) (b)
-  a<() Bool> | (a_val)
-  b<() Bool> | (b_val)
-  Word.ltn<Nat.8>(a_val)(b_val);;
+U8.ltn(a: U8, b: U8): Bool
+  get a_val = a
+  get b_val = b 
+  Word.ltn<>(a_val, b_val)
 
-U8.mod: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.mod<Nat.8>(a_val)(b_val));;
+U8.mod(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.mod<>(a_val, b_val))  
 
-U8.mul: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.mul<Nat.8>(a_val)(b_val));;
+U8.mul(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.mul<>(a_val, b_val))  
 
-U8.new: Word(Nat.8) -> U8
-  (a)
-  <> (u8) u8(a)
+U8.or(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.or<>(a_val, b_val))  
 
-U8.or: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.or<Nat.8>(a_val)(b_val));;
+U8.parse_hex(str: String): U8
+  U8.new(Word.from_bits(8, Bits.parse_hex(str)))
 
-U8.parse_hex: String -> U8
-  (str) U8.new(Word.from_bits(Nat.8)(Bits.parse_hex(str)))
+U8.pow(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.pow<>(a_val, b_val))  
 
-U8.pow: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.pow<Nat.8>(a_val)(b_val));;
+U8.shl(n: Nat, a: U8): U8
+  get a_val = a 
+  U8.new(Word.shift_left<>(n, a_val))
 
-U8.shl: Nat -> U8 -> U8 //prim//
-  (n) (a)
-  a<() U8> | (a_val)
-  U8.new(Word.shift_left<Nat.8>(n)(a_val));
+U8.shr(n: Nat, a: U8): U8
+  get a_val = a 
+  U8.new(Word.shift_right<>(n, a_val))
 
-U8.shr: Nat -> U8 -> U8 //prim//
-  (n) (a)
-  a<() U8> | (a_val)
-  U8.new(Word.shift_right<Nat.8>(n)(a_val));
+U8.sub(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.sub<>(a_val, b_val))  
 
-U8.sub: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.sub<Nat.8>(a_val)(b_val));;
+U8.to_bits(a: U8): Bits
+  get a_val = a 
+  Word.to_bits<>(a_val)
 
-U8.to_bits: U8 -> Bits
-  (a)
-  a<() Bits> | (a_val)
-  Word.to_bits<Nat.8>(a_val);
+U8.to_nat(a: U8): Nat
+  get a_val = a 
+  Word.to_nat<>(a_val)
+
+U8.xor(a: U8, b: U8): U8
+  get a_val = a
+  get b_val = b 
+  U8.new(Word.xor<>(a_val, b_val))  
 
 U8.from_nat: Nat -> U8
   // TODO
   U8.from_nat
-
-U8.to_nat: U8 -> Nat //prim//
-  (a)
-  a<() Nat> | (a_val)
-  Word.to_nat<Nat.8>(a_val);
-
-U8.xor: U8 -> U8 -> U8 //prim//
-  (a) (b)
-  a<() U8> | (a_val)
-  b<() U8> | (b_val)
-  U8.new(Word.xor<Nat.8>(a_val)(b_val));;
 

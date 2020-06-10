@@ -1,3 +1,3 @@
 String.split_at: (n: Nat) -> (xs: String) -> Pair(String)(String)
-  (n) (xs) xs<(xs.self) Pair(String)(String)>(Pair.new<String><String>(String.nil)(String.nil))((xs.head) (xs.tail) n<(n.self) Pair(String)(String)>(Pair.new<String><String>(String.nil)(xs))((n.pred) n.pred<(n.pred.self) Pair(String)(String)>(Pair.new<String><String>(String.pure(xs.head))(xs.tail))((n.pred.pred) String.split_at(n.pred)(xs.tail)<(self) Pair(String)(String)>((y) (z) Pair.new<String><String>(String.cons(xs.head)(y))(z)))))
+  (n) (xs) xs<(xs.self) Pair(String)(String)>(Pair.new<String><String>(String.nil)(String.nil))((xs.head) (xs.tail) n<(n.self) Pair(String)(String)>(Pair.new<String><String>(String.nil)(xs))((n.pred) n.pred<(n.pred.self) Pair(String)(String)>(Pair.new<String><String>(String.pure(xs.head))(xs.tail))((n.pred.pred) String.split_at(n.pred)(xs.tail)<(x) Pair(String)(String)>((y) (z) Pair.new<String><String>(String.cons(xs.head)(y))(z)))))
 

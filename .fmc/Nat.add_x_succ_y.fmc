@@ -1,3 +1,3 @@
 Nat.add_x_succ_y: Π(x:Nat) Π(y:Nat) (((Equal Nat) ((Nat.add x) (Nat.succ y))) (Nat.succ ((Nat.add x) y)))
-  λx λy ((<x λx (((Equal Nat) ((Nat.add x) (Nat.succ y))) (Nat.succ ((Nat.add x) y)))> <<Equal.to Nat> (Nat.succ y)>) λx.pred ((((<<Equal.apply_ind Nat> Nat> ((Nat.add x.pred) (Nat.succ y))) (Nat.succ ((Nat.add x.pred) y))) Nat.succ) ((Nat.add_x_succ_y x.pred) y)))
+  λx λy ((<x λx (((Equal Nat) ((Nat.add x) (Nat.succ y))) (Nat.succ ((Nat.add x) y)))> <<Equal.to Nat> (Nat.succ y)>) λx.pred <<<<<<Equal.apply Nat> Nat> ((Nat.add x.pred) (Nat.succ y))> (Nat.succ ((Nat.add x.pred) y))> Nat.succ> ((Nat.add_x_succ_y x.pred) y)>)
 

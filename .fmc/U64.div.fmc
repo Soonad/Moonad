@@ -1,3 +1,3 @@
 U64.div: Π(a:U64) Π(b:U64) U64
-  λa λb (<a λself U64> λa_val (<b λself U64> λb_val (U64.new ((<Word.div 64> a_val) b_val))))
+  λa λb (<a λx U64> λa_val (<b λx U64> λb_val (U64.new ((<Word.div 64> a_val) b_val))))
 
