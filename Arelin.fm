@@ -1405,7 +1405,7 @@ Arelin.Game.combine_mov_buffs(buff: Arelin.Game.Buff, i: F64): F64
 Arelin.Thing.speed_multiplier_of(self: Arelin.Thing): F64
   let self.bst = Arelin.Thing.get_bst(self)
   let self.buf = Arelin.Thing.get_buf(self) 
-  List.fold<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
+  List.foldr<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
 
 Arelin.Thing.is_silenced(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
@@ -1504,7 +1504,7 @@ Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
   let self.buf      = Arelin.Thing.get_buf(self)
   let self.dmg      = Arelin.Thing.get_dmg(self)
   let init_val      = Pair.new<><>(hit_dmg, List.nil<>)
-  let res           = List.fold<><>(init_val, Arelin.Game.use_shields, self.buf)
+  let res           = List.foldr<><>(init_val, Arelin.Game.use_shields, self.buf)
   let remaining_dmg = F64.add(Pair.fst<><>(res), self.dmg)
   let remaining_buf = Pair.snd<><>(res)
   let self          = Arelin.Thing.set_dmg(self, remaining_dmg)
@@ -1564,7 +1564,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
       ;
     ;
   ) :: Arelin.Game.Buff -> List(Arelin.Game.Buff) -> List(Arelin.Game.Buff)
-  let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
+  let new_buf = List.foldr<><>(List.nil<>, fn, self.buf)
   Arelin.Thing.set_buf(self, new_buf)
   
 // Ends an animation/transformation/thing after some ticks
@@ -1760,7 +1760,7 @@ Arelin.collide_with(
         | #some# Maybe.some<>(result.value); 
       ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
       let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
-      List.fold<><>(nil,cons,segs);;
+      List.foldr<><>(nil,cons,segs);;
   | #pbox# Maybe.none<>; // TODO
 
 //// Interaction function between two things
@@ -1905,9 +1905,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
               | this;;
 
         ) :: Arelin.Game.Effect -> Arelin.Thing -> Arelin.Thing
-       List.fold<><>(this, apply_eff, hit.eff);;
+       List.foldr<><>(this, apply_eff, hit.eff);;
     ) :: Arelin.Game.Hit -> Arelin.Thing -> Arelin.Thing 
-    List.fold<><>(this, apply_hit, that.hit)
+    List.foldr<><>(this, apply_hit, that.hit)
   this  
 
 // Like a fold, but with access to a list of other elements
@@ -1994,7 +1994,7 @@ Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
     let this = fun(this)
 
     // Calls the interaction function with all other things
-    let this = List.fold<><>(this, intr, others)
+    let this = List.foldr<><>(this, intr, others)
 
     // Increments tik counter
     let tik  = Arelin.Thing.get_tik(this)
