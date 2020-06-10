@@ -1,263 +1,420 @@
-// Do all elements satisfy a condition?
-List.all: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list)
-  case list:
-  | Bool.true;
-  | (head) (tail)
-    case cond(head):
-    | List.all<>(cond)(tail);
-    | Bool.false;;
-
-// Are all elements true?
-List.all_true: List(Bool) -> Bool
-  (list) List.all<>((x) x)(list)
-
-// Do any element satisfy a condition?
-List.any: <A: Type> -> (A -> Bool) -> List(A) -> Bool
-  <A> (cond) (list)
-  case list:
-  | Bool.false;
-  | (head) (tail)
-    case cond(head):
-    | Bool.true;
-    | List.any<>(cond)(tail);;
-
-// Is any element true?
-List.any_true: List(Bool) -> Bool
-  (list) List.any<>((x) x)(list)
-
-// Appends element to the end of the list.
-List.append: <A: Type> -> List(A) -> A -> List(A)
-  <A> (as) (a)
-  case as:
-  | List.single<>(a);
-  | (head) (tail)
-    List.cons<>(head)(List.append<>(tail)(a));
-
-// Returns the element at given position.
-List.at: <A: Type> -> List(A) -> Nat -> Maybe(A)
-  <A> (list) (indx)
-  case list:
-  | Maybe.none<>;
-  | (head) (tail)
-    case indx:
-    | Maybe.some<>(head);
-    | (pred) List.at<>(tail)(pred);;
-
-// The bind function of the list Monad.
-List.bind: <A: Type> -> <B: Type> -> List(A) -> (A -> List(B)) -> List(B)
-  <A> <B> (xs) (f)
-  List.flatten<>(List.map<><>(f)(xs))
-
-List.chunk: <A: Type> -> Nat -> List(A) -> Maybe(List(A))
-  <A> (n) (list)
-  case n:
-  | Maybe.some<>(List.nil<>);
-  | (pred)
-    case list:
-    | Maybe.none<>;
-    | (head) (tail)
-      use x = Maybe.bind<><>(List.chunk<A>(pred)(tail))
-      Maybe.some<>(List.cons<A>(head)(x))
-    ;
-  ;
-
-// Concatenates two lists.
-List.concat: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (bs)
-  case as:
-  | bs;
-  | (head) (tail)
-    List.cons<>(head)(List.concat<>(tail)(bs));
-
-// Removes the first elements of a list.
-List.drop: <A: Type> -> Nat -> List(A) -> List(A)
-  <A> (n) (list)
-  case n:
-  | list;
-  | (pred)
-    case list:
-    | List.nil<A>;
-    | (head) (tail)
-      List.drop<>(pred)(tail);;
-
-// Removes all elements that do not satisfy a condition.
-List.filter : <A: Type> -> (A -> Bool) -> List(A) -> List(A)
-  <A> (cond) (list)
-  case list:
-  | List.nil<A>;
-  | (list.head) (list.tail)
-    case cond(list.head):
-    | (t) t;
-    | (t) List.cons<>(list.head)(t);
-    | List.filter<>(cond)(list.tail);
-  ;
-
-//Finds the first occurrence that satisfies a condition
-List.find: <A: Type> -> (A -> Bool) -> List(A) -> Maybe(A)
-  <A> (cond) (xs)
-  case xs:
-  | Maybe.none<>;
-  | (head) (tail)
-    case cond(head):
-    | Maybe.some<>(head);
-    | List.find<>(cond)(tail);;
-
-
-List.find_last.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat)) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx) (res)
-  case list:
-  | res;
-  | (head) (tail)
-    let res =
-      case cond(head)(indx):
-      | Maybe.some<>(Pair.new<><>(head)(indx));
-      | res;
-    List.find_last.aux<>(tail)(cond)(Nat.succ(indx))(res);
-
-// Finds the last element that satisfies a condition and its index.
-List.find_last: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond)
-  List.find_last.aux<A>(list)(cond)(Nat.zero)(Maybe.none<Pair(A)(Nat)>)
-
-// Flattens a list of lists into a single list.
-List.flatten: <A: Type> -> List(List(A)) -> List(A)
-  <A> (as)
-  case as:
-  | List.nil<>;
-  | (head) (tail)
-    List.concat<>(head)(List.flatten<>(tail));
-
 // The polymorphic List type can hold a number of elements.
 T List <A: Type>
 | nil;
 | cons(head: A, tail: List(A));
 
-// Folds over a list.
-List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  <A> <B> (nil) (cons) (list)
-  case list:
-  | nil;
-  | (x) (xs) cons(x)(List.fold<><>(nil)(cons)(xs));
+// Basic Theorems
+// ===============
 
-List.ifind.aux: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Nat -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond) (indx)
-  case list:
-  | Maybe.none<>;
-  | (head) (tail)
-    case cond(head)(indx):
-    | Maybe.some<>(Pair.new<><>(head)(indx));
-    | List.ifind.aux<>(tail)(cond)(Nat.succ(indx));
-  ;
-
-// Finds the first element that satisfies a condition and its index.
-List.ifind: <A: Type> -> List(A) -> (A -> Nat -> Bool) -> Maybe(Pair(A)(Nat))
-  <A> (list) (cond)
-  List.ifind.aux<A>(list)(cond)(Nat.zero)
-
-List.imap: <A: Type> -> <B: Type> -> (Nat -> A -> B) -> List(A) -> List(B)
-  <A> <B> (fn) (list)
-  case list:
-  | List.nil<B>;
-  | (list.head) (list.tail)
-    List.cons<B>(fn(Nat.zero)(list.head))
-    | List.imap<><>((n) fn(Nat.succ(n)))(list.tail);
-  ;
-
-List.intercalate: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
-  <A> (sep) (xs)
+// A proposition that a list is not the empty list
+List.not_empty<A: Type>(xs: List(A)) : Type
   case xs:
-  | List.nil<>;
-  | (x) (xs) List.cons<A>(x)(List.cons<A>(sep)(List.intercalate<A>(sep)(xs)));
+  | Empty;
+  | Unit;
 
-// Is this list empty?
-List.is_empty: <A: Type> -> List(A) -> Bool
-  <A> (list)
-  case list:
+// A theorem that List.cons isn't List.nil
+List.cons_isnt_nil<A: Type>(x:A, xs: List(A))
+  : Not(Equal(List(A),List.cons<A>(x,xs), List.nil<A>))
+  def P = ((x) case x: | Empty; | Unit;) :: List(A) -> Type
+  (e) Equal.rewrite<List(A), List.cons<A>(x,xs), List.nil<A>,P>(e, Unit.new)
+
+// A theorem that a list made with List.cons is not the empty list
+List.cons_isnt_empty<A: Type>(
+  x:A,
+  xs: List(A)
+): List.not_empty<A>(List.cons<A>(x,xs))
+  def y = List.cons<A>(x,xs)
+  case y:
+  with e : Equal(List(A),y,y.self) = Equal.to<List(A),y>;
+  | Empty.absurd(List.cons_isnt_nil<A>(x,xs,e),_);
+  | Unit.new;
+
+// Basic Functions
+// ===============
+
+// Concatenates two lists.
+List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
+  case as:
+  | bs;
+  | List.cons<>(as.head, List.concat<>(as.tail,bs));
+
+// Get the head of a nonempty list
+List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
+  case xs:
+  with ne : List.not_empty<A>(xs.self) = not_empty;
+  | Empty.absurd(ne, A);
+  | xs.head;
+
+// Get the tail of a nonempty list
+List.tail<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
+  case xs:
+  with ne : List.not_empty<A>(xs.self) = not_empty;
+  | Empty.absurd(ne, List(A));
+  | xs.tail;
+
+// Get the all elements of a nonempty list except the last one
+List.init<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
+  case xs:
+  with ne : List.not_empty<A>(xs.self) = not_empty;
+  | Empty.absurd(ne, List(A));
+  | case xs.tail:
+    with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
+    | List.nil<>;
+    | def cne = List.cons_isnt_empty<A>(xs.tail.head,xs.tail.tail)
+      def xne = Equal.rewrite<_,_,_,(x) List.not_empty<A>(x)>(e,cne)
+      List.cons<>(xs.head,List.init<>(xs.tail,xne));;
+
+// Get the last element of a nonempty list
+List.last<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
+  case xs:
+  with ne : List.not_empty<A>(xs.self) = not_empty;
+  | Empty.absurd(ne, A);
+  | case xs.tail:
+    with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
+    | xs.head;
+    | def cne = List.cons_isnt_empty<A>(xs.tail.head,xs.tail.tail)
+      def xne = Equal.rewrite<_,_,_,(x) List.not_empty<A>(x)>(e,cne)
+      List.last<>(xs.tail,xne);;
+
+List.uncons<A: Type>(xs: List(A)): Maybe(Pair(A,List(A)))
+  case xs:
+  | Maybe.none<>;
+  | Maybe.some<>(Pair.new<,>(xs.head,xs.tail));
+
+List.null<A: Type>(xs: List(A)) : Bool
+  case xs:
   | Bool.true;
-  | (x) (xs) Bool.false;
+  | Bool.false;
 
 // Computes the length of the list.
-List.length: <A: Type> -> List(A) -> Nat
-  <A> (list)
-  case list:
-  | Nat.zero;
-  | (head) (tail)
-    Nat.succ(List.length<A>(tail));
+List.length<A: Type>(xs: List(A)): Nat
+  List.length.go<>(xs,Nat.zero)
+
+List.length<A: Type>(xs: List(A), n: Nat): Nat
+  case xs:
+  | n;
+  | List.length<A>(xs.tail,Nat.succ(n));
+
+// Appends element to the end of the list.
+List.append<A: Type>(as: List(A), a: A): List(A)
+  case as:
+  | List.pure<>(a);
+  | List.cons<>(as.head,List.append<>(as.tail, a));
+
+
+// List transformations
+// ====================
 
 // Applies a function to all elements of the list.
-List.map: <A: Type> -> <B: Type> -> (A -> B) -> List(A) -> List(B)
-  <A> <B> (fn) (list)
-  case list:
-  | List.nil<>;
-  | (list.head) (list.tail)
-    List.cons<>(fn(list.head))(List.map<><>(fn)(list.tail));
-
-// Pushes a value to the end of the list
-List.push: <A: Type> -> A -> List(A) -> List(A)
-  <A> (val) (list)
-  case list:
-  | List.cons<>(val)(List.nil<>);
-  | (list.head) (list.tail)
-    List.cons<>(list.head)(List.push<>(val)(list.tail));
-
-List.reverse.aux: <A: Type> -> List(A) -> List(A) -> List(A)
-  <A> (as) (xs)
+List.map<A: Type, B: Type>(f: A -> B, as: List(A)): List(B)
   case as:
-  | xs;
-  | (head) (tail) List.reverse.aux<>(tail)(List.cons<>(head)(xs));
+  | List.nil<>;
+  | List.cons<>(f(as.head),List.map<,>(f,as.tail));
 
-// Reverses the list.
-List.reverse: <A: Type> -> List(A) -> List(A)
-  <A> (as)
-  List.reverse.aux<A>(as)(List.nil<A>)
+// Map over a list with the index
+List.imap<A: Type,B: Type>(f: Nat -> A -> B, xs: List(A)): List(B)
+  case xs:
+  | List.nil<>;
+  | List.cons<>(f(0,xs.head),List.imap<,>((n) f(Nat.succ(n)),xs.tail));
 
-// TODO: improve using Concat instead. Check Core.stringify.go
-List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
-  <A> (f) (xs)
-  String.concat("[")
-  | String.concat
-    | String.flatten(List.intercalate<String>(",")(List.map<A><String>(f)(xs)));
-    | "]";
-  ;
+// Reverse the order of the elements of the list
+List.reverse<A: Type>(xs: List(A)) : List(A)
+  List.reverse.go<>(xs,List.nil<>)
 
+List.reverse.go<A: Type>(xs: List(A), res: List(A)): List(A)
+  case xs:
+  | res;
+  | List.reverse.go<>(xs.tail,List.cons<>(xs.head,res));
 
+// insert separators between elements, i.e. `[A,B,C] ~> [A,sep,B,sep,C]`
+List.intersperse<A: Type>(sep: A, xs: List(A)): List(A)
+  case xs:
+  | List.nil<>;
+  | case xs.tail:
+    | List.pure<>(xs.head);
+    | List.cons<>(xs.head,List.cons<>(sep,List.intersperse<A>(sep,xs.tail)));;
 
+// insert separators between elements, i.e. `[A,B,C] ~> [A,sep,B,sep,C]`
+List.intercalate<A: Type>(sep: List(A), xs: List(List(A))): List(A)
+  List.flatten<A>(List.intersperse<List(A)>(sep,xs))
 
+List.subsequences<A: Type>(xs: List(A)): List(List(A))
+  List.cons<>(List.nil<>,List.subsequences.go<>(xs))
 
+List.subsequences.go<A: Type>(xs: List(A)): List(List(A))
+  case xs:
+  | List.nil<>;
+  | let f = ((ys,r) List.cons<>(ys,List.cons<>(List.cons<>(xs.head,ys),r)))
+        :: List(A) -> List(List(A)) -> List(List(A))
+    List.cons<>
+    | List.pure<>(xs.head);
+    | List.fold<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
 
+// Reducing Lists
+// ==============
+
+// Folds over a list, right associative
+List.fold<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
+  List.fold.go<,>(b,f,xs,(x) x)
+
+List.fold.go<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A), g: B -> B): B
+  case xs:
+  | g(b);
+  | List.fold.go<,>(b,f,xs.tail,(x) f(xs.head,x));
+
+List.foldr<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
+  List.fold<,>(b,f,xs)
+
+List.fold1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+  case xs:
+  with ne : List.not_empty<>(xs.self) = ne;
+  | Empty.absurd(ne,A);
+  | List.fold<A,A>(xs.head,f,xs.tail);
+
+// Folds over a list, left associative
+List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B
+  case xs:
+  | b;
+  | List.foldl<,>(f(b,xs.head),f,xs.tail);
+
+List.foldl1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+  case xs:
+  with ne : List.not_empty<>(xs.self) = ne;
+  | Empty.absurd(ne,A);
+  | List.foldl<A,A>(xs.head,f,xs.tail);
+
+// Special folds
+// =============
+
+// Flattens a list of lists into a single list.
+List.flatten<A: Type>(xs: List(List(A))): List(A)
+  case xs:
+  | List.nil<>;
+  | List.concat<>(xs.head, List.flatten<>(xs.tail));
+
+// Do all elements satisfy a condition?
+List.all<A: Type>(cond: A -> Bool, list: List(A)): Bool
+  case list:
+  | Bool.true;
+  | case cond(list.head):
+    | List.all<>(cond)(list.tail);
+    | Bool.false;;
+
+// Are all elements true?
+List.and(list: List(Bool)): Bool
+  List.all<>((x) x)(list)
+
+/// Do any element satisfy a condition?
+List.any <A: Type>(cond: A -> Bool, list: List(A)): Bool
+  case list:
+  | Bool.false;
+  | case cond(list.head):
+    | Bool.true;
+    | List.any<>(cond)(list.tail);;
+
+// Is any element true?
+List.or(list: List(Bool)): Bool
+  List.any<>((x) x)(list)
+
+// Add the total of a list of natural numbers
+List.sum(xs: List(Nat)) : Nat
+  List.sum.go(xs, Nat.zero)
+
+List.sum.go(xs: List(Nat), n: Nat) : Nat
+  case xs:
+  | Nat.zero;
+  | List.sum.go(xs.tail,Nat.add(xs.head,n));
+
+List.product(xs: List(Nat)) : Nat
+  List.product.go(xs, Nat.zero)
+
+List.product.go(xs: List(Nat), n: Nat) : Nat
+  case xs:
+  | Nat.zero;
+  | List.product.go(xs.tail,Nat.mul(xs.head,n));
+
+// Print a list
+List.show<A: Type>(f: A -> String, xs: List(A)): String
+  List.show.go<>(f,xs,String.Builder.cons('[',String.Builder.new))
+
+List.show.go<A: Type>(f: A -> String, xs: List(A), sb: String.Builder): String
+  case xs:
+  | sb(String.pure(']'));
+  | List.show.go<>(f,xs.tail)
+    | String.Builder.concat(String.to_builder(f(xs.head)))
+      | String.Builder.cons(',',sb);;;
+
+// List monad
+// ==========
 
 // A list with only one element.
-List.single : <A : Type> -> (x : A) -> List(A)
-  <A> (x) List.cons<A>(x)(List.nil<A>)
+List.pure<A : Type>(x : A) : List(A)
+  List.cons<A>(x)(List.nil<A>)
+
+// The bind function of the list Monad.
+List.bind<A: Type,B: Type>(xs: List(A), f: A -> List(B)): List(B)
+  List.flatten<>(List.map<,>(f)(xs))
+
+// Sublists
+// ========
+
+// Removes the first elements of a list.
+List.drop<A: Type>(n: Nat, xs: List(A)):  List(A)
+  case n:
+  | xs;
+  | case xs:
+    | List.nil<>;
+    | List.drop<>(n.pred,xs.tail);;
 
 // Returns the first elements of a list, discards the rest.
-List.take: <A: Type> -> Nat -> List(A) -> List(A)
-  <A> (n) (list)
-  list<() List(A)>
-  | List.nil<A>;
-  | (head) (tail)
-    n<() List(A)>
-    | List.nil<A>;
-    | (pred) List.cons<A>(head)(List.take<A>(pred)(tail));;
+List.take<A: Type>(n: Nat, xs: List(A)): List(A)
+  case xs:
+  | List.nil<>;
+  | case n:
+    | List.nil<>;
+    | List.cons<>(xs.head,List.take<>(n.pred, xs.tail));;
 
-// Converts a list to a concatenation list.
-List.to_concat: <A: Type> -> (xs: List(A)) -> Concat(A)
-  <A> (xs)
-  xs<() Concat(A)>
-  | (ys) ys;
-  | (head) (tail) (ys) List.cons<A>(head)(List.to_concat<A>(tail)(ys));
+// Remove elements while a condition is true
+List.drop_while<A: Type>(f: A -> Bool, xs: List(A)): List(A)
+  case xs:
+  | List.nil<>;
+  | case f(xs.head):
+    | List.drop_while<>(f,xs.tail);
+    | xs;;
+
+List.take_while<A: Type>(f: A -> Bool, xs: List(A)) : List(A)
+  case xs:
+  | List.nil<>;
+  | case f(xs.head):
+    | List.cons<>(xs.head,List.take_while<>(f,xs.tail));
+    | List.nil<>;;
+
+List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
+  case xs:
+  | Pair.new<,>(List.nil<>,List.nil<>);
+  | case n:
+    | Pair.new<,>(List.nil<>,xs);
+    | case n.pred:
+      | Pair.new<,>(List.pure<>(xs.head),xs.tail);
+      | get y z = List.split_at<>(n.pred,xs.tail)
+        Pair.new<,>(List.cons<>(xs.head,y),z);;;
+
+List.drop_until<A: Type>(f: A -> Bool, xs: List(A)): List(A)
+  List.drop_while<>((c) Bool.not(f(c)), xs)
+
+// Removes all elements that do not satisfy a condition.
+List.filter<A: Type>(f: A -> Bool, xs: List(A)): List(A)
+  case xs:
+  | List.nil<>;
+  | case f(xs.head):
+    | List.cons<>(xs.head,List.filter<>(f, xs.tail));
+    | List.filter<>(f, xs.tail);;
+
+List.span<A: Type>(f: A -> Bool, xs: List(A)): Pair(List(A),List(A))
+  case xs:
+  | Pair.new<,>(List.nil<>,List.nil<>);
+  | case f(xs.head):
+    | get y z = List.span<>(f,xs.tail)
+      Pair.new<,>(List.cons<>(xs.head,y),z);
+    | Pair.new<,>(List.nil<>,xs);;
+
+// List.Builder
+// ============
+
+// A lazy List constructor, useful for efficient concatenation
+List.Builder(A: Type): Type
+  List(A) -> List(A)
+
+// construct a new builder (it's just the identity function)
+List.Builder.new<A: Type> : List.Builder(A)
+  (x) x
+
+// turn a builder into a List
+List.run_builder<A: Type>(lb: List.Builder(A)): List(A)
+  lb(List.nil<>)
+
+// concatenate two list builders
+List.Builder.concat<A: Type>(a: List.Builder(A), b: List.Builder(A)): List.Builder(A)
+   (x) a(b(x))
+
+// prepend an element
+List.Builder.cons<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
+  (x) lb(List.cons<>(c,x))
+
+// convert a list to a builder
+List.to_builder<A: Type>(list: List(A)) : List.Builder(A)
+  List.to_builder.go<>(list, List.Builder.new<>)
+
+List.to_builder.go<A: Type>(list: List(A), lb: List.Builder(A)) : List.Builder(A)
+  case list:
+  | lb;
+  | List.to_builder.go<>(list.tail)(List.Builder.cons<>(list.head, lb));
+
+// Returns the element at given position.
+List.at<A: Type>(list: List(A), index: Nat): Maybe(A)
+  case list:
+  | Maybe.none<>;
+  | case index:
+    | Maybe.some<>(list.head);
+    | List.at<>(list.tail)(index.pred);;
+
+List.chunk<A: Type>(n: Nat, xs: List(A)): Maybe(List(A))
+  case n:
+  | Maybe.some<>(List.nil<>);
+  | case xs:
+    | Maybe.none<>;
+    | Maybe.bind<,>(List.chunk<>(n.pred,xs.tail))
+      | (x) Maybe.some<>(List.cons<>(xs.head,x));;;
+
+// Indexing Lists
+// ==============
+
+//Finds the first occurrence that satisfies a condition
+List.find<A: Type>(cond: A -> Bool, xs: List(A)): Maybe(A)
+  case xs:
+  | Maybe.none<>;
+  | case cond(xs.head):
+    | Maybe.some<>(xs.head);
+    | List.find<>(cond)(xs.tail);;
+
+// Finds the last element that satisfies a condition and its index.
+List.find_last<A: Type>(xs: List(A), f: A -> Nat -> Bool): Maybe(Pair(A)(Nat))
+  List.find_last.go<A>(xs,f,Nat.zero,Maybe.none<>)
+
+List.find_last.go<A: Type>(
+  xs: List(A),
+  f: A -> Nat -> Bool,
+  n: Nat,
+  res: Maybe(Pair(A,Nat))
+): Maybe(Pair(A,Nat))
+  case xs:
+  | res;
+  | let res = case f(xs.head,n):
+      | Maybe.some<>(Pair.new<,>(xs.head,n));
+      | res;
+    List.find_last.go<>(xs.tail,f,Nat.succ(n),res);
+
+// Finds the first element that satisfies a condition and its index.
+List.ifind<A: Type>(xs: List(A), f: A -> Nat -> Bool): Maybe(Pair(A,Nat))
+  List.ifind.go<A>(xs,f,Nat.zero)
+
+List.ifind.go<A: Type>(xs: List(A), f: A -> Nat -> Bool, i: Nat): Maybe(Pair(A,Nat))
+  case xs:
+  | Maybe.none<>;
+  | case f(xs.head,i):
+    | Maybe.some<>(Pair.new<,>(xs.head)(i));
+    | List.ifind.go<>(xs.tail,f,Nat.succ(i));;
+
+// Zipping lists
+// =============
 
 // Given two lists `xs` and `ys`, applies `f(xs[i],ys[i])` for all `i`.
-List.zip_with: <A: Type> -> <B: Type> -> <C: Type> -> (A -> B -> C) -> List(A) -> List(B) -> List(C)
-  <A> <B> <C> (fn) (as) (bs)
-  as<() List(C)>
-  | List.nil<C>;
-  | (a.head) (a.tail)
-    bs<() List(C)>
-    | List.nil<C>;
-    | (b.head) (b.tail)
-      let head = fn(a.head)(b.head)
-      let tail = List.zip_with<A><B><C>(fn)(a.tail)(b.tail)
-      List.cons<C>(head)(tail);;
+List.zip_with<A: Type, B: Type, C: Type>(f: A -> B -> C, as: List(A), bs: List(B))
+  : List(C)
+  case as:
+  | List.nil<>;
+  | case bs:
+    | List.nil<>;
+    | List.cons<>(f(as.head,bs.head),List.zip_with<,,>(f,as.tail,bs.tail));;
+
 

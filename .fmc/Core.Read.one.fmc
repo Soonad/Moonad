@@ -1,3 +1,0 @@
-Core.Read.one: Π(:String) Π(:String) (Core.Read Bool)
-  λchr0 λchr1 @list=((<List.cons String> chr0) ((<List.cons String> chr1) <List.nil String>));((<<Core.Read.bind Nat> Bool> (Core.Read.fst list)) λidx (<Core.Read.done Bool> (Bool.not (Nat.is_zero idx))))
-

@@ -1,3 +1,0 @@
-List.ifind.aux: ∀(A:*) Π(:(List A)) Π(:Π(:A) Π(:Nat) Bool) Π(:Nat) (Maybe ((Pair A) Nat))
-  ΛA λlist λcond λindx ((<list λself (Maybe ((Pair A) Nat))> <Maybe.none ((Pair A) Nat)>) λhead λtail ((<((cond head) indx) λself (Maybe ((Pair A) Nat))> (<Maybe.some ((Pair A) Nat)> ((<<Pair.new A> Nat> head) indx))) (((<List.ifind.aux A> tail) cond) (Nat.succ indx))))
-

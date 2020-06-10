@@ -1,0 +1,3 @@
+Parser.State.make: (pos: Nat) -> (str: String) -> (errs: List(Parser.Error)) -> Parser.State
+  (pos) (str) (errs) <P> (make) make(pos)(str)(errs)
+

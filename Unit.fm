@@ -1,11 +1,5 @@
-Unit : Type //prim//
-  unit<P: Unit -> Type> ->
-  (new: P(Unit.new)) ->
-  P(unit)
+T Unit
+| new;
 
-Unit.new : Unit
-  <P> (unit) unit
-
-Unit.show: Unit -> String
-  (u) "Unit.new"
-
+Unit.show(u: Unit): String
+  "Unit.new"

@@ -1,3 +1,3 @@
-List.chunk: ∀(A:*) Π(:Nat) Π(:(List A)) (Maybe (List A))
-  ΛA λn λlist ((<n λx3 (Maybe (List A))> (<Maybe.some (List A)> <List.nil A>)) λpred ((<list λself (Maybe (List A))> <Maybe.none (List A)>) λhead λtail ((<<Maybe.bind (List A)> (List A)> ((<List.chunk A> pred) tail)) λx (<Maybe.some (List A)> ((<List.cons A> head) x)))))
+List.chunk: ∀(A:*) Π(n:Nat) Π(xs:(List A)) (Maybe (List A))
+  ΛA λn λxs ((<n λn.self (Maybe (List A))> (<Maybe.some (List A)> <List.nil A>)) λn.pred ((<xs λxs.self (Maybe (List A))> <Maybe.none (List A)>) λxs.head λxs.tail ((<<Maybe.bind (List A)> (List A)> ((<List.chunk A> n.pred) xs.tail)) λx (<Maybe.some (List A)> ((<List.cons A> xs.head) x)))))
 

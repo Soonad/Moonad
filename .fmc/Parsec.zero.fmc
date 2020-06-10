@@ -1,3 +1,0 @@
-Parsec.zero: ∀(S:*) ∀(E:*) ∀(A:*) (((Parsec S) E) A)
-  ΛS ΛE ΛA ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (<s1 λ X> λ λindex λ λ @e=(((<Parsec.Error.make_trivial E> index) <Maybe.none Parsec.Error.Item>) <List.nil Parsec.Error.Item>);((empty_error s1) e))
-

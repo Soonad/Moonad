@@ -1,3 +1,3 @@
-UFind.find: <B: Type> -> UFind -> Bits -> (UFind -> Bits -> Nat -> B) -> B
-  <B> (uf) (path) (k) let found = Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf); found<() B>((node) (uf) node<() B>((node.rank) k(uf)(path)(node.rank))((node.parent) UFind.find<B>(uf)(node.parent)((uf) (root) (rank) let uf = Map.set<UNode>(path)(UNode.link(root))(uf); k(uf)(root)(rank))))
+UFind.find: (uf: UFind) -> (path: Bits) -> <B: Type> -> (UFind -> Bits -> Nat -> B) -> B
+  (uf) (path) <B> (k) Map.lookup<UNode>(path)(UNode.root(Nat.zero))(uf)<(self) B>((node) (uf) node<(node.self) B>((node.rank) k(uf)(path)(node.rank))((node.parent) UFind.find(uf)(node.parent)<B>((uf) (root) (rank) let uf = Map.set<UNode>(path)(UNode.link(root))(uf); k(uf)(root)(rank))))
 

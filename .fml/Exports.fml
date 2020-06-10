@@ -1,3 +1,0 @@
-Exports: Type
-  <P: Type> -> (new: P) -> (add: <A: Type> -> (x: A) -> (xs: P) -> P) -> P
-

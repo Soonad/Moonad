@@ -1,3 +1,3 @@
-Parser.take: ∀(A:*) Π(:String) Π(:Nat) (Parser String)
-  ΛA λerr λn ((<<<Parsec.take Unit> Unit> A> err) n)
+Parser.take: Π(lbl:String) Π(n:Nat) (Parser String)
+  λlbl λn λs1 (<s1 λself (Parser.Reply String)> λpos λstr λerrs (<((String.split_at n) str) λself (Parser.Reply String)> λtook λrest ((<((Nat.eql (String.length took)) n) λself.self (Parser.Reply String)> ((<Parser.Reply.val String> (((Parser.State.make ((Nat.add pos) (String.length took))) rest) errs)) took)) ((<Parser.Reply.err String> (((Parser.State.make ((Nat.add pos) (String.length took))) rest) errs)) (((Parser.Error.new ((Nat.add pos) (String.length took))) (<Maybe.some Parser.Item> Parser.Item.eof)) (<List.pure Parser.Item> (Parser.Item.label lbl)))))))
 

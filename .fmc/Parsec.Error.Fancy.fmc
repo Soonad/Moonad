@@ -1,3 +1,0 @@
-Parsec.Error.Fancy: Π(:*) *
-  λE ∀parser.error.fancy(P:Π(:(Parsec.Error.Fancy E)) *) Π(fail:Π(msg:String) (P (<Parsec.Error.Fancy.fail E> msg))) Π(custom:Π(err:E) (P (<Parsec.Error.Fancy.custom E> err))) (P parser.error.fancy)
-

@@ -1,3 +1,3 @@
-Parser.take_while: (Char -> Bool) -> Parser(String)
-  (f) Parsec.take_while<Unit><Unit>(f)
+Parser.take_while: (f: Char -> Bool) -> Parser(String)
+  (f) (s1) s1<(self) Parser.Reply(String)>((pos) (str) (errs) String.span(f)(str)<(self) Parser.Reply(String)>((took) (rest) Parser.Reply.val<String>(Parser.State.make(Nat.add(pos)(String.length(took)))(rest)(errs))(took)))
 

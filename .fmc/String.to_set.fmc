@@ -1,3 +1,0 @@
-String.to_set: Π(:String) Set
-  λstr ((<str λself Set> Set.new) λstr.head λstr.tail ((Set.set (U16.to_bits str.head)) (String.to_set str.tail)))
-

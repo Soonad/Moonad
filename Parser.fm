@@ -1,170 +1,226 @@
-Parser.Error: Type
-  Parsec.Error(Unit)
+T Parser.State
+| make(pos:Nat, str: String, errs: List(Parser.Error));
 
-Parser.Error.show: Parser.Error -> String
-  (e)
-  e<() String>
-  | (position) (unexpect) (expected) 
-    String.concat("Error at ")        |
-    String.concat(Nat.show(position)) |
-    String.concat(":")                |
-    String.concat
-    | unexpect<() String>("")
-      | (v) String.concat(" unexpected ") |
-            String.concat(Parsec.Error.Item.show(v))(",");;; 
-                                      |
-    String.concat(" expected ")
-    | List.show<Parsec.Error.Item>(Parsec.Error.Item.show)(expected);;;;;;
-  | (position) (messages) "fancy";
+T Parser.Error
+| new(pos: Nat, unx: Maybe(Parser.Item), exp: List(Parser.Item));
+| msg(pos: Nat, msgs: List(String));
 
-Parser.Reply: Type -> Type
-  (A) Parsec.Reply(Unit)(Unit)(A)
+T Parser.Item
+| tokens(xs: String);
+| label(xs: String);
+| eof;
 
-Parser.State.default: String -> Parser.State
-  (input) Parsec.State.default<Unit><Unit>(input)(Unit.new)
+T Parser.Reply<A: Type>
+| val(state: Parser.State, value: A);
+| err(state: Parser.State, error: Parser.Error);
 
-Parser.State : Type
-  Parsec.State(Unit)(Unit)
+Parser.Error.merge(x: Parser.Error, y: Parser.Error): Parser.Error
+  case x:
+  | case y:
+    | case Nat.cmp(x.pos, y.pos):
+      | y;
+      | def unx = x.unx<>(y.unx,(x) Maybe.some<>(x));
+        Parser.Error.new(x.pos, unx, List.concat<>(x.exp,y.exp));
+      | x;;
+    | y;;
+  | case y:
+    | x;
+    | case Nat.cmp(x.pos, y.pos):
+      | y;
+      | Parser.Error.msg(x.pos, List.concat<>(x.msgs,y.msgs));
+      | x;;;
 
-Parser.any_char : Parser(Char)
-  Parsec.any_char<Unit><Unit>
+Parser(A: Type): Type
+  Parser.State -> Parser.Reply(A)
 
-Parser.ap: <A: Type> -> <B: Type> -> Parser(A -> B) -> Parser(A) -> Parser(B)
-  <A> <B> (pf) (pa)
-  Parsec.ap<Unit><Unit><A><B>(pf)(pa)
+Parser.State.new(input: String) : Parser.State
+  Parser.State.make(Nat.zero, input, List.nil<_>)
 
-Parser.bind: <A: Type> -> <B: Type> -> Parser(A) -> (A -> Parser(B)) -> Parser(B)
-  <A> <B> (pa) (pf) Parsec.bind<Unit><Unit><A><B>(pa)(pf)
+Parser.State.consumed(x: Parser.State, y: Parser.State): Bool
+  case x: | case y: | Nat.gtn(y.pos,x.pos);;
 
+Parser.State.merge(x: Parser.State, y: Parser.State): Parser.State
+  case x: | case y: |
+  case Nat.cmp(x.pos,y.pos):
+  | y;
+  | Parser.State.make(x.pos, x.str, List.concat<>(x.errs,y.errs));
+  | x;;;
 
-Parser.char : Char -> Parser(Char)
-  (c) Parsec.char<Unit><Unit>(c)
+Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
+  p(Parser.State.new(s))
 
-Parser.choice: <A: Type> -> List(Parser(A)) -> Parser(A)
-  <A> (ps) Parsec.choice<Unit><Unit><A>(ps)
+Parser.token<A: Type>(f: Char -> Maybe(A), es: List(Parser.Item)) : Parser(A)
+  (s1) get pos str errs = s1
+  case str:
+  | def e = Parser.Error.new(pos,Maybe.some<>(Parser.Item.eof),es)
+    Parser.Reply.err<>(s1,e);
+  | case f(str.head):
+    | def unx = Maybe.some<>(Parser.Item.tokens(String.pure(str.head)))
+      Parser.Reply.err<>(s1,Parser.Error.new(pos,unx,es));
+    | def s2 = Parser.State.make(Nat.succ(pos), str.tail, errs);
+      Parser.Reply.val<>(s2,self.value);;
 
-Parser.eof : Parser(Unit)
-  Parsec.eof<Unit><Unit>
+Parser.tokens(match: String): Parser(String)
+  (s1) get pos str errs = s1
+  def len_m = String.length(match)
+  get took rest = String.split_at(len_m,str)
+  def len_t = String.length(took)
+  def s2 = Parser.State.make(Nat.add(pos,len_t),rest,errs)
+  def lbl = List.pure<>(Parser.Item.tokens(match));
+  case Nat.ltn(len_t,len_m):
+  | def unx = Maybe.some<>(Parser.Item.eof);
+    Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));
+  | case String.eql(match,took):
+    | Parser.Reply.val<>(s2,took);
+    | def unx = Maybe.some<>(Parser.Item.tokens(took))
+      Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));;
 
-Parser.fail: <A: Type> -> String -> Parser(A)
-  <A> (msg) Parsec.fail<Unit><Unit><A>(msg)
+Parser.try<A: Type>(p: Parser(A)): Parser(A)
+  (s1)
+  case p(s1):
+  | Parser.Reply.val<>(self.state, self.value);
+  | Parser.Reply.err<>(s1,self.error);
 
-Parser : Type -> Type
-  (A) Parsec(Unit)(Unit)(A)
+Parser.map<A: Type, B: Type>(f: A -> B, p: Parser(A)): Parser(B)
+  (s1) case p(s1):
+  | Parser.Reply.val<>(self.state,f(self.value));
+  | Parser.Reply.err<>(self.state,self.error);
 
-Parser.label : <A: Type> -> String -> Parser(A) -> Parser(A)
-  <A> (label) (p)
-  Parsec.label<Unit><Unit><A>(label)(p)
+Parser.pure<A: Type>(a: A): Parser(A)
+  (s1) Parser.Reply.val<>(s1,a)
 
-Parser.many: <A: Type> -> Parser(A) -> Parser(List(A))
-  <A> (p) Parsec.many<Unit><Unit><A>(p)
+Parser.ap<A: Type, B: Type>(pf: Parser(A -> B), pa: Parser(A)): Parser(B)
+  (s1) case pf(s1) as f:
+  | case pa(f.state) as a:
+    | Parser.Reply.val<>(a.state,f.value(a.value));
+    | Parser.Reply.err<>(a.state,a.error);;
+  | Parser.Reply.err<>(f.state,f.error);
 
-Parser.many_till: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(List(A))
-  <A> <B> (p) (q)
-  Parser.plus<List(A)>
-  | Parser.then<B><List(A)>(q)(Parser.pure<List(A)>(List.nil<A>));
-  | Parser.bind<A><List(A)>(p) | (x)
-    Parser.bind<List(A)><List(A)>(Parser.many_till<A><B>(p)(q)) | (xs)
-    Parser.pure<List(A)>(List.cons<A>(x)(xs));;;
+Parser.bind<A: Type, B: Type>(pa: Parser(A), pf: A -> Parser(B)): Parser(B)
+  (s1) case pa(s1) as a:
+  | pf(a.value,a.state);
+  | Parser.Reply.err<>(a.state,a.error);
 
+Parser.then<A: Type, B: Type>(pa: Parser(A), pb: Parser(B)): Parser(B)
+  (s1) case pa(s1) as a:
+  | pb(a.state);
+  | Parser.Reply.err<>(a.state,a.error);
 
-Parser.observing: <A: Type> -> Parser(A) -> Parser(Either(Parser.Error)(A))
-  <A> (p)
-  Parsec.observing<Unit><Unit><A>(p)
+Parser.plus<A: Type>(px: Parser(A), py: Parser(A)): Parser(A)
+  (s1) case px(s1) as x:
+  | Parser.Reply.val<>(x.state,x.value);
+  | case Parser.State.consumed(s1,x.state):
+    | Parser.Reply.err<>(x.state,x.error);
+    | case py(x.state) as y:
+      | Parser.Reply.val<>(y.state,y.value);
+      | Parser.Reply.err<>
+        | Parser.State.merge(x.state,y.state);
+        | Parser.Error.merge(x.error,y.error);;;;
 
+Parser.take(lbl: String, n: Nat) : Parser(String)
+  (s1)
+  get pos str errs = s1
+  get took rest = String.split_at(n,str)
+  def len = String.length(took)
+  def s2 = Parser.State.make(Nat.add(pos,len),rest,errs)
+  case Nat.eql(len,n):
+  | Parser.Reply.val<>(s2,took);
+  | def l = List.pure<>(Parser.Item.label(lbl))
+    def e = Parser.Error.new(Nat.add(pos,len),Maybe.some<>(Parser.Item.eof),l);
+    Parser.Reply.err<>(s2,e);
 
-Parser.optional: <A: Type> -> Parser(A) -> Parser(Maybe(A))
-  <A> (p) Parsec.optional<Unit><Unit><A>(p)
+Parser.take_while(f: Char -> Bool): Parser(String)
+  (s1)
+  get pos str errs = s1
+  get took rest = String.span(f,str)
+  def len = String.length(took)
+  Parser.Reply.val<>(Parser.State.make(Nat.add(pos,len),rest,errs),took)
 
-Parser.parse:
-  <A: Type> ->
-  (p: Parser(A)) ->
-  (s: String) ->
-  Parser.type(A)(Parser.run<A>(p)(Parser.State.default(s)))
+Parser.take_while1(lbl: String, f: Char -> Bool): Parser(String)
+  (s1)
+  get pos str errs = s1
+  get took rest = String.span(f,str)
+  def len = String.length(took)
+  def s2 = Parser.State.make(Nat.add(pos,len),rest,errs)
+  def l = List.pure<>(Parser.Item.label(lbl))
+  case str:
+  | Parser.Reply.err<>(s2,Parser.Error.new(pos,Maybe.some<>(Parser.Item.eof),l));
+  | case len:
+    | def unx = Maybe.some<>(Parser.Item.tokens(String.pure(str.head)))
+      Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,l));
+    | Parser.Reply.val<>(s2,took);;
 
-  <A> (p) (s)
-  Parsec.parse<Unit><Unit><A>(p)(Parser.State.default(s))
+Parser.zero<A: Type>: Parser(A)
+  (s1) get pos str errs = s1
+  Parser.Reply.err<>(s1,Parser.Error.new(pos,Maybe.none<>, List.nil<>))
 
+Parser.char(c: Char) : Parser(Char)
+  Parser.token<>
+  | (x) case U16.eql(c,x): | Maybe.some<>(c); | Maybe.none<>;;
+  | List.pure<>(Parser.Item.tokens(String.pure(c)));
 
+Parser.choice<A: Type>(ps : List(Parser(A))) : Parser(A)
+  case ps:
+  | Parser.zero<>;
+  | Parser.plus<>(ps.head,Parser.choice<>(ps.tail));
 
-Parser.plus: <A: Type> -> Parser(A) -> Parser(A) -> Parser(A)
-  <A> (p) (q)
-  Parsec.plus<Unit><Unit><A>(p)(q)
+Parser.any_char: Parser(Char)
+  Parser.token<>(Maybe.some<>,List.pure<>(Parser.Item.label("any character")))
 
+Parser.eof: Parser(Unit)
+  (s1) get pos str errs = s1
+  case str:
+  | Parser.Reply.val<>(s1,Unit.new);
+  | def unx = Maybe.some<>(Parser.Item.tokens(String.pure(str.head)))
+    def err = Parser.Error.new(pos,unx,List.pure<>(Parser.Item.eof))
+    Parser.Reply.err<>(s1,err);
 
-Parser.pure: <A: Type> -> (a: A) -> Parser(A)
-  <A> (a)
-  <X> (s) (empty_value) () () () empty_value(s)(a)
+Parser.fail<A: Type>(msg: String) : Parser(A)
+  (s1) get pos str errs = s1
+  Parser.Reply.err<>(s1,Parser.Error.msg(pos, List.pure<>(msg)))
 
-Parser.run: <A: Type> -> Parser(A) -> Parser.State -> Parser.Reply(A)
-  <A> (p) (s)
-  Parsec.run<Unit><Unit><A>(p)(s)
+Parser.label<A: Type>(lbl: String, p: Parser(A)) : Parser(A)
+  (s1) case p(s1) as x:
+  | Parser.Reply.val<>(x.state,x.value);
+  | def exp = List.pure<>(Parser.Item.label(lbl))
+    case x.error as e:
+    | Parser.Reply.err<>(x.state,Parser.Error.new(e.pos,e.unx,exp));
+    | Parser.Reply.err<>(x.state,Parser.Error.new(e.pos,Maybe.none<>,exp));;
 
-Parser.run_default: <A: Type> -> Parser(A) -> String -> Parser.Reply(A)
-  <A> (p) (s)
-  Parsec.run<Unit><Unit><A>(p)(Parser.State.default(s))
+Parser.optional<A: Type>(p: Parser(A)): Parser(Maybe(A))
+  Parser.plus<>(Parser.map<,>(Maybe.some<>,p),Parser.pure<>(Maybe.none<>))
 
-Parser.run_either: <A: Type> -> Parser(A) -> String -> Either(Parser.Error)(A)
-  <A> (p) (s)
-  let reply = Parsec.run<Unit><Unit><A>(p)(Parser.State.default(s))
-  reply<() Either(Parser.Error)(A)>
-  | () (x) Either.right<Parser.Error><A>(x);
-  | () (e) Either.left<Parser.Error><A>(e);
-  | () (x) Either.right<Parser.Error><A>(x);
-  | () (e) Either.left<Parser.Error><A>(e);
+Parser.peek<A: Type>(p: Parser(A)): Parser(A)
+  (s1) case p(s1):
+  | Parser.Reply.val<>(s1,self.value);
+  | Parser.Reply.err<>(self.state,self.error);
 
-Parser.skip_many: <A: Type> -> Parser(A) -> Parser(Unit)
-  <A> (p)
-  Parsec.skip_many<Unit><Unit><A>(p)
+Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
+  p(Parser.State.new(s))
 
+Parser.type(A: Type, r: Parser.Reply(A)) : Type
+  case r: | A; | Parser.Error;
 
-Parser.take: <A: Type> -> String -> Nat -> Parser(String)
-  <A> (err) (n)
-  Parsec.take<Unit><Unit><A>(err)(n)
+Parser.parse<A: Type>(p: Parser(A), s: String): Parser.type(A, Parser.run<A>(p,s))
+  case Parser.run<A>(p,s) as x:
+  | x.value;
+  | x.error;
+  : Parser.type(A,x.self);
 
-Parser.take_while: (Char -> Bool) -> Parser(String)
-  (f) Parsec.take_while<Unit><Unit>(f)
-
-Parser.take_while1: String -> (Char -> Bool) -> Parser(String)
-  (err) (f) Parsec.take_while1<Unit><Unit>(err)(f)
+Parser.Item.show(e: Parser.Item): String
+  case e:
+  | String.flatten(["tokens(",String.pure('"'),e.xs,String.pure('"'),")"]);
+  | String.flatten(["label(",String.pure('"'),e.xs,String.pure('"'),")"]);
+  | "end_of_input";
 
 //Parser.test : String
-//  Parser.parse<String>
-//  | Parser.tokens("a");
-//  | "a";
-
-
-
-
-Parser.then: <A: Type> -> <B: Type> -> Parser(A) -> Parser(B) -> Parser(B)
-  <A> <B> (pa) (pb)
-  Parsec.then<Unit><Unit><A><B>(pa)(pb)
-
-// parse a single character with a validator function 
-// and a list of expected tokens
-
-Parser.token:
-  <A: Type> ->
-  (Char -> Maybe(A)) ->
-  List(Parsec.Error.Item) ->
-  Parser(A)
-
-  <A> (f) (es)
-  Parsec.token<Unit><Unit><A>(f)(es)
-
-
-Parser.tokens: String -> Parser(String)
-  (str) Parsec.tokens<Unit><Unit>(str)
-
-
-Parser.try : <A: Type> -> Parser(A) -> Parser(A)
-  <A> (p) Parsec.try<Unit><Unit><A>(p)
-
-Parser.type: (A: Type) -> Parser.Reply(A) -> Type
-  (A) (reply) Parsec.type(Unit)(Unit)(A)(reply)
-
-
-Parser.zero: <A: Type> -> Parser(A)
-  <A> Parsec.zero<Unit><Unit><A>
-
+//  def p   = Parser.tokens("x")
+//  Parser.run<String>(p,"x")<() String>
+//  | (s,x) x;
+//  | (s,e) "Error";
+//
+//Parser.testIO : IO(Unit)
+//  do IO {
+//    IO.print(Parser.test);
+//  }
 

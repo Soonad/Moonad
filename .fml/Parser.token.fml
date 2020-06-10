@@ -1,3 +1,3 @@
-Parser.token: <A: Type> -> (Char -> Maybe(A)) -> List(Parsec.Error.Item) -> Parser(A)
-  <A> (f) (es) Parsec.token<Unit><Unit><A>(f)(es)
+Parser.token: <A: Type> -> (f: Char -> Maybe(A)) -> (es: List(Parser.Item)) -> Parser(A)
+  <A> (f) (es) (s1) s1<(self) Parser.Reply(A)>((pos) (str) (errs) str<(str.self) Parser.Reply(A)>(Parser.Reply.err<A>(s1)(Parser.Error.new(pos)(Maybe.some<Parser.Item>(Parser.Item.eof))(es)))((str.head) (str.tail) f(str.head)<(self.self) Parser.Reply(A)>(Parser.Reply.err<A>(s1)(Parser.Error.new(pos)(Maybe.some<Parser.Item>(Parser.Item.tokens(String.pure(str.head))))(es)))((self.value) Parser.Reply.val<A>(Parser.State.make(Nat.succ(pos))(str.tail)(errs))(self.value))))
 

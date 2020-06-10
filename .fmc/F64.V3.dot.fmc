@@ -1,3 +1,3 @@
-F64.V3.dot: Π(:F64.V3) Π(:F64.V3) F64
-  λa λb (<a λ F64> λa.x λa.y λa.z (<b λ F64> λb.x λb.y λb.z @res=F64.0;@res=((F64.add res) ((F64.mul a.x) b.x));@res=((F64.add res) ((F64.mul a.y) b.y));@res=((F64.add res) ((F64.mul a.z) b.z));res))
+F64.V3.dot: Π(a:F64.V3) Π(b:F64.V3) F64
+  λa λb (<a λself F64> λa.x λa.y λa.z (<b λself F64> λb.x λb.y λb.z $res=F64.0;$res=((F64.add res) ((F64.mul a.x) b.x));$res=((F64.add res) ((F64.mul a.y) b.y));$res=((F64.add res) ((F64.mul a.z) b.z));res))
 

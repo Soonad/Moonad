@@ -1,0 +1,3 @@
+Arelin.fold_with_context: <A: Type> -> <B: Type> -> (i: B) -> (f: A -> List(A) -> B -> B) -> (xs: List(A)) -> (ys: List(A) -> List(A)) -> B
+  <A> <B> (i) (f) (xs) (ys) xs<() B>(i)((self.head) (self.tail) i)
+

@@ -1,3 +1,3 @@
-U32.and: U32 -> U32 -> U32
-  (a) (b) a<() U32>((a_val) b<() U32>((b_val) U32.new(Word.and<Nat.32>(a_val)(b_val))))
+U32.and: (a: U32) -> (b: U32) -> U32
+  (a) (b) a<(self) U32>((a_val) b<(self) U32>((b_val) U32.new(Word.and<32>(a_val)(b_val))))
 

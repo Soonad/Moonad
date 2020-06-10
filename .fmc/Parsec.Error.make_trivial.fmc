@@ -1,3 +1,0 @@
-Parsec.Error.make_trivial: ∀(E:*) Π(:Nat) Π(:(Maybe Parsec.Error.Item)) Π(:(List Parsec.Error.Item)) (Parsec.Error E)
-  ΛE λposition λunexpect λexpected ΛP λtrivial λ (((trivial position) unexpect) expected)
-

@@ -1,3 +1,3 @@
-U32.mul: Π(:U32) Π(:U32) U32
-  λa λb (<a λ U32> λa_val (<b λ U32> λb_val (U32.new ((<Word.mul Nat.32> a_val) b_val))))
+U32.mul: Π(a:U32) Π(b:U32) U32
+  λa λb (<a λself U32> λa_val (<b λself U32> λb_val (U32.new ((<Word.mul 32> a_val) b_val))))
 

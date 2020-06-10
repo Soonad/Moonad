@@ -1,0 +1,3 @@
+Export: Type
+  self_Export<P: (self: Export) -> Type> -> (new: (T: Type) -> (value: T) -> P(Export.new(T)(value))) -> P(self_Export)
+

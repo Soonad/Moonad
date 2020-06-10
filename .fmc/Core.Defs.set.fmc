@@ -1,3 +1,0 @@
-Core.Defs.set: Π(:String) Π(:Core.Def) Π(:Core.Defs) Core.Defs
-  λname λval λdefs @key=(String.to_bits name);(((<Map.set Core.Def> key) val) defs)
-

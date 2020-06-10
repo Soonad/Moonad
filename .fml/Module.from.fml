@@ -1,0 +1,3 @@
+Module.from: (defs: List(Pair(String)(Export))) -> Module
+  (defs) defs<(defs.self) Module>(Module.new)((defs.head) (defs.tail) defs.head<(defs.head.self) Module>((defs.head.fst) (defs.head.snd) Module.set(defs.head.fst)(defs.head.snd)(Module.from(defs.tail))))
+

@@ -1,0 +1,3 @@
+Parser.Item: Type
+  self_Parser.Item<P: (self: Parser.Item) -> Type> -> (tokens: (xs: String) -> P(Parser.Item.tokens(xs))) -> (label: (xs: String) -> P(Parser.Item.label(xs))) -> (eof: P(Parser.Item.eof)) -> P(self_Parser.Item)
+

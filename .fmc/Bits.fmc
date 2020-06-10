@@ -1,3 +1,3 @@
 Bits: *
-  ∀bits(P:Π(:Bits) *) Π(be:(P Bits.nil)) Π(b0:Π(pred:Bits) (P (Bits.0 pred))) Π(b1:Π(pred:Bits) (P (Bits.1 pred))) (P bits)
+  ∀self_Bits(P:Π(self:Bits) *) Π(nil:(P Bits.nil)) Π(b0:Π(pred:Bits) (P (Bits.b0 pred))) Π(b1:Π(pred:Bits) (P (Bits.b1 pred))) (P self_Bits)
 

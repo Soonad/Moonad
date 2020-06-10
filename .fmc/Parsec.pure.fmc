@@ -1,3 +1,0 @@
-Parsec.pure: ∀(S:*) ∀(E:*) ∀(A:*) Π(a:A) (((Parsec S) E) A)
-  ΛS ΛE ΛA λa ΛX λs λempty_value λ λ λ ((empty_value s) a)
-

@@ -1,3 +1,3 @@
-Nat.parse_decimal.go: Π(:String) Π(:Nat) Nat
-  λstr λres ((<str λ Nat> res) λstr.head λstr.tail @dig=((Nat.sub (U16.to_nat str.head)) Nat.48);@res=((Nat.add dig) ((Nat.mul Nat.10) res));((Nat.parse_decimal.go str.tail) res))
+Nat.parse_decimal.go: Π(str:String) Π(res:Nat) Nat
+  λstr λres ((<str λstr.self Nat> res) λstr.head λstr.tail $dig=((Nat.sub (U16.to_nat str.head)) 48);$res=((Nat.add dig) ((Nat.mul 10) res));((Nat.parse_decimal.go str.tail) res))
 

@@ -1,3 +1,0 @@
-Parsec.fail: ∀(S:*) ∀(E:*) ∀(A:*) Π(:String) (((Parsec S) E) A)
-  ΛS ΛE ΛA λmsg ΛX λs λ λempty_error λ λ (<s λ X> λ λindex λ λ @e=(<List.single (Parsec.Error.Fancy E)> (<Parsec.Error.Fancy.fail E> msg));((empty_error s) ((<Parsec.Error.make_fancy E> index) e)))
-

@@ -1,0 +1,3 @@
+List.init: ∀(A:*) Π(xs:(List A)) Π(not_empty:(<List.not_empty A> xs)) (List A)
+  ΛA λxs λnot_empty (((<xs λxs.self Π(ne:(<List.not_empty A> xs.self)) (List A)> λne ((Empty.absurd ne) (List A))) λxs.head λxs.tail λne (((<xs.tail λxs.tail.self Π(e:(((Equal (List A)) xs.tail.self) xs.tail)) (List A)> λe <List.nil A>) λxs.tail.head λxs.tail.tail λe ((<List.cons A> xs.head) ((<List.init A> xs.tail) ((<<<<Equal.rewrite (List A)> ((<List.cons A> xs.tail.head) xs.tail.tail)> xs.tail> λx (<List.not_empty A> x)> e) ((<List.cons_isnt_empty A> xs.tail.head) xs.tail.tail))))) <<Equal.to (List A)> xs.tail>)) not_empty)
+

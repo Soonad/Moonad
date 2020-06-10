@@ -1,3 +1,3 @@
-Parser.token: ∀(A:*) Π(:Π(:Char) (Maybe A)) Π(:(List Parsec.Error.Item)) (Parser A)
-  ΛA λf λes ((<<<Parsec.token Unit> Unit> A> f) es)
+Parser.token: ∀(A:*) Π(f:Π(:Char) (Maybe A)) Π(es:(List Parser.Item)) (Parser A)
+  ΛA λf λes λs1 (<s1 λself (Parser.Reply A)> λpos λstr λerrs ((<str λstr.self (Parser.Reply A)> ((<Parser.Reply.err A> s1) (((Parser.Error.new pos) (<Maybe.some Parser.Item> Parser.Item.eof)) es))) λstr.head λstr.tail ((<(f str.head) λself.self (Parser.Reply A)> ((<Parser.Reply.err A> s1) (((Parser.Error.new pos) (<Maybe.some Parser.Item> (Parser.Item.tokens (String.pure str.head)))) es))) λself.value ((<Parser.Reply.val A> (((Parser.State.make (Nat.succ pos)) str.tail) errs)) self.value))))
 

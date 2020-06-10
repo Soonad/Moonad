@@ -1,3 +1,3 @@
-U64.inc: Π(:U64) U64
-  λa (<a λ U64> λa_val (U64.new (<Word.inc Nat.64> a_val)))
+U64.inc: Π(a:U64) U64
+  λa (<a λself U64> λa_val (U64.new (<Word.inc 64> a_val)))
 

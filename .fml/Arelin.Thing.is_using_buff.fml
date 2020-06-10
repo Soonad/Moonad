@@ -1,0 +1,3 @@
+Arelin.Thing.is_using_buff: (self: Arelin.Thing) -> (stt_key: Bits) -> Bool
+  (self) (stt_key) let stt = Arelin.Thing.get_stt(self); let get_stt = Map.get<F64>(stt_key)(stt); get_stt<(get_stt.self) Bool>(Bool.false)((get_stt.value) F64.eql(get_stt.value)(F64.0)<(self.self) Bool>(Bool.false)(Bool.true))
+

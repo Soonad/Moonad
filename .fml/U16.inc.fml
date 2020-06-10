@@ -1,3 +1,3 @@
-U16.inc: U16 -> U16
-  (a) a<() U16>((a_val) U16.new(Word.inc<Nat.16>(a_val)))
+U16.inc: (a: U16) -> U16
+  (a) a<(self) U16>((a_val) U16.new(Word.inc<16>(a_val)))
 

@@ -1,0 +1,3 @@
+String.cons_isnt_empty: Π(x:Char) Π(xs:String) (String.not_empty ((String.cons x) xs))
+  λx λxs (((<((String.cons x) xs) λy.self Π(e:(((Equal String) ((String.cons x) xs)) y.self)) Unit> λe ((Empty.absurd (((String.cons_isnt_nil x) xs) e)) Unit)) λy.head λy.tail λe Unit.new) <<Equal.to String> ((String.cons x) xs)>)
+

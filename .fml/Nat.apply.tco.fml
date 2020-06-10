@@ -1,0 +1,3 @@
+Nat.apply.tco: <A: Type> -> (n: Nat) -> (f: A -> A) -> (x: A) -> A
+  <A> (n) (f) (x) n<(n.self) A>(x)((n.pred) Nat.apply.tco<A>(n.pred)(f)(f(x)))
+

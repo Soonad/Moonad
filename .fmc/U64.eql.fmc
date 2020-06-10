@@ -1,3 +1,3 @@
-U64.eql: Π(:U64) Π(:U64) Bool
-  λa λb (<a λ Bool> λa_val (<b λ Bool> λb_val ((<Word.eql Nat.64> a_val) b_val)))
+U64.eql: Π(a:U64) Π(b:U64) Bool
+  λa λb (<a λself Bool> λa_val (<b λself Bool> λb_val ((<Word.eql 64> a_val) b_val)))
 

@@ -1,3 +1,3 @@
-F64.V3.look_at: Π(:F64.V3) Π(:F64.V3) Π(:F64.V3) F64.V3
-  λa λb λc (<a λ F64.V3> λa.x λa.y λa.z (<b λ F64.V3> λa.x λa.y λa.z (<c λ F64.V3> λa.x λa.y λa.z @a_eql_b=((F64.V3.eql a) b);@diff=((F64.V3.sub b) a);@normdiff=(F64.V3.norm diff);((<a_eql_b λ F64.V3> normdiff) c))))
+F64.V3.look_at: Π(a:F64.V3) Π(b:F64.V3) Π(c:F64.V3) F64.V3
+  λa λb λc (<a λself F64.V3> λa.x λa.y λa.z (<b λself F64.V3> λb.x λb.y λb.z (<c λself F64.V3> λc.x λc.y λc.z $a_eql_b=((F64.V3.eql a) b);$diff=((F64.V3.sub b) a);$normdiff=(F64.V3.norm diff);((<a_eql_b λa_eql_b.self F64.V3> normdiff) c))))
 

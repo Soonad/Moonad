@@ -1,0 +1,3 @@
+List.init: <A: Type> -> (xs: List(A)) -> (not_empty: List.not_empty<A>(xs)) -> List(A)
+  <A> (xs) (not_empty) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> List(A)>((ne) Empty.absurd(ne)(List(A)))((xs.head) (xs.tail) (ne) xs.tail<(xs.tail.self) (e: Equal(List(A))(xs.tail.self)(xs.tail)) -> List(A)>((e) [A;])((xs.tail.head) (xs.tail.tail) (e) List.cons<A>(xs.head)(List.init<A>(xs.tail)(Equal.rewrite<List(A)><List.cons<A>(xs.tail.head)(xs.tail.tail)><xs.tail><(x) List.not_empty<A>(x)>(e)(List.cons_isnt_empty<A>(xs.tail.head)(xs.tail.tail)))))(Equal.to<List(A)><xs.tail>))(not_empty)
+

@@ -1,3 +1,3 @@
-Comp.app: Π(:Comp) Π(:Comp) Comp
-  λfunc λargm Λ λ λ λapp λ λ λ ((app func) argm)
+Comp.app: Π(func:Comp) Π(argm:Comp) Comp
+  λfunc λargm ΛP λvar λlam λapp λlet λtru λfal ((app func) argm)
 

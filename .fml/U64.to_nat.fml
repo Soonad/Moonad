@@ -1,3 +1,3 @@
-U64.to_nat: U64 -> Nat
-  (a) a<() Nat>((a_val) Word.to_nat<Nat.64>(a_val))
+U64.to_nat: (a: U64) -> Nat
+  (a) a<(self) Nat>((a_val) Word.to_nat<64>(a_val))
 

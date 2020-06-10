@@ -1,3 +1,3 @@
-Set.get: Π(:Bits) Π(:Set) Bool
-  λbits λset ((<((<Map.get Unit> bits) set) λ Bool> Bool.false) λ Bool.true)
+Set.get: Π(bits:Bits) Π(set:Set) Bool
+  λbits λset ((<((<Map.get Unit> bits) set) λself.self Bool> Bool.false) λself.value Bool.true)
 

@@ -1,0 +1,3 @@
+IO.get: ∀(A:*) Π(nxt:Π(:String) (IO A)) (IO A)
+  ΛA λnxt ΛP λend λlog λget (get nxt)
+

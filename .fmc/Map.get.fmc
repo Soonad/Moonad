@@ -1,3 +1,3 @@
-Map.get: ∀(A:*) Π(:Bits) Π(:(Map A)) (Maybe A)
-  ΛA λbits λmap (((<bits λ (Maybe A)> ((<map λ (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt map.val)) λbits.pred ((<map λ (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt ((<Map.get A> bits.pred) map.lft))) λbits.pred ((<map λ (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt ((<Map.get A> bits.pred) map.rgt)))
+Map.get: ∀(A:*) Π(bits:Bits) Π(map:(Map A)) (Maybe A)
+  ΛA λbits λmap (((<bits λbits.self (Maybe A)> ((<map λmap.self (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt map.val)) λbits.pred ((<map λmap.self (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt ((<Map.get A> bits.pred) map.lft))) λbits.pred ((<map λmap.self (Maybe A)> <Maybe.none A>) λmap.val λmap.lft λmap.rgt ((<Map.get A> bits.pred) map.rgt)))
 

@@ -1,0 +1,3 @@
+Module.type: (key: String) -> (mod: Module) -> Type
+  (key) (mod) Map.get<Export>(String.to_bits(key))(mod)<(got.self) Type>(Unit)((got.value) Export.T(got.value))
+

@@ -1,3 +1,3 @@
-Comp.var: Π(:String) Comp
-  λname ΛP λvar λ λ λ λ λ (var name)
+Comp.var: Π(name:String) Comp
+  λname ΛP λvar λlam λapp λlet λtru λfal (var name)
 

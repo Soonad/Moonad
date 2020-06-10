@@ -1,3 +1,3 @@
-List.reverse: <A: Type> -> List(A) -> List(A)
-  <A> (as) List.reverse.aux<A>(as)([A;])
+List.reverse: <A: Type> -> (xs: List(A)) -> List(A)
+  <A> (xs) List.reverse.go<A>(xs)([A;])
 

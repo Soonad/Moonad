@@ -1,3 +1,3 @@
-Sigma.new: <A: Type> -> <B: A -> Type> -> (a: A) -> B(a) -> Sigma(A)(B)
-  <A> <B> (a) (b) <P> (sigma) sigma(a)(b)
+Sigma.new: <A: Type> -> <B: A -> Type> -> (fst: A) -> (snd: B(fst)) -> Sigma(A)(B)
+  <A> <B> (fst) (snd) <P> (new) new(fst)(snd)
 

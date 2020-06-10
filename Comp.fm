@@ -1,68 +1,32 @@
-Comp.app: Comp -> Comp -> Comp
-  (func) (argm)
-  <> () () (app) () () ()
-  app(func)(argm)
-
-Comp.fal: Comp
-  <> () () () () () (fal)
-  fal
-
 // Untyped, compilation-ready intermediate language
-Comp: Type
-  comp<P: Comp -> Type> ->
-  (var:
-    (name: String) -> 
-    P(Comp.var(name))) ->
-  (lam:
-    (name: String) ->
-    (body: Comp) ->
-    P(Comp.lam(name)(body))) ->
-  (app:
-    (func: Comp) ->
-    (argm: Comp) ->
-    P(Comp.app(func)(argm))) ->
-  (let:
-    (name: String) ->
-    (expr: Comp) ->
-    (body: Comp) ->
-    P(Comp.let(name)(expr)(body))) ->
-  (tru:
-    P(Comp.tru)) ->
-  (fal:
-    P(Comp.fal)) ->
-  P(comp)
+T Comp 
+| var(name: String);
+| lam(name: String, body: Comp);
+| app(func: Comp, argm: Comp);
+| let(name: String, expr: Comp, body: Comp);
+| tru;
+| fal;
 
-Comp.lam: String -> Comp -> Comp
-  (name) (body)
-  <> () (lam) () () () ()
-  lam(name)(body)
-
-Comp.let: String -> Comp -> Comp -> Comp
-  (name) (expr) (body)
-  <> () () () (Let) () ()
-  Let(name)(expr)(body)
-
-Comp.stringify: Comp -> Stringifier
-  (comp)
-  let lit = String.to_stringifier
+Comp.stringify(term: Comp): String.Builder
+  let lit = String.to_builder
   let rec = Comp.stringify
-  case comp:
-  |#var# (term.name)
+  case term:
+  |#var(term.name)#
     lit(term.name);
-  |#lam# (term.name) (term.body)
+  |#lam(term.name, term.body)#
     let lpar = lit("((")
     let name = lit(term.name)
     let rpar = lit(") ")
     let body = rec(term.body)
     let lend = lit(")")
     (x) lpar(name(rpar(body(lend(x)))));
-  |#app# (term.func) (term.argm)
+  |#app(term.func, term.argm)#
     let func = rec(term.func)
     let lpar = lit("(")
     let argm = rec(term.argm)
     let rpar = lit(")")
     (x) func(lpar(argm(rpar(x))));
-  |#let# (term.name) (term.expr) (term.body)
+  |#let(term.name, term.expr, term.body)#
     let llet = lit("let ")
     let name = lit(term.name)
     let leql = lit(" = ")
@@ -77,13 +41,4 @@ Comp.stringify: Comp -> Stringifier
     let lval = lit("false")
     (x) lval(x);
 
-Comp.tru: Comp
-  <> () () () () (tru) ()
-  tru
-
-Comp.var: String -> Comp
-  (name)
-  <P> (var) () () () () ()
-  var(name)
-  
 

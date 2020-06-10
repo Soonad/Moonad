@@ -1,0 +1,3 @@
+Parser.Error.merge: (x: Parser.Error) -> (y: Parser.Error) -> Parser.Error
+  (x) (y) x<(x.self) Parser.Error>((x.pos) (x.unx) (x.exp) y<(y.self) Parser.Error>((y.pos) (y.unx) (y.exp) Nat.cmp(x.pos)(y.pos)<(self.self) Parser.Error>(y)(Parser.Error.new(x.pos)(x.unx<(self) Maybe(Parser.Item)>(y.unx)((x) Maybe.some<Parser.Item>(x)))(List.concat<Parser.Item>(x.exp)(y.exp)))(x))((y.pos) (y.msgs) y))((x.pos) (x.msgs) y<(y.self) Parser.Error>((y.pos) (y.unx) (y.exp) x)((y.pos) (y.msgs) Nat.cmp(x.pos)(y.pos)<(self.self) Parser.Error>(y)(Parser.Error.msg(x.pos)(List.concat<String>(x.msgs)(y.msgs)))(x)))
+

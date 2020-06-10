@@ -1,0 +1,3 @@
+List.product: (xs: List(Nat)) -> Nat
+  (xs) List.product.go(xs)(Nat.zero)
+

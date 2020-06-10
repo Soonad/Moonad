@@ -1,3 +1,3 @@
-Parser.tokens: Π(:String) (Parser String)
-  λstr (<<Parsec.tokens Unit> Unit> str)
+Parser.tokens: Π(match:String) (Parser String)
+  λmatch λs1 (<s1 λself (Parser.Reply String)> λpos λstr λerrs (<((String.split_at (String.length match)) str) λself (Parser.Reply String)> λtook λrest ((<((Nat.ltn (String.length took)) (String.length match)) λself.self (Parser.Reply String)> ((<Parser.Reply.err String> (((Parser.State.make ((Nat.add pos) (String.length took))) rest) errs)) (((Parser.Error.new pos) (<Maybe.some Parser.Item> Parser.Item.eof)) (<List.pure Parser.Item> (Parser.Item.tokens match))))) ((<((String.eql match) took) λself.self (Parser.Reply String)> ((<Parser.Reply.val String> (((Parser.State.make ((Nat.add pos) (String.length took))) rest) errs)) took)) ((<Parser.Reply.err String> (((Parser.State.make ((Nat.add pos) (String.length took))) rest) errs)) (((Parser.Error.new pos) (<Maybe.some Parser.Item> (Parser.Item.tokens took))) (<List.pure Parser.Item> (Parser.Item.tokens match))))))))
 

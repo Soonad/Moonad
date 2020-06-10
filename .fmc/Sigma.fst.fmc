@@ -1,3 +1,3 @@
 Sigma.fst: ∀(A:*) ∀(B:Π(:A) *) Π(sig:((Sigma A) B)) A
-  ΛA ΛB λsig (<sig λ A> λx λy x)
+  ΛA ΛB λsig (<sig λsig.self A> λsig.fst λsig.snd sig.fst)
 

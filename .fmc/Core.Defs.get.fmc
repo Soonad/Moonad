@@ -1,3 +1,0 @@
-Core.Defs.get: Π(:Core.Defs) Π(:String) (Maybe Core.Def)
-  λdefs λname ((<Map.get Core.Def> (String.to_bits name)) defs)
-

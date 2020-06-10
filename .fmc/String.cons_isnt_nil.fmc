@@ -1,0 +1,3 @@
+String.cons_isnt_nil: Π(x:Char) Π(xs:String) (Not (((Equal String) ((String.cons x) xs)) String.nil))
+  λx λxs λe ((<<<<Equal.rewrite String> ((String.cons x) xs)> String.nil> String.not_empty> e) Unit.new)
+

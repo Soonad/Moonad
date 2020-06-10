@@ -1,264 +1,264 @@
-Lang.Cont: Type
-  Core.Ctx -> Core
+//Lang.Cont: Type
+  //Core.Ctx -> Core
 
-Lang.all: Parser(Core.Ctx -> Core)
-  def Bnd = Core.Ctx -> Core
-  def Ret = Pair(Text)(Bnd)
-  Parser.bind<Text><Bnd>(Lang.nam(Bool.true)) | (self)
-  Parser.bind<Pair(Bool)(Ret)><Bnd>
-  | use   = Lang.enclose<Ret>
-    use n = Parser.bind<Text><Ret>(Lang.nam(Bool.true))
-    use   = Parser.then<Unit><Ret>(Lang.space)
-    use   = Parser.then<Text><Ret>(Lang.symbol(":"))
-    use t = Parser.bind<Bnd ><Ret>(Lang.trm)
-    Parser.pure<Ret>(Pair.new<Text><Bnd>(n)(t));
-  | (x)
-    use eras p    = x<() Parser(Bnd)>
-    use name bind = p<() Parser(Bnd)>
-    use           = Parser.then<Unit><Bnd>(Lang.space)
-    use           = Parser.then<Text><Bnd>(Lang.symbol("->"))
-    use body      = Parser.bind<Bnd><Bnd>(Lang.trm)
-    use ctx       = Parser.pure<Bnd>
-    let tbind     = bind(ctx)
-    let tbody     = ((s) (x) body
-                  | Core.Ctx.ext(name)(x)
-                  | Core.Ctx.ext(self)(s)(ctx);;)
-                  :: Core -> Core -> Core
-    Core.all(eras)(self)(name)(tbind)(tbody);;
-
-
-Lang.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  (expr)
-  Parser.then<Unit  ><C>(Lang.space)        |
-  Parser.then<String><C>(Lang.symbol("::")) |
-  Parser.bind<C     ><C>(Lang.trm)          |  (type)
-  Parser.pure<C     >
-  | (ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx));;;;
-
-Lang.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  (func)
-  Parser.bind<Pair(Bool)(C)><C>
-  | Lang.enclose<C>(Lang.trm);
-  | (x) x<() Parser(C)> | (eras) (argm)
-  Parser.pure<C>
-  | (ctx) Core.app(eras)(func(ctx))(argm(ctx));;;
-
-Lang.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  (bind)
-  Parser.then<Unit  ><C>(Lang.space)        |
-  Parser.then<String><C>(Lang.symbol("->")) |
-  Parser.bind<C     ><C>(Lang.trm)          | (body)
-  Parser.pure<C>
-  | (ctx)
-    let tbind = bind(ctx)
-    let tbody = ((s) (x) body(Core.Ctx.ext("")(x)(Core.Ctx.ext("")(s)(ctx))))
-              :: Core -> Core -> Core
-    Core.all(Bool.false)("")("")(tbind)(tbody);;;;
-
-Lang.block_comment: Parser(Unit)
-  Parser.then<String><Unit>(Parser.tokens("#")) |
-  Parser.then<List(Char)><Unit>
-  | Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#"));
-  | Parser.pure<Unit>(Unit.new);;
-
-Lang.core: Parser(Core)
-  def C = Core.Ctx -> Core
-  Parser.bind<C><Core>(Lang.trm) | (term)
-  Parser.pure<Core>(term(Core.Ctx.nil));
-
-//Parse.def: Parse(Pair(String)(Def))
-//  Parse.bind<String><Pair(String)(Def)>(Parse.nam(Bool.false)) | (name)
-//  Parse.then<Unit  ><Pair(String)(Def)>(Parse.space)           |
-//  Parse.then<String><Pair(String)(Def)>(Parse.symbol(":"))     |
-//  let vars = List.nil<String>
-//  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (type)
-//  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (term)
-//  Parse.pure<Pair(String)(Def)>
-//  | Pair.new<String><Def>(name)(Pair.new<Term><Term>(term)(type));;;;;;
+//Lang.all: Parser(Core.Ctx -> Core)
+  //def Bnd = Core.Ctx -> Core
+  //def Ret = Pair(Text)(Bnd)
+  //Parser.bind<Text><Bnd>(Lang.nam(Bool.true)) | (self)
+  //Parser.bind<Pair(Bool)(Ret)><Bnd>
+  //| use   = Lang.enclose<Ret>
+    //use n = Parser.bind<Text><Ret>(Lang.nam(Bool.true))
+    //use   = Parser.then<Unit><Ret>(Lang.space)
+    //use   = Parser.then<Text><Ret>(Lang.symbol(":"))
+    //use t = Parser.bind<Bnd ><Ret>(Lang.trm)
+    //Parser.pure<Ret>(Pair.new<Text><Bnd>(n)(t));
+  //| (x)
+    //use eras p    = x<() Parser(Bnd)>
+    //use name bind = p<() Parser(Bnd)>
+    //use           = Parser.then<Unit><Bnd>(Lang.space)
+    //use           = Parser.then<Text><Bnd>(Lang.symbol("->"))
+    //use body      = Parser.bind<Bnd><Bnd>(Lang.trm)
+    //use ctx       = Parser.pure<Bnd>
+    //let tbind     = bind(ctx)
+    //let tbody     = ((s) (x) body
+                  //| Core.Ctx.ext(name)(x)
+                  //| Core.Ctx.ext(self)(s)(ctx);;)
+                  //:: Core -> Core -> Core
+    //Core.all(eras)(self)(name)(tbind)(tbody);;
 
 
-//Parse.dfs: Defs -> Parse(Defs)
-//  (file)
-//  let vars = List.nil<String>
-//  let next =
-//  next<() Parse(Defs)>
-//  | Parse.some<Defs>(file);
-//  | (p) p<() Parse(Defs)> |  (file)
-//  Parse.dfs(file);;
+//Lang.ann: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //(expr)
+  //Parser.then<Unit  ><C>(Lang.space)        |
+  //Parser.then<String><C>(Lang.symbol("::")) |
+  //Parser.bind<C     ><C>(Lang.trm)          |  (type)
+  //Parser.pure<C     >
+  //| (ctx) Core.ann(Bool.false)(expr(ctx))(type(ctx));;;;
 
-Lang.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
-  <A> (p)
-  Parser.bind<Bool><Pair(Bool)(A)>(Lang.open) | (eras)
-  Parser.bind<A><Pair(Bool)(A)>(p) | (x)
-  Parser.then<String><Pair(Bool)(A)>
-  | eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")"));
-  | Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;
+//Lang.app: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //(func)
+  //Parser.bind<Pair(Bool)(C)><C>
+  //| Lang.enclose<C>(Lang.trm);
+  //| (x) x<() Parser(C)> | (eras) (argm)
+  //Parser.pure<C>
+  //| (ctx) Core.app(eras)(func(ctx))(argm(ctx));;;
 
-Lang.is_name: Char -> Bool
-  (c)
-  let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9")))
-  let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z")))
-  let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z")))
-  let und = U16.eql(c)(Char.parse("_"))
-  Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
+//Lang.arr: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //(bind)
+  //Parser.then<Unit  ><C>(Lang.space)        |
+  //Parser.then<String><C>(Lang.symbol("->")) |
+  //Parser.bind<C     ><C>(Lang.trm)          | (body)
+  //Parser.pure<C>
+  //| (ctx)
+    //let tbind = bind(ctx)
+    //let tbody = ((s) (x) body(Core.Ctx.ext("")(x)(Core.Ctx.ext("")(s)(ctx))))
+              //:: Core -> Core -> Core
+    //Core.all(Bool.false)("")("")(tbind)(tbody);;;;
 
-Lang.is_space: Char -> Bool
-  (c)
-  let spc = U16.eql(c)(Char.parse(" "))
-  let lin = U16.eql(c)(Char.newline)
-  let tab = U16.eql(c)(Char.tab)
-  Bool.or(spc)(Bool.or(lin)(tab))
+//Lang.block_comment: Parser(Unit)
+  //Parser.then<String><Unit>(Parser.tokens("#")) |
+  //Parser.then<List(Char)><Unit>
+  //| Parser.many_till<Char><String>(Parser.any_char)(Parser.tokens("#"));
+  //| Parser.pure<Unit>(Unit.new);;
 
-Lang.lam: Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  Parser.bind<Pair(Bool)(String)><C>
-  | Lang.enclose<String>(Lang.nam(Bool.true));
-  | (x) x<() Parser(C)> | (eras) (n)
-  Parser.then<Unit><C>(Lang.space) |
-  Parser.bind<C   ><C>(Lang.trm)   | (body)
-  Parser.pure<C>
-  | (ctx)
-    let tbody = ((x) body(Core.Ctx.ext(n)(x)(ctx))) :: Core -> Core
-    Core.lam(eras)(n)(tbody);;;;;
+//Lang.core: Parser(Core)
+  //def C = Core.Ctx -> Core
+  //Parser.bind<C><Core>(Lang.trm) | (term)
+  //Parser.pure<Core>(term(Core.Ctx.nil));
 
-
-Lang.let: Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  Parser.then<String><C>(Lang.symbol("let"))   |
-  Parser.bind<String><C>(Lang.nam(Bool.false)) | (name)
-  Parser.then<Unit  ><C>(Lang.space)           |
-  Parser.then<String><C>(Lang.symbol("="))     |
-  Parser.bind<C     ><C>(Lang.trm)             | (expr)
-  Parser.then<Unit  ><C>(Lang.space)           |
-  Parser.then<Maybe(String)><C>
-  | Parser.optional<String>(Lang.symbol(";")); |
-  Parser.bind<C     ><C>(Lang.trm)             | (body)
-  Parser.pure<C>
-  | (ctx)
-    let tbody = ((x) body(Core.Ctx.ext(name)(x)(ctx))) :: Core -> Core
-    Core.let(name)(expr(ctx))(tbody);;;;;;;;;
-
-Lang.line_comment: Parser(Unit)
-  let not_newline = ((c) Bool.not(U16.eql(c)(Char.newline))) :: Char -> Bool
-  Parser.then<String><Unit>(Parser.tokens("/")) |
-  Parser.then<String><Unit>(Parser.take_while(not_newline)) |
-  Parser.then<Char  ><Unit>(Parser.char(Char.newline)) |
-  Parser.pure<Unit>(Unit.new);;;
-
-Lang.nam: Bool -> Parser(String)
-  (allow_empty)
-  allow_empty<() Parser(String)>
-  | Parser.take_while(Lang.is_name);
-  | Parser.take_while1("name")(Lang.is_name);
+////Parse.def: Parse(Pair(String)(Def))
+////  Parse.bind<String><Pair(String)(Def)>(Parse.nam(Bool.false)) | (name)
+////  Parse.then<Unit  ><Pair(String)(Def)>(Parse.space)           |
+////  Parse.then<String><Pair(String)(Def)>(Parse.symbol(":"))     |
+////  let vars = List.nil<String>
+////  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (type)
+////  Parse.bind<Term  ><Pair(String)(Def)>(Parse.trm(vars))       | (term)
+////  Parse.pure<Pair(String)(Def)>
+////  | Pair.new<String><Def>(name)(Pair.new<Term><Term>(term)(type));;;;;;
 
 
-Lang.open: Parser(Bool)
-  Parser.plus<Bool>
-  | Parser.then<String><Bool>
-    | Lang.symbol("(");
-    | Parser.pure<Bool>(Bool.false);;
-  | Parser.then<String><Bool>
-    | Lang.symbol("<");
-    | Parser.pure<Bool>(Bool.true);;
+////Parse.dfs: Defs -> Parse(Defs)
+////  (file)
+////  let vars = List.nil<String>
+////  let next =
+////  next<() Parse(Defs)>
+////  | Parse.some<Defs>(file);
+////  | (p) p<() Parse(Defs)> |  (file)
+////  Parse.dfs(file);;
 
-Lang.par: Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  Parser.then<String><C>(Lang.symbol("(")) |
-  Parser.bind<C     ><C>(Lang.trm)         |  (term)
-  Parser.then<Unit  ><C>(Lang.space)       |
-  Parser.then<String><C>(Parser.tokens(")"))      |
-  Parser.pure<C>(term);;;;
+//Lang.enclose: <A: Type> -> Parser(A) -> Parser(Pair(Bool)(A))
+  //<A> (p)
+  //Parser.bind<Bool><Pair(Bool)(A)>(Lang.open) | (eras)
+  //Parser.bind<A><Pair(Bool)(A)>(p) | (x)
+  //Parser.then<String><Pair(Bool)(A)>
+  //| eras<() Parser(String)>(Parser.tokens(">"))(Parser.tokens(")"));
+  //| Parser.pure<Pair(Bool)(A)>(Pair.new<Bool><A>(eras)(x));;;
 
-Lang.parse
-  : (s : String) ->
-    Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
-  (s) Parser.parse<Core>(Lang.core)(s)
+//Lang.is_name: Char -> Bool
+  //(c)
+  //let num = Bool.and(U16.gte(c)(Char.parse("0")))(U16.lte(c)(Char.parse("9")))
+  //let low = Bool.and(U16.gte(c)(Char.parse("a")))(U16.lte(c)(Char.parse("z")))
+  //let upp = Bool.and(U16.gte(c)(Char.parse("A")))(U16.lte(c)(Char.parse("Z")))
+  //let und = U16.eql(c)(Char.parse("_"))
+  //Bool.or(num)(Bool.or(low)(Bool.or(upp)(und)))
 
-Lang.pip: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  (func)
-  Parser.then<Unit><C>(Lang.space)               |
-  Parser.then<String><C>(Lang.symbol("|"))       |
-  Parser.bind<C><C>(Lang.trm)                    | (argm)
-  Parser.then<Unit><C>(Lang.space)               |
-  Parser.then<String><C>(Parser.tokens(";"))            |
-  Parser.pure<C>
-  | (ctx) Core.app(Bool.false)(func(ctx))(argm(ctx));;;;;;
+//Lang.is_space: Char -> Bool
+  //(c)
+  //let spc = U16.eql(c)(Char.parse(" "))
+  //let lin = U16.eql(c)(Char.newline)
+  //let tab = U16.eql(c)(Char.tab)
+  //Bool.or(spc)(Bool.or(lin)(tab))
 
-Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  (base)
-  Parser.bind<Maybe(C)><C>
-  | Parser.optional<C> |
-    Parser.choice<C> |
-    List.cons<Parser(C)>(Lang.app(base)) |
-    List.cons<Parser(C)>(Lang.pip(base)) |
-    List.cons<Parser(C)>(Lang.arr(base)) |
-    List.cons<Parser(C)>(Lang.ann(base)) |
-    List.nil<Parser(C)>;;;;;;;
-  | (maybe_term) maybe_term<() Parser(C)>
-    | Parser.pure<C>(base);
-    | (post) Lang.pst(post);;
-
-Lang.space : Parser(Unit)
-  Parser.skip_many<Unit> | Parser.choice<Unit> |
-  List.cons<Parser(Unit)>(Lang.whitespace)   |
-  List.cons<Parser(Unit)>(Lang.line_comment) |
-  List.cons<Parser(Unit)>(Lang.block_comment)|
-  List.nil<Parser(Unit)>;;;;;
+//Lang.lam: Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //Parser.bind<Pair(Bool)(String)><C>
+  //| Lang.enclose<String>(Lang.nam(Bool.true));
+  //| (x) x<() Parser(C)> | (eras) (n)
+  //Parser.then<Unit><C>(Lang.space) |
+  //Parser.bind<C   ><C>(Lang.trm)   | (body)
+  //Parser.pure<C>
+  //| (ctx)
+    //let tbody = ((x) body(Core.Ctx.ext(n)(x)(ctx))) :: Core -> Core
+    //Core.lam(eras)(n)(tbody);;;;;
 
 
-Lang.symbol : String -> Parser(String)
-  (str)
-  Parser.bind<String><String>(Parser.tokens(str)) | (x)
-  Parser.then<Unit  ><String>(Lang.space) |
-  Parser.pure<String>(x);;
+//Lang.let: Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //Parser.then<String><C>(Lang.symbol("let"))   |
+  //Parser.bind<String><C>(Lang.nam(Bool.false)) | (name)
+  //Parser.then<Unit  ><C>(Lang.space)           |
+  //Parser.then<String><C>(Lang.symbol("="))     |
+  //Parser.bind<C     ><C>(Lang.trm)             | (expr)
+  //Parser.then<Unit  ><C>(Lang.space)           |
+  //Parser.then<Maybe(String)><C>
+  //| Parser.optional<String>(Lang.symbol(";")); |
+  //Parser.bind<C     ><C>(Lang.trm)             | (body)
+  //Parser.pure<C>
+  //| (ctx)
+    //let tbody = ((x) body(Core.Ctx.ext(name)(x)(ctx))) :: Core -> Core
+    //Core.let(name)(expr(ctx))(tbody);;;;;;;;;
 
-Lang.test : String
-  Parser.run_either<Core>(Lang.core)("(x : A) -> x")<() String>
-  | (e) Parser.Error.show(e);
-  | (x) Core.stringify(x);
+//Lang.line_comment: Parser(Unit)
+  //let not_newline = ((c) Bool.not(U16.eql(c)(Char.newline))) :: Char -> Bool
+  //Parser.then<String><Unit>(Parser.tokens("/")) |
+  //Parser.then<String><Unit>(Parser.take_while(not_newline)) |
+  //Parser.then<Char  ><Unit>(Parser.char(Char.newline)) |
+  //Parser.pure<Unit>(Unit.new);;;
 
-//Lang.testIO : IO(Unit)
-//  use skip = IO.log<Unit>(Lang.test)
-//  IO.end<Unit>(Unit.new)
-//
+//Lang.nam: Bool -> Parser(String)
+  //(allow_empty)
+  //allow_empty<() Parser(String)>
+  //| Parser.take_while(Lang.is_name);
+  //| Parser.take_while1("name")(Lang.is_name);
 
-Lang.trm: Parser(Core.Ctx -> Core)
-  def C = Core.Ctx -> Core
-  Parser.bind<C><C>
-  | Parser.choice<C> |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.all))  |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.lam))  |
-    List.cons<Parser(C)>(Parser.try<C>(Lang.par))  |
-    List.cons<Parser(C)>(Lang.let)                 |
-    List.cons<Parser(C)>(Lang.typ)                 |
-    List.cons<Parser(C)>(Lang.var)                 |
-    List.nil< Parser(C)>;;;;;;;;
-  | (x) Lang.pst(x);
 
-Lang.typ: Parser(Core.Ctx -> Core)
-  Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type")) |
-  Parser.pure<Core.Ctx -> Core>((ctx) Core.typ);
+//Lang.open: Parser(Bool)
+  //Parser.plus<Bool>
+  //| Parser.then<String><Bool>
+    //| Lang.symbol("(");
+    //| Parser.pure<Bool>(Bool.false);;
+  //| Parser.then<String><Bool>
+    //| Lang.symbol("<");
+    //| Parser.pure<Bool>(Bool.true);;
 
-Lang.var: Parser(Core.Ctx -> Core)
-  Parser.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false)) | (name)
-  Parser.pure<Core.Ctx -> Core>
-  | (ctx)
-    let got =
-      List.ifind<Pair(String)(Core)>
-      | ctx;
-      | (x) (i) String.eql(Pair.fst<String><Core>(x))(name);
-    got<() Core>
-    | Core.ref(name);
-    | (x) x<() Core> | (val) () Pair.snd<String><Core>(val);;;;
+//Lang.par: Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //Parser.then<String><C>(Lang.symbol("(")) |
+  //Parser.bind<C     ><C>(Lang.trm)         |  (term)
+  //Parser.then<Unit  ><C>(Lang.space)       |
+  //Parser.then<String><C>(Parser.tokens(")"))      |
+  //Parser.pure<C>(term);;;;
 
-Lang.whitespace: Parser(Unit)
-  Parser.then<String><Unit>
-  | Parser.take_while1("whitespace")(Lang.is_space);
-  | Parser.pure<Unit>(Unit.new);
+//Lang.parse
+  //: (s : String) ->
+    //Parser.type(Core)(Parser.run_default<Core>(Lang.core)(s))
+  //(s) Parser.parse<Core>(Lang.core)(s)
+
+//Lang.pip: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //(func)
+  //Parser.then<Unit><C>(Lang.space)               |
+  //Parser.then<String><C>(Lang.symbol("|"))       |
+  //Parser.bind<C><C>(Lang.trm)                    | (argm)
+  //Parser.then<Unit><C>(Lang.space)               |
+  //Parser.then<String><C>(Parser.tokens(";"))            |
+  //Parser.pure<C>
+  //| (ctx) Core.app(Bool.false)(func(ctx))(argm(ctx));;;;;;
+
+//Lang.pst: (Core.Ctx -> Core) -> Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //(base)
+  //Parser.bind<Maybe(C)><C>
+  //| Parser.optional<C> |
+    //Parser.choice<C> |
+    //List.cons<Parser(C)>(Lang.app(base)) |
+    //List.cons<Parser(C)>(Lang.pip(base)) |
+    //List.cons<Parser(C)>(Lang.arr(base)) |
+    //List.cons<Parser(C)>(Lang.ann(base)) |
+    //List.nil<Parser(C)>;;;;;;;
+  //| (maybe_term) maybe_term<() Parser(C)>
+    //| Parser.pure<C>(base);
+    //| (post) Lang.pst(post);;
+
+//Lang.space : Parser(Unit)
+  //Parser.skip_many<Unit> | Parser.choice<Unit> |
+  //List.cons<Parser(Unit)>(Lang.whitespace)   |
+  //List.cons<Parser(Unit)>(Lang.line_comment) |
+  //List.cons<Parser(Unit)>(Lang.block_comment)|
+  //List.nil<Parser(Unit)>;;;;;
+
+
+//Lang.symbol : String -> Parser(String)
+  //(str)
+  //Parser.bind<String><String>(Parser.tokens(str)) | (x)
+  //Parser.then<Unit  ><String>(Lang.space) |
+  //Parser.pure<String>(x);;
+
+//Lang.test : String
+  //Parser.run_either<Core>(Lang.core)("(x : A) -> x")<() String>
+  //| (e) Parser.Error.show(e);
+  //| (x) Core.stringify(x);
+
+////Lang.testIO : IO(Unit)
+////  use skip = IO.log<Unit>(Lang.test)
+////  IO.end<Unit>(Unit.new)
+////
+
+//Lang.trm: Parser(Core.Ctx -> Core)
+  //def C = Core.Ctx -> Core
+  //Parser.bind<C><C>
+  //| Parser.choice<C> |
+    //List.cons<Parser(C)>(Parser.try<C>(Lang.all))  |
+    //List.cons<Parser(C)>(Parser.try<C>(Lang.lam))  |
+    //List.cons<Parser(C)>(Parser.try<C>(Lang.par))  |
+    //List.cons<Parser(C)>(Lang.let)                 |
+    //List.cons<Parser(C)>(Lang.typ)                 |
+    //List.cons<Parser(C)>(Lang.var)                 |
+    //List.nil< Parser(C)>;;;;;;;;
+  //| (x) Lang.pst(x);
+
+//Lang.typ: Parser(Core.Ctx -> Core)
+  //Parser.then<String><Core.Ctx -> Core>(Parser.tokens("Type")) |
+  //Parser.pure<Core.Ctx -> Core>((ctx) Core.typ);
+
+//Lang.var: Parser(Core.Ctx -> Core)
+  //Parser.bind<String><Core.Ctx -> Core>(Lang.nam(Bool.false)) | (name)
+  //Parser.pure<Core.Ctx -> Core>
+  //| (ctx)
+    //let got =
+      //List.ifind<Pair(String)(Core)>
+      //| ctx;
+      //| (x) (i) String.eql(Pair.fst<String><Core>(x))(name);
+    //got<() Core>
+    //| Core.ref(name);
+    //| (x) x<() Core> | (val) () Pair.snd<String><Core>(val);;;;
+
+//Lang.whitespace: Parser(Unit)
+  //Parser.then<String><Unit>
+  //| Parser.take_while1("whitespace")(Lang.is_space);
+  //| Parser.pure<Unit>(Unit.new);
 
 

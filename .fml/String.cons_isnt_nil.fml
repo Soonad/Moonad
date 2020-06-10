@@ -1,0 +1,3 @@
+String.cons_isnt_nil: (x: Char) -> (xs: String) -> Not(Equal(String)(String.cons(x)(xs))(String.nil))
+  (x) (xs) (e) Equal.rewrite<String><String.cons(x)(xs)><String.nil><String.not_empty>(e)(Unit.new)
+

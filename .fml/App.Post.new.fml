@@ -1,0 +1,3 @@
+App.Post.new: (date: U64) -> (auth: String) -> (head: String) -> (body: String) -> App.Post
+  (date) (auth) (head) (body) <P> (new) new(date)(auth)(head)(body)
+

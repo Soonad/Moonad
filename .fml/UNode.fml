@@ -1,3 +1,3 @@
 UNode: Type
-  unode_value<P: (x: UNode) -> Type> -> (root: (rank: Nat) -> P(UNode.root(rank))) -> (link: (parent: Bits) -> P(UNode.link(parent))) -> P(unode_value)
+  self_UNode<P: (self: UNode) -> Type> -> (root: (rank: Nat) -> P(UNode.root(rank))) -> (link: (parent: Bits) -> P(UNode.link(parent))) -> P(self_UNode)
 

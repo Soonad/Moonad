@@ -4,9 +4,9 @@ name: Type check terms
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev-taelin-arena ]
   push:
-    branches: [ master ]
+    branches: [ master, dev-taelin-arena ]
     
 jobs:
   # This workflow contains a single job called "build"
@@ -20,14 +20,14 @@ jobs:
     - uses: actions/checkout@v2
 
     # Install dependency
-    - name: Install formality-core
-      run: npm i formality-core
+    - name: Install formality-lang
+      run: npm i formality-lang
     
     - name: Type check fm --github
       id: check_type_fm_github
-      run: node node_modules/formality-core/bin/fm.js --github
+      run: node node_modules/formality-lang/bin/fm.js --github
           
     - name: Type check fmc --github
       id: check_type_github
-      run: node ../node_modules/formality-core/bin/fmc.js --github
+      run: node ../node_modules/formality-lang/bin/fmc.js --github
       working-directory: ./.fmc

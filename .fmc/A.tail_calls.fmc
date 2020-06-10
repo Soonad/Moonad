@@ -1,3 +1,0 @@
-A.tail_calls: Nat
-  @n10=Nat.10;@n100=((Nat.mul n10) n10);@n1k=((Nat.mul n10) n100);@n10k=((Nat.mul n10) n1k);@n100k=((Nat.mul n10) n10k);@n1m=((Nat.mul n10) n100k);@n10m=((Nat.mul n10) n1m);(Nat.sum n10m)
-

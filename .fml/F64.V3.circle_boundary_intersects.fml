@@ -1,3 +1,3 @@
-F64.V3.circle_boundary_intersects: F64.Circle -> F64.Boundary -> F64
-  (c) (b) c<() F64>((c.pos) (c.rad) b<() F64>((pts) pts<() F64>(F64.0)((h0) (t0) t0<() F64>(F64.0)((h1) (t1) let p0 = h0; let p1 = h1; let sg = F64.Segment.new(p0)(p1); let cd = F64.V3.point_segment_sqrdist(c.pos)(sg); let test = F64.ltn(cd)(F64.mul(cd)(cd)); test<() F64>(F64.1)(let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1)); F64.V3.circle_boundary_intersects(c)(boun))))))
+F64.V3.circle_boundary_intersects: (c: F64.Circle) -> (b: F64.Boundary) -> F64
+  (c) (b) c<(self) F64>((c.pos) (c.rad) b<(self) F64>((b.pts) b.pts<(b.pts.self) F64>(F64.0)((b.pts.head) (b.pts.tail) let h0 = b.pts.head; let t0 = b.pts.tail; t0<(t0.self) F64>(F64.0)((t0.head) (t0.tail) let h1 = t0.head; let t1 = t0.tail; let p0 = h0; let p1 = h1; let sg = F64.Segment.new(p0)(p1); let cd = F64.V3.point_segment_sqrdist(c.pos)(sg); let test = F64.ltn(cd)(F64.mul(cd)(cd)); test<(test.self) F64>(F64.1)(let boun = F64.Boundary.new(List.cons<F64.V3>(h1)(t1)); F64.V3.circle_boundary_intersects(c)(boun))))))
 

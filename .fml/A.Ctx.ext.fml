@@ -1,3 +1,0 @@
-A.Ctx.ext: Char -> Nat -> A.Ctx -> A.Ctx
-  (nam) (x) List.cons<A.Var>(A.Var.new(nam)(x))
-

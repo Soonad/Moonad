@@ -1,3 +1,3 @@
-F64.compare_numbers: Π(:F64) Π(:F64) F64.Ordering
+F64.compare_numbers: Π(a:F64) Π(b:F64) F64.Ordering
   λa λb (((<Bool.if F64.Ordering> ((F64.eql a) b)) F64.Ordering.EQ) (((<Bool.if F64.Ordering> ((F64.ltn b) a)) F64.Ordering.GT) F64.Ordering.LT))
 

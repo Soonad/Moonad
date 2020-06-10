@@ -1,3 +1,3 @@
 Parser.State: *
-  ((Parsec.State Unit) Unit)
+  ∀self_Parser.State(P:Π(self:Parser.State) *) Π(make:Π(pos:Nat) Π(str:String) Π(errs:(List Parser.Error)) (P (((Parser.State.make pos) str) errs))) (P self_Parser.State)
 

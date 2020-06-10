@@ -1,0 +1,3 @@
+List.to_builder: ∀(A:*) Π(list:(List A)) (List.Builder A)
+  ΛA λlist ((<List.to_builder.go A> list) <List.Builder.new A>)
+

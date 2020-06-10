@@ -1,3 +1,3 @@
-Parser.char: Char -> Parser(Char)
-  (c) Parsec.char<Unit><Unit>(c)
+Parser.char: (c: Char) -> Parser(Char)
+  (c) Parser.token<Char>((x) U16.eql(c)(x)<(self.self) Maybe(Char)>(Maybe.some<Char>(c))(Maybe.none<Char>))(List.pure<Parser.Item>(Parser.Item.tokens(String.pure(c))))
 

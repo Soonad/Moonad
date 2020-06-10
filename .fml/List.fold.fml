@@ -1,3 +1,3 @@
-List.fold: <A: Type> -> <B: Type> -> B -> (A -> B -> B) -> List(A) -> B
-  <A> <B> (nil) (cons) (list) list<(self) B>(nil)((x) (xs) cons(x)(List.fold<A><B>(nil)(cons)(xs)))
+List.fold: <A: Type> -> <B: Type> -> (b: B) -> (f: A -> B -> B) -> (xs: List(A)) -> B
+  <A> <B> (b) (f) (xs) List.fold.go<A><B>(b)(f)(xs)((x) x)
 

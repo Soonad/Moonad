@@ -1,0 +1,3 @@
+List.foldr: <A: Type> -> <B: Type> -> (b: B) -> (f: A -> B -> B) -> (xs: List(A)) -> B
+  <A> <B> (b) (f) (xs) List.fold<A><B>(b)(f)(xs)
+

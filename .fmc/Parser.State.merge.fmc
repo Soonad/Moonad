@@ -1,0 +1,3 @@
+Parser.State.merge: Π(x:Parser.State) Π(y:Parser.State) Parser.State
+  λx λy (<x λx.self Parser.State> λx.pos λx.str λx.errs (<y λy.self Parser.State> λy.pos λy.str λy.errs (((<((Nat.cmp x.pos) y.pos) λself.self Parser.State> y) (((Parser.State.make x.pos) x.str) ((<List.concat Parser.Error> x.errs) y.errs))) x)))
+

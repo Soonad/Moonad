@@ -1,3 +1,3 @@
-U64.new: Π(:(Word Nat.64)) U64
-  λa ΛP λu64 (u64 a)
+U64.new: Π(a:(Word 64)) U64
+  λa ΛP λnew (new a)
 

@@ -1,0 +1,3 @@
+Arelin.Game.Hitbox: *
+  ∀self_Arelin.Game.Hitbox(P:Π(self:Arelin.Game.Hitbox) *) Π(nbox:(P Arelin.Game.Hitbox.nbox)) Π(cbox:Π(rad:F64) (P (Arelin.Game.Hitbox.cbox rad))) Π(pbox:Π(pts:(List F64.V3)) (P (Arelin.Game.Hitbox.pbox pts))) (P self_Arelin.Game.Hitbox)
+

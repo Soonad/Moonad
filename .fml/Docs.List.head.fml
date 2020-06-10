@@ -1,0 +1,3 @@
+Docs.List.head: <A: Type> -> (xs: List(A)) -> (not_empty: List.not_empty<A>(xs)) -> A
+  <A> (xs) (not_empty) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> A>((ne) Empty.absurd(ne)(A))((xs.head) (xs.tail) (ne) xs.head)(not_empty)
+

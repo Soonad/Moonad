@@ -1,0 +1,3 @@
+List.Builder.new: ∀(A:*) (List.Builder A)
+  ΛA λx x
+

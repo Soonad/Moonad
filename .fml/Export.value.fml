@@ -1,0 +1,3 @@
+Export.value: (ex: Export) -> Export.T(ex)
+  (ex) ex<(ex.self) ex.self<(ex.self.self) Type>((ex.self.T) (ex.self.value) ex.self.T)>((ex.T) (ex.value) ex.value)
+

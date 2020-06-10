@@ -1,0 +1,3 @@
+List.to_builder.go: <A: Type> -> (list: List(A)) -> (lb: List.Builder(A)) -> List.Builder(A)
+  <A> (list) (lb) list<(list.self) List.Builder(A)>(lb)((list.head) (list.tail) List.to_builder.go<A>(list.tail)(List.Builder.cons<A>(list.head)(lb)))
+

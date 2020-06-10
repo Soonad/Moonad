@@ -1,3 +1,3 @@
-Show: (x: String) -> Type
-  (x) show<P: (x: String) -> Show(x) -> Type> -> (msg: (x: String) -> P(x)(Show.msg(x))) -> P(x)(show)
+Show: (str: String) -> Type
+  (str) self_Show<P: (str: String) -> (self: Show(str)) -> Type> -> (msg: (str: String) -> P(str)(Show.msg(str))) -> P(str)(self_Show)
 

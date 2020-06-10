@@ -1,0 +1,3 @@
+Docs.Bool.double_negation_theorem: (b: Bool) -> Equal(Bool)(Bool.not(Bool.not(b)))(b)
+  (b) b<(b.self) Equal(Bool)(Bool.not(Bool.not(b.self)))(b.self)>(Equal.to<Bool><Bool.true>)(Equal.to<Bool><Bool.false>)
+

@@ -1,8 +1,9 @@
-// If we have an element of the empty type, then we can prove anything.
-Empty.absurd: (x: Empty) -> (P: Type) -> P
-  (x) (P)
-  x<() P>
-
 // The empty datatype.
 T Empty
 
+// If we have an element of the empty type, then we can prove anything.
+Empty.absurd (x: Empty) (P: Type) : P
+  case x:
+
+//Empty.show(e: Empty): String
+  //case e:

@@ -1,3 +1,0 @@
-Parsec.token: ∀(S:*) ∀(E:*) ∀(A:*) Π(:Π(:Char) (Maybe A)) Π(:(List Parsec.Error.Item)) (((Parsec S) E) A)
-  ΛS ΛE ΛA λf λes ΛX λs1 λempty_value λempty_error λeaten_value λeaten_error (<s1 λ X> λinput λindex λerror λstate ((<input λ X> @unex=(<Maybe.some Parsec.Error.Item> Parsec.Error.Item.end_of_input);((empty_error s1) (((<Parsec.Error.make_trivial E> Nat.zero) unex) es))) λc λcs ((<(f c) λ X> @item=(Parsec.Error.Item.tokens (String.single c));@unex=(<Maybe.some Parsec.Error.Item> item);((empty_error s1) (((<Parsec.Error.make_trivial E> index) unex) es))) λx @s2=((((<<Parsec.State.make S> E> cs) (Nat.succ index)) error) state);((eaten_value s2) x))))
-

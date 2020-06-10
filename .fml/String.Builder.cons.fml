@@ -1,0 +1,3 @@
+String.Builder.cons: (c: Char) -> (lb: String.Builder) -> String.Builder
+  (c) (lb) (x) lb(String.cons(c)(x))
+

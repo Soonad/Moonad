@@ -1,3 +1,0 @@
-Core.eql: Π(:Core) Π(:Core) Π(:Core.Defs) Bool
-  λa λb λdefs (((((Core.eql.go a) b) defs) Set.new) Nat.zero)
-

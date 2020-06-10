@@ -1,3 +1,3 @@
-String.length: Π(:String) Nat
-  λstr ((<str λself Nat> Nat.zero) λhead λtail (Nat.succ (String.length tail)))
+String.length: Π(xs:String) Nat
+  λxs ((String.length.go xs) 0)
 

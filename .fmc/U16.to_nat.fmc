@@ -1,3 +1,3 @@
-U16.to_nat: Π(:U16) Nat
-  λa (<a λ Nat> λa_val (<Word.to_nat Nat.16> a_val))
+U16.to_nat: Π(a:U16) Nat
+  λa (<a λself Nat> λa_val (<Word.to_nat 16> a_val))
 

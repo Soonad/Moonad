@@ -1,3 +1,3 @@
-Maybe.extract: ∀(A:*) Π(:(Maybe A)) Π(:A) A
-  ΛA λm λa ((<m λ A> a) λm.value m.value)
+Maybe.extract: ∀(A:*) Π(m:(Maybe A)) Π(a:A) A
+  ΛA λm λa ((<m λm.self A> a) λm.value m.value)
 

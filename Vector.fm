@@ -3,21 +3,17 @@ T Vector <A: Type>                       ~ (len: Nat)
 | ext<len: Nat>(x: A, xs: Vector(A,len)) ~ (Nat.succ(len));
 
 Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
-  case vec
-  : (len, vec)
-    (e: Equal(Nat)(len)(Nat.zero)) ->
-    def P0 = ((x) Vector(Nat)(x)) :: Nat -> Type
-    def P1 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
-    let x0 = Equal.rewrite<><len><Nat.zero><P0>(e, vec)
-    let x1 = Equal.rewrite<><len><Nat.zero><P1>(e, Vector.nil<Nat>)
-    Equal()(x0)(x1);
-  | (e)
-    def P0 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
+  case vec:
+  with e : Equal(Nat, vec.len, Nat.zero) = Equal.to<Nat, Nat.zero>;
+  | def P0 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
     def x0 = Equal.rewrite<><><><P0>(e, Vector.nil<Nat>)
     Equal.to<Vector(Nat, Nat.zero)><x0>;
-  | <len> (x, xs, e)
-    Empty.absurd(Nat.succ_isnt_zero(len, e), _);
-  | Equal.to<Nat><Nat.zero>;
+  | Empty.absurd(Nat.succ_isnt_zero(vec.len, e), _);
+  : def P0 = ((x) Vector(Nat)(x)) :: Nat -> Type
+    def P1 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
+    let x0 = Equal.rewrite<><vec.len><Nat.zero><P0>(e, vec.self)
+    let x1 = Equal.rewrite<><vec.len><Nat.zero><P1>(e, Vector.nil<Nat>)
+    Equal()(x0)(x1);
 
 Vector.extract: <A: Type> -> <n: Nat> -> Vector(A, Nat.succ(n)) -> Pair(A, Vector(A, n))
   <A> <n> (xs) xs<(n) () Bool.if<Type>(Nat.eql(Nat.0, n), Unit, Pair(A, Vector(A, Nat.pred(n))))>

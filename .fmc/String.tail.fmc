@@ -1,3 +1,3 @@
-String.tail: Π(:String) String
-  λstr ((<str λself String> String.nil) λstr.head λstr.tail str.tail)
+String.tail: Π(xs:String) Π(not_empty:(String.not_empty xs)) String
+  λxs λnot_empty (((<xs λxs.self Π(ne:(String.not_empty xs.self)) String> λne ((Empty.absurd ne) String)) λxs.head λxs.tail λne xs.tail) not_empty)
 

@@ -1,3 +1,3 @@
-Nat.div: Nat -> Nat -> Nat
+Nat.div: (n: Nat) -> (m: Nat) -> Nat
   (n) (m) Pair.fst<Nat><Nat>(Nat.div_mod(n)(m))
 

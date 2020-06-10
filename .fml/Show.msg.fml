@@ -1,3 +1,3 @@
-Show.msg: (x: String) -> Show(x)
-  (x) <P> (msg) msg(x)
+Show.msg: (str: String) -> Show(str)
+  (str) <P> (msg) msg(str)
 

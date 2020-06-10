@@ -1,3 +1,3 @@
-String.reverse.go: String -> String -> String
-  (str) (res) str<(self) String>(res)((str.head) (str.tail) String.reverse.go(str.tail)(String.cons(str.head)(res)))
+String.reverse.go: (xs: String) -> (res: String) -> String
+  (xs) (res) xs<(xs.self) String>(res)((xs.head) (xs.tail) String.reverse.go(xs.tail)(String.cons(xs.head)(res)))
 

@@ -1,0 +1,3 @@
+Docs.my_nat: Nat
+  Module.get("nat")(Docs.my_lib)
+

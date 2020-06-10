@@ -1,0 +1,3 @@
+App.Post: *
+  ∀self_App.Post(P:Π(self:App.Post) *) Π(new:Π(date:U64) Π(auth:String) Π(head:String) Π(body:String) (P ((((App.Post.new date) auth) head) body))) (P self_App.Post)
+

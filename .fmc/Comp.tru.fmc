@@ -1,3 +1,3 @@
 Comp.tru: Comp
-  Λ λ λ λ λ λtru λ tru
+  ΛP λvar λlam λapp λlet λtru λfal tru
 

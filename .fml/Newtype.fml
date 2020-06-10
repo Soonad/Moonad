@@ -1,3 +1,3 @@
 Newtype: (A: Type) -> (tag: String) -> Type
-  (A) (tag) newtype<P: (tag: String) -> Newtype(A)(tag) -> Type> -> (val: (x: A) -> P(tag)(Newtype.val<A><tag>(x))) -> P(tag)(newtype)
+  (A) (tag) self_Newtype<P: (tag: String) -> (self: Newtype(A)(tag)) -> Type> -> (new: <tag: String> -> (val: A) -> P(tag)(Newtype.new<A><tag>(val))) -> P(tag)(self_Newtype)
 

@@ -1,0 +1,3 @@
+List.uncons: <A: Type> -> (xs: List(A)) -> Maybe(Pair(A)(List(A)))
+  <A> (xs) xs<(xs.self) Maybe(Pair(A)(List(A)))>(Maybe.none<Pair(A)(List(A))>)((xs.head) (xs.tail) Maybe.some<Pair(A)(List(A))>(Pair.new<A><List(A)>(xs.head)(xs.tail)))
+

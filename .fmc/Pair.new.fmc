@@ -1,3 +1,3 @@
-Pair.new: ∀(A:*) ∀(B:*) Π(a:A) Π(b:B) ((Pair A) B)
-  ΛA ΛB λa λb ΛP λnew ((new a) b)
+Pair.new: ∀(A:*) ∀(B:*) Π(fst:A) Π(snd:B) ((Pair A) B)
+  ΛA ΛB λfst λsnd ΛP λnew ((new fst) snd)
 

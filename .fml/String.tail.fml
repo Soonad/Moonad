@@ -1,3 +1,3 @@
-String.tail: String -> String
-  (str) str<(self) String>(String.nil)((str.head) (str.tail) str.tail)
+String.tail: (xs: String) -> (not_empty: String.not_empty(xs)) -> String
+  (xs) (not_empty) xs<(xs.self) (ne: String.not_empty(xs.self)) -> String>((ne) Empty.absurd(ne)(String))((xs.head) (xs.tail) (ne) xs.tail)(not_empty)
 

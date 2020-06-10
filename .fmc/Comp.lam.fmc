@@ -1,3 +1,3 @@
-Comp.lam: Π(:String) Π(:Comp) Comp
-  λname λbody Λ λ λlam λ λ λ λ ((lam name) body)
+Comp.lam: Π(name:String) Π(body:Comp) Comp
+  λname λbody ΛP λvar λlam λapp λlet λtru λfal ((lam name) body)
 

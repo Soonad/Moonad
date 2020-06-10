@@ -1,3 +1,0 @@
-Parsec.take_while: ∀(S:*) ∀(E:*) Π(:Π(:Char) Bool) (((Parsec S) E) String)
-  ΛS ΛE λf ΛX λs1 λempty_value λempty_error λeaten_value λ (<s1 λ X> λinput λindex λerror λstate (<((String.take_while f) input) λ X> λtook λrest @len=(String.length took);@s2=((((<<Parsec.State.make S> E> rest) ((Nat.add index) len)) error) state);((<took λ X> ((empty_value s2) took)) λ λ ((eaten_value s2) took))))
-

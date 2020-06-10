@@ -1,0 +1,3 @@
+App.Post: Type
+  self_App.Post<P: (self: App.Post) -> Type> -> (new: (date: U64) -> (auth: String) -> (head: String) -> (body: String) -> P(App.Post.new(date)(auth)(head)(body))) -> P(self_App.Post)
+

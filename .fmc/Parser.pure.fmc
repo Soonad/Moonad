@@ -1,3 +1,3 @@
 Parser.pure: ∀(A:*) Π(a:A) (Parser A)
-  ΛA λa ΛX λs λempty_value λ λ λ ((empty_value s) a)
+  ΛA λa λs1 ((<Parser.Reply.val A> s1) a)
 

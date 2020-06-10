@@ -1,0 +1,3 @@
+List.foldl: ∀(A:*) ∀(B:*) Π(b:B) Π(f:Π(:B) Π(:A) B) Π(xs:(List A)) B
+  ΛA ΛB λb λf λxs ((<xs λxs.self B> b) λxs.head λxs.tail (((<<List.foldl A> B> ((f b) xs.head)) f) xs.tail))
+

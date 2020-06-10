@@ -1,0 +1,3 @@
+Arelin.Game.get_position_by_pid: Π(pid:Arelin.Game.PlayerId) Π(gm:Arelin.Game) F64.V3
+  λpid λgm $thi=((Arelin.Thing.get_by_pid pid) gm);((<thi λthi.self F64.V3> (((F64.V3.new F64.0) F64.0) F64.0)) λthi.value (Arelin.Thing.get_pos thi.value))
+

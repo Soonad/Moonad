@@ -1,3 +1,3 @@
-Parser.ap: ∀(A:*) ∀(B:*) Π(:(Parser Π(:A) B)) Π(:(Parser A)) (Parser B)
-  ΛA ΛB λpf λpa ((<<<<Parsec.ap Unit> Unit> A> B> pf) pa)
+Parser.ap: ∀(A:*) ∀(B:*) Π(pf:(Parser Π(:A) B)) Π(pa:(Parser A)) (Parser B)
+  ΛA ΛB λpf λpa λs1 ((<(pf s1) λf.self (Parser.Reply B)> λf.state λf.value ((<(pa f.state) λa.self (Parser.Reply B)> λa.state λa.value ((<Parser.Reply.val B> a.state) (f.value a.value))) λa.state λa.error ((<Parser.Reply.err B> a.state) a.error))) λf.state λf.error ((<Parser.Reply.err B> f.state) f.error))
 

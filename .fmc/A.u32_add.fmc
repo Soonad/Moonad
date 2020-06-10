@@ -1,3 +1,0 @@
-A.u32_add: U32
-  @num=(U32.inc (U32.inc U32.0));((U32.add num) num)
-
