@@ -272,3 +272,9 @@ String.to_builder.go(string: String, lb: String.Builder) : String.Builder
   case string:
   | lb;
   | String.to_builder.go(string.tail)(String.Builder.cons(string.head, lb));
+
+String.to_set: String -> Set
+  (str)
+  case str:
+  | Set.new;
+  | Set.set(U16.to_bits(str.head), String.to_set(str.tail));
