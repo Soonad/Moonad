@@ -28,7 +28,7 @@ App.demo: App(Nat)
 
   // Render function
   def draw(state)
-    let count = "1" //Nat.to_string_decimal(state)
+    let count = Nat.to_string_decimal(state)
     App.Render.text(String.concat("Count: ", count))
 
   // User input callback

@@ -1,0 +1,3 @@
+Cmp.as_lte: Π(cmp:Cmp) Bool
+  λcmp (((<cmp λcmp.self Bool> Bool.true) Bool.true) Bool.false)
+

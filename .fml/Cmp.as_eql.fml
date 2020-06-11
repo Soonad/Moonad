@@ -1,0 +1,3 @@
+Cmp.as_eql: (cmp: Cmp) -> Bool
+  (cmp) cmp<(cmp.self) Bool>(Bool.false)(Bool.true)(Bool.false)
+

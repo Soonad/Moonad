@@ -1,3 +1,3 @@
-List.fold1: ∀(A:*) Π(f:Π(:A) Π(:A) A) Π(xs:(List A)) Π(ne:(<List.not_empty A> xs)) A
-  ΛA λf λxs λne (((<xs λxs.self Π(ne:(<List.not_empty A> xs.self)) A> λne ((Empty.absurd ne) A)) λxs.head λxs.tail λne (((<<List.fold A> A> xs.head) f) xs.tail)) ne)
+List.fold1: ∀(A:*) Π(xs:(List A)) ∀(ne:(<List.not_empty A> xs)) ∀(P:*) Π(:P) Π(:Π(:A) Π(:P) P) P
+  ΛA λxs Λne ΛP λnil λcons (((<xs λxs.self Π(ne:(<List.not_empty A> xs.self)) P> λne ((Empty.absurd ne) P)) λxs.head λxs.tail λne ((<(<List.fold A> xs) P> nil) cons)) ne)
 

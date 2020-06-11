@@ -1,0 +1,3 @@
+Cmp.as_gtn: Π(cmp:Cmp) Bool
+  λcmp (((<cmp λcmp.self Bool> Bool.false) Bool.false) Bool.true)
+

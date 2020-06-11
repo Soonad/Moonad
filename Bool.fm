@@ -40,10 +40,10 @@ Bool.elim(b: Bool): <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
   <P> (t) (f) b<P>(t, f)
 
 // If-then-else
-Bool.if <A: Type> (x: Bool) (t: A) (f: A) : A
-  case Bool.eql(x, Bool.false):
-  | f;
+Bool.if<A: Type>(x: Bool, t: A, f: A): A
+  case t:
   | t;
+  | f;
 
 // Boolean negation, fusible
 Bool.notf(a: Bool): Bool
