@@ -7,13 +7,13 @@ Nat.add(n: Nat, m: Nat): Nat
   | m;
   | Nat.succ(Nat.add(n.pred, m));
 
-Nat.apply.tco<A: Type>(n: Nat, f: A -> A, x: A): A
+Nat.apply.go<A: Type>(n: Nat, f: A -> A, x: A): A
   case n:
   | x;
-  | Nat.apply.tco<A>(n.pred, f, f(x));
+  | Nat.apply.go<A>(n.pred, f, f(x));
 
 Nat.apply: <A: Type> -> (n: Nat, f: A -> A, x: A) -> A
-  Nat.apply.tco
+  Nat.apply.go
 
 Nat.cmp(a: Nat, b: Nat): Cmp
   case a:
@@ -136,15 +136,23 @@ Nat.to_base(base: Nat, nat: Nat): List(Nat)
   Nat.to_base.go(base, nat, List.nil<Nat>)
 
 Nat.to_base.go(base: Nat, nat: Nat, res: List(Nat)): List(Nat) //loop//
-  case Nat.div_mod(nat, base) as p:
-  | let res = List.cons<Nat>(p.snd, res)
-    case p.fst<() List(Nat)>:
-    | res;
-    | Nat.to_base.go(base, p.fst, res);;
+  get d m = Nat.div_mod(nat, base)
+  case d:
+  | List.cons<>(m,res);
+  | Nat.to_base.go(base,d,List.cons<>(m,res));
 
-////base(123, [])
-////base(12, [3])
-////base(1, [2,3])
+Nat.pow(base: Nat, exp: Nat) : Nat
+  case exp:
+  | 1;
+  | Nat.mul(base,Nat.pow(base,exp.pred));
+
+Nat.from_base(base: Nat, ds: List(Nat)) : Nat
+  Nat.from_base.go(base,List.reverse<>(ds),1,0)
+
+Nat.from_base.go(b: Nat, ds: List(Nat), p: Nat, res : Nat) : Nat
+  case ds:
+  | res;
+  | Nat.from_base.go(b,ds.tail,Nat.mul(b,p), Nat.add(Nat.mul(ds.head,p),res));
 
 Nat.to_bits(n: Nat): Bits
   case n:
@@ -159,11 +167,22 @@ Nat.to_string(n: Nat): String
 Nat.to_string_base(base: Nat, nat: Nat): String
   List.foldr<Nat, String>
   | String.nil;
-  | (n) (str) String.cons(Nat.apply<Char>(n, U16.inc, Char.parse("0")), str);
+  | (n) (str) String.cons(Nat.show_digit(base,n), str);
   | Nat.to_base(base, nat);
 
-Nat.to_string_decimal: Nat -> String
-  Nat.to_string_base(10)
+Nat.show_digit(base: Nat, n: Nat) : Char
+  let m = Nat.mod(n,base)
+  def base64 =
+    ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
+    ,'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'
+    ,'W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l'
+    ,'m','n','o','p','q','r','s','t','u','v','w','x','y','z','+','/'
+    ]
+  if Bool.and(Nat.gtn(base,0),Nat.lte(base,64)) then 
+    case List.at<>(base64,m) as c:
+    | '#';
+    | c.value;
+  else '#'
 
 Nat.show(n: Nat): String
-  Nat.to_string_decimal(10)
+  Nat.to_string_base(10,n)
