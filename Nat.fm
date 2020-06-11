@@ -39,18 +39,17 @@ Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
 
 // Nat division and remainder (helper function)
 Nat.div_mod.go(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
-  let p = Nat.sub_rem(n,m)
-  case p:
-  | Nat.div_mod.go(p.value,m,Nat.succ(d));
-  | Pair.new<_,_>(d,n);
+  case Nat.sub_rem(n, m) as p:
+  | Nat.div_mod.go(p.value, m, Nat.succ(d));
+  | Pair.new<_,_>(d, n);
 
 // Nat division and modulus
 Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
-  Nat.div_mod.go(n,m,Nat.zero)
+  Nat.div_mod.go(n, m, Nat.zero)
 
 // Nat modulus
 Nat.mod(n: Nat, m: Nat): Nat
-  Pair.snd<Nat,Nat>(Nat.div_mod(n,m))
+  Pair.snd<_,_>(Nat.div_mod(n, m))
 
 // Nat division
 Nat.div(n: Nat, m: Nat): Nat

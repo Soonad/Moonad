@@ -1,3 +1,3 @@
-Bool.if: ∀(A:*) Π(x:Bool) Π(t:A) Π(f:A) A
-  ΛA λx λt λf t
+Bool.if: ∀(A:*) Π(cond:Bool) Π(true_case:A) Π(false_case:A) A
+  ΛA λcond λtrue_case λfalse_case ((<cond λcond.self A> true_case) false_case)
 
