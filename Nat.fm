@@ -156,6 +156,11 @@ Nat.to_string(n: Nat): String
   | String.cons(Char.parse("z"), String.nil);
   | String.cons(Char.parse("s"), Nat.to_string(n.pred));
 
+Nat.to_string_unary(n: Nat): String
+  case n:
+  | String.nil;
+  | String.cons('1', Nat.to_string_unary(n.pred));
+
 Nat.to_string_base(base: Nat, nat: Nat): String
   List.foldr<Nat, String>
   | String.nil;

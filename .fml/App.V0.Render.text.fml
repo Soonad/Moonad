@@ -1,0 +1,3 @@
+App.V0.Render.text: (str: String) -> App.V0.Render
+  (str) <P> (text) text(str)
+

@@ -15,27 +15,29 @@ Char.hex_value(chr: Char): Maybe(Nat)
 
 // Creates a character from 16 bits.
 Char.new
-  (b0:Bit, b1:Bit, b2:Bit, b3:Bit, b4:Bit, b5:Bit, b6:Bit, b7:Bit,
-   b8:Bit, b9:Bit, bA:Bit, bB:Bit, bC:Bit, bD:Bit, bE:Bit, bF:Bit)
-  : U16
-  let kF = b0<>(Word.0<>)(Word.1<>)
-  let kE = b1<>(Word.0<>)(Word.1<>)
-  let kD = b2<>(Word.0<>)(Word.1<>)
-  let kC = b3<>(Word.0<>)(Word.1<>)
-  let kB = b4<>(Word.0<>)(Word.1<>)
-  let kA = b5<>(Word.0<>)(Word.1<>)
-  let k9 = b6<>(Word.0<>)(Word.1<>)
-  let k8 = b7<>(Word.0<>)(Word.1<>)
-  let k7 = b8<>(Word.0<>)(Word.1<>)
-  let k6 = b9<>(Word.0<>)(Word.1<>)
-  let k5 = bA<>(Word.0<>)(Word.1<>)
-  let k4 = bB<>(Word.0<>)(Word.1<>)
-  let k3 = bC<>(Word.0<>)(Word.1<>)
-  let k2 = bD<>(Word.0<>)(Word.1<>)
-  let k1 = bE<>(Word.0<>)(Word.1<>)
-  let k0 = bF<>(Word.0<>)(Word.1<>)
-  let k_ = Word.nil
-  U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
+(b0: Bit) (b1: Bit) (b2: Bit) (b3: Bit)
+(b4: Bit) (b5: Bit) (b6: Bit) (b7: Bit)
+(b8: Bit) (b9: Bit) (bA: Bit) (bB: Bit)
+(bC: Bit) (bD: Bit) (bE: Bit) (bF: Bit)
+: U16
+  let kF = b0<>(Word.0<>, Word.1<>)
+  let kE = b1<>(Word.0<>, Word.1<>)
+  let kD = b2<>(Word.0<>, Word.1<>)
+  let kC = b3<>(Word.0<>, Word.1<>)
+  let kB = b4<>(Word.0<>, Word.1<>)
+  let kA = b5<>(Word.0<>, Word.1<>)
+  let k9 = b6<>(Word.0<>, Word.1<>)
+  let k8 = b7<>(Word.0<>, Word.1<>)
+  let k7 = b8<>(Word.0<>, Word.1<>)
+  let k6 = b9<>(Word.0<>, Word.1<>)
+  let k5 = bA<>(Word.0<>, Word.1<>)
+  let k4 = bB<>(Word.0<>, Word.1<>)
+  let k3 = bC<>(Word.0<>, Word.1<>)
+  let k2 = bD<>(Word.0<>, Word.1<>)
+  let k1 = bE<>(Word.0<>, Word.1<>)
+  let k0 = bF<>(Word.0<>, Word.1<>)
+  let kx = Word.nil
+  U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(kx)))))))))))))))))
 
 Char.newline: Char
   Char.new(

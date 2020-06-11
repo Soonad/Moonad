@@ -1,0 +1,3 @@
+App.V0.new: ∀(S:*) Π(init:S) Π(draw:Π(:S) App.V0.Render) Π(when:Π(:App.V0.Event) Π(:S) S) (App.V0 S)
+  ΛS λinit λdraw λwhen ΛP λnew (((new init) draw) when)
+
