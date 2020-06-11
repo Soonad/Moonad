@@ -1,0 +1,3 @@
+ecdsa.invertBatch.aux2: (nums: List(Nat)) -> (modulo: Nat) -> (acc: Nat) -> (scratch: List(Nat)) -> (inverts: List(Nat)) -> List(Nat)
+  (nums) (modulo) (acc) (scratch) (inverts) nums<(nums.self) List(Nat)>(inverts)((nums.head) (nums.tail) scratch<(scratch.self) List(Nat)>(inverts)((scratch.head) (scratch.tail) Bool.if<List(Nat)>(Nat.eql(nums.head)(0))(let inverts = List.cons<Nat>(0)(inverts); ecdsa.invertBatch.aux2(nums.tail)(modulo)(acc)(scratch.tail)(inverts))(let inverts = List.cons<Nat>(Nat.mod(Nat.mul(acc)(scratch.head))(modulo))(inverts); let acc = Nat.mod(Nat.mul(acc)(nums.head))(modulo); ecdsa.invertBatch.aux2(nums.tail)(modulo)(acc)(scratch.tail)(inverts))))
+

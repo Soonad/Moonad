@@ -1,3 +1,0 @@
-ecdsa.pow_mod.tco: Π(:Nat) Π(:Nat) Π(:Nat) Π(:Nat) Nat
-  λa λb λmodulo λres (((<Bool.if Nat> ((Nat.eql b) 0)) res) $res=(((<Bool.if Nat> (Nat.odd b)) ((Nat.mod ((Nat.mul res) a)) modulo)) res);$b=((Nat.div b) 2);$a=((Nat.mod ((Nat.mul a) a)) modulo);((((ecdsa.pow_mod.tco a) b) modulo) res))
-

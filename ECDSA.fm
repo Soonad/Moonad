@@ -28,38 +28,34 @@ CURVE.Gy: Nat
 CURVE.beta: Nat
   Nat.parse_hex("7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE")
 
-ecdsa.mod: Nat -> Nat
-  (a) Nat.mod(a, CURVE.P)
+ecdsa.mod(a: Nat): Nat
+  Nat.mod(a, CURVE.P)
 
-ecdsa.negate: Nat -> Nat
-  (a)
+ecdsa.negate(a: Nat): Nat
   let a = ecdsa.mod(a)
-  Nat.eql(a, 0)<() Nat>
+  case Nat.eql(a, 0):
   | 0;
   | Nat.sub(CURVE.P, a);
 
-ecdsa.sub: Nat -> Nat -> Nat
-  (a) (b) ecdsa.mod(Nat.add(a, ecdsa.negate(b)))
+ecdsa.sub(a: Nat, b: Nat): Nat
+  ecdsa.mod(Nat.add(a, ecdsa.negate(b)))
 
-ecdsa.pow_mod: Nat -> Nat -> Nat -> Nat
-  (a) (b) (modulo)
-  ecdsa.pow_mod.tco(a, b, modulo, 1)
+ecdsa.pow_mod(a: Nat, b: Nat, modulo: Nat): Nat
+  ecdsa.pow_mod.aux(a, b, modulo, 1)
 
-ecdsa.pow_mod.tco: Nat -> Nat -> Nat -> Nat -> Nat
-  (a) (b) (modulo) (res)
-  Bool.if<_>(Nat.eql(b, 0))
+ecdsa.pow_mod.aux(a: Nat, b: Nat, modulo: Nat, res: Nat): Nat
+  case Nat.eql(b, 0):
   | res;
-  | let res = Bool.if<_>(Nat.odd(b), Nat.mod(Nat.mul(res, a), modulo), res)
+  | let res = Bool.if<>(Nat.odd(b), Nat.mod(Nat.mul(res, a), modulo), res)
     let b = Nat.div(b, 2)
     let a = Nat.mod(Nat.mul(a, a), modulo)
-    ecdsa.pow_mod.tco(a, b, modulo, res);
+    ecdsa.pow_mod.aux(a, b, modulo, res);
 
-ecdsa.sqrt: Nat -> Nat
-  (a) ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, 1), 4), CURVE.P)
+ecdsa.sqrt(a: Nat): Nat
+  ecdsa.pow_mod(a, Nat.div(Nat.add(CURVE.P, 1), 4), CURVE.P)
 
 // RHS of elliptic curve equation
-ecdsa.weierstrass: Nat -> Nat
-  (x)
+ecdsa.weierstrass(x: Nat): Nat
   ecdsa.mod(Nat.add(Nat.add(Nat.mulVar(3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
 
 ecdsa.PRIME_SIZE: Nat
@@ -68,56 +64,48 @@ ecdsa.PRIME_SIZE: Nat
 ecdsa.USE_ENDOMORPHISM: Bool
   Nat.eql(CURVE.a, 0)
 
-ecdsa.invert: Nat -> Nat -> Nat
-  (number) (modulo)
-  Nat.eql(number, 0)<() Nat>
+ecdsa.invert(number: Nat, modulo: Nat): Nat
+  case Nat.eql(number, 0):
   | 0;
   | get gcd p = Nat.egcd(Nat.mod(number, modulo), modulo)
-    Nat.eql(gcd, 1)<() Nat>
+    case Nat.eql(gcd, 1):
     | get x y = p
       Int.mod_Nat(x, modulo);
     | 0;;
 
-ecdsa.invertBatch: List(Nat) -> Nat -> List(Nat)
-  (nums) (modulo)
-  get acc p = ecdsa.invertBatch1.tco(nums, modulo, 1, List.nil<Nat>, List.nil<Nat>)
+ecdsa.invertBatch(nums: List(Nat), modulo: Nat): List(Nat)
+  get acc p = ecdsa.invertBatch.aux1(nums, modulo, 1, List.nil<Nat>, List.nil<Nat>)
   get scratch rest = p
   let acc = ecdsa.invert(acc, modulo)
-  ecdsa.invertBatch2.tco(rest, modulo, acc, scratch, List.nil<Nat>)
+  ecdsa.invertBatch.aux2(rest, modulo, acc, scratch, List.nil<Nat>)
 
-ecdsa.invertBatch1.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> Pair(Nat, Pair(List(Nat), List(Nat)))
-  (nums) (modulo) (acc) (scratch) (rest)
-  nums<_>
-  | Pair.new<_,_>(acc, Pair.new<_,_>(scratch, rest));
-  | (nums.head) (nums.tail)
-    Bool.if<_>(Nat.eql(nums.head, 0))
-    | let scratch = List.cons<_>(0, scratch)
-      let rest = List.cons<_>(nums.head, rest)
-      ecdsa.invertBatch1.tco(nums.tail, modulo, acc, scratch, rest);
-    | let scratch = List.cons<_>(acc, scratch)
+ecdsa.invertBatch.aux1(nums: List(Nat), modulo: Nat, acc: Nat, scratch: List(Nat), rest: List(Nat)): Pair(Nat, Pair(List(Nat), List(Nat)))
+  case nums:
+  | Pair.new<,>(acc, Pair.new<,>(scratch, rest));
+  | case Nat.eql(nums.head, 0):
+    | let scratch = List.cons<>(0, scratch)
+      let rest = List.cons<>(nums.head, rest)
+      ecdsa.invertBatch.aux1(nums.tail, modulo, acc, scratch, rest);
+    | let scratch = List.cons<>(acc, scratch)
       let acc = Nat.mod(Nat.mul(acc, nums.head), modulo)
-      let rest = List.cons<_>(nums.head, rest)
-      ecdsa.invertBatch1.tco(nums.tail, modulo, acc, scratch, rest);;
+      let rest = List.cons<>(nums.head, rest)
+      ecdsa.invertBatch.aux1(nums.tail, modulo, acc, scratch, rest);;
 
-ecdsa.invertBatch2.tco: List(Nat) -> Nat -> Nat -> List(Nat) -> List(Nat) -> List(Nat)
-  (nums) (modulo) (acc) (scratch) (inverts)
-  nums<() _>
+ecdsa.invertBatch.aux2(nums: List(Nat), modulo: Nat, acc: Nat, scratch: List(Nat), inverts: List(Nat)): List(Nat)
+  case nums:
   | inverts;
-  | (nums.head) (nums.tail)
-    scratch<() _>
+  | case scratch:
     | inverts; // Should not happen
-    | (scratch.head) (scratch.tail)
-      Bool.if<_>(Nat.eql(nums.head, 0))
+    | Bool.if<_>(Nat.eql(nums.head, 0))
       | let inverts = List.cons<_>(0, inverts)
-        ecdsa.invertBatch2.tco(nums.tail, modulo, acc, scratch.tail, inverts);
+        ecdsa.invertBatch.aux2(nums.tail, modulo, acc, scratch.tail, inverts);
       | let inverts = List.cons<_>(Nat.mod(Nat.mul(acc, scratch.head), modulo), inverts)
         let acc = Nat.mod(Nat.mul(acc, nums.head), modulo)
-        ecdsa.invertBatch2.tco(nums.tail, modulo, acc, scratch.tail, inverts);;;
+        ecdsa.invertBatch.aux2(nums.tail, modulo, acc, scratch.tail, inverts);;;
 
 // Split 256-bit K into 2 128-bit (k1, k2) for which k1 + k2 * lambda = K.
 // https://gist.github.com/paulmillr/eb670806793e84df628a7c434a873066
-ecdsa.split_scalar: Nat -> Pair(Int, Int)
-  (k)
+ecdsa.split_scalar(k: Nat): Pair(Int, Int)
   let k  = Int.fromNat(k)
   let a1 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
   let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3")
@@ -129,16 +117,14 @@ ecdsa.split_scalar: Nat -> Pair(Int, Int)
   let k2 = Int.sub(Int.mul(c1, b1), Int.mul(c2, b2))
   Pair.new<Int, Int>(k1, k2)
 
-ecdsa.number_to_hex: Nat -> String
-  (num)
+ecdsa.number_to_hex(num: Nat): String
   let hex = Nat.to_string_base(num, 16);
   Bool.if<>(Nat.odd(String.length(hex)), String.cons('0', hex), hex)
 
-ecdsa.parse_byte: String -> Maybe(Nat)
-  (n) Maybe.map<,>(Nat.mul(2), Nat.parse_hex_safe(n))
+ecdsa.parse_byte(str: String): Maybe(Nat)
+  Maybe.map<,>(Nat.mul(2), Nat.parse_hex_safe(str))
 
-ecdsa.truncateHash: String -> Maybe(Nat)
-  (hash)
+ecdsa.truncateHash(hash: String): Maybe(Nat)
   use msg = Maybe.bind<,>(Nat.parse_hex_safe(hash))
   let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), 2), 8), ecdsa.PRIME_SIZE)
   let msg = Bool.if<>(Nat.gtn(delta, 0), Nat.div(msg, Nat.pow(2, delta)), msg)
@@ -146,14 +132,8 @@ ecdsa.truncateHash: String -> Maybe(Nat)
   Maybe.some<>(msg)
 
 // Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
-Jacobian: Type
-  jacobian<P: Jacobian -> Type> ->
-  (new: (x: Nat) -> (y: Nat) -> (z: Nat)-> P(Jacobian.new(x, y, z))) ->
-  P(jacobian)
-
-Jacobian.new: Nat -> Nat -> Nat -> Jacobian
-  (x) (y) (z)
-  <P> (point) point(x, y, z)
+T Jacobian
+| new(x: Nat, y: Nat, z: Nat);
 
 Jacobian.0: Jacobian
   Jacobian.new(0, 0, 1)
@@ -167,11 +147,10 @@ Jacobian.base.window_size: Nat
 Jacobian.base.precomputes: List(Jacobian)
   Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size)
 
-Jacobian.base.mul: Nat -> Jacobian
-  (n) Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
+Jacobian.base.mul(n: Nat): Jacobian
+  Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
 
-Jacobian.equal: Jacobian -> Jacobian -> Bool
-  (a) (b)
+Jacobian.equal(a: Jacobian, b: Jacobian): Bool
   get a.x a.y a.z = a
   get b.x b.y b.z = b
   let a.z2 = ecdsa.mod(Nat.mul(a.z, a.z))
@@ -182,52 +161,43 @@ Jacobian.equal: Jacobian -> Jacobian -> Bool
   let eq2 = Nat.eql(ecdsa.mod(Nat.mul(a.y, b.z3)), ecdsa.mod(Nat.mul(b.y, a.z3)))
   Bool.and(eq1, eq2)
 
-Jacobian.from_point: Point -> Jacobian
-  (p)
+Jacobian.from_point(p: Point): Jacobian
   get p.x p.y = p
   Jacobian.new(p.x, p.y, 1)
 
-Jacobian.to_point: Jacobian -> Point
-  (p)
+Jacobian.to_point(p: Jacobian): Point
   get p.x p.y p.z = p
   Jacobian.to_point.aux(p, ecdsa.invert(p.z, CURVE.P))
 
-Jacobian.to_point.aux: Jacobian -> Nat -> Point
-  (p) (invz)
+Jacobian.to_point.aux(p: Jacobian, invz: Nat): Point
   get p.x p.y p.z = p
   let invz2 = Nat.square(invz)
   let x = ecdsa.mod(Nat.mul(p.x, invz2))
   let y = ecdsa.mod(Nat.mulVar(3, p.y, invz2, invz))
   Point.new(x, y)
 
-Jacobian.to_pointBatch: List(Jacobian) -> List(Point)
-  (ps)
+Jacobian.to_pointBatch(ps: List(Jacobian)): List(Point)
   let inverts = ecdsa.invertBatch(List.map<Jacobian, Nat>((p)
     get p.x p.y p.z = p
     p.z, ps), CURVE.P)
   Jacobian.to_pointBatch.aux(ps, inverts)
 
-Jacobian.to_pointBatch.aux: List(Jacobian) -> List(Nat) -> List(Point)
-  (ps) (inverts)
-  ps<_>
+Jacobian.to_pointBatch.aux(ps: List(Jacobian), inverts: List(Nat)): List(Point)
+  case ps:
   | List.nil<_>;
-  | (ps.head) (ps.tail)
-    inverts<_>
+  | case inverts:
     | List.nil<_>; // should not happen
-    | (inverts.head) (inverts.tail)
-      let point = Jacobian.to_point.aux(ps.head, inverts.head)
+    | let point = Jacobian.to_point.aux(ps.head, inverts.head)
       List.cons<_>(point, Jacobian.to_pointBatch.aux(ps.tail, inverts.tail));;
 
-Jacobian.normalizeZ: Jacobian -> Jacobian
-  (p) Jacobian.from_point(Jacobian.to_point(p))
+Jacobian.normalizeZ(p: Jacobian): Jacobian
+  Jacobian.from_point(Jacobian.to_point(p))
 
-Jacobian.negate: Jacobian -> Jacobian
-  (p)
+Jacobian.negate(p: Jacobian): Jacobian
   get p.x p.y p.z = p
   Jacobian.new(p.x, ecdsa.negate(p.y), p.z)
 
-Jacobian.double: Jacobian -> Jacobian
-  (p)
+Jacobian.double(p: Jacobian): Jacobian
   get p.x p.y p.z = p
   let A = Nat.square(p.x)
   let B = Nat.square(p.y)
@@ -241,13 +211,12 @@ Jacobian.double: Jacobian -> Jacobian
   let z = ecdsa.mod(Nat.mulVar(3, 2, p.y, p.z))
   Jacobian.new(x, y, z)
 
-Jacobian.add: Jacobian -> Jacobian -> Jacobian
-  (p) (q)
+Jacobian.add(p: Jacobian, q: Jacobian): Jacobian
   get p.x p.y p.z = p
-  Bool.or(Nat.eql(p.x, 0), Nat.eql(p.y, 0))<() Jacobian>
+  case Bool.or(Nat.eql(p.x, 0), Nat.eql(p.y, 0)):
   | q;
   | get q.x q.y q.z = q
-    Bool.or(Nat.eql(q.x, 0), Nat.eql(q.y, 0))<() Jacobian>
+    case Bool.or(Nat.eql(q.x, 0), Nat.eql(q.y, 0)):
     | p;
     | let p.z2 = Nat.square(p.z)
       let q.z2 = Nat.square(q.z)
@@ -258,8 +227,8 @@ Jacobian.add: Jacobian -> Jacobian -> Jacobian
       let H = ecdsa.sub(U2, U1)
       let r = ecdsa.sub(S2, S1)
       // H = 0 meaning it's the same point.
-      Nat.eql(H, 0)<() Jacobian>
-      | Nat.eql(r, 0)<() Jacobian>
+      case Nat.eql(H, 0):
+      | case Nat.eql(r, 0):
         | Jacobian.double(p);
         | Jacobian.0;;
       | let HH = ecdsa.mod(Nat.square(H))
@@ -273,79 +242,69 @@ Jacobian.add: Jacobian -> Jacobian -> Jacobian
     // Non-constant-time multiplication. Uses double-and-add algorithm.
     // It's faster, but should only be used when you don't care about
     // an exposed private key e.g. sig verification.
-Jacobian.mul_unsafe: Jacobian -> Nat -> Maybe(Jacobian)
-  (d) (scalar)
+Jacobian.mul_unsafe(d: Jacobian, scalar: Nat): Maybe(Jacobian)
   let n = Nat.mod(scalar, CURVE.n)
   let res =
     get k1 k2 = ecdsa.split_scalar(n)
     get k1neg k1 = Int.toNat(k1)
     get k2neg k2 = Int.toNat(k2)
-    get k1p k2p = Jacobian.mul_unsafe_aux.tco(d, Jacobian.0, Jacobian.0, k1, k2)
+    get k1p k2p = Jacobian.mul_unsafe_aux(d, Jacobian.0, Jacobian.0, k1, k2)
     let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
     let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
     let k2p = get k2p.x k2p.y k2p.z = k2p
       Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
     Jacobian.add(k1p, k2p)
-  n<() Maybe(Jacobian)>
+  case n:
   | Maybe.none<Jacobian>;
-  | () Maybe.some<Jacobian>(res);
+  | Maybe.some<Jacobian>(res);
 
-Jacobian.mul_unsafe_aux.tco: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian, Jacobian)
-  (d) (k1p) (k2p) (k1) (k2)
-  Bool.or(Nat.gtn(k1, 0), Nat.gtn(k2, 0))<() Unit -> Pair(Jacobian, Jacobian)>
-  | ()
-    let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p, d), k1p)
+Jacobian.mul_unsafe_aux(d: Jacobian, k1p: Jacobian, k2p: Jacobian, k1: Nat, k2: Nat): Pair(Jacobian, Jacobian)
+  case Bool.or(Nat.gtn(k1, 0), Nat.gtn(k2, 0)):
+  | let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p, d), k1p)
     let k2p = Nat.odd(k2)<() Jacobian>(Jacobian.add(k2p, d), k2p)
     let d = Jacobian.double(d)
     let k1 = Nat.div(k1, 2)
     let k2 = Nat.div(k2, 2)
-    Jacobian.mul_unsafe_aux.tco(d, k1p, k2p, k1, k2);
-  | () Pair.new<Jacobian, Jacobian>(k1p, k2p);
-  | Unit.new;
+    Jacobian.mul_unsafe_aux(d, k1p, k2p, k1, k2);
+  | Pair.new<Jacobian, Jacobian>(k1p, k2p);
 
-ecdsa.window: Nat -> Nat
-  (n) ecdsa.USE_ENDOMORPHISM<() Nat>
+ecdsa.window(n: Nat): Nat
+  case ecdsa.USE_ENDOMORPHISM:
   | Nat.add(2, Nat.div(Nat.parse_decimal("128"), n));
   | Nat.add(1, Nat.div(Nat.parse_decimal("256"), n));
 
-ecdsa.size: Nat -> Nat
-  (n) Nat.mul(ecdsa.window(n), Nat.pow(2, Nat.pred(n)))
+ecdsa.size(n: Nat): Nat
+  Nat.mul(ecdsa.window(n), Nat.pow(2, Nat.pred(n)))
 
 //Jacobian.precompute_window: Jacobian -> (w: Nat) -> Vector(Jacobian, ecdsa.size(w))
-Jacobian.precompute_window: Jacobian -> (w: Nat) -> List(Jacobian)
-  (p) (w)
+Jacobian.precompute_window(p: Jacobian, w: Nat): List(Jacobian)
   let windows = ecdsa.window(w)
   let points = Concat.empty<Jacobian>
   let size = Nat.pow(2, Nat.pred(w))
-  Concat.to_list<Jacobian>(Jacobian.precompute_window.tco(p, windows, points, 0, Jacobian.0, size, 0))
+  Concat.to_list<>(Jacobian.precompute_window.aux(p, windows, points, 0, Jacobian.0, size, 0))
 
-Jacobian.precompute_window.tco: Jacobian -> Nat -> Concat(Jacobian) -> Nat -> Jacobian -> Nat -> Nat -> Concat(Jacobian)
-  (p) (windows) (points) (window) (base) (size) (i)
-  Bool.if<Unit -> Concat(Jacobian)>(Nat.ltn(window, windows))
-  | () Bool.if<Concat(Jacobian)>(Nat.ltn(i, size))
+Jacobian.precompute_window.aux(p: Jacobian, windows: Nat, points: Concat(Jacobian), window: Nat, base: Jacobian, size: Nat, i: Nat): Concat(Jacobian)
+  case Nat.ltn(window, windows):
+  | case Nat.ltn(i, size):
     | let base = Jacobian.add(base, p)
       let points = Concat.push<Jacobian>(base, points)
-      Jacobian.precompute_window.tco(p, windows, points, window, base, size, Nat.succ(i));
+      Jacobian.precompute_window.aux(p, windows, points, window, base, size, Nat.succ(i));
     | let p = Jacobian.double(base)
-      Jacobian.precompute_window.tco(p, windows, points, Nat.succ(window), Jacobian.0, size, 0);;
-  | () points;
-  | Unit.new;
+      Jacobian.precompute_window.aux(p, windows, points, Nat.succ(window), Jacobian.0, size, 0);;
+  | points;
 
-Jacobian.wNAF: (W: Nat) -> (precomputes: List(Jacobian)) -> (n: Nat) -> Pair(Jacobian, Jacobian)
-  (W) (precomputes) (n)
-    let windows = ecdsa.window(W)
-    let windowSize = Nat.pow(2, Nat.pred(W))
-    let maxNumber = Nat.pow(2, W)
+Jacobian.wNAF(W: Nat, precomputes: List(Jacobian), n: Nat): Pair(Jacobian, Jacobian)
+  let windows = ecdsa.window(W)
+  let windowSize = Nat.pow(2, Nat.pred(W))
+  let maxNumber = Nat.pow(2, W)
 
-    // Create mask with W ones: 0b1111 for W=4 etc.
-    let mask = Nat.pred(Nat.pow(2, W))
-    Jacobian.wNAF.tco(precomputes, Jacobian.0, Jacobian.0, n, W, 0, windows, windowSize, mask, maxNumber)
+  // Create mask with W ones: 0b1111 for W=4 etc.
+  let mask = Nat.pred(Nat.pow(2, W))
+  Jacobian.wNAF.aux(precomputes, Jacobian.0, Jacobian.0, n, W, 0, windows, windowSize, mask, maxNumber)
 
-Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Nat -> Pair(Jacobian, Jacobian)
-  (precomputes) (p) (f) (n) (W) (window) (windows) (windowSize) (mask) (maxNumber)
-  Bool.if<Unit -> Pair(Jacobian, Jacobian)>(Nat.ltn(window, windows))
-  | ()
-    let offset = Nat.mul(window, windowSize)
+Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat, W: Nat, window: Nat, windows: Nat, windowSize: Nat, mask: Nat, maxNumber: Nat): Pair(Jacobian, Jacobian)
+  case Nat.ltn(window, windows):
+  | let offset = Nat.mul(window, windowSize)
 
     // Extract W bits.
     let wbits = Nat.bitwise_and(n, mask)
@@ -362,52 +321,44 @@ Jacobian.wNAF.tco: List(Jacobian) -> Jacobian -> Jacobian -> Nat -> Nat -> Nat -
 
     // Check if we're onto Zero point.
     // Add random point inside current window to f.
-    Bool.if<_>(Nat.eql(wbits, 0))
+    case Nat.eql(wbits, 0):
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       let q = Maybe.extract<_>(List.at<_>(precomputes, offset), Jacobian.0)
       let f = Jacobian.add(f, Bool.if<_>(Nat.odd(window), Jacobian.negate(q), q))
       let window = Nat.succ(window)
-      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
+      Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       let cached = Maybe.extract<_>(List.at<_>(precomputes, Nat.pred(Nat.add(offset, wbits))), Jacobian.0)
       let p = Jacobian.add(p, cached)
       let window = Nat.succ(window)
-      Jacobian.wNAF.tco(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
-  | () Pair.new<Jacobian, Jacobian>(p, f);
-  | Unit.new;
+      Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
+  | Pair.new<Jacobian, Jacobian>(p, f);
 
-Jacobian.mul: (scalar: Nat) -> (w: Nat) -> (precomputes: List(Jacobian)) -> Jacobian
-  (scalar) (w) (precomputes)
-    let n = Nat.mod(scalar, CURVE.n)
-    get k1 k2 = ecdsa.split_scalar(n)
-    get k1neg k1 = Int.toNat(k1)
-    get k2neg k2 = Int.toNat(k2)
-    get k1p f1p = Jacobian.wNAF(w, precomputes, k1)
-    get k2p f2p = Jacobian.wNAF(w, precomputes, k2)
-    let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
-    let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
-    let k2p = get k2p.x k2p.y k2p.z = k2p
-      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
-    let point = Jacobian.add(k1p, k2p)
-    let fake  = Jacobian.add(f1p, f2p)
-    get _ _ _ = fake // this is used to force the computation of the fake point, to achieve constant time
-    Jacobian.normalizeZ(point)
+Jacobian.mul(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
+  let n = Nat.mod(scalar, CURVE.n)
+  get k1 k2 = ecdsa.split_scalar(n)
+  get k1neg k1 = Int.toNat(k1)
+  get k2neg k2 = Int.toNat(k2)
+  get k1p f1p = Jacobian.wNAF(w, precomputes, k1)
+  get k2p f2p = Jacobian.wNAF(w, precomputes, k2)
+  let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
+  let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
+  let k2p = get k2p.x k2p.y k2p.z = k2p
+    Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
+  let point = Jacobian.add(k1p, k2p)
+  let fake  = Jacobian.add(f1p, f2p)
+  get _ _ _ = fake // this is used to force the computation of the fake point, to achieve constant time
+  Jacobian.normalizeZ(point)
 
 // Point works in default coordinates
-Point: Type
-  point<P: Point -> Type> ->
-  (new: (x: Nat) -> (y: Nat) -> P(Point.new(x, y))) ->
-  P(point)
-
-Point.new: Nat -> Nat -> Point
-  (x) (y)
-  <P> (point) point(x, y)
+T Point
+| new(x: Nat, y: Nat);
 
 Point.base: Point
   Point.new(CURVE.Gx, CURVE.Gy)
 
-Point.base.mul: Nat -> Point
-  (n) Jacobian.to_point(Jacobian.base.mul(n))
+Point.base.mul(n: Nat): Point
+  Jacobian.to_point(Jacobian.base.mul(n))
 
 Point.mul_unsafe: Point -> Nat -> Maybe(Point)
   (p) (n) Maybe.map<Jacobian, Point>(Jacobian.to_point, Jacobian.mul_unsafe(Jacobian.from_point(p), n))
@@ -514,14 +465,13 @@ SignResult.to_hex: SignResult -> Bool -> String
     String.concatVar(8, "30", length, "02", r_len, r_hex, "02", s_len, s_hex);
 
 U8_Vector.to_number: <n: Nat> -> Vector(U8, n) -> Nat
-  <n> (bytes) U8_Vector.to_number.tco<n>(bytes, 0)
+  <n> (bytes) U8_Vector.to_number.aux<n>(bytes, 0)
 
-U8_Vector.to_number.tco: <n: Nat> -> Vector(U8, n) -> Nat -> Nat
+U8_Vector.to_number.aux: <n: Nat> -> Vector(U8, n) -> Nat -> Nat
   <n> (bytes) (res)
-  bytes<() () Unit -> Nat>
-  | () res;
-  | <n> (head) (tail) () U8_Vector.to_number.tco<n>(tail, Nat.add(U8.to_nat(head), Nat.mul(res, 16)));
-  | Unit.new;
+  bytes<() () Nat>
+  | res;
+  | <n> (head) (tail) U8_Vector.to_number.aux<n>(tail, Nat.add(U8.to_nat(head), Nat.mul(res, 16)));
 
 U8_Vector.from_nat: (pad: Nat) -> (n: Nat) -> Vector(U8, pad)
   (pad) (n) Vector.reverse<U8, pad>(U8_Vector.from_nat(pad, n))

@@ -1,3 +1,3 @@
-ecdsa.invert: Nat -> Nat -> Nat
-  (number) (modulo) Nat.eql(number)(0)<() Nat>(0)(Nat.egcd(Nat.mod(number)(modulo))(modulo)<(x) Nat>((gcd) (p) Nat.eql(gcd)(1)<() Nat>(p<(x) Nat>((x) (y) Int.mod_Nat(x)(modulo)))(0)))
+ecdsa.invert: (number: Nat) -> (modulo: Nat) -> Nat
+  (number) (modulo) Nat.eql(number)(0)<(self.self) Nat>(0)(Nat.egcd(Nat.mod(number)(modulo))(modulo)<(x) Nat>((gcd) (p) Nat.eql(gcd)(1)<(self.self) Nat>(p<(x) Nat>((x) (y) Int.mod_Nat(x)(modulo)))(0)))
 

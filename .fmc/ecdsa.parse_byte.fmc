@@ -1,3 +1,3 @@
-ecdsa.parse_byte: Π(:String) (Maybe Nat)
-  λn ((<<Maybe.map Nat> Nat> (Nat.mul 2)) (Nat.parse_hex_safe n))
+ecdsa.parse_byte: Π(str:String) (Maybe Nat)
+  λstr ((<<Maybe.map Nat> Nat> (Nat.mul 2)) (Nat.parse_hex_safe str))
 

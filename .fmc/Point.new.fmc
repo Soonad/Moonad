@@ -1,3 +1,3 @@
-Point.new: Π(:Nat) Π(:Nat) Point
-  λx λy ΛP λpoint ((point x) y)
+Point.new: Π(x:Nat) Π(y:Nat) Point
+  λx λy ΛP λnew ((new x) y)
 

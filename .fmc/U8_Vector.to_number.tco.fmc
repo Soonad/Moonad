@@ -1,3 +1,0 @@
-U8_Vector.to_number.tco: ∀(n:Nat) Π(:((Vector U8) n)) Π(:Nat) Nat
-  Λn λbytes λres (((<bytes λ λ Π(:Unit) Nat> λ res) Λn λhead λtail λ ((<U8_Vector.to_number.tco n> tail) ((Nat.add (U8.to_nat head)) ((Nat.mul res) 16)))) Unit.new)
-

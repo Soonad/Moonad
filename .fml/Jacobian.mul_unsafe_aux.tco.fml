@@ -1,3 +1,0 @@
-Jacobian.mul_unsafe_aux.tco: Jacobian -> Jacobian -> Jacobian -> Nat -> Nat -> Pair(Jacobian)(Jacobian)
-  (d) (k1p) (k2p) (k1) (k2) Bool.or(Nat.gtn(k1)(0))(Nat.gtn(k2)(0))<() Unit -> Pair(Jacobian)(Jacobian)>(() let k1p = Nat.odd(k1)<() Jacobian>(Jacobian.add(k1p)(d))(k1p); let k2p = Nat.odd(k2)<() Jacobian>(Jacobian.add(k2p)(d))(k2p); let d = Jacobian.double(d); let k1 = Nat.div(k1)(2); let k2 = Nat.div(k2)(2); Jacobian.mul_unsafe_aux.tco(d)(k1p)(k2p)(k1)(k2))(() Pair.new<Jacobian><Jacobian>(k1p)(k2p))(Unit.new)
-

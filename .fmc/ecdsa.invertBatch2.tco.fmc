@@ -1,3 +1,0 @@
-ecdsa.invertBatch2.tco: Π(:(List Nat)) Π(:Nat) Π(:Nat) Π(:(List Nat)) Π(:(List Nat)) (List Nat)
-  λnums λmodulo λacc λscratch λinverts ((<nums λ (List Nat)> inverts) λnums.head λnums.tail ((<scratch λ (List Nat)> inverts) λscratch.head λscratch.tail (((<Bool.if (List Nat)> ((Nat.eql nums.head) 0)) $inverts=((<List.cons Nat> 0) inverts);(((((ecdsa.invertBatch2.tco nums.tail) modulo) acc) scratch.tail) inverts)) $inverts=((<List.cons Nat> ((Nat.mod ((Nat.mul acc) scratch.head)) modulo)) inverts);$acc=((Nat.mod ((Nat.mul acc) nums.head)) modulo);(((((ecdsa.invertBatch2.tco nums.tail) modulo) acc) scratch.tail) inverts))))
-

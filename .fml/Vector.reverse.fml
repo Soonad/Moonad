@@ -1,3 +1,3 @@
-Vector.reverse: <A: Type> -> <n: Nat> -> Vector(A)(n) -> Vector(A)(n)
+Vector.reverse: <A: Type> -> <n: Nat> -> (xs: Vector(A)(n)) -> Vector(A)(n)
   <A> <n> (xs) let eq = Nat.add_x_0(n); let ys = Vector.reverse.aux<A><n><0>(xs)(Vector.nil<A>); Equal.rewrite<Nat><Nat.add(n)(Nat.zero)><n><(x) Vector(A)(x)>(eq)(ys)
 

@@ -1,3 +1,3 @@
-Vector.ext: ∀(A:*) ∀(len:Nat) Π(x:A) Π(xs:((Vector A) len)) ((Vector A) (Nat.succ len))
-  ΛA Λlen λx λxs ΛP λnil λext ((<ext len> x) xs)
+Vector.ext: ∀(A:*) ∀(len:Nat) Π(head:A) Π(tail:((Vector A) len)) ((Vector A) (Nat.succ len))
+  ΛA Λlen λhead λtail ΛP λnil λext ((<ext len> head) tail)
 

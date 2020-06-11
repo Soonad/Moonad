@@ -1,3 +1,3 @@
-Jacobian.to_pointBatch.aux: List(Jacobian) -> List(Nat) -> List(Point)
-  (ps) (inverts) ps<(self) List(Point)>([Point;])((ps.head) (ps.tail) inverts<(self) List(Point)>([Point;])((inverts.head) (inverts.tail) let point = Jacobian.to_point.aux(ps.head)(inverts.head); List.cons<Point>(point)(Jacobian.to_pointBatch.aux(ps.tail)(inverts.tail))))
+Jacobian.to_pointBatch.aux: (ps: List(Jacobian)) -> (inverts: List(Nat)) -> List(Point)
+  (ps) (inverts) ps<(ps.self) List(Point)>([Point;])((ps.head) (ps.tail) inverts<(inverts.self) List(Point)>([Point;])((inverts.head) (inverts.tail) let point = Jacobian.to_point.aux(ps.head)(inverts.head); List.cons<Point>(point)(Jacobian.to_pointBatch.aux(ps.tail)(inverts.tail))))
 

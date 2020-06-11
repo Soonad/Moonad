@@ -1,57 +1,54 @@
-T Vector <A: Type>                       ~ (len: Nat)
-| nil                                    ~ (Nat.zero);
-| ext<len: Nat>(x: A, xs: Vector(A,len)) ~ (Nat.succ(len));
+T Vector <A: Type>                            ~ (len: Nat)
+| nil                                         ~ (Nat.zero);
+| ext<len: Nat>(head: A, tail: Vector(A,len)) ~ (Nat.succ(len));
 
-Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
+Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)): Equal(_, vec, Vector.nil<Nat>)
   case vec:
   with e : Equal(Nat, vec.len, Nat.zero) = Equal.to<Nat, Nat.zero>;
-  | def P0 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
-    def x0 = Equal.rewrite<><><><P0>(e, Vector.nil<Nat>)
-    Equal.to<Vector(Nat, Nat.zero)><x0>;
+  | def P0 = ((x) Vector(Nat, Nat.zero)) :: Nat -> Type
+    def x0 = Equal.rewrite<_,_,_, P0>(e, Vector.nil<Nat>)
+    Equal.to<Vector(Nat, Nat.zero), x0>;
   | Empty.absurd(Nat.succ_isnt_zero(vec.len, e), _);
-  : def P0 = ((x) Vector(Nat)(x)) :: Nat -> Type
-    def P1 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
-    let x0 = Equal.rewrite<><vec.len><Nat.zero><P0>(e, vec.self)
-    let x1 = Equal.rewrite<><vec.len><Nat.zero><P1>(e, Vector.nil<Nat>)
-    Equal()(x0)(x1);
+  : def P0 = ((x) Vector(Nat, x)) :: Nat -> Type
+    def P1 = ((x) Vector(Nat, Nat.zero)) :: Nat -> Type
+    let x0 = Equal.rewrite<_, vec.len, Nat.zero, P0>(e, vec.self)
+    let x1 = Equal.rewrite<_, vec.len, Nat.zero, P1>(e, Vector.nil<Nat>)
+    Equal(_, x0, x1);
 
-Vector.extract: <A: Type> -> <n: Nat> -> Vector(A, Nat.succ(n)) -> Pair(A, Vector(A, n))
-  <A> <n> (xs) xs<(n) () Bool.if<Type>(Nat.eql(0, n), Unit, Pair(A, Vector(A, Nat.pred(n))))>
+Vector.extract<A: Type, n: Nat>(xs: Vector(A, Nat.succ(n))): Pair(A, Vector(A, n))
+  case xs:
   | Unit.new;
-  | <n> (head) (tail) Pair.new<A, Vector(A, n)>(head, tail);
+  | Pair.new<A, Vector(A, xs.len)>(xs.head, xs.tail);
+  : Bool.if<Type>(Nat.eql(0, xs.len), Unit, Pair(A, Vector(A, Nat.pred(xs.len))));
 
-Vector.split_at: <A: Type> -> <n: Nat> -> Vector(A, n) -> (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))
-  <A> <n> (xs) xs<(n) () (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))>
+Vector.split_at<A: Type, n: Nat>(xs: Vector(A, n)): (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))
+  case xs:
   | (m) Pair.new<Vector(A, 0), Vector(A, 0)>(Vector.nil<A>, Vector.nil<A>);
-  | <n.pred> (head) (tail) (m)
-    m<(m) Pair(Vector(A, Nat.min(Nat.succ(n.pred), m)), Vector(A, Nat.sub(Nat.succ(n.pred), m)))>
-    | Pair.new<Vector(A, 0), Vector(A, Nat.succ(n.pred))>(Vector.nil<A>, Vector.ext<A, n.pred>(head, tail));
-    | (m.pred)
-      get x y = Vector.split_at<A, n.pred>(tail, m.pred)
-      let x = Vector.ext<A, Nat.min(n.pred, m.pred)>(head, x)
-      def x_type = Vector(A, Nat.succ(Nat.min(n.pred, m.pred)))
-      def y_type = Vector(A, Nat.sub(n.pred, m.pred))
-      Pair.new<x_type, y_type>(x, y);;
+  | (m)
+    case m:
+    | Pair.new<,>(Vector.nil<A>, Vector.ext<A, xs.len>(xs.head, xs.tail));
+    | get x y = Vector.split_at<A, xs.len>(xs.tail, m.pred)
+      let x = Vector.ext<A, Nat.min(xs.len, m.pred)>(xs.head, x)
+      Pair.new<_,_>(x, y);
+    : Pair(Vector(A, Nat.min(Nat.succ(xs.len), m.self)), Vector(A, Nat.sub(Nat.succ(xs.len), m.self)));;
+  : (m: Nat) -> Pair(Vector(A, Nat.min(xs.len, m)), Vector(A, Nat.sub(xs.len, m)));
 
-Vector.reverse.aux: <A: Type> -> <n: Nat> -> <m: Nat> -> Vector(A, n) -> Vector(A, m) -> Vector(A, Nat.add(n, m))
-  <A> <n> <m> (xs) (ys)
-  xs<(n) () Vector(A, Nat.add(n, m))>
+Vector.reverse.aux<A: Type, n: Nat, m: Nat>(xs: Vector(A, n), ys: Vector(A, m)): Vector(A, Nat.add(n, m))
+  case xs:
   | ys;
-  | <n.pred> (head) (tail)
-    let ys = Vector.ext<A, m>(head, ys)
-    let eq = Nat.add_x_succ_y(n.pred, m)
-    let res = Vector.reverse.aux<A, n.pred, Nat.succ(m)>(tail, ys);
-    Equal.rewrite<_, Nat.add(n.pred, Nat.succ(m)), Nat.add(Nat.succ(n.pred), m), (x) Vector(A, x)>(eq, res);
+  | let ys = Vector.ext<A, m>(xs.head, ys)
+    let eq = Nat.add_x_succ_y(xs.len, m)
+    let res = Vector.reverse.aux<A, xs.len, Nat.succ(m)>(xs.tail, ys);
+    Equal.rewrite<_, Nat.add(xs.len, Nat.succ(m)), Nat.add(Nat.succ(xs.len), m), (x) Vector(A, x)>(eq, res);
+  : Vector(A, Nat.add(xs.len, m));
 
-Vector.reverse: <A: Type> -> <n: Nat> -> Vector(A, n) -> Vector(A, n)
-  <A> <n> (xs)
+Vector.reverse<A: Type, n: Nat>(xs: Vector(A, n)): Vector(A, n)
   let eq = Nat.add_x_0(n)
   let ys = Vector.reverse.aux<A, n, 0>(xs, Vector.nil<A>)
   Equal.rewrite<_, Nat.add(n, Nat.zero), n, (x) Vector(A, x)>(eq, ys)
 
-Vector.concat: <A: Type> -> <n: Nat> -> <m: Nat>  -> Vector(A, n) -> Vector(A, m) -> Vector(A, Nat.add(n, m))
-  <A> <n> <m> (as) (bs)
-  as<(n) () Vector(A, Nat.add(n, m))>
+Vector.concat<A: Type, n: Nat, m: Nat>(as: Vector(A, n), bs: Vector(A, m)): Vector(A, Nat.add(n, m))
+  case as:
   | bs;
-  | <n.pred> (head) (tail)
-    Vector.ext<A, Nat.add(n.pred, m)>(head, Vector.concat<A, n.pred, m>(tail, bs));
+  | Vector.ext<A, Nat.add(as.len, m)>(as.head, Vector.concat<A, as.len, m>(as.tail, bs));
+  : Vector(A, Nat.add(as.len, m));

@@ -1,3 +1,3 @@
-Point.new: Nat -> Nat -> Point
-  (x) (y) <P> (point) point(x)(y)
+Point.new: (x: Nat) -> (y: Nat) -> Point
+  (x) (y) <P> (new) new(x)(y)
 

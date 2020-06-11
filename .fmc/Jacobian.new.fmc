@@ -1,3 +1,3 @@
-Jacobian.new: Π(:Nat) Π(:Nat) Π(:Nat) Jacobian
-  λx λy λz ΛP λpoint (((point x) y) z)
+Jacobian.new: Π(x:Nat) Π(y:Nat) Π(z:Nat) Jacobian
+  λx λy λz ΛP λnew (((new x) y) z)
 

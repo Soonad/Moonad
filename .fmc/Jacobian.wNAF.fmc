@@ -1,3 +1,3 @@
 Jacobian.wNAF: Π(W:Nat) Π(precomputes:(List Jacobian)) Π(n:Nat) ((Pair Jacobian) Jacobian)
-  λW λprecomputes λn $windows=(ecdsa.window W);$windowSize=((Nat.pow 2) (Nat.pred W));$maxNumber=((Nat.pow 2) W);$mask=(Nat.pred ((Nat.pow 2) W));((((((((((Jacobian.wNAF.tco precomputes) Jacobian.0) Jacobian.0) n) W) 0) windows) windowSize) mask) maxNumber)
+  λW λprecomputes λn $windows=(ecdsa.window W);$windowSize=((Nat.pow 2) (Nat.pred W));$maxNumber=((Nat.pow 2) W);$mask=(Nat.pred ((Nat.pow 2) W));((((((((((Jacobian.wNAF.aux precomputes) Jacobian.0) Jacobian.0) n) W) 0) windows) windowSize) mask) maxNumber)
 

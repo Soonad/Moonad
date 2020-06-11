@@ -1,3 +1,3 @@
-ecdsa.number_to_hex: Nat -> String
+ecdsa.number_to_hex: (num: Nat) -> String
   (num) let hex = Nat.to_string_base(num)(16); Bool.if<String>(Nat.odd(String.length(hex)))(String.cons('0')(hex))(hex)
 

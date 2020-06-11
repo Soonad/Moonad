@@ -1,3 +1,3 @@
-Jacobian.new: Nat -> Nat -> Nat -> Jacobian
-  (x) (y) (z) <P> (point) point(x)(y)(z)
+Jacobian.new: (x: Nat) -> (y: Nat) -> (z: Nat) -> Jacobian
+  (x) (y) (z) <P> (new) new(x)(y)(z)
 

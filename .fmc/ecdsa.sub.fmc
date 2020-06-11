@@ -1,3 +1,3 @@
-ecdsa.sub: Π(:Nat) Π(:Nat) Nat
+ecdsa.sub: Π(a:Nat) Π(b:Nat) Nat
   λa λb (ecdsa.mod ((Nat.add a) (ecdsa.negate b)))
 

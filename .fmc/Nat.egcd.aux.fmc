@@ -1,0 +1,3 @@
+Nat.egcd.aux: Π(a:Nat) Π(b:Nat) Π(x:Int) Π(y:Int) Π(u:Int) Π(v:Int) ((Pair Nat) ((Pair Int) Int))
+  λa λb λx λy λu λv ((<a λa.self ((Pair Nat) ((Pair Int) Int))> ((<<Pair.new Nat> ((Pair Int) Int)> b) ((<<Pair.new Int> Int> x) y))) λa.pred $q=((Nat.div b) a);$r=((Nat.mod b) a);$m=((Int.sub x) ((Int.mul u) (Int.fromNat q)));$n=((Int.sub y) ((Int.mul v) (Int.fromNat q)));((((((Nat.egcd.aux r) a) u) v) m) n))
+
