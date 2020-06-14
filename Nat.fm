@@ -1,20 +1,61 @@
+// Natural numbers
 T Nat
 | zero;
 | succ(pred: Nat);
 
+// Nat predecessor
+Nat.pred(n: Nat): Nat
+  case n:
+  | Nat.zero;
+  | n.pred;
+
+// Nat addition
 Nat.add(n: Nat, m: Nat): Nat
   case n:
   | m;
   | Nat.succ(Nat.add(n.pred, m));
 
-Nat.apply.go<A: Type>(n: Nat, f: A -> A, x: A): A
+// Nat multiplication
+Nat.mul(n: Nat, m: Nat): Nat
   case n:
-  | x;
-  | Nat.apply.go<A>(n.pred, f, f(x));
+  | Nat.zero;
+  | Nat.add(m, Nat.mul(n.pred, m));
 
-Nat.apply: <A: Type> -> (n: Nat, f: A -> A, x: A) -> A
-  Nat.apply.go
+// Nat subtraction
+Nat.sub(n: Nat, m: Nat): Nat
+  case m:
+  | n;
+  | case n:
+    | Nat.zero;
+    | Nat.sub(n.pred, m.pred);;
 
+// Nat subtraction and remainder
+Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
+  case m:
+  | Either.left<_,_>(n);
+  | case n:
+    | Either.right<_,_>(Nat.succ(m.pred));
+    | Nat.sub_rem(n.pred, m.pred);;
+
+// Nat division and remainder (helper function)
+Nat.div_mod.go(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
+  case Nat.sub_rem(n, m) as p:
+  | Nat.div_mod.go(p.value, m, Nat.succ(d));
+  | Pair.new<_,_>(d, n);
+
+// Nat division and modulus
+Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
+  Nat.div_mod.go(n, m, Nat.zero)
+
+// Nat modulus
+Nat.mod(n: Nat, m: Nat): Nat
+  Pair.snd<_,_>(Nat.div_mod(n, m))
+
+// Nat division
+Nat.div(n: Nat, m: Nat): Nat
+  Pair.fst<_,_>(Nat.div_mod(n, m))
+
+// Compares two nats
 Nat.cmp(a: Nat, b: Nat): Cmp
   case a:
   | case b:
@@ -24,66 +65,38 @@ Nat.cmp(a: Nat, b: Nat): Cmp
     | Cmp.gtn;
     | Nat.cmp(a.pred, b.pred);;
 
-Nat.sub(n: Nat, m: Nat): Nat
-  case m:
-  | n;
-  | case n:
-    | Nat.zero;
-    | Nat.sub(n.pred, m.pred);;
+// n < m
+Nat.ltn(n: Nat, m: Nat): Bool
+  Cmp.as_ltn(Nat.cmp(n, m))
 
-Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
-  case m:
-  | Either.left<_,_>(n);
-  | case n:
-    | Either.right<_,_>(Nat.succ(m.pred));
-    | Nat.sub_rem(n.pred, m.pred);;
+// n <= m
+Nat.lte(n: Nat, m: Nat): Bool
+  Cmp.as_lte(Nat.cmp(n, m))
 
-Nat.div(n: Nat, m: Nat): Nat
-  Pair.fst<_,_>(Nat.div_mod(n, m))
+// n == m
+Nat.eql(n: Nat, m: Nat): Bool
+  Cmp.as_eql(Nat.cmp(n, m))
 
-Nat.div_mod.aux(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
-  let p = Nat.sub_rem(n,m)
-  case p:
-  | Nat.div_mod.aux(p.value,m,Nat.succ(d));
-  | Pair.new<_,_>(d,n);
+// n >= m
+Nat.gte(n: Nat, m: Nat): Bool
+  Cmp.as_gte(Nat.cmp(n, m))
 
-Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
-  Nat.div_mod.aux(n,m,Nat.zero)
+// n > m
+Nat.gtn(n: Nat, m: Nat): Bool
+  Cmp.as_gtn(Nat.cmp(n, m))
+
+Nat.apply.go<A: Type>(n: Nat, f: A -> A, x: A): A
+  case n:
+  | x;
+  | Nat.apply.go<A>(n.pred, f, f(x));
+
+Nat.apply: <A: Type> -> (n: Nat, f: A -> A, x: A) -> A
+  Nat.apply.go
 
 Nat.double(n: Nat): Nat
   case n:
   | Nat.zero;
   | Nat.succ(Nat.succ(Nat.double(n.pred)));
-
-Nat.ltn(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.true;
-  | Bool.false;
-  | Bool.false;
-
-Nat.lte(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.true;
-  | Bool.true;
-  | Bool.false;
-
-Nat.eql(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.true;
-  | Bool.false;
-
-Nat.gte(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.true;
-  | Bool.true;
-
-Nat.gtn(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.false;
-  | Bool.true;
 
 Nat.induction(n: Nat): <P: Nat -> Type> -> (z: P(Nat.zero)) -> (s: ((m:Nat) -> P(m) -> P(Nat.succ(m)))) -> P(n)
   <P> (z) (s) n<P>(z, (pred) s(pred, Nat.induction(pred)<P>(z, s)))
@@ -92,14 +105,6 @@ Nat.is_zero(n: Nat): Bool
   case n:
   | Bool.true;
   | Bool.false;
-
-Nat.mod(n: Nat, m: Nat): Nat
-  Pair.snd<Nat,Nat>(Nat.div_mod(n,m))
-
-Nat.mul(n: Nat, m: Nat): Nat
-  case n:
-  | Nat.zero;
-  | Nat.add(m, Nat.mul(n.pred, m));
 
 //TODO: error on misformatted Nat
 Nat.parse_decimal(str: String): Nat
@@ -111,11 +116,6 @@ Nat.parse_decimal.go(str: String, res: Nat): Nat
   | let dig = Nat.sub(U16.to_nat(str.head), 48)
     let res = Nat.add(dig, Nat.mul(10, res))
     Nat.parse_decimal.go(str.tail, res);
-
-Nat.pred(n: Nat): Nat
-  case n:
-  | Nat.zero;
-  | n.pred;
 
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
@@ -163,6 +163,11 @@ Nat.to_string(n: Nat): String
   case n:
   | String.cons(Char.parse("z"), String.nil);
   | String.cons(Char.parse("s"), Nat.to_string(n.pred));
+
+Nat.to_string_unary(n: Nat): String
+  case n:
+  | String.nil;
+  | String.cons('1', Nat.to_string_unary(n.pred));
 
 Nat.to_string_base(base: Nat, nat: Nat): String
   List.foldr<Nat, String>

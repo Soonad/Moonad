@@ -1,0 +1,3 @@
+App.V0.demo: (App.V0 Nat)
+  (((<App.V0.new Nat> 0) λstate (App.V0.Render.text ((String.concat "Count: ") (Nat.to_string_unary state)))) λinput λstate (<input λinput.self Nat> λinput.keycode (Nat.succ state)))
+

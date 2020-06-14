@@ -1,3 +1,0 @@
-App.Input: *
-  ∀self_App.Input(P:Π(self:App.Input) *) Π(keypress:Π(keycode:U16) (P (App.Input.keypress keycode))) Π(newpost:Π(post:App.Post) (P (App.Input.newpost post))) (P self_App.Input)
-

@@ -1,3 +1,0 @@
-App.Render: *
-  ∀self_App.Render(P:Π(self:App.Render) *) Π(text:Π(str:String) (P (App.Render.text str))) (P self_App.Render)
-

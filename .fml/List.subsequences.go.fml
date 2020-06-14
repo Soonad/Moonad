@@ -1,3 +1,3 @@
 List.subsequences.go: <A: Type> -> (xs: List(A)) -> List(List(A))
-  <A> (xs) xs<(xs.self) List(List(A))>([List(A);])((xs.head) (xs.tail) let f = ((ys) (r) List.cons<List(A)>(ys)(List.cons<List(A)>(List.cons<A>(xs.head)(ys))(r))) :: List(A) -> List(List(A)) -> List(List(A)); List.cons<List(A)>(List.pure<A>(xs.head))(List.fold<List(A)><List(List(A))>([List(A);])(f)(List.subsequences.go<A>(xs.tail))))
+  <A> (xs) xs<(xs.self) List(List(A))>([List(A);])((xs.head) (xs.tail) let f = ((ys) (r) List.cons<List(A)>(ys)(List.cons<List(A)>(List.cons<A>(xs.head)(ys))(r))) :: List(A) -> List(List(A)) -> List(List(A)); List.cons<List(A)>(List.pure<A>(xs.head))(List.foldr<List(A)><List(List(A))>([List(A);])(f)(List.subsequences.go<A>(xs.tail))))
 

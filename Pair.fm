@@ -1,4 +1,4 @@
-T Pair <A: Type> <B: Type>
+T Pair<A: Type, B: Type>
 | new(fst: A, snd: B);
 
 Pair.fst<A: Type, B: Type>(pair: Pair(A)(B)): A

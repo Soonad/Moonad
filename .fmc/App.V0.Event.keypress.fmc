@@ -1,0 +1,3 @@
+App.V0.Event.keypress: Π(keycode:U16) App.V0.Event
+  λkeycode ΛP λkeypress (keypress keycode)
+

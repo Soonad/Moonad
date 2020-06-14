@@ -1,3 +1,3 @@
 Arelin.Thing.speed_multiplier_of: (self: Arelin.Thing) -> F64
-  (self) let self.bst = Arelin.Thing.get_bst(self); let self.buf = Arelin.Thing.get_buf(self); List.fold<Arelin.Game.Buff><F64>(self.bst)(Arelin.Game.combine_mov_buffs)(self.buf)
+  (self) let self.bst = Arelin.Thing.get_bst(self); let self.buf = Arelin.Thing.get_buf(self); List.foldr<Arelin.Game.Buff><F64>(self.bst)(Arelin.Game.combine_mov_buffs)(self.buf)
 

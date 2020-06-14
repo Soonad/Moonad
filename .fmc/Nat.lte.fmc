@@ -1,3 +1,3 @@
 Nat.lte: Π(n:Nat) Π(m:Nat) Bool
-  λn λm (((<((Nat.cmp n) m) λself.self Bool> Bool.true) Bool.true) Bool.false)
+  λn λm (Cmp.as_lte ((Nat.cmp n) m))
 

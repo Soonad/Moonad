@@ -1,3 +1,0 @@
-List.fold.go: <A: Type> -> <B: Type> -> (b: B) -> (f: A -> B -> B) -> (xs: List(A)) -> (g: B -> B) -> B
-  <A> <B> (b) (f) (xs) (g) xs<(xs.self) B>(g(b))((xs.head) (xs.tail) List.fold.go<A><B>(b)(f)(xs.tail)((x) f(xs.head)(x)))
-

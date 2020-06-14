@@ -1,3 +1,0 @@
-App.Input.keypress: (keycode: U16) -> App.Input
-  (keycode) <P> (keypress) (newpost) keypress(keycode)
-

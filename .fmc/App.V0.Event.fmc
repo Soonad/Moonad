@@ -1,0 +1,3 @@
+App.V0.Event: *
+  ∀self_App.V0.Event(P:Π(self:App.V0.Event) *) Π(keypress:Π(keycode:U16) (P (App.V0.Event.keypress keycode))) (P self_App.V0.Event)
+
