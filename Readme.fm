@@ -1,0 +1,22 @@
+// Examples from moonad/Formality
+// ------------------------------
+
+// Adding all numbers of a list:
+Readme.List.sum(xs: List(Nat)) : Nat
+  case xs:
+  | Nat.zero;
+  | Nat.add(xs.head, Readme.List.sum(xs.tail));
+
+// A proof that negating a bool twice returns the same bool:
+Readme.Bool.double_negation_theorem(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
+  case b:
+  | Equal.to<_, Bool.true>;
+  | Equal.to<_, Bool.false>;
+  : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);
+
+// Extracting the first element of a list statically checked to be non-empty:
+Readme.List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
+  case xs:
+  with ne : List.not_empty<A>(xs.self) = not_empty;
+  | Empty.absurd(ne, A);
+  | xs.head;

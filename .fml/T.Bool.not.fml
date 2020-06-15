@@ -1,0 +1,3 @@
+T.Bool.not: (b: Bool) -> Bool
+  (b) b<() Bool>(Bool.false)(Bool.true)
+

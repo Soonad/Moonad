@@ -1,3 +1,7 @@
 Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
+<<<<<<< Updated upstream
   (false_is_true) Equal.rewrite<Bool><Bool.false><Bool.true><(b) b :: Bool<(b.self) Type>(Empty)(Unit)>(false_is_true)(Unit.new)
+=======
+  (e) Equal.rewrite<Bool><Bool.false><Bool.true><((b) b<(b.self) Type>(Empty)(Unit)) :: Bool -> Type>(e)(Unit.new)
+>>>>>>> Stashed changes
 

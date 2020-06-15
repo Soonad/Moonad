@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
 Bool: *
   ∀self_Bool(P:Π(self:Bool) *) Π(true:(P Bool.true)) Π(false:(P Bool.false)) (P self_Bool)
+=======
+bool: *
+  ∀self(P:Π(self:bool) *) Π(maisa:(P bool.maisa)) Π(neelix:(P bool.neelix)) Π(belanna:(P bool.belanna)) (P self)
+>>>>>>> Stashed changes
 

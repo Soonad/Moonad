@@ -3,6 +3,15 @@ T Bool
 | true;
 | false;
 
+T Bool
+| true;
+| false;
+
+// T bool
+// | maisa;
+// | neelix;
+// | belanna;
+
 // Boolean negation.
 Bool.not(a: Bool):  Bool
   case a:

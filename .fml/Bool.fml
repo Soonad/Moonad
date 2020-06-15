@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
 Bool: Type
   self_Bool<P: (self: Bool) -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(self_Bool)
+=======
+bool: Type
+  self<P: (self: bool) -> Type> -> (maisa: P(bool.maisa)) -> (neelix: P(bool.neelix)) -> (belanna: P(bool.belanna)) -> P(self)
+>>>>>>> Stashed changes
 

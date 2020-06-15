@@ -1,0 +1,3 @@
+Readme.List.sum: (xs: List(Nat)) -> Nat
+  (xs) xs<(xs.self) Nat>(Nat.zero)((xs.head) (xs.tail) Nat.add(xs.head)(Readme.List.sum(xs.tail)))
+

@@ -1,0 +1,16 @@
+// List.safe_head(A: Type, xs: List(A), not_empty: List.not_empty<A>(xs)) : A
+//   case xs : (xs) (e: List.not_empty<A>(xs)) -> A;
+//   | (ne) Empty.absurd(ne, A);
+//   | (x, xs, ne) x;
+//   | not_empty;
+
+// // t.main: Nat
+// //   let l = [Nat; 1, 2, 3]
+// //   List.summ(l)
+
+
+T.Bool.not(b: Bool): Bool
+  if b then
+    Bool.false
+  else
+    Bool.true

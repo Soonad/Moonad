@@ -1,3 +1,7 @@
 Bool.false_isnt_true: (Not (((Equal Bool) Bool.false) Bool.true))
+<<<<<<< Updated upstream
   λfalse_is_true ((<<<<Equal.rewrite Bool> Bool.false> Bool.true> λb ((<:Bool b λb.self *> Empty) Unit)> false_is_true) Unit.new)
+=======
+  λe ((<<<<Equal.rewrite Bool> Bool.false> Bool.true> :Π(:Bool) * λb ((<b λb.self *> Empty) Unit)> e) Unit.new)
+>>>>>>> Stashed changes
 
