@@ -236,14 +236,8 @@ List.product.go(xs: List(Nat), n: Nat) : Nat
 
 // Print a list
 List.show<A: Type>(f: A -> String, xs: List(A)): String
-  List.show.go<>(f,xs,String.Builder.cons('[',String.Builder.new))
+  String.flatten(["[",String.intercalate(",", List.map<,>(f,xs)),"]"])
 
-List.show.go<A: Type>(f: A -> String, xs: List(A), sb: String.Builder): String
-  case xs:
-  | sb(String.pure(']'));
-  | List.show.go<>(f,xs.tail)
-    | String.Builder.concat(String.to_builder(f(xs.head)))
-      | String.Builder.cons(',',sb);;;
 
 // List monad
 // ==========
@@ -340,6 +334,10 @@ List.Builder.concat<A: Type>(a: List.Builder(A), b: List.Builder(A)): List.Build
 
 // prepend an element
 List.Builder.cons<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
+  (x) List.cons<>(c,lb(x))
+
+// append an element
+List.Builder.snoc<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
   (x) lb(List.cons<>(c,x))
 
 // convert a list to a builder
@@ -349,7 +347,7 @@ List.to_builder<A: Type>(list: List(A)) : List.Builder(A)
 List.to_builder.go<A: Type>(list: List(A), lb: List.Builder(A)) : List.Builder(A)
   case list:
   | lb;
-  | List.to_builder.go<>(list.tail)(List.Builder.cons<>(list.head, lb));
+  | List.to_builder.go<>(list.tail)(List.Builder.snoc<>(list.head, lb));
 
 // Returns the element at given position.
 List.at<A: Type>(list: List(A), index: Nat): Maybe(A)
