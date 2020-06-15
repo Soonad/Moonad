@@ -1,3 +1,3 @@
-ecdsa.is_valid_private_key: Π(:Nat) Bool
+ecdsa.is_valid_private_key: Π(priv_key:Nat) Bool
   λpriv_key ((Bool.and ((Nat.ltn 0) priv_key)) ((Nat.ltn priv_key) CURVE.n))
 

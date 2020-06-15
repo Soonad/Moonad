@@ -1,0 +1,3 @@
+Variadic.foldl: ∀(A:*) ∀(B:*) Π(acc:Π(:B) Π(:A) B) Π(b:B) Π(n:Nat) (((Variadic n) A) B)
+  ΛA ΛB λacc λb λn ((<n λn.self (((Variadic n.self) A) B)> b) λn.pred λa (((<<Variadic.foldl A> B> acc) ((acc b) a)) n.pred))
+

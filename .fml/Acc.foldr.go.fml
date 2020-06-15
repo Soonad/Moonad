@@ -1,0 +1,3 @@
+Acc.foldr.go: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: A -> B -> B) -> (b: B) -> (k: B -> B) -> (a: A) -> Acc(A)(B)(stop)(a)
+  <A> <B> (stop) (acc) (b) (k) (a) stop(a)<(b.self) (eq: Equal(Bool)(b.self)(stop(a))) -> Acc(A)(B)(stop)(a)>((eq) Equal.rewrite<Bool><Bool.true><stop(a)><(x) x<(x.self) Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)(k(b)))((eq) Equal.rewrite<Bool><Bool.false><stop(a)><(x) x<(x.self) Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)(Acc.foldr.go<A><B>(stop)(acc)(b)((r) k(acc(a)(r)))))(Equal.to<Bool><stop(a)>)
+

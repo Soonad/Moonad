@@ -1,3 +1,3 @@
 U8_Vector.from_nat.aux: Π(pad:Nat) Π(n:Nat) ((Vector U8) pad)
-  λpad λn ((<pad λpad ((Vector U8) pad)> <Vector.nil U8>) λpad.pred (<((Nat.div_mod n) 256) λx ((Vector U8) (Nat.succ pad.pred))> λdiv λmod ((<<Vector.ext U8> pad.pred> (U8.from_nat mod)) ((U8_Vector.from_nat.aux pad.pred) div))))
+  λpad λn ((<pad λpad.self ((Vector U8) pad.self)> <Vector.nil U8>) λpad.pred (<((Nat.div_mod n) 256) λx ((Vector U8) (Nat.succ pad.pred))> λdiv λmod ((<<Vector.ext U8> pad.pred> (U8.from_nat mod)) ((U8_Vector.from_nat.aux pad.pred) div))))
 

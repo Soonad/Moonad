@@ -17,3 +17,22 @@ Acc.foldl <A: Type, B: Type>(stop: A -> Bool, acc: B -> A -> B, b: B, a: A): Acc
       | (a: A) -> Acc(A, B, stop, a);
     Equal.rewrite<Bool, Bool.false, stop(a), P>(eq, Acc.foldl<A, B>(stop, acc, acc(b, a)));
   : Acc(A, B, stop, a);
+
+Acc.foldr<A: Type, B: Type>(stop: A -> Bool, acc: A -> B -> B, b: B, a: A): Acc(A, B, stop, a)
+  Acc.foldr.go<A, B>(stop, acc, b, (r) r, a)
+
+Acc.foldr.go<A: Type, B: Type>(stop: A -> Bool, acc: A -> B -> B, b: B, k: B -> B, a: A): Acc(A, B, stop, a)
+  case stop(a) as b:
+  with eq : Equal(Bool, b.self, stop(a)) = Equal.to<Bool, stop(a)>;
+  | def P = (x)
+      case x:
+      | B;
+      | (a: A) -> Acc(A, B, stop, a);
+    Equal.rewrite<Bool, Bool.true, stop(a), P>(eq, k(b));
+  | def P = (x)
+      case x:
+      | B;
+      | (a: A) -> Acc(A, B, stop, a);
+    def cont = Acc.foldr.go<A, B>(stop, acc, b, (r) k(acc(a, r)))
+    Equal.rewrite<Bool, Bool.false, stop(a), P>(eq, cont);
+  : Acc(A, B, stop, a);

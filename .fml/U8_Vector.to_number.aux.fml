@@ -1,3 +1,3 @@
-U8_Vector.to_number.aux: <n: Nat> -> Vector(U8)(n) -> Nat -> Nat
-  <n> (bytes) (res) bytes<() () Nat>(res)(<n> (head) (tail) U8_Vector.to_number.aux<n>(tail)(Nat.add(U8.to_nat(head))(Nat.mul(res)(16))))
+U8_Vector.to_number.aux: <n: Nat> -> (bytes: Vector(U8)(n)) -> (res: Nat) -> Nat
+  <n> (bytes) (res) bytes<(bytes.len) (bytes.self) Nat>(res)(<bytes.len> (bytes.head) (bytes.tail) U8_Vector.to_number.aux<bytes.len>(bytes.tail)(Nat.add(U8.to_nat(bytes.head))(Nat.mul(res)(16))))
 

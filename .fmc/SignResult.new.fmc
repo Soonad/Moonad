@@ -1,3 +1,3 @@
-SignResult.new: Π(:Nat) Π(:Nat) SignResult
-  λr λs ΛP λsignResult ((signResult r) s)
+SignResult.new: Π(r:Nat) Π(s:Nat) SignResult
+  λr λs ΛP λnew ((new r) s)
 

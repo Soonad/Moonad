@@ -1,3 +1,3 @@
 QRS: Type
-  qrs<P: QRS -> Type> -> (new: (p: Point) -> (r: Nat) -> (s: Nat) -> P(QRS.new(p)(r)(s))) -> P(qrs)
+  self_QRS<P: (self: QRS) -> Type> -> (new: (p: Point) -> (r: Nat) -> (s: Nat) -> P(QRS.new(p)(r)(s))) -> P(self_QRS)
 
