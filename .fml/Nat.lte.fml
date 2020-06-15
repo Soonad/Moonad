@@ -1,3 +1,0 @@
-Nat.lte: (n: Nat) -> (m: Nat) -> Bool
-  (n) (m) Cmp.as_lte(Nat.cmp(n)(m))
-

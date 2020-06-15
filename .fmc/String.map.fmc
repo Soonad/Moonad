@@ -1,3 +1,0 @@
-String.map: Π(f:Π(:Char) Char) Π(as:String) String
-  λf λas ((<as λas.self String> String.nil) λas.head λas.tail ((String.cons (f as.head)) ((String.map f) as.tail)))
-

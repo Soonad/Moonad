@@ -1,3 +1,0 @@
-F64.new: Π(a:(Word 64)) F64
-  λa ΛP λnew (new a)
-

@@ -1,3 +1,0 @@
-U16.inc: Π(a:U16) U16
-  λa (<a λself U16> λa_val (U16.new (<Word.inc 16> a_val)))
-

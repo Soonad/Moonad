@@ -1,3 +1,0 @@
-App.V0.Event: Type
-  self_App.V0.Event<P: (self: App.V0.Event) -> Type> -> (keypress: (keycode: U16) -> P(App.V0.Event.keypress(keycode))) -> P(self_App.V0.Event)
-

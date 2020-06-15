@@ -1,3 +1,0 @@
-String.not_empty: Π(xs:String) *
-  λxs ((<xs λxs.self *> Empty) λxs.head λxs.tail Unit)
-

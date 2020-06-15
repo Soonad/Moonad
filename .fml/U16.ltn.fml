@@ -1,3 +1,0 @@
-U16.ltn: (a: U16) -> (b: U16) -> Bool
-  (a) (b) a<(self) Bool>((a_val) b<(self) Bool>((b_val) Word.ltn<16>(a_val)(b_val)))
-

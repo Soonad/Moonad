@@ -1,3 +1,0 @@
-Unit.show: Π(u:Unit) String
-  λu "Unit.new"
-

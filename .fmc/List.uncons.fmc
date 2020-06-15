@@ -1,3 +1,0 @@
-List.uncons: ∀(A:*) Π(xs:(List A)) (Maybe ((Pair A) (List A)))
-  ΛA λxs ((<xs λxs.self (Maybe ((Pair A) (List A)))> <Maybe.none ((Pair A) (List A))>) λxs.head λxs.tail (<Maybe.some ((Pair A) (List A))> ((<<Pair.new A> (List A)> xs.head) xs.tail)))
-

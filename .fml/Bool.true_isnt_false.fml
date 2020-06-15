@@ -1,3 +1,0 @@
-Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
-  (true_is_false) Equal.rewrite<Bool><Bool.true><Bool.false><(b) b :: Bool<(b.self) Type>(Unit)(Empty)>(true_is_false)(Unit.new)
-

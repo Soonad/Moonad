@@ -1,3 +1,0 @@
-Logic.modus_tollens: <P: Type> -> <Q: Type> -> (implies: P -> Q) -> (not_q: Not(Q)) -> Not(P)
-  <P> <Q> (implies) (not_q) (x) not_q(implies(x))
-

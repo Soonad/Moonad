@@ -1,3 +1,0 @@
-List.product.go: Π(xs:(List Nat)) Π(n:Nat) Nat
-  λxs λn ((<xs λxs.self Nat> Nat.zero) λxs.head λxs.tail ((List.product.go xs.tail) ((Nat.mul xs.head) n)))
-

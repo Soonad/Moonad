@@ -1,3 +1,0 @@
-Function.call: ∀(A:*) ∀(B:*) Π(x:A) Π(f:Π(:A) B) B
-  ΛA ΛB λx λf (f x)
-

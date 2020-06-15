@@ -1,3 +1,0 @@
-U16.new: (a: Word(16)) -> U16
-  (a) <P> (new) new(a)
-

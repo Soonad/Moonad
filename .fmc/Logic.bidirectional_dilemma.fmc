@@ -1,3 +1,0 @@
-Logic.bidirectional_dilemma: ∀(P:*) ∀(Q:*) ∀(R:*) ∀(S:*) Π(f:Π(:P) Q) Π(g:Π(:R) S) Π(c:((Or P) (Not S))) ((Or Q) (Not R))
-  ΛP ΛQ ΛR ΛS λf λg λc ((<c λ ((Or Q) Π(x:R) Empty)> λx (<<Or.lft Q> Π(x:R) Empty> (f x))) λx (<<Or.rgt Q> Π(x:R) Empty> λr (x (g r))))
-

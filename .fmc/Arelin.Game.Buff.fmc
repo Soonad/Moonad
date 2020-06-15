@@ -1,3 +1,0 @@
-Arelin.Game.Buff: *
-  ∀self_Arelin.Game.Buff(P:Π(self:Arelin.Game.Buff) *) Π(shielded:Π(dur:F64) Π(val:F64) (P ((Arelin.Game.Buff.shielded dur) val))) Π(slowed:Π(dur:F64) Π(val:F64) (P ((Arelin.Game.Buff.slowed dur) val))) Π(hasted:Π(dur:F64) Π(val:F64) (P ((Arelin.Game.Buff.hasted dur) val))) Π(silenced:Π(dur:F64) (P (Arelin.Game.Buff.silenced dur))) Π(rooted:Π(dur:F64) (P (Arelin.Game.Buff.rooted dur))) Π(stunned:Π(dur:F64) (P (Arelin.Game.Buff.stunned dur))) (P self_Arelin.Game.Buff)
-

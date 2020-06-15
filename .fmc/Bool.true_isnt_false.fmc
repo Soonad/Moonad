@@ -1,3 +1,0 @@
-Bool.true_isnt_false: (Not (((Equal Bool) Bool.true) Bool.false))
-  λtrue_is_false ((<<<<Equal.rewrite Bool> Bool.true> Bool.false> λb ((<:Bool b λb.self *> Unit) Empty)> true_is_false) Unit.new)
-

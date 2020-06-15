@@ -1,3 +1,0 @@
-List.sum: Π(xs:(List Nat)) Nat
-  λxs ((List.sum.go xs) Nat.zero)
-

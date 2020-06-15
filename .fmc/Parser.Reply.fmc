@@ -1,3 +1,0 @@
-Parser.Reply: Π(A:*) *
-  λA ∀self_Parser.Reply(P:Π(self:(Parser.Reply A)) *) Π(val:Π(state:Parser.State) Π(value:A) (P ((<Parser.Reply.val A> state) value))) Π(err:Π(state:Parser.State) Π(error:Parser.Error) (P ((<Parser.Reply.err A> state) error))) (P self_Parser.Reply)
-

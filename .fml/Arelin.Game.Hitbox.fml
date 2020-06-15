@@ -1,3 +1,0 @@
-Arelin.Game.Hitbox: Type
-  self_Arelin.Game.Hitbox<P: (self: Arelin.Game.Hitbox) -> Type> -> (nbox: P(Arelin.Game.Hitbox.nbox)) -> (cbox: (rad: F64) -> P(Arelin.Game.Hitbox.cbox(rad))) -> (pbox: (pts: List(F64.V3)) -> P(Arelin.Game.Hitbox.pbox(pts))) -> P(self_Arelin.Game.Hitbox)
-

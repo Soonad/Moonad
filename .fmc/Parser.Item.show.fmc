@@ -1,3 +1,0 @@
-Parser.Item.show: Π(e:Parser.Item) String
-  λe (((<e λe.self String> λe.xs (String.flatten ((<List.cons String> "tokens(") ((<List.cons String> (String.pure '"')) ((<List.cons String> e.xs) ((<List.cons String> (String.pure '"')) ((<List.cons String> ")") <List.nil String>))))))) λe.xs (String.flatten ((<List.cons String> "label(") ((<List.cons String> (String.pure '"')) ((<List.cons String> e.xs) ((<List.cons String> (String.pure '"')) ((<List.cons String> ")") <List.nil String>))))))) "end_of_input")
-

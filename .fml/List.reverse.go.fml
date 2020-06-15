@@ -1,3 +1,0 @@
-List.reverse.go: <A: Type> -> (xs: List(A)) -> (res: List(A)) -> List(A)
-  <A> (xs) (res) xs<(xs.self) List(A)>(res)((xs.head) (xs.tail) List.reverse.go<A>(xs.tail)(List.cons<A>(xs.head)(res)))
-

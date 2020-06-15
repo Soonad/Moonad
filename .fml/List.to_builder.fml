@@ -1,3 +1,0 @@
-List.to_builder: <A: Type> -> (list: List(A)) -> List.Builder(A)
-  <A> (list) List.to_builder.go<A>(list)(List.Builder.new<A>)
-

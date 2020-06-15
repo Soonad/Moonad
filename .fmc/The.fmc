@@ -1,3 +1,0 @@
-The: Π(A:*) Π(x:A) *
-  λA λx ∀self_The(P:Π(x:A) Π(self:((The A) x)) *) Π(term:Π(x:A) ((P x) (<The.term A> x))) ((P x) self_The)
-

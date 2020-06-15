@@ -1,3 +1,0 @@
-Logic.exfalso: Π(x:Empty) Π(P:*) P
-  λx λP ((Empty.absurd x) P)
-

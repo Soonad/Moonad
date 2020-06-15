@@ -1,3 +1,0 @@
-Set.get: (bits: Bits) -> (set: Set) -> Bool
-  (bits) (set) Map.get<Unit>(bits)(set)<(self.self) Bool>(Bool.false)((self.value) Bool.true)
-

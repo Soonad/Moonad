@@ -1,3 +1,0 @@
-Bits.from_string: Π(str:String) Bits
-  λstr ((<str λstr.self Bits> Bits.nil) λstr.head λstr.tail ((<((U16.eql str.head) (Char.parse "1")) λself.self Bits> (Bits.1 (Bits.from_string str.tail))) (Bits.0 (Bits.from_string str.tail))))
-

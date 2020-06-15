@@ -1,3 +1,0 @@
-String.cons: Π(head:Char) Π(tail:String) String
-  λhead λtail ΛP λnil λcons ((cons head) tail)
-

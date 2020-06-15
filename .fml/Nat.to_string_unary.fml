@@ -1,3 +1,0 @@
-Nat.to_string_unary: (n: Nat) -> String
-  (n) n<(n.self) String>(String.nil)((n.pred) String.cons('1')(Nat.to_string_unary(n.pred)))
-

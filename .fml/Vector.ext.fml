@@ -1,3 +1,0 @@
-Vector.ext: <A: Type> -> <len: Nat> -> (x: A) -> (xs: Vector(A)(len)) -> Vector(A)(Nat.succ(len))
-  <A> <len> (x) (xs) <P> (nil) (ext) ext<len>(x)(xs)
-

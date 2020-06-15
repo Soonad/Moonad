@@ -1,3 +1,0 @@
-Bits.reverse.tco: (a: Bits) -> (r: Bits) -> Bits
-  (a) (r) a<(a.self) Bits>(r)((a.pred) Bits.reverse.tco(a.pred)(Bits.0(r)))((a.pred) Bits.reverse.tco(a.pred)(Bits.1(r)))
-

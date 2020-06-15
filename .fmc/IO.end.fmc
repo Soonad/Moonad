@@ -1,3 +1,0 @@
-IO.end: ∀(A:*) Π(val:A) (IO A)
-  ΛA λval ΛP λend λlog λget (end val)
-

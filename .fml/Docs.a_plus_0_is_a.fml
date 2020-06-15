@@ -1,3 +1,0 @@
-Docs.a_plus_0_is_a: (a: Nat) -> Equal(Nat)(Nat.add(a)(0))(a)
-  (a) a<(a.self) Equal(Nat)(Nat.add(a.self)(0))(a.self)>(Equal.to<Nat><Nat.zero>)((a.pred) let ind = Docs.a_plus_0_is_a(a.pred); let app = Equal.apply<Nat><Nat><Nat.add(a.pred)(Nat.zero)><a.pred><Nat.succ><ind>; app)
-

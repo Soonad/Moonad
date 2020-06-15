@@ -1,3 +1,0 @@
-U64.inc: (a: U64) -> U64
-  (a) a<(self) U64>((a_val) U64.new(Word.inc<64>(a_val)))
-

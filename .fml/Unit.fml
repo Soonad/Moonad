@@ -1,3 +1,0 @@
-Unit: Type
-  self_Unit<P: (self: Unit) -> Type> -> (new: P(Unit.new)) -> P(self_Unit)
-

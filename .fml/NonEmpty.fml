@@ -1,3 +1,0 @@
-NonEmpty: (A: Type) -> Type
-  (A) self_NonEmpty<P: (self: NonEmpty(A)) -> Type> -> (end: (value: A) -> P(NonEmpty.end<A>(value))) -> (cons: (head: A) -> (tail: NonEmpty(A)) -> P(NonEmpty.cons<A>(head)(tail))) -> P(self_NonEmpty)
-

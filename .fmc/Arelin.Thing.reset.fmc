@@ -1,3 +1,0 @@
-Arelin.Thing.reset: Π(self:Arelin.Thing) Π(at_tik:F64) Arelin.Thing
-  λself λat_tik $curr_tik=(Arelin.Thing.get_tik self);((<((F64.gtn curr_tik) ((F64.sub at_tik) F64.1)) λself.self Arelin.Thing> ((Arelin.Thing.set_rst self) Bool.true)) self)
-

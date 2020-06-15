@@ -1,3 +1,0 @@
-Parser.zero: ∀(A:*) (Parser A)
-  ΛA λs1 (<s1 λself (Parser.Reply A)> λpos λstr λerrs ((<Parser.Reply.err A> s1) (((Parser.Error.new pos) <Maybe.none Parser.Item>) <List.nil Parser.Item>)))
-

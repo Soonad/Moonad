@@ -1,3 +1,0 @@
-Function.const: ∀(A:*) Π(x:A) Π(y:A) A
-  ΛA λx λy x
-

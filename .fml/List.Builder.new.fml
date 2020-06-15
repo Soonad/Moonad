@@ -1,3 +1,0 @@
-List.Builder.new: <A: Type> -> List.Builder(A)
-  <A> (x) x
-

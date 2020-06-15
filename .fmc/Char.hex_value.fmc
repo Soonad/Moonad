@@ -1,3 +1,0 @@
-Char.hex_value: Π(chr:Char) (Maybe Nat)
-  λchr ((<((Bool.and ((U16.gte chr) '0')) ((U16.lte chr) '9')) λ (Maybe Nat)> (<Maybe.some Nat> (U16.to_nat ((U16.sub chr) '0')))) ((<((Bool.and ((U16.gte chr) 'a')) ((U16.lte chr) 'f')) λ (Maybe Nat)> (<Maybe.some Nat> ((Nat.add (U16.to_nat ((U16.sub chr) 'a'))) 10))) ((<((Bool.and ((U16.gte chr) 'A')) ((U16.lte chr) 'F')) λ (Maybe Nat)> (<Maybe.some Nat> ((Nat.add (U16.to_nat ((U16.sub chr) 'A'))) 10))) <Maybe.none Nat>)))
-

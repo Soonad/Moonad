@@ -1,3 +1,0 @@
-Bits.reverse.tco: Π(a:Bits) Π(r:Bits) Bits
-  λa λr (((<a λa.self Bits> r) λa.pred ((Bits.reverse.tco a.pred) (Bits.0 r))) λa.pred ((Bits.reverse.tco a.pred) (Bits.1 r)))
-

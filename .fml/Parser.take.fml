@@ -1,3 +1,0 @@
-Parser.take: (lbl: String) -> (n: Nat) -> Parser(String)
-  (lbl) (n) (s1) s1<(self) Parser.Reply(String)>((pos) (str) (errs) String.split_at(n)(str)<(self) Parser.Reply(String)>((took) (rest) Nat.eql(String.length(took))(n)<(self.self) Parser.Reply(String)>(Parser.Reply.val<String>(Parser.State.make(Nat.add(pos)(String.length(took)))(rest)(errs))(took))(Parser.Reply.err<String>(Parser.State.make(Nat.add(pos)(String.length(took)))(rest)(errs))(Parser.Error.new(Nat.add(pos)(String.length(took)))(Maybe.some<Parser.Item>(Parser.Item.eof))(List.pure<Parser.Item>(Parser.Item.label(lbl)))))))
-

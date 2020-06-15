@@ -1,3 +1,0 @@
-String.filter: Π(f:Π(:Char) Bool) Π(xs:String) String
-  λf λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((<(f xs.head) λself.self String> ((String.cons xs.head) ((String.filter f) xs.tail))) ((String.filter f) xs.tail)))
-

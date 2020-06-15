@@ -1,3 +1,0 @@
-Bool.eql: Π(a:Bool) Π(b:Bool) Bool
-  λa λb ((<a λa.self Bool> ((<b λb.self Bool> Bool.true) Bool.false)) ((<b λb.self Bool> Bool.false) Bool.true))
-

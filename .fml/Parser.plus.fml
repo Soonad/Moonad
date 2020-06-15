@@ -1,3 +1,0 @@
-Parser.plus: <A: Type> -> (px: Parser(A)) -> (py: Parser(A)) -> Parser(A)
-  <A> (px) (py) (s1) px(s1)<(x.self) Parser.Reply(A)>((x.state) (x.value) Parser.Reply.val<A>(x.state)(x.value))((x.state) (x.error) Parser.State.consumed(s1)(x.state)<(self.self) Parser.Reply(A)>(Parser.Reply.err<A>(x.state)(x.error))(py(x.state)<(y.self) Parser.Reply(A)>((y.state) (y.value) Parser.Reply.val<A>(y.state)(y.value))((y.state) (y.error) Parser.Reply.err<A>(Parser.State.merge(x.state)(y.state))(Parser.Error.merge(x.error)(y.error)))))
-

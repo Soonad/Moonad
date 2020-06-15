@@ -1,3 +1,0 @@
-Nat.induction: Π(n:Nat) ∀(P:Π(:Nat) *) Π(z:(P Nat.zero)) Π(s:Π(m:Nat) Π(:(P m)) (P (Nat.succ m))) (P n)
-  λn ΛP λz λs ((<n P> z) λpred ((s pred) ((<(Nat.induction pred) P> z) s)))
-

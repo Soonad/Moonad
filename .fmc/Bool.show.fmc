@@ -1,3 +1,0 @@
-Bool.show: Π(b:Bool) String
-  λb ((<b λb.self String> "Bool.true") "Bool.false")
-

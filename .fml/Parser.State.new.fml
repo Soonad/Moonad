@@ -1,3 +1,0 @@
-Parser.State.new: (input: String) -> Parser.State
-  (input) Parser.State.make(Nat.zero)(input)([Parser.Error;])
-

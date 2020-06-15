@@ -1,3 +1,0 @@
-Comp.app: (func: Comp) -> (argm: Comp) -> Comp
-  (func) (argm) <P> (var) (lam) (app) (let) (tru) (fal) app(func)(argm)
-

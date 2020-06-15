@@ -1,3 +1,0 @@
-Map: (A: Type) -> Type
-  (A) self_Map<P: (self: Map(A)) -> Type> -> (new: P(Map.new<A>)) -> (tie: (val: Maybe(A)) -> (lft: Map(A)) -> (rgt: Map(A)) -> P(Map.tie<A>(val)(lft)(rgt))) -> P(self_Map)
-

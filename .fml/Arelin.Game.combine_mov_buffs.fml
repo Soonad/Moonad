@@ -1,3 +1,0 @@
-Arelin.Game.combine_mov_buffs: (buff: Arelin.Game.Buff) -> (i: F64) -> F64
-  (buff) (i) buff<(buff.self) F64>((buff.dur) (buff.val) i)((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) (buff.val) F64.mul(i)(buff.val))((buff.dur) i)((buff.dur) F64.0)((buff.dur) F64.0)
-

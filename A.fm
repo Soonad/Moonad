@@ -1,3 +1,20 @@
+//A: Nat
+  //Nat.add(3, 4)
+
+//foo(a: Nat, b: Nat, e: Equal(Nat, a, b)): Equal(Nat, 2, 1)
+  //let e0 = Equal.apply<Nat, Nat, a, b, Nat.mul(a), e>
+  //let e1 = Equal.apply<Nat, Nat, Nat.mul(a,a), Nat.mul(a,b), (x: Nat) Nat.sub(x, Nat.mul(b,b)), e0>
+  //?a
+  //let e0 = 
+
+
+
+
+
+
+
+
+
 //A.my_lib: Module
   //Module.from({
     //"nat": Export.new(Nat, 42),

@@ -1,3 +1,0 @@
-List.product: Π(xs:(List Nat)) Nat
-  λxs ((List.product.go xs) Nat.zero)
-

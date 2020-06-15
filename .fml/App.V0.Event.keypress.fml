@@ -1,3 +1,0 @@
-App.V0.Event.keypress: (keycode: U16) -> App.V0.Event
-  (keycode) <P> (keypress) keypress(keycode)
-

@@ -1,3 +1,0 @@
-Parser: (A: Type) -> Type
-  (A) Parser.State -> Parser.Reply(A)
-

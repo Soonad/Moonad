@@ -1,3 +1,0 @@
-U32: *
-  ∀self_U32(P:Π(self:U32) *) Π(new:Π(a:(Word 32)) (P (U32.new a))) (P self_U32)
-

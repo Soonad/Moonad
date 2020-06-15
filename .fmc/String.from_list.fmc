@@ -1,3 +1,0 @@
-String.from_list: Π(xs:(List Char)) String
-  λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((String.cons xs.head) (String.from_list xs.tail)))
-

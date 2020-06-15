@@ -1,3 +1,0 @@
-List.show: ∀(A:*) Π(f:Π(:A) String) Π(xs:(List A)) String
-  ΛA λf λxs (((<List.show.go A> f) xs) ((String.Builder.cons '[') String.Builder.new))
-

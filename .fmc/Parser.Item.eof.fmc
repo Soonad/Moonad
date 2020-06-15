@@ -1,3 +1,0 @@
-Parser.Item.eof: Parser.Item
-  ΛP λtokens λlabel λeof eof
-

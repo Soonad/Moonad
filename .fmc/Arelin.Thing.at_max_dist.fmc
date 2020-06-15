@@ -1,3 +1,0 @@
-Arelin.Thing.at_max_dist: Π(self:Arelin.Thing) Π(max_range:F64) F64.V3
-  λself λmax_range $pos=(Arelin.Thing.get_pos self);$trg=(Arelin.Thing.get_trg self);$dist_max=((F64.V3.dist pos) ((Arelin.Thing.at_dist self) max_range));$dist_trg=((F64.V3.dist pos) trg);((<((F64.ltn dist_trg) dist_max) λself.self F64.V3> ((Arelin.Thing.at_dist self) dist_trg)) ((Arelin.Thing.at_dist self) max_range))
-

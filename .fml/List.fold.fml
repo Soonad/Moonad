@@ -1,3 +1,0 @@
-List.fold: <A: Type> -> (list: List(A)) -> <P: Type> -> P -> (A -> P -> P) -> P
-  <A> (list) <P> (nil) (cons) list<(list.self) P>(nil)((list.head) (list.tail) cons(list.head)(List.fold<A>(list.tail)<P>(nil)(cons)))
-

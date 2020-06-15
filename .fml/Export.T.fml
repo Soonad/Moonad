@@ -1,3 +1,0 @@
-Export.T: (ex: Export) -> Type
-  (ex) ex<(ex.self) Type>((ex.T) (ex.value) ex.T)
-

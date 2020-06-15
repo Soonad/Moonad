@@ -18,17 +18,17 @@ Docs.List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   | Empty.absurd(ne, A);
   | xs.head;
 
-Docs.hello: IO(Unit)
-  IO.print("Hello, world!")
+Docs.hello: SimpleIO(Unit)
+  SimpleIO.print("Hello, world!")
 
-Docs.welcome: IO(Unit)
-  do IO {
-    var name = IO.query("What is your name?");
-    IO.print(String.concat("Welcome, ", name));
+Docs.welcome: SimpleIO(Unit)
+  do SimpleIO {
+    var name = SimpleIO.query("What is your name?");
+    SimpleIO.print(String.concat("Welcome, ", name));
   }
 
-Docs.bool_test_0: IO(Unit)
-  IO.print(Bool.show(Bool.not(Bool.true)))
+Docs.bool_test_0: SimpleIO(Unit)
+  SimpleIO.print(Bool.show(Bool.not(Bool.true)))
 
 Docs.bool_test_1: Bool
   Bool.not(Bool.true)

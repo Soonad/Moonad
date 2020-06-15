@@ -1,3 +1,0 @@
-Arelin.Thing.set_stt_value_v3: (self: Arelin.Thing) -> (v3: F64.V3) -> Arelin.Thing
-  (self) (v3) let self.stt = Arelin.Thing.get_stt(self); v3<(v3.self) Arelin.Thing>((v3.x) (v3.y) (v3.z) let insert_x = Map.set<F64>(Arelin.Constants.POS_X_KEY)(v3.x)(self.stt); let insert_y = Map.set<F64>(Arelin.Constants.POS_Y_KEY)(v3.x)(self.stt); let self = Arelin.Thing.set_stt(self)(insert_x); let self = Arelin.Thing.set_stt(self)(insert_y); self)
-

@@ -1,3 +1,0 @@
-U64.gtn: (a: U64) -> (b: U64) -> Bool
-  (a) (b) a<(self) Bool>((a_val) b<(self) Bool>((b_val) Word.gtn<64>(a_val)(b_val)))
-

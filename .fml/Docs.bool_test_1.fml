@@ -1,3 +1,0 @@
-Docs.bool_test_1: Bool
-  Bool.not(Bool.true)
-

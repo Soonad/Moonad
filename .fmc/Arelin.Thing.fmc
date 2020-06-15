@@ -1,3 +1,0 @@
-Arelin.Thing: *
-  ∀self_Arelin.Thing(P:Π(self:Arelin.Thing) *) Π(new:Π(fun:Arelin.Game.TxFunction) Π(pid:Arelin.Game.PlayerId) Π(mid:Arelin.Game.ModelId) Π(act:Arelin.Game.ActionId) Π(sid:Arelin.Game.SideId) Π(stt:(Map F64)) Π(nam:String) Π(lit:(List Arelin.Game.Light)) Π(tik:F64) Π(pos:F64.V3) Π(mov:F64) Π(bst:F64) Π(pad:F64.V3) Π(dir:F64.V3) Π(trg:F64.V3) Π(vel:F64.V3) Π(box:Arelin.Game.Hitbox) Π(wei:F64) Π(mhp:F64) Π(dmg:F64) Π(knk:F64.V3) Π(buf:(List Arelin.Game.Buff)) Π(chi:(List Arelin.Thing)) Π(hit:(List Arelin.Game.Hit)) Π(rst:Bool) Π(die:Bool) (P ((((((((((((((((((((((((((Arelin.Thing.new fun) pid) mid) act) sid) stt) nam) lit) tik) pos) mov) bst) pad) dir) trg) vel) box) wei) mhp) dmg) knk) buf) chi) hit) rst) die))) (P self_Arelin.Thing)
-

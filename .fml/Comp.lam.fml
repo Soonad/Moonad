@@ -1,3 +1,0 @@
-Comp.lam: (name: String) -> (body: Comp) -> Comp
-  (name) (body) <P> (var) (lam) (app) (let) (tru) (fal) lam(name)(body)
-

@@ -1,3 +1,0 @@
-Nat.div_mod.go: Π(n:Nat) Π(m:Nat) Π(d:Nat) ((Pair Nat) Nat)
-  λn λm λd ((<((Nat.sub_rem n) m) λp.self ((Pair Nat) Nat)> λp.value (((Nat.div_mod.go p.value) m) (Nat.succ d))) λp.value ((<<Pair.new Nat> Nat> d) n))
-

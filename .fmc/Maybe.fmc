@@ -1,3 +1,0 @@
-Maybe: Π(A:*) *
-  λA ∀self_Maybe(P:Π(self:(Maybe A)) *) Π(none:(P <Maybe.none A>)) Π(some:Π(value:A) (P (<Maybe.some A> value))) (P self_Maybe)
-

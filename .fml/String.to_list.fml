@@ -1,3 +1,0 @@
-String.to_list: (str: String) -> List(Char)
-  (str) str<(str.self) List(Char)>([Char;])((str.head) (str.tail) List.cons<Char>(str.head)(String.to_list(str.tail)))
-

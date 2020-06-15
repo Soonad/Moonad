@@ -1,3 +1,0 @@
-Nat.to_string_unary: Π(n:Nat) String
-  λn ((<n λn.self String> String.nil) λn.pred ((String.cons '1') (Nat.to_string_unary n.pred)))
-

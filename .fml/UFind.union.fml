@@ -1,3 +1,0 @@
-UFind.union: (uf: UFind) -> (path1: Bits) -> (path2: Bits) -> UFind
-  (uf) (path1) (path2) UFind.find(uf)(path1)<UFind>((uf) (root_path1) (rank1) UFind.find(uf)(path2)<UFind>((uf) (root_path2) (rank2) Bits.eql(root_path1)(root_path2)<(self.self) UFind>(uf)(Nat.cmp(rank1)(rank2)<(self.self) Map(UNode)>(let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf); uf)(let uf = Map.set<UNode>(root_path1)(UNode.link(root_path2))(uf); let uf = Map.set<UNode>(root_path2)(UNode.root(Nat.succ(rank2)))(uf); uf)(let uf = Map.set<UNode>(root_path1)(UNode.root(rank2))(uf); let uf = Map.set<UNode>(root_path2)(UNode.link(root_path1))(uf); uf))))
-

@@ -1,3 +1,0 @@
-Parser.Item.tokens: Π(xs:String) Parser.Item
-  λxs ΛP λtokens λlabel λeof (tokens xs)
-

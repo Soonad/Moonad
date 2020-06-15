@@ -1,3 +1,0 @@
-NonEmpty.end: ∀(A:*) Π(value:A) (NonEmpty A)
-  ΛA λvalue ΛP λend λcons (end value)
-

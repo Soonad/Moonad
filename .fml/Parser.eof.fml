@@ -1,3 +1,0 @@
-Parser.eof: Parser(Unit)
-  (s1) s1<(self) Parser.Reply(Unit)>((pos) (str) (errs) str<(str.self) Parser.Reply(Unit)>(Parser.Reply.val<Unit>(s1)(Unit.new))((str.head) (str.tail) Parser.Reply.err<Unit>(s1)(Parser.Error.new(pos)(Maybe.some<Parser.Item>(Parser.Item.tokens(String.pure(str.head))))(List.pure<Parser.Item>(Parser.Item.eof)))))
-

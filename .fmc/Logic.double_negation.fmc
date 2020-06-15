@@ -1,3 +1,0 @@
-Logic.double_negation: ∀(P:*) Π(p:P) (Not (Not P))
-  ΛP λp λnotP (notP p)
-

@@ -1,3 +1,0 @@
-String.flatten: Π(xs:(List String)) String
-  λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((String.concat xs.head) (String.flatten xs.tail)))
-

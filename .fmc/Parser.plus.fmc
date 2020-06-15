@@ -1,3 +1,0 @@
-Parser.plus: ∀(A:*) Π(px:(Parser A)) Π(py:(Parser A)) (Parser A)
-  ΛA λpx λpy λs1 ((<(px s1) λx.self (Parser.Reply A)> λx.state λx.value ((<Parser.Reply.val A> x.state) x.value)) λx.state λx.error ((<((Parser.State.consumed s1) x.state) λself.self (Parser.Reply A)> ((<Parser.Reply.err A> x.state) x.error)) ((<(py x.state) λy.self (Parser.Reply A)> λy.state λy.value ((<Parser.Reply.val A> y.state) y.value)) λy.state λy.error ((<Parser.Reply.err A> ((Parser.State.merge x.state) y.state)) ((Parser.Error.merge x.error) y.error)))))
-

@@ -1,3 +1,0 @@
-Arelin.Game.new: Π(stage:(List Arelin.Thing)) Arelin.Game
-  λstage ΛP λnew (new stage)
-

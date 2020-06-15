@@ -1,3 +1,0 @@
-Either.bind: <A: Type> -> <B: Type> -> <C: Type> -> (e: Either(A)(B)) -> (f: B -> Either(A)(C)) -> Either(A)(C)
-  <A> <B> <C> (e) (f) e<(e.self) Either(A)(C)>((e.value) Either.left<A><C>(e.value))((e.value) f(e.value))
-

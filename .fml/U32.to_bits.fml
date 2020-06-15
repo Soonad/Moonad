@@ -1,3 +1,0 @@
-U32.to_bits: (a: U32) -> Bits
-  (a) a<(self) Bits>((a_val) Word.to_bits<32>(a_val))
-

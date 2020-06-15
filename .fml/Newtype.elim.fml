@@ -1,3 +1,0 @@
-Newtype.elim: <A: Type> -> <tag: String> -> (x: Newtype(A)(tag)) -> A
-  <A> <tag> (x) x<(x.tag) (x.self) A>(<x.tag> (x.val) x.val)
-

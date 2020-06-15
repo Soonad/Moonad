@@ -1,3 +1,0 @@
-JSON.number: Π(x:F64) JSON
-  λx ΛP λnull λbool λnumber λstring λarray λobject (number x)
-

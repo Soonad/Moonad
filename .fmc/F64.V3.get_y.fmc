@@ -1,3 +1,0 @@
-F64.V3.get_y: Π(v:F64.V3) F64
-  λv (<v λself F64> λv.x λv.y λv.z v.y)
-

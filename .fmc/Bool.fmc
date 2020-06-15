@@ -1,3 +1,0 @@
-Bool: *
-  ∀self_Bool(P:Π(self:Bool) *) Π(true:(P Bool.true)) Π(false:(P Bool.false)) (P self_Bool)
-

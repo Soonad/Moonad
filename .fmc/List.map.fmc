@@ -1,3 +1,0 @@
-List.map: ∀(A:*) ∀(B:*) Π(f:Π(:A) B) Π(as:(List A)) (List B)
-  ΛA ΛB λf λas ((<as λas.self (List B)> <List.nil B>) λas.head λas.tail ((<List.cons B> (f as.head)) ((<<List.map A> B> f) as.tail)))
-

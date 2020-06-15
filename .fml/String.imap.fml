@@ -1,3 +1,0 @@
-String.imap: (f: Nat -> Char -> Char) -> (xs: String) -> String
-  (f) (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) String.cons(f(0)(xs.head))(String.imap((n) f(Nat.succ(n)))(xs.tail)))
-

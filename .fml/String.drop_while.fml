@@ -1,3 +1,0 @@
-String.drop_while: (f: Char -> Bool) -> (xs: String) -> String
-  (f) (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) f(xs.head)<(self.self) String>(String.drop_while(f)(xs.tail))(xs))
-

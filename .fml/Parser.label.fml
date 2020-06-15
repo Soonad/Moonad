@@ -1,3 +1,0 @@
-Parser.label: <A: Type> -> (lbl: String) -> (p: Parser(A)) -> Parser(A)
-  <A> (lbl) (p) (s1) p(s1)<(x.self) Parser.Reply(A)>((x.state) (x.value) Parser.Reply.val<A>(x.state)(x.value))((x.state) (x.error) x.error<(e.self) Parser.Reply(A)>((e.pos) (e.unx) (e.exp) Parser.Reply.err<A>(x.state)(Parser.Error.new(e.pos)(e.unx)(List.pure<Parser.Item>(Parser.Item.label(lbl)))))((e.pos) (e.msgs) Parser.Reply.err<A>(x.state)(Parser.Error.new(e.pos)(Maybe.none<Parser.Item>)(List.pure<Parser.Item>(Parser.Item.label(lbl))))))
-

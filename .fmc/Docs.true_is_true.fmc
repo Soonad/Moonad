@@ -1,3 +1,0 @@
-Docs.true_is_true: (((Equal Bool) Bool.true) Bool.true)
-  <<Equal.to Bool> Bool.true>
-

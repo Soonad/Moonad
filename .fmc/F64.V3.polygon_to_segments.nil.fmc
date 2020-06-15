@@ -1,3 +1,0 @@
-F64.V3.polygon_to_segments.nil: Π(pos:F64.V3) Π(dir:F64.V3) Π(pt_a:(Maybe F64.V3)) Π(pt_0:(Maybe F64.V3)) (List F64.Segment)
-  λpos λdir λpt_a λpt_0 ((<pt_0 λpt_0.self (List F64.Segment)> <List.nil F64.Segment>) λpt_0.value ((<pt_a λpt_a.self (List F64.Segment)> <List.nil F64.Segment>) λpt_a.value $p0=(((F64.V3.polygon_to_segments.transform pos) dir) pt_a.value);$p1=(((F64.V3.polygon_to_segments.transform pos) dir) pt_0.value);$sg=((F64.Segment.new p0) p1);((<List.cons F64.Segment> sg) <List.nil F64.Segment>)))
-

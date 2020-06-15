@@ -1,3 +1,0 @@
-Parser.Error: *
-  ∀self_Parser.Error(P:Π(self:Parser.Error) *) Π(new:Π(pos:Nat) Π(unx:(Maybe Parser.Item)) Π(exp:(List Parser.Item)) (P (((Parser.Error.new pos) unx) exp))) Π(msg:Π(pos:Nat) Π(msgs:(List String)) (P ((Parser.Error.msg pos) msgs))) (P self_Parser.Error)
-

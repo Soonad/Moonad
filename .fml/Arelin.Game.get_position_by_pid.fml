@@ -1,3 +1,0 @@
-Arelin.Game.get_position_by_pid: (pid: Arelin.Game.PlayerId) -> (gm: Arelin.Game) -> F64.V3
-  (pid) (gm) let thi = Arelin.Thing.get_by_pid(pid)(gm); thi<(thi.self) F64.V3>(F64.V3.new(F64.0)(F64.0)(F64.0))((thi.value) Arelin.Thing.get_pos(thi.value))
-

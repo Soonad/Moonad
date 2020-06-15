@@ -1,3 +1,0 @@
-List.show.go: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> (sb: String.Builder) -> String
-  <A> (f) (xs) (sb) xs<(xs.self) String>(sb(String.pure(']')))((xs.head) (xs.tail) List.show.go<A>(f)(xs.tail)(String.Builder.concat(String.to_builder(f(xs.head)))(String.Builder.cons(',')(sb))))
-
