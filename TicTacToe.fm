@@ -67,7 +67,7 @@ newline_str: String
   String.cons(Char.newline, String.nil)
 
 row_drawing: String
-  "---|---|---"
+  "---|---|---\n"
 
 show_game_map(map: GameMap): String
   get fst_row rest    = List.split_at<Value>(3, map)
@@ -101,19 +101,3 @@ main: IO(Unit)
 //  3 | 4 | 5 
 // ---|---|---
 //  6 | 7 | 8
-
-
-// Sublist : Type
-//   List(Value)
-
-// ttt.sublist(to_idx: Nat, xs: List(Value)): Pair(Sublist, Sublist)
-//   ttt.sublist.go(0, to_idx, xs, List.nil<Value>)
-
-// ttt.sublist.go(idx: Nat, to_idx: Nat, xs: List(Value), sub: List(Value)): Pair(Sublist, Sublist)
-//   case xs:
-//   | Pair.new<Sublist, Sublist>([], []);
-//   | let sub_append = List.cons<Value>(xs.head, sub) // List(Value)
-//     case Nat.eql(idx, to_idx):
-//     | Pair.new<Sublist, Sublist>(sub_append, xs.tail);
-//     | ttt.sublist.go(Nat.pred(idx), to_idx, xs.tail, sub_append);
-//   ;
