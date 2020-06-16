@@ -286,13 +286,11 @@ List.take_while<A: Type>(f: A -> Bool, xs: List(A)) : List(A)
 
 List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
   case xs:
-  | Pair.new<,>(List.nil<>,List.nil<>);
+  | Pair.new<,>(List.nil<>, List.nil<>);
   | case n:
-    | Pair.new<,>(List.nil<>,xs);
-    | case n.pred:
-      | Pair.new<,>(List.pure<>(xs.head),xs.tail);
-      | get y z = List.split_at<>(n.pred,xs.tail)
-        Pair.new<,>(List.cons<>(xs.head,y),z);;;
+    | Pair.new<,>(List.nil<>, xs);
+    | get fst snd = List.split_at<>(n.pred, xs.tail)
+      Pair.new<,>(List.cons<>(xs.head, fst), snd);;
 
 List.drop_until<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   List.drop_while<>((c) Bool.not(f(c)), xs)
