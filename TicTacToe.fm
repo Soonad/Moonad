@@ -1,0 +1,119 @@
+T Value
+| e;
+| x;
+| o;
+
+Value.show(v: Value): String
+  case v:
+  | " ? ";
+  | " X ";
+  | " O ";
+
+GameMap : Type
+  List(Value)
+
+T GameState
+| new(map: GameMap, is_active: Bool, turn: Value); // TODO: add current player
+
+Log : Type
+  List(GameMap)
+
+// Check if two Values are equal
+is_value_equal(value: Value, match: Value): Bool
+  case value:
+  | #e# 
+    case match:
+    | #e# Bool.true;
+    | #x# Bool.false;
+    | #o# Bool.false;;
+  | #x#
+    case match:
+    | #e# Bool.false;
+    | #x# Bool.true;
+    | #o# Bool.false;;
+  | #o#
+    case match:
+    | #e# Bool.false;
+    | #x# Bool.false;
+    | #o# Bool.true;;
+
+equal_x(e: Value): Bool
+  case e:
+  | Bool.false;
+  | Bool.true;
+  | Bool.false;
+
+equal_o(e: Value): Bool
+  case e:
+  | Bool.false;
+  | Bool.false;
+  | Bool.true;
+
+// Game states
+// -----------
+empty_game_map : GameMap
+  [ Value.e, Value.e, Value.e, 
+    Value.e, Value.e, Value.e, 
+    Value.e, Value.e, Value.e ]
+
+set_pos(value: Value, pos: Nat): GameMap
+  [ Value.x, Value.e, Value.e, 
+    Value.e, Value.e, Value.e, 
+    Value.e, Value.e, Value.e ]
+
+// Auxiliars
+// ---------
+newline_str: String
+  String.cons(Char.newline, String.nil)
+
+row_drawing: String
+  "---|---|---"
+
+show_game_map(map: GameMap): String
+  get fst_row rest    = List.split_at<Value>(3, map)
+  get snd_row thd_row = List.split_at<Value>(3, rest)
+
+  let fst_row = row_value_drawing(fst_row) // String
+  let snd_row = row_value_drawing(snd_row)
+  let thd_row = row_value_drawing(thd_row)
+  
+  let step1 = String.concat(fst_row, row_drawing) // row + row_drawing
+  let step2 = String.concat(snd_row, row_drawing) // row + row_drawing
+  let step3 = String.concat(step2, thd_row)
+  let step4 = String.concat(step1, step3)
+  step4
+
+// Creates a row like: ' X | O | ? \n'
+row_value_drawing(xs: List(Value)): String
+  let xs_string = row_value_to_string(xs)
+  let xs_string_updated = List.intersperse<String>("|", xs_string)
+  String.concat(String.flatten(xs_string_updated), newline_str)
+
+row_value_to_string(xs: List(Value)): List(String)
+  List.map<Value, String>(Value.show, xs)
+
+// Game
+main: IO(Unit)
+  IO.print(show_game_map(empty_game_map))
+
+//  0 | 1 | 2
+// ---|---|---
+//  3 | 4 | 5 
+// ---|---|---
+//  6 | 7 | 8
+
+
+// Sublist : Type
+//   List(Value)
+
+// ttt.sublist(to_idx: Nat, xs: List(Value)): Pair(Sublist, Sublist)
+//   ttt.sublist.go(0, to_idx, xs, List.nil<Value>)
+
+// ttt.sublist.go(idx: Nat, to_idx: Nat, xs: List(Value), sub: List(Value)): Pair(Sublist, Sublist)
+//   case xs:
+//   | Pair.new<Sublist, Sublist>([], []);
+//   | let sub_append = List.cons<Value>(xs.head, sub) // List(Value)
+//     case Nat.eql(idx, to_idx):
+//     | Pair.new<Sublist, Sublist>(sub_append, xs.tail);
+//     | ttt.sublist.go(Nat.pred(idx), to_idx, xs.tail, sub_append);
+//   ;
