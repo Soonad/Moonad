@@ -52,7 +52,7 @@ String.cons_isnt_empty(x: Char, xs: String): String.not_empty(String.cons(x,xs))
   def y = String.cons(x,xs)
   case y:
   with e : Equal(String,y,y.self) = Equal.to<String,y>;
-  | Empty.absurd(String.cons_isnt_nil(x,xs,e),_);
+  | Empty.absurd<>(String.cons_isnt_nil(x,xs,e));
   | Unit.new;
 
 // Concatenates two strings.
@@ -65,21 +65,21 @@ String.concat(as: String, bs: String): String
 String.head(xs: String, not_empty: String.not_empty(xs)) : Char
   case xs:
   with ne : String.not_empty(xs.self) = not_empty;
-  | Empty.absurd(ne, Char);
+  | Empty.absurd<>(ne);
   | xs.head;
 
 // Get the tail of a nonempty string
 String.tail(xs: String, not_empty: String.not_empty(xs)) : String
   case xs:
   with ne : String.not_empty(xs.self) = not_empty;
-  | Empty.absurd(ne, String);
+  | Empty.absurd<>(ne);
   | xs.tail;
 
 // Get the all characters of a nonempty string except the last one
 String.init(xs: String, not_empty: String.not_empty(xs)) : String
   case xs:
   with ne : String.not_empty(xs.self) = not_empty;
-  | Empty.absurd(ne, String);
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<String,xs.tail>;
     | String.nil;
@@ -91,7 +91,7 @@ String.init(xs: String, not_empty: String.not_empty(xs)) : String
 String.last(xs: String, not_empty: String.not_empty(xs)) : Char
   case xs:
   with ne : String.not_empty(xs.self) = not_empty;
-  | Empty.absurd(ne, Char);
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<String,xs.tail>;
     | xs.head;

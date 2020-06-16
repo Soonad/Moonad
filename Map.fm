@@ -1,5 +1,5 @@
 // A Map from bitstrings to values.
-T Map (A: Type)
+T Map<A: Type>
 | new;
 | tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
 

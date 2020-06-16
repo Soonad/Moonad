@@ -31,7 +31,7 @@ Not(P : Type) : Type
   P -> Empty
 
 Logic.exfalso(x: Empty,P: Type): P
-  Empty.absurd(x,P)
+  Empty.absurd<>(x)
 
 // Theorems
 // ========
@@ -58,7 +58,7 @@ Logic.hypothetical_syllogism<P: Type, Q: Type, R: Type>(
 // Modus tollendo ponens: ((P ∨ Q) ∧ ¬P) |- Q
 Logic.disjunctive_syllogism<P: Type, Q: Type>(c: Or(P,Q), not_p: Not(P)) : Q
  c<() Q>
- | (x) Empty.absurd(not_p(x), Q);
+ | (x) Empty.absurd<>(not_p(x));
  | (x) x;
 
 // (P -> Q) ∧ (R -> S) ∧ (P ∨ R) |- (Q ∨ S)

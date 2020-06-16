@@ -26,7 +26,7 @@ List.cons_isnt_empty<A: Type>(
   def y = List.cons<A>(x,xs)
   case y:
   with e : Equal(List(A),y,y.self) = Equal.to<List(A),y>;
-  | Empty.absurd(List.cons_isnt_nil<A>(x,xs,e),_);
+  | Empty.absurd<>(List.cons_isnt_nil<A>(x,xs,e));
   | Unit.new;
 
 // Basic Functions
@@ -42,21 +42,21 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
 List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, A);
+  | Empty.absurd<>(ne);
   | xs.head;
 
 // Get the tail of a nonempty list
 List.tail<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, List(A));
+  | Empty.absurd<>(ne);
   | xs.tail;
 
 // Get the all elements of a nonempty list except the last one
 List.init<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, List(A));
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
     | List.nil<>;
@@ -68,7 +68,7 @@ List.init<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
 List.last<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, A);
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
     | xs.head;
@@ -87,9 +87,6 @@ List.null<A: Type>(xs: List(A)) : Bool
   | Bool.false;
 
 // Computes the length of the list.
-List.length<A: Type>(xs: List(A)): Nat
-  List.length.go<>(xs,Nat.zero)
-
 List.length<A: Type>(xs: List(A), n: Nat): Nat
   case xs:
   | n;
@@ -165,7 +162,7 @@ List.fold1<A: Type>(xs: List(A))<ne: List.not_empty<A>(xs)>
   <P> (nil, cons)
   case xs:
   with ne : List.not_empty<>(xs.self) = ne;
-  | Empty.absurd(ne,P);
+  | Empty.absurd<>(ne);
   | List.fold<>(xs)<P>(nil,cons);
 
 // Folds over a list, right associative
@@ -181,7 +178,7 @@ List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B
 List.foldl1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
   case xs:
   with ne : List.not_empty<>(xs.self) = ne;
-  | Empty.absurd(ne,A);
+  | Empty.absurd<>(ne);
   | List.foldl<A,A>(xs.head,f,xs.tail);
 
 // Special folds

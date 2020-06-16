@@ -6,11 +6,11 @@ Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
   case vec:
   with e : Equal(Nat, vec.len, Nat.zero) = Equal.to<Nat, Nat.zero>;
   | def P0 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
-    def x0 = Equal.rewrite<><><><P0>(e, Vector.nil<Nat>)
-    Equal.to<Vector(Nat, Nat.zero)><x0>;
-  | Empty.absurd(Nat.succ_isnt_zero(vec.len, e), _);
+    def x0 = Equal.rewrite<,,><P0>(e, Vector.nil<Nat>)
+    Equal.to<Vector(Nat, Nat.zero), x0>;
+  | Empty.absurd<>(Nat.succ_isnt_zero<vec.len>(e));
   : def P0 = ((x) Vector(Nat)(x)) :: Nat -> Type
     def P1 = ((x) Vector(Nat)(Nat.zero)) :: Nat -> Type
-    let x0 = Equal.rewrite<><vec.len><Nat.zero><P0>(e, vec.self)
-    let x1 = Equal.rewrite<><vec.len><Nat.zero><P1>(e, Vector.nil<Nat>)
+    let x0 = Equal.rewrite<><vec.len,Nat.zero,P0>(e, vec.self)
+    let x1 = Equal.rewrite<><vec.len,Nat.zero,P1>(e, Vector.nil<Nat>)
     Equal()(x0)(x1);

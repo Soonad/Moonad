@@ -120,9 +120,25 @@ Nat.parse_decimal.go(str: String, res: Nat): Nat
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
 
-Nat.succ_isnt_zero(n: Nat, e: Equal(Nat, Nat.succ(n), Nat.zero)): Empty
-  def P = ((x) case x: | Empty; | Unit;) :: Nat -> Type
-  Equal.rewrite<Nat, Nat.succ(n), Nat.zero, P>(e, Unit.new)
+Nat.succ_isnt_zero<n: Nat>: Not(Equal(Nat, Nat.succ(n), Nat.zero))
+  def P(n : Nat)
+    case n:
+    | Empty;
+    | Unit;
+  def p_succ
+    Unit.new
+  (succ_is_zero)
+    Equal.rewrite<_,_,_,P>(succ_is_zero, p_succ)
+
+Nat.zero_isnt_succ<n: Nat>: Not(Equal(Nat, Nat.zero, Nat.succ(n)))
+  def P(n : Nat)
+    case n:
+    | Unit;
+    | Empty;
+  def p_zero
+    Unit.new
+  (zero_is_succ)
+    Equal.rewrite<_,_,_,P>(zero_is_succ, p_zero)
 
 Nat.sum(n: Nat): Nat
   Nat.sum.go(n, Nat.zero)
