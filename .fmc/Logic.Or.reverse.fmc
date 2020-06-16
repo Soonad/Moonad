@@ -1,3 +1,0 @@
-Logic.Or.reverse: ∀(A:*) ∀(B:*) Π(x:((And (Not A)) (Not B))) (Not ((Or A) B))
-  ΛA ΛB λx λor ((<or λ Empty> λa (<x λ Empty> λnot_a λnot_b (not_a a))) λb (<x λ Empty> λnot_a λnot_b (not_b b)))
-

@@ -1,3 +1,0 @@
-Logic.noncontradiction: <P: Type> -> Not(And(P)(Not(P)))
-  <P> (contra) contra<() Empty>((p) (not_p) not_p(p))
-

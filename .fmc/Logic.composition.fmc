@@ -1,3 +1,0 @@
-Logic.composition: ∀(P:*) ∀(Q:*) ∀(R:*) Π(f:Π(:P) Q) Π(g:Π(:P) R) Π(p:P) ((And Q) R)
-  ΛP ΛQ ΛR λf λg λp ((<<And.new Q> R> (f p)) (g p))
-

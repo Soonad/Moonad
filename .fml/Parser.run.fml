@@ -1,3 +1,0 @@
-Parser.run: <A: Type> -> (p: Parser(A)) -> (s: String) -> Parser.Reply(A)
-  <A> (p) (s) p(Parser.State.new(s))
-

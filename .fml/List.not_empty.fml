@@ -1,3 +1,0 @@
-List.not_empty: <A: Type> -> (xs: List(A)) -> Type
-  <A> (xs) xs<(xs.self) Type>(Empty)((xs.head) (xs.tail) Unit)
-

@@ -1,3 +1,0 @@
-Parser.any_char: Parser(Char)
-  Parser.token<Char>(Maybe.some<Char>)(List.pure<Parser.Item>(Parser.Item.label("any character")))
-

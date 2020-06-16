@@ -1,3 +1,0 @@
-Arelin.Thing.is_rooted: (self: Arelin.Thing) -> Bool
-  (self) let self.buf = Arelin.Thing.get_buf(self); let is_root_buff = ((buff) buff<(buff.self) Bool>((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) (buff.val) Bool.false)((buff.dur) Bool.false)((buff.dur) Bool.true)((buff.dur) Bool.true)) :: Arelin.Game.Buff -> Bool; List.find<Arelin.Game.Buff>(is_root_buff)(self.buf)<(self.self) Bool>(Bool.false)((self.value) Bool.true)
-

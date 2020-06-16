@@ -1,3 +1,0 @@
-Export.new: (T: Type) -> (value: T) -> Export
-  (T) (value) <P> (new) new(T)(value)
-

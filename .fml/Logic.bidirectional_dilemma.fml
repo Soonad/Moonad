@@ -1,3 +1,0 @@
-Logic.bidirectional_dilemma: <P: Type> -> <Q: Type> -> <R: Type> -> <S: Type> -> (f: P -> Q) -> (g: R -> S) -> (c: Or(P)(Not(S))) -> Or(Q)(Not(R))
-  <P> <Q> <R> <S> (f) (g) (c) c<() Or(Q)((x: R) -> Empty)>((x) Or.lft<Q><(x: R) -> Empty>(f(x)))((x) Or.rgt<Q><(x: R) -> Empty>((r) x(g(r))))
-

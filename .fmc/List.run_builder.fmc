@@ -1,3 +1,0 @@
-List.run_builder: ∀(A:*) Π(lb:(List.Builder A)) (List A)
-  ΛA λlb (lb <List.nil A>)
-

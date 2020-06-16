@@ -8,6 +8,13 @@ Maybe.bind<A: Type, B: Type>(m: Maybe(A), f: A -> Maybe(B)): Maybe(B)
   | Maybe.none<B>;
   | f(m.value);
 
+Maybe.pure<A: Type>(a: A): Maybe(A)
+  Maybe.some<A>(a)
+
+// the monad instance for Maybe
+Maybe.monad: Monad(Maybe)
+  Monad.new<Maybe>(Maybe.bind, Maybe.pure)
+
 Maybe.extract<A: Type>(m: Maybe(A), a: A): A
   case m:
   | a;

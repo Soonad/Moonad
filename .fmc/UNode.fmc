@@ -1,3 +1,0 @@
-UNode: *
-  ∀self_UNode(P:Π(self:UNode) *) Π(root:Π(rank:Nat) (P (UNode.root rank))) Π(link:Π(parent:Bits) (P (UNode.link parent))) (P self_UNode)
-

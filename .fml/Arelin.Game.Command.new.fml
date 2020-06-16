@@ -1,3 +1,0 @@
-Arelin.Game.Command.new: (pid: Arelin.Game.PlayerId) -> (inp: Arelin.Game.Input) -> Arelin.Game.Command
-  (pid) (inp) <P> (new) new(pid)(inp)
-

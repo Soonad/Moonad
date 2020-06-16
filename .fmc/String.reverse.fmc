@@ -1,3 +1,0 @@
-String.reverse: Π(xs:String) String
-  λxs ((String.reverse.go xs) String.nil)
-

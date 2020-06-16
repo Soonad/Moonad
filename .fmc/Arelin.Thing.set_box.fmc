@@ -1,3 +1,0 @@
-Arelin.Thing.set_box: Π(thi:Arelin.Thing) Π(new_box:Arelin.Game.Hitbox) Arelin.Thing
-  λthi λnew_box (<thi λthi.self Arelin.Thing> λthi.fun λthi.pid λthi.mid λthi.act λthi.sid λthi.stt λthi.nam λthi.lit λthi.tik λthi.pos λthi.mov λthi.bst λthi.pad λthi.dir λthi.trg λthi.vel λthi.box λthi.wei λthi.mhp λthi.dmg λthi.knk λthi.buf λthi.chi λthi.hit λthi.rst λthi.die ((((((((((((((((((((((((((Arelin.Thing.new thi.fun) thi.pid) thi.mid) thi.act) thi.sid) thi.stt) thi.nam) thi.lit) thi.tik) thi.pos) thi.mov) thi.bst) thi.pad) thi.dir) thi.trg) thi.vel) new_box) thi.wei) thi.mhp) thi.dmg) thi.knk) thi.buf) thi.chi) thi.hit) thi.rst) thi.die))
-

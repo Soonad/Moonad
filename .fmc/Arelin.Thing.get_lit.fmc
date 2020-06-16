@@ -1,3 +1,0 @@
-Arelin.Thing.get_lit: Π(thi:Arelin.Thing) (List Arelin.Game.Light)
-  λthi (<thi λthi.self (List Arelin.Game.Light)> λthi.fun λthi.pid λthi.mid λthi.act λthi.sid λthi.stt λthi.nam λthi.lit λthi.tik λthi.pos λthi.mov λthi.bst λthi.pad λthi.dir λthi.trg λthi.vel λthi.box λthi.wei λthi.mhp λthi.dmg λthi.knk λthi.buf λthi.chi λthi.hit λthi.rst λthi.die thi.lit)
-

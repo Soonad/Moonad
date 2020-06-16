@@ -1,3 +1,0 @@
-Either.left: <A: Type> -> <B: Type> -> (value: A) -> Either(A)(B)
-  <A> <B> (value) <P> (left) (right) left(value)
-

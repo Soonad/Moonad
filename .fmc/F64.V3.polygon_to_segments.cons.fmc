@@ -1,3 +1,0 @@
-F64.V3.polygon_to_segments.cons: Π(pos:F64.V3) Π(dir:F64.V3) Π(pt_b:F64.V3) Π(segs:Π(:(Maybe F64.V3)) Π(:(Maybe F64.V3)) (List F64.Segment)) Π(pt_a:(Maybe F64.V3)) Π(pt_0:(Maybe F64.V3)) (List F64.Segment)
-  λpos λdir λpt_b λsegs λpt_a λpt_0 ((<pt_a λpt_a.self (List F64.Segment)> ((segs (<Maybe.some F64.V3> pt_b)) (<Maybe.some F64.V3> pt_b))) λpt_a.value $pt_0=((<pt_0 λpt_0.self (Maybe F64.V3)> (<Maybe.some F64.V3> pt_b)) λpt_0.value pt_0);$p0=(((F64.V3.polygon_to_segments.transform pos) dir) pt_a.value);$p1=(((F64.V3.polygon_to_segments.transform pos) dir) pt_b);$sg=((F64.Segment.new p0) p1);((<List.cons F64.Segment> sg) ((segs (<Maybe.some F64.V3> pt_b)) pt_0)))
-

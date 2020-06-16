@@ -1,3 +1,0 @@
-F64.Ordering: *
-  ∀self_F64.Ordering(P:Π(self:F64.Ordering) *) Π(LT:(P F64.Ordering.LT)) Π(EQ:(P F64.Ordering.EQ)) Π(GT:(P F64.Ordering.GT)) (P self_F64.Ordering)
-

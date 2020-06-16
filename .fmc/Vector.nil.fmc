@@ -1,3 +1,0 @@
-Vector.nil: ∀(A:*) ((Vector A) Nat.zero)
-  ΛA ΛP λnil λext nil
-

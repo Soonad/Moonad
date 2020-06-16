@@ -1,3 +1,0 @@
-List.last: <A: Type> -> (xs: List(A)) -> (not_empty: List.not_empty<A>(xs)) -> A
-  <A> (xs) (not_empty) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> A>((ne) Empty.absurd(ne)(A))((xs.head) (xs.tail) (ne) xs.tail<(xs.tail.self) (e: Equal(List(A))(xs.tail.self)(xs.tail)) -> A>((e) xs.head)((xs.tail.head) (xs.tail.tail) (e) List.last<A>(xs.tail)(Equal.rewrite<List(A)><List.cons<A>(xs.tail.head)(xs.tail.tail)><xs.tail><(x) List.not_empty<A>(x)>(e)(List.cons_isnt_empty<A>(xs.tail.head)(xs.tail.tail))))(Equal.to<List(A)><xs.tail>))(not_empty)
-

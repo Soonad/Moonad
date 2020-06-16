@@ -1,3 +1,0 @@
-List.span: ∀(A:*) Π(f:Π(:A) Bool) Π(xs:(List A)) ((Pair (List A)) (List A))
-  ΛA λf λxs ((<xs λxs.self ((Pair (List A)) (List A))> ((<<Pair.new (List A)> (List A)> <List.nil A>) <List.nil A>)) λxs.head λxs.tail ((<(f xs.head) λself.self ((Pair (List A)) (List A))> (<((<List.span A> f) xs.tail) λself ((Pair (List A)) (List A))> λy λz ((<<Pair.new (List A)> (List A)> ((<List.cons A> xs.head) y)) z))) ((<<Pair.new (List A)> (List A)> <List.nil A>) xs)))
-

@@ -1,3 +1,0 @@
-String.to_builder: (string: String) -> String.Builder
-  (string) String.to_builder.go(string)(String.Builder.new)
-

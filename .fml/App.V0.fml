@@ -1,3 +1,0 @@
-App.V0: (S: Type) -> Type
-  (S) self_App.V0<P: (self: App.V0(S)) -> Type> -> (new: (init: S) -> (draw: S -> App.V0.Render) -> (when: App.V0.Event -> S -> S) -> P(App.V0.new<S>(init)(draw)(when))) -> P(self_App.V0)
-

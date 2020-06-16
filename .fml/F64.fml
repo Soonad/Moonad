@@ -1,3 +1,0 @@
-F64: Type
-  self_F64<P: (self: F64) -> Type> -> (new: (a: Word(64)) -> P(F64.new(a))) -> P(self_F64)
-

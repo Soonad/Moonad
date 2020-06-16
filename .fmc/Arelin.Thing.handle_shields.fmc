@@ -1,3 +1,0 @@
-Arelin.Thing.handle_shields: Π(hit_dmg:F64) Π(self:Arelin.Thing) Arelin.Thing
-  λhit_dmg λself $self.buf=(Arelin.Thing.get_buf self);$self.dmg=(Arelin.Thing.get_dmg self);$init_val=((<<Pair.new F64> (List Arelin.Game.Buff)> hit_dmg) <List.nil Arelin.Game.Buff>);$res=(((<<List.foldr Arelin.Game.Buff> ((Pair F64) (List Arelin.Game.Buff))> init_val) Arelin.Game.use_shields) self.buf);$remaining_dmg=((F64.add (<<Pair.fst F64> (List Arelin.Game.Buff)> res)) self.dmg);$remaining_buf=(<<Pair.snd F64> (List Arelin.Game.Buff)> res);$self=((Arelin.Thing.set_dmg self) remaining_dmg);$self=((Arelin.Thing.set_buf self) remaining_buf);self
-

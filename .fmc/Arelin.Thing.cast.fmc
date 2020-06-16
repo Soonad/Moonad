@@ -1,3 +1,0 @@
-Arelin.Thing.cast: Π(self:Arelin.Thing) Π(at_tik:F64) Π(do_hit:(List Arelin.Game.Hit)) Arelin.Thing
-  λself λat_tik λdo_hit $self.tik=(Arelin.Thing.get_tik self);((<((F64.eql self.tik) at_tik) λself.self Arelin.Thing> ((Arelin.Thing.set_hit self) do_hit)) self)
-

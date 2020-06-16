@@ -1,3 +1,0 @@
-Arelin.Thing.is_using_buff: Π(self:Arelin.Thing) Π(stt_key:Bits) Bool
-  λself λstt_key $stt=(Arelin.Thing.get_stt self);$get_stt=((<Map.get F64> stt_key) stt);((<get_stt λget_stt.self Bool> Bool.false) λget_stt.value ((<((F64.eql get_stt.value) F64.0) λself.self Bool> Bool.false) Bool.true))
-

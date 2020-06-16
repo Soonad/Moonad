@@ -1,3 +1,0 @@
-Nat.show: (n: Nat) -> String
-  (n) Nat.to_string_decimal(10)
-

@@ -1,3 +1,0 @@
-Empty: *
-  ∀self_Empty(P:Π(self:Empty) *) (P self_Empty)
-

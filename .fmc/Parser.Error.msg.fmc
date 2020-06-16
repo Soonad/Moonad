@@ -1,3 +1,0 @@
-Parser.Error.msg: Π(pos:Nat) Π(msgs:(List String)) Parser.Error
-  λpos λmsgs ΛP λnew λmsg ((msg pos) msgs)
-

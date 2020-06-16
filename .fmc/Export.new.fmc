@@ -1,3 +1,0 @@
-Export.new: Π(T:*) Π(value:T) Export
-  λT λvalue ΛP λnew ((new T) value)
-

@@ -1,3 +1,0 @@
-Docs.not_not_is_b: Π(b:Bool) (((Equal Bool) (Bool.not (Bool.not b))) b)
-  λb ((<b λb.self (((Equal Bool) (Bool.not (Bool.not b.self))) b.self)> <<Equal.to Bool> Bool.true>) <<Equal.to Bool> Bool.false>)
-

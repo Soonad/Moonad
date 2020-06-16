@@ -1,3 +1,0 @@
-Logic.negation_elimination: ∀(P:*) Π(lem:Logic.ExcludedMiddle) Π(not_not_p:(Not (Not P))) P
-  ΛP λlem λnot_not_p ((<<lem P> λ P> λx x) λx ((Logic.exfalso (not_not_p x)) P))
-

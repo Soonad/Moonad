@@ -1,3 +1,0 @@
-Arelin.Game.Buff.slowed: Π(dur:F64) Π(val:F64) Arelin.Game.Buff
-  λdur λval ΛP λshielded λslowed λhasted λsilenced λrooted λstunned ((slowed dur) val)
-

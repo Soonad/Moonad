@@ -1,3 +1,0 @@
-String.span: Π(f:Π(:Char) Bool) Π(xs:String) ((Pair String) String)
-  λf λxs ((<xs λxs.self ((Pair String) String)> ((<<Pair.new String> String> String.nil) String.nil)) λxs.head λxs.tail ((<(f xs.head) λself.self ((Pair String) String)> (<((String.span f) xs.tail) λself ((Pair String) String)> λy λz ((<<Pair.new String> String> ((String.cons xs.head) y)) z))) ((<<Pair.new String> String> String.nil) xs)))
-

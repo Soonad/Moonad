@@ -1,3 +1,0 @@
-U64.to_bits: (a: U64) -> Bits
-  (a) a<(self) Bits>((a_val) Word.to_bits<64>(a_val))
-

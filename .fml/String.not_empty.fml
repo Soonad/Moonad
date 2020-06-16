@@ -1,3 +1,0 @@
-String.not_empty: (xs: String) -> Type
-  (xs) xs<(xs.self) Type>(Empty)((xs.head) (xs.tail) Unit)
-

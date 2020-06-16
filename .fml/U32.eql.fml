@@ -1,3 +1,0 @@
-U32.eql: (a: U32) -> (b: U32) -> Bool
-  (a) (b) a<(self) Bool>((a_val) b<(self) Bool>((b_val) Word.eql<32>(a_val)(b_val)))
-

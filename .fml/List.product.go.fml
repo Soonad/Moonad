@@ -1,3 +1,0 @@
-List.product.go: (xs: List(Nat)) -> (n: Nat) -> Nat
-  (xs) (n) xs<(xs.self) Nat>(Nat.zero)((xs.head) (xs.tail) List.product.go(xs.tail)(Nat.mul(xs.head)(n)))
-

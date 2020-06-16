@@ -1,3 +1,0 @@
-List.Builder: Π(A:*) *
-  λA Π(:(List A)) (List A)
-

@@ -1,3 +1,0 @@
-List.take_while: ∀(A:*) Π(f:Π(:A) Bool) Π(xs:(List A)) (List A)
-  ΛA λf λxs ((<xs λxs.self (List A)> <List.nil A>) λxs.head λxs.tail ((<(f xs.head) λself.self (List A)> ((<List.cons A> xs.head) ((<List.take_while A> f) xs.tail))) <List.nil A>))
-

@@ -1,3 +1,0 @@
-Arelin.Thing.is_stunned: Π(self:Arelin.Thing) Bool
-  λself $self.buf=(Arelin.Thing.get_buf self);$is_stun_buff=:Π(:Arelin.Game.Buff) Bool λbuff ((((((<buff λbuff.self Bool> λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur λbuff.val Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.false) λbuff.dur Bool.true);((<((<List.find Arelin.Game.Buff> is_stun_buff) self.buf) λself.self Bool> Bool.false) λself.value Bool.true)
-

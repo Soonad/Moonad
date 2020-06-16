@@ -1,3 +1,0 @@
-List.intersperse: ∀(A:*) Π(sep:A) Π(xs:(List A)) (List A)
-  ΛA λsep λxs ((<xs λxs.self (List A)> <List.nil A>) λxs.head λxs.tail ((<xs.tail λxs.tail.self (List A)> (<List.pure A> xs.head)) λxs.tail.head λxs.tail.tail ((<List.cons A> xs.head) ((<List.cons A> sep) ((<List.intersperse A> sep) xs.tail)))))
-

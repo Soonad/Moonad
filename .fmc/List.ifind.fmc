@@ -1,3 +1,0 @@
-List.ifind: ∀(A:*) Π(xs:(List A)) Π(f:Π(:A) Π(:Nat) Bool) (Maybe ((Pair A) Nat))
-  ΛA λxs λf (((<List.ifind.go A> xs) f) Nat.zero)
-

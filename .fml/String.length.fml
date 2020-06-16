@@ -1,3 +1,0 @@
-String.length: (xs: String) -> Nat
-  (xs) String.length.go(xs)(0)
-

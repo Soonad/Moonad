@@ -1,3 +1,0 @@
-String.all: Π(cond:Π(:Char) Bool) Π(string:String) Bool
-  λcond λstring ((<string λstring.self Bool> Bool.true) λstring.head λstring.tail ((<(cond string.head) λself.self Bool> ((String.all cond) string.tail)) Bool.false))
-

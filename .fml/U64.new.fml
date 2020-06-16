@@ -1,3 +1,0 @@
-U64.new: (a: Word(64)) -> U64
-  (a) <P> (new) new(a)
-

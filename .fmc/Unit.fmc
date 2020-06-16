@@ -1,3 +1,0 @@
-Unit: *
-  ∀self_Unit(P:Π(self:Unit) *) Π(new:(P Unit.new)) (P self_Unit)
-

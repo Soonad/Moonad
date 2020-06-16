@@ -1,3 +1,0 @@
-U32.new: Π(a:(Word 32)) U32
-  λa ΛP λnew (new a)
-

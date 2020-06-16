@@ -1,3 +1,0 @@
-Vector.nil: <A: Type> -> Vector(A)(Nat.zero)
-  <A> <P> (nil) (ext) nil
-

@@ -1,3 +1,0 @@
-Newtype.new: ∀(A:*) ∀(tag:String) Π(val:A) ((Newtype A) tag)
-  ΛA Λtag λval ΛP λnew (<new tag> val)
-

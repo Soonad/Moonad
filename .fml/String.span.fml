@@ -1,3 +1,0 @@
-String.span: (f: Char -> Bool) -> (xs: String) -> Pair(String)(String)
-  (f) (xs) xs<(xs.self) Pair(String)(String)>(Pair.new<String><String>(String.nil)(String.nil))((xs.head) (xs.tail) f(xs.head)<(self.self) Pair(String)(String)>(String.span(f)(xs.tail)<(self) Pair(String)(String)>((y) (z) Pair.new<String><String>(String.cons(xs.head)(y))(z)))(Pair.new<String><String>(String.nil)(xs)))
-

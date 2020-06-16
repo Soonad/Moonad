@@ -1,3 +1,0 @@
-Arelin.Game.Effect.heal: (lif: F64) -> Arelin.Game.Effect
-  (lif) <P> (heal) (damage) (repulse) (impulse) (slow) (haste) (shield) (silence) (root) (stun) (teleport_to) heal(lif)
-

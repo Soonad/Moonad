@@ -1,3 +1,0 @@
-Nat.to_bits: (n: Nat) -> Bits
-  (n) n<(n.self) Bits>(Bits.0(Bits.nil))((n.pred) Bits.1(Nat.to_bits(n.pred)))
-

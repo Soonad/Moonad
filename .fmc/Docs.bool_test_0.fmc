@@ -1,3 +1,0 @@
-Docs.bool_test_0: (IO Unit)
-  (IO.print (Bool.show (Bool.not Bool.true)))
-

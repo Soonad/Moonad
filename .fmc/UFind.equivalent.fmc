@@ -1,3 +1,0 @@
-UFind.equivalent: Π(uf:UFind) Π(path1:Bits) Π(path2:Bits) Bool
-  λuf λpath1 λpath2 (<((UFind.find uf) path1) Bool> λuf λroot1 λrank1 (<((UFind.find uf) path2) Bool> λuf λroot2 λrank2 ((Bits.eql root1) root2)))
-

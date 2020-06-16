@@ -1,3 +1,0 @@
-Module.type: Π(key:String) Π(mod:Module) *
-  λkey λmod ((<((<Map.get Export> (String.to_bits key)) mod) λgot.self *> Unit) λgot.value (Export.T got.value))
-

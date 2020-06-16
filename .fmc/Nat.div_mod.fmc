@@ -1,3 +1,0 @@
-Nat.div_mod: Π(n:Nat) Π(m:Nat) ((Pair Nat) Nat)
-  λn λm (((Nat.div_mod.go n) m) Nat.zero)
-

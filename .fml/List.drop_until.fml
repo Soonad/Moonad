@@ -1,3 +1,0 @@
-List.drop_until: <A: Type> -> (f: A -> Bool) -> (xs: List(A)) -> List(A)
-  <A> (f) (xs) List.drop_while<A>((c) Bool.not(f(c)))(xs)
-

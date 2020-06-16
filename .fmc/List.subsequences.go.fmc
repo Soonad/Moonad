@@ -1,3 +1,0 @@
-List.subsequences.go: ∀(A:*) Π(xs:(List A)) (List (List A))
-  ΛA λxs ((<xs λxs.self (List (List A))> <List.nil (List A)>) λxs.head λxs.tail $f=:Π(:(List A)) Π(:(List (List A))) (List (List A)) λys λr ((<List.cons (List A)> ys) ((<List.cons (List A)> ((<List.cons A> xs.head) ys)) r));((<List.cons (List A)> (<List.pure A> xs.head)) (((<<List.foldr (List A)> (List (List A))> <List.nil (List A)>) f) (<List.subsequences.go A> xs.tail))))
-

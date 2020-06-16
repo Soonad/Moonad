@@ -1,3 +1,0 @@
-String.foldl: <B: Type> -> (b: B) -> (f: B -> Char -> B) -> (xs: String) -> B
-  <B> (b) (f) (xs) xs<(xs.self) B>(b)((xs.head) (xs.tail) String.foldl<B>(f(b)(xs.head))(f)(xs.tail))
-

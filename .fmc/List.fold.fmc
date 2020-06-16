@@ -1,3 +1,0 @@
-List.fold: ∀(A:*) Π(list:(List A)) ∀(P:*) Π(:P) Π(:Π(:A) Π(:P) P) P
-  ΛA λlist ΛP λnil λcons ((<list λlist.self P> nil) λlist.head λlist.tail ((cons list.head) ((<(<List.fold A> list.tail) P> nil) cons)))
-

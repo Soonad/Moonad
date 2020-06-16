@@ -1,3 +1,0 @@
-Bool.or: Π(a:Bool) Π(b:Bool) Bool
-  λa λb ((<a λa.self Bool> Bool.true) ((<b λb.self Bool> Bool.true) Bool.false))
-

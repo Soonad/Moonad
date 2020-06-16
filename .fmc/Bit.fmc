@@ -1,3 +1,0 @@
-Bit: *
-  ∀self_Bit(P:Π(self:Bit) *) Π(b0:(P Bit.b0)) Π(b1:(P Bit.b1)) (P self_Bit)
-

@@ -1,3 +1,0 @@
-Arelin.Thing.create_at: (self: Arelin.Thing) -> (at_tik: F64) -> (new_thing: Arelin.Game.TxFunction) -> Arelin.Thing
-  (self) (at_tik) (new_thing) let self.tik = Arelin.Thing.get_tik(self); F64.eql(self.tik)(at_tik)<(self.self) Arelin.Thing>(let self.pid = Arelin.Thing.get_pid(self); let self.pos = Arelin.Thing.get_pos(self); let self = Arelin.Thing.set_fun(self)(new_thing); let self = Arelin.Thing.set_pid(self)(self.pid); let self = Arelin.Thing.set_pos(self)(self.pos); self)(self)
-

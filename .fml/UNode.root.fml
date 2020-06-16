@@ -1,3 +1,0 @@
-UNode.root: (rank: Nat) -> UNode
-  (rank) <P> (root) (link) root(rank)
-

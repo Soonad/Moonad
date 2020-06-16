@@ -236,14 +236,8 @@ List.product.go(xs: List(Nat), n: Nat) : Nat
 
 // Print a list
 List.show<A: Type>(f: A -> String, xs: List(A)): String
-  List.show.go<>(f,xs,String.Builder.cons('[',String.Builder.new))
+  String.flatten(["[",String.intercalate(",", List.map<,>(f,xs)),"]"])
 
-List.show.go<A: Type>(f: A -> String, xs: List(A), sb: String.Builder): String
-  case xs:
-  | sb(String.pure(']'));
-  | List.show.go<>(f,xs.tail)
-    | String.Builder.concat(String.to_builder(f(xs.head)))
-      | String.Builder.cons(',',sb);;;
 
 // List monad
 // ==========
@@ -292,13 +286,11 @@ List.take_while<A: Type>(f: A -> Bool, xs: List(A)) : List(A)
 
 List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
   case xs:
-  | Pair.new<,>(List.nil<>,List.nil<>);
+  | Pair.new<,>(List.nil<>, List.nil<>);
   | case n:
-    | Pair.new<,>(List.nil<>,xs);
-    | case n.pred:
-      | Pair.new<,>(List.pure<>(xs.head),xs.tail);
-      | get y z = List.split_at<>(n.pred,xs.tail)
-        Pair.new<,>(List.cons<>(xs.head,y),z);;;
+    | Pair.new<,>(List.nil<>, xs);
+    | get fst snd = List.split_at<>(n.pred, xs.tail)
+      Pair.new<,>(List.cons<>(xs.head, fst), snd);;
 
 List.drop_until<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   List.drop_while<>((c) Bool.not(f(c)), xs)
@@ -340,6 +332,10 @@ List.Builder.concat<A: Type>(a: List.Builder(A), b: List.Builder(A)): List.Build
 
 // prepend an element
 List.Builder.cons<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
+  (x) List.cons<>(c,lb(x))
+
+// append an element
+List.Builder.snoc<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
   (x) lb(List.cons<>(c,x))
 
 // convert a list to a builder
@@ -349,7 +345,7 @@ List.to_builder<A: Type>(list: List(A)) : List.Builder(A)
 List.to_builder.go<A: Type>(list: List(A), lb: List.Builder(A)) : List.Builder(A)
   case list:
   | lb;
-  | List.to_builder.go<>(list.tail)(List.Builder.cons<>(list.head, lb));
+  | List.to_builder.go<>(list.tail)(List.Builder.snoc<>(list.head, lb));
 
 // Returns the element at given position.
 List.at<A: Type>(list: List(A), index: Nat): Maybe(A)

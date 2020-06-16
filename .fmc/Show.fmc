@@ -1,3 +1,0 @@
-Show: Π(str:String) *
-  λstr ∀self_Show(P:Π(str:String) Π(self:(Show str)) *) Π(msg:Π(str:String) ((P str) (Show.msg str))) ((P str) self_Show)
-

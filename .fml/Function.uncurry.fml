@@ -1,3 +1,0 @@
-Function.uncurry: <A: Type> -> <B: Type> -> <C: Type> -> (f: A -> B -> C) -> (p: Pair(A)(B)) -> C
-  <A> <B> <C> (f) (p) p<(self) C>((a) (b) f(a)(b))
-

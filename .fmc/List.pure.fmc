@@ -1,3 +1,0 @@
-List.pure: ∀(A:*) Π(x:A) (List A)
-  ΛA λx ((<List.cons A> x) <List.nil A>)
-

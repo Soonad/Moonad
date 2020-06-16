@@ -1,3 +1,0 @@
-List.fold1: <A: Type> -> (xs: List(A)) -> <ne: List.not_empty<A>(xs)> -> <P: Type> -> P -> (A -> P -> P) -> P
-  <A> (xs) <ne> <P> (nil) (cons) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> P>((ne) Empty.absurd(ne)(P))((xs.head) (xs.tail) (ne) List.fold<A>(xs)<P>(nil)(cons))(ne)
-

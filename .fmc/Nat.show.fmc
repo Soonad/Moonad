@@ -1,3 +1,0 @@
-Nat.show: Π(n:Nat) String
-  λn (Nat.to_string_decimal 10)
-

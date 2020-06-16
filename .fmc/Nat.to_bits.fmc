@@ -1,3 +1,0 @@
-Nat.to_bits: Π(n:Nat) Bits
-  λn ((<n λn.self Bits> (Bits.0 Bits.nil)) λn.pred (Bits.1 (Nat.to_bits n.pred)))
-

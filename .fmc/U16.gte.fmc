@@ -1,3 +1,0 @@
-U16.gte: Π(a:U16) Π(b:U16) Bool
-  λa λb (<a λself Bool> λa_val (<b λself Bool> λb_val ((<Word.gte 16> a_val) b_val)))
-

@@ -1,3 +1,0 @@
-Cmp: Type
-  self_Cmp<P: (self: Cmp) -> Type> -> (ltn: P(Cmp.ltn)) -> (eql: P(Cmp.eql)) -> (gtn: P(Cmp.gtn)) -> P(self_Cmp)
-

@@ -1,3 +1,0 @@
-String.show: (xs: String) -> String
-  (xs) String.Builder.cons('"')(String.to_builder(xs))(String.pure('"'))
-

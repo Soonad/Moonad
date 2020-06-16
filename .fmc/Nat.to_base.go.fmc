@@ -1,3 +1,0 @@
-Nat.to_base.go: Π(base:Nat) Π(nat:Nat) Π(res:(List Nat)) (List Nat)
-  λbase λnat λres (<((Nat.div_mod nat) base) λp.self (List Nat)> λp.fst λp.snd $res=((<List.cons Nat> p.snd) res);((<p.fst λ (List Nat)> ΛP λnil λcons nil) λself.pred res))
-

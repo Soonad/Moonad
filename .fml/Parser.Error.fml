@@ -1,3 +1,0 @@
-Parser.Error: Type
-  self_Parser.Error<P: (self: Parser.Error) -> Type> -> (new: (pos: Nat) -> (unx: Maybe(Parser.Item)) -> (exp: List(Parser.Item)) -> P(Parser.Error.new(pos)(unx)(exp))) -> (msg: (pos: Nat) -> (msgs: List(String)) -> P(Parser.Error.msg(pos)(msgs))) -> P(self_Parser.Error)
-
