@@ -1,20 +1,20 @@
-T SimpleIO (A: Type)
-| end(val: A);
-| ask(then: String -> SimpleIO(A));
-| say(text: String, then: Unit -> SimpleIO(A));
+T IO<A: Type>
+| end(value: A);
+| ask(query: String, param: String, then: String -> IO(A));
 
-SimpleIO.query(text: String): SimpleIO(String)
-  SimpleIO.say<String>(text, () SimpleIO.ask<String>(SimpleIO.end<String>))
+IO.prompt(text: String): IO(String)
+  use skip = IO.ask<String>("print", text)
+  use line = IO.ask<String>("get_line", "")
+  IO.end<String>(line)
 
-SimpleIO.print(text: String): SimpleIO(Unit)
-  use skip = SimpleIO.say<Unit>(text)
-  SimpleIO.end<Unit>(Unit.new)
+IO.print(text: String): IO(Unit)
+  use skip = IO.ask<Unit>("print", text)
+  IO.end<Unit>(Unit.new)
 
-SimpleIO.bind<A: Type, B: Type>(a: SimpleIO(A), f: A -> SimpleIO(B)) : SimpleIO(B)
+IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)): IO(B)
   case a:
-  | f(a.val);
-  | SimpleIO.ask<B>((x) SimpleIO.bind<A,B>(a.then(x), f));
-  | SimpleIO.say<B>(a.text, (x) SimpleIO.bind<A,B>(a.then(x), f));
+  | f(a.value);
+  | IO.ask<B>(a.query, a.param, (x) IO.bind<A,B>(a.then(x), f));
 
-SimpleIO.monad: Monad(SimpleIO)
-  Monad.new<SimpleIO>(SimpleIO.bind, SimpleIO.end)
+IO.monad: Monad(IO)
+  Monad.new<IO>(IO.bind, IO.end)
