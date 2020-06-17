@@ -1,24 +1,7 @@
-// Functor where
-//   map :: (a -> b) -> f a -> f b
-// with map satisfying the laws
-//   map id == id
-//   map (f . g) == map f . map g
 T Functor<F: Type -> Type>
 | new(
-  map
-    : <A: Type, B: Type> ->
-      (A -> B) -> F(A) -> F(B)
-  )<
-  id
-    : <A: Type> ->
-      (fa: F(A)) -> Equal(F(A), map<A, A>(Function.id<A>, fa), Function.id<F(A)>(fa)),
-  comp
-    : <A: Type, B: Type, C: Type> ->
-      (fa: F(A)) -> (g: B -> C) -> (h: A -> B) ->
-      Equal(F(C),
-            map<A, C>(Function.comp<A, B, C>(g, h), fa),
-            Function.comp<F(A), F(B), F(C)>(map<B, C>(g), map<A, B>(h))(fa))
-  >;
+  map: <A: Type, B: Type> -> (A -> B) -> F(A) -> F(B)
+  );
 
 Functor.map<F: Type -> Type>(f: Functor(F)): <A: Type, B: Type> -> (A -> B) -> F(A) -> F(B)
   case f:
@@ -27,3 +10,19 @@ Functor.map<F: Type -> Type>(f: Functor(F)): <A: Type, B: Type> -> (A -> B) -> F
 Functor.const<F: Type -> Type>(f: Functor(F)): <A: Type, B: Type> -> A -> F(B) -> F(A)
   <A, B> (a)
   Functor.map<>(f)<,>(Function.const<,>(a))
+
+// VerifiedFunctor is a Functor
+// with map satisfying the functor laws
+//   map id == id
+//   map (f . g) == map f . map g
+T VerifiedFunctor<F: Type -> Type, f: Functor(F)>
+| new(
+  id: <A: Type> ->
+      (fa: F(A)) -> Equal(F(A), Functor.map<F>(f)<A, A>(Function.id<A>, fa), Function.id<F(A)>(fa)),
+  comp: <A: Type, B: Type, C: Type> ->
+      (fa: F(A)) -> (g: B -> C) -> (h: A -> B) ->
+      Equal(F(C),
+            Functor.map<F>(f)<A, C>(Function.comp<A, B, C>(g, h), fa),
+            Function.comp<F(A), F(B), F(C)>(Functor.map<F>(f)<B, C>(g), Functor.map<F>(f)<A, B>(h))(fa))
+  );
+

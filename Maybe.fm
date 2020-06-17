@@ -30,9 +30,13 @@ Maybe.map<A: Type, B: Type>(f: A -> B, m: Maybe(A)): Maybe(B)
   | Maybe.none<B>;
   | Maybe.some<B>(f(m.value));
 
-// the functor instance for Maybe
+// Maybe functor
+// =============
 Maybe.functor: Functor(Maybe)
-  Functor.new<Maybe>(Maybe.map)<Maybe.map.id, Maybe.map.comp>
+  Functor.new<Maybe>(Maybe.map)
+
+Maybe.functor.verified: VerifiedFunctor(Maybe, Maybe.functor)
+  VerifiedFunctor.new<Maybe, Maybe.functor>(Maybe.map.id, Maybe.map.comp)
 
 Maybe.map.id<A: Type>(ma: Maybe(A)): Equal(Maybe(A), Maybe.map<A, A>(Function.id<A>, ma), ma)
   case ma:
