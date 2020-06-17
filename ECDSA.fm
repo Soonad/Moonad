@@ -145,10 +145,13 @@ Jacobian.base.window_size: Nat
   8
 
 Jacobian.base.precomputes: List(Jacobian)
-  Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size)
+  Jacobian.normalizeZ_batch(Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size))
 
 Jacobian.base.mul(n: Nat): Jacobian
   Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
+
+Jacobian.base.mul_unsafe(n: Nat): Maybe(Jacobian)
+  Jacobian.mul_unsafe(Jacobian.base, n)
 
 Jacobian.equal(a: Jacobian, b: Jacobian): Bool
   get a.x a.y a.z = a
@@ -192,6 +195,9 @@ Jacobian.to_pointBatch.aux(ps: List(Jacobian), inverts: List(Nat)): List(Point)
 
 Jacobian.normalizeZ(p: Jacobian): Jacobian
   Jacobian.from_point(Jacobian.to_point(p))
+
+Jacobian.normalizeZ_batch(p: List(Jacobian)): List(Jacobian)
+  List.map<,>(Jacobian.from_point, Jacobian.to_pointBatch(p))
 
 Jacobian.negate(p: Jacobian): Jacobian
   get p.x p.y p.z = p
@@ -300,7 +306,12 @@ Jacobian.wNAF(W: Nat, precomputes: List(Jacobian), n: Nat): Pair(Jacobian, Jacob
 
   // Create mask with W ones: 0b1111 for W=4 etc.
   let mask = Nat.pred(Nat.pow(2, W))
-  Jacobian.wNAF.aux(precomputes, Jacobian.0, Jacobian.0, n, W, 0, windows, windowSize, mask, maxNumber)
+
+  // real and fake points
+  let p = Jacobian.0
+  let f = Jacobian.0
+
+  Jacobian.wNAF.aux(precomputes, p, f, n, W, 0, windows, windowSize, mask, maxNumber)
 
 Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat, W: Nat, window: Nat, windows: Nat, windowSize: Nat, mask: Nat, maxNumber: Nat): Pair(Jacobian, Jacobian)
   case Nat.ltn(window, windows):
@@ -316,19 +327,21 @@ Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat,
     // +224 => 256 - 32
     get n wbits =
       case Nat.gtn(wbits, windowSize):
-      | Pair.new<,>(Nat.succ(n), Nat.sub(wbits, maxNumber));
-      | Pair.new<,>(n, wbits);
+      | Pair.new<,>(Nat.succ(n), Int.new(wbits, maxNumber));
+      | Pair.new<,>(n, Int.fromNat(wbits));
 
     // Check if we're onto Zero point.
     // Add random point inside current window to f.
-    case Nat.eql(wbits, 0):
+    case Int.eql(wbits, Int.0):
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       let q = Maybe.extract<>(List.at<>(precomputes, offset), Jacobian.0)
       let f = Jacobian.add(f, Bool.if<>(Nat.odd(window), Jacobian.negate(q), q))
       let window = Nat.succ(window)
       Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
+      get neg wbits = Int.toNat(wbits)
       let cached = Maybe.extract<>(List.at<>(precomputes, Nat.pred(Nat.add(offset, wbits))), Jacobian.0)
+      let cached = Bool.if<>(neg, Jacobian.negate(cached), cached)
       let p = Jacobian.add(p, cached)
       let window = Nat.succ(window)
       Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;

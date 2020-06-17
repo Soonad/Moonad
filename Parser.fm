@@ -195,9 +195,6 @@ Parser.peek<A: Type>(p: Parser(A)): Parser(A)
   | Parser.Reply.val<>(s1,self.value);
   | Parser.Reply.err<>(self.state,self.error);
 
-Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
-  p(Parser.State.new(s))
-
 Parser.type(A: Type, r: Parser.Reply(A)) : Type
   case r: | A; | Parser.Error;
 
