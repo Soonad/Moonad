@@ -2,17 +2,6 @@
 Char: Type
   U16
 
-// Receives a hex char (0-9, a-f, A-F) and returns its value as a Nat.
-Char.hex_value(chr: Char): Maybe(Nat)
-  if Bool.and(U16.gte(chr,'0'),U16.lte(chr,'9')) then
-    Maybe.some<_>(U16.to_nat(U16.sub(chr,'0')))
-  else if Bool.and(U16.gte(chr,'a'),U16.lte(chr,'f')) then
-    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'a')),10))
-  else if Bool.and(U16.gte(chr,'A'),U16.lte(chr,'F')) then
-    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'A')),10))
-  else
-    Maybe.none<_>
-
 // Creates a character from 16 bits.
 Char.new
 (b0: Bit) (b1: Bit) (b2: Bit) (b3: Bit)
@@ -45,6 +34,27 @@ Char.newline: Char
     Bit.0, Bit.0, Bit.0, Bit.0,
     Bit.0, Bit.0, Bit.0, Bit.0,
     Bit.1, Bit.0, Bit.1, Bit.0)
+
+// Receives a hex char (0-9, a-f, A-F) and returns its value.
+Char.hex_value16(chr: Char): U16
+  def U16.add10((x0)
+    def x1 = U16.inc(U16.inc(U16.inc(U16.inc(U16.inc(x0)))))
+    def x2 = U16.inc(U16.inc(U16.inc(U16.inc(U16.inc(x1)))))
+    x2) :: U16 -> U16
+  if Bool.and(U16.gte(chr,'0'),U16.lte(chr,'9')) then
+    U16.sub(chr,'0')
+  else if Bool.and(U16.gte(chr,'a'),U16.lte(chr,'f')) then
+    U16.add10(U16.sub(chr,'a'))
+  else if Bool.and(U16.gte(chr,'A'),U16.lte(chr,'F')) then
+    U16.add10(U16.sub(chr,'A'))
+  else
+    U16.0
+
+Char.hex_value32(chr: Char): U32
+  U16.to_u32(Char.hex_value16(chr))
+
+Char.hex_value(chr: Char): Nat
+  U32.to_nat(Char.hex_value32(chr))
 
 Char.parse.type(str: String): Type
   case str:

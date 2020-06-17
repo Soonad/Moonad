@@ -207,3 +207,30 @@ Nat.show_digit(base: Nat, n: Nat) : Char
 
 Nat.show(n: Nat): String
   Nat.to_string_base(10,n)
+
+Nat.to_u16(n: Nat): U16
+  Nat.apply<U16>(n, U16.inc, U16.0)
+
+Nat.to_u32(n: Nat): U32
+  Nat.apply<U32>(n, U32.inc, U32.0)
+
+Nat.to_u64(n: Nat): U64
+  Nat.apply<U64>(n, U64.inc, U64.0)
+
+Nat.add_zero_theorem(n: Nat): Equal(Nat, Nat.add(n, Nat.zero), n)
+  case n:
+  | Equal.to<Nat, Nat.zero>;
+  | let e0 = Nat.add_zero_theorem(n.pred)
+    let e1 = Equal.apply<Nat, Nat, Nat.add(n.pred, Nat.zero), n.pred, Nat.succ>(e0)
+    e1;
+  : Equal(Nat, Nat.add(n.self, Nat.zero), n.self);
+
+// TODO
+// (1 + a) + b == a + (1 + b)
+Nat.add_succ_theorem(n: Nat, m: Nat): Equal(Nat, Nat.add(n, Nat.succ(m)), Nat.succ(Nat.add(n, m)))
+  case n:
+  | Equal.to<Nat, Nat.succ(m)>;
+  | let e0 = Nat.add_succ_theorem(n.pred, m)
+    let e1 = Equal.apply<Nat, Nat, Nat.add(n.pred, Nat.succ(m)), Nat.succ(Nat.add(n.pred, m)), Nat.succ>(e0)
+    e1;
+  : Equal(Nat, Nat.add(n.self, Nat.succ(m)), Nat.add(Nat.succ(n.self), m));

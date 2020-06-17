@@ -109,6 +109,12 @@ Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
   <size> (a) (b)
   Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
 
+Word.zero(size: Nat): Word(size)
+  case size:
+  | Word.nil;
+  | Word.0<size.pred>(Word.zero(size.pred));
+  : Word(size.self);
+
 Word.from_bits: (size: Nat) -> Bits -> Word(size)
   (size) (bits)
   size<(size) Word(size)>
@@ -208,3 +214,44 @@ Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
 
+// Converts a word to another size, removing bits or adding zeroes as needed.
+Word.trim<size: Nat>(new_size: Nat, word: Word(size)): Word(new_size)
+  case new_size:
+  | Word.nil;
+  | case word:
+    | Word.w0<new_size.pred>(Word.trim<Nat.zero>(new_size.pred, Word.nil));
+    | Word.w0<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));
+    | Word.w1<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));;
+  : Word(new_size.self);
+
+Word.from_nat(size: Nat, n: Nat): Word(size)
+  Nat.apply<Word(size)>(n, Word.inc<size>, Word.zero(size))
+
+Word.nat_log2.go<size: Nat>(word: Word(size), c: Nat, n: Nat): Nat
+  case word:
+  | n;
+  | Word.nat_log2.go<word.size>(word.pred, Nat.succ(c), n);
+  | Word.nat_log2.go<word.size>(word.pred, Nat.succ(c), c);
+  
+Word.nat_log2<size: Nat>(word: Word(size)): Nat
+  Word.nat_log2.go<size>(word, 0, 0)
+
+Word.reverse.go<size: Nat, a: Nat, b: Nat>
+(word: Word(a), res: Word(b))<eq: Equal(Nat, Nat.add(a,b), size)>
+: Word(size)
+  (case word:
+  | <eq> Equal.cast<Nat, b, size, (x) Word(x), eq>(res);
+  | <eq>
+    def eq0 = Equal.mirror<Nat, Nat.add(word.size, Nat.succ(b)), Nat.succ(Nat.add(word.size, b))>(Nat.add_succ_theorem(word.size, b))
+    def eq1 = Equal.cast<Nat, Nat.add(Nat.succ(word.size), b), Nat.add(word.size, Nat.succ(b)), (x) Equal(Nat, x, size), eq0>(eq)
+    let rec = Word.reverse.go<size, word.size, Nat.succ(b)>(word.pred, Word.w0<b>(res))<eq1>
+    rec;
+  | <eq>
+    def eq0 = Equal.mirror<Nat, Nat.add(word.size, Nat.succ(b)), Nat.succ(Nat.add(word.size, b))>(Nat.add_succ_theorem(word.size, b))
+    def eq1 = Equal.cast<Nat, Nat.add(Nat.succ(word.size), b), Nat.add(word.size, Nat.succ(b)), (x) Equal(Nat, x, size), eq0>(eq)
+    let rec = Word.reverse.go<size, word.size, Nat.succ(b)>(word.pred, Word.w1<b>(res))<eq1>
+    rec;
+  : <eq: Equal(Nat, Nat.add(word.n, b), size)> -> Word(size);)<eq>
+
+Word.reverse<size: Nat>(word: Word(size)): Word(size)
+  Word.reverse.go<size, size, Nat.zero>(word, Word.nil)<Nat.add_zero_theorem(size)>

@@ -106,12 +106,21 @@ String.null(xs: String) : Bool
 
 // Computes the length of the string.
 String.length(xs: String): Nat
-  String.length.go(xs,0)
+  String.length.go(xs, 0)
 
 String.length.go(xs: String, n: Nat): Nat
   case xs:
   | n;
-  | String.length.go(xs.tail,Nat.succ(n));
+  | String.length.go(xs.tail, Nat.succ(n));
+
+// Computes the length of the string as a U32.
+String.length32(xs: String): U32
+  String.length32.go(xs, U32.0)
+
+String.length32.go(xs: String, n: U32): U32
+  case xs:
+  | n;
+  | String.length32.go(xs.tail, U32.inc(n));
 
 // Appends character to the end of the string.
 String.append(as: String, a: Char): String
@@ -239,6 +248,9 @@ String.take(n: Nat, xs: String): String
 
 String.split_at(n : Nat, xs: String) : Pair(String,String)
   Pair.new<,>(String.take(n,xs),String.drop(n,xs))
+
+String.slice(i: Nat, j: Nat, xs: String): String
+  String.take(Nat.sub(j, i), String.drop(i, xs))
 
 // String.Builder
 // ============
