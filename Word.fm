@@ -135,12 +135,12 @@ Word.gtn: <size:Nat> -> Word(size) -> Word(size) -> Bool
   <size> (a) (b)
   Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.false)(Bool.true)
 
-Word.inc: <size: Nat> -> Word(size) -> Word(size)
-  <size> (word)
-  word<(size) () Word(size)>
+Word.inc<size: Nat>(word: Word(size)): Word(size)
+  case word:
   | Word.nil;
-  | <size> (pred) Word.1<size>(pred);
-  | <size> (pred) Word.0<size>(Word.inc<size>(pred));
+  | Word.w1<word.size>(word.pred);
+  | Word.w0<word.size>(Word.inc<word.size>(word.pred));
+  : Word(word.size);
 
 // a <= b
 Word.lte: <size:Nat> -> Word(size) -> Word(size) -> Bool
