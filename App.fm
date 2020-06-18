@@ -6,8 +6,7 @@ T App<S: Type>
 
 T App.Render
 | txt(text: String);
-| pix(size: Pair(U32,U32), draw: Pair(U32, U32 -> Pair(U32,U32)));
-
+| pix(draw: Pair(U32, U32 -> Pair(U32,U32)));
 
 T App.Event
 | tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
