@@ -27,7 +27,3 @@ jobs:
       id: check_type_fm_github
       run: node node_modules/formality-lang/bin/fm.js --github
           
-    - name: Type check fmc --github
-      id: check_type_github
-      run: node ../node_modules/formality-lang/bin/fmc.js --github
-      working-directory: ./.fmc

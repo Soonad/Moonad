@@ -1,16 +1,14 @@
 Set: Type
   Map(Unit)
 
-Set.get: Bits -> Set -> Bool
-  (bits) (set)
-  Map.get<Unit>(bits)(set)<() Bool>
+Set.get(bits: Bits, set: Set): Bool
+  case Map.get<Unit>(bits, set):
   | Bool.false;
-  | () Bool.true;
+  | Bool.true;
 
 Set.new: Set
   Map.new<Unit>
 
-Set.set: Bits -> Set -> Set
-  (bits) (set)
-  Map.set<Unit>(bits)(Unit.new)(set)
+Set.set(bits: Bits, set: Set): Set
+  Map.set<Unit>(bits, Unit.new, set)
 

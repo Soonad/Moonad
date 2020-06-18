@@ -48,32 +48,32 @@ T Arelin.Game.Light
 
 T Arelin.Thing 
 | new(
-    fun : Arelin.Game.TxFunction,   // transaction function
-    pid : Arelin.Game.PlayerId,     // number of playber controlling this
-    mid : Arelin.Game.ModelId,      // id of model to be rendered
-    act : Arelin.Game.ActionId,     // number of performing action
-    sid : Arelin.Game.SideId,       // player side
-    stt : Map(F64),                 // an arbitrary state
-    nam : String,                   // name of thing
-    lit : List(Arelin.Game.Light),  // list of lights to render
-    tik : F64,                      // ticks passed since last act change
-    pos : F64.V3,                   // in-game position
-    mov : F64,                      // movement speed
-    bst : F64,                      // movement speed multiplier 
-    pad : F64.V3,                   // analog pad direction (len = 0 to 1)
-    dir : F64.V3,                   // facing direction (len = 1)
-    trg : F64.V3,                   // targeted position
-    vel : F64.V3,                   // dash velocity vector
-    box : Arelin.Game.Hitbox,       // hitbox (space occupied)
-    wei : F64,                      // weight (affects friction)
-    mhp : F64,                      // max health points
-    dmg : F64,                      // damage taken
-    knk : F64.V3,                   // launch direction and intensity
-    buf : List(Arelin.Game.Buff),   // buffs and nerfs (status effects) applied
-    chi : List(Arelin.Thing),       // children to be created on next tick
-    hit : List(Arelin.Game.Hit),    // hits done by this 
-    rst : Bool,                     // should this reset to idle?
-    die : Bool                      // should this be removed? 
+  fun : Arelin.Game.TxFunction,   // transaction function
+  pid : Arelin.Game.PlayerId,     // number of playber controlling this
+  mid : Arelin.Game.ModelId,      // id of model to be rendered
+  act : Arelin.Game.ActionId,     // number of performing action
+  sid : Arelin.Game.SideId,       // player side
+  stt : Map(F64),                 // an arbitrary state
+  nam : String,                   // name of thing
+  lit : List(Arelin.Game.Light),  // list of lights to render
+  tik : F64,                      // ticks passed since last act change
+  pos : F64.V3,                   // in-game position
+  mov : F64,                      // movement speed
+  bst : F64,                      // movement speed multiplier 
+  pad : F64.V3,                   // analog pad direction (len = 0 to 1)
+  dir : F64.V3,                   // facing direction (len = 1)
+  trg : F64.V3,                   // targeted position
+  vel : F64.V3,                   // dash velocity vector
+  box : Arelin.Game.Hitbox,       // hitbox (space occupied)
+  wei : F64,                      // weight (affects friction)
+  mhp : F64,                      // max health points
+  dmg : F64,                      // damage taken
+  knk : F64.V3,                   // launch direction and intensity
+  buf : List(Arelin.Game.Buff),   // buffs and nerfs (status effects) applied
+  chi : List(Arelin.Thing),       // children to be created on next tick
+  hit : List(Arelin.Game.Hit),    // hits done by this 
+  rst : Bool,                     // should this reset to idle?
+  die : Bool                      // should this be removed? 
   );
 
 Arelin.Game.TxFunction : Type
@@ -102,8 +102,8 @@ Arelin.Thing.new_thing : Arelin.Thing
     F64.0,                             // mid 
     F64.0,                             // act
     F64.0,                             // sid 
-    Map.new<>,                         // stt 
-    List.nil<>,                        // nam
+    Map.new<>,                         // stt
+    String.nil,                        // nam
     List.nil<>,                        // lit
     F64.0,                             // tik
     F64.V3.new(F64.0,F64.0,F64.0),     // pos
@@ -124,25 +124,17 @@ Arelin.Thing.new_thing : Arelin.Thing
     Bool.false,                        // rst
     Bool.false)                        // die
 
-// Getters and setters
+//// Getters and setters
 Arelin.Thing.get_fun(thi: Arelin.Thing): Arelin.Game.TxFunction
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.fun;
+  | thi.fun;
 
 Arelin.Thing.set_fun(
   thi: Arelin.Thing, 
   new_fun: Arelin.Game.TxFunction
 ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | new_fun;
     | thi.pid;
     | thi.mid;
@@ -173,22 +165,14 @@ Arelin.Thing.set_fun(
 
 Arelin.Thing.get_pid(thi: Arelin.Thing): Arelin.Game.PlayerId
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.pid;
+  | thi.pid;
 
 Arelin.Thing.set_pid(
   thi: Arelin.Thing, 
   new_pid: Arelin.Game.PlayerId
 ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | new_pid;
     | thi.mid;
@@ -219,22 +203,14 @@ Arelin.Thing.set_pid(
 
 Arelin.Thing.get_mid(thi: Arelin.Thing): Arelin.Game.ModelId
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.mid;
+  | thi.mid;
 
 Arelin.Thing.set_mid(
   thi: Arelin.Thing, 
   new_mid: Arelin.Game.ModelId
 ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | new_mid;
@@ -265,22 +241,14 @@ Arelin.Thing.set_mid(
 
 Arelin.Thing.get_act(thi: Arelin.Thing): Arelin.Game.ActionId
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.act;
+  | thi.act;
 
 Arelin.Thing.set_act(
   thi: Arelin.Thing, 
   new_act: Arelin.Game.ActionId
 ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -311,22 +279,14 @@ Arelin.Thing.set_act(
 
 Arelin.Thing.get_sid(thi: Arelin.Thing): Arelin.Game.SideId
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.sid;
+  | thi.sid;
 
 Arelin.Thing.set_sid(
   thi: Arelin.Thing, 
   new_sid: Arelin.Game.SideId
 ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -357,19 +317,11 @@ Arelin.Thing.set_sid(
 
 Arelin.Thing.get_stt(thi: Arelin.Thing): Map(F64)
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.stt;
+  | thi.stt;
 
 Arelin.Thing.set_stt(thi: Arelin.Thing, new_stt: Map(F64)) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -400,19 +352,11 @@ Arelin.Thing.set_stt(thi: Arelin.Thing, new_stt: Map(F64)) : Arelin.Thing
 
 Arelin.Thing.get_nam(thi: Arelin.Thing): String
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.nam;
+  | thi.nam;
 
 Arelin.Thing.set_nam(thi: Arelin.Thing, new_nam: String) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -443,22 +387,14 @@ Arelin.Thing.set_nam(thi: Arelin.Thing, new_nam: String) : Arelin.Thing
 
 Arelin.Thing.get_lit(thi: Arelin.Thing): List(Arelin.Game.Light)
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.lit;
+  | thi.lit;
 
 Arelin.Thing.set_lit(
   thi: Arelin.Thing, 
   new_lit: List(Arelin.Game.Light)
   ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -489,19 +425,11 @@ Arelin.Thing.set_lit(
 
 Arelin.Thing.get_tik(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.tik;
+  | thi.tik;
 
 Arelin.Thing.set_tik(thi: Arelin.Thing, new_tik: F64) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -532,19 +460,11 @@ Arelin.Thing.set_tik(thi: Arelin.Thing, new_tik: F64) : Arelin.Thing
 
 Arelin.Thing.get_pos(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.pos;
+  | thi.pos;
 
 Arelin.Thing.set_pos(thi: Arelin.Thing, new_pos: F64.V3) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -575,19 +495,11 @@ Arelin.Thing.set_pos(thi: Arelin.Thing, new_pos: F64.V3) : Arelin.Thing
 
 Arelin.Thing.get_mov(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.mov;
+  | thi.mov;
 
 Arelin.Thing.set_mov(thi: Arelin.Thing, new_mov: F64) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -618,19 +530,11 @@ Arelin.Thing.set_mov(thi: Arelin.Thing, new_mov: F64) : Arelin.Thing
 
 Arelin.Thing.get_bst(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.bst;
+  | thi.bst;
 
 Arelin.Thing.set_bst(thi: Arelin.Thing, new_bst: F64) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -661,19 +565,11 @@ Arelin.Thing.set_bst(thi: Arelin.Thing, new_bst: F64) : Arelin.Thing
 
 Arelin.Thing.get_pad(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.pad;
+  | thi.pad;
 
 Arelin.Thing.set_pad(thi: Arelin.Thing, new_pad: F64.V3) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -704,19 +600,11 @@ Arelin.Thing.set_pad(thi: Arelin.Thing, new_pad: F64.V3) : Arelin.Thing
 
 Arelin.Thing.get_dir(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.dir;
+  | thi.dir;
 
 Arelin.Thing.set_dir(thi: Arelin.Thing, new_dir: F64.V3) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -747,19 +635,11 @@ Arelin.Thing.set_dir(thi: Arelin.Thing, new_dir: F64.V3) : Arelin.Thing
 
 Arelin.Thing.get_trg(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.trg;
+  | thi.trg;
 
 Arelin.Thing.set_trg(thi: Arelin.Thing, new_trg: F64.V3) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -790,19 +670,11 @@ Arelin.Thing.set_trg(thi: Arelin.Thing, new_trg: F64.V3) : Arelin.Thing
 
 Arelin.Thing.get_vel(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.vel;
+  | thi.vel;
 
 Arelin.Thing.set_vel(thi: Arelin.Thing, new_vel: F64.V3) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -833,22 +705,14 @@ Arelin.Thing.set_vel(thi: Arelin.Thing, new_vel: F64.V3) : Arelin.Thing
 
 Arelin.Thing.get_box(thi: Arelin.Thing): Arelin.Game.Hitbox
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.box;
+  | thi.box;
 
 Arelin.Thing.set_box(
   thi: Arelin.Thing, 
   new_box: Arelin.Game.Hitbox
   ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -879,19 +743,11 @@ Arelin.Thing.set_box(
 
 Arelin.Thing.get_wei(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.wei;
+  | thi.wei;
 
 Arelin.Thing.set_wei(thi: Arelin.Thing, new_wei: F64): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -922,19 +778,11 @@ Arelin.Thing.set_wei(thi: Arelin.Thing, new_wei: F64): Arelin.Thing
 
 Arelin.Thing.get_mhp(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.mhp;
+  | thi.mhp;
 
 Arelin.Thing.set_mhp(thi: Arelin.Thing, new_mhp: F64): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -965,19 +813,11 @@ Arelin.Thing.set_mhp(thi: Arelin.Thing, new_mhp: F64): Arelin.Thing
 
 Arelin.Thing.get_dmg(thi: Arelin.Thing): F64
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.dmg;
+  | thi.dmg;
 
 Arelin.Thing.set_dmg(thi: Arelin.Thing, new_dmg: F64): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1008,19 +848,11 @@ Arelin.Thing.set_dmg(thi: Arelin.Thing, new_dmg: F64): Arelin.Thing
 
 Arelin.Thing.get_knk(thi: Arelin.Thing): F64.V3
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.knk;
+  | thi.knk;
 
 Arelin.Thing.set_knk(thi: Arelin.Thing, new_knk: F64.V3): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1051,22 +883,14 @@ Arelin.Thing.set_knk(thi: Arelin.Thing, new_knk: F64.V3): Arelin.Thing
 
 Arelin.Thing.get_buf(thi: Arelin.Thing): List(Arelin.Game.Buff)
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.buf;
+  | thi.buf;
 
 Arelin.Thing.set_buf(
   thi: Arelin.Thing, 
   new_buf: List(Arelin.Game.Buff)
   ): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1097,22 +921,14 @@ Arelin.Thing.set_buf(
 
 Arelin.Thing.get_chi(thi: Arelin.Thing): List(Arelin.Thing)
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.chi;
+  | thi.chi;
 
 Arelin.Thing.set_chi(
   thi: Arelin.Thing, 
   new_chi: List(Arelin.Thing)
   ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1143,22 +959,14 @@ Arelin.Thing.set_chi(
 
 Arelin.Thing.get_hit(thi: Arelin.Thing): List(Arelin.Game.Hit)
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.hit; 
+  | thi.hit; 
 
 Arelin.Thing.set_hit(
   thi: Arelin.Thing, 
   new_hit: List(Arelin.Game.Hit)
   ) : Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1189,19 +997,11 @@ Arelin.Thing.set_hit(
 
 Arelin.Thing.get_rst(thi: Arelin.Thing): Bool
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.rst;
+  | thi.rst;
 
 Arelin.Thing.set_rst(thi: Arelin.Thing, new_rst: Bool): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1232,19 +1032,11 @@ Arelin.Thing.set_rst(thi: Arelin.Thing, new_rst: Bool): Arelin.Thing
 
 Arelin.Thing.get_die(thi: Arelin.Thing): Bool
   case thi: 
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-  thi.die;
+  | thi.die;
 
 Arelin.Thing.set_die(thi: Arelin.Thing, new_die: Bool): Arelin.Thing
   case thi:
-  | (thi.fun) (thi.pid) (thi.mid) (thi.act) (thi.sid) (thi.stt) (thi.nam) 
-    (thi.lit) (thi.tik) (thi.pos) (thi.mov) (thi.bst) (thi.pad) (thi.dir) 
-    (thi.trg) (thi.vel) (thi.box) (thi.wei) (thi.mhp) (thi.dmg) (thi.knk) 
-    (thi.buf) (thi.chi) (thi.hit) (thi.rst) (thi.die)
-    Arelin.Thing.new
+  | Arelin.Thing.new
     | thi.fun;
     | thi.pid;
     | thi.mid;
@@ -1281,15 +1073,16 @@ Arelin.Thing.get_by_pid(
     let thi.pid = Arelin.Thing.get_pid(thi)
     F64.eql(pid, thi.pid)) :: Arelin.Game.PlayerId -> Arelin.Thing -> Bool
   case gm: 
-  | (stage) List.find<>(cond(pid), stage);
+  | List.find<>(cond(pid), gm.stage);
 
 Arelin.Game.get_position_by_pid(
   pid : Arelin.Game.PlayerId,
   gm  : Arelin.Game
   ) : F64.V3
-  case Arelin.Thing.get_by_pid(pid, gm):
+  let thi = Arelin.Thing.get_by_pid(pid, gm)
+  case thi:
   | #none# F64.V3.new(F64.0,F64.0,F64.0);
-  | #some# (thi) Arelin.Thing.get_pos(thi);
+  | #some# Arelin.Thing.get_pos(thi.value);
 
 
 Arelin.Game.map_stage(
@@ -1366,25 +1159,22 @@ Arelin.Thing.init_act(
   let act = Arelin.Thing.get_act(self)
   let trg = Arelin.Thing.get_trg(self)
   let tik = Arelin.Thing.get_tik(self) 
-  let act = 
+  let check_act = 
     case F64.eql(act, F64.0):
     | new_act;
     | act;
-
-  let trg = 
+  let check_trg = 
     case F64.eql(act, F64.0):
     | new_trg;
     | trg;
-
-  let tik = 
+  let check_tik = 
     case F64.eql(act, F64.0):
     | F64.0;
     | tik;
-
-  let self = Arelin.Thing.set_act(self, act)
-  let self = Arelin.Thing.set_trg(self, trg)
-  let self = Arelin.Thing.set_tik(self, tik)
-  self 
+  let self = Arelin.Thing.set_act(self, check_act)
+  let self = Arelin.Thing.set_trg(self, check_trg)
+  let self = Arelin.Thing.set_tik(self, check_tik)
+  self
 
 // Is this thing walking?
 Arelin.Thing.is_walking(self: Arelin.Thing): Bool
@@ -1454,18 +1244,16 @@ Arelin.Thing.animate_between(
       | case F64.gtn(pad_len, F64.0):
         | F64.V3.norm(self.pad);
         | self.dir;;
-    
     let new_mid = 
       let duration = F64.sub(til, from)
       let curr_tik = F64.sub(self.tik, from)
       let curr_tim = F64.div(curr_tik, duration)
       F64.add(model, F64.mod(F64.floor(F64.mul(curr_tim, count)), count))
-    
     let self = Arelin.Thing.set_bst(self, boost)
     let self = Arelin.Thing.set_dir(self, new_dir)
     let self = Arelin.Thing.set_mid(self, new_mid)
     self;
-  | #false#  self;
+  | #false# self;
 
 // Performs an animation, reseting to idle when it ends
 // - self: thing to be animated
@@ -1525,7 +1313,6 @@ Arelin.Thing.animate_with_blink(
     | F64.1;
     | til;
     | F64.add(til,F64.1);
-
   let self = Arelin.Thing.reset(self, til)
   self 
 
@@ -1550,7 +1337,6 @@ Arelin.Thing.dash(
       case F64.is_between(from_tik, til_tik, self.tik):
       | F64.V3.scale(speed, F64.V3.look_at(self.pos, self.trg, self.dir));
       | F64.V3.new(F64.0, F64.0, F64.0);
-
     Arelin.Thing.set_vel(self, new_vel);
   
 Arelin.Thing.move(self: Arelin.Thing, to_pos: F64.V3): Arelin.Thing
@@ -1609,77 +1395,77 @@ Arelin.Thing.illumine(
 
 Arelin.Game.combine_mov_buffs(buff: Arelin.Game.Buff, i: F64): F64
   case buff:
-  | #shielded# (buff.dur) (buff.val) i;
-  | #slowed#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
-  | #hasted#   (buff.dur) (buff.val) F64.mul(i)(buff.val);
-  | #silenced# (buff.dur)            i;
-  | #rooted#   (buff.dur)            F64.0;
-  | #stuned#   (buff.dur)            F64.0;
+  | #shielded# i;
+  | #slowed#   F64.mul(i)(buff.val);
+  | #hasted#   F64.mul(i)(buff.val);
+  | #silenced# i;
+  | #rooted#   F64.0;
+  | #stuned#   F64.0;
 
 Arelin.Thing.speed_multiplier_of(self: Arelin.Thing): F64
   let self.bst = Arelin.Thing.get_bst(self)
   let self.buf = Arelin.Thing.get_buf(self) 
-  List.fold<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
+  List.foldr<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
 
 Arelin.Thing.is_silenced(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
   let is_silence_buff = ((buff) 
     case buff:
-    | #shielded# (buff.dur) (buff.val) Bool.false;
-    | #slowed#   (buff.dur) (buff.val) Bool.false; 
-    | #hasted#   (buff.dur) (buff.val) Bool.false;
-    | #silenced# (buff.dur)            Bool.true;
-    | #rooted#   (buff.dur)            Bool.false;
-    | #stunned#  (buff.dur)            Bool.true;
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.true;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.true;
   ) :: Arelin.Game.Buff -> Bool
   case List.find<>(is_silence_buff, self.buf):
   | #none# Bool.false;
-  | (some) Bool.true;
+  | #some# Bool.true;
 
 Arelin.Thing.is_stunned(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
   let is_stun_buff = ((buff) 
     case buff:
-    | #shielded# (buff.dur) (buff.val) Bool.false;
-    | #slowed#   (buff.dur) (buff.val) Bool.false; 
-    | #hasted#   (buff.dur) (buff.val) Bool.false;
-    | #silenced# (buff.dur)            Bool.false;
-    | #rooted#   (buff.dur)            Bool.false;
-    | #stunned#  (buff.dur)            Bool.true;
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.true;
   ) :: Arelin.Game.Buff -> Bool
   case List.find<>(is_stun_buff, self.buf):
   | #none# Bool.false;
-  | (some) Bool.true;
+  | #some# Bool.true;
 
 Arelin.Thing.is_rooted(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
   let is_root_buff = ((buff) 
     case buff:
-    | #shielded# (buff.dur) (buff.val) Bool.false;
-    | #slowed#   (buff.dur) (buff.val) Bool.false; 
-    | #hasted#   (buff.dur) (buff.val) Bool.false;
-    | #silenced# (buff.dur)            Bool.false;
-    | #rooted#   (buff.dur)            Bool.true;
-    | #stunned#  (buff.dur)            Bool.true;
+    | #shielded# Bool.false;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.true;
+    | #stunned#  Bool.true;
   ) :: Arelin.Game.Buff -> Bool
   case List.find<>(is_root_buff, self.buf):
   | #none# Bool.false;
-  | (some) Bool.true;
+  | #some# Bool.true;
 
 Arelin.Thing.has_shield(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
   let is_shield_buff = ((buff) 
     case buff:
-    | #shielded# (buff.dur) (buff.val) Bool.true;
-    | #slowed#   (buff.dur) (buff.val) Bool.false; 
-    | #hasted#   (buff.dur) (buff.val) Bool.false;
-    | #silenced# (buff.dur)            Bool.false;
-    | #rooted#   (buff.dur)            Bool.false;
-    | #stunned#  (buff.dur)            Bool.false;
+    | #shielded# Bool.true;
+    | #slowed#   Bool.false; 
+    | #hasted#   Bool.false;
+    | #silenced# Bool.false;
+    | #rooted#   Bool.false;
+    | #stunned#  Bool.false;
   ) :: Arelin.Game.Buff -> Bool
   case List.find<>(is_shield_buff, self.buf):
   | #none# Bool.false;
-  | (some) Bool.true;
+  | #some# Bool.true;
 
 Arelin.Game.use_shields(
   buff : Arelin.Game.Buff,
@@ -1688,7 +1474,7 @@ Arelin.Game.use_shields(
   let curr_dmg = Pair.fst<><>(acc)
   let curr_buf = Pair.snd<><>(acc)
   case buff:
-  | #shielded# (buff.dur) (buff.val) 
+  | #shielded#
     case F64.eql(curr_dmg, F64.0):
     | acc;
     | case F64.compare_numbers(curr_dmg, buff.val):
@@ -1707,27 +1493,18 @@ Arelin.Game.use_shields(
         Pair.new<><>(remaining_dmg, curr_buf);
     ;
   ;
-  | #slowed#   (buff.dur) (buff.val) 
-    Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  ; 
-  | #hasted#   (buff.dur) (buff.val) 
-    Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  ;
-  | #silenced# (buff.dur)   
-    Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  ;
-  | #rooted#   (buff.dur)            
-    Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  ;
-  | #stunned#  (buff.dur)            
-    Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf))
-  ;
+  | #slowed#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf)); 
+  | #hasted#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #silenced# Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #rooted#   Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+  | #stunned#  Pair.new<><>(curr_dmg, List.cons<>(buff, curr_buf));
+
 
 Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
   let self.buf      = Arelin.Thing.get_buf(self)
   let self.dmg      = Arelin.Thing.get_dmg(self)
   let init_val      = Pair.new<><>(hit_dmg, List.nil<>)
-  let res           = List.fold<><>(init_val, Arelin.Game.use_shields, self.buf)
+  let res           = List.foldr<><>(init_val, Arelin.Game.use_shields, self.buf)
   let remaining_dmg = F64.add(Pair.fst<><>(res), self.dmg)
   let remaining_buf = Pair.snd<><>(res)
   let self          = Arelin.Thing.set_dmg(self, remaining_dmg)
@@ -1738,7 +1515,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
   let self.buf = Arelin.Thing.get_buf(self)
   let fn = ((buff) (acc) 
     case buff:
-    | #shielded# (buff.dur) (buff.val) 
+    | #shielded# 
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1746,7 +1523,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
         | acc;
       ;  
     ;
-    | #slowed#   (buff.dur) (buff.val) 
+    | #slowed#   
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1754,7 +1531,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
         | acc;
       ;
     ; 
-    | #hasted#   (buff.dur) (buff.val) 
+    | #hasted#   
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1762,7 +1539,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
         | acc;
       ;
     ;
-    | #silenced# (buff.dur)            
+    | #silenced# 
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1770,7 +1547,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
         | acc;
       ;
     ;
-    | #rooted#   (buff.dur)            
+    | #rooted#   
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1778,7 +1555,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
         | acc;
       ;
     ;
-    | #stunned#  (buff.dur)           
+    | #stunned# 
       case F64.eql(buff.dur, F64.0):
       | acc;
       | List.cons<>
@@ -1787,11 +1564,9 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
       ;
     ;
   ) :: Arelin.Game.Buff -> List(Arelin.Game.Buff) -> List(Arelin.Game.Buff)
-  let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
+  let new_buf = List.foldr<><>(List.nil<>, fn, self.buf)
   Arelin.Thing.set_buf(self, new_buf)
   
-
-
 // Ends an animation/transformation/thing after some ticks
 // - self: thing that will end after a while
 // - tx: the new animation to use when it ends
@@ -1808,7 +1583,7 @@ Arelin.Thing.end_thing(
   let empty_stt   = Map.set<>(stt_key, after_tiks, self.stt)
   case current_tik:
   | #none# Arelin.Thing.set_stt(self, empty_stt);
-  | #some# (current_tik.value) 
+  | #some#
     case F64.eql(current_tik.value, F64.0):
     | let self.pid = Arelin.Thing.get_pid(self)
       let self.pos = Arelin.Thing.get_pos(self)
@@ -1829,30 +1604,28 @@ Arelin.Thing.end_thing(
 
 Arelin.Thing.get_stt_value(self: Arelin.Thing, stt_key: Bits): F64
   let stt = Arelin.Thing.get_stt(self)
-  case Map.get<>(stt_key, stt):
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
   | #none# F64.0;
-  | #some# (value) value;
+  | #some# get_stt.value;
 
-// this should be renamed
-Arelin.POS_X_KEY : Bits
-  // 01011101b
-  (Bits.0(Bits.0(Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
-Arelin.POS_Y_KEY : Bits
-  // 01110101b
-  (Bits.0(Bits.1(Bits.1(Bits.1(Bits.0(Bits.1(Bits.0(Bits.1(Bits.nil)))))))))
+Arelin.Constants.POS_X_KEY : Bits
+  Bits.from_string("01011101")
+
+Arelin.Constants.POS_Y_KEY : Bits
+  Bits.from_string("01110101")
 
 Arelin.Thing.get_stt_value_v3(self: Arelin.Thing): F64.V3
-  let x = Arelin.Thing.get_stt_value(self, Arelin.POS_X_KEY)
-  let y = Arelin.Thing.get_stt_value(self, Arelin.POS_Y_KEY)
-  // let z = Arelin.Thing.get_stt_value(self, Arelin.POS_Z_KEY)
+  let x = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_X_KEY)
+  let y = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_Y_KEY)
+  // let z = Arelin.Thing.get_stt_value(self, Arelin.Constants.POS_Z_KEY)
   F64.V3.new(x,y,F64.0) 
 
 Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
   let self.stt = Arelin.Thing.get_stt(self)
   case v3:
-  | (v3.x) (v3.y) (v3.z)
-    let insert_x = Map.set<>(Arelin.POS_X_KEY, v3.x, self.stt)
-    let insert_y = Map.set<>(Arelin.POS_Y_KEY, v3.x, self.stt)
+  | let insert_x = Map.set<>(Arelin.Constants.POS_X_KEY, v3.x, self.stt)
+    let insert_y = Map.set<>(Arelin.Constants.POS_Y_KEY, v3.x, self.stt)
     let self     = Arelin.Thing.set_stt(self, insert_x)
     let self     = Arelin.Thing.set_stt(self, insert_y)
     self 
@@ -1860,10 +1633,11 @@ Arelin.Thing.set_stt_value_v3(self: Arelin.Thing, v3: F64.V3): Arelin.Thing
 
 Arelin.Thing.is_using_buff(self: Arelin.Thing, stt_key: Bits): Bool
   let stt = Arelin.Thing.get_stt(self)
-  case Map.get<>(stt_key, stt):
+  let get_stt = Map.get<>(stt_key, stt);
+  case get_stt:
   | #none# Bool.false;
-  | #some# (current_tik)
-    case F64.eql(current_tik, F64.0):
+  | #some#
+    case F64.eql(get_stt.value, F64.0):
     | Bool.false;
     | Bool.true;;
 
@@ -1873,75 +1647,73 @@ Arelin.Thing.map_stt_key(
   fn      : F64 -> F64
   ) : Arelin.Thing
   let stt = Arelin.Thing.get_stt(self)
-  case Map.get<>(stt_key, stt):
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
   | #none# 
     Arelin.Thing.set_stt
     | self;
     | Map.set<>(stt_key, F64.0, stt);;
-  | #some# (value)
+  | #some#
     Arelin.Thing.set_stt 
     | self;
-    | Map.set<>(stt_key, fn(value), stt);;
-
- 
+    | Map.set<>(stt_key, fn(get_stt.value), stt);;
 
 // Update a stt_key until the value associated to it ends. Used along with will_set_buff
 // - self: thing with stt (usually character)
 // - stt_key: the key in the stt map
 Arelin.Thing.update_buff(self: Arelin.Thing, stt_key: Bits): Arelin.Thing
   let stt = Arelin.Thing.get_stt(self)
-  case Map.get<>(stt_key, stt):
+  let get_stt = Map.get<>(stt_key, stt)
+  case get_stt:
   | #none# self;
-  | #some# (value)
-    case F64.eql(value, F64.0):
-    | let new_tik = F64.sub(value, F64.1)
+  | #some#
+    case F64.eql(get_stt.value, F64.0):
+    | let new_tik = F64.sub(get_stt.value, F64.1)
       let new_stt = Map.set<>(stt_key, new_tik, stt)
       Arelin.Thing.set_stt(self, new_stt);
     | self;;
 
-
-
 Arelin.exec_command(cmd: Arelin.Game.Command, gm: Arelin.Game): Arelin.Game
   case cmd:
-  | (cmd.pid) (cmd.inp)
+  | #cmd.pid, cmd.inp#
     let fn = ((this)
       let silenced = Arelin.Thing.is_silenced(this)
       let stunned  = Arelin.Thing.is_stunned(this)
       case stunned:
       | #true# 
         case cmd.inp:
-        | #sdir# (dir) Arelin.Thing.init_act(this, F64.0, dir); 
-        | #key0# (pos) this; 
-        | #key1# (pos) this; 
-        | #key2# (pos) this; 
-        | #key3# (pos) this; 
-        | #key4# (pos) this; 
-        | #key5# (pos) this; 
-        | #cmsg# (txt) this;
+        | #sdir# Arelin.Thing.init_act(this, F64.0, cmd.inp.dir); 
+        | #key0# this; 
+        | #key1# this; 
+        | #key2# this; 
+        | #key3# this; 
+        | #key4# this; 
+        | #key5# this; 
+        | #cmsg# this;
       ;
       | #false#
         case silenced:
         | #true#
           case cmd.inp:
-          | #sdir# (dir) Arelin.Thing.set_pad(this, dir); 
-          | #key0# (pos) this; 
-          | #key1# (pos) this; 
-          | #key2# (pos) this; 
-          | #key3# (pos) this; 
-          | #key4# (pos) this; 
-          | #key5# (pos) this; 
-          | #cmsg# (txt) this;
+          | #sdir# Arelin.Thing.set_pad(this, cmd.inp.dir); 
+          | #key0# this; 
+          | #key1# this; 
+          | #key2# this; 
+          | #key3# this; 
+          | #key4# this; 
+          | #key5# this; 
+          | #cmsg# this;
         ;          
         | #false#
           case cmd.inp:
-          | #sdir# (dir) Arelin.Thing.set_pad(this, dir); 
-          | #key0# (pos) Arelin.Thing.init_act(this,          F64.1, pos); 
-          | #key1# (pos) Arelin.Thing.init_act(this, F64.parse("2"), pos); 
-          | #key2# (pos) Arelin.Thing.init_act(this, F64.parse("3"), pos); 
-          | #key3# (pos) Arelin.Thing.init_act(this, F64.parse("4"), pos); 
-          | #key4# (pos) Arelin.Thing.init_act(this, F64.parse("5"), pos); 
-          | #key5# (pos) Arelin.Thing.init_act(this, F64.parse("6"), pos); 
-          | #cmsg# (txt) this;
+          | #sdir# Arelin.Thing.set_pad(this, cmd.inp.dir); 
+          | #key0# Arelin.Thing.init_act(this,          F64.1, cmd.inp.pos); 
+          | #key1# Arelin.Thing.init_act(this, F64.parse("2"), cmd.inp.pos); 
+          | #key2# Arelin.Thing.init_act(this, F64.parse("3"), cmd.inp.pos); 
+          | #key3# Arelin.Thing.init_act(this, F64.parse("4"), cmd.inp.pos); 
+          | #key4# Arelin.Thing.init_act(this, F64.parse("5"), cmd.inp.pos); 
+          | #key5# Arelin.Thing.init_act(this, F64.parse("6"), cmd.inp.pos); 
+          | #cmsg# this;
         ;
       ;
     ) :: Arelin.Game.TxFunction 
@@ -1958,10 +1730,10 @@ Arelin.collide_with(
 ) : Maybe(F64.V3)
   case a_box:
   | #nbox# Maybe.none<>;
-  | #cbox# (a_box.rad)
+  | #cbox#
     case b_box:
     | #nbox# Maybe.none<>;
-    | #cbox# (b_box.rad)
+    | #cbox#
       let dst = F64.V3.dist(a_pos, b_pos)
       let rad = F64.add(a_box.rad, b_box.rad)
       case Bool.and(F64.gtn(dst, F64.0), F64.ltn(dst, rad)):
@@ -1969,14 +1741,13 @@ Arelin.collide_with(
         let out_vec = F64.V3.scale(F64.sub(rad, dst), out_dir)
         Maybe.some<>(out_vec);
       | Maybe.none<>;;
-    | #pbox# (b_box.pts)
+    | #pbox#
       let nil = Maybe.none<>
       let cons = ((segment) (result)
         case result:
         | #none# 
           case segment:
-          | (segment.a) (segment.b)
-            let dst = F64.V3.point_segment_dist(a_pos, segment)
+          | let dst = F64.V3.point_segment_dist(a_pos, segment)
             let rad = a_box.rad 
             case F64.ltn(dst, rad):
             | #true#
@@ -1986,16 +1757,13 @@ Arelin.collide_with(
               Maybe.some<>(out_vec);
             | #false# Maybe.none<>;;
           ;
-        | #some# (value) Maybe.some<>(value); 
+        | #some# Maybe.some<>(result.value); 
       ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
       let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
-      List.fold<><>(nil,cons,segs);;
-  | #pbox# (a_box.pts)
-    //TODO
-    Maybe.none<>
-  ;
+      List.foldr<><>(nil,cons,segs);;
+  | #pbox# Maybe.none<>; // TODO
 
-// Interaction function between two things
+//// Interaction function between two things
 Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
   // Physical interactions
   let this.pos = Arelin.Thing.get_pos(this)
@@ -2018,15 +1786,15 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
     |that.box;
   let this = 
     case out_vec:
-    | #none# this;           
-    | #some# (out_vec.value)  
+    | #none# this;
+    | #some# 
       let new_pos = F64.V3.add(this.pos, out_vec.value)
       Arelin.Thing.set_pos(this, new_pos);
   let this = 
     // Hit by an effect
     let apply_hit = ((hit) (this)
       case hit:
-      | (hit.eff) (hit.pos) (hit.dir) (hit.box)
+      | #hit.eff hit.pos hit.dir hit.box#
         let out_vec = 
           Arelin.collide_with  
           |this.pos;
@@ -2038,24 +1806,24 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
 
         case out_vec:
         | #none# this;
-        | #some# (value)
+        | #some#
           let compare_sid = F64.eql(this.sid, that.sid) 
           let apply_eff   = ((eff) (this)
             case eff:
-            | #heal# (eff.lif)
+            | #heal#
               let this.dmg = Arelin.Thing.get_dmg(this)
               // IMPORTANT: use commented code. 
               // The code is inverted so the puddle on debug mode could heal
               case compare_sid:
               | #true#   this;
               | #false#  Arelin.Thing.set_dmg(this, F64.sub(this.dmg, eff.lif));;
-  
-            | #damage# (eff.dmg)
+
+            | #damage#
               case compare_sid:
               | #true#   this;
               | #false#  Arelin.Thing.handle_shields(eff.dmg, this);;
 
-            | #repulse# (eff.mag)
+            | #repulse#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2063,16 +1831,15 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                 let dir = F64.V3.look_at(hit.pos, this.pos, v3)
                 let vec = F64.V3.scale(eff.mag, dir)
                 Arelin.Thing.set_knk(this, vec);;
- 
           
-            | #impulse# (eff.mag) (eff.dir)
+            | #impulse#
               case compare_sid:
               | #true#   this;
               | #false#  
                 let vec = F64.V3.scale(eff.mag, eff.dir)
                 Arelin.Thing.set_knk(this, vec);;
 
-            | #slow# (eff.dur) (eff.val)  
+            | #slow# 
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2080,10 +1847,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.slowed(eff.dur, eff.val);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
             
-            | #haste# (eff.dur) (eff.val)  
+            | #haste#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2091,11 +1857,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.hasted(eff.dur, eff.val);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
 
-
-            | #shield# (eff.dur) (eff.val)  
+            | #shield#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2103,11 +1867,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.shielded(eff.dur, eff.val);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
 
-
-            | #silence# (eff.dur)
+            | #silence#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2115,10 +1877,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.silenced(eff.dur);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
 
-            | #root# (eff.dur)
+            | #root#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2126,10 +1887,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.rooted(eff.dur);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
 
-            | #stun# (eff.dur)
+            | #stun#
               case compare_sid:
               | #true#   this;
               | #false#  
@@ -2137,20 +1897,19 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
                   List.cons<>
                   | Arelin.Game.Buff.stunned(eff.dur);
                   | this.buf;
-                
                 Arelin.Thing.set_buf(this, updated_buffs);;
 
-            | #teleport_to# (eff.to_pos) (eff.all)
+            | #teleport_to#
               case F64.eql(eff.all, F64.1):
               | Arelin.Thing.move(this, eff.to_pos);
               | this;;
+
         ) :: Arelin.Game.Effect -> Arelin.Thing -> Arelin.Thing
-       List.fold<><>(this, apply_eff, hit.eff);;
+       List.foldr<><>(this, apply_eff, hit.eff);;
     ) :: Arelin.Game.Hit -> Arelin.Thing -> Arelin.Thing 
-    List.fold<><>(this, apply_hit, that.hit)
+    List.foldr<><>(this, apply_hit, that.hit)
   this  
 
-    
 // Like a fold, but with access to a list of other elements
 Arelin.fold_with_context
   : <A : Type>                  -> 
@@ -2161,19 +1920,18 @@ Arelin.fold_with_context
     (ys : List(A) -> List(A))   ->
     B 
   <A> <B> (i) (f) (xs) (ys)
-  xs<() B>
+  case xs<() B>:
   | i;
-  | (xs.head) (xs.tail)
-    let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A)
+  | let ys2 = ((x) ys(List.cons<A>(xs.head)(xs))) :: List(A) -> List(A)
     let rest = Arelin.fold_with_context<A><B>(i)(f)(xs.tail)(ys2)
     f(xs.head)(ys(xs.tail))(rest);
 
 
-
 Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
   // Interaction function
-  let intr = ((that) (this) Arelin.interact_with(this, that)) 
-  :: Arelin.Thing -> Arelin.Thing -> Arelin.Thing 
+  let intr = ((that) (this) 
+   Arelin.interact_with(this, that)
+  ) :: Arelin.Thing -> Arelin.Thing -> Arelin.Thing 
   
   // For each thing in the game...
   let tick = ((this) (others) (res)
@@ -2227,7 +1985,6 @@ Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
       | #true#
         let force = F64.max(F64.sub(knk_len, wei), F64.0)
         F64.V3.scale(force, F64.V3.norm(knk));
-
       | #false# knk;
     let this = Arelin.Thing.set_pos(this)(new_pos)
     let this = Arelin.Thing.set_knk(this)(new_knk)
@@ -2237,7 +1994,7 @@ Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
     let this = fun(this)
 
     // Calls the interaction function with all other things
-    let this = List.fold<><>(this, intr, others)
+    let this = List.foldr<><>(this, intr, others)
 
     // Increments tik counter
     let tik  = Arelin.Thing.get_tik(this)

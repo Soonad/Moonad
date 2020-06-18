@@ -1,38 +1,20 @@
-// The IO type allows representing side-effective computations.
-// You can run a term of type `IO(Unit)` using `fmcio my_term`.
-IO: Type -> Type
-  (A)
-  io<P : IO(A) -> Type> ->
-  (end: (val: A) -> P(IO.end<A>(val))) ->
-  (log: (str: String) -> (nxt: Unit -> IO(A)) -> P(IO.log<A>(str)(nxt))) ->
-  (get: (nxt: String -> IO(A)) -> P(IO.get<A>(nxt))) ->
-  P(io)
+T IO<A: Type>
+| end(value: A);
+| ask(query: String, param: String, then: String -> IO(A));
 
-IO.end: <A: Type> -> A -> IO(A)
-  <A> (x)
-  <P> (end) () ()
-  end(x)
+IO.prompt(text: String): IO(String)
+  use skip = IO.ask<String>("print", text)
+  use line = IO.ask<String>("get_line", "")
+  IO.end<String>(line)
 
-IO.get: <A: Type> -> (String -> IO(A)) -> IO(A)
-  <A> (nxt)
-  <P> () () (get)
-  get(nxt)
-
-IO.log: <A: Type> -> String -> (Unit -> IO(A)) -> IO(A)
-  <A> (str) (nxt)
-  <P> () (log) ()
-  log(str)(nxt)
-
-IO.query(str: String): IO(String)
-  IO.log<String>(str, () IO.get<String>(IO.end<String>))
-
-IO.print(str: String): IO(Unit)
-  use skip = IO.log<Unit>(str)
+IO.print(text: String): IO(Unit)
+  use skip = IO.ask<Unit>("print", text)
   IO.end<Unit>(Unit.new)
 
-IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)) : IO(B)
-  case a
-  : () IO(B);
-  | (val) f(val);
-  | (str, nxt) IO.log<B>(str, (x) IO.bind<A,B>(nxt(x), f));
-  | (nxt) IO.get<B>((x) IO.bind<A,B>(nxt(x), f));
+IO.bind<A: Type, B: Type>(a: IO(A), f: A -> IO(B)): IO(B)
+  case a:
+  | f(a.value);
+  | IO.ask<B>(a.query, a.param, (x) IO.bind<A,B>(a.then(x), f));
+
+IO.monad: Monad(IO)
+  Monad.new<IO>(IO.bind, IO.end)

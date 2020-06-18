@@ -1,0 +1,11 @@
+T Export
+| new(T: Type, value: T);
+
+Export.T(ex: Export): Type
+  case ex:
+  | ex.T;
+
+Export.value(ex: Export): Export.T(ex)
+  case ex:
+  | ex.value;
+  : case ex.self: | ex.self.T;;

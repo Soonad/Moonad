@@ -1,93 +1,65 @@
-Bits.0: (bs: Bits) -> Bits
-  (bs) <P> (be, b0, b1) b0(bs)
+T Bits
+| nil;
+| b0(pred: Bits);
+| b1(pred: Bits);
 
-Bits.1: (bs: Bits) -> Bits
-  (bs) <P> (be, b0, b1) b1(bs)
+Bits.0: Bits -> Bits
+  Bits.b0
 
-Bits.concat: Bits -> Bits -> Bits
-  (a, b)
-  a<() Bits>
+Bits.1: Bits -> Bits
+  Bits.b1
+
+Bits.concat(a: Bits, b: Bits): Bits
+  case a:
   | b;
-  | (a.pred) Bits.0(Bits.concat(a.pred)(b));
-  | (a.pred) Bits.1(Bits.concat(a.pred)(b));
+  | Bits.0(Bits.concat(a.pred, b));
+  | Bits.1(Bits.concat(a.pred, b));
 
-Bits.eql: Bits -> Bits -> Bool
-  (bs1)
-  bs1<() Bits -> _>
-  | (bs2)
-    case bs2:
+Bits.eql(a: Bits, b: Bits): Bool
+  case a:
+  | case b:
     | Bool.true;
-    | () Bool.false;
-    | () Bool.false;
-  ;
-  | (bs1.pred) (bs2)
-    case bs2:
     | Bool.false;
-    | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
-    | () Bool.false;
-  ;
-  | (bs1.pred) (bs2)
-    case bs2:
+    | Bool.false;;
+  | case b:
     | Bool.false;
-    | () Bool.false;
-    | (bs2.pred) Bits.eql(bs1.pred)(bs2.pred);
-  ;
-
-// A sequence of bits.
-// T Bits
-// | b0(pred: Bits)
-// | b1(pred: Bits)
-Bits: Type //prim//
-  bits<P: Bits -> Type> ->
-  (be: P(Bits.nil)) ->
-  (b0: (pred: Bits) -> P(Bits.0(pred))) ->
-  (b1: (pred: Bits) -> P(Bits.1(pred))) ->
-  P(bits)
-
-Bits.from_string: String -> Bits
-  (str)
+    | Bits.eql(a.pred, b.pred);
+    | Bool.false;;
+  | case b:
+    | Bool.false;
+    | Bool.false;
+    | Bits.eql(a.pred, b.pred);;
+  
+Bits.from_string(str: String): Bits
   case str:
   | Bits.nil;
-  | (str.head) (str.tail)
-    case U16.eql(str.head)(Char.parse("1")):
-    | () Bits.1(Bits.from_string(str.tail));
-    | () Bits.0(Bits.from_string(str.tail));
+  | case U16.eql(str.head, Char.parse("1")):
+    | Bits.1(Bits.from_string(str.tail));
+    | Bits.0(Bits.from_string(str.tail));
     | Unit.new;;
 
-Bits.inc: Bits -> Bits
-  (bits)
-  case bits:
+Bits.inc(a: Bits): Bits
+  case a:
   | Bits.nil;
-  | (bits.pred) Bits.1(bits.pred);
-  | (bits.pred) Bits.0(Bits.inc(bits.pred));
-
-Bits.nil: Bits
-  <P> (be) (b0) (b1) be
+  | Bits.1(a.pred);
+  | Bits.0(Bits.inc(a.pred));
 
 Bits.parse_hex: String -> Bits
-  (str) Bits.parse_hex.go(str)(Bits.nil)
+  (str) Bits.parse_hex.tco(str)(Bits.nil)
 
-Bits.parse_hex.go: String -> Bits -> Bits //loop//
-  (str) (res)
+Bits.parse_hex.tco(str: String, res: Bits): Bits
   case str:
   | res;
-  | (str.head) (str.tail)
-    Char.hex_value(str.head)<() Bits>
-    | res;
-    | (value) 
-      let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
-      let bhead = Nat.apply<Bits>(value)(Bits.inc)(b0000)
-      Bits.parse_hex.go(str.tail)(Bits.concat(bhead)(res))
-    ;
-  ;
+  | let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
+    let bhead = Nat.apply<Bits>(Char.hex_value(str.head), Bits.inc, b0000)
+    Bits.parse_hex.tco(str.tail, Bits.concat(bhead, res));
 
 // Reverses a bistring.
-Bits.reverse: Bits -> Bits
-  (as) Bits.reverse.go(as)(Bits.nil)
+Bits.reverse(a: Bits): Bits
+  Bits.reverse.tco(a, Bits.nil)
 
-Bits.reverse.go: Bits -> Bits -> Bits
-  (as) (res)
-  case as:
-  | res;
-  | (as.pred) Bits.reverse.go(as.pred)(Bits.0(res));
-  | (as.pred) Bits.reverse.go(as.pred)(Bits.1(res));
+Bits.reverse.tco(a: Bits, r: Bits): Bits
+  case a:
+  | r;
+  | Bits.reverse.tco(a.pred, Bits.0(r));
+  | Bits.reverse.tco(a.pred, Bits.1(r));

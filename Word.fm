@@ -1,11 +1,17 @@
-Word.0: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
-  <size> (wo) <P> (we) (w0) (w1)
-  w0<size>(wo)
+// TODO: update style
 
-Word.1: <size: Nat> -> Word(size) -> Word(Nat.succ(size))
-  <size> (wo) <P> (we) (w0) (w1)
-  w1<size>(wo)
+T Word                            ~ (n: Nat)
+| nil                             ~ (Nat.zero);
+| w0<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
+| w1<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
 
+Word.0: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
+  Word.w0
+
+Word.1: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
+  Word.w1
+  
+// TODO: improve syntax
 Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
   <size> (a) (b) (c)
   ( a<(a.size) () Word(a.size) -> Word(a.size)>
@@ -44,7 +50,6 @@ Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
 Word.add: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   <size> (a) (b) Word.add.aux<size>(a)(b)(Bool.false)
 
-// TODO bitwise AND between two words
 Word.and: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.and
 
@@ -104,13 +109,11 @@ Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
   <size> (a) (b)
   Word.cmp<size>(a)(b)<() Bool>(Bool.false)(Bool.true)(Bool.false)
 
-Word: Nat -> Type
-  (size)
-  word<P: (size: Nat) -> Word(size) -> Type> ->
-  (we: P(Nat.zero)(Word.nil)) ->
-  (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.0<size>(pred))) ->
-  (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.1<size>(pred))) ->
-  P(size)(word)
+Word.zero(size: Nat): Word(size)
+  case size:
+  | Word.nil;
+  | Word.0<size.pred>(Word.zero(size.pred));
+  : Word(size.self);
 
 Word.from_bits: (size: Nat) -> Bits -> Word(size)
   (size) (bits)
@@ -157,10 +160,6 @@ Word.mod: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
 Word.mul: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.mul
 
-Word.nil: Word(Nat.zero)
-  <P> (we) (w0) (w1)
-  we
-
 // TODO bitwise OR between two words
 Word.or: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.or
@@ -200,18 +199,59 @@ Word.to_bits: <size: Nat> -> Word(size) -> Bits
 
 Word.to_nat: <size: Nat> -> Word(size) -> Nat
   <size> (word)
-  Word.to_nat.go<size>(word)(Nat.1)
+  Word.to_nat.go<size>(word)(1)
 
 Word.to_nat.go: <size: Nat> -> Word(size) -> Nat -> Nat
   <size> (word) (add)
   word<() () Nat>
   | Nat.zero;
   | <size> (word.pred)
-    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2));
+    Word.to_nat.go<size>(word.pred)(Nat.mul(add)(2));
   | <size> (word.pred)
-    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(Nat.2)));
+    Nat.add(add)(Word.to_nat.go<size>(word.pred)(Nat.mul(add)(2)));
 
 // TODO bitwise XOR between two words
 Word.xor: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
   Word.xor
 
+// Converts a word to another size, removing bits or adding zeroes as needed.
+Word.trim<size: Nat>(new_size: Nat, word: Word(size)): Word(new_size)
+  case new_size:
+  | Word.nil;
+  | case word:
+    | Word.w0<new_size.pred>(Word.trim<Nat.zero>(new_size.pred, Word.nil));
+    | Word.w0<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));
+    | Word.w1<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));;
+  : Word(new_size.self);
+
+Word.from_nat(size: Nat, n: Nat): Word(size)
+  Nat.apply<Word(size)>(n, Word.inc<size>, Word.zero(size))
+
+Word.nat_log2.go<size: Nat>(word: Word(size), c: Nat, n: Nat): Nat
+  case word:
+  | n;
+  | Word.nat_log2.go<word.size>(word.pred, Nat.succ(c), n);
+  | Word.nat_log2.go<word.size>(word.pred, Nat.succ(c), c);
+  
+Word.nat_log2<size: Nat>(word: Word(size)): Nat
+  Word.nat_log2.go<size>(word, 0, 0)
+
+Word.reverse.go<size: Nat, a: Nat, b: Nat>
+(word: Word(a), res: Word(b))<eq: Equal(Nat, Nat.add(a,b), size)>
+: Word(size)
+  (case word:
+  | <eq> Equal.cast<Nat, b, size, (x) Word(x), eq>(res);
+  | <eq>
+    def eq0 = Equal.mirror<Nat, Nat.add(word.size, Nat.succ(b)), Nat.succ(Nat.add(word.size, b))>(Nat.add_succ_theorem(word.size, b))
+    def eq1 = Equal.cast<Nat, Nat.add(Nat.succ(word.size), b), Nat.add(word.size, Nat.succ(b)), (x) Equal(Nat, x, size), eq0>(eq)
+    let rec = Word.reverse.go<size, word.size, Nat.succ(b)>(word.pred, Word.w0<b>(res))<eq1>
+    rec;
+  | <eq>
+    def eq0 = Equal.mirror<Nat, Nat.add(word.size, Nat.succ(b)), Nat.succ(Nat.add(word.size, b))>(Nat.add_succ_theorem(word.size, b))
+    def eq1 = Equal.cast<Nat, Nat.add(Nat.succ(word.size), b), Nat.add(word.size, Nat.succ(b)), (x) Equal(Nat, x, size), eq0>(eq)
+    let rec = Word.reverse.go<size, word.size, Nat.succ(b)>(word.pred, Word.w1<b>(res))<eq1>
+    rec;
+  : <eq: Equal(Nat, Nat.add(word.n, b), size)> -> Word(size);)<eq>
+
+Word.reverse<size: Nat>(word: Word(size)): Word(size)
+  Word.reverse.go<size, size, Nat.zero>(word, Word.nil)<Nat.add_zero_theorem(size)>

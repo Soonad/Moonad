@@ -12,58 +12,46 @@ Bool.not(a: Bool):  Bool
 // Is any of the bools true?
 Bool.or(a: Bool, b: Bool): Bool
   case a:
+  | Bool.true;
   | case b:
     | Bool.true;
-    | Bool.true;
-  ;
-  | case b:
-    | Bool.true;
-    | Bool.false;
-  ;
+    | Bool.false;;
 
 // Are both bools true?
 Bool.and(a: Bool, b: Bool): Bool
   case a:
   | case b:
     | Bool.true;
-    | Bool.false;
-  ;
-  | case b:
-    | Bool.false;
-    | Bool.false;
-  ;
+    | Bool.false;;
+  | Bool.false;
 
 // Are both booleans equal?
-Bool.eql: Bool -> Bool -> Bool
-  (a) (b)
+Bool.eql(a: Bool, b: Bool): Bool
   case a:
   | case b: 
     | Bool.true;
-    | Bool.false;
-  ;
+    | Bool.false;;
   | case b:
     | Bool.false;
-    | Bool.true;
-  ;
+    | Bool.true;;
 
 // Dependent elimination of Bool.
-Bool.elim : (b: Bool) -> <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
-  (b) <P> (t) (f) b<P>(t)(f)
+Bool.elim(b: Bool): <P: Bool -> Type> -> P(Bool.true) -> P(Bool.false) -> P(b)
+  <P> (t) (f) b<P>(t, f)
 
 // If-then-else
-Bool.if: <A: Type> -> (x: Bool) -> (ct: A) -> (cf: A) -> A //prim//
-  <A> (x) (ct) (cf)
-  case Bool.eql(x)(Bool.false):
-  | cf;
-  | ct;
+Bool.if<A: Type>(cond: Bool, true_case: A, false_case: A): A
+  case cond:
+  | true_case;
+  | false_case;
 
 // Boolean negation, fusible
 Bool.notf(a: Bool): Bool
   <P> (t) (f)
-  case a
-  : (a) P(Bool.notf(a));
+  case a:
   | f;
   | t;
+  : P(Bool.notf(a.self));
 
 // Converts to a string
 Bool.show(b: Bool): String
@@ -82,27 +70,39 @@ Bool.IsFalse(b: Bool): Type
   case b:
   | Empty;
   | Unit;
-  
-// Proof that false != true
-Bool.false_isnt_true: Not(Equal(Bool)(Bool.false)(Bool.true))
-  def P = ((b) case b: |Empty; |Unit;) :: Bool -> Type
-  (e) Equal.rewrite<Bool><Bool.false><Bool.true><P>(e)(Unit.new)
 
 // Proof that true != false
-Bool.true_isnt_false: Not(Equal(Bool)(Bool.true)(Bool.false))
-  (e)
-  Equal.rewrite<Bool><Bool.true><Bool.false><(b) b<() Type>|Unit;|Empty;>(e)(Unit.new)
+Bool.true_isnt_false: Not(Equal(Bool, Bool.true, Bool.false))
+  def P(b : Bool)
+    case b:
+    | Unit;
+    | Empty;
+  def p_true
+    Unit.new
+  (true_is_false)
+    Equal.rewrite<_,_,_,P>(true_is_false, p_true)
+  
+// Proof that false != true
+Bool.false_isnt_true: Not(Equal(Bool, Bool.false, Bool.true))
+  def P(b : Bool)
+    case b:
+    | Empty;
+    | Unit;
+  def p_false
+    Unit.new
+  (false_is_true)
+    Equal.rewrite<_,_,_,P>(false_is_true, p_false)
 
 // Bool that is provably different from the input
-Bool.test.different_elem: (a: Bool) -> Subset(Bool)((b) Not(Equal(Bool)(a)(b)))
+Bool.test.different_elem: (a: Bool) -> Subset(Bool, (b) Not(Equal(Bool, a, b)))
   (a)
-  a<(self) Subset(Bool)((b) Not(Equal(Bool)(self)(b)))>
-  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.true)(b))>(Bool.false)<Bool.true_isnt_false>;
-  | Subset.new<Bool><(b) Not(Equal(Bool)(Bool.false)(b))>(Bool.true)<Bool.false_isnt_true>;
+  a<(self) Subset(Bool, (b) Not(Equal(Bool, self, b)))>
+  | Subset.new<Bool, (b) Not(Equal(Bool, Bool.true, b))>(Bool.false)<Bool.true_isnt_false>;
+  | Subset.new<Bool, (b) Not(Equal(Bool, Bool.false, b))>(Bool.true)<Bool.false_isnt_true>;
 
 // Proof that not(not(b)) == b
-Bool.double_negation_theorem(b: Bool): Equal(_, Bool.not(Bool.not(b)), b)
-  case b
-  : (b) Equal(_, Bool.not(Bool.not(b)), b);
+Bool.double_negation_theorem(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
+  case b:
   | Equal.to<_, Bool.true>;
   | Equal.to<_, Bool.false>;
+  : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);
