@@ -1,79 +1,88 @@
 // Array(A, depth) is a container with 2^depth values of type A.
-T Array<A: Type>                                ~ (n: Nat)
-| tip(value: A)                                 ~ (Nat.zero);
-| tie<n: Nat>(lft: Array(A,n), rgt: Array(A,n)) ~ (Nat.succ(n));
+T Array<A: Type>                                            ~ (depth: Nat)
+| tip(value: A)                                             ~ (Nat.zero);
+| tie<depth: Nat>(lft: Array(A,depth), rgt: Array(A,depth)) ~ (Nat.succ(depth));
 
-Array.rget<A:Type, n:Nat>(idx: Word(n), arr: Array(A,n)): A
+Array.rget<A:Type, depth:Nat>(idx: Word(depth), arr: Array(A,depth)): A
   case idx:
-  with e0: Equal(Nat, n, idx.n) = Equal.to<Nat, n>;
+  with e0: Equal(Nat, depth, idx.size) = Equal.to<Nat, depth>;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
     | arr.value;
     | Empty.absurd<>(Nat.zero_isnt_succ<>(Equal.right<,,,>(e0, e1)));;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
     | Empty.absurd<>(Nat.succ_isnt_zero<>(Equal.right<,,,>(e0, e1)));
     | let e2 = Equal.right<,,,>(e1, e0)
       let e3 = Equal.apply<_,_,_,_,Nat.pred>(e2)
-      let l0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A,x)>(e3, arr.lft)
+      let l0 = Equal.rewrite<Nat,arr.depth,idx.size,(x) Array(A,x)>(e3, arr.lft)
       Array.rget<A, idx.size>(idx.pred, l0);;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
     | Empty.absurd<>(Nat.succ_isnt_zero<>(Equal.right<,,,>(e0, e1)));
     | let e2 = Equal.right<,,,>(e1, e0)
       let e3 = Equal.apply<_,_,_,_,Nat.pred>(e2)
-      let r0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A,x)>(e3, arr.rgt)
+      let r0 = Equal.rewrite<Nat,arr.depth,idx.size,(x) Array(A,x)>(e3, arr.rgt)
       Array.rget<A, idx.size>(idx.pred, r0);;
 
-Array.rmut<A:Type, n:Nat>(idx: Word(n), f: A -> A, arr: Array(A,n)): Array(A,n)
+Array.rmut<A:Type, depth:Nat>(idx: Word(depth), f: A -> A, arr: Array(A,depth))
+: Array(A,depth)
   case idx:
-  with e0: Equal(Nat, n, idx.n) = Equal.to<Nat, n>;
+  with e0: Equal(Nat, depth, idx.size) = Equal.to<Nat, depth>;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
     | Array.tip<A>(f(arr.value));
     | let e2 = Equal.right<,,,>(e0, e1)
-      Empty.absurd<Array(A,Nat.zero)>(Nat.zero_isnt_succ<arr.n>(e2));;
+      Empty.absurd<Array(A,Nat.zero)>(Nat.zero_isnt_succ<arr.depth>(e2));;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
-    | let e2 = Equal.right<Nat,n,Nat.succ(idx.size),Nat.zero>(e0, e1)
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
+    | let e2 = Equal.right<Nat,depth,Nat.succ(idx.size),Nat.zero>(e0, e1)
       let e3 = Nat.succ_isnt_zero<idx.size>(e2)
       Empty.absurd<Array(A, Nat.succ(idx.size))>(e3);
-    | let e2 = Equal.right<Nat,n,Nat.succ(arr.n),Nat.succ(idx.size)>(e1, e0)
-      let e3 = Equal.apply<Nat,Nat,Nat.succ(arr.n),Nat.succ(idx.size),Nat.pred>(e2)
-      let l0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A, x)>(e3, arr.lft)
-      let l1 = Array.rmut<A, idx.size>(idx.pred, f, l0)
-      let r0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A, x)>(e3, arr.rgt)
-      let a0 = Array.tie<A, idx.size>(l1, r0)
+    | def ad = arr.depth
+      def is = idx.size
+      let e2 = Equal.right<Nat,depth,Nat.succ(ad),Nat.succ(is)>(e1,e0)
+      let e3 = Equal.apply<Nat,Nat,Nat.succ(ad),Nat.succ(is),Nat.pred>(e2)
+      let l0 = Equal.rewrite<Nat,ad,is,(x) Array(A, x)>(e3, arr.lft)
+      let l1 = Array.rmut<A, is>(idx.pred, f, l0)
+      let r0 = Equal.rewrite<Nat,ad,is,(x) Array(A, x)>(e3, arr.rgt)
+      let a0 = Array.tie<A, is>(l1, r0)
       a0;;
   | case arr:
-    with e1: Equal(Nat, n, arr.n) = Equal.to<Nat, n>;
-    | let e2 = Equal.right<Nat,n,Nat.succ(idx.size),Nat.zero>(e0, e1)
+    with e1: Equal(Nat, depth, arr.depth) = Equal.to<Nat, depth>;
+    | let e2 = Equal.right<Nat,depth,Nat.succ(idx.size),Nat.zero>(e0, e1)
       let e3 = Nat.succ_isnt_zero<idx.size>(e2)
       Empty.absurd<Array(A, Nat.succ(idx.size))>(e3);
-    | let e2 = Equal.right<Nat,n,Nat.succ(arr.n),Nat.succ(idx.size)>(e1, e0)
-      let e3 = Equal.apply<Nat,Nat,Nat.succ(arr.n),Nat.succ(idx.size),Nat.pred>(e2)
-      let l0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A, x)>(e3, arr.lft)
-      let r0 = Equal.rewrite<Nat,arr.n,idx.size,(x) Array(A, x)>(e3, arr.rgt)
-      let r1 = Array.rmut<A, idx.size>(idx.pred, f, r0)
-      let a0 = Array.tie<A, idx.size>(l0, r1)
+    | def ad = arr.depth
+      def is = idx.size
+      let e2 = Equal.right<Nat,depth,Nat.succ(ad),Nat.succ(is)>(e1, e0)
+      let e3 = Equal.apply<Nat,Nat,Nat.succ(ad),Nat.succ(is),Nat.pred>(e2)
+      let l0 = Equal.rewrite<Nat,ad,is,(x) Array(A, x)>(e3, arr.lft)
+      let r0 = Equal.rewrite<Nat,ad,is,(x) Array(A, x)>(e3, arr.rgt)
+      let r1 = Array.rmut<A, is>(idx.pred, f, r0)
+      let a0 = Array.tie<A, is>(l0, r1)
       a0;;
-  : Array(A, idx.n);
+  : Array(A, idx.size);
 
-Array.rset<A:Type, n:Nat>(idx: Word(n), val: A, arr: Array(A,n)): Array(A,n)
-  Array.rmut<A,n>(idx, () val, arr)
+Array.rset<A:Type, depth:Nat>(idx: Word(depth), val: A, arr: Array(A,depth))
+: Array(A,depth)
+  Array.rmut<A,depth>(idx, () val, arr)
 
-Array.get<A:Type, n:Nat>(idx: Word(n), arr: Array(A,n)): A
-  Array.rget<A, n>(Word.reverse<n>(idx), arr)
+Array.get<A:Type, depth:Nat>(idx: Word(depth), arr: Array(A,depth))
+: A
+  Array.rget<A, depth>(Word.reverse<depth>(idx), arr)
 
-Array.mut<A:Type, n:Nat>(idx: Word(n), f: A -> A, arr: Array(A,n)): Array(A,n)
-  Array.rmut<A, n>(Word.reverse<n>(idx), f, arr)
+Array.mut<A:Type, depth:Nat>(idx: Word(depth), f: A -> A, arr: Array(A,depth))
+: Array(A,depth)
+  Array.rmut<A, depth>(Word.reverse<depth>(idx), f, arr)
 
-Array.set<A:Type, n:Nat>(idx: Word(n), val: A, arr: Array(A,n)): Array(A,n)
-  Array.rset<A,n>(Word.reverse<n>(idx), val, arr)
+Array.set<A:Type, depth:Nat>(idx: Word(depth), val: A, arr: Array(A,depth))
+: Array(A,depth)
+  Array.rset<A,depth>(Word.reverse<depth>(idx), val, arr)
 
-Array.alloc<A: Type>(n: Nat, x: A): Array(A, n)
-  case n:
+Array.alloc<A: Type>(depth: Nat, x: A): Array(A, depth)
+  case depth:
   | Array.tip<A>(x);
-  | let half = Array.alloc<A>(n.pred, x)
-    Array.tie<A, n.pred>(half, half);
-  : Array(A, n.self);
+  | let half = Array.alloc<A>(depth.pred, x)
+    Array.tie<A, depth.pred>(half, half);
+  : Array(A, depth.self);

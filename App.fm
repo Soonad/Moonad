@@ -1,0 +1,27 @@
+T App<S: Type>
+| new(
+  init: S,
+  draw: S -> App.Render,
+  when: App.Event -> S -> S);
+
+T App.Render
+| txt(text: String);
+| img(size: Pair(U32,U32), image: Buffer32);
+
+T App.Event
+| tick(date: U64, mouse_x: U32, mouse_y: U32);
+| ukey(down: Bool, code: U16);
+| post(date: U64, auth: String, head: String, body: String);
+
+// A demo application
+App.demo: App(Nat)
+  def init
+    0
+  def draw(state)
+    App.Render.txt(String.concat("Clicks: ", Nat.to_string_unary(state)))
+  def when(event, state)
+    case event:
+    | tick => state;
+    | ukey => Nat.succ(state);
+    | post => state;
+  App.new<>(init, draw, when)
