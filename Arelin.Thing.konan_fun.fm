@@ -1,262 +1,258 @@
-// Arelin.Thing.konan_fun(self: Arelin.Thing): Arelin.Thing
-//   let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
-//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-//   let self.act = Arelin.Thing.get_act(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
-//   let self.pos = Arelin.Thing.get_pos(self)
-//   let targ_dir = Arelin.Thing.targ_dir(self)
+Arelin.Thing.konan_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
+  let self     = Arelin.Thing.set_mhp(self, F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let targ_dir = Arelin.Thing.targ_dir(self)
   
-//   case F64.eql(self.act, F64.0):
-//   | #KONAN_IDLE#
-//     case Arelin.Thing.is_walking(self):
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | KONAN_RUN_000;
-//       | F64.parse("6");
-//       | F64.parse("12");
-//     ;
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | KONAN_IDLE_000;
-//       | F64.parse("6");
-//       | F64.parse("12");
-//     ;
-//   ;
-//   | case F64.eql(self.act, F64.1):
-//   | #KONAN_GIANT_PAPER_DESTRUCTION#
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | KONAN_GIANT_PAPER_DESTRUCTION_CAST_000;
-//       | F64.parse("2");
-//       | F64.parse("14");
+  case F64.eql(self.act, F64.0):
+  | #KONAN_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | KONAN_RUN_000;
+      | F64.parse("6");
+      | F64.parse("12");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | KONAN_IDLE_000;
+      | F64.parse("6");
+      | F64.parse("12");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #KONAN_GIANT_PAPER_DESTRUCTION#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | KONAN_GIANT_PAPER_DESTRUCTION_CAST_000;
+      | F64.parse("2");
+      | F64.parse("14");
 
-//     let paper = Arelin.Thing.new_thing
-//     let paper = Arelin.Thing.set_pos(paper, self.pos)
-//     let paper = Arelin.Thing.set_dir(paper, targ_dir)
-//     let paper = 
-//       Arelin.Thing.set_fun
-//       | paper;
-//       | Arelin.Thing.konan.giant_paper_cast;
+    let paper = Arelin.Thing.new_thing
+    let paper = Arelin.Thing.set_pos(paper, self.pos)
+    let paper = Arelin.Thing.set_dir(paper, targ_dir)
+    let paper = 
+      Arelin.Thing.set_fun
+      | paper;
+      | Arelin.Thing.konan.giant_paper_cast;
 
-//     let explo = Arelin.Thing.new_thing
-//     let explo = Arelin.Thing.set_dir(explo, targ_dir)
-//     let explo = 
-//       Arelin.Thing.move
-//       | explo;
-//       | Arelin.Thing.at_max_dist(self, F64.parse("200"));
-//     let explo = 
-//       Arelin.Thing.set_fun
-//       | explo;
-//       | Arelin.Thing.konan.giant_paper_explo;
+    let explo = Arelin.Thing.new_thing
+    let explo = Arelin.Thing.set_dir(explo, targ_dir)
+    let explo = 
+      Arelin.Thing.move
+      | explo;
+      | Arelin.Thing.at_max_dist(self, F64.parse("200"));
+    let explo = 
+      Arelin.Thing.set_fun
+      | explo;
+      | Arelin.Thing.konan.giant_paper_explo;
     
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.0;
-//       | [ Arelin.Thing; paper ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.0;
+      | [ paper ];
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("13");
-//       | [ Arelin.Thing; explo ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("13");
+      | [ explo ];
     
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.2):
-//   | #KONAN_SHIKIGAMIS_DANCE#
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | KONAN_SHIKIGAMIS_DANCE_000;
-//       | F64.parse("16");
-//       | F64.parse("32");
+    self 
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #KONAN_SHIKIGAMIS_DANCE#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | KONAN_SHIKIGAMIS_DANCE_000;
+      | F64.parse("16");
+      | F64.parse("32");
 
-//     let self = 
-//       Arelin.Thing.blink
-//       | self;
-//       | F64.parse("31");
-//       | Arelin.Thing.at_dist(self, F64.parse("100"));
+    let self = 
+      Arelin.Thing.blink
+      | self;
+      | F64.parse("31");
+      | Arelin.Thing.at_dist(self, F64.parse("100"));
 
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.parse("3")):
-//   | #KONAN_ORIGAMI_KNOCKDOWN#
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | KONAN_ORIGAMI_KNOCKDOWN_CAST_000;
-//       | F64.parse("2");
-//       | F64.parse("10");
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #KONAN_ORIGAMI_KNOCKDOWN#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | KONAN_ORIGAMI_KNOCKDOWN_CAST_000;
+      | F64.parse("2");
+      | F64.parse("10");
 
-//     let origami = Arelin.Thing.new_thing
-//     let origami = Arelin.Thing.set_fun(origami, Arelin.Thing.konan.origami)
-//     let origami = Arelin.Thing.set_dir(origami, targ_dir)
-//     let origami = 
-//       Arelin.Thing.set_pos
-//       | origami;
-//       | Arelin.Thing.at_max_dist(self, F64.parse("100"));
+    let origami = Arelin.Thing.new_thing
+    let origami = Arelin.Thing.set_fun(origami, Arelin.Thing.konan.origami)
+    let origami = Arelin.Thing.set_dir(origami, targ_dir)
+    let origami = 
+      Arelin.Thing.set_pos
+      | origami;
+      | Arelin.Thing.at_max_dist(self, F64.parse("100"));
     
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("8");
-//       | [ Arelin.Thing; origami ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("8");
+      | [ origami ];
     
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.parse("4")):
-//   | #KONAN_GODS_ANGEL#
-//     // TODO: do not invert the position she is looking at
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | KONAN_GODS_ANGEL_CAST_000;
-//       | F64.parse("15");
-//       | F64.parse("30");
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #KONAN_GODS_ANGEL#
+    // TODO: do not invert the position she is looking at
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | KONAN_GODS_ANGEL_CAST_000;
+      | F64.parse("15");
+      | F64.parse("30");
 
-//     let self = 
-//       Arelin.Thing.blink
-//       | self; 
-//       | F64.parse("29");
-//       | Arelin.Thing.between_dist(self, F64.parse("60"), F64.parse("70"));
+    let self = 
+      Arelin.Thing.blink
+      | self; 
+      | F64.parse("29");
+      | Arelin.Thing.between_dist(self, F64.parse("60"), F64.parse("70"));
 
-//     let wings = Arelin.Thing.new_thing
-//     let wings = Arelin.Thing.set_fun(wings, Arelin.Thing.konan.gods_angel)
-//     let wings = Arelin.Thing.set_dir(wings, targ_dir)
-//     let wings = Arelin.Thing.set_pos(wings, self.pos)
+    let wings = Arelin.Thing.new_thing
+    let wings = Arelin.Thing.set_fun(wings, Arelin.Thing.konan.gods_angel)
+    let wings = Arelin.Thing.set_dir(wings, targ_dir)
+    let wings = Arelin.Thing.set_pos(wings, self.pos)
 
-//     let self  = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("15");
-//       | [ Arelin.Thing; wings ];
+    let self  = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("15");
+      | [ wings ];
 
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.parse("5")):
-//   | #KONAN_BLOCK#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | KONAN_BLOCK_000;
-//     | F64.parse("9");
-//     | F64.parse("27");
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #KONAN_BLOCK#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | KONAN_BLOCK_000;
+    | F64.parse("9");
+    | F64.parse("27");
 
-//   ;
-//   | #KONAN_TAUNT#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | KONAN_TAUNT_CAST_000;
-//     | F64.parse("9");
-//     | F64.parse("18");
-//   ;;;;;;
+  ;
+  | #KONAN_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | KONAN_TAUNT_CAST_000;
+    | F64.parse("9");
+    | F64.parse("18");
+  ;;;;;;
 
-// Arelin.Thing.konan.giant_paper_cast(self: Arelin.Thing): Arelin.Thing
-//   Arelin.Thing.animate_die
-//   | self;
-//   | F64.0;
-//   | KONAN_GIANT_PAPER_DESTRUCTION_EFFECT_000;
-//   | F64.parse("9");
-//   | F64.parse("18");
+Arelin.Thing.konan.giant_paper_cast(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | KONAN_GIANT_PAPER_DESTRUCTION_EFFECT_000;
+  | F64.parse("9");
+  | F64.parse("18");
 
-// // High damage on a small area
-// Arelin.Thing.konan.giant_paper_explo(self: Arelin.Thing): Arelin.Thing
-//   let self.pos = Arelin.Thing.get_pos(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
+// High damage on a small area
+Arelin.Thing.konan.giant_paper_explo(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
 
-//   let self = 
-//     Arelin.Thing.animate_die
-//     | self;
-//     | F64.0;
-//     | KONAN_GIANT_PAPER_DESTRUCTION_EXPLOSION_EFFECT_000;
-//     | F64.parse("4");
-//     | F64.parse("8");
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | KONAN_GIANT_PAPER_DESTRUCTION_EXPLOSION_EFFECT_000;
+    | F64.parse("4");
+    | F64.parse("8");
 
-//   let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
-//   let effs = [Arelin.Game.Effect; Arelin.Game.Effect.damage(F64.parse("5"))]
-//   let hits = 
-//     [ Arelin.Game.Hit; 
-//       Arelin.Game.Hit.new
-//       | effs;
-//       | self.pos;
-//       | self.dir; 
-//       | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-//     ]
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let effs = [ Arelin.Game.Effect.damage(F64.parse("5"))]
+  let hits = 
+    [ Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir; 
+      | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+    ]
 
-//   let self = Arelin.Thing.cast(self, F64.0, hits)
+  let self = Arelin.Thing.cast(self, F64.0, hits)
   
-//   self
+  self
 
 
-// // Low damage and knock back
-// // TODO: update box to a polygon
-// Arelin.Thing.konan.origami(self: Arelin.Thing): Arelin.Thing
-//   let self.pos = Arelin.Thing.get_pos(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
-//   let self = 
-//     Arelin.Thing.animate_die
-//     | self;
-//     | F64.0;
-//     | KONAN_ORIGAMI_KNOCKDOWN_EFFECT_000;
-//     | F64.parse("14");
-//     | F64.parse("28");
+// Low damage and knock back
+// TODO: update box to a polygon
+Arelin.Thing.konan.origami(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | KONAN_ORIGAMI_KNOCKDOWN_EFFECT_000;
+    | F64.parse("14");
+    | F64.parse("28");
 
-//   let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
 
-//   let effs = 
-//     [ Arelin.Game.Effect; 
-//       Arelin.Game.Effect.damage(F64.parse("2")),
-//       Arelin.Game.Effect.repulse(F64.parse("8"))
-//     ]
+  let effs = 
+    [ Arelin.Game.Effect.damage(F64.parse("2")),
+      Arelin.Game.Effect.repulse(F64.parse("8"))
+    ]
 
-//   let hits = 
-//     [ Arelin.Game.Hit; 
-//       Arelin.Game.Hit.new
-//       | effs;
-//       | self.pos;
-//       | self.dir;
-//       | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-//     ]
+  let hits = 
+    [ Arelin.Game.Hit.new
+      | effs;
+      | self.pos;
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+    ]
   
-//   let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
 
-//   self 
+  self 
 
-// Arelin.Thing.konan.gods_angel(self: Arelin.Thing): Arelin.Thing
-//   let self.pos = Arelin.Thing.get_pos(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
-//   let self = 
-//     Arelin.Thing.animate_die
-//     | self;
-//     | F64.0;
-//     | KONAN_GODS_ANGEL_EFFECT_000;
-//     | F64.parse("7");
-//     | F64.parse("14");
+Arelin.Thing.konan.gods_angel(self: Arelin.Thing): Arelin.Thing
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self = 
+    Arelin.Thing.animate_die
+    | self;
+    | F64.0;
+    | KONAN_GODS_ANGEL_EFFECT_000;
+    | F64.parse("7");
+    | F64.parse("14");
 
-//   let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
 
-//   let effs = [ Arelin.Game.Effect; Arelin.Game.Effect.damage(F64.parse("2")) ]
-//   let hits = 
-//     [ Arelin.Game.Hit; 
-//       Arelin.Game.Hit.new
-//       | effs;
-//       | self.pos; 
-//       | self.dir;
-//       | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-//     ]
+  let effs = [ Arelin.Game.Effect.damage(F64.parse("2")) ]
+  let hits = 
+    [ Arelin.Game.Hit.new
+      | effs;
+      | self.pos; 
+      | self.dir;
+      | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+    ]
 
-//   let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
-//   let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
-//   let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
 
-//   self 
+  self 
