@@ -25,4 +25,3 @@ T VerifiedFunctor<F: Type -> Type, f: Functor(F)>
             Functor.map<F>(f)<A, C>(Function.comp<A, B, C>(g, h), fa),
             Function.comp<F(A), F(B), F(C)>(Functor.map<F>(f)<B, C>(g), Functor.map<F>(f)<A, B>(h))(fa))
   );
-

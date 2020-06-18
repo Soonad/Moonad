@@ -32,9 +32,12 @@ Maybe.map<A: Type, B: Type>(f: A -> B, m: Maybe(A)): Maybe(B)
 
 // Maybe functor
 // =============
+
+// The functor instance for maybe
 Maybe.functor: Functor(Maybe)
   Functor.new<Maybe>(Maybe.map)
 
+// Proof that Maybe.functor conforms to the functor laws
 Maybe.functor.verified: VerifiedFunctor(Maybe, Maybe.functor)
   VerifiedFunctor.new<Maybe, Maybe.functor>(Maybe.map.id, Maybe.map.comp)
 
