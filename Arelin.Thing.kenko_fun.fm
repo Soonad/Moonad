@@ -1,110 +1,110 @@
-Arelin.Thing.kenko_fun(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("5"))
-  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-  let self.act = Arelin.Thing.get_act(self)
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self.trg = Arelin.Thing.get_trg(self)
+// Arelin.Thing.kenko_fun(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("5"))
+//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self.trg = Arelin.Thing.get_trg(self)
   
-  case F64.eql(self.act, F64.0):
-  | #KENKO_IDLE#
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | KENKO_WALK_000;
-      | F64.parse("6");
-      | F64.parse("12");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | KENKO_IDLE_000;
-      | F64.parse("7");
-      | F64.parse("14");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #KENKO_GOLEM_BLAST#
-    Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | KENKO_GOLEM_BLAST_000;
-    | F64.parse("14");
-    | F64.parse("28");
-  ;
-  | case F64.eql(self.act, F64.2):
-  | #KENKO_JADE_TONING_SHOT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | KING_DEDEDE_GORDO_THROW_CAST_000;
-    | F64.parse("10");
-    | F64.parse("20");
-  ;
-  | case F64.eql(self.act, F64.parse("3")):
-  | #KENKO_ONYX_FURY_HIT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | KENKO_ONYX_FURY_HIT_000;
-    | F64.parse("21");
-    | F64.parse("30");
-  ;
-  | case F64.eql(self.act, F64.parse("4")):
-  | #KENKO_AMETHYST_SHIELD#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | KENKO_AMETHYST_SHIELD_000;
-      | F64.parse("26");
-      | F64.parse("40");
+//   case F64.eql(self.act, F64.0):
+//   | #KENKO_IDLE#
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | KENKO_WALK_000;
+//       | F64.parse("6");
+//       | F64.parse("12");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | KENKO_IDLE_000;
+//       | F64.parse("7");
+//       | F64.parse("14");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #KENKO_GOLEM_BLAST#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | KENKO_GOLEM_BLAST_000;
+//     | F64.parse("14");
+//     | F64.parse("28");
+//   ;
+//   | case F64.eql(self.act, F64.2):
+//   | #KENKO_JADE_TONING_SHOT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | KING_DEDEDE_GORDO_THROW_CAST_000;
+//     | F64.parse("10");
+//     | F64.parse("20");
+//   ;
+//   | case F64.eql(self.act, F64.parse("3")):
+//   | #KENKO_ONYX_FURY_HIT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | KENKO_ONYX_FURY_HIT_000;
+//     | F64.parse("21");
+//     | F64.parse("30");
+//   ;
+//   | case F64.eql(self.act, F64.parse("4")):
+//   | #KENKO_AMETHYST_SHIELD#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | KENKO_AMETHYST_SHIELD_000;
+//       | F64.parse("26");
+//       | F64.parse("40");
 
-    let shield = Arelin.Thing.new_thing
-    let shield = Arelin.Thing.set_fun(shield, Arelin.Thing.kenko.amethyst_shield)
-    let shield = Arelin.Thing.set_pos(shield, self.trg)
+//     let shield = Arelin.Thing.new_thing
+//     let shield = Arelin.Thing.set_fun(shield, Arelin.Thing.kenko.amethyst_shield)
+//     let shield = Arelin.Thing.set_pos(shield, self.trg)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("10");
-      | [ Arelin.Thing; shield ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("10");
+//       | [ Arelin.Thing; shield ];
 
-    self
-  ;
-  | case F64.eql(self.act, F64.parse("5")):
-  | #KENKO_DASH#
-    let self =     
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | KING_DEDEDE_IDLE_000;
-      | F64.parse("4");
-      | F64.parse("16");
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.parse("5")):
+//   | #KENKO_DASH#
+//     let self =     
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | KING_DEDEDE_IDLE_000;
+//       | F64.parse("4");
+//       | F64.parse("16");
 
-    let self = 
-      Arelin.Thing.dash
-      | self;
-      | F64.parse("4");
-      | F64.0;
-      | F64.parse("12");
+//     let self = 
+//       Arelin.Thing.dash
+//       | self;
+//       | F64.parse("4");
+//       | F64.0;
+//       | F64.parse("12");
 
-    self 
-  ;
-  | #KENKO_TAUNT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | KENKO_TAUNT_000;
-    | F64.parse("7");
-    | F64.parse("14");
-  ;;;;;;
+//     self 
+//   ;
+//   | #KENKO_TAUNT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | KENKO_TAUNT_000;
+//     | F64.parse("7");
+//     | F64.parse("14");
+//   ;;;;;;
 
-Arelin.Thing.kenko.amethyst_shield(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | KENKO_AMETHYST_SHIELD_SKILL_000;
-  | F64.parse("23");
-  | F64.parse("23");
+// Arelin.Thing.kenko.amethyst_shield(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | KENKO_AMETHYST_SHIELD_SKILL_000;
+//   | F64.parse("23");
+//   | F64.parse("23");

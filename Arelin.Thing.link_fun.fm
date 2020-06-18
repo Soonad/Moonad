@@ -1,537 +1,537 @@
-Arelin.Thing.link_fun(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-  let self.act = Arelin.Thing.get_act(self)
-  let self.buf = Arelin.Thing.get_buf(self)
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self.sid = Arelin.Thing.get_sid(self)
-  let self.tik = Arelin.Thing.get_tik(self)
-  let targ_dir = Arelin.Thing.targ_dir(self)
+// Arelin.Thing.link_fun(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.buf = Arelin.Thing.get_buf(self)
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self.sid = Arelin.Thing.get_sid(self)
+//   let self.tik = Arelin.Thing.get_tik(self)
+//   let targ_dir = Arelin.Thing.targ_dir(self)
   
-  case F64.eql(self.act, F64.0):
-  | #LINK_IDLE#
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LINK_WALK_CYCLE_000;
-      | F64.parse("7");
-      | F64.parse("17");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LINK_IDLE_000;
-      | F64.parse("7");
-      | F64.parse("17");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #LINK_TRIPLE_ATTACK#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LINK_TRIPLE_ATTACK_000;
-      | F64.parse("11");
-      | F64.parse("22");
+//   case F64.eql(self.act, F64.0):
+//   | #LINK_IDLE#
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LINK_WALK_CYCLE_000;
+//       | F64.parse("7");
+//       | F64.parse("17");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LINK_IDLE_000;
+//       | F64.parse("7");
+//       | F64.parse("17");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #LINK_TRIPLE_ATTACK#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LINK_TRIPLE_ATTACK_000;
+//       | F64.parse("11");
+//       | F64.parse("22");
 
-    let effs = 
-      [ Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
-      ]
+//     let effs = 
+//       [ Arelin.Game.Effect; 
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+//       ]
 
-    let hits = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("20"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let hits = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("20"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.2):
-  | #LINK_PERFECT_EXCHANGE#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | LINK_PERFECT_EXTHENGE_CASTING_000;
-      | F64.parse("29");
-      | F64.parse("29");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.2):
+//   | #LINK_PERFECT_EXCHANGE#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | LINK_PERFECT_EXTHENGE_CASTING_000;
+//       | F64.parse("29");
+//       | F64.parse("29");
 
-    let arrow = Arelin.Thing.new_thing 
-    let arrow = Arelin.Thing.set_sid(arrow, self.sid)
-    let arrow = Arelin.Thing.set_fun(arrow, Arelin.Thing.link.perfect_exchange)
-    let arrow = Arelin.Thing.set_pos(arrow, self.pos)
-    let arrow = 
-      Arelin.Thing.set_vel
-      | arrow;
-      | F64.V3.scale(F64.parse("10"), targ_dir);
+//     let arrow = Arelin.Thing.new_thing 
+//     let arrow = Arelin.Thing.set_sid(arrow, self.sid)
+//     let arrow = Arelin.Thing.set_fun(arrow, Arelin.Thing.link.perfect_exchange)
+//     let arrow = Arelin.Thing.set_pos(arrow, self.pos)
+//     let arrow = 
+//       Arelin.Thing.set_vel
+//       | arrow;
+//       | F64.V3.scale(F64.parse("10"), targ_dir);
     
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("22");
-      | [ Arelin.Thing; arrow ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("22");
+//       | [ Arelin.Thing; arrow ];
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("3")):
-  | #LINK_STORM#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LINK_STORM_000;
-      | F64.parse("23");
-      | F64.parse("46");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("3")):
+//   | #LINK_STORM#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LINK_STORM_000;
+//       | F64.parse("23");
+//       | F64.parse("46");
 
-    let effs = 
-      [ Arelin.Game.Effect; 
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1) 
-      ]
+//     let effs = 
+//       [ Arelin.Game.Effect; 
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_1) 
+//       ]
 
-    let storm_hits = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new 
-        | effs;
-        | self.pos;
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("25"));
-      ]
+//     let storm_hits = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new 
+//         | effs;
+//         | self.pos;
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("25"));
+//       ]
 
-    let last_hits = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("20"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let last_hits = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("20"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let self = Arelin.Thing.cast(self, F64.parse("10"), storm_hits)
-    let self = Arelin.Thing.cast(self, F64.parse("20"), storm_hits)
-    let self = Arelin.Thing.cast(self, F64.parse("30"), storm_hits)
-    let self = Arelin.Thing.cast(self, F64.parse("40"), last_hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("10"), storm_hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("20"), storm_hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("30"), storm_hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("40"), last_hits)
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("4")):
-  | #LINK_SELECTION_MASK#
-    let self = 
-      case F64.gtn(self.tik, F64.parse("40")):
-      | get self.dir.x self.dir.y self.dir.z = self.dir 
-        case F64.gtn(self.dir.x, F64.0):
-        | Arelin.Thing.create_at
-          | self;
-          | F64.parse("41");
-          | Arelin.Thing.link.zora;
-        ;
-        | case F64.gtn(self.dir.y, F64.0):
-          | Arelin.Thing.create_at
-            | self;
-            | F64.parse("41");
-            | Arelin.Thing.link.goron; 
-          ;
-          | Arelin.Thing.create_at
-            | self;
-            | F64.parse("41");
-            | Arelin.Thing.link.deku; 
-          ; 
-        ; 
-      ;
-      | Arelin.Thing.animate
-        | self;
-        | F64.0;
-        | LINK_SELECTION_MASK_000;
-        | F64.parse("23");
-        | F64.parse("46");  
-      ;
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("4")):
+//   | #LINK_SELECTION_MASK#
+//     let self = 
+//       case F64.gtn(self.tik, F64.parse("40")):
+//       | get self.dir.x self.dir.y self.dir.z = self.dir 
+//         case F64.gtn(self.dir.x, F64.0):
+//         | Arelin.Thing.create_at
+//           | self;
+//           | F64.parse("41");
+//           | Arelin.Thing.link.zora;
+//         ;
+//         | case F64.gtn(self.dir.y, F64.0):
+//           | Arelin.Thing.create_at
+//             | self;
+//             | F64.parse("41");
+//             | Arelin.Thing.link.goron; 
+//           ;
+//           | Arelin.Thing.create_at
+//             | self;
+//             | F64.parse("41");
+//             | Arelin.Thing.link.deku; 
+//           ; 
+//         ; 
+//       ;
+//       | Arelin.Thing.animate
+//         | self;
+//         | F64.0;
+//         | LINK_SELECTION_MASK_000;
+//         | F64.parse("23");
+//         | F64.parse("46");  
+//       ;
     
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("5")):
-  | #LINK_YOUNG_LINK#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | LINK_YOUNG_LINK_000;
-      | F64.parse("9");
-      | F64.parse("18");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("5")):
+//   | #LINK_YOUNG_LINK#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | LINK_YOUNG_LINK_000;
+//       | F64.parse("9");
+//       | F64.parse("18");
 
-    let effs = 
-      [ Arelin.Game.Effect;
-        Arelin.Game.Effect.repulse(F64.parse("-10"))
-      ]
+//     let effs = 
+//       [ Arelin.Game.Effect;
+//         Arelin.Game.Effect.repulse(F64.parse("-10"))
+//       ]
 
-    let hits = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("60"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let hits = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("60"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
 
-    self 
-  ;
-  | #LINK_BLOCK#
-    let shield_buff = 
-      Arelin.Game.Buff.shielded
-      | F64.parse("22");
-      | F64.parse("1000");
+//     self 
+//   ;
+//   | #LINK_BLOCK#
+//     let shield_buff = 
+//       Arelin.Game.Buff.shielded
+//       | F64.parse("22");
+//       | F64.parse("1000");
 
-    let self = 
-      Arelin.Thing.set_buf
-      | self;
-      | List.cons<>(shield_buff, self.buf);
+//     let self = 
+//       Arelin.Thing.set_buf
+//       | self;
+//       | List.cons<>(shield_buff, self.buf);
 
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LINK_BLOCK_000;
-      | F64.parse("11");
-      | F64.parse("22");
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LINK_BLOCK_000;
+//       | F64.parse("11");
+//       | F64.parse("22");
 
-    self 
-  ;;;;;;
+//     self 
+//   ;;;;;;
 
-Arelin.Thing.link.perfect_exchange(self: Arelin.Thing): Arelin.Thing
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
+// Arelin.Thing.link.perfect_exchange(self: Arelin.Thing): Arelin.Thing
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
   
-  let self = 
-    Arelin.Thing.animate_die
-    | self;
-    | F64.0;
-    | LINK_PERFECT_EXTHENGE_PROJECT_000;
-    | F64.1;
-    | F64.parse("16");
+//   let self = 
+//     Arelin.Thing.animate_die
+//     | self;
+//     | F64.0;
+//     | LINK_PERFECT_EXTHENGE_PROJECT_000;
+//     | F64.1;
+//     | F64.parse("16");
 
-  let effs = 
-    [ Arelin.Game.Effect;
-      Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
-    ]
+//   let effs = 
+//     [ Arelin.Game.Effect;
+//       Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+//     ]
 
-  let hits = 
-    [ Arelin.Game.Hit;
-      Arelin.Game.Hit.new
-      | effs;
-      | self.pos;
-      | self.dir;
-      | Arelin.Game.Hitbox.cbox(F64.parse("6"));
-    ]
+//   let hits = 
+//     [ Arelin.Game.Hit;
+//       Arelin.Game.Hit.new
+//       | effs;
+//       | self.pos;
+//       | self.dir;
+//       | Arelin.Game.Hitbox.cbox(F64.parse("6"));
+//     ]
 
-  let self = Arelin.Thing.cast(self, F64.0, hits)
-  let self = Arelin.Thing.cast(self, F64.1, hits)
-  let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
-  let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+//   let self = Arelin.Thing.cast(self, F64.0, hits)
+//   let self = Arelin.Thing.cast(self, F64.1, hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("2"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("3"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("4"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("5"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("6"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("7"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("8"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("9"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("11"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("12"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("13"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("14"), hits)
+//   let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
 
-  self  
+//   self  
 
-Arelin.Thing.link.zora(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.act = Arelin.Thing.get_act(self)
-  let self = 
-    Arelin.Thing.end_thing 
-    | self; 
-    | Arelin.Thing.link_fun;
-    | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
-    | Arelin.Constants.ULT_TIME;
+// Arelin.Thing.link.zora(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self = 
+//     Arelin.Thing.end_thing 
+//     | self; 
+//     | Arelin.Thing.link_fun;
+//     | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
+//     | Arelin.Constants.ULT_TIME;
 
-  case F64.eql(self.act, F64.0):
-  | #ZORA_IDLE# 
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | ZORA_RUN_000;
-      | F64.parse("5");
-      | F64.parse("10");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | ZORA_IDLE_000;
-      | F64.parse("5");
-      | F64.parse("10");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #ZORA_DASH#
-    let self = 
-      Arelin.Thing.animate_with_blink
-      | self;
-      | F64.1;
-      | ZORA_SKILL_000;
-      | ZORA_IDLE_000;
-      | F64.parse("4");
-      | F64.0;
-      | F64.parse("16");
+//   case F64.eql(self.act, F64.0):
+//   | #ZORA_IDLE# 
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | ZORA_RUN_000;
+//       | F64.parse("5");
+//       | F64.parse("10");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | ZORA_IDLE_000;
+//       | F64.parse("5");
+//       | F64.parse("10");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #ZORA_DASH#
+//     let self = 
+//       Arelin.Thing.animate_with_blink
+//       | self;
+//       | F64.1;
+//       | ZORA_SKILL_000;
+//       | ZORA_IDLE_000;
+//       | F64.parse("4");
+//       | F64.0;
+//       | F64.parse("16");
 
-    let self = 
-      Arelin.Thing.blink
-      | self;
-      | F64.parse("16");
-      | Arelin.Thing.at_dist(self, F64.parse("75"));
+//     let self = 
+//       Arelin.Thing.blink
+//       | self;
+//       | F64.parse("16");
+//       | Arelin.Thing.at_dist(self, F64.parse("75"));
 
-    let effs = 
-      [ Arelin.Game.Effect;
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
-      ]      
+//     let effs = 
+//       [ Arelin.Game.Effect;
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+//       ]      
   
-    let hits1 = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("25"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let hits1 = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("25"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let hits2 = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("50"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let hits2 = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("50"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let hits3 = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | Arelin.Thing.at_dist(self, F64.parse("75"));
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("12"));
-      ]
+//     let hits3 = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | Arelin.Thing.at_dist(self, F64.parse("75"));
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("12"));
+//       ]
 
-    let self = Arelin.Thing.cast(self, F64.parse("4"), hits1)
-    let self = Arelin.Thing.cast(self, F64.parse("8"), hits2)
-    let self = Arelin.Thing.cast(self, F64.parse("12"), hits3)
-    let self = 
-      Arelin.Thing.create_at
-      | self;
-      | F64.parse("16"); 
-      | Arelin.Thing.link_fun;
+//     let self = Arelin.Thing.cast(self, F64.parse("4"), hits1)
+//     let self = Arelin.Thing.cast(self, F64.parse("8"), hits2)
+//     let self = Arelin.Thing.cast(self, F64.parse("12"), hits3)
+//     let self = 
+//       Arelin.Thing.create_at
+//       | self;
+//       | F64.parse("16"); 
+//       | Arelin.Thing.link_fun;
        
-    self   
-  ;
-  | Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | ZORA_IDLE_000;
-    | F64.parse("5");
-    | F64.parse("10");
-  ;;
+//     self   
+//   ;
+//   | Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | ZORA_IDLE_000;
+//     | F64.parse("5");
+//     | F64.parse("10");
+//   ;;
 
-Arelin.Thing.link.deku(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.act = Arelin.Thing.get_act(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self = 
-    Arelin.Thing.end_thing 
-    | self; 
-    | Arelin.Thing.link_fun;
-    | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
-    | Arelin.Constants.ULT_TIME;
+// Arelin.Thing.link.deku(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self = 
+//     Arelin.Thing.end_thing 
+//     | self; 
+//     | Arelin.Thing.link_fun;
+//     | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
+//     | Arelin.Constants.ULT_TIME;
 
-  case F64.eql(self.act, F64.0):
-  | #DEKU_IDLE# 
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | DEKU_RUN_000;
-      | F64.parse("4");
-      | F64.parse("16");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | DEKU_IDLE_000;
-      | F64.parse("6");
-      | F64.parse("12");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #DEKU_MUSIC#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | DEKU_SKILL_000;
-      | F64.parse("19");
-      | F64.parse("38");
+//   case F64.eql(self.act, F64.0):
+//   | #DEKU_IDLE# 
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | DEKU_RUN_000;
+//       | F64.parse("4");
+//       | F64.parse("16");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | DEKU_IDLE_000;
+//       | F64.parse("6");
+//       | F64.parse("12");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #DEKU_MUSIC#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | DEKU_SKILL_000;
+//       | F64.parse("19");
+//       | F64.parse("38");
 
-    let box = 
-      Arelin.Game.Hitbox.pbox
-      | [ F64.V3;
-          F64.V3.new(F64.0,           F64.0,            F64.0),
-          F64.V3.new(F64.parse("70"), F64.parse("45"),  F64.0), 
-          F64.V3.new(F64.parse("70"), F64.parse("-45"), F64.0)
-        ];
+//     let box = 
+//       Arelin.Game.Hitbox.pbox
+//       | [ F64.V3;
+//           F64.V3.new(F64.0,           F64.0,            F64.0),
+//           F64.V3.new(F64.parse("70"), F64.parse("45"),  F64.0), 
+//           F64.V3.new(F64.parse("70"), F64.parse("-45"), F64.0)
+//         ];
 
-    let effs = 
-      [ Arelin.Game.Effect;
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
-      ]      
+//     let effs = 
+//       [ Arelin.Game.Effect;
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_2)
+//       ]      
   
-    let hits = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs;
-        | self.pos;
-        | self.dir;
-        | box;
-      ]
+//     let hits = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs;
+//         | self.pos;
+//         | self.dir;
+//         | box;
+//       ]
       
-    let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("20"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("25"), hits)
-    let self = Arelin.Thing.cast(self, F64.parse("30"), hits)
-    let self = 
-      Arelin.Thing.create_at
-      | self;
-      | F64.parse("37"); 
-      | Arelin.Thing.link_fun;
+//     let self = Arelin.Thing.cast(self, F64.parse("10"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("15"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("20"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("25"), hits)
+//     let self = Arelin.Thing.cast(self, F64.parse("30"), hits)
+//     let self = 
+//       Arelin.Thing.create_at
+//       | self;
+//       | F64.parse("37"); 
+//       | Arelin.Thing.link_fun;
        
-    self   
-  ;
-  | Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | DEKU_IDLE_000;
-    | F64.parse("6");
-    | F64.parse("12");
-  ;;
+//     self   
+//   ;
+//   | Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | DEKU_IDLE_000;
+//     | F64.parse("6");
+//     | F64.parse("12");
+//   ;;
 
-Arelin.Thing.link.goron(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.act = Arelin.Thing.get_act(self)
-  let self = 
-    Arelin.Thing.end_thing 
-    | self; 
-    | Arelin.Thing.link_fun;
-    | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
-    | Arelin.Constants.ULT_TIME;
+// Arelin.Thing.link.goron(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("4"))
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self = 
+//     Arelin.Thing.end_thing 
+//     | self; 
+//     | Arelin.Thing.link_fun;
+//     | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("7"));
+//     | Arelin.Constants.ULT_TIME;
 
-  case F64.eql(self.act, F64.0):
-  | #DEKU_IDLE# 
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | GORON_RUN_000;
-      | F64.parse("4");
-      | F64.parse("16");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | GORON_IDLE_000;
-      | F64.parse("5");
-      | F64.parse("10");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #GORON_JUMP#
-    let self = 
-      Arelin.Thing.animate_with_blink
-      | self;
-      | F64.1;
-      | GORON_SKILL_000;
-      | LINK_IDLE_000;
-      | F64.parse("18");
-      | F64.0;
-      | F64.parse("36");
+//   case F64.eql(self.act, F64.0):
+//   | #DEKU_IDLE# 
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | GORON_RUN_000;
+//       | F64.parse("4");
+//       | F64.parse("16");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | GORON_IDLE_000;
+//       | F64.parse("5");
+//       | F64.parse("10");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #GORON_JUMP#
+//     let self = 
+//       Arelin.Thing.animate_with_blink
+//       | self;
+//       | F64.1;
+//       | GORON_SKILL_000;
+//       | LINK_IDLE_000;
+//       | F64.parse("18");
+//       | F64.0;
+//       | F64.parse("36");
 
-    let self = 
-      Arelin.Thing.blink
-      | self;
-      | F64.parse("16");
-      | Arelin.Thing.at_dist(self, F64.parse("30"));
+//     let self = 
+//       Arelin.Thing.blink
+//       | self;
+//       | F64.parse("16");
+//       | Arelin.Thing.at_dist(self, F64.parse("30"));
     
-    let self = 
-      Arelin.Thing.blink
-      | self;
-      | F64.parse("31");
-      | Arelin.Thing.at_dist(self, F64.parse("5"));
+//     let self = 
+//       Arelin.Thing.blink
+//       | self;
+//       | F64.parse("31");
+//       | Arelin.Thing.at_dist(self, F64.parse("5"));
 
-    let pos1  = Arelin.Thing.at_dist(self, F64.parse("20"))
-    let pos2  = Arelin.Thing.at_dist(self, F64.parse("50"))
+//     let pos1  = Arelin.Thing.at_dist(self, F64.parse("20"))
+//     let pos2  = Arelin.Thing.at_dist(self, F64.parse("50"))
     
-    let effs1 = 
-      [ Arelin.Game.Effect;
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_3)
-      ]
+//     let effs1 = 
+//       [ Arelin.Game.Effect;
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_3)
+//       ]
     
-    let effs2 = 
-      [ Arelin.Game.Effect;
-        Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_6)
-      ]
+//     let effs2 = 
+//       [ Arelin.Game.Effect;
+//         Arelin.Game.Effect.damage(Arelin.Constants.DMG_LV_6)
+//       ]
 
-    let hits1 = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs1;
-        | pos1;
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("15"));
-      ]
+//     let hits1 = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs1;
+//         | pos1;
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("15"));
+//       ]
 
-    let hits2 = 
-      [ Arelin.Game.Hit;
-        Arelin.Game.Hit.new
-        | effs2;
-        | pos2;
-        | self.dir;
-        | Arelin.Game.Hitbox.cbox(F64.parse("15"));
-      ]
+//     let hits2 = 
+//       [ Arelin.Game.Hit;
+//         Arelin.Game.Hit.new
+//         | effs2;
+//         | pos2;
+//         | self.dir;
+//         | Arelin.Game.Hitbox.cbox(F64.parse("15"));
+//       ]
     
-    let self = Arelin.Thing.cast(self, F64.parse("15"), hits1)
-    let self = Arelin.Thing.cast(self, F64.parse("30"), hits2)
-    let self = 
-      Arelin.Thing.create_at
-      | self;
-      | F64.parse("36"); 
-      | Arelin.Thing.link_fun;
+//     let self = Arelin.Thing.cast(self, F64.parse("15"), hits1)
+//     let self = Arelin.Thing.cast(self, F64.parse("30"), hits2)
+//     let self = 
+//       Arelin.Thing.create_at
+//       | self;
+//       | F64.parse("36"); 
+//       | Arelin.Thing.link_fun;
        
-    self   
-  ;
-  | Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | GORON_IDLE_000;
-    | F64.parse("5");
-    | F64.parse("10");
-  ;;
+//     self   
+//   ;
+//   | Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | GORON_IDLE_000;
+//     | F64.parse("5");
+//     | F64.parse("10");
+//   ;;

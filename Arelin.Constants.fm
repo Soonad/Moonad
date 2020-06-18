@@ -1,7 +1,4 @@
 Arelin.Constants.ONE_SEC: F64 F64.parse("24")
-Arelin.Constants.POS_X_KEY : Bits Bits.from_string("01011101b")
-Arelin.Constants.POS_Y_KEY : Bits Bits.from_string("01110101b")
-
 
 Arelin.Constants.DARTH_VADER_USING_FORCE : Bits Bits.from_string("0101100001")
 Arelin.Constants.FORCE_AWAKENS_KEY : Bits Bits.from_string("01101101")

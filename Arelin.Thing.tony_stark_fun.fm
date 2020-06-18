@@ -1,304 +1,304 @@
-Arelin.Thing.tony_stark_fun(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("2"))
-  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-  let self.act = Arelin.Thing.get_act(self)
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let targ_dir = Arelin.Thing.targ_dir(self)
+// Arelin.Thing.tony_stark_fun(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("2"))
+//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let targ_dir = Arelin.Thing.targ_dir(self)
   
-  case F64.eql(self.act, F64.0):
-  | #TONY_STARK_IDLE#
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | TONY_STARK_WALK_000;
-      | F64.parse("8");
-      | F64.parse("16");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | TONY_STARK_IDLE_000;
-      | F64.parse("12");
-      | F64.parse("24");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #TONY_STARK_IRON_HAND#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | TONY_STARK_IRON_HAND_CAST_000;
-      | F64.parse("13");
-      | F64.parse("26");
+//   case F64.eql(self.act, F64.0):
+//   | #TONY_STARK_IDLE#
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | TONY_STARK_WALK_000;
+//       | F64.parse("8");
+//       | F64.parse("16");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | TONY_STARK_IDLE_000;
+//       | F64.parse("12");
+//       | F64.parse("24");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #TONY_STARK_IRON_HAND#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | TONY_STARK_IRON_HAND_CAST_000;
+//       | F64.parse("13");
+//       | F64.parse("26");
 
-    let laser = Arelin.Thing.new_thing
-    let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.tony_stark.iron_hand)
-    let laser = Arelin.Thing.set_pos(laser, self.pos)
-    let laser = Arelin.Thing.set_dir(laser, targ_dir)
+//     let laser = Arelin.Thing.new_thing
+//     let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.tony_stark.iron_hand)
+//     let laser = Arelin.Thing.set_pos(laser, self.pos)
+//     let laser = Arelin.Thing.set_dir(laser, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("12");
-      | [ Arelin.Thing;
-          Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("39")))
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("12");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("39")))
+//         ];
 
-    self
-  ;
-  | case F64.eql(self.act, F64.2):
-  | #TONY_STARK_IRON_TRAP#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | TONY_STARK_IRON_TRAP_CAST_000;
-      | F64.parse("12");
-      | F64.parse("24");
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.2):
+//   | #TONY_STARK_IRON_TRAP#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | TONY_STARK_IRON_TRAP_CAST_000;
+//       | F64.parse("12");
+//       | F64.parse("24");
 
-    let trap = Arelin.Thing.new_thing
-    let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.tony_stark.iron_trap)
-    let trap = Arelin.Thing.set_pos(trap, self.pos)
-    let trap = Arelin.Thing.set_dir(trap, targ_dir)
+//     let trap = Arelin.Thing.new_thing
+//     let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.tony_stark.iron_trap)
+//     let trap = Arelin.Thing.set_pos(trap, self.pos)
+//     let trap = Arelin.Thing.set_dir(trap, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("12");
-      | [ Arelin.Thing;
-          Arelin.Thing.move(trap, Arelin.Thing.at_dist(self, F64.parse("45")))
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("12");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move(trap, Arelin.Thing.at_dist(self, F64.parse("45")))
+//         ];
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("3")):
-  | #TONY_STARK_THRUST_ATTACK#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | TONY_STARK_THRUST_ATTACK_CAST_000;
-      | F64.parse("7");
-      | F64.parse("14");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("3")):
+//   | #TONY_STARK_THRUST_ATTACK#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | TONY_STARK_THRUST_ATTACK_CAST_000;
+//       | F64.parse("7");
+//       | F64.parse("14");
 
-    let laser = Arelin.Thing.new_thing
-    let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.tony_stark.thrust)
-    let laser = Arelin.Thing.set_pos(laser, self.pos)
-    let laser = Arelin.Thing.set_dir(laser, targ_dir)
+//     let laser = Arelin.Thing.new_thing
+//     let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.tony_stark.thrust)
+//     let laser = Arelin.Thing.set_pos(laser, self.pos)
+//     let laser = Arelin.Thing.set_dir(laser, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("8");
-      | [ Arelin.Thing;
-          Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("25")))
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("8");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("25")))
+//         ];
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("4")):
-  | #TONY_STARK_IRON_MAN#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | TONY_STARK_ULTIMATE_000;
-      | F64.parse("16");
-      | F64.parse("32");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("4")):
+//   | #TONY_STARK_IRON_MAN#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | TONY_STARK_ULTIMATE_000;
+//       | F64.parse("16");
+//       | F64.parse("32");
 
-    let self = 
-      Arelin.Thing.create_at
-      | self;
-      | F64.parse("31");
-      | Arelin.Thing.tony_stark.iron_man;
+//     let self = 
+//       Arelin.Thing.create_at
+//       | self;
+//       | F64.parse("31");
+//       | Arelin.Thing.tony_stark.iron_man;
 
-    self
-  ;
-  | case F64.eql(self.act, F64.parse("5")):
-  | #TONY_STARK_DASH#
-    Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | TONY_STARK_IDLE_000;
-    | F64.parse("12");
-    | F64.parse("24");
-  ;
-  | #KENKO_TAUNT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | TONY_STARK_IDLE_000;
-    | F64.parse("12");
-    | F64.parse("24");
-  ;;;;;;
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.parse("5")):
+//   | #TONY_STARK_DASH#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | TONY_STARK_IDLE_000;
+//     | F64.parse("12");
+//     | F64.parse("24");
+//   ;
+//   | #KENKO_TAUNT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | TONY_STARK_IDLE_000;
+//     | F64.parse("12");
+//     | F64.parse("24");
+//   ;;;;;;
 
-Arelin.Thing.tony_stark.iron_hand(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | TONY_STARK_IRON_HAND_EFFECT_000;
-  | F64.parse("5");
-  | F64.parse("5");
+// Arelin.Thing.tony_stark.iron_hand(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | TONY_STARK_IRON_HAND_EFFECT_000;
+//   | F64.parse("5");
+//   | F64.parse("5");
 
-Arelin.Thing.tony_stark.iron_trap(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | TONY_STARK_IRON_TRAP_EFFECT_000;
-  | F64.parse("19");
-  | F64.parse("38");
+// Arelin.Thing.tony_stark.iron_trap(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | TONY_STARK_IRON_TRAP_EFFECT_000;
+//   | F64.parse("19");
+//   | F64.parse("38");
 
-Arelin.Thing.tony_stark.thrust(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | TONY_STARK_THRUST_ATTACK_EFFECT_000;
-  | F64.parse("5");
-  | F64.parse("10");
+// Arelin.Thing.tony_stark.thrust(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | TONY_STARK_THRUST_ATTACK_EFFECT_000;
+//   | F64.parse("5");
+//   | F64.parse("10");
 
-Arelin.Thing.tony_stark.iron_man(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-  let self.act = Arelin.Thing.get_act(self)
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let targ_dir = Arelin.Thing.targ_dir(self)
+// Arelin.Thing.tony_stark.iron_man(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let targ_dir = Arelin.Thing.targ_dir(self)
  
-  let self = 
-    Arelin.Thing.end_thing
-    | self;
-    | Arelin.Thing.tony_stark_fun;
-    | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("5"));
-    | Arelin.Constants.ULT_TIME;
+//   let self = 
+//     Arelin.Thing.end_thing
+//     | self;
+//     | Arelin.Thing.tony_stark_fun;
+//     | F64.mul(Arelin.Constants.ONE_SEC, F64.parse("5"));
+//     | Arelin.Constants.ULT_TIME;
 
 
-  case F64.eql(self.act, F64.0):
-  | #IRON_MAN_IDLE#
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | IRON_MAN_WALK_000;
-      | F64.parse("8");
-      | F64.parse("16");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | IRON_MAN_IDLE_000;
-      | F64.parse("16");
-      | F64.parse("32");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #IRON_MAN_QUICK_ATTACK#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | IRON_MAN_QUICK_ATTACK_CAST_000;
-      | F64.parse("12");
-      | F64.parse("24");
+//   case F64.eql(self.act, F64.0):
+//   | #IRON_MAN_IDLE#
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | IRON_MAN_WALK_000;
+//       | F64.parse("8");
+//       | F64.parse("16");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | IRON_MAN_IDLE_000;
+//       | F64.parse("16");
+//       | F64.parse("32");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #IRON_MAN_QUICK_ATTACK#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | IRON_MAN_QUICK_ATTACK_CAST_000;
+//       | F64.parse("12");
+//       | F64.parse("24");
 
-    let laser = Arelin.Thing.new_thing
-    let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.iron_man.quick_attack)
-    let laser = Arelin.Thing.set_pos(laser, self.pos)
-    let laser = Arelin.Thing.set_dir(laser, targ_dir)
+//     let laser = Arelin.Thing.new_thing
+//     let laser = Arelin.Thing.set_fun(laser, Arelin.Thing.iron_man.quick_attack)
+//     let laser = Arelin.Thing.set_pos(laser, self.pos)
+//     let laser = Arelin.Thing.set_dir(laser, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("10");
-      | [ Arelin.Thing;
-          Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("35")))
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("10");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move(laser, Arelin.Thing.at_dist(self, F64.parse("35")))
+//         ];
 
-    self
-  ;
-  | case F64.eql(self.act, F64.2):
-  | #IRON_MAN_ROCKET_RAIN#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | IRON_MAN_ROCKET_RAIN_CAST_000;
-      | F64.parse("14");
-      | F64.parse("28");
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.2):
+//   | #IRON_MAN_ROCKET_RAIN#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | IRON_MAN_ROCKET_RAIN_CAST_000;
+//       | F64.parse("14");
+//       | F64.parse("28");
 
-    let fire = Arelin.Thing.new_thing
-    let fire = Arelin.Thing.set_fun(fire, Arelin.Thing.iron_man.rocket_rain)
-    let fire = Arelin.Thing.set_pos(fire, self.pos)
-    let fire = Arelin.Thing.set_dir(fire, targ_dir)
+//     let fire = Arelin.Thing.new_thing
+//     let fire = Arelin.Thing.set_fun(fire, Arelin.Thing.iron_man.rocket_rain)
+//     let fire = Arelin.Thing.set_pos(fire, self.pos)
+//     let fire = Arelin.Thing.set_dir(fire, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("12");
-      | [ Arelin.Thing;
-          Arelin.Thing.move(fire, Arelin.Thing.at_dist(self, F64.parse("100")))
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("12");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move(fire, Arelin.Thing.at_dist(self, F64.parse("100")))
+//         ];
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("3")):
-  | #IRON_MAN_IMPACT_EXPLOSION#
-    Arelin.Thing.animate
-    | self;
-    | F64.1;
-    | IRON_MAN_IMPACT_AND_EXPLOSION_000;
-    | F64.parse("16");
-    | F64.parse("32");
-  ;
-  | case F64.eql(self.act, F64.parse("4")):
-  | #IRON_MAN_TONY_STARK#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | IRON_MAN_ULTIMATE_000;
-      | F64.parse("16");
-      | F64.parse("32");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("3")):
+//   | #IRON_MAN_IMPACT_EXPLOSION#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.1;
+//     | IRON_MAN_IMPACT_AND_EXPLOSION_000;
+//     | F64.parse("16");
+//     | F64.parse("32");
+//   ;
+//   | case F64.eql(self.act, F64.parse("4")):
+//   | #IRON_MAN_TONY_STARK#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | IRON_MAN_ULTIMATE_000;
+//       | F64.parse("16");
+//       | F64.parse("32");
 
-    let self = 
-      Arelin.Thing.create_at
-      | self;
-      | F64.parse("31");
-      | Arelin.Thing.tony_stark_fun;
+//     let self = 
+//       Arelin.Thing.create_at
+//       | self;
+//       | F64.parse("31");
+//       | Arelin.Thing.tony_stark_fun;
 
-    self
-  ;
-  | case F64.eql(self.act, F64.parse("5")):
-  | #IRON_MAN_DASH#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | IRON_MAN_IDLE_000;
-    | F64.parse("16");
-    | F64.parse("32");
-  ;
-  | #IRON_MAN_TAUNT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | IRON_MAN_IDLE_000;
-    | F64.parse("16");
-    | F64.parse("32");
-  ;;;;;;
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.parse("5")):
+//   | #IRON_MAN_DASH#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | IRON_MAN_IDLE_000;
+//     | F64.parse("16");
+//     | F64.parse("32");
+//   ;
+//   | #IRON_MAN_TAUNT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | IRON_MAN_IDLE_000;
+//     | F64.parse("16");
+//     | F64.parse("32");
+//   ;;;;;;
 
-Arelin.Thing.iron_man.quick_attack(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | IRON_MAN_QUICK_ATTACK_EFFECT_000;
-  | F64.parse("9");
-  | F64.parse("18");
+// Arelin.Thing.iron_man.quick_attack(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | IRON_MAN_QUICK_ATTACK_EFFECT_000;
+//   | F64.parse("9");
+//   | F64.parse("18");
 
-Arelin.Thing.iron_man.rocket_rain(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | IRON_MAN_ROCKET_RAIN_EFFECT_000;
-  | F64.parse("16");
-  | F64.parse("32");
+// Arelin.Thing.iron_man.rocket_rain(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | IRON_MAN_ROCKET_RAIN_EFFECT_000;
+//   | F64.parse("16");
+//   | F64.parse("32");

@@ -1,300 +1,300 @@
-Arelin.Thing.loki_fun(self: Arelin.Thing): Arelin.Thing
-  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-  let self.act = Arelin.Thing.get_act(self)
-  let self.dir = Arelin.Thing.get_dir(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self.sid = Arelin.Thing.get_sid(self)
-  let targ_dir = Arelin.Thing.targ_dir(self)
+// Arelin.Thing.loki_fun(self: Arelin.Thing): Arelin.Thing
+//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+//   let self.act = Arelin.Thing.get_act(self)
+//   let self.dir = Arelin.Thing.get_dir(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self.sid = Arelin.Thing.get_sid(self)
+//   let targ_dir = Arelin.Thing.targ_dir(self)
   
-  case F64.eql(self.act, F64.0):
-  | #HERO_IDLE#
-    case Arelin.Thing.is_walking(self):
-    | Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LOKI_WALK_000;
-      | F64.parse("6");
-      | F64.parse("12");
-    ;
-    | Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | LOKI_IDLE_000;
-      | F64.parse("7");
-      | F64.parse("14");
-    ;
-  ;
-  | case F64.eql(self.act, F64.1):
-  | #LOKI_NORDIC_PULSE#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | LOKI_GOLDEN_PULSE_CASTING_000;
-      | F64.parse("10");
-      | F64.parse("20");
+//   case F64.eql(self.act, F64.0):
+//   | #HERO_IDLE#
+//     case Arelin.Thing.is_walking(self):
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LOKI_WALK_000;
+//       | F64.parse("6");
+//       | F64.parse("12");
+//     ;
+//     | Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | LOKI_IDLE_000;
+//       | F64.parse("7");
+//       | F64.parse("14");
+//     ;
+//   ;
+//   | case F64.eql(self.act, F64.1):
+//   | #LOKI_NORDIC_PULSE#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | LOKI_GOLDEN_PULSE_CASTING_000;
+//       | F64.parse("10");
+//       | F64.parse("20");
 
-    let pulse = Arelin.Thing.new_thing
-    let pulse = Arelin.Thing.set_fun(pulse, Arelin.Thing.loki.nordic_pulse)
-    let pulse = Arelin.Thing.set_pos(pulse, self.pos)
-    let pulse = Arelin.Thing.set_dir(pulse, targ_dir)
+//     let pulse = Arelin.Thing.new_thing
+//     let pulse = Arelin.Thing.set_fun(pulse, Arelin.Thing.loki.nordic_pulse)
+//     let pulse = Arelin.Thing.set_pos(pulse, self.pos)
+//     let pulse = Arelin.Thing.set_dir(pulse, targ_dir)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("12");
-      | [ Arelin.Thing;
-          Arelin.Thing.move
-          | pulse;
-          | Arelin.Thing.at_dist(self, F64.parse("23"));
-        ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("12");
+//       | [ Arelin.Thing;
+//           Arelin.Thing.move
+//           | pulse;
+//           | Arelin.Thing.at_dist(self, F64.parse("23"));
+//         ];
 
-    self
-  ;
-  | case F64.eql(self.act, F64.2):
-  | #LOKI_DODGER#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.0;
-      | LOKI_DODGER_CASTING_000;
-      | F64.parse("11");
-      | F64.parse("22");
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.2):
+//   | #LOKI_DODGER#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.0;
+//       | LOKI_DODGER_CASTING_000;
+//       | F64.parse("11");
+//       | F64.parse("22");
 
-    let shield = Arelin.Thing.new_thing
-    let shield = Arelin.Thing.set_fun(shield, Arelin.Thing.loki.dodger)
-    let shield = Arelin.Thing.set_pos(shield, self.pos)
-    let shield = Arelin.Thing.set_dir(shield, targ_dir)
-    let shield = Arelin.Thing.set_vel(shield, F64.V3.scale(F64.0, targ_dir))
-    let shield = Arelin.Thing.set_box(shield, Arelin.Game.Hitbox.nbox)
+//     let shield = Arelin.Thing.new_thing
+//     let shield = Arelin.Thing.set_fun(shield, Arelin.Thing.loki.dodger)
+//     let shield = Arelin.Thing.set_pos(shield, self.pos)
+//     let shield = Arelin.Thing.set_dir(shield, targ_dir)
+//     let shield = Arelin.Thing.set_vel(shield, F64.V3.scale(F64.0, targ_dir))
+//     let shield = Arelin.Thing.set_box(shield, Arelin.Game.Hitbox.nbox)
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("21");
-      | [ Arelin.Thing; shield ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("21");
+//       | [ Arelin.Thing; shield ];
 
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("3")):
-  | #LOKI_RUNIC_CURSE#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LOKI_RUNIC_CURSE_CASTING_000;
-      | F64.parse("6");
-      | F64.parse("12");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("3")):
+//   | #LOKI_RUNIC_CURSE#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LOKI_RUNIC_CURSE_CASTING_000;
+//       | F64.parse("6");
+//       | F64.parse("12");
 
-    let ball = Arelin.Thing.new_thing
-    let ball = Arelin.Thing.set_fun(ball, Arelin.Thing.loki.runic_curse)
-    let ball = Arelin.Thing.set_dir(ball, targ_dir)
-    let ball = Arelin.Thing.set_sid(ball, self.sid)
-    let ball = Arelin.Thing.set_vel(ball, F64.V3.scale(F64.0, targ_dir))
-    let ball = Arelin.Thing.set_box(ball, Arelin.Game.Hitbox.nbox)
-    let ball = 
-      Arelin.Thing.set_pos
-      | ball;
-      | Arelin.Thing.at_max_dist(self, F64.parse("120"));
+//     let ball = Arelin.Thing.new_thing
+//     let ball = Arelin.Thing.set_fun(ball, Arelin.Thing.loki.runic_curse)
+//     let ball = Arelin.Thing.set_dir(ball, targ_dir)
+//     let ball = Arelin.Thing.set_sid(ball, self.sid)
+//     let ball = Arelin.Thing.set_vel(ball, F64.V3.scale(F64.0, targ_dir))
+//     let ball = Arelin.Thing.set_box(ball, Arelin.Game.Hitbox.nbox)
+//     let ball = 
+//       Arelin.Thing.set_pos
+//       | ball;
+//       | Arelin.Thing.at_max_dist(self, F64.parse("120"));
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("10");
-      | [ Arelin.Thing; ball ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("10");
+//       | [ Arelin.Thing; ball ];
  
-    self 
-  ;
-  | case F64.eql(self.act, F64.parse("4")):
-  | #LOKI_GIFT_FROM_THE_GODS#
-    let self = 
-      Arelin.Thing.animate
-      | self;
-      | F64.1;
-      | LOKI_GIFT_FROM_THE_GODS_CASTING_000;
-      | F64.parse("6");
-      | F64.parse("12");
+//     self 
+//   ;
+//   | case F64.eql(self.act, F64.parse("4")):
+//   | #LOKI_GIFT_FROM_THE_GODS#
+//     let self = 
+//       Arelin.Thing.animate
+//       | self;
+//       | F64.1;
+//       | LOKI_GIFT_FROM_THE_GODS_CASTING_000;
+//       | F64.parse("6");
+//       | F64.parse("12");
 
-    let ball = Arelin.Thing.new_thing
-    let ball = Arelin.Thing.set_fun(ball, Arelin.Thing.loki.gift)
-    let ball = Arelin.Thing.set_dir(ball, targ_dir)
-    let ball = Arelin.Thing.set_sid(ball, self.sid)
-    let ball = Arelin.Thing.set_vel(ball, F64.V3.scale(F64.0, targ_dir))
-    let ball = Arelin.Thing.set_box(ball, Arelin.Game.Hitbox.nbox)
-    let ball = 
-      Arelin.Thing.set_pos
-      | ball;
-      | Arelin.Thing.at_max_dist(self, F64.parse("120"));
+//     let ball = Arelin.Thing.new_thing
+//     let ball = Arelin.Thing.set_fun(ball, Arelin.Thing.loki.gift)
+//     let ball = Arelin.Thing.set_dir(ball, targ_dir)
+//     let ball = Arelin.Thing.set_sid(ball, self.sid)
+//     let ball = Arelin.Thing.set_vel(ball, F64.V3.scale(F64.0, targ_dir))
+//     let ball = Arelin.Thing.set_box(ball, Arelin.Game.Hitbox.nbox)
+//     let ball = 
+//       Arelin.Thing.set_pos
+//       | ball;
+//       | Arelin.Thing.at_max_dist(self, F64.parse("120"));
 
-    let self = 
-      Arelin.Thing.spawn
-      | self;
-      | F64.parse("10");
-      | [ Arelin.Thing; ball ];
+//     let self = 
+//       Arelin.Thing.spawn
+//       | self;
+//       | F64.parse("10");
+//       | [ Arelin.Thing; ball ];
  
-    self
-  ;
-  | case F64.eql(self.act, F64.parse("5")):
-  | #LOKI_DASH#
-    let self = 
-      Arelin.Thing.animate_between
-      | self;
-      | F64.0;
-      | LOKI_TELEPORT_IN_000;
-      | F64.parse("5");
-      | F64.0;
-      | F64.parse("10");
+//     self
+//   ;
+//   | case F64.eql(self.act, F64.parse("5")):
+//   | #LOKI_DASH#
+//     let self = 
+//       Arelin.Thing.animate_between
+//       | self;
+//       | F64.0;
+//       | LOKI_TELEPORT_IN_000;
+//       | F64.parse("5");
+//       | F64.0;
+//       | F64.parse("10");
 
-    let self = 
-      Arelin.Thing.animate_between
-      | self;
-      | F64.0;
-      | LOKI_TELEPORT_OUT_000;
-      | F64.parse("3");
-      | F64.parse("10");
-      | F64.parse("19");
+//     let self = 
+//       Arelin.Thing.animate_between
+//       | self;
+//       | F64.0;
+//       | LOKI_TELEPORT_OUT_000;
+//       | F64.parse("3");
+//       | F64.parse("10");
+//       | F64.parse("19");
 
-    let self = 
-      Arelin.Thing.blink
-      | self;
-      | F64.parse("10");
-      | Arelin.Thing.at_max_dist(self, F64.parse("200"));
+//     let self = 
+//       Arelin.Thing.blink
+//       | self;
+//       | F64.parse("10");
+//       | Arelin.Thing.at_max_dist(self, F64.parse("200"));
 
-    let self = Arelin.Thing.reset(self, F64.parse("19"))
+//     let self = Arelin.Thing.reset(self, F64.parse("19"))
 
-    self
-  ;
-  | #LOKI_TAUNT#
-    Arelin.Thing.animate
-    | self;
-    | F64.0;
-    | LOKI_TAUNT_000;
-    | F64.parse("19");
-    | F64.parse("50");
-  ;;;;;;
+//     self
+//   ;
+//   | #LOKI_TAUNT#
+//     Arelin.Thing.animate
+//     | self;
+//     | F64.0;
+//     | LOKI_TAUNT_000;
+//     | F64.parse("19");
+//     | F64.parse("50");
+//   ;;;;;;
 
-Arelin.Thing.loki.nordic_pulse(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | LOKI_GOLDEN_PULSE_PROJECT_000;
-  | F64.parse("13");
-  | F64.parse("13");
+// Arelin.Thing.loki.nordic_pulse(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | LOKI_GOLDEN_PULSE_PROJECT_000;
+//   | F64.parse("13");
+//   | F64.parse("13");
 
-Arelin.Thing.loki.dodger(self: Arelin.Thing): Arelin.Thing
-  Arelin.Thing.animate_die
-  | self;
-  | F64.0;
-  | LOKI_DODGER_CASTED_000;
-  | F64.parse("8");
-  | F64.parse("32");
-
-
-Arelin.Thing.loki.runic_curse(self: Arelin.Thing): Arelin.Thing
-  let self.sid = Arelin.Thing.get_sid(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self = 
-    Arelin.Thing.animate_die
-    | self;
-    | F64.0;
-    | LOKI_RUNIC_CURSE_CASTED_000;
-    | F64.parse("12");
-    | F64.parse("24");
-
-  let self = 
-    Arelin.Thing.set_box
-    | self;
-    | Arelin.Game.Hitbox.cbox(F64.parse("10"));
-
-  let trap = Arelin.Thing.new_thing
-  let trap = Arelin.Thing.set_sid(trap, self.sid)
-  let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.loki.runic_curse_trap)
-  let trap = Arelin.Thing.set_pos(trap, self.pos)
-
-  let self = 
-    Arelin.Thing.spawn
-    | self;
-    | F64.parse("23");
-    | [ Arelin.Thing; trap ];
-
-  self 
-
-Arelin.Thing.loki.runic_curse_trap(self: Arelin.Thing): Arelin.Thing
-  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
-  let self = 
-    Arelin.Thing.animate_between
-    | self; 
-    | F64.0;
-    | LOKI_RUNIC_CURSE_TRAP_IDLE_000;
-    | F64.parse("5");
-    | F64.0;
-    | F64.parse("20");
-
-  let self = 
-    Arelin.Thing.animate_between
-    | self; 
-    | F64.0;
-    | LOKI_RUNIC_CURSE_PRESSED_000;
-    | F64.parse("11");
-    | F64.parse("20");
-    | F64.parse("42");
-
-  let self = Arelin.Thing.die(self, F64.parse("42"))
-
-  self 
+// Arelin.Thing.loki.dodger(self: Arelin.Thing): Arelin.Thing
+//   Arelin.Thing.animate_die
+//   | self;
+//   | F64.0;
+//   | LOKI_DODGER_CASTED_000;
+//   | F64.parse("8");
+//   | F64.parse("32");
 
 
-Arelin.Thing.loki.gift(self: Arelin.Thing): Arelin.Thing
-  let self.sid = Arelin.Thing.get_sid(self)
-  let self.pos = Arelin.Thing.get_pos(self)
-  let self = 
-    Arelin.Thing.animate_die
-    | self;
-    | F64.0;
-    | LOKI_GIFT_FROM_THE_GODS_CASTED_000;
-    | F64.parse("12");
-    | F64.parse("24");
+// Arelin.Thing.loki.runic_curse(self: Arelin.Thing): Arelin.Thing
+//   let self.sid = Arelin.Thing.get_sid(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self = 
+//     Arelin.Thing.animate_die
+//     | self;
+//     | F64.0;
+//     | LOKI_RUNIC_CURSE_CASTED_000;
+//     | F64.parse("12");
+//     | F64.parse("24");
 
-  let self = 
-    Arelin.Thing.set_box
-    | self;
-    | Arelin.Game.Hitbox.cbox(F64.parse("10"));
+//   let self = 
+//     Arelin.Thing.set_box
+//     | self;
+//     | Arelin.Game.Hitbox.cbox(F64.parse("10"));
 
-  let trap = Arelin.Thing.new_thing
-  let trap = Arelin.Thing.set_sid(trap, self.sid)
-  let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.loki.gift_trap)
-  let trap = Arelin.Thing.set_pos(trap, self.pos)
+//   let trap = Arelin.Thing.new_thing
+//   let trap = Arelin.Thing.set_sid(trap, self.sid)
+//   let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.loki.runic_curse_trap)
+//   let trap = Arelin.Thing.set_pos(trap, self.pos)
 
-  let self = 
-    Arelin.Thing.spawn
-    | self;
-    | F64.parse("23");
-    | [ Arelin.Thing; trap ];
+//   let self = 
+//     Arelin.Thing.spawn
+//     | self;
+//     | F64.parse("23");
+//     | [ Arelin.Thing; trap ];
 
-  self  
+//   self 
 
-Arelin.Thing.loki.gift_trap(self: Arelin.Thing): Arelin.Thing
-  let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
-  let self = 
-    Arelin.Thing.animate_between
-    | self; 
-    | F64.0;
-    | LOKI_GIFT_FROM_THE_GODS_TRAP_IDLE_000;
-    | F64.parse("5");
-    | F64.0;
-    | F64.parse("20");
+// Arelin.Thing.loki.runic_curse_trap(self: Arelin.Thing): Arelin.Thing
+//   let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+//   let self = 
+//     Arelin.Thing.animate_between
+//     | self; 
+//     | F64.0;
+//     | LOKI_RUNIC_CURSE_TRAP_IDLE_000;
+//     | F64.parse("5");
+//     | F64.0;
+//     | F64.parse("20");
 
-  let self = 
-    Arelin.Thing.animate_between
-    | self; 
-    | F64.0;
-    | LOKI_GIFT_FROM_THE_GODS_PRESSED_000;
-    | F64.parse("10");
-    | F64.parse("20");
-    | F64.parse("40");
+//   let self = 
+//     Arelin.Thing.animate_between
+//     | self; 
+//     | F64.0;
+//     | LOKI_RUNIC_CURSE_PRESSED_000;
+//     | F64.parse("11");
+//     | F64.parse("20");
+//     | F64.parse("42");
 
-  let self = Arelin.Thing.die(self, F64.parse("39"))
+//   let self = Arelin.Thing.die(self, F64.parse("42"))
 
-  self 
+//   self 
+
+
+// Arelin.Thing.loki.gift(self: Arelin.Thing): Arelin.Thing
+//   let self.sid = Arelin.Thing.get_sid(self)
+//   let self.pos = Arelin.Thing.get_pos(self)
+//   let self = 
+//     Arelin.Thing.animate_die
+//     | self;
+//     | F64.0;
+//     | LOKI_GIFT_FROM_THE_GODS_CASTED_000;
+//     | F64.parse("12");
+//     | F64.parse("24");
+
+//   let self = 
+//     Arelin.Thing.set_box
+//     | self;
+//     | Arelin.Game.Hitbox.cbox(F64.parse("10"));
+
+//   let trap = Arelin.Thing.new_thing
+//   let trap = Arelin.Thing.set_sid(trap, self.sid)
+//   let trap = Arelin.Thing.set_fun(trap, Arelin.Thing.loki.gift_trap)
+//   let trap = Arelin.Thing.set_pos(trap, self.pos)
+
+//   let self = 
+//     Arelin.Thing.spawn
+//     | self;
+//     | F64.parse("23");
+//     | [ Arelin.Thing; trap ];
+
+//   self  
+
+// Arelin.Thing.loki.gift_trap(self: Arelin.Thing): Arelin.Thing
+//   let self = Arelin.Thing.set_box(self, Arelin.Game.Hitbox.nbox)
+//   let self = 
+//     Arelin.Thing.animate_between
+//     | self; 
+//     | F64.0;
+//     | LOKI_GIFT_FROM_THE_GODS_TRAP_IDLE_000;
+//     | F64.parse("5");
+//     | F64.0;
+//     | F64.parse("20");
+
+//   let self = 
+//     Arelin.Thing.animate_between
+//     | self; 
+//     | F64.0;
+//     | LOKI_GIFT_FROM_THE_GODS_PRESSED_000;
+//     | F64.parse("10");
+//     | F64.parse("20");
+//     | F64.parse("40");
+
+//   let self = Arelin.Thing.die(self, F64.parse("39"))
+
+//   self 
   
