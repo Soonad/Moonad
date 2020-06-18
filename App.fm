@@ -9,7 +9,7 @@ T App.Render
 | img(size: Pair(U32,U32), image: Buffer32);
 
 T App.Event
-| tick(date: U64, mouse_x: U32, mouse_y: U32);
+| tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
 | ukey(down: Bool, code: U16);
 | post(date: U64, auth: String, head: String, body: String);
 
