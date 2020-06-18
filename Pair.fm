@@ -8,3 +8,30 @@ Pair.fst<A: Type, B: Type>(pair: Pair(A)(B)): A
 Pair.snd<A: Type, B: Type>(pair: Pair(A)(B)): B
   case pair:
   | pair.snd;
+
+// Pair(A) functor
+// =================
+Pair.functor<A: Type>: Functor(Pair(A))
+  Functor.new<Pair(A)>(Pair.map<A>)
+
+Pair.functor.verified<A: Type>: VerifiedFunctor(Pair(A), Pair.functor<A>)
+  VerifiedFunctor.new<Pair(A), Pair.functor<A>>(Pair.map.id<A>, Pair.map.comp<A>)
+
+Pair.map<A: Type, B: Type, C: Type>(f: B -> C, p: Pair(A, B)): Pair(A, C)
+  case p:
+  | Pair.new<A, C>(p.fst, f(p.snd));
+
+Pair.map.id<A: Type, B: Type>(p: Pair(A, B)): Equal(Pair(A, B), Pair.map<A, B, B>(Function.id<B>, p), p)
+  case p:
+  | _;
+  : Equal(_, Pair.map<A,B,B>(Function.id<>, p.self), p.self);
+
+Pair.map.comp<A: Type, B: Type, C: Type, D: Type>(e: Pair(A, B), g: (C -> D), h: (B -> C))
+  : Equal(Pair(A, D),
+          Pair.map<A, B, D>(Function.comp<B, C, D>(g, h), e),
+          Function.comp<Pair(A, B), Pair(A, C), Pair(A, D)>(Pair.map<A, C, D>(g), Pair.map<A, B, C>(h), e))
+  case e:
+  | _;
+  : Equal(_,
+          Pair.map<,,>(Function.comp<,,>(g, h), e.self),
+          Function.comp<,,>(Pair.map<,,>(g), Pair.map<,,>(h))(e.self));
