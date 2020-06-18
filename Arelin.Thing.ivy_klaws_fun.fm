@@ -1,79 +1,79 @@
-// Arelin.Thing.ivy_klaws_fun(self: Arelin.Thing): Arelin.Thing
-//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-//   let self.act = Arelin.Thing.get_act(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
-//   let self.pos = Arelin.Thing.get_pos(self)
+Arelin.Thing.ivy_klaws_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+  let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
   
-//   case F64.eql(self.act, F64.0):
-//   | #IVY_KLAWS_IDLE#
-//     case Arelin.Thing.is_walking(self):
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | IVY_KLAWS_WALK_GLOVES_OFF_000;
-//       | F64.parse("10");
-//       | F64.parse("20");
-//     ;
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | IVY_KLAWS_IDLE_GLOVES_OFF_000;
-//       | F64.parse("5");
-//       | F64.parse("10");
-//     ;
-//   ;
-//   | case F64.eql(self.act, F64.1):
-//   | #IVY_KLAWS_DUAL_SLICE#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | IVY_KLAWS_DUAL_SLICE_GLOVES_OFF_000;
-//     | F64.parse("18");
-//     | F64.parse("36");
-//   ;
-//   | case F64.eql(self.act, F64.2):
-//   | #IVY_KLAWS_GLOVES#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | IVY_KLAWS_GLOVES_EQUIP_GLOVES_000;
-//     | F64.parse("4");
-//     | F64.parse("8");
-//   ;
-//   | case F64.eql(self.act, F64.parse("3")):
-//   | #IVY_KLAWS_RIP_AND_TEAR#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | IVY_KLAWS_RIP_AND_TEAR_CAST_GLOVES_OFF_000;
-//     | F64.parse("11");
-//     | F64.parse("22");
-//   ;
-//   | case F64.eql(self.act, F64.parse("4")):
-//   | #IVY_KLAWS_DIG#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.1;
-//     | IVY_KLAWS_DIG_CAST_000;
-//     | F64.parse("17");
-//     | F64.parse("34");
-//   ;
-//   | case F64.eql(self.act, F64.parse("5")):
-//   | #SPACE#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | IVY_KLAWS_IDLE_GLOVES_OFF_000;
-//     | F64.parse("5");
-//     | F64.parse("10");
+  case F64.eql(self.act, F64.0):
+  | #IVY_KLAWS_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | IVY_KLAWS_WALK_GLOVES_OFF_000;
+      | F64.parse("10");
+      | F64.parse("20");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | IVY_KLAWS_IDLE_GLOVES_OFF_000;
+      | F64.parse("5");
+      | F64.parse("10");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #IVY_KLAWS_DUAL_SLICE#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | IVY_KLAWS_DUAL_SLICE_GLOVES_OFF_000;
+    | F64.parse("18");
+    | F64.parse("36");
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #IVY_KLAWS_GLOVES#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | IVY_KLAWS_GLOVES_EQUIP_GLOVES_000;
+    | F64.parse("4");
+    | F64.parse("8");
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #IVY_KLAWS_RIP_AND_TEAR#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | IVY_KLAWS_RIP_AND_TEAR_CAST_GLOVES_OFF_000;
+    | F64.parse("11");
+    | F64.parse("22");
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #IVY_KLAWS_DIG#
+    Arelin.Thing.animate
+    | self;
+    | F64.1;
+    | IVY_KLAWS_DIG_CAST_000;
+    | F64.parse("17");
+    | F64.parse("34");
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #SPACE#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | IVY_KLAWS_IDLE_GLOVES_OFF_000;
+    | F64.parse("5");
+    | F64.parse("10");
 
-//   ;
-//   | #IVY_KLAWS_TAUNT#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.1;
-//     | IVY_KLAWS_TAUNT_GLOVES_OFF_000;
-//     | F64.parse("21");
-//     | F64.parse("42");
-//   ;;;;;;
+  ;
+  | #IVY_KLAWS_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.1;
+    | IVY_KLAWS_TAUNT_GLOVES_OFF_000;
+    | F64.parse("21");
+    | F64.parse("42");
+  ;;;;;;

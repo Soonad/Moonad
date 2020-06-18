@@ -1,218 +1,217 @@
-// Arelin.Thing.lina_inverse_fun(self: Arelin.Thing): Arelin.Thing
-//   let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
-//   let self     = Arelin.Thing.set_mhp(self)(F64.parse("24"))
-//   let self.act = Arelin.Thing.get_act(self)
-//   let self.dir = Arelin.Thing.get_dir(self)
-//   let self.pos = Arelin.Thing.get_pos(self)
-//   let self.sid = Arelin.Thing.get_sid(self)
-//   let targ_dir = Arelin.Thing.targ_dir(self)
+Arelin.Thing.lina_inverse_fun(self: Arelin.Thing): Arelin.Thing
+  let self     = Arelin.Thing.set_mov(self, F64.parse("3"))
+  let self     = Arelin.Thing.set_mhp(self, F64.parse("24"))
+  let self.act = Arelin.Thing.get_act(self)
+  let self.dir = Arelin.Thing.get_dir(self)
+  let self.pos = Arelin.Thing.get_pos(self)
+  let self.sid = Arelin.Thing.get_sid(self)
+  let targ_dir = Arelin.Thing.targ_dir(self)
   
-//   case F64.eql(self.act, F64.0):
-//   | #HERO_IDLE#
-//     case Arelin.Thing.is_walking(self):
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | LINA_INVERSE_WALK_000;
-//       | F64.parse("6");
-//       | F64.parse("12");
-//     ;
-//     | Arelin.Thing.animate
-//       | self;
-//       | F64.1;
-//       | LINA_INVERSE_IDLE_000;
-//       | F64.parse("9");
-//       | F64.parse("18");
-//     ;
-//   ;
-//   | case F64.eql(self.act, F64.1):
-//   | #LINA_INVERSE_BURNING_HANDS#
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | LINA_INVERSE_BURNING_HANDS_CAST_000;
-//       | F64.parse("11");
-//       | F64.parse("22");
+  case F64.eql(self.act, F64.0):
+  | #HERO_IDLE#
+    case Arelin.Thing.is_walking(self):
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | LINA_INVERSE_WALK_000;
+      | F64.parse("6");
+      | F64.parse("12");
+    ;
+    | Arelin.Thing.animate
+      | self;
+      | F64.1;
+      | LINA_INVERSE_IDLE_000;
+      | F64.parse("9");
+      | F64.parse("18");
+    ;
+  ;
+  | case F64.eql(self.act, F64.1):
+  | #LINA_INVERSE_BURNING_HANDS#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LINA_INVERSE_BURNING_HANDS_CAST_000;
+      | F64.parse("11");
+      | F64.parse("22");
 
-//     let fire_a = Arelin.Thing.new_thing
-//     let fire_a = Arelin.Thing.set_sid(fire_a, self.sid)
-//     let fire_a = 
-//       Arelin.Thing.set_fun
-//       | fire_a;
-//       | Arelin.Thing.lina_inverse.burning_hands_a;
-//     let fire_a = Arelin.Thing.set_pos(fire_a, self.pos)
-//     let fire_a = 
-//       Arelin.Thing.set_vel
-//       | fire_a;
-//       | F64.V3.scale(F64.parse("14"), targ_dir);
-//     let fire_a = Arelin.Thing.set_box(fire_a, Arelin.Game.Hitbox.nbox)
+    let fire_a = Arelin.Thing.new_thing
+    let fire_a = Arelin.Thing.set_sid(fire_a, self.sid)
+    let fire_a = 
+      Arelin.Thing.set_fun
+      | fire_a;
+      | Arelin.Thing.lina_inverse.burning_hands_a;
+    let fire_a = Arelin.Thing.set_pos(fire_a, self.pos)
+    let fire_a = 
+      Arelin.Thing.set_vel
+      | fire_a;
+      | F64.V3.scale(F64.parse("14"), targ_dir);
+    let fire_a = Arelin.Thing.set_box(fire_a, Arelin.Game.Hitbox.nbox)
 
-//     let fire_b = Arelin.Thing.new_thing
-//     let fire_b = Arelin.Thing.set_sid(fire_b, self.sid)
-//     let fire_b = 
-//       Arelin.Thing.set_fun
-//       | fire_b;
-//       | Arelin.Thing.lina_inverse.burning_hands_b;
-//     let fire_b = Arelin.Thing.set_pos(fire_b, self.pos)
-//     let fire_b = 
-//       Arelin.Thing.set_vel
-//       | fire_b;
-//       | F64.V3.scale(F64.parse("14"), targ_dir);
-//     let fire_b = Arelin.Thing.set_box(fire_b, Arelin.Game.Hitbox.nbox)
+    let fire_b = Arelin.Thing.new_thing
+    let fire_b = Arelin.Thing.set_sid(fire_b, self.sid)
+    let fire_b = 
+      Arelin.Thing.set_fun
+      | fire_b;
+      | Arelin.Thing.lina_inverse.burning_hands_b;
+    let fire_b = Arelin.Thing.set_pos(fire_b, self.pos)
+    let fire_b = 
+      Arelin.Thing.set_vel
+      | fire_b;
+      | F64.V3.scale(F64.parse("14"), targ_dir);
+    let fire_b = Arelin.Thing.set_box(fire_b, Arelin.Game.Hitbox.nbox)
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("10");
-//       | [ Arelin.Thing; fire_a ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("10");
+      | [ fire_a ];
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("20");
-//       | [ Arelin.Thing; fire_b ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("20");
+      | [ fire_b ];
 
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.2):
-//   | #LINA_INVERSE_LIGHT_STRIKE_ARRAY#
-//     let self = 
-//       Arelin.Thing.animate_between
-//       | self;
-//       | F64.1;
-//       | LINA_INVERSE_LIGHT_STRIKE_ARRAY_CAST_000;
-//       | F64.parse("6");
-//       | F64.0;
-//       | F64.parse("10");
+    self 
+  ;
+  | case F64.eql(self.act, F64.2):
+  | #LINA_INVERSE_LIGHT_STRIKE_ARRAY#
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | LINA_INVERSE_LIGHT_STRIKE_ARRAY_CAST_000;
+      | F64.parse("6");
+      | F64.0;
+      | F64.parse("10");
 
-//     let self = 
-//       Arelin.Thing.animate_between
-//       | self;
-//       | F64.1;
-//       | LINA_INVERSE_LIGHT_STRIKE_ARRAY_CAST_006;
-//       | F64.parse("3");
-//       | F64.parse("10");
-//       | F64.parse("24");
+    let self = 
+      Arelin.Thing.animate_between
+      | self;
+      | F64.1;
+      | LINA_INVERSE_LIGHT_STRIKE_ARRAY_CAST_006;
+      | F64.parse("3");
+      | F64.parse("10");
+      | F64.parse("24");
 
-//     let self = Arelin.Thing.reset(self, F64.parse("24"))
+    let self = Arelin.Thing.reset(self, F64.parse("24"))
 
-//     let effect = Arelin.Thing.new_thing
-//     let effect = 
-//       Arelin.Thing.set_fun
-//       | effect;
-//       | Arelin.Thing.lina_inverse.light_strike;
+    let effect = Arelin.Thing.new_thing
+    let effect = 
+      Arelin.Thing.set_fun
+      | effect;
+      | Arelin.Thing.lina_inverse.light_strike;
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("10");
-//       | [ Arelin.Thing; 
-//           Arelin.Thing.move
-//           | effect;
-//           | Arelin.Thing.at_max_dist(self, F64.parse("150"));
-//         ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("10");
+      | [ Arelin.Thing.move
+          | effect;
+          | Arelin.Thing.at_max_dist(self, F64.parse("150"));
+        ];
 
-//     self 
-//   ;
-//   | case F64.eql(self.act, F64.parse("3")):
-//   | #LINA_INVERSE_DRAGON_SLAVE#
-//     let self = 
-//       Arelin.Thing.animate
-//       | self;
-//       | F64.0;
-//       | LINA_INVERSE_DRAGON_SLAVE_CAST_000;
-//       | F64.parse("9");
-//       | F64.parse("27");
+    self 
+  ;
+  | case F64.eql(self.act, F64.parse("3")):
+  | #LINA_INVERSE_DRAGON_SLAVE#
+    let self = 
+      Arelin.Thing.animate
+      | self;
+      | F64.0;
+      | LINA_INVERSE_DRAGON_SLAVE_CAST_000;
+      | F64.parse("9");
+      | F64.parse("27");
 
-//     let bird = Arelin.Thing.new_thing
-//     let bird = Arelin.Thing.set_sid(bird, self.sid)
-//     let bird = Arelin.Thing.set_dir(bird, targ_dir)
-//     let bird = Arelin.Thing.set_box(bird, Arelin.Game.Hitbox.nbox)
-//     let bird = 
-//       Arelin.Thing.set_fun
-//       | bird;
-//       | Arelin.Thing.lina_inverse.dragon_slave;
-//     let bird = 
-//       Arelin.Thing.set_pos
-//       | bird;
-//       | Arelin.Thing.at_dist(self, F64.parse("50"));
+    let bird = Arelin.Thing.new_thing
+    let bird = Arelin.Thing.set_sid(bird, self.sid)
+    let bird = Arelin.Thing.set_dir(bird, targ_dir)
+    let bird = Arelin.Thing.set_box(bird, Arelin.Game.Hitbox.nbox)
+    let bird = 
+      Arelin.Thing.set_fun
+      | bird;
+      | Arelin.Thing.lina_inverse.dragon_slave;
+    let bird = 
+      Arelin.Thing.set_pos
+      | bird;
+      | Arelin.Thing.at_dist(self, F64.parse("50"));
 
-//     let self = 
-//       Arelin.Thing.spawn
-//       | self;
-//       | F64.parse("20");
-//       | [ Arelin.Thing; bird ];
+    let self = 
+      Arelin.Thing.spawn
+      | self;
+      | F64.parse("20");
+      | [ bird ];
 
-//     self  
-//   ;
-//   | case F64.eql(self.act, F64.parse("4")):
-//   | #LINA_INVERSE_BURNING_SOUL#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.0;
-//     | LINA_INVERSE_BURNING_SOUL_000;
-//     | F64.parse("11");
-//     | F64.parse("33");
-//   ;
-//   | case F64.eql(self.act, F64.parse("5")):
-//   | #LINA_INVERSE_DASH#
-//     let self = 
-//       Arelin.Thing.animate_with_blink
-//       | self;
-//       | F64.0;
-//       | LINA_INVERSE_ON_FIRE_000;
-//       | LINA_INVERSE_IDLE_000;
-//       | F64.parse("11");
-//       | F64.0;
-//       | F64.parse("22");
+    self  
+  ;
+  | case F64.eql(self.act, F64.parse("4")):
+  | #LINA_INVERSE_BURNING_SOUL#
+    Arelin.Thing.animate
+    | self;
+    | F64.0;
+    | LINA_INVERSE_BURNING_SOUL_000;
+    | F64.parse("11");
+    | F64.parse("33");
+  ;
+  | case F64.eql(self.act, F64.parse("5")):
+  | #LINA_INVERSE_DASH#
+    let self = 
+      Arelin.Thing.animate_with_blink
+      | self;
+      | F64.0;
+      | LINA_INVERSE_ON_FIRE_000;
+      | LINA_INVERSE_IDLE_000;
+      | F64.parse("11");
+      | F64.0;
+      | F64.parse("22");
 
-//     let self = Arelin.Thing.reset(self, F64.parse("22"))
-//     let self = 
-//       Arelin.Thing.blink
-//       | self;
-//       | F64.parse("22");
-//       | Arelin.Thing.at_dist(self, F64.parse("105"));
+    let self = Arelin.Thing.reset(self, F64.parse("22"))
+    let self = 
+      Arelin.Thing.blink
+      | self;
+      | F64.parse("22");
+      | Arelin.Thing.at_dist(self, F64.parse("105"));
 
-//     self 
-//   ;
-//   | #LINA_INVERSE_TAUNT#
-//     Arelin.Thing.animate
-//     | self;
-//     | F64.1;
-//     | LINA_INVERSE_TAUNT_000;
-//     | F64.parse("15");
-//     | F64.parse("30");
-//   ;;;;;;
+    self 
+  ;
+  | #LINA_INVERSE_TAUNT#
+    Arelin.Thing.animate
+    | self;
+    | F64.1;
+    | LINA_INVERSE_TAUNT_000;
+    | F64.parse("15");
+    | F64.parse("30");
+  ;;;;;;
 
-// Arelin.Thing.lina_inverse.burning_hands_a(self: Arelin.Thing): Arelin.Thing
-//   Arelin.Thing.animate_die
-//   | self;
-//   | F64.0;
-//   | LINA_INVERSE_BURNING_HANDS_PROJECTILE_A_000;
-//   | F64.parse("6");
-//   | F64.parse("12");
+Arelin.Thing.lina_inverse.burning_hands_a(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | LINA_INVERSE_BURNING_HANDS_PROJECTILE_A_000;
+  | F64.parse("6");
+  | F64.parse("12");
 
-// Arelin.Thing.lina_inverse.burning_hands_b(self: Arelin.Thing): Arelin.Thing
-//   Arelin.Thing.animate_die
-//   | self;
-//   | F64.0;
-//   | LINA_INVERSE_BURNING_HANDS_PROJECTILE_B_000;
-//   | F64.parse("6");
-//   | F64.parse("12");
+Arelin.Thing.lina_inverse.burning_hands_b(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | LINA_INVERSE_BURNING_HANDS_PROJECTILE_B_000;
+  | F64.parse("6");
+  | F64.parse("12");
 
-// Arelin.Thing.lina_inverse.light_strike(self: Arelin.Thing): Arelin.Thing
-//   Arelin.Thing.animate_die
-//   | self;
-//   | F64.0;
-//   | LINA_INVERSE_LIGHT_STRIKE_ARRAY_EFFECT_000;
-//   | F64.parse("8");
-//   | F64.parse("16");
+Arelin.Thing.lina_inverse.light_strike(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | LINA_INVERSE_LIGHT_STRIKE_ARRAY_EFFECT_000;
+  | F64.parse("8");
+  | F64.parse("16");
 
-// Arelin.Thing.lina_inverse.dragon_slave(self: Arelin.Thing): Arelin.Thing
-//   Arelin.Thing.animate_die
-//   | self;
-//   | F64.0;
-//   | LINA_INVERSE_DRAGON_SLAVE_PROJECTILE_000;
-//   | F64.parse("5");
-//   | F64.parse("10");
+Arelin.Thing.lina_inverse.dragon_slave(self: Arelin.Thing): Arelin.Thing
+  Arelin.Thing.animate_die
+  | self;
+  | F64.0;
+  | LINA_INVERSE_DRAGON_SLAVE_PROJECTILE_000;
+  | F64.parse("5");
+  | F64.parse("10");
