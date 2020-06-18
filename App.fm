@@ -11,7 +11,7 @@ T App.Render
 T App.Event
 | tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
 | ukey(down: Bool, code: U16);
-| post(date: U64, auth: String, head: String, body: String);
+| post(date: U64, auth: String, name: String, head: String, body: String);
 
 // A demo application
 App.demo: App(Nat)
