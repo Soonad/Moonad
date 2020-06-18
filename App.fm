@@ -6,7 +6,7 @@ T App<S: Type>
 
 T App.Render
 | txt(text: String);
-| img(size: Pair(U32,U32), image: Buffer32);
+| img(size: Pair(U32,U32), draw: Buffer32 -> Buffer32);
 
 T App.Event
 | tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
