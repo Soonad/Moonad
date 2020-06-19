@@ -1,13 +1,7 @@
 T Bits
-| nil;
-| b0(pred: Bits);
-| b1(pred: Bits);
-
-Bits.0: Bits -> Bits
-  Bits.b0
-
-Bits.1: Bits -> Bits
-  Bits.b1
+| Bits.nil;
+| Bits.0(pred: Bits);
+| Bits.1(pred: Bits);
 
 Bits.concat(a: Bits, b: Bits): Bits
   case a:
