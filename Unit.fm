@@ -1,5 +1,5 @@
 T Unit
-| new;
+| Unit.new;
 
 Unit.show(u: Unit): String
   "Unit.new"

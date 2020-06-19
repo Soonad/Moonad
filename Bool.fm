@@ -1,7 +1,7 @@
 // Booleans.
 T Bool
-| true;
-| false;
+| Bool.true;
+| Bool.false;
 
 // Boolean negation.
 Bool.not(a: Bool):  Bool

@@ -1,7 +1,7 @@
 // The polymorphic List type can hold a number of elements.
 T List <A: Type>
-| nil;
-| cons(head: A, tail: List(A));
+| List.nil;
+| List.cons(head: A, tail: List(A));
 
 // Basic Theorems
 // ===============

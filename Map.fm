@@ -1,7 +1,7 @@
 // A Map from bitstrings to values.
 T Map<A: Type>
-| new;
-| tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
+| Map.new;
+| Map.tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
 
 // Returns the element stored at a given key, if any.
 // Example: Map.get<Nat>(my_key, my_map)
@@ -126,19 +126,19 @@ Map.merge.go<A: Type,B: Type,C: Type>(
     | Map.new<>;
     | let val = case b.val as bv: | Maybe.none<>; | g(key,bv.value);
       Map.tie<>(val,
-        Map.merge.go<,,>(f,g,h,Bits.b0(key),Map.new<>,b.lft),
-        Map.merge.go<,,>(f,g,h,Bits.b1(key),Map.new<>,b.rgt));;
+        Map.merge.go<,,>(f,g,h,Bits.0(key),Map.new<>,b.lft),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),Map.new<>,b.rgt));;
   | case b:
     | let val = case a.val as av: | Maybe.none<>; | f(key,av.value);
       Map.tie<>(val,
-        Map.merge.go<,,>(f,g,h,Bits.b0(key),a.lft,Map.new<>),
-        Map.merge.go<,,>(f,g,h,Bits.b1(key),a.rgt,Map.new<>));
+        Map.merge.go<,,>(f,g,h,Bits.0(key),a.lft,Map.new<>),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),a.rgt,Map.new<>));
     | let val = case a.val as av:
         | case b.val as bv: | Maybe.none<>;    | g(key,bv.value);;
         | case b.val as bv: | f(key,av.value); | h(key,av.value,bv.value);;
       Map.tie<>(val,
-        Map.merge.go<,,>(f,g,h,Bits.b0(key),a.lft,b.lft),
-        Map.merge.go<,,>(f,g,h,Bits.b1(key),a.rgt,b.rgt));;
+        Map.merge.go<,,>(f,g,h,Bits.0(key),a.lft,b.lft),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),a.rgt,b.rgt));;
 
 Map.disj<A: Type>(a: Map(A), b: Map(A)): Bool
   case a: | Bool.true; |

@@ -1,7 +1,7 @@
 // Array(A, depth) is a container with 2^depth values of type A.
 T Array<A: Type>                                            ~ (depth: Nat)
-| tip(value: A)                                             ~ (Nat.zero);
-| tie<depth: Nat>(lft: Array(A,depth), rgt: Array(A,depth)) ~ (Nat.succ(depth));
+| Array.tip(value: A)                                             ~ (Nat.zero);
+| Array.tie<depth: Nat>(lft: Array(A,depth), rgt: Array(A,depth)) ~ (Nat.succ(depth));
 
 Array.rget<A:Type, depth:Nat>(idx: Word(depth), arr: Array(A,depth)): A
   case idx:

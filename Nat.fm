@@ -1,7 +1,7 @@
 // Natural numbers
 T Nat
-| zero;
-| succ(pred: Nat);
+| Nat.zero;
+| Nat.succ(pred: Nat);
 
 // Nat predecessor
 Nat.pred(n: Nat): Nat

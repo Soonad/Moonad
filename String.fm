@@ -1,7 +1,7 @@
 // A monomorphic specialization of List(Char) for performance/compilation
 T String
-| nil;
-| cons(head: Char, tail: String);
+| String.nil;
+| String.cons(head: Char, tail: String);
 
 // Basic Functions
 // ===============

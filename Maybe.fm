@@ -1,7 +1,7 @@
 // The Maybe(A) type can hold a value of type A or nothing.
 T Maybe <A: Type>
-| none;
-| some(value: A);
+| Maybe.none;
+| Maybe.some(value: A);
 
 Maybe.bind<A: Type, B: Type>(m: Maybe(A), f: A -> Maybe(B)): Maybe(B)
   case m:

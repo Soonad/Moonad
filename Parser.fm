@@ -1,18 +1,18 @@
 T Parser.State
-| make(pos:Nat, str: String, errs: List(Parser.Error));
+| Parser.State.make(pos:Nat, str: String, errs: List(Parser.Error));
 
 T Parser.Error
-| new(pos: Nat, unx: Maybe(Parser.Item), exp: List(Parser.Item));
-| msg(pos: Nat, msgs: List(String));
+| Parser.Error.new(pos: Nat, unx: Maybe(Parser.Item), exp: List(Parser.Item));
+| Parser.Error.msg(pos: Nat, msgs: List(String));
 
 T Parser.Item
-| tokens(xs: String);
-| label(xs: String);
-| eof;
+| Parser.Item.tokens(xs: String);
+| Parser.Item.label(xs: String);
+| Parser.Item.eof;
 
 T Parser.Reply<A: Type>
-| val(state: Parser.State, value: A);
-| err(state: Parser.State, error: Parser.Error);
+| Parser.Reply.val(state: Parser.State, value: A);
+| Parser.Reply.err(state: Parser.State, error: Parser.Error);
 
 Parser.Error.merge(x: Parser.Error, y: Parser.Error): Parser.Error
   case x:

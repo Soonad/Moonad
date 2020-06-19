@@ -1,2 +1,2 @@
 T The <A: Type> ~ (x: A)
-| term(x: A)    ~ (x);
+| The.value(x: A)    ~ (x);

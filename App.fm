@@ -1,27 +1,46 @@
 T App<S: Type>
-| new(
+| App.new(
   init: S,
   draw: S -> App.Render,
   when: App.Event -> S -> S);
 
 T App.Render
-| txt(text: String);
-| pix(size: U32, draw: U32 -> Pair(U32,U32));
+| App.Render.txt(text: String);
+| App.Render.pix(size: U32, draw: U32 -> Pair(U32,U32));
 
 T App.Event
-| tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
-| ukey(down: Bool, code: U16);
-| post(date: U64, auth: String, name: String, head: String, body: String);
+| App.Event.tick(date: U64, screen: Pair(U32,U32), mouse: Pair(U32,U32));
+| App.Event.ukey(down: Bool, code: U16);
+| App.Event.post(date: U64, auth: String, name: String, head: String, body: String);
 
 // A demo application
-App.demo: App(Nat)
+App.demo.0: App(Pair(U32,U32))
+  def u32
+    Nat.to_u32
   def init
-    0
+    Pair.new<,>(U32.0, U32.0)
   def draw(state)
-    App.Render.txt(String.concat("Clicks: ", Nat.to_string_unary(state)))
+    def size
+      u32(256)
+    def draw(i)
+      case state:
+      | let m_x = state.fst // mouse x
+        let m_y = state.snd // mouse y
+        let i_x = U32.mod(i, u32(16)) // square x
+        let i_y = U32.div(i, u32(16)) // square y
+        let p_x = U32.sub(U32.add(m_x, i_x), u32(8)) // pixel x
+        let p_y = U32.sub(U32.add(m_y, i_y), u32(8)) // pixel y
+        let p_z = u32(128) // pixel z
+        let pos = U32.0
+        let pos = U32.or(U32.mul(p_x, u32(1048576)), pos)
+        let pos = U32.or(U32.mul(p_y, u32(256)), pos)
+        let pos = U32.or(U32.mul(p_z, u32(1)), pos)
+        let col = u32(4278190335) // rgba(255,0,0,255)
+        Pair.new<,>(pos, col);
+    App.Render.pix(size, draw)
   def when(event, state)
     case event:
-    | tick => state;
-    | ukey => Nat.succ(state);
+    | tick => event.mouse; // sets state to mouse pos
+    | ukey => state;
     | post => state;
   App.new<>(init, draw, when)

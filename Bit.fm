@@ -1,9 +1,3 @@
 T Bit
-| b0;
-| b1;
-
-Bit.0: Bit
-  Bit.b0
-
-Bit.1: Bit
-  Bit.b1
+| Bit.0;
+| Bit.1;

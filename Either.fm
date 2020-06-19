@@ -1,7 +1,7 @@
 // A container for either a value of type A or a value of type B.
 T Either<A: Type, B: Type>
-| left(value: A);
-| right(value: B);
+| Either.left(value: A);
+| Either.right(value: B);
 
 Either.bind<A: Type, B: Type, C: Type>(e: Either(A,B), f: B -> Either(A,C)): Either(A,C)
   case e:

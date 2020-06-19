@@ -2,7 +2,7 @@
 // linearly. This is NOT checked yet, so, right now, buffer compilation is
 // unsafe until linearity checks are added.
 T Buffer32
-| new(depth: Nat, array: Array(U32, depth));
+| Buffer32.new(depth: Nat, array: Array(U32, depth));
 
 Buffer32.get(idx: U32, buf: Buffer32): U32
   get dep arr = buf

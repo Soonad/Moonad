@@ -1,5 +1,5 @@
 T U32
-| new(a: Word(32));
+| U32.new(a: Word(32));
 
 U32.0: U32
   U32.new(Word.zero(32))

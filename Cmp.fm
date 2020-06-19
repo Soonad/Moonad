@@ -1,8 +1,8 @@
 // Comparisons
 T Cmp
-| ltn;
-| eql;
-| gtn;
+| Cmp.ltn;
+| Cmp.eql;
+| Cmp.gtn;
 
 // n < m
 Cmp.as_ltn(cmp: Cmp): Bool

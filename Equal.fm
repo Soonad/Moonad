@@ -1,6 +1,6 @@
 // The Equal datatype.
 T Equal <A: Type> (a: A) ~ (b: A)
-| to                     ~ (a);
+| Equal.to               ~ (a);
 
 // Applies a function to both sides of an equality
 Equal.apply<A: Type, B: Type, a: A, b: A, f: A -> B>(e: Equal(A,a,b)): Equal(B, f(a), f(b))

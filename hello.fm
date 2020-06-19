@@ -1,8 +1,0 @@
-// hello: IO(Unit)
-  //let uname = "Your name:"
-  //let greet = String.concat("Hello, ")
-  //IO.log<Unit>(uname)       | ()
-  //IO.get<Unit>              | (name)
-  //IO.log<Unit>(greet(name)) | ()
-  //IO.end<Unit>(Unit.new);;;
-

@@ -1,16 +1,10 @@
 // TODO: update style
 
 T Word                            ~ (size: Nat)
-| nil                             ~ (Nat.zero);
-| w0<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
-| w1<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
+| Word.nil                             ~ (Nat.zero);
+| Word.0<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
+| Word.1<size: Nat>(pred: Word(size)) ~ (Nat.succ(size));
 
-Word.0: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
-  Word.w0
-
-Word.1: <size: Nat> -> (pred: Word(size)) -> Word(Nat.succ(size)) 
-  Word.w1
-  
 // TODO: improve syntax
 Word.add.aux: <size: Nat> -> Word(size) -> Word(size) -> Bool -> Word(size)
   <size> (a) (b) (c)
@@ -112,7 +106,7 @@ Word.eql: <size:Nat> -> Word(size) -> Word(size) -> Bool
 Word.zero(size: Nat): Word(size)
   case size:
   | Word.nil;
-  | Word.w0<size.pred>(Word.zero(size.pred));
+  | Word.0<size.pred>(Word.zero(size.pred));
   : Word(size.self);
 
 Word.from_bits: (size: Nat) -> Bits -> Word(size)
@@ -138,8 +132,8 @@ Word.gtn: <size:Nat> -> Word(size) -> Word(size) -> Bool
 Word.inc<size: Nat>(word: Word(size)): Word(size)
   case word:
   | Word.nil;
-  | Word.w1<word.size>(word.pred);
-  | Word.w0<word.size>(Word.inc<word.size>(word.pred));
+  | Word.1<word.size>(word.pred);
+  | Word.0<word.size>(Word.inc<word.size>(word.pred));
   : Word(word.size);
 
 // a <= b
@@ -219,9 +213,9 @@ Word.trim<size: Nat>(new_size: Nat, word: Word(size)): Word(new_size)
   case new_size:
   | Word.nil;
   | case word:
-    | Word.w0<new_size.pred>(Word.trim<Nat.zero>(new_size.pred, Word.nil));
-    | Word.w0<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));
-    | Word.w1<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));;
+    | Word.0<new_size.pred>(Word.trim<Nat.zero>(new_size.pred, Word.nil));
+    | Word.0<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));
+    | Word.1<new_size.pred>(Word.trim<word.size>(new_size.pred, word.pred));;
   : Word(new_size.self);
 
 Word.from_nat(size: Nat, n: Nat): Word(size)
@@ -258,6 +252,6 @@ Word.indl<P: Nat -> Type, m: Nat>
 
 Word.reverse<size: Nat>(word: Word(size)): Word(size)
   def nil = Word.nil
-  def w0  = <size> (rev) Word.w0<size>(rev)
-  def w1  = <size> (rev) Word.w1<size>(rev)
+  def w0  = <size> (rev) Word.0<size>(rev)
+  def w1  = <size> (rev) Word.1<size>(rev)
   Word.indl<Word, size>(nil, w0, w1, word)

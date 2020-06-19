@@ -1,5 +1,5 @@
 T Pair<A: Type, B: Type>
-| new(fst: A, snd: B);
+| Pair.new(fst: A, snd: B);
 
 Pair.fst<A: Type, B: Type>(pair: Pair(A)(B)): A
   case pair:

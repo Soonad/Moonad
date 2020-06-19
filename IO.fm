@@ -1,6 +1,6 @@
 T IO<A: Type>
-| end(value: A);
-| ask(query: String, param: String, then: String -> IO(A));
+| IO.end(value: A);
+| IO.ask(query: String, param: String, then: String -> IO(A));
 
 IO.prompt(text: String): IO(String)
   use skip = IO.ask<String>("print", text)
