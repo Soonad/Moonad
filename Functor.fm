@@ -1,5 +1,5 @@
 T Functor<F: Type -> Type>
-| new(
+| Functor.new(
   map: <A: Type, B: Type> -> (A -> B) -> F(A) -> F(B)
   );
 
@@ -16,7 +16,7 @@ Functor.const<F: Type -> Type>(f: Functor(F)): <A: Type, B: Type> -> A -> F(B) -
 //   map id == id
 //   map (f . g) == map f . map g
 T VerifiedFunctor<F: Type -> Type, f: Functor(F)>
-| new(
+| VerifiedFunctor.new(
   id: <A: Type> ->
       (fa: F(A)) -> Equal(F(A), Functor.map<F>(f)<A, A>(Function.id<A>, fa), Function.id<F(A)>(fa)),
   comp: <A: Type, B: Type, C: Type> ->
