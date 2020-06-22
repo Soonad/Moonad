@@ -65,6 +65,10 @@ String.concat(as: String, bs: String): String
 String.concatVar: (n: Nat) -> Variadic(n, String, String)
   Variadic.foldr<,>(String.concat, String.nil)
 
+// Concatenate any number of chars
+String.consVar: (n: Nat) -> Variadic(n, Char, String)
+  Variadic.foldr<,>(String.cons, String.nil)
+
 // Get the head of a nonempty string
 String.head(xs: String, not_empty: String.not_empty(xs)) : Char
   case xs:

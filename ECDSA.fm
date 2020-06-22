@@ -150,7 +150,7 @@ Jacobian.base.precomputes: List(Jacobian)
 Jacobian.base.mul(n: Nat): Jacobian
   Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
 
-Jacobian.base.mul_unsafe(n: Nat): Maybe(Jacobian)
+Jacobian.base.mul_unsafe(n: Nat): Jacobian
   Jacobian.mul_unsafe(Jacobian.base, n)
 
 Jacobian.equal(a: Jacobian, b: Jacobian): Bool
@@ -248,21 +248,17 @@ Jacobian.add(p: Jacobian, q: Jacobian): Jacobian
     // Non-constant-time multiplication. Uses double-and-add algorithm.
     // It's faster, but should only be used when you don't care about
     // an exposed private key e.g. sig verification.
-Jacobian.mul_unsafe(d: Jacobian, scalar: Nat): Maybe(Jacobian)
+Jacobian.mul_unsafe(d: Jacobian, scalar: Nat): Jacobian
   let n = Nat.mod(scalar, CURVE.n)
-  let res =
-    get k1 k2 = ecdsa.split_scalar(n)
-    get k1neg k1 = Int.toNat(k1)
-    get k2neg k2 = Int.toNat(k2)
-    get k1p k2p = Jacobian.mul_unsafe_aux(d, Jacobian.0, Jacobian.0, k1, k2)
-    let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
-    let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
-    let k2p = get k2p.x k2p.y k2p.z = k2p
-      Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
-    Jacobian.add(k1p, k2p)
-  case n:
-  | Maybe.none<Jacobian>;
-  | Maybe.some<Jacobian>(res);
+  get k1 k2 = ecdsa.split_scalar(n)
+  get k1neg k1 = Int.toNat(k1)
+  get k2neg k2 = Int.toNat(k2)
+  get k1p k2p = Jacobian.mul_unsafe_aux(d, Jacobian.0, Jacobian.0, k1, k2)
+  let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
+  let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
+  let k2p = get k2p.x k2p.y k2p.z = k2p
+    Jacobian.new(ecdsa.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
+  Jacobian.add(k1p, k2p)
 
 Jacobian.mul_unsafe_aux(d: Jacobian, k1p: Jacobian, k2p: Jacobian, k1: Nat, k2: Nat): Pair(Jacobian, Jacobian)
   case Bool.or(Nat.gtn(k1, 0), Nat.gtn(k2, 0)):
@@ -363,7 +359,7 @@ Jacobian.mul(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
   get _ _ _ = fake // This is used to force the computation of the fake point, to achieve constant time
   Jacobian.normalizeZ(point)
 
-// Point works in default coordinates
+// Point works in default coordinates. Public keys are represented by points.
 T Point
 | new(x: Nat, y: Nat);
 
@@ -373,16 +369,18 @@ Point.base: Point
 Point.base.mul(n: Nat): Point
   Jacobian.to_point(Jacobian.base.mul(n))
 
-Point.mul_unsafe(p: Point, n: Nat): Maybe(Point)
-  Maybe.map<Jacobian, Point>(Jacobian.to_point, Jacobian.mul_unsafe(Jacobian.from_point(p), n))
+Point.mul_unsafe(p: Point, n: Nat): Point
+  Jacobian.to_point(Jacobian.mul_unsafe(Jacobian.from_point(p), n))
 
-Point.valid_point(p: Point): Bool
+Point.valid_point(p: Point): Maybe(Point)
   get x y = p
   case Bool.or(Nat.eql(x, 0), Nat.eql(y, 0)):
-  | Bool.false;
-  | Nat.eql(ecdsa.mod(Nat.square(y)), ecdsa.weierstrass(x));
+  | Maybe.none<>;
+  | case Nat.eql(ecdsa.mod(Nat.square(y)), ecdsa.weierstrass(x)):
+    | Maybe.some<>(p);
+    | Maybe.none<>;;
 
-Point.from_compressed_hex(bytes: Vector(U8, 33)): Maybe(Point)
+Point.from_compressed_bytes(bytes: Vector(U8, 33)): Maybe(Point)
   get head tail = Vector.extract<U8, 32>(bytes)
   let head = U8.to_nat(head)
   let x = U8_Vector.to_number<32>(tail)
@@ -392,19 +390,15 @@ Point.from_compressed_hex(bytes: Vector(U8, 33)): Maybe(Point)
   let is_y_odd = Nat.odd(y)
   let y = Bool.if<>(Bool.eql(is_head_odd, is_y_odd), y, ecdsa.negate(y))
   let point = Point.new(x, y)
-  case Point.valid_point(point):
-  | Maybe.some<>(point);
-  | Maybe.none<>;
+  Point.valid_point(point)
 
-Point.from_uncompressed_hex(bytes: Vector(U8, 65)): Maybe(Point)
+Point.from_uncompressed_bytes(bytes: Vector(U8, 65)): Maybe(Point)
   get head tail = Vector.extract<U8, 64>(bytes)
   get x y = Vector.split_at<U8, 64>(tail, 32)
   let x = U8_Vector.to_number<32>(x)
   let y = U8_Vector.to_number<32>(y)
   let point = Point.new(x, y)
-  case Point.valid_point(point):
-  | Maybe.some<>(point);
-  | Maybe.none<>;
+  Point.valid_point(point)
 
 Point.to_bytes(p: Point, compressed: Bool): Vector(U8, Bool.if<Nat>(compressed, 33, 65))
  get p.x p.y = p
@@ -417,6 +411,17 @@ Point.to_bytes(p: Point, compressed: Bool): Vector(U8, Bool.if<Nat>(compressed, 
    let uncompressed_vec = Vector.concat<U8, 32, 32>(x, y)
    Vector.ext<U8, 64>(uncompressed_byte, uncompressed_vec);
  : Vector(U8, Bool.if<Nat>(compressed.self, 33, 65));
+
+
+Point.from_PrivateKey(n: Nat): Point
+  Point.base.mul(n)
+
+PrivateKey.is_valid(n: Nat): Bool
+  Bool.and(Nat.gtn(0, n), Nat.gtn(n, CURVE.n))
+
+PublicKey.from_PrivateKey(priv: Nat, compressed: Bool): Vector(U8, Bool.if<Nat>(compressed, 33, 65))
+    let point = Point.from_PrivateKey(priv)
+    Point.to_bytes(point, compressed)
 
 T SignResult
 | new(r: Nat, s: Nat);
