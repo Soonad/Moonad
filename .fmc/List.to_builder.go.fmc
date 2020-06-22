@@ -1,3 +1,0 @@
-List.to_builder.go: ∀(A:*) Π(list:(List A)) Π(lb:(List.Builder A)) (List.Builder A)
-  ΛA λlist λlb ((<list λlist.self (List.Builder A)> lb) λlist.head λlist.tail ((<List.to_builder.go A> list.tail) ((<List.Builder.cons A> list.head) lb)))
-

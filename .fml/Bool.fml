@@ -1,3 +1,0 @@
-Bool: Type
-  self_Bool<P: (self: Bool) -> Type> -> (true: P(Bool.true)) -> (false: P(Bool.false)) -> P(self_Bool)
-

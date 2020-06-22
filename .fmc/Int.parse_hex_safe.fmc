@@ -1,3 +1,0 @@
-Int.parse_hex_safe: Π(str:String) (Maybe Int)
-  λstr ((<str λstr.self (Maybe Int)> <Maybe.none Int>) λstr.head λstr.tail ((<((U16.eql str.head) (Char.parse "-")) λself.self (Maybe Int)> ((<<Maybe.bind Nat> Int> (Nat.parse_hex_safe str.tail)) λb (<Maybe.some Int> ((Int.new 0) b)))) ((<<Maybe.bind Nat> Int> (Nat.parse_hex_safe ((String.cons str.head) str.tail))) λa (<Maybe.some Int> ((Int.new a) 0)))))
-

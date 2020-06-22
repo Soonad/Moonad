@@ -1,3 +1,0 @@
-ecdsa.negate: Π(a:Nat) Nat
-  λa $a=(ecdsa.mod a);((<((Nat.eql a) 0) λself.self Nat> 0) ((Nat.sub CURVE.P) a))
-

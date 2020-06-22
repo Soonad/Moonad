@@ -1,3 +1,0 @@
-Parser.parse: ∀(A:*) Π(p:(Parser A)) Π(s:String) ((Parser.type A) ((<Parser.run A> p) s))
-  ΛA λp λs ((<((<Parser.run A> p) s) λx.self ((Parser.type A) x.self)> λx.state λx.value x.value) λx.state λx.error x.error)
-

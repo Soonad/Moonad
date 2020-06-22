@@ -1,3 +1,0 @@
-Point.to_bytes: Π(p:Point) Π(compressed:Bool) ((Vector U8) (((<Bool.if Nat> compressed) 33) 65))
-  λp λcompressed (<p λx ((Vector U8) (((<Bool.if Nat> compressed) 33) 65))> λp.x λp.y $x=((U8_Vector.from_nat 32) p.x);((<compressed λcompressed.self ((Vector U8) (((<Bool.if Nat> compressed.self) 33) 65))> $is_odd_byte=(U8.from_nat (((<Bool.if Nat> (Nat.odd p.y)) 3) 2));((<<Vector.ext U8> 32> is_odd_byte) x)) $uncompressed_byte=(U8.from_nat 4);$y=((U8_Vector.from_nat 32) p.y);$uncompressed_vec=((<<<Vector.concat U8> 32> 32> x) y);((<<Vector.ext U8> 64> uncompressed_byte) uncompressed_vec)))
-

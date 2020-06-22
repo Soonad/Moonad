@@ -1,3 +1,0 @@
-Function.curry: ∀(A:*) ∀(B:*) ∀(C:*) Π(f:Π(:((Pair A) B)) C) Π(x:A) Π(y:B) C
-  ΛA ΛB ΛC λf λx λy (f ((<<Pair.new A> B> x) y))
-

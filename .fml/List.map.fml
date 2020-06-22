@@ -1,3 +1,0 @@
-List.map: <A: Type> -> <B: Type> -> (f: A -> B) -> (as: List(A)) -> List(B)
-  <A> <B> (f) (as) as<(as.self) List(B)>([B;])((as.head) (as.tail) List.cons<B>(f(as.head))(List.map<A><B>(f)(as.tail)))
-

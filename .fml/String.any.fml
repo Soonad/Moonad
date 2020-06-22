@@ -1,3 +1,0 @@
-String.any: (cond: Char -> Bool) -> (string: String) -> Bool
-  (cond) (string) string<(string.self) Bool>(Bool.false)((string.head) (string.tail) cond(string.head)<(self.self) Bool>(Bool.true)(String.any(cond)(string.tail)))
-

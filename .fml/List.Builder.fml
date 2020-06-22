@@ -1,3 +1,0 @@
-List.Builder: (A: Type) -> Type
-  (A) List(A) -> List(A)
-

@@ -1,3 +1,0 @@
-Acc.foldr: ∀(A:*) ∀(B:*) Π(stop:Π(:A) Bool) Π(acc:Π(:A) Π(:B) B) Π(b:B) Π(a:A) ((((Acc A) B) stop) a)
-  ΛA ΛB λstop λacc λb λa (((((<<Acc.foldr.go A> B> stop) acc) b) λr r) a)
-

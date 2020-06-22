@@ -1,3 +1,0 @@
-List.cons: ∀(A:*) Π(head:A) Π(tail:(List A)) (List A)
-  ΛA λhead λtail ΛP λnil λcons ((cons head) tail)
-

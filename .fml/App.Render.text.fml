@@ -1,3 +1,0 @@
-App.Render.text: (str: String) -> App.Render
-  (str) <P> (text) text(str)
-

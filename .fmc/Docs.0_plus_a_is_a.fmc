@@ -1,3 +1,0 @@
-Docs.0_plus_a_is_a: Π(a:Nat) (((Equal Nat) ((Nat.add 0) a)) a)
-  λa <<Equal.to Nat> a>
-

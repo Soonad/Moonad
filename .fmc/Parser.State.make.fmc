@@ -1,3 +1,0 @@
-Parser.State.make: Π(pos:Nat) Π(str:String) Π(errs:(List Parser.Error)) Parser.State
-  λpos λstr λerrs ΛP λmake (((make pos) str) errs)
-

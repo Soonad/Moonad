@@ -1,3 +1,0 @@
-Parser.type: Π(A:*) Π(r:(Parser.Reply A)) *
-  λA λr ((<r λr.self *> λr.state λr.value A) λr.state λr.error Parser.Error)
-

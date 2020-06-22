@@ -1,3 +1,0 @@
-List.Builder.concat: <A: Type> -> (a: List.Builder(A)) -> (b: List.Builder(A)) -> List.Builder(A)
-  <A> (a) (b) (x) a(b(x))
-

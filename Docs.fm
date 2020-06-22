@@ -15,7 +15,7 @@ Docs.Bool.double_negation_theorem(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b
 Docs.List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, A);
+  | Empty.absurd<A>(ne);
   | xs.head;
 
 Docs.hello: IO(Unit)
@@ -23,7 +23,7 @@ Docs.hello: IO(Unit)
 
 Docs.welcome: IO(Unit)
   do IO {
-    var name = IO.query("What is your name?");
+    var name = IO.prompt("What is your name?");
     IO.print(String.concat("Welcome, ", name));
   }
 
@@ -52,7 +52,7 @@ Docs.a_plus_0_is_a(a: Nat): Equal(Nat, Nat.add(a, 0), a)
   case a:
   | Equal.to<Nat, Nat.zero>;
   | let ind = Docs.a_plus_0_is_a(a.pred)
-    let app = Equal.apply<Nat, Nat, Nat.add(a.pred, Nat.zero), a.pred, Nat.succ, ind>
+    let app = Equal.apply<Nat, Nat, Nat.add(a.pred, Nat.zero), a.pred, Nat.succ>(ind)
     app;
   : Equal(Nat, Nat.add(a.self, 0), a.self);
 

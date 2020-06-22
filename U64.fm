@@ -1,54 +1,54 @@
-T U64 //prim//
-| new(a: Word(64));
+T U64
+| U64.new(a: Word(64));
 
 U64.0: U64
-  U64.parse_hex("0000000000000000")
+  U64.new(Word.zero(64))
 
-U64.add(a: U64, b: U64): U64 //prim//
+U64.add(a: U64, b: U64): U64
   get a_val = a
   get b_val = b
   U64.new(Word.add<>(a_val, b_val))
 
-U64.and(a: U64, b: U64): U64 //prim//
+U64.and(a: U64, b: U64): U64
   get a_val = a
   get b_val = b
   U64.new(Word.and<>(a_val, b_val))
 
-U64.div(a: U64, b: U64): U64 //prim//
+U64.div(a: U64, b: U64): U64
   get a_val = a
   get b_val = b
   U64.new(Word.div<>(a_val, b_val))
 
 // a == b
-U64.eql(a: U64, b: U64): Bool //prim//
+U64.eql(a: U64, b: U64): Bool
   get a_val = a
   get b_val = b
   Word.eql<>(a_val, b_val)
 
 // a >= b
-U64.gte(a: U64, b: U64): Bool //prim//
+U64.gte(a: U64, b: U64): Bool
   get a_val = a
   get b_val = b
   Word.gte<>(a_val, b_val)
 
 // a > b
-U64.gtn(a: U64, b: U64): Bool //prim//
+U64.gtn(a: U64, b: U64): Bool
   get a_val = a
   get b_val = b
   Word.gtn<>(a_val, b_val)
 
-U64.inc(a: U64): U64 //prim//
+U64.inc(a: U64): U64
   get a_val = a 
   U64.new(Word.inc<>(a_val))
 
 // a <= b
-U64.lte(a: U64, b: U64): Bool //prim//
+U64.lte(a: U64, b: U64): Bool
   get a_val = a
   get b_val = b
   Word.lte<>(a_val, b_val)
 
 // a < b
-U64.ltn(a: U64, b: U64): Bool //prim//
+U64.ltn(a: U64, b: U64): Bool
   get a_val = a
   get b_val = b
   Word.ltn<>(a_val, b_val)
@@ -67,17 +67,17 @@ U64.mix(h: U64): U64
   let h = U64.xor(h, U64.shr(33, h))
   h 
 
-U64.mod(a: U64, b: U64): U64 //prim//
+U64.mod(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.mod<>(a_val, b_val))
 
-U64.mul(a: U64, b: U64): U64 //prim//
+U64.mul(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.mul<>(a_val, b_val))
 
-U64.or(a: U64, b: U64): U64 //prim//
+U64.or(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.or<>(a_val, b_val))
@@ -85,20 +85,20 @@ U64.or(a: U64, b: U64): U64 //prim//
 U64.parse_hex(str: String): U64
   U64.new(Word.from_bits(64, Bits.parse_hex(str)))
 
-U64.pow(a: U64, b: U64): U64 //prim//
+U64.pow(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.pow<>(a_val, b_val))
 
-U64.shl(n: Nat, a: U64): U64 //prim//
+U64.shl(n: Nat, a: U64): U64
   get a_val = a 
   U64.new(Word.shift_left<>(n, a_val))
 
-U64.shr(n: Nat, a: U64): U64 //prim//
+U64.shr(n: Nat, a: U64): U64
   get a_val = a 
   U64.new(Word.shift_right<>(n, a_val))
 
-U64.sub(a: U64, b: U64): U64 //prim//
+U64.sub(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.sub<>(a_val, b_val))
@@ -107,11 +107,11 @@ U64.to_bits(a: U64): Bits
   get a_val = a 
   Word.to_bits<>(a_val)
 
-U64.to_nat(a: U64): Nat //prim//
+U64.to_nat(a: U64): Nat
   get a_val = a 
   Word.to_nat<>(a_val)
 
-U64.xor(a: U64, b: U64): U64 //prim//
+U64.xor(a: U64, b: U64): U64
   get a_val = a 
   get b_val = b 
   U64.new(Word.xor<>(a_val, b_val))

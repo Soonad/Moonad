@@ -1,3 +1,0 @@
-Bool.eql: (a: Bool) -> (b: Bool) -> Bool
-  (a) (b) a<(a.self) Bool>(b<(b.self) Bool>(Bool.true)(Bool.false))(b<(b.self) Bool>(Bool.false)(Bool.true))
-

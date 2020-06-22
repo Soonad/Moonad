@@ -1,3 +1,0 @@
-UFind.find: Π(uf:UFind) Π(path:Bits) ∀(B:*) Π(:Π(:UFind) Π(:Bits) Π(:Nat) B) B
-  λuf λpath ΛB λk (<(((<Map.lookup UNode> path) (UNode.root Nat.zero)) uf) λx B> λnode λuf ((<node λnode.self B> λnode.rank (((k uf) path) node.rank)) λnode.parent (<((UFind.find uf) node.parent) B> λuf λroot λrank $uf=(((<Map.set UNode> path) (UNode.link root)) uf);(((k uf) root) rank))))
-

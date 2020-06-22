@@ -1,3 +1,0 @@
-Docs.my_lib: Module
-  (Module.from ((<List.cons ((Pair String) Export)> ((<<Pair.new String> Export> "nat") ((Export.new Nat) 42))) ((<List.cons ((Pair String) Export)> ((<<Pair.new String> Export> "yep") ((Export.new Bool) Bool.true))) ((<List.cons ((Pair String) Export)> ((<<Pair.new String> Export> "nop") ((Export.new Bool) Bool.false))) <List.nil ((Pair String) Export)>))))
-

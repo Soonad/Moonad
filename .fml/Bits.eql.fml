@@ -1,3 +1,0 @@
-Bits.eql: (a: Bits) -> (b: Bits) -> Bool
-  (a) (b) a<(a.self) Bool>(b<(b.self) Bool>(Bool.true)((b.pred) Bool.false)((b.pred) Bool.false))((a.pred) b<(b.self) Bool>(Bool.false)((b.pred) Bits.eql(a.pred)(b.pred))((b.pred) Bool.false))((a.pred) b<(b.self) Bool>(Bool.false)((b.pred) Bool.false)((b.pred) Bits.eql(a.pred)(b.pred)))
-

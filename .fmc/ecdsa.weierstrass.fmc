@@ -1,3 +1,0 @@
-ecdsa.weierstrass: Π(x:Nat) Nat
-  λx (ecdsa.mod ((Nat.add ((Nat.add ((((Nat.mulVar 3) x) x) x)) ((Nat.mul CURVE.a) x))) CURVE.b))
-

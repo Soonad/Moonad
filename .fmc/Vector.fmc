@@ -1,3 +1,0 @@
-Vector: Π(A:*) Π(len:Nat) *
-  λA λlen ∀self_Vector(P:Π(len:Nat) Π(self:((Vector A) len)) *) Π(nil:((P Nat.zero) <Vector.nil A>)) Π(ext:∀(len:Nat) Π(head:A) Π(tail:((Vector A) len)) ((P (Nat.succ len)) ((<<Vector.ext A> len> head) tail))) ((P len) self_Vector)
-

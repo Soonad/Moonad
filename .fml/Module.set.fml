@@ -1,3 +1,0 @@
-Module.set: (key: String) -> (val: Export) -> (mod: Module) -> Module
-  (key) (val) (mod) Map.set<Export>(String.to_bits(key))(val)(mod)
-

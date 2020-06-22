@@ -1,3 +1,0 @@
-Word.w0: ∀(size:Nat) Π(pred:(Word size)) (Word (Nat.succ size))
-  Λsize λpred ΛP λnil λw0 λw1 (<w0 size> pred)
-

@@ -1,3 +1,0 @@
-Module.from: Π(defs:(List ((Pair String) Export))) Module
-  λdefs ((<defs λdefs.self Module> Module.new) λdefs.head λdefs.tail (<defs.head λdefs.head.self Module> λdefs.head.fst λdefs.head.snd (((Module.set defs.head.fst) defs.head.snd) (Module.from defs.tail))))
-

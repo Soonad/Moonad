@@ -1,3 +1,0 @@
-App.Input: Type
-  self_App.Input<P: (self: App.Input) -> Type> -> (keypress: (keycode: U16) -> P(App.Input.keypress(keycode))) -> (newpost: (post: App.Post) -> P(App.Input.newpost(post))) -> P(self_App.Input)
-

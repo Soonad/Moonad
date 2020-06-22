@@ -1,3 +1,0 @@
-SignResult.to_hex: Π(sig:SignResult) Π(compressed:Bool) String
-  λsig λcompressed (<sig λx String> λsig.r λsig.s $s_hex=(ecdsa.number_to_hex sig.s);((<compressed λcompressed.self String> s_hex) $r_hex=(ecdsa.number_to_hex sig.r);$r_len_nat=((Nat.div (String.length r_hex)) 2);$r_len=(ecdsa.number_to_hex r_len_nat);$s_len_nat=((Nat.div (String.length s_hex)) 2);$s_len=(ecdsa.number_to_hex s_len_nat);$length=(ecdsa.number_to_hex ((((Nat.addVar 3) r_len_nat) s_len_nat) 4));(((((((((String.concatVar 8) "30") length) "02") r_len) r_hex) "02") s_len) s_hex)))
-

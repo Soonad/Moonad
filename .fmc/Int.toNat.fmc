@@ -1,3 +1,0 @@
-Int.toNat: Π(a:Int) ((Pair Bool) Nat)
-  λa (<a λa. ((Pair Bool) Nat)> λa.x λa.y ((<a.y λa.y.self ((Pair Bool) Nat)> ((<<Pair.new Bool> Nat> Bool.false) a.x)) λa.y.pred ((<<Pair.new Bool> Nat> Bool.true) a.y)))
-

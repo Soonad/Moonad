@@ -1,3 +1,0 @@
-Arelin.Thing.create_at: Π(self:Arelin.Thing) Π(at_tik:F64) Π(new_thing:Arelin.Game.TxFunction) Arelin.Thing
-  λself λat_tik λnew_thing $self.tik=(Arelin.Thing.get_tik self);((<((F64.eql self.tik) at_tik) λself.self Arelin.Thing> $self.pid=(Arelin.Thing.get_pid self);$self.pos=(Arelin.Thing.get_pos self);$self=((Arelin.Thing.set_fun self) new_thing);$self=((Arelin.Thing.set_pid self) self.pid);$self=((Arelin.Thing.set_pos self) self.pos);self) self)
-

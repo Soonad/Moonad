@@ -1,3 +1,0 @@
-Point.from_uncompressed_hex: Π(bytes:((Vector U8) 65)) (Maybe Point)
-  λbytes (<(<<Vector.extract U8> 64> bytes) λx (Maybe Point)> λhead λtail (<((<<Vector.split_at U8> 64> tail) 32) λx (Maybe Point)> λx λy $x=(<U8_Vector.to_number 32> x);$y=(<U8_Vector.to_number 32> y);$point=((Point.new x) y);((<(Point.valid_point point) λself.self (Maybe Point)> (<Maybe.some Point> point)) <Maybe.none Point>)))
-

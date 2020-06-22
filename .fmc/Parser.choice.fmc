@@ -1,3 +1,0 @@
-Parser.choice: ∀(A:*) Π(ps:(List (Parser A))) (Parser A)
-  ΛA λps ((<ps λps.self (Parser A)> <Parser.zero A>) λps.head λps.tail ((<Parser.plus A> ps.head) (<Parser.choice A> ps.tail)))
-

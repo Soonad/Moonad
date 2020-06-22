@@ -1,3 +1,0 @@
-Sigma: (A: Type) -> (B: A -> Type) -> Type
-  (A) (B) self_Sigma<P: (self: Sigma(A)(B)) -> Type> -> (new: (fst: A) -> (snd: B(fst)) -> P(Sigma.new<A><B>(fst)(snd))) -> P(self_Sigma)
-

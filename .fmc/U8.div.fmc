@@ -1,3 +1,0 @@
-U8.div: Π(a:U8) Π(b:U8) U8
-  λa λb (<a λx U8> λa_val (<b λx U8> λb_val (U8.new ((<Word.div 8> a_val) b_val))))
-

@@ -1,3 +1,0 @@
-Jacobian.equal: Π(a:Jacobian) Π(b:Jacobian) Bool
-  λa λb (<a λself Bool> λa.x λa.y λa.z (<b λself Bool> λb.x λb.y λb.z $a.z2=(ecdsa.mod ((Nat.mul a.z) a.z));$a.z3=(ecdsa.mod ((Nat.mul a.z) a.z2));$b.z2=(ecdsa.mod ((Nat.mul b.z) b.z));$b.z3=(ecdsa.mod ((Nat.mul b.z) b.z2));$eq1=((Nat.eql (ecdsa.mod ((Nat.mul a.x) b.z2))) (ecdsa.mod ((Nat.mul b.x) a.z2)));$eq2=((Nat.eql (ecdsa.mod ((Nat.mul a.y) b.z3))) (ecdsa.mod ((Nat.mul b.y) a.z3)));((Bool.and eq1) eq2)))
-

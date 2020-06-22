@@ -1,3 +1,0 @@
-Parser.Reply: (A: Type) -> Type
-  (A) self_Parser.Reply<P: (self: Parser.Reply(A)) -> Type> -> (val: (state: Parser.State) -> (value: A) -> P(Parser.Reply.val<A>(state)(value))) -> (err: (state: Parser.State) -> (error: Parser.Error) -> P(Parser.Reply.err<A>(state)(error))) -> P(self_Parser.Reply)
-

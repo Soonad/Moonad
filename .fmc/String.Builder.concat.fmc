@@ -1,3 +1,0 @@
-String.Builder.concat: Π(a:String.Builder) Π(b:String.Builder) String.Builder
-  λa λb λx (a (b x))
-

@@ -1,3 +1,0 @@
-Nat.mul: (n: Nat) -> (m: Nat) -> Nat
-  (n) (m) n<(n.self) Nat>(Nat.zero)((n.pred) Nat.add(m)(Nat.mul(n.pred)(m)))
-

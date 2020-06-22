@@ -1,3 +1,0 @@
-Parser: Π(A:*) *
-  λA Π(:Parser.State) (Parser.Reply A)
-

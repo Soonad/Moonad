@@ -1,3 +1,0 @@
-App.demo: App(Nat)
-  App.new<Nat>(0)((state) let count = Nat.to_string_decimal(state); App.Render.text(String.concat("Count: ")(count)))((input) (state) input<(input.self) Nat>((input.keycode) Nat.succ(state))((input.post) Nat.succ(state)))((state) state)
-

@@ -1,3 +1,0 @@
-U8.parse_hex: Π(str:String) U8
-  λstr (U8.new ((Word.from_bits 8) (Bits.parse_hex str)))
-

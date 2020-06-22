@@ -1,3 +1,0 @@
-List.show: <A: Type> -> (f: A -> String) -> (xs: List(A)) -> String
-  <A> (f) (xs) List.show.go<A>(f)(xs)(String.Builder.cons('[')(String.Builder.new))
-

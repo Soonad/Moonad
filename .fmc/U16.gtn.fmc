@@ -1,3 +1,0 @@
-U16.gtn: Π(a:U16) Π(b:U16) Bool
-  λa λb (<a λx Bool> λa_val (<b λx Bool> λb_val ((<Word.gtn 16> a_val) b_val)))
-

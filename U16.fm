@@ -1,5 +1,8 @@
 T U16
-| new(a: Word(16));
+| U16.new(a: Word(16));
+
+U16.0: U16
+  U16.new(Word.zero(16))
 
 U16.add(a: U16, b: U16): U16
   get a_val = a 
@@ -103,3 +106,7 @@ U16.xor(a: U16, b: U16): U16
   get a_val = a
   get b_val = b 
   U16.new(Word.xor<>(a_val, b_val))  
+
+U16.to_u32(a: U16): U32
+  case a:
+  | U32.new(Word.trim<16>(32, a.a));

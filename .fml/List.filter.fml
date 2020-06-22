@@ -1,3 +1,0 @@
-List.filter: <A: Type> -> (f: A -> Bool) -> (xs: List(A)) -> List(A)
-  <A> (f) (xs) xs<(xs.self) List(A)>([A;])((xs.head) (xs.tail) f(xs.head)<(self.self) List(A)>(List.cons<A>(xs.head)(List.filter<A>(f)(xs.tail)))(List.filter<A>(f)(xs.tail)))
-

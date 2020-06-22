@@ -1,3 +1,0 @@
-Jacobian.from_point: Π(p:Point) Jacobian
-  λp (<p λx Jacobian> λp.x λp.y (((Jacobian.new p.x) p.y) 1))
-

@@ -1,3 +1,0 @@
-Parser.Reply.err: ∀(A:*) Π(state:Parser.State) Π(error:Parser.Error) (Parser.Reply A)
-  ΛA λstate λerror ΛP λval λerr ((err state) error)
-

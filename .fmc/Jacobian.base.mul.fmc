@@ -1,3 +1,0 @@
-Jacobian.base.mul: Π(n:Nat) Jacobian
-  λn (((Jacobian.mul n) Jacobian.base.window_size) Jacobian.base.precomputes)
-

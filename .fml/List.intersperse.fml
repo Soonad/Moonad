@@ -1,3 +1,0 @@
-List.intersperse: <A: Type> -> (sep: A) -> (xs: List(A)) -> List(A)
-  <A> (sep) (xs) xs<(xs.self) List(A)>([A;])((xs.head) (xs.tail) xs.tail<(xs.tail.self) List(A)>(List.pure<A>(xs.head))((xs.tail.head) (xs.tail.tail) List.cons<A>(xs.head)(List.cons<A>(sep)(List.intersperse<A>(sep)(xs.tail)))))
-

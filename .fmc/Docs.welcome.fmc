@@ -1,3 +1,0 @@
-Docs.welcome: (IO Unit)
-  ((<<(<Monad.bind IO> IO.monad) String> Unit> (IO.query "What is your name?")) λname (IO.print ((String.concat "Welcome, ") name)))
-

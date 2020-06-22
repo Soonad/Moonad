@@ -1,3 +1,0 @@
-Arelin.Thing.update_buff: (self: Arelin.Thing) -> (stt_key: Bits) -> Arelin.Thing
-  (self) (stt_key) let stt = Arelin.Thing.get_stt(self); let get_stt = Map.get<F64>(stt_key)(stt); get_stt<(get_stt.self) Arelin.Thing>(self)((get_stt.value) F64.eql(get_stt.value)(F64.0)<(self.self) Arelin.Thing>(let new_tik = F64.sub(get_stt.value)(F64.1); let new_stt = Map.set<F64>(stt_key)(new_tik)(stt); Arelin.Thing.set_stt(self)(new_stt))(self))
-

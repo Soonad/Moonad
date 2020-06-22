@@ -1,3 +1,0 @@
-QRS: *
-  ∀self_QRS(P:Π(self:QRS) *) Π(new:Π(p:Point) Π(r:Nat) Π(s:Nat) (P (((QRS.new p) r) s))) (P self_QRS)
-

@@ -1,3 +1,0 @@
-Int.to_string_decimal: Π(a:Int) String
-  λa (<a λa. String> λa.x λa.y ((<a.y λa.y.self String> (Nat.to_string_decimal a.x)) λa.y.pred ((String.cons (Char.parse "-")) (Nat.to_string_decimal a.y))))
-

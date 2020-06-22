@@ -1,3 +1,0 @@
-Nat.parse_decimal: Π(str:String) Nat
-  λstr ((Nat.parse_decimal.go str) Nat.zero)
-

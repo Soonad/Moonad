@@ -1,3 +1,0 @@
-Int.0: Int
-  (Int.fromNat 0)
-

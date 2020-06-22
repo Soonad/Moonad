@@ -1,3 +1,0 @@
-String.flatten: (xs: List(String)) -> String
-  (xs) xs<(xs.self) String>(String.nil)((xs.head) (xs.tail) String.concat(xs.head)(String.flatten(xs.tail)))
-

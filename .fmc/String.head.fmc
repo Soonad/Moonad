@@ -1,3 +1,0 @@
-String.head: Π(xs:String) Π(not_empty:(String.not_empty xs)) Char
-  λxs λnot_empty (((<xs λxs.self Π(ne:(String.not_empty xs.self)) Char> λne ((Empty.absurd ne) Char)) λxs.head λxs.tail λne xs.head) not_empty)
-

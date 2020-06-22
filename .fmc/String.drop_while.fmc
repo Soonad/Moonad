@@ -1,3 +1,0 @@
-String.drop_while: Π(f:Π(:Char) Bool) Π(xs:String) String
-  λf λxs ((<xs λxs.self String> String.nil) λxs.head λxs.tail ((<(f xs.head) λself.self String> ((String.drop_while f) xs.tail)) xs))
-

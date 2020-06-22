@@ -1,3 +1,0 @@
-Jacobian.double: Π(p:Jacobian) Jacobian
-  λp (<p λself Jacobian> λp.x λp.y λp.z $A=(Nat.square p.x);$B=(Nat.square p.y);$C=(Nat.square B);$D=((Nat.mul 2) ((ecdsa.sub (Nat.square ((Nat.add p.x) B))) ((Nat.add A) C)));$E=((Nat.mul 3) A);$F=(Nat.square E);$F=(Nat.square E);$x=((ecdsa.sub F) ((Nat.mul 2) D));$y=((ecdsa.sub ((Nat.mul E) ((ecdsa.sub D) x))) ((Nat.mul 8) C));$z=(ecdsa.mod ((((Nat.mulVar 3) 2) p.y) p.z));(((Jacobian.new x) y) z))
-

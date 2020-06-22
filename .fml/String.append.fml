@@ -1,3 +1,0 @@
-String.append: (as: String) -> (a: Char) -> String
-  (as) (a) as<(as.self) String>(String.pure(a))((as.head) (as.tail) String.cons(as.head)(String.append(as.tail)(a)))
-

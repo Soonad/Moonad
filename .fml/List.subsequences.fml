@@ -1,3 +1,0 @@
-List.subsequences: <A: Type> -> (xs: List(A)) -> List(List(A))
-  <A> (xs) List.cons<List(A)>([A;])(List.subsequences.go<A>(xs))
-

@@ -1,3 +1,0 @@
-QRS.new: Π(p:Point) Π(r:Nat) Π(s:Nat) QRS
-  λp λr λs ΛP λnew (((new p) r) s)
-

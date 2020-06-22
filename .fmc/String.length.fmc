@@ -1,3 +1,0 @@
-String.length: Π(xs:String) Nat
-  λxs ((String.length.go xs) 0)
-

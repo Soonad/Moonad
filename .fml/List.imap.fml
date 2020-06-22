@@ -1,3 +1,0 @@
-List.imap: <A: Type> -> <B: Type> -> (f: Nat -> A -> B) -> (xs: List(A)) -> List(B)
-  <A> <B> (f) (xs) xs<(xs.self) List(B)>([B;])((xs.head) (xs.tail) List.cons<B>(f(0)(xs.head))(List.imap<A><B>((n) f(Nat.succ(n)))(xs.tail)))
-

@@ -14,28 +14,28 @@ F64.256 : F64
   F64.parse_binary("0000000000000000000000000000000000000000000000000000111000000010")
 
 T F64.Boundary
-| new(pts: List(F64.V3));
+| F64.Boundary.new(pts: List(F64.V3));
   
 // An IEEE-754 compliant 64-bit floating point.
-T F64 //prim//
-| new (a: Word(64));
+T F64
+| F64.new (a: Word(64));
 
 T F64.V3
-| new(x: F64, y: F64, z: F64);
+| F64.V3.new(x: F64, y: F64, z: F64);
 
 T F64.Circle
-| new(pos: F64.V3, rad: F64);
+| F64.Circle.new(pos: F64.V3, rad: F64);
 
 T F64.Line
-| new(pos: F64.V3, dir: F64.V3);
+| F64.Line.new(pos: F64.V3, dir: F64.V3);
 
 T F64.Ordering
-| LT;
-| EQ;
-| GT;
+| F64.Ordering.LT;
+| F64.Ordering.EQ;
+| F64.Ordering.GT;
 
 T F64.Segment
-| new(a: F64.V3, b: F64.V3);
+| F64.Segment.new(a: F64.V3, b: F64.V3);
 
 F64.V3.add(a: F64.V3, b: F64.V3): F64.V3 
   get a.x a.y a.z = a
@@ -273,7 +273,7 @@ F64.V3.polygon_to_segments(
   dir: F64.V3,
   pts: List(F64.V3)):
   List(F64.Segment)
-  List.fold<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
+  List.foldr<F64.V3><Maybe(F64.V3) -> Maybe(F64.V3) -> List(F64.Segment)>
   |F64.V3.polygon_to_segments.nil(pos, dir);
   |F64.V3.polygon_to_segments.cons(pos, dir);
   |pts;

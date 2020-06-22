@@ -1,3 +1,0 @@
-List.nil: ∀(A:*) (List A)
-  ΛA ΛP λnil λcons nil
-

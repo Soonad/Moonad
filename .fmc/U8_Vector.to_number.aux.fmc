@@ -1,3 +1,0 @@
-U8_Vector.to_number.aux: ∀(n:Nat) Π(bytes:((Vector U8) n)) Π(res:Nat) Nat
-  Λn λbytes λres ((<bytes λbytes.len λbytes.self Nat> res) Λbytes.len λbytes.head λbytes.tail ((<U8_Vector.to_number.aux bytes.len> bytes.tail) ((Nat.add (U8.to_nat bytes.head)) ((Nat.mul res) 16))))
-

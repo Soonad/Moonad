@@ -1,3 +1,0 @@
-Word.neg.aux: ∀(size:Nat) Π(:(Word size)) Π(:Bool) (Word size)
-  Λsize λword λinc (((<word λsize λ (Word size)> Word.nil) Λsize λpred ((<inc λ (Word (Nat.succ size))> (<Word.0 size> ((<Word.neg.aux size> pred) Bool.true))) (<Word.1 size> ((<Word.neg.aux size> pred) Bool.false)))) Λsize λpred ((<inc λ (Word (Nat.succ size))> (<Word.1 size> ((<Word.neg.aux size> pred) Bool.false))) (<Word.0 size> ((<Word.neg.aux size> pred) Bool.false))))
-

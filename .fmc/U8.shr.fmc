@@ -1,3 +1,0 @@
-U8.shr: Π(n:Nat) Π(a:U8) U8
-  λn λa (<a λx U8> λa_val (U8.new ((<Word.shift_right 8> n) a_val)))
-

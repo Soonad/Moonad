@@ -1,3 +1,0 @@
-App: Π(S:*) *
-  λS ∀self_App(P:Π(self:(App S)) *) Π(new:Π(init:S) Π(draw:Π(:S) App.Render) Π(when:Π(:App.Input) Π(:S) S) Π(tick:Π(:S) S) (P ((((<App.new S> init) draw) when) tick))) (P self_App)
-

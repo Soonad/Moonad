@@ -1,3 +1,0 @@
-Point.mul_unsafe: Π(p:Point) Π(n:Nat) (Maybe Point)
-  λp λn ((<<Maybe.map Jacobian> Point> Jacobian.to_point) ((Jacobian.mul_unsafe (Jacobian.from_point p)) n))
-

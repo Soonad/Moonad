@@ -1,3 +1,0 @@
-Nat.mulAcc: Π(n:Nat) ((((Acc Nat) Nat) (Nat.eql 1)) n)
-  (((<<Acc.foldl Nat> Nat> (Nat.eql 1)) Nat.mul) 1)
-

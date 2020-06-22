@@ -1,3 +1,0 @@
-Export.value: Π(ex:Export) (Export.T ex)
-  λex (<ex λex.self (<ex.self λex.self.self *> λex.self.T λex.self.value ex.self.T)> λex.T λex.value ex.value)
-

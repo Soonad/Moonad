@@ -1,3 +1,0 @@
-Jacobian.mul_unsafe: Π(d:Jacobian) Π(scalar:Nat) (Maybe Jacobian)
-  λd λscalar $n=((Nat.mod scalar) CURVE.n);$res=(<(ecdsa.split_scalar n) λx Jacobian> λk1 λk2 (<(Int.toNat k1) λx Jacobian> λk1neg λk1 (<(Int.toNat k2) λx Jacobian> λk2neg λk2 (<(((((Jacobian.mul_unsafe_aux d) Jacobian.0) Jacobian.0) k1) k2) λx Jacobian> λk1p λk2p $k1p=(((<Bool.if Jacobian> k1neg) (Jacobian.negate k1p)) k1p);$k2p=(((<Bool.if Jacobian> k2neg) (Jacobian.negate k2p)) k2p);$k2p=(<k2p λself Jacobian> λk2p.x λk2p.y λk2p.z (((Jacobian.new (ecdsa.mod ((Nat.mul k2p.x) CURVE.beta))) k2p.y) k2p.z));((Jacobian.add k1p) k2p)))));((<n λn.self (Maybe Jacobian)> <Maybe.none Jacobian>) λn.pred (<Maybe.some Jacobian> res))
-

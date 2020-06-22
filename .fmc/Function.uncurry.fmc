@@ -1,3 +1,0 @@
-Function.uncurry: ∀(A:*) ∀(B:*) ∀(C:*) Π(f:Π(:A) Π(:B) C) Π(p:((Pair A) B)) C
-  ΛA ΛB ΛC λf λp (<p λx C> λa λb ((f a) b))
-

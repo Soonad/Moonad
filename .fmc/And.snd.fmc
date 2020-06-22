@@ -1,3 +1,0 @@
-And.snd: ∀(A:*) ∀(B:*) Π(x:((And A) B)) B
-  ΛA ΛB λx (<<Pair.snd A> B> x)
-

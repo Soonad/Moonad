@@ -1,5 +1,5 @@
 T Export
-| new(T: Type, value: T);
+| Export.new(T: Type, value: T);
 
 Export.T(ex: Export): Type
   case ex:

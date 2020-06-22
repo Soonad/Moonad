@@ -1,3 +1,0 @@
-Arelin.Game.map_stage: Π(fn:Arelin.Game.TxFunction) Π(gm:Arelin.Game) Arelin.Game
-  λfn λgm (<gm λx Arelin.Game> λstage $new_stage=((<<List.map Arelin.Thing> Arelin.Thing> fn) stage);(Arelin.Game.new new_stage))
-

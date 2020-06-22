@@ -1,3 +1,0 @@
-Parser.Reply.val: <A: Type> -> (state: Parser.State) -> (value: A) -> Parser.Reply(A)
-  <A> (state) (value) <P> (val) (err) val(state)(value)
-

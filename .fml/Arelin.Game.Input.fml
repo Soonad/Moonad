@@ -1,3 +1,0 @@
-Arelin.Game.Input: Type
-  self_Arelin.Game.Input<P: (self: Arelin.Game.Input) -> Type> -> (sdir: (dir: F64.V3) -> P(Arelin.Game.Input.sdir(dir))) -> (key0: (pos: F64.V3) -> P(Arelin.Game.Input.key0(pos))) -> (key1: (pos: F64.V3) -> P(Arelin.Game.Input.key1(pos))) -> (key2: (pos: F64.V3) -> P(Arelin.Game.Input.key2(pos))) -> (key3: (pos: F64.V3) -> P(Arelin.Game.Input.key3(pos))) -> (key4: (pos: F64.V3) -> P(Arelin.Game.Input.key4(pos))) -> (key5: (pos: F64.V3) -> P(Arelin.Game.Input.key5(pos))) -> (cmsg: (txt: String) -> P(Arelin.Game.Input.cmsg(txt))) -> P(self_Arelin.Game.Input)
-

@@ -1,3 +1,0 @@
-Arelin.Thing.dash: (self: Arelin.Thing) -> (speed: F64) -> (from_tik: F64) -> (til_tik: F64) -> Arelin.Thing
-  (self) (speed) (from_tik) (til_tik) Arelin.Thing.is_rooted(self)<(self.self) Arelin.Thing>(self)(let self.tik = Arelin.Thing.get_tik(self); let self.pos = Arelin.Thing.get_pos(self); let self.trg = Arelin.Thing.get_trg(self); let self.dir = Arelin.Thing.get_dir(self); let new_vel = F64.is_between(from_tik)(til_tik)(self.tik)<(self.self) F64.V3>(F64.V3.scale(speed)(F64.V3.look_at(self.pos)(self.trg)(self.dir)))(F64.V3.new(F64.0)(F64.0)(F64.0)); Arelin.Thing.set_vel(self)(new_vel))
-

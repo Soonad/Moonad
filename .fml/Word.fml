@@ -1,3 +1,0 @@
-Word: (n: Nat) -> Type
-  (n) self_Word<P: (n: Nat) -> (self: Word(n)) -> Type> -> (nil: P(Nat.zero)(Word.nil)) -> (w0: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.w0<size>(pred))) -> (w1: <size: Nat> -> (pred: Word(size)) -> P(Nat.succ(size))(Word.w1<size>(pred))) -> P(n)(self_Word)
-

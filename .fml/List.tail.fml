@@ -1,3 +1,0 @@
-List.tail: <A: Type> -> (xs: List(A)) -> (not_empty: List.not_empty<A>(xs)) -> List(A)
-  <A> (xs) (not_empty) xs<(xs.self) (ne: List.not_empty<A>(xs.self)) -> List(A)>((ne) Empty.absurd(ne)(List(A)))((xs.head) (xs.tail) (ne) xs.tail)(not_empty)
-

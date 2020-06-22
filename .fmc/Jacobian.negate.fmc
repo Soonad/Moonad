@@ -1,3 +1,0 @@
-Jacobian.negate: Π(p:Jacobian) Jacobian
-  λp (<p λself Jacobian> λp.x λp.y λp.z (((Jacobian.new p.x) (ecdsa.negate p.y)) p.z))
-

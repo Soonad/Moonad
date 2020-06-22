@@ -1,3 +1,0 @@
-Jacobian.precompute_window.aux: Π(p:Jacobian) Π(windows:Nat) Π(points:(Concat Jacobian)) Π(window:Nat) Π(base:Jacobian) Π(size:Nat) Π(i:Nat) (Concat Jacobian)
-  λp λwindows λpoints λwindow λbase λsize λi ((<((Nat.ltn window) windows) λself.self (Concat Jacobian)> ((<((Nat.ltn i) size) λself.self (Concat Jacobian)> $base=((Jacobian.add base) p);$points=((<Concat.push Jacobian> base) points);(((((((Jacobian.precompute_window.aux p) windows) points) window) base) size) (Nat.succ i))) $p=(Jacobian.double base);(((((((Jacobian.precompute_window.aux p) windows) points) (Nat.succ window)) Jacobian.0) size) 0))) points)
-

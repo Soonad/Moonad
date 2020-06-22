@@ -1,3 +1,0 @@
-String.foldr.go: ∀(B:*) Π(b:B) Π(f:Π(:Char) Π(:B) B) Π(xs:String) Π(g:Π(:B) B) B
-  ΛB λb λf λxs λg ((<xs λxs.self B> (g b)) λxs.head λxs.tail ((((<String.foldr.go B> b) f) xs.tail) λx ((f xs.head) x)))
-

@@ -1,18 +1,13 @@
-// `Function(A, (x) B(x))` is a complex way to write `(x: A) -> B(x)` I guess.
+// `Function(A, (x) B(x))` is a synonym for `(x: A) -> B(x)`
 Function(A: Type, B: A -> Type): Type
   (x: A) -> B(x)
 
 // Calls a function in an argument. The most useless function.
-Function.call: <A: Type> -> <B: Type> -> (x: A) -> (f: A -> B) -> B
-  <A> <B> (x) (f)
+Function.call<A: Type, B: Type>(x: A, f: A -> B): B
   f(x)
 
 // Dependent function composition.
-Function.comp<A: Type, B: Type, C: B -> Type>(
-  g: (b: B) -> C(b),
-  f: A -> B,
-  x: A
-): C(f(x))
+Function.comp<A:Type, B:Type, C:B->Type>(g:(b:B)->C(b), f:A -> B, x:A): C(f(x))
   g(f(x))
 
 // Given a `x`, returns a function that receives an `y` and returns `x`.
@@ -20,19 +15,11 @@ Function.const<A: Type>(x: A, y: A): A
   x
 
 // Converts a function that receives a pair into a function of 2 arguments.
-Function.curry<A: Type, B: Type, C: Type>(
-  f: Pair(A, B) -> C,
-  x: A,
-  y: B
-): C
+Function.curry<A: Type, B: Type, C: Type>(f: Pair(A, B) -> C, x: A, y: B): C
   f(Pair.new<A><B>(x, y))
 
 // Flips the two first arguments of a function.
-Function.flip<A: Type, B: Type, C: Type>(
-  f: A -> B -> C,
-  y: B,
-  x: A
-): C
+Function.flip<A: Type, B: Type, C: Type>(f: A -> B -> C, y: B, x: A): C
   f(x, y)
 
 // The identity function returns its argument.
@@ -44,10 +31,6 @@ Function.pipe<A: Type, B: Type>(x: A, f: A -> B): B
   f(x)
 
 // Converts a function from 2 arguments to a function that receives a pair.
-Function.uncurry<A: Type, B: Type, C: Type>(
-  f: A -> B -> C,
-  p: Pair(A, B)
-): C
+Function.uncurry<A: Type, B: Type, C: Type>(f: A -> B -> C, p: Pair(A, B)): C
   get a b = p
   f(a, b)
-

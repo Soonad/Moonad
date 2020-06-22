@@ -1,3 +1,0 @@
-U64.or: Π(a:U64) Π(b:U64) U64
-  λa λb (<a λx U64> λa_val (<b λx U64> λb_val (U64.new ((<Word.or 64> a_val) b_val))))
-

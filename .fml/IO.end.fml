@@ -1,3 +1,0 @@
-IO.end: <A: Type> -> (val: A) -> IO(A)
-  <A> (val) <P> (end) (log) (get) end(val)
-

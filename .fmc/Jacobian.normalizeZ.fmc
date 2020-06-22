@@ -1,3 +1,0 @@
-Jacobian.normalizeZ: Π(p:Jacobian) Jacobian
-  λp (Jacobian.from_point (Jacobian.to_point p))
-

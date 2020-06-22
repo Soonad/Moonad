@@ -1,3 +1,0 @@
-Parser.run: ∀(A:*) Π(p:(Parser A)) Π(s:String) (Parser.Reply A)
-  ΛA λp λs (p (Parser.State.new s))
-

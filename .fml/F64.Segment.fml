@@ -1,3 +1,0 @@
-F64.Segment: Type
-  self_F64.Segment<P: (self: F64.Segment) -> Type> -> (new: (a: F64.V3) -> (b: F64.V3) -> P(F64.Segment.new(a)(b))) -> P(self_F64.Segment)
-

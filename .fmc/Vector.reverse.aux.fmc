@@ -1,3 +1,0 @@
-Vector.reverse.aux: ∀(A:*) ∀(n:Nat) ∀(m:Nat) Π(xs:((Vector A) n)) Π(ys:((Vector A) m)) ((Vector A) ((Nat.add n) m))
-  ΛA Λn Λm λxs λys ((<xs λxs.len λxs.self ((Vector A) ((Nat.add xs.len) m))> ys) Λxs.len λxs.head λxs.tail $ys=((<<Vector.ext A> m> xs.head) ys);$eq=((Nat.add_x_succ_y xs.len) m);$res=((<<<Vector.reverse.aux A> xs.len> (Nat.succ m)> xs.tail) ys);((<<<<Equal.rewrite Nat> ((Nat.add xs.len) (Nat.succ m))> ((Nat.add (Nat.succ xs.len)) m)> λx ((Vector A) x)> eq) res))
-

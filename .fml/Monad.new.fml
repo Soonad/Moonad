@@ -1,3 +1,0 @@
-Monad.new: <M: Type -> Type> -> (bind: <A: Type> -> <B: Type> -> M(A) -> (A -> M(B)) -> M(B)) -> (pure: <A: Type> -> A -> M(A)) -> Monad(M)
-  <M> (bind) (pure) <P> (new) new(bind)(pure)
-

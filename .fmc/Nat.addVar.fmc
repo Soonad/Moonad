@@ -1,3 +1,0 @@
-Nat.addVar: Π(n:Nat) (((Variadic n) Nat) Nat)
-  ((<<Variadic.foldr Nat> Nat> Nat.add) 0)
-

@@ -1,29 +1,27 @@
+// Natural numbers
 T Nat
-| zero;
-| succ(pred: Nat);
+| Nat.zero;
+| Nat.succ(pred: Nat);
 
+// Nat predecessor
+Nat.pred(n: Nat): Nat
+  case n:
+  | Nat.zero;
+  | n.pred;
+
+// Nat addition
 Nat.add(n: Nat, m: Nat): Nat
   case n:
   | m;
   | Nat.succ(Nat.add(n.pred, m));
 
-Nat.apply.tco<A: Type>(n: Nat, f: A -> A, x: A): A
+// Nat multiplication
+Nat.mul(n: Nat, m: Nat): Nat
   case n:
-  | x;
-  | Nat.apply.tco<A>(n.pred, f, f(x));
+  | Nat.zero;
+  | Nat.add(m, Nat.mul(n.pred, m));
 
-Nat.apply: <A: Type> -> (n: Nat, f: A -> A, x: A) -> A
-  Nat.apply.tco
-
-Nat.cmp(a: Nat, b: Nat): Cmp
-  case a:
-  | case b:
-    | Cmp.eql;
-    | Cmp.ltn;;
-  | case b:
-    | Cmp.gtn;
-    | Nat.cmp(a.pred, b.pred);;
-
+// Nat subtraction
 Nat.sub(n: Nat, m: Nat): Nat
   case n:
   | 0;
@@ -36,6 +34,7 @@ Nat.sub(n: Nat, m: Nat): Nat
   //   | Nat.zero;
   //   | Nat.sub(n.pred, m.pred);;
 
+// Nat subtraction and remainder
 Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
   case m:
   | Either.left<_,_>(n);
@@ -43,52 +42,66 @@ Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
     | Either.right<_,_>(Nat.succ(m.pred));
     | Nat.sub_rem(n.pred, m.pred);;
 
+// Nat division and remainder (helper function)
+Nat.div_mod.go(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
+  case Nat.sub_rem(n, m) as p:
+  | Nat.div_mod.go(p.value, m, Nat.succ(d));
+  | Pair.new<_,_>(d, n);
+
+// Nat division and modulus
+Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
+  Nat.div_mod.go(n, m, Nat.zero)
+
+// Nat modulus
+Nat.mod(n: Nat, m: Nat): Nat
+  Pair.snd<_,_>(Nat.div_mod(n, m))
+
+// Nat division
 Nat.div(n: Nat, m: Nat): Nat
   Pair.fst<_,_>(Nat.div_mod(n, m))
 
-Nat.div_mod.aux(n: Nat, m: Nat, d: Nat): Pair(Nat, Nat)
-  let p = Nat.sub_rem(n,m)
-  case p:
-  | Nat.div_mod.aux(p.value,m,Nat.succ(d));
-  | Pair.new<_,_>(d,n);
+// Compares two nats
+Nat.cmp(a: Nat, b: Nat): Cmp
+  case a:
+  | case b:
+    | Cmp.eql;
+    | Cmp.ltn;;
+  | case b:
+    | Cmp.gtn;
+    | Nat.cmp(a.pred, b.pred);;
 
-Nat.div_mod(n: Nat, m: Nat): Pair(Nat, Nat)
-  Nat.div_mod.aux(n,m,Nat.zero)
+// n < m
+Nat.ltn(n: Nat, m: Nat): Bool
+  Cmp.as_ltn(Nat.cmp(n, m))
+
+// n <= m
+Nat.lte(n: Nat, m: Nat): Bool
+  Cmp.as_lte(Nat.cmp(n, m))
+
+// n == m
+Nat.eql(n: Nat, m: Nat): Bool
+  Cmp.as_eql(Nat.cmp(n, m))
+
+// n >= m
+Nat.gte(n: Nat, m: Nat): Bool
+  Cmp.as_gte(Nat.cmp(n, m))
+
+// n > m
+Nat.gtn(n: Nat, m: Nat): Bool
+  Cmp.as_gtn(Nat.cmp(n, m))
+
+Nat.apply.go<A: Type>(n: Nat, f: A -> A, x: A): A
+  case n:
+  | x;
+  | Nat.apply.go<A>(n.pred, f, f(x));
+
+Nat.apply: <A: Type> -> (n: Nat, f: A -> A, x: A) -> A
+  Nat.apply.go
 
 Nat.double(n: Nat): Nat
   case n:
   | Nat.zero;
   | Nat.succ(Nat.succ(Nat.double(n.pred)));
-
-Nat.ltn(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.true;
-  | Bool.false;
-  | Bool.false;
-
-Nat.lte(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.true;
-  | Bool.true;
-  | Bool.false;
-
-Nat.eql(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.true;
-  | Bool.false;
-
-Nat.gte(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.true;
-  | Bool.true;
-
-Nat.gtn(n: Nat, m: Nat): Bool
-  case Nat.cmp(n, m):
-  | Bool.false;
-  | Bool.false;
-  | Bool.true;
 
 Nat.induction(n: Nat): <P: Nat -> Type> -> (z: P(Nat.zero)) -> (s: ((m:Nat) -> P(m) -> P(Nat.succ(m)))) -> P(n)
   <P> (z) (s) n<P>(z, (pred) s(pred, Nat.induction(pred)<P>(z, s)))
@@ -97,14 +110,6 @@ Nat.is_zero(n: Nat): Bool
   case n:
   | Bool.true;
   | Bool.false;
-
-Nat.mod(n: Nat, m: Nat): Nat
-  Pair.snd<Nat,Nat>(Nat.div_mod(n,m))
-
-Nat.mul(n: Nat, m: Nat): Nat
-  case n:
-  | Nat.zero;
-  | Nat.add(m, Nat.mul(n.pred, m));
 
 //TODO: error on misformatted Nat
 Nat.parse_decimal(str: String): Nat
@@ -117,17 +122,28 @@ Nat.parse_decimal.go(str: String, res: Nat): Nat
     let res = Nat.add(dig, Nat.mul(10, res))
     Nat.parse_decimal.go(str.tail, res);
 
-Nat.pred(n: Nat): Nat
-  case n:
-  | Nat.zero;
-  | n.pred;
-
 //Nat.solve_for: (x: Nat) -> <E: (x: Nat) -> Type> -> <P: E(x)> -> Nat
   //(x) <E> <P> x
 
-Nat.succ_isnt_zero(n: Nat, e: Equal(Nat, Nat.succ(n), Nat.zero)): Empty
-  def P = ((x) case x: | Empty; | Unit;) :: Nat -> Type
-  Equal.rewrite<Nat, Nat.succ(n), Nat.zero, P>(e, Unit.new)
+Nat.succ_isnt_zero<n: Nat>: Not(Equal(Nat, Nat.succ(n), Nat.zero))
+  def P(n : Nat)
+    case n:
+    | Empty;
+    | Unit;
+  def p_succ
+    Unit.new
+  (succ_is_zero)
+    Equal.rewrite<_,_,_,P>(succ_is_zero, p_succ)
+
+Nat.zero_isnt_succ<n: Nat>: Not(Equal(Nat, Nat.zero, Nat.succ(n)))
+  def P(n : Nat)
+    case n:
+    | Unit;
+    | Empty;
+  def p_zero
+    Unit.new
+  (zero_is_succ)
+    Equal.rewrite<_,_,_,P>(zero_is_succ, p_zero)
 
 Nat.sum(n: Nat): Nat
   Nat.sum.go(n, Nat.zero)
@@ -141,15 +157,23 @@ Nat.to_base(base: Nat, nat: Nat): List(Nat)
   Nat.to_base.go(base, nat, List.nil<Nat>)
 
 Nat.to_base.go(base: Nat, nat: Nat, res: List(Nat)): List(Nat) //loop//
-  case Nat.div_mod(nat, base) as p:
-  | let res = List.cons<Nat>(p.snd, res)
-    case p.fst<() List(Nat)>:
-    | res;
-    | Nat.to_base.go(base, p.fst, res);;
+  get d m = Nat.div_mod(nat, base)
+  case d:
+  | List.cons<>(m,res);
+  | Nat.to_base.go(base,d,List.cons<>(m,res));
 
-////base(123, [])
-////base(12, [3])
-////base(1, [2,3])
+Nat.pow(base: Nat, exp: Nat) : Nat
+  case exp:
+  | 1;
+  | Nat.mul(base,Nat.pow(base,exp.pred));
+
+Nat.from_base(base: Nat, ds: List(Nat)) : Nat
+  Nat.from_base.go(base,List.reverse<>(ds),1,0)
+
+Nat.from_base.go(b: Nat, ds: List(Nat), p: Nat, res : Nat) : Nat
+  case ds:
+  | res;
+  | Nat.from_base.go(b,ds.tail,Nat.mul(b,p), Nat.add(Nat.mul(ds.head,p),res));
 
 Nat.to_bits(n: Nat): Bits
   case n:
@@ -161,17 +185,60 @@ Nat.to_string(n: Nat): String
   | String.cons(Char.parse("z"), String.nil);
   | String.cons(Char.parse("s"), Nat.to_string(n.pred));
 
+Nat.to_string_unary(n: Nat): String
+  case n:
+  | String.nil;
+  | String.cons('1', Nat.to_string_unary(n.pred));
+
 Nat.to_string_base(base: Nat, nat: Nat): String
   List.foldr<Nat, String>
   | String.nil;
-  | (n) (str) String.cons(Nat.apply<Char>(n, U16.inc, Char.parse("0")), str);
+  | (n) (str) String.cons(Nat.show_digit(base,n), str);
   | Nat.to_base(base, nat);
 
-Nat.to_string_decimal: Nat -> String
-  Nat.to_string_base(10)
+Nat.show_digit(base: Nat, n: Nat) : Char
+  let m = Nat.mod(n,base)
+  def base64 =
+    ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'
+    ,'G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'
+    ,'W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l'
+    ,'m','n','o','p','q','r','s','t','u','v','w','x','y','z','+','/'
+    ]
+  if Bool.and(Nat.gtn(base,0),Nat.lte(base,64)) then 
+    case List.at<>(base64,m) as c:
+    | '#';
+    | c.value;
+  else '#'
 
 Nat.show(n: Nat): String
-  Nat.to_string_decimal(10)
+  Nat.to_string_base(10,n)
+
+Nat.to_u16(n: Nat): U16
+  Nat.apply<U16>(n, U16.inc, U16.0)
+
+Nat.to_u32(n: Nat): U32
+  Nat.apply<U32>(n, U32.inc, U32.0)
+
+Nat.to_u64(n: Nat): U64
+  Nat.apply<U64>(n, U64.inc, U64.0)
+
+Nat.add_zero_theorem(n: Nat): Equal(Nat, Nat.add(n, Nat.zero), n)
+  case n:
+  | Equal.to<Nat, Nat.zero>;
+  | let e0 = Nat.add_zero_theorem(n.pred)
+    let e1 = Equal.apply<Nat, Nat, Nat.add(n.pred, Nat.zero), n.pred, Nat.succ>(e0)
+    e1;
+  : Equal(Nat, Nat.add(n.self, Nat.zero), n.self);
+
+// TODO
+// (1 + a) + b == a + (1 + b)
+Nat.add_succ_theorem(n: Nat, m: Nat): Equal(Nat, Nat.add(n, Nat.succ(m)), Nat.succ(Nat.add(n, m)))
+  case n:
+  | Equal.to<Nat, Nat.succ(m)>;
+  | let e0 = Nat.add_succ_theorem(n.pred, m)
+    let e1 = Equal.apply<Nat, Nat, Nat.add(n.pred, Nat.succ(m)), Nat.succ(Nat.add(n.pred, m)), Nat.succ>(e0)
+    e1;
+  : Equal(Nat, Nat.add(n.self, Nat.succ(m)), Nat.add(Nat.succ(n.self), m));
 
 Nat.addVar: (n: Nat) -> Variadic(n, Nat, Nat)
   Variadic.foldr<,>(Nat.add, 0)
@@ -185,35 +252,15 @@ Nat.mulAcc: (n: Nat) -> Acc(Nat, Nat, Nat.eql(1), n)
 Nat.mulVar: (n: Nat) -> Variadic(n, Nat, Nat)
   Variadic.foldr<,>(Nat.mul, 1)
 
-Nat.parse_hex:
-  (str: String) ->
-    Nat.parse_hex_safe(str)<() Type>
-    | Unit;
-    | () Nat;
-  (str)
-  Nat.parse_hex_safe(str)<
-    (m)
-    m<() Type>
-    | Unit;
-    | () Nat;
-  >
-  | Unit.new;
-  | (val) val;
+Nat.parse_hex(str: String): Nat
+  Nat.parse_hex.go(str, Nat.zero)
 
-Nat.parse_hex_safe: String -> Maybe(Nat)
-  (str) Nat.parse_hex_safe.go(str, Nat.zero)
-
-Nat.parse_hex_safe.go(str: String, res: Nat): Maybe(Nat)
+Nat.parse_hex.go(str: String, res: Nat): Nat
   case str:
-  | Maybe.some<Nat>(res);
-  | use dig = Maybe.bind<,>(Char.hex_value(str.head))
+  | res;
+  | let dig = Char.hex_value(str.head)
     let res = Nat.add(dig, Nat.mul(16, res))
-    Nat.parse_hex_safe.go(str.tail, res);
-
-Nat.pow(a: Nat, b: Nat): Nat //prim//
-  case b:
-  | 1;
-  | Nat.mul(a, Nat.pow(a, b.pred));
+    Nat.parse_hex.go(str.tail, res);
 
 Nat.square(a: Nat): Nat
   Nat.mul(a, a)
@@ -250,21 +297,3 @@ Nat.min(a: Nat): Nat -> Nat
     case b:
     | 0;
     | Nat.succ(Nat.min(a.pred, b.pred));;
-
-Nat.add_x_0(x: Nat): Equal(Nat, Nat.add(x, 0), x)
-  case x:
-  | Equal.to<,>;
-  | def a = Nat.add(x.pred, 0)
-    def b = x.pred
-    def eq = Nat.add_x_0(x.pred)
-    Equal.apply<_, _, a, b, Nat.succ, eq>;
-  : Equal(Nat, Nat.add(x.self, 0), x.self);
-
-Nat.add_x_succ_y(x: Nat, y: Nat): Equal(Nat, Nat.add(x, Nat.succ(y)), Nat.succ(Nat.add(x, y)))
-  case x:
-  | Equal.to<,>;
-  | def a = Nat.add(x.pred, Nat.succ(y))
-    def b = Nat.succ(Nat.add(x.pred, y))
-    def eq = Nat.add_x_succ_y(x.pred, y)
-    Equal.apply<_, _, a, b, Nat.succ, eq>;
-  : Equal(Nat, Nat.add(x.self, Nat.succ(y)), Nat.succ(Nat.add(x.self, y)));

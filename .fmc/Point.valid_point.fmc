@@ -1,3 +1,0 @@
-Point.valid_point: Π(p:Point) Bool
-  λp (<p λx Bool> λx λy ((<((Bool.or ((Nat.eql x) 0)) ((Nat.eql y) 0)) λself.self Bool> Bool.false) ((Nat.eql (ecdsa.mod (Nat.square y))) (ecdsa.weierstrass x))))
-

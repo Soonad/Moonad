@@ -1,3 +1,0 @@
-Nat.parse_decimal: (str: String) -> Nat
-  (str) Nat.parse_decimal.go(str)(Nat.zero)
-

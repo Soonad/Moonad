@@ -1,3 +1,0 @@
-U8.to_bits: Π(a:U8) Bits
-  λa (<a λx Bits> λa_val (<Word.to_bits 8> a_val))
-

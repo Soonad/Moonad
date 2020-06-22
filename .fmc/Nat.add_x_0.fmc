@@ -1,3 +1,0 @@
-Nat.add_x_0: Π(x:Nat) (((Equal Nat) ((Nat.add x) 0)) x)
-  λx ((<x λx.self (((Equal Nat) ((Nat.add x.self) 0)) x.self)> <<Equal.to Nat> ((Nat.add Nat.zero) 0)>) λx.pred <<<<<<Equal.apply Nat> Nat> ((Nat.add x.pred) 0)> x.pred> Nat.succ> (Nat.add_x_0 x.pred)>)
-

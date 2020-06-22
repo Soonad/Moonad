@@ -1,3 +1,0 @@
-Jacobian.to_point.aux: Π(p:Jacobian) Π(invz:Nat) Point
-  λp λinvz (<p λself Point> λp.x λp.y λp.z $invz2=(Nat.square invz);$x=(ecdsa.mod ((Nat.mul p.x) invz2));$y=(ecdsa.mod ((((Nat.mulVar 3) p.y) invz2) invz));((Point.new x) y))
-

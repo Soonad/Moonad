@@ -1,3 +1,0 @@
-Jacobian.to_point: Π(p:Jacobian) Point
-  λp (<p λself Point> λp.x λp.y λp.z ((Jacobian.to_point.aux p) ((ecdsa.invert p.z) CURVE.P)))
-

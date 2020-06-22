@@ -1,3 +1,0 @@
-String.eql: Π(a:String) Π(b:String) Bool
-  λa λb ((<a λa.self Bool> ((<b λb.self Bool> Bool.true) λb.head λb.tail Bool.false)) λa.head λa.tail ((<b λb.self Bool> Bool.false) λb.head λb.tail ((Bool.and ((U16.eql a.head) b.head)) ((String.eql a.tail) b.tail))))
-

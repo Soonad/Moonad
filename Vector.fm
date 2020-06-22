@@ -1,54 +1,54 @@
-T Vector <A: Type>                            ~ (len: Nat)
-| nil                                         ~ (Nat.zero);
-| ext<len: Nat>(head: A, tail: Vector(A,len)) ~ (Nat.succ(len));
+T Vector <A: Type>                         ~ (size: Nat)
+| Vector.nil                                      ~ (Nat.zero);
+| Vector.ext<size: Nat>(head: A, tail: Vector(A,size)) ~ (Nat.succ(size));
 
-Vector.len_0_is_nil(vec: Vector(Nat, Nat.zero)): Equal(_, vec, Vector.nil<Nat>)
+Vector.size_0_is_nil(vec: Vector(Nat, Nat.zero)): Equal(_, vec, Vector.nil<Nat>)
   case vec:
-  with e : Equal(Nat, vec.len, Nat.zero) = Equal.to<Nat, Nat.zero>;
+  with e : Equal(Nat, vec.size, Nat.zero) = Equal.to<Nat, Nat.zero>;
   | def P0 = ((x) Vector(Nat, Nat.zero)) :: Nat -> Type
     def x0 = Equal.rewrite<_,_,_, P0>(e, Vector.nil<Nat>)
     Equal.to<Vector(Nat, Nat.zero), x0>;
-  | Empty.absurd(Nat.succ_isnt_zero(vec.len, e), _);
+  | Empty.absurd<>(Nat.succ_isnt_zero<vec.size>(e));
   : def P0 = ((x) Vector(Nat, x)) :: Nat -> Type
     def P1 = ((x) Vector(Nat, Nat.zero)) :: Nat -> Type
-    let x0 = Equal.rewrite<_, vec.len, Nat.zero, P0>(e, vec.self)
-    let x1 = Equal.rewrite<_, vec.len, Nat.zero, P1>(e, Vector.nil<Nat>)
+    let x0 = Equal.rewrite<_, vec.size, Nat.zero, P0>(e, vec.self)
+    let x1 = Equal.rewrite<_, vec.size, Nat.zero, P1>(e, Vector.nil<Nat>)
     Equal(_, x0, x1);
 
 Vector.extract<A: Type, n: Nat>(xs: Vector(A, Nat.succ(n))): Pair(A, Vector(A, n))
   case xs:
   | Unit.new;
-  | Pair.new<A, Vector(A, xs.len)>(xs.head, xs.tail);
-  : Bool.if<Type>(Nat.eql(0, xs.len), Unit, Pair(A, Vector(A, Nat.pred(xs.len))));
+  | Pair.new<A, Vector(A, xs.size)>(xs.head, xs.tail);
+  : Bool.if<Type>(Nat.eql(0, xs.size), Unit, Pair(A, Vector(A, Nat.pred(xs.size))));
 
 Vector.split_at<A: Type, n: Nat>(xs: Vector(A, n)): (m: Nat) -> Pair(Vector(A, Nat.min(n, m)), Vector(A, Nat.sub(n, m)))
   case xs:
   | (m) Pair.new<Vector(A, 0), Vector(A, 0)>(Vector.nil<A>, Vector.nil<A>);
   | (m)
     case m:
-    | Pair.new<,>(Vector.nil<A>, Vector.ext<A, xs.len>(xs.head, xs.tail));
-    | get x y = Vector.split_at<A, xs.len>(xs.tail, m.pred)
-      let x = Vector.ext<A, Nat.min(xs.len, m.pred)>(xs.head, x)
+    | Pair.new<,>(Vector.nil<A>, Vector.ext<A, xs.size>(xs.head, xs.tail));
+    | get x y = Vector.split_at<A, xs.size>(xs.tail, m.pred)
+      let x = Vector.ext<A, Nat.min(xs.size, m.pred)>(xs.head, x)
       Pair.new<_,_>(x, y);
-    : Pair(Vector(A, Nat.min(Nat.succ(xs.len), m.self)), Vector(A, Nat.sub(Nat.succ(xs.len), m.self)));;
-  : (m: Nat) -> Pair(Vector(A, Nat.min(xs.len, m)), Vector(A, Nat.sub(xs.len, m)));
+    : Pair(Vector(A, Nat.min(Nat.succ(xs.size), m.self)), Vector(A, Nat.sub(Nat.succ(xs.size), m.self)));;
+  : (m: Nat) -> Pair(Vector(A, Nat.min(xs.size, m)), Vector(A, Nat.sub(xs.size, m)));
 
 Vector.reverse.aux<A: Type, n: Nat, m: Nat>(xs: Vector(A, n), ys: Vector(A, m)): Vector(A, Nat.add(n, m))
   case xs:
   | ys;
   | let ys = Vector.ext<A, m>(xs.head, ys)
-    let eq = Nat.add_x_succ_y(xs.len, m)
-    let res = Vector.reverse.aux<A, xs.len, Nat.succ(m)>(xs.tail, ys);
-    Equal.rewrite<_, Nat.add(xs.len, Nat.succ(m)), Nat.add(Nat.succ(xs.len), m), (x) Vector(A, x)>(eq, res);
-  : Vector(A, Nat.add(xs.len, m));
+    let eq = Nat.add_succ_theorem(xs.size, m)
+    let res = Vector.reverse.aux<A, xs.size, Nat.succ(m)>(xs.tail, ys);
+    Equal.rewrite<_, Nat.add(xs.size, Nat.succ(m)), Nat.add(Nat.succ(xs.size), m), (x) Vector(A, x)>(eq, res);
+  : Vector(A, Nat.add(xs.size, m));
 
 Vector.reverse<A: Type, n: Nat>(xs: Vector(A, n)): Vector(A, n)
-  let eq = Nat.add_x_0(n)
+  let eq = Nat.add_zero_theorem(n)
   let ys = Vector.reverse.aux<A, n, 0>(xs, Vector.nil<A>)
   Equal.rewrite<_, Nat.add(n, Nat.zero), n, (x) Vector(A, x)>(eq, ys)
 
 Vector.concat<A: Type, n: Nat, m: Nat>(as: Vector(A, n), bs: Vector(A, m)): Vector(A, Nat.add(n, m))
   case as:
   | bs;
-  | Vector.ext<A, Nat.add(as.len, m)>(as.head, Vector.concat<A, as.len, m>(as.tail, bs));
-  : Vector(A, Nat.add(as.len, m));
+  | Vector.ext<A, Nat.add(as.size, m)>(as.head, Vector.concat<A, as.size, m>(as.tail, bs));
+  : Vector(A, Nat.add(as.size, m));

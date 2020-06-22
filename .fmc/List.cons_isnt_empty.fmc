@@ -1,3 +1,0 @@
-List.cons_isnt_empty: ∀(A:*) Π(x:A) Π(xs:(List A)) (<List.not_empty A> ((<List.cons A> x) xs))
-  ΛA λx λxs (((<((<List.cons A> x) xs) λy.self Π(e:(((Equal (List A)) ((<List.cons A> x) xs)) y.self)) Unit> λe ((Empty.absurd (((<List.cons_isnt_nil A> x) xs) e)) Unit)) λy.head λy.tail λe Unit.new) <<Equal.to (List A)> ((<List.cons A> x) xs)>)
-

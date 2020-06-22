@@ -1,3 +1,0 @@
-App.Input.keypress: Π(keycode:U16) App.Input
-  λkeycode ΛP λkeypress λnewpost (keypress keycode)
-

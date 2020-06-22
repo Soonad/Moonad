@@ -1,3 +1,0 @@
-SignResult: *
-  ∀self_SignResult(P:Π(self:SignResult) *) Π(new:Π(r:Nat) Π(s:Nat) (P ((SignResult.new r) s))) (P self_SignResult)
-

@@ -1,3 +1,0 @@
-Int.parse_decimal: Π(str:String) Int
-  λstr ((<str λstr.self Int> Int.0) λstr.head λstr.tail ((<((U16.eql str.head) (Char.parse "-")) λ Int> ((Int.new 0) (Nat.parse_decimal str.tail))) ((Int.new (Nat.parse_decimal ((String.cons str.head) str.tail))) 0)))
-

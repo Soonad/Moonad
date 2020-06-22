@@ -1,3 +1,0 @@
-U16.concat: Π(a:U16) Π(b:U16) U32
-  λa λb (<a λx U32> λa_val (<b λx U32> λb_val (U32.new ((<<Word.concat 16> 16> a_val) b_val))))
-

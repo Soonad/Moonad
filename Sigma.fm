@@ -1,5 +1,5 @@
 T Sigma (A: Type) (B: A -> Type)
-| new(fst: A, snd: B(fst));
+| Sigma.new(fst: A, snd: B(fst));
 
 Sigma.fst<A: Type, B: A -> Type>(sig: Sigma(A)(B)): A
   case sig:

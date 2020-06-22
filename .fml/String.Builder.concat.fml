@@ -1,3 +1,0 @@
-String.Builder.concat: (a: String.Builder) -> (b: String.Builder) -> String.Builder
-  (a) (b) (x) a(b(x))
-

@@ -1,3 +1,0 @@
-Nat.succ_isnt_zero: (n: Nat) -> (e: Equal(Nat)(Nat.succ(n))(Nat.zero)) -> Empty
-  (n) (e) Equal.rewrite<Nat><Nat.succ(n)><Nat.zero><((x) x<(x.self) Type>(Empty)((x.pred) Unit)) :: Nat -> Type>(e)(Unit.new)
-

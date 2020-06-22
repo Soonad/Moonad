@@ -1,7 +1,7 @@
 // The polymorphic List type can hold a number of elements.
 T List <A: Type>
-| nil;
-| cons(head: A, tail: List(A));
+| List.nil;
+| List.cons(head: A, tail: List(A));
 
 // Basic Theorems
 // ===============
@@ -26,7 +26,7 @@ List.cons_isnt_empty<A: Type>(
   def y = List.cons<A>(x,xs)
   case y:
   with e : Equal(List(A),y,y.self) = Equal.to<List(A),y>;
-  | Empty.absurd(List.cons_isnt_nil<A>(x,xs,e),_);
+  | Empty.absurd<>(List.cons_isnt_nil<A>(x,xs,e));
   | Unit.new;
 
 // Basic Functions
@@ -42,21 +42,21 @@ List.concat<A: Type>(as: List(A), bs: List(A)): List(A)
 List.head<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, A);
+  | Empty.absurd<>(ne);
   | xs.head;
 
 // Get the tail of a nonempty list
 List.tail<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, List(A));
+  | Empty.absurd<>(ne);
   | xs.tail;
 
 // Get the all elements of a nonempty list except the last one
 List.init<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, List(A));
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
     | List.nil<>;
@@ -68,7 +68,7 @@ List.init<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : List(A)
 List.last<A: Type>(xs: List(A), not_empty: List.not_empty<A>(xs)) : A
   case xs:
   with ne : List.not_empty<A>(xs.self) = not_empty;
-  | Empty.absurd(ne, A);
+  | Empty.absurd<>(ne);
   | case xs.tail:
     with e : Equal(_, xs.tail.self,xs.tail) = Equal.to<List(A),xs.tail>;
     | xs.head;
@@ -145,28 +145,29 @@ List.subsequences.go<A: Type>(xs: List(A)): List(List(A))
         :: List(A) -> List(List(A)) -> List(List(A))
     List.cons<>
     | List.pure<>(xs.head);
-    | List.fold<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
+    | List.foldr<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
 
 // Reducing Lists
 // ==============
 
-// Folds over a list, right associative
-List.fold<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
-  List.fold.go<,>(b,f,xs,(x) x)
+// Converts a list to its non-inductive Church encoding
+List.fold<A: Type>(list: List(A)): <P: Type> -> P -> (A -> P -> P) -> P
+  <P> (nil, cons)
+  case list:
+  | nil;
+  | cons(list.head, List.fold<A>(list.tail)<P>(nil, cons));
 
-List.fold.go<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A), g: B -> B): B
-  case xs:
-  | g(b);
-  | List.fold.go<,>(b,f,xs.tail,(x) f(xs.head,x));
-
-List.foldr<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
-  List.fold<,>(b,f,xs)
-
-List.fold1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
+List.fold1<A: Type>(xs: List(A))<ne: List.not_empty<A>(xs)>
+  : <P: Type> -> P -> (A -> P -> P) -> P
+  <P> (nil, cons)
   case xs:
   with ne : List.not_empty<>(xs.self) = ne;
-  | Empty.absurd(ne,A);
-  | List.fold<A,A>(xs.head,f,xs.tail);
+  | Empty.absurd<>(ne);
+  | List.fold<>(xs)<P>(nil,cons);
+
+// Folds over a list, right associative
+List.foldr<A: Type,B: Type>(b: B, f: A -> B -> B, xs: List(A)): B
+  List.fold<>(xs)<>(b,f)
 
 // Folds over a list, left associative
 List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B
@@ -177,7 +178,7 @@ List.foldl<A: Type,B: Type>(b: B, f: B -> A -> B, xs: List(A)): B
 List.foldl1<A: Type>(f: A -> A -> A, xs: List(A), ne: List.not_empty<A>(xs)): A
   case xs:
   with ne : List.not_empty<>(xs.self) = ne;
-  | Empty.absurd(ne,A);
+  | Empty.absurd<>(ne);
   | List.foldl<A,A>(xs.head,f,xs.tail);
 
 // Special folds
@@ -232,14 +233,8 @@ List.product.go(xs: List(Nat), n: Nat) : Nat
 
 // Print a list
 List.show<A: Type>(f: A -> String, xs: List(A)): String
-  List.show.go<>(f,xs,String.Builder.cons('[',String.Builder.new))
+  String.flatten(["[",String.intercalate(",", List.map<,>(f,xs)),"]"])
 
-List.show.go<A: Type>(f: A -> String, xs: List(A), sb: String.Builder): String
-  case xs:
-  | sb(String.pure(']'));
-  | List.show.go<>(f,xs.tail)
-    | String.Builder.concat(String.to_builder(f(xs.head)))
-      | String.Builder.cons(',',sb);;;
 
 // List monad
 // ==========
@@ -288,13 +283,11 @@ List.take_while<A: Type>(f: A -> Bool, xs: List(A)) : List(A)
 
 List.split_at<A: Type>(n : Nat, xs: List(A)) : Pair(List(A),List(A))
   case xs:
-  | Pair.new<,>(List.nil<>,List.nil<>);
+  | Pair.new<,>(List.nil<>, List.nil<>);
   | case n:
-    | Pair.new<,>(List.nil<>,xs);
-    | case n.pred:
-      | Pair.new<,>(List.pure<>(xs.head),xs.tail);
-      | get y z = List.split_at<>(n.pred,xs.tail)
-        Pair.new<,>(List.cons<>(xs.head,y),z);;;
+    | Pair.new<,>(List.nil<>, xs);
+    | get fst snd = List.split_at<>(n.pred, xs.tail)
+      Pair.new<,>(List.cons<>(xs.head, fst), snd);;
 
 List.drop_until<A: Type>(f: A -> Bool, xs: List(A)): List(A)
   List.drop_while<>((c) Bool.not(f(c)), xs)
@@ -336,6 +329,10 @@ List.Builder.concat<A: Type>(a: List.Builder(A), b: List.Builder(A)): List.Build
 
 // prepend an element
 List.Builder.cons<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
+  (x) List.cons<>(c,lb(x))
+
+// append an element
+List.Builder.snoc<A: Type>(c: A, lb: List.Builder(A)) : List.Builder(A)
   (x) lb(List.cons<>(c,x))
 
 // convert a list to a builder
@@ -345,7 +342,7 @@ List.to_builder<A: Type>(list: List(A)) : List.Builder(A)
 List.to_builder.go<A: Type>(list: List(A), lb: List.Builder(A)) : List.Builder(A)
   case list:
   | lb;
-  | List.to_builder.go<>(list.tail)(List.Builder.cons<>(list.head, lb));
+  | List.to_builder.go<>(list.tail)(List.Builder.snoc<>(list.head, lb));
 
 // Returns the element at given position.
 List.at<A: Type>(list: List(A), index: Nat): Maybe(A)

@@ -1,3 +1,0 @@
-ecdsa.USE_ENDOMORPHISM: Bool
-  ((Nat.eql CURVE.a) 0)
-

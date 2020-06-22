@@ -1,3 +1,0 @@
-Jacobian.mul_unsafe_aux: Π(d:Jacobian) Π(k1p:Jacobian) Π(k2p:Jacobian) Π(k1:Nat) Π(k2:Nat) ((Pair Jacobian) Jacobian)
-  λd λk1p λk2p λk1 λk2 ((<((Bool.or ((Nat.gtn k1) 0)) ((Nat.gtn k2) 0)) λself.self ((Pair Jacobian) Jacobian)> $k1p=(((<Bool.if Jacobian> (Nat.odd k1)) ((Jacobian.add k1p) d)) k1p);$k2p=(((<Bool.if Jacobian> (Nat.odd k2)) ((Jacobian.add k2p) d)) k2p);$d=(Jacobian.double d);$k1=((Nat.div k1) 2);$k2=((Nat.div k2) 2);(((((Jacobian.mul_unsafe_aux d) k1p) k2p) k1) k2)) ((<<Pair.new Jacobian> Jacobian> k1p) k2p))
-

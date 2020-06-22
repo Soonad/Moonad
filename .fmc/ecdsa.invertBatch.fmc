@@ -1,3 +1,0 @@
-ecdsa.invertBatch: Π(nums:(List Nat)) Π(modulo:Nat) (List Nat)
-  λnums λmodulo (<(((((ecdsa.invertBatch.aux1 nums) modulo) 1) <List.nil Nat>) <List.nil Nat>) λx (List Nat)> λacc λp (<p λx (List Nat)> λscratch λrest $acc=((ecdsa.invert acc) modulo);(((((ecdsa.invertBatch.aux2 rest) modulo) acc) scratch) <List.nil Nat>)))
-

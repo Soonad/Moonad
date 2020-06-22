@@ -75,23 +75,17 @@ Int.parse_decimal(str: String): Int
     | Int.new(0, Nat.parse_decimal(str.tail));
     | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), 0);;
 
-Int.parse_hex(str: String): Int.parse_hex_safe(str)<() Type> | Unit; | () Int;
-  case Int.parse_hex_safe(str) as m:
-  | Unit.new;
-  | m.value;
-  : m.self<() Type> | Unit; | () Int;;
-
-Int.parse_hex_safe(str: String): Maybe(Int)
+Int.parse_hex(str: String): Int
   case str:
-  | Maybe.none<>;
+  | Int.0;
   | case U16.eql(str.head, Char.parse("-")):
-    | use b = Maybe.bind<,>(Nat.parse_hex_safe(str.tail))
-      Maybe.some<>(Int.new(0, b));
-    | use a = Maybe.bind<,>(Nat.parse_hex_safe(String.cons(str.head, str.tail)))
-      Maybe.some<>(Int.new(a, 0));;
+    | let b = Nat.parse_hex(str.tail)
+      Int.new(0, b);
+    | let a = Nat.parse_hex(String.cons(str.head, str.tail))
+      Int.new(a, 0);;
 
-Int.to_string_decimal(a: Int): String
+Int.to_string_base(base: Nat, a: Int): String
   get a.x a.y = a
   case a.y:
-  | Nat.to_string_decimal(a.x);
-  | String.cons(Char.parse("-"), Nat.to_string_decimal(a.y));
+  | Nat.to_string_base(base, a.x);
+  | String.cons(Char.parse("-"), Nat.to_string_base(base, a.y));

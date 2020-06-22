@@ -11,43 +11,43 @@ Arelin.Game.SideId : Type
   F64
 
 T Arelin.Game.Hitbox 
-| nbox;
-| cbox(rad: F64);
-| pbox(pts: List(F64.V3));
+| Arelin.Game.Hitbox.nbox;
+| Arelin.Game.Hitbox.cbox(rad: F64);
+| Arelin.Game.Hitbox.pbox(pts: List(F64.V3));
 
 T Arelin.Game.Effect 
-| heal(lif: F64);
-| damage(dmg: F64);
-| repulse(mag: F64);
-| impulse(mag: F64, dir: F64.V3);
-| slow(dur: F64, val: F64);
-| haste(dur: F64, val: F64);
-| shield(dur: F64, val: F64);
-| silence(dur: F64);
-| root(dur: F64);
-| stun(dur: F64);
-| teleport_to(to_pos: F64.V3, all: F64); //1: everyone, 0: only team mates
+| Arelin.Game.Effect.heal(lif: F64);
+| Arelin.Game.Effect.damage(dmg: F64);
+| Arelin.Game.Effect.repulse(mag: F64);
+| Arelin.Game.Effect.impulse(mag: F64, dir: F64.V3);
+| Arelin.Game.Effect.slow(dur: F64, val: F64);
+| Arelin.Game.Effect.haste(dur: F64, val: F64);
+| Arelin.Game.Effect.shield(dur: F64, val: F64);
+| Arelin.Game.Effect.silence(dur: F64);
+| Arelin.Game.Effect.root(dur: F64);
+| Arelin.Game.Effect.stun(dur: F64);
+| Arelin.Game.Effect.teleport_to(to_pos: F64.V3, all: F64); //1: everyone, 0: only team mates
 
-T Arelin.Game.Buff 
-| shielded(dur: F64, val: F64); // shields are hit before hp
-| slowed(dur: F64, val: F64);
-| hasted(dur: F64, val: F64);
-| silenced(dur: F64);
-| rooted(dur: F64);
-| stunned(dur: F64);
+T Arelin.Game.Buff
+| Arelin.Game.Buff.shielded(dur: F64, val: F64); // shields are hit before hp
+| Arelin.Game.Buff.slowed(dur: F64, val: F64);
+| Arelin.Game.Buff.hasted(dur: F64, val: F64);
+| Arelin.Game.Buff.silenced(dur: F64);
+| Arelin.Game.Buff.rooted(dur: F64);
+| Arelin.Game.Buff.stunned(dur: F64);
 
-T Arelin.Game.Hit 
-| new(
+T Arelin.Game.Hit
+| Arelin.Game.Hit.new(
   eff: List(Arelin.Game.Effect), 
   pos: F64.V3, 
   dir: F64.V3, 
   box: Arelin.Game.Hitbox);
 
 T Arelin.Game.Light
-| new(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
+| Arelin.Game.Light.new(pos: F64.V3, rad: F64, rng: F64, sub: F64.V3, add: F64.V3);
 
 T Arelin.Thing 
-| new(
+| Arelin.Thing.new(
   fun : Arelin.Game.TxFunction,   // transaction function
   pid : Arelin.Game.PlayerId,     // number of playber controlling this
   mid : Arelin.Game.ModelId,      // id of model to be rendered
@@ -80,20 +80,20 @@ Arelin.Game.TxFunction : Type
   Arelin.Thing -> Arelin.Thing 
 
 T Arelin.Game 
-| new(stage: List(Arelin.Thing));
+| Arelin.Game.new(stage: List(Arelin.Thing));
 
-T Arelin.Game.Input 
-| sdir(dir: F64.V3); // stick direction
-| key0(pos: F64.V3); // left down
-| key1(pos: F64.V3); // middle down
-| key2(pos: F64.V3); // right down
-| key3(pos: F64.V3); // space down
-| key4(pos: F64.V3); // extra down
-| key5(pos: F64.V3); // shift down
-| cmsg(txt: String); // chat message 
+T Arelin.Game.Input
+| Arelin.Game.Input.sdir(dir: F64.V3); // stick direction
+| Arelin.Game.Input.key0(pos: F64.V3); // left down
+| Arelin.Game.Input.key1(pos: F64.V3); // middle down
+| Arelin.Game.Input.key2(pos: F64.V3); // right down
+| Arelin.Game.Input.key3(pos: F64.V3); // space down
+| Arelin.Game.Input.key4(pos: F64.V3); // extra down
+| Arelin.Game.Input.key5(pos: F64.V3); // shift down
+| Arelin.Game.Input.cmsg(txt: String); // chat message 
 
 T Arelin.Game.Command
-| new(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
+| Arelin.Game.Command.new(pid: Arelin.Game.PlayerId, inp: Arelin.Game.Input);
 
 Arelin.Thing.new_thing : Arelin.Thing
   Arelin.Thing.new(
@@ -1405,7 +1405,7 @@ Arelin.Game.combine_mov_buffs(buff: Arelin.Game.Buff, i: F64): F64
 Arelin.Thing.speed_multiplier_of(self: Arelin.Thing): F64
   let self.bst = Arelin.Thing.get_bst(self)
   let self.buf = Arelin.Thing.get_buf(self) 
-  List.fold<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
+  List.foldr<><>(self.bst, Arelin.Game.combine_mov_buffs, self.buf)
 
 Arelin.Thing.is_silenced(self: Arelin.Thing): Bool
   let self.buf = Arelin.Thing.get_buf(self)
@@ -1504,7 +1504,7 @@ Arelin.Thing.handle_shields(hit_dmg: F64, self: Arelin.Thing): Arelin.Thing
   let self.buf      = Arelin.Thing.get_buf(self)
   let self.dmg      = Arelin.Thing.get_dmg(self)
   let init_val      = Pair.new<><>(hit_dmg, List.nil<>)
-  let res           = List.fold<><>(init_val, Arelin.Game.use_shields, self.buf)
+  let res           = List.foldr<><>(init_val, Arelin.Game.use_shields, self.buf)
   let remaining_dmg = F64.add(Pair.fst<><>(res), self.dmg)
   let remaining_buf = Pair.snd<><>(res)
   let self          = Arelin.Thing.set_dmg(self, remaining_dmg)
@@ -1564,7 +1564,7 @@ Arelin.Thing.update_buff_dur(self: Arelin.Thing): Arelin.Thing
       ;
     ;
   ) :: Arelin.Game.Buff -> List(Arelin.Game.Buff) -> List(Arelin.Game.Buff)
-  let new_buf = List.fold<><>(List.nil<>, fn, self.buf)
+  let new_buf = List.foldr<><>(List.nil<>, fn, self.buf)
   Arelin.Thing.set_buf(self, new_buf)
   
 // Ends an animation/transformation/thing after some ticks
@@ -1760,7 +1760,7 @@ Arelin.collide_with(
         | #some# Maybe.some<>(result.value); 
       ) :: F64.Segment -> Maybe(F64.V3) -> Maybe(F64.V3)
       let segs = F64.V3.polygon_to_segments(b_pos, b_dir, b_box.pts)
-      List.fold<><>(nil,cons,segs);;
+      List.foldr<><>(nil,cons,segs);;
   | #pbox# Maybe.none<>; // TODO
 
 //// Interaction function between two things
@@ -1905,9 +1905,9 @@ Arelin.interact_with(this: Arelin.Thing, that: Arelin.Thing): Arelin.Thing
               | this;;
 
         ) :: Arelin.Game.Effect -> Arelin.Thing -> Arelin.Thing
-       List.fold<><>(this, apply_eff, hit.eff);;
+       List.foldr<><>(this, apply_eff, hit.eff);;
     ) :: Arelin.Game.Hit -> Arelin.Thing -> Arelin.Thing 
-    List.fold<><>(this, apply_hit, that.hit)
+    List.foldr<><>(this, apply_hit, that.hit)
   this  
 
 // Like a fold, but with access to a list of other elements
@@ -1994,7 +1994,7 @@ Arelin.exec_turn(gm: Arelin.Game): Arelin.Game
     let this = fun(this)
 
     // Calls the interaction function with all other things
-    let this = List.fold<><>(this, intr, others)
+    let this = List.foldr<><>(this, intr, others)
 
     // Increments tik counter
     let tik  = Arelin.Thing.get_tik(this)

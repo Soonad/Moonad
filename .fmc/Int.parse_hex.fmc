@@ -1,3 +1,0 @@
-Int.parse_hex: Π(str:String) ((<(Int.parse_hex_safe str) λ *> Unit) λ Int)
-  λstr ((<(Int.parse_hex_safe str) λm.self ((<m.self λ *> Unit) λ Int)> Unit.new) λm.value m.value)
-

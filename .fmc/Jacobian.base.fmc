@@ -1,3 +1,0 @@
-Jacobian.base: Jacobian
-  (((Jacobian.new CURVE.Gx) CURVE.Gy) 1)
-

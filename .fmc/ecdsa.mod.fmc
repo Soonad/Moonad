@@ -1,3 +1,0 @@
-ecdsa.mod: Π(a:Nat) Nat
-  λa ((Nat.mod a) CURVE.P)
-

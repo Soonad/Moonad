@@ -1,3 +1,0 @@
-U8_Vector.to_number: ∀(n:Nat) Π(bytes:((Vector U8) n)) Nat
-  Λn λbytes ((<U8_Vector.to_number.aux n> bytes) 0)
-

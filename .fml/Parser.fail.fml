@@ -1,3 +1,0 @@
-Parser.fail: <A: Type> -> (msg: String) -> Parser(A)
-  <A> (msg) (s1) s1<(self) Parser.Reply(A)>((pos) (str) (errs) Parser.Reply.err<A>(s1)(Parser.Error.msg(pos)(List.pure<String>(msg))))
-

@@ -1,6 +1,6 @@
 T NonEmpty <A: Type>
-| end(value: A);
-| cons(head: A, tail: NonEmpty(A));
+| NonEmpty.end(value: A);
+| NonEmpty.cons(head: A, tail: NonEmpty(A));
 
 NonEmpty.to_list<A: Type>(xs: NonEmpty(A)): List(A)
   case xs:

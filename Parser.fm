@@ -1,18 +1,18 @@
 T Parser.State
-| make(pos:Nat, str: String, errs: List(Parser.Error));
+| Parser.State.make(pos:Nat, str: String, errs: List(Parser.Error));
 
 T Parser.Error
-| new(pos: Nat, unx: Maybe(Parser.Item), exp: List(Parser.Item));
-| msg(pos: Nat, msgs: List(String));
+| Parser.Error.new(pos: Nat, unx: Maybe(Parser.Item), exp: List(Parser.Item));
+| Parser.Error.msg(pos: Nat, msgs: List(String));
 
 T Parser.Item
-| tokens(xs: String);
-| label(xs: String);
-| eof;
+| Parser.Item.tokens(xs: String);
+| Parser.Item.label(xs: String);
+| Parser.Item.eof;
 
 T Parser.Reply<A: Type>
-| val(state: Parser.State, value: A);
-| err(state: Parser.State, error: Parser.Error);
+| Parser.Reply.val(state: Parser.State, value: A);
+| Parser.Reply.err(state: Parser.State, error: Parser.Error);
 
 Parser.Error.merge(x: Parser.Error, y: Parser.Error): Parser.Error
   case x:
@@ -49,6 +49,7 @@ Parser.State.merge(x: Parser.State, y: Parser.State): Parser.State
 Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
   p(Parser.State.new(s))
 
+// auto-backtracks when erroring
 Parser.token<A: Type>(f: Char -> Maybe(A), es: List(Parser.Item)) : Parser(A)
   (s1) get pos str errs = s1
   case str:
@@ -60,6 +61,7 @@ Parser.token<A: Type>(f: Char -> Maybe(A), es: List(Parser.Item)) : Parser(A)
     | def s2 = Parser.State.make(Nat.succ(pos), str.tail, errs);
       Parser.Reply.val<>(s2,self.value);;
 
+// auto-backtracks when erroring
 Parser.tokens(match: String): Parser(String)
   (s1) get pos str errs = s1
   def len_m = String.length(match)
@@ -69,11 +71,11 @@ Parser.tokens(match: String): Parser(String)
   def lbl = List.pure<>(Parser.Item.tokens(match));
   case Nat.ltn(len_t,len_m):
   | def unx = Maybe.some<>(Parser.Item.eof);
-    Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));
+    Parser.Reply.err<>(s1,Parser.Error.new(pos,unx,lbl));
   | case String.eql(match,took):
     | Parser.Reply.val<>(s2,took);
     | def unx = Maybe.some<>(Parser.Item.tokens(took))
-      Parser.Reply.err<>(s2,Parser.Error.new(pos,unx,lbl));;
+      Parser.Reply.err<>(s1,Parser.Error.new(pos,unx,lbl));;
 
 Parser.try<A: Type>(p: Parser(A)): Parser(A)
   (s1)
@@ -210,14 +212,52 @@ Parser.Item.show(e: Parser.Item): String
   | String.flatten(["label(",String.pure('"'),e.xs,String.pure('"'),")"]);
   | "end_of_input";
 
-//Parser.test : String
-//  def p   = Parser.tokens("x")
-//  Parser.run<String>(p,"x")<() String>
-//  | (s,x) x;
-//  | (s,e) "Error";
-//
+Parser.Error.show(e: Parser.Error): String
+  case e:
+  | let unx = case e.unx: | "";
+      | String.flatten(["unexpected: ", Parser.Item.show(e.unx.value), ", "]);
+    let exp = List.show<>(Parser.Item.show, e.exp)
+    String.flatten(["Error at ", Nat.show(e.pos),", ", unx, "expected: ", exp]);
+  | let msgs = List.show<>((x) x, e.msgs)
+    String.flatten(["Error at ", Nat.show(e.pos),", ", msgs]);
+
+Parser.monad : Monad(Parser)
+  Monad.new<Parser>(Parser.bind, Parser.pure)
+
 //Parser.testIO : IO(Unit)
 //  do IO {
 //    IO.print(Parser.test);
 //  }
+
+
+Parser.one_of(xs : List(Char)): Parser(Char)
+  Parser.choice<>(List.map<,>(Parser.char,xs))
+
+Parser.many<A: Type>(p: Parser(A)) : Parser(List(A))
+  do Parser {
+    var x = Parser.optional<>(p);
+    case x:
+    | Parser.pure<>([]);
+    | Parser.map<><>(List.cons<>(x.value),Parser.many<>(p));;
+  }
+// TODO: use Map?
+Parser.decimal.digit : Parser(Nat)
+  def char = ((x,y) Parser.then<Char,Nat>(Parser.char(x),Parser.pure<Nat>(y))) 
+           :: Char -> Nat -> Parser(Nat)
+  def ds = [char('0',0), char('1',1), char('2',2), char('3',3),char('4',4),
+            char('5',5), char('6',6), char('7',7), char('8',8),char('9',9)]
+  Parser.choice<>(ds)
+
+Parser.decimal : Parser(Nat)
+  do Parser {
+    var ds  = Parser.many<>(Parser.decimal.digit);
+    return Nat.from_base(10,ds);
+  }
+
+Parser.test: String
+  def p = Parser.decimal
+  case Parser.run<>(p,"123456789123456789") as x:
+  | Nat.show(x.value);
+  | Parser.Error.show(x.error);
+
 

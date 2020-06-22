@@ -1,3 +1,0 @@
-String.concatVar: Π(n:Nat) (((Variadic n) String) String)
-  ((<<Variadic.foldr String> String> String.concat) String.nil)
-

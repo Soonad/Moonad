@@ -1,5 +1,8 @@
 T U8
-| new(a: Word(8));
+| U8.new(a: Word(8));
+
+U8.0: U8
+  U8.new(Word.zero(8))
 
 U8.add(a: U8, b: U8): U8
   get a_val = a 
@@ -104,7 +107,7 @@ U8.xor(a: U8, b: U8): U8
   get b_val = b 
   U8.new(Word.xor<>(a_val, b_val))  
 
-U8.from_nat: Nat -> U8
+U8.from_nat(n: Nat): U8
   // TODO
-  U8.from_nat
+  U8.parse_hex(Nat.to_string_base(16, n))
 

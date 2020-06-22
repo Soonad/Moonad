@@ -1,3 +1,0 @@
-Point.base.mul: Π(n:Nat) Point
-  λn (Jacobian.to_point (Jacobian.base.mul n))
-

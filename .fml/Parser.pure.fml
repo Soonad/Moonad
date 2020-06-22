@@ -1,3 +1,0 @@
-Parser.pure: <A: Type> -> (a: A) -> Parser(A)
-  <A> (a) (s1) Parser.Reply.val<A>(s1)(a)
-

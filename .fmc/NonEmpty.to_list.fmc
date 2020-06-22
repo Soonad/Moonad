@@ -1,3 +1,0 @@
-NonEmpty.to_list: ∀(A:*) Π(xs:(NonEmpty A)) (List A)
-  ΛA λxs ((<xs λxs.self (List A)> λxs.value ((<List.cons A> xs.value) <List.nil A>)) λxs.head λxs.tail ((<List.cons A> xs.head) (<NonEmpty.to_list A> xs.tail)))
-

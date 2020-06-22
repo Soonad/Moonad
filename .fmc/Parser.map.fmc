@@ -1,3 +1,0 @@
-Parser.map: ∀(A:*) ∀(B:*) Π(f:Π(:A) B) Π(p:(Parser A)) (Parser B)
-  ΛA ΛB λf λp λs1 ((<(p s1) λself.self (Parser.Reply B)> λself.state λself.value ((<Parser.Reply.val B> self.state) (f self.value))) λself.state λself.error ((<Parser.Reply.err B> self.state) self.error))
-

@@ -1,3 +1,0 @@
-U8.eql: Π(a:U8) Π(b:U8) Bool
-  λa λb (<a λx Bool> λa_val (<b λx Bool> λb_val ((<Word.eql 8> a_val) b_val)))
-

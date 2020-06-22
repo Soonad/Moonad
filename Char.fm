@@ -2,40 +2,31 @@
 Char: Type
   U16
 
-// Receives a hex char (0-9, a-f, A-F) and returns its value as a Nat.
-Char.hex_value(chr: Char): Maybe(Nat)
-  if Bool.and(U16.gte(chr,'0'),U16.lte(chr,'9')) then
-    Maybe.some<_>(U16.to_nat(U16.sub(chr,'0')))
-  else if Bool.and(U16.gte(chr,'a'),U16.lte(chr,'f')) then
-    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'a')),10))
-  else if Bool.and(U16.gte(chr,'A'),U16.lte(chr,'F')) then
-    Maybe.some<_>(Nat.add(U16.to_nat(U16.sub(chr,'A')),10))
-  else
-    Maybe.none<_>
-
 // Creates a character from 16 bits.
 Char.new
-  (b0:Bit, b1:Bit, b2:Bit, b3:Bit, b4:Bit, b5:Bit, b6:Bit, b7:Bit,
-   b8:Bit, b9:Bit, bA:Bit, bB:Bit, bC:Bit, bD:Bit, bE:Bit, bF:Bit)
-  : U16
-  let kF = b0<>(Word.0<>)(Word.1<>)
-  let kE = b1<>(Word.0<>)(Word.1<>)
-  let kD = b2<>(Word.0<>)(Word.1<>)
-  let kC = b3<>(Word.0<>)(Word.1<>)
-  let kB = b4<>(Word.0<>)(Word.1<>)
-  let kA = b5<>(Word.0<>)(Word.1<>)
-  let k9 = b6<>(Word.0<>)(Word.1<>)
-  let k8 = b7<>(Word.0<>)(Word.1<>)
-  let k7 = b8<>(Word.0<>)(Word.1<>)
-  let k6 = b9<>(Word.0<>)(Word.1<>)
-  let k5 = bA<>(Word.0<>)(Word.1<>)
-  let k4 = bB<>(Word.0<>)(Word.1<>)
-  let k3 = bC<>(Word.0<>)(Word.1<>)
-  let k2 = bD<>(Word.0<>)(Word.1<>)
-  let k1 = bE<>(Word.0<>)(Word.1<>)
-  let k0 = bF<>(Word.0<>)(Word.1<>)
-  let k_ = Word.nil
-  U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(k_)))))))))))))))))
+(b0: Bit) (b1: Bit) (b2: Bit) (b3: Bit)
+(b4: Bit) (b5: Bit) (b6: Bit) (b7: Bit)
+(b8: Bit) (b9: Bit) (bA: Bit) (bB: Bit)
+(bC: Bit) (bD: Bit) (bE: Bit) (bF: Bit)
+: U16
+  let kF = b0<>(Word.0<>, Word.1<>)
+  let kE = b1<>(Word.0<>, Word.1<>)
+  let kD = b2<>(Word.0<>, Word.1<>)
+  let kC = b3<>(Word.0<>, Word.1<>)
+  let kB = b4<>(Word.0<>, Word.1<>)
+  let kA = b5<>(Word.0<>, Word.1<>)
+  let k9 = b6<>(Word.0<>, Word.1<>)
+  let k8 = b7<>(Word.0<>, Word.1<>)
+  let k7 = b8<>(Word.0<>, Word.1<>)
+  let k6 = b9<>(Word.0<>, Word.1<>)
+  let k5 = bA<>(Word.0<>, Word.1<>)
+  let k4 = bB<>(Word.0<>, Word.1<>)
+  let k3 = bC<>(Word.0<>, Word.1<>)
+  let k2 = bD<>(Word.0<>, Word.1<>)
+  let k1 = bE<>(Word.0<>, Word.1<>)
+  let k0 = bF<>(Word.0<>, Word.1<>)
+  let kx = Word.nil
+  U16.new(k0(k1(k2(k3(k4(k5(k6(k7(k8(k9(kA(kB(kC(kD(kE(kF(kx)))))))))))))))))
 
 Char.newline: Char
   Char.new(
@@ -43,6 +34,27 @@ Char.newline: Char
     Bit.0, Bit.0, Bit.0, Bit.0,
     Bit.0, Bit.0, Bit.0, Bit.0,
     Bit.1, Bit.0, Bit.1, Bit.0)
+
+// Receives a hex char (0-9, a-f, A-F) and returns its value.
+Char.hex_value16(chr: Char): U16
+  def U16.add10((x0)
+    def x1 = U16.inc(U16.inc(U16.inc(U16.inc(U16.inc(x0)))))
+    def x2 = U16.inc(U16.inc(U16.inc(U16.inc(U16.inc(x1)))))
+    x2) :: U16 -> U16
+  if Bool.and(U16.gte(chr,'0'),U16.lte(chr,'9')) then
+    U16.sub(chr,'0')
+  else if Bool.and(U16.gte(chr,'a'),U16.lte(chr,'f')) then
+    U16.add10(U16.sub(chr,'a'))
+  else if Bool.and(U16.gte(chr,'A'),U16.lte(chr,'F')) then
+    U16.add10(U16.sub(chr,'A'))
+  else
+    U16.0
+
+Char.hex_value32(chr: Char): U32
+  U16.to_u32(Char.hex_value16(chr))
+
+Char.hex_value(chr: Char): Nat
+  U32.to_nat(Char.hex_value32(chr))
 
 Char.parse.type(str: String): Type
   case str:

@@ -1,3 +1,0 @@
-Logic.modus_ponens: <P: Type> -> <Q: Type> -> (implies: P -> Q) -> (p: P) -> Q
-  <P> <Q> (implies) (p) implies(p)
-

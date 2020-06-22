@@ -1,3 +1,0 @@
-Jacobian.to_pointBatch: Π(ps:(List Jacobian)) (List Point)
-  λps $inverts=((ecdsa.invertBatch ((<<List.map Jacobian> Nat> λp (<p λself Nat> λp.x λp.y λp.z p.z)) ps)) CURVE.P);((Jacobian.to_pointBatch.aux ps) inverts)
-

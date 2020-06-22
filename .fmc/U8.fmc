@@ -1,3 +1,0 @@
-U8: *
-  ∀self_U8(P:Π(self:U8) *) Π(new:Π(a:(Word 8)) (P (U8.new a))) (P self_U8)
-

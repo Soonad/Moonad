@@ -1,3 +1,0 @@
-Point: *
-  ∀self_Point(P:Π(self:Point) *) Π(new:Π(x:Nat) Π(y:Nat) (P ((Point.new x) y))) (P self_Point)
-

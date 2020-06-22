@@ -1,13 +1,7 @@
 T Bits
-| nil;
-| b0(pred: Bits);
-| b1(pred: Bits);
-
-Bits.0: Bits -> Bits
-  Bits.b0
-
-Bits.1: Bits -> Bits
-  Bits.b1
+| Bits.nil;
+| Bits.0(pred: Bits);
+| Bits.1(pred: Bits);
 
 Bits.concat(a: Bits, b: Bits): Bits
   case a:
@@ -50,11 +44,9 @@ Bits.parse_hex: String -> Bits
 Bits.parse_hex.tco(str: String, res: Bits): Bits
   case str:
   | res;
-  | case Char.hex_value(str.head) as hv:
-    | res;
-    | let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
-      let bhead = Nat.apply<Bits>(hv.value)(Bits.inc)(b0000)
-      Bits.parse_hex.tco(str.tail)(Bits.concat(bhead)(res));;
+  | let b0000 = Bits.0(Bits.0(Bits.0(Bits.0(Bits.nil))))
+    let bhead = Nat.apply<Bits>(Char.hex_value(str.head), Bits.inc, b0000)
+    Bits.parse_hex.tco(str.tail, Bits.concat(bhead, res));
 
 // Reverses a bistring.
 Bits.reverse(a: Bits): Bits

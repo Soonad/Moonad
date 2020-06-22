@@ -1,3 +1,0 @@
-Parser.Item.label: (xs: String) -> Parser.Item
-  (xs) <P> (tokens) (label) (eof) label(xs)
-

@@ -1,3 +1,0 @@
-ecdsa.size: Π(n:Nat) Nat
-  λn ((Nat.mul (ecdsa.window n)) ((Nat.pow 2) (Nat.pred n)))
-

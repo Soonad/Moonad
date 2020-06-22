@@ -1,3 +1,0 @@
-Nat.to_string_base: Π(base:Nat) Π(nat:Nat) String
-  λbase λnat (((<<List.foldr Nat> String> String.nil) λn λstr ((String.cons (((<Nat.apply Char> n) U16.inc) (Char.parse "0"))) str)) ((Nat.to_base base) nat))
-

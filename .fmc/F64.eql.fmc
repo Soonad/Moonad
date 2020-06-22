@@ -1,3 +1,0 @@
-F64.eql: Π(x:F64) Π(y:F64) Bool
-  λx λy (<x λx Bool> λx.word (<y λy.self Bool> λy.a (<y λx Bool> λy.word ((<Word.eql 64> x.word) y.word))))
-

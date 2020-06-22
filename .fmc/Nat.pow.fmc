@@ -1,3 +1,0 @@
-Nat.pow: Π(a:Nat) Π(b:Nat) Nat
-  λa λb ((<b λb.self Nat> 1) λb.pred ((Nat.mul a) ((Nat.pow a) b.pred)))
-

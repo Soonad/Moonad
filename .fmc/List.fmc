@@ -1,3 +1,0 @@
-List: Π(A:*) *
-  λA ∀self_List(P:Π(self:(List A)) *) Π(nil:(P <List.nil A>)) Π(cons:Π(head:A) Π(tail:(List A)) (P ((<List.cons A> head) tail))) (P self_List)
-

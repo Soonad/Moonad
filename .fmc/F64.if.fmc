@@ -1,3 +1,0 @@
-F64.if: ∀(A:*) Π(x:F64) Π(ct:A) Π(cf:A) A
-  ΛA λx λct λcf ((<((F64.eql x) F64.0) λself.self A> cf) ct)
-

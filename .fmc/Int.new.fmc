@@ -1,3 +1,0 @@
-Int.new: Π(x:Nat) Π(y:Nat) Int
-  λx λy ΛP λnew ((<x λx.self (P ((Int.new x.self) y))> ((new Nat.zero) y)) λx.pred ((<y λy.self (P ((Int.new (Nat.succ x.pred)) y.self))> ((new (Nat.succ x.pred)) Nat.zero)) λy.pred (<((Int.new ((Nat.sub x.pred) y.pred)) ((Nat.sub y.pred) x.pred)) P> new)))
-

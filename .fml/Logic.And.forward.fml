@@ -1,3 +1,0 @@
-Logic.And.forward: <P: Type> -> <Q: Type> -> (lem: Logic.ExcludedMiddle) -> (not_pq: Not(And(P)(Q))) -> Or(Not(P))(Not(Q))
-  <P> <Q> (lem) (not_pq) lem<P><() Or(Not(P))(Not(Q))>((p) lem<Q><() Or(Not(P))(Not(Q))>((q) Logic.exfalso(not_pq(And.new<P><Q>(p)(q)))(Or(Not(P))(Not(Q))))((q) Or.rgt<Not(P)><Not(Q)>(q)))((p) Or.lft<Not(P)><Not(Q)>(p))
-

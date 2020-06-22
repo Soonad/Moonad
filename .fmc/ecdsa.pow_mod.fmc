@@ -1,3 +1,0 @@
-ecdsa.pow_mod: Π(a:Nat) Π(b:Nat) Π(modulo:Nat) Nat
-  λa λb λmodulo ((((ecdsa.pow_mod.aux a) b) modulo) 1)
-

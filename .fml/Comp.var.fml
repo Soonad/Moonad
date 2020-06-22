@@ -1,3 +1,0 @@
-Comp.var: (name: String) -> Comp
-  (name) <P> (var) (lam) (app) (let) (tru) (fal) var(name)
-

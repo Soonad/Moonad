@@ -1,3 +1,0 @@
-U8_Vector.from_nat: Π(pad:Nat) Π(n:Nat) ((Vector U8) pad)
-  λpad λn (<<Vector.reverse U8> pad> ((U8_Vector.from_nat pad) n))
-

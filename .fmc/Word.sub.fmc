@@ -1,3 +1,0 @@
-Word.sub: ∀(size:Nat) Π(:(Word size)) Π(:(Word size)) (Word size)
-  Λsize λa λb ((<Word.add size> a) (<Word.neg size> b))
-

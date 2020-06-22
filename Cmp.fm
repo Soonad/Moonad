@@ -1,6 +1,40 @@
 // Comparisons
 T Cmp
-| ltn;
-| eql;
-| gtn;
+| Cmp.ltn;
+| Cmp.eql;
+| Cmp.gtn;
 
+// n < m
+Cmp.as_ltn(cmp: Cmp): Bool
+  case cmp:
+  | Bool.true;
+  | Bool.false;
+  | Bool.false;
+
+// n <= m
+Cmp.as_lte(cmp: Cmp): Bool
+  case cmp:
+  | Bool.true;
+  | Bool.true;
+  | Bool.false;
+
+// n == m
+Cmp.as_eql(cmp: Cmp): Bool
+  case cmp:
+  | Bool.false;
+  | Bool.true;
+  | Bool.false;
+
+// n >= m
+Cmp.as_gte(cmp: Cmp): Bool
+  case cmp:
+  | Bool.false;
+  | Bool.true;
+  | Bool.true;
+
+// n > m
+Cmp.as_gtn(cmp: Cmp): Bool
+  case cmp:
+  | Bool.false;
+  | Bool.false;
+  | Bool.true;

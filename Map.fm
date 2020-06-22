@@ -1,7 +1,7 @@
 // A Map from bitstrings to values.
-T Map (A: Type)
-| new;
-| tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
+T Map<A: Type>
+| Map.new;
+| Map.tie(val: Maybe(A), lft: Map(A), rgt: Map(A));
 
 // Returns the element stored at a given key, if any.
 // Example: Map.get<Nat>(my_key, my_map)
@@ -51,10 +51,18 @@ Map.set<A: Type>(bits: Bits, val: A, map: Map(A)): Map(A)
     | Map.tie<>(Maybe.none<>, Map.new<>, Map.set<>(bits.pred, val, Map.new<>));
     | Map.tie<>(map.val, map.lft, Map.set<>(bits.pred, val, map.rgt));;
 
+Map.delete<A: Type>(key: Bits, map: Map(A)) : Map(A)
+  case map:
+  | Map.new<>;
+  | case key:
+    | Map.tie<>(Maybe.none<>,map.lft,map.rgt);
+    | Map.delete<>(key.pred,map.lft);
+    | Map.delete<>(key.pred,map.rgt);;
+
 // Modifies the element at a given key, returns it and a copy of the map.
 // This used to be important on linear back-ends, but it isn't linear anymore.
 // TODO: use `with` to make this function linear again.
-query<A: Type>(cpy: A -> Pair(A, A), bits: Bits, map: Map(A)): Pair(Map(A), Maybe(A))
+Map.query<A: Type>(cpy: A -> Pair(A, A), bits: Bits, map: Map(A)): Pair(Map(A), Maybe(A))
   case bits:
   | case map:
     | let map = Map.new<>
@@ -72,7 +80,7 @@ query<A: Type>(cpy: A -> Pair(A, A), bits: Bits, map: Map(A)): Pair(Map(A), Mayb
     | let map = Map.new<>
       let val = Maybe.none<>
       Pair.new<><>(map, val);
-    | get p.fst p.snd = query<>(cpy, bits.pred, map.lft)
+    | get p.fst p.snd = Map.query<>(cpy, bits.pred, map.lft)
       let map = Map.tie<>(map.val, p.fst, map.rgt)
       let val = p.snd
       Pair.new<><>(map, val);;
@@ -80,7 +88,66 @@ query<A: Type>(cpy: A -> Pair(A, A), bits: Bits, map: Map(A)): Pair(Map(A), Mayb
     | let map = Map.new<>
       let val = Maybe.none<>
       Pair.new<><>(map, val);
-    | get p.fst p.snd = query<>(cpy, bits.pred, map.rgt)
+    | get p.fst p.snd = Map.query<>(cpy, bits.pred, map.rgt)
       let map = Map.tie<>(map.val, map.lft, p.fst)
       let val = p.snd
       Pair.new<><>(map, val);;
+
+// combines two maps, preferring the left-hand map in case of duplicates entries
+Map.union<A: Type>(a: Map(A), b: Map(A)) : Map(A)
+  case a:
+  | b;
+  | case b:
+    | a;
+    | case a.val:
+      | Map.tie<>(b.val, Map.union<>(a.lft,b.lft), Map.union<>(a.rgt,b.rgt));
+      | Map.tie<>(a.val, Map.union<>(a.lft,b.lft), Map.union<>(a.rgt,b.rgt));;;
+
+// general merge function
+Map.merge<A: Type,B: Type,C: Type>(
+  a_not_b : Bits -> A -> Maybe(C),
+  b_not_a : Bits -> B -> Maybe(C),
+  a_and_b : Bits -> A -> B -> Maybe(C),
+  a: Map(A),
+  b: Map(B)
+) : Map(C)
+  Map.merge.go<,,>(a_not_b,b_not_a,a_and_b,Bits.nil,a,b)
+
+Map.merge.go<A: Type,B: Type,C: Type>(
+  f: Bits -> A -> Maybe(C),
+  g: Bits -> B -> Maybe(C),
+  h: Bits -> A -> B -> Maybe(C),
+  key: Bits,
+  a: Map(A),
+  b: Map(B)
+) : Map(C)
+  case a:
+  | case b:
+    | Map.new<>;
+    | let val = case b.val as bv: | Maybe.none<>; | g(key,bv.value);
+      Map.tie<>(val,
+        Map.merge.go<,,>(f,g,h,Bits.0(key),Map.new<>,b.lft),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),Map.new<>,b.rgt));;
+  | case b:
+    | let val = case a.val as av: | Maybe.none<>; | f(key,av.value);
+      Map.tie<>(val,
+        Map.merge.go<,,>(f,g,h,Bits.0(key),a.lft,Map.new<>),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),a.rgt,Map.new<>));
+    | let val = case a.val as av:
+        | case b.val as bv: | Maybe.none<>;    | g(key,bv.value);;
+        | case b.val as bv: | f(key,av.value); | h(key,av.value,bv.value);;
+      Map.tie<>(val,
+        Map.merge.go<,,>(f,g,h,Bits.0(key),a.lft,b.lft),
+        Map.merge.go<,,>(f,g,h,Bits.1(key),a.rgt,b.rgt));;
+
+Map.disj<A: Type>(a: Map(A), b: Map(A)): Bool
+  case a: | Bool.true; |
+  case b: | Bool.true; |
+  let v = case a.val: | Bool.true;
+        | case b.val: | Bool.true;
+        | Bool.false;;
+  Bool.and(v,Bool.and(Map.disj<>(a.lft,b.lft), Map.disj<>(a.rgt,b.rgt)));;
+
+
+
+

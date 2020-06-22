@@ -1,3 +1,0 @@
-Arelin.Thing.get_stt_value: (self: Arelin.Thing) -> (stt_key: Bits) -> F64
-  (self) (stt_key) let stt = Arelin.Thing.get_stt(self); let get_stt = Map.get<F64>(stt_key)(stt); get_stt<(get_stt.self) F64>(F64.0)((get_stt.value) get_stt.value)
-

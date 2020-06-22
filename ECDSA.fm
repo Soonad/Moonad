@@ -121,19 +121,19 @@ ecdsa.number_to_hex(num: Nat): String
   let hex = Nat.to_string_base(num, 16);
   Bool.if<>(Nat.odd(String.length(hex)), String.cons('0', hex), hex)
 
-ecdsa.parse_byte(str: String): Maybe(Nat)
-  Maybe.map<,>(Nat.mul(2), Nat.parse_hex_safe(str))
+ecdsa.parse_byte(str: String): Nat
+  Nat.mul(2, Nat.parse_hex(str))
 
-ecdsa.truncateHash(hash: String): Maybe(Nat)
-  use msg = Maybe.bind<,>(Nat.parse_hex_safe(hash))
+ecdsa.truncateHash(hash: String): Nat
+  let msg = Nat.parse_hex(hash)
   let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), 2), 8), ecdsa.PRIME_SIZE)
   let msg = Bool.if<>(Nat.gtn(delta, 0), Nat.div(msg, Nat.pow(2, delta)), msg)
   let msg = Bool.if<>(Nat.gte(msg, CURVE.n), Nat.sub(msg, CURVE.n), msg)
-  Maybe.some<>(msg)
+  msg
 
 // Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
 T Jacobian
-| new(x: Nat, y: Nat, z: Nat);
+| Jacobian.new(x: Nat, y: Nat, z: Nat);
 
 Jacobian.0: Jacobian
   Jacobian.new(0, 0, 1)
@@ -361,7 +361,7 @@ Jacobian.mul(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
 
 // Point works in default coordinates. Public keys are represented by points.
 T Point
-| new(x: Nat, y: Nat);
+| Point.new(x: Nat, y: Nat);
 
 Point.base: Point
   Point.new(CURVE.Gx, CURVE.Gy)
@@ -424,7 +424,7 @@ PublicKey.from_PrivateKey(priv: Nat, compressed: Bool): Vector(U8, Bool.if<Nat>(
     Point.to_bytes(point, compressed)
 
 T SignResult
-| new(r: Nat, s: Nat);
+| SignResult.new(r: Nat, s: Nat);
 
 SignResult.from_hex(str: String): Maybe(SignResult)
   use pair = Maybe.bind<,>(String.take_n(2, str))
@@ -432,7 +432,7 @@ SignResult.from_hex(str: String): Maybe(SignResult)
 
   use pair = Maybe.bind<,>(String.take_n(2, str))
   get length str = pair
-  use length = Maybe.bind<,>(ecdsa.parse_byte(length))
+  let length = ecdsa.parse_byte(length)
 
   use pair = Maybe.bind<,>(String.take_n(2, str))
   get check2 str = pair
@@ -444,10 +444,10 @@ SignResult.from_hex(str: String): Maybe(SignResult)
   | // r
     use pair = Maybe.bind<,>(String.take_n(2, str))
     get rLen str = pair
-    use rLen = Maybe.bind<,>(ecdsa.parse_byte(rLen))
+    let rLen = ecdsa.parse_byte(rLen)
     use pair = Maybe.bind<,>(String.take_n(rLen, str))
     get r str = pair
-    use r = Maybe.bind<,>(Nat.parse_hex_safe(r))
+    let r = Nat.parse_hex(r)
     // s
     use pair = Maybe.bind<,>(String.take_n(2, str))
     get check3 str = pair
@@ -455,10 +455,10 @@ SignResult.from_hex(str: String): Maybe(SignResult)
     | Maybe.none<SignResult>;
     | use pair = Maybe.bind<,>(String.take_n(2, str))
       get sLen str = pair
-      use sLen = Maybe.bind<,>(ecdsa.parse_byte(sLen))
+      let sLen = ecdsa.parse_byte(sLen)
       use pair = Maybe.bind<,>(String.take_n(sLen, str))
       get s str = pair
-      use s = Maybe.bind<,>(Nat.parse_hex_safe(s))
+      let s = Nat.parse_hex(s)
       Maybe.some<SignResult>(SignResult.new(r, s));;
 
 SignResult.to_hex(sig: SignResult, compressed: Bool): String
@@ -480,7 +480,7 @@ U8_Vector.to_number<n: Nat>(bytes: Vector(U8, n)): Nat
 U8_Vector.to_number.aux<n: Nat>(bytes: Vector(U8, n), res: Nat): Nat
   case bytes:
   | res;
-  | U8_Vector.to_number.aux<bytes.len>(bytes.tail, Nat.add(U8.to_nat(bytes.head), Nat.mul(res, 16)));
+  | U8_Vector.to_number.aux<bytes.size>(bytes.tail, Nat.add(U8.to_nat(bytes.head), Nat.mul(res, 16)));
 
 U8_Vector.from_nat(pad: Nat, n: Nat): Vector(U8, pad)
   Vector.reverse<U8, pad>(U8_Vector.from_nat(pad, n))
@@ -495,13 +495,14 @@ U8_Vector.from_nat.aux(pad: Nat, n: Nat): Vector(U8, pad)
 U8_Vector.to_hex<n: Nat>(bytes: Vector(U8, n)): String
   case bytes:
   | String.nil;
-  | String.concat(ecdsa.number_to_hex(U8.to_nat(bytes.head)), U8_Vector.to_hex<bytes.len>(bytes.tail));
+  | String.concat(ecdsa.number_to_hex(U8.to_nat(bytes.head)), U8_Vector.to_hex<bytes.size>(bytes.tail));
+
 
 ecdsa.is_valid_private_key(priv_key: Nat): Bool
   Bool.and(Nat.ltn(0, priv_key), Nat.ltn(priv_key, CURVE.n))
 
 T QRS
-| new(p: Point, r: Nat, s: Nat);
+| QRS.new(p: Point, r: Nat, s: Nat);
 
 QRS.from_k(k: Nat, msg: Nat, priv: Nat): Maybe(QRS)
   let max = CURVE.n
