@@ -5,7 +5,10 @@ T Either<A: Type, B: Type>
 
 Either.bind<A: Type, B: Type, C: Type>(e: Either(A,B), f: B -> Either(A,C)): Either(A,C)
   case e:
-  | Either.left<A><C>(e.value);
+  | Either.left<A, C>(e.value);
   | f(e.value);
 
-
+Either.map<A: Type, B: Type, C: Type>(f: B -> C, e: Either(A,B)): Either(A,C)
+  case e:
+  | Either.left<A, C>(e.value);
+  | Either.right<A, C>(f(e.value));
