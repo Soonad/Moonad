@@ -1,6 +1,7 @@
 // ECDSA implementation based on Paul Miller's JS implementation at https://github.com/paulmillr/noble-secp256k1
 // Lacks random generation of keys and an HMAC_SHA256 implementation.
-// Commented code loops the hole filling algorithm. Investigation as to why is needed.
+// Commented code loops the hole filling algorithm, but kept them as looped definitions.
+// Investigation as to why it loops is needed.
 
 T ECDSA.ErrorTypes
 | ECDSA.ErrorTypes.point_not_in_curve;
@@ -32,43 +33,43 @@ ECDSA.Error.from_maybe<A: Type>(err: ECDSA.ErrorTypes, m: Maybe(A)): ECDSA.Error
   | ECDSA.Error.ok<A>(m.value);
 
 // Params: a, b
-CURVE.a: Nat
+ECDSA.CURVE.a: Nat
   0
 
-CURVE.b: Nat
+ECDSA.CURVE.b: Nat
   7
 
 // Field over which we'll do calculations
-CURVE.P: Nat
+ECDSA.CURVE.P: Nat
   Nat.parse_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F")
 
 // Subgroup order aka prime_order
-CURVE.n: Nat
+ECDSA.CURVE.n: Nat
   Nat.parse_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141")
 
 // Cofactor
-CURVE.h: Nat
+ECDSA.CURVE.h: Nat
   Nat.parse_hex("1")
 
 // Base point (x, y) aka generator point
-CURVE.Gx: Nat
+ECDSA.CURVE.Gx: Nat
   Nat.parse_hex("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
 
-CURVE.Gy: Nat
+ECDSA.CURVE.Gy: Nat
   Nat.parse_hex("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
 
 // For endomorphism, see below.
-CURVE.beta: Nat
+ECDSA.CURVE.beta: Nat
   Nat.parse_hex("7AE96A2B657C07106E64479EAC3434E99CF0497512F58995C1396C28719501EE")
 
 ECDSA.mod(a: Nat): Nat
-  Nat.mod(a, CURVE.P)
+  Nat.mod(a, ECDSA.CURVE.P)
 
 ECDSA.negate(a: Nat): Nat
   let a = ECDSA.mod(a)
   case Nat.eql(a, 0):
   | 0;
-  | Nat.sub(CURVE.P, a);
+  | Nat.sub(ECDSA.CURVE.P, a);
 
 ECDSA.sub(a: Nat, b: Nat): Nat
   ECDSA.mod(Nat.add(a, ECDSA.negate(b)))
@@ -85,17 +86,17 @@ ECDSA.pow_mod.aux(a: Nat, b: Nat, modulo: Nat, res: Nat): Nat
     ECDSA.pow_mod.aux(a, b, modulo, res);
 
 ECDSA.sqrt(a: Nat): Nat
-  ECDSA.pow_mod(a, Nat.div(Nat.add(CURVE.P, 1), 4), CURVE.P)
+  ECDSA.pow_mod(a, Nat.div(Nat.add(ECDSA.CURVE.P, 1), 4), ECDSA.CURVE.P)
 
 // RHS of elliptic curve equation
 ECDSA.weierstrass(x: Nat): Nat
-  ECDSA.mod(Nat.add(Nat.add(Nat.mulVar(3, x, x, x), Nat.mul(CURVE.a, x)), CURVE.b))
+  ECDSA.mod(Nat.add(Nat.add(Nat.mulVar(3, x, x, x), Nat.mul(ECDSA.CURVE.a, x)), ECDSA.CURVE.b))
 
 ECDSA.PRIME_SIZE: Nat
   256
 
 ECDSA.USE_ENDOMORPHISM: Bool
-  Nat.eql(CURVE.a, 0)
+  Nat.eql(ECDSA.CURVE.a, 0)
 
 ECDSA.invert(number: Nat, modulo: Nat): Nat
   case Nat.eql(number, 0):
@@ -144,8 +145,8 @@ ECDSA.split_scalar(k: Nat): Pair(Int, Int)
   let b1 = Int.parse_hex("e4437ed6010e88286f547fa90abfe4c3")
   let a2 = Int.parse_hex("114ca50f7a8e2f3f657c1108d9d44cfd8")
   let b2 = Int.parse_hex("3086d221a7d46bcde86c90e49284eb15")
-  let c1 = Int.div_Nat(Int.mul(b2, k), CURVE.n)
-  let c2 = Int.div_Nat(Int.mul(b1, k), CURVE.n)
+  let c1 = Int.div_Nat(Int.mul(b2, k), ECDSA.CURVE.n)
+  let c2 = Int.div_Nat(Int.mul(b1, k), ECDSA.CURVE.n)
   let k1 = Int.sub(Int.sub(k, Int.mul(c1, a1)), Int.mul(c2, a2))
   let k2 = Int.sub(Int.mul(c1, b1), Int.mul(c2, b2))
   Pair.new<Int, Int>(k1, k2)
@@ -161,32 +162,32 @@ ECDSA.truncate_hash(hash: String): Nat
   let msg = Nat.parse_hex(hash)
   let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), 2), 8), ECDSA.PRIME_SIZE)
   let msg = Bool.if<>(Nat.gtn(delta, 0), Nat.div(msg, Nat.pow(2, delta)), msg)
-  let msg = Bool.if<>(Nat.gte(msg, CURVE.n), Nat.sub(msg, CURVE.n), msg)
+  let msg = Bool.if<>(Nat.gte(msg, ECDSA.CURVE.n), Nat.sub(msg, ECDSA.CURVE.n), msg)
   msg
 
-// Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
-T Jacobian
-| Jacobian.new(x: Nat, y: Nat, z: Nat);
+// ECDSA.Jacobian works in jacobi coordinates: (x, y, z) ~ (x/z^2, y/z^3)
+T ECDSA.Jacobian
+| ECDSA.Jacobian.new(x: Nat, y: Nat, z: Nat);
 
-Jacobian.0: Jacobian
-  Jacobian.new(0, 0, 1)
+ECDSA.Jacobian.0: ECDSA.Jacobian
+  ECDSA.Jacobian.new(0, 0, 1)
 
-Jacobian.base: Jacobian
-  Jacobian.new(CURVE.Gx, CURVE.Gy, 1)
+ECDSA.Jacobian.base: ECDSA.Jacobian
+  ECDSA.Jacobian.new(ECDSA.CURVE.Gx, ECDSA.CURVE.Gy, 1)
 
-Jacobian.base.window_size: Nat
+ECDSA.Jacobian.base.window_size: Nat
   8
 
-Jacobian.base.precomputes: List(Jacobian)
-  Jacobian.normalizeZ_batch(Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size))
+ECDSA.Jacobian.base.precomputes: List(ECDSA.Jacobian)
+  ECDSA.Jacobian.normalizeZ_batch(ECDSA.Jacobian.precompute_window(ECDSA.Jacobian.base, ECDSA.Jacobian.base.window_size))
 
-Jacobian.base.mul(n: Nat): Jacobian
-  Jacobian.mul_pre(n, Jacobian.base.window_size, Jacobian.base.precomputes)
+ECDSA.Jacobian.base.mul(n: Nat): ECDSA.Jacobian
+  ECDSA.Jacobian.mul_pre(n, ECDSA.Jacobian.base.window_size, ECDSA.Jacobian.base.precomputes)
 
-Jacobian.base.mul_unsafe(n: Nat): Jacobian
-  Jacobian.mul_unsafe(Jacobian.base, n)
+ECDSA.Jacobian.base.mul_unsafe(n: Nat): ECDSA.Jacobian
+  ECDSA.Jacobian.mul_unsafe(ECDSA.Jacobian.base, n)
 
-Jacobian.equal(a: Jacobian, b: Jacobian): Bool
+ECDSA.Jacobian.equal(a: ECDSA.Jacobian, b: ECDSA.Jacobian): Bool
   get a.x a.y a.z = a
   get b.x b.y b.z = b
   let a.z2 = ECDSA.mod(Nat.mul(a.z, a.z))
@@ -197,46 +198,46 @@ Jacobian.equal(a: Jacobian, b: Jacobian): Bool
   let eq2 = Nat.eql(ECDSA.mod(Nat.mul(a.y, b.z3)), ECDSA.mod(Nat.mul(b.y, a.z3)))
   Bool.and(eq1, eq2)
 
-Jacobian.from_point(p: Point): Jacobian
+ECDSA.Jacobian.from_point(p: ECDSA.Point): ECDSA.Jacobian
   get p.x p.y = p
-  Jacobian.new(p.x, p.y, 1)
+  ECDSA.Jacobian.new(p.x, p.y, 1)
 
-Jacobian.to_point(p: Jacobian): Point
+ECDSA.Jacobian.to_point(p: ECDSA.Jacobian): ECDSA.Point
   get p.x p.y p.z = p
-  Jacobian.to_point.aux(p, ECDSA.invert(p.z, CURVE.P))
+  ECDSA.Jacobian.to_point.aux(p, ECDSA.invert(p.z, ECDSA.CURVE.P))
 
-Jacobian.to_point.aux(p: Jacobian, invz: Nat): Point
+ECDSA.Jacobian.to_point.aux(p: ECDSA.Jacobian, invz: Nat): ECDSA.Point
   get p.x p.y p.z = p
   let invz2 = Nat.square(invz)
   let x = ECDSA.mod(Nat.mul(p.x, invz2))
   let y = ECDSA.mod(Nat.mulVar(3, p.y, invz2, invz))
-  Point.new(x, y)
+  ECDSA.Point.new(x, y)
 
-Jacobian.to_pointBatch(ps: List(Jacobian)): List(Point)
-  let inverts = ECDSA.invertBatch(List.map<Jacobian, Nat>((p)
+ECDSA.Jacobian.to_pointBatch(ps: List(ECDSA.Jacobian)): List(ECDSA.Point)
+  let inverts = ECDSA.invertBatch(List.map<ECDSA.Jacobian, Nat>((p)
     get p.x p.y p.z = p
-    p.z, ps), CURVE.P)
-  Jacobian.to_pointBatch.aux(ps, inverts)
+    p.z, ps), ECDSA.CURVE.P)
+  ECDSA.Jacobian.to_pointBatch.aux(ps, inverts)
 
-Jacobian.to_pointBatch.aux(ps: List(Jacobian), inverts: List(Nat)): List(Point)
+ECDSA.Jacobian.to_pointBatch.aux(ps: List(ECDSA.Jacobian), inverts: List(Nat)): List(ECDSA.Point)
   case ps:
   | List.nil<>;
   | case inverts:
     | List.nil<>; // should not happen
-    | let point = Jacobian.to_point.aux(ps.head, inverts.head)
-      List.cons<>(point, Jacobian.to_pointBatch.aux(ps.tail, inverts.tail));;
+    | let point = ECDSA.Jacobian.to_point.aux(ps.head, inverts.head)
+      List.cons<>(point, ECDSA.Jacobian.to_pointBatch.aux(ps.tail, inverts.tail));;
 
-Jacobian.normalizeZ(p: Jacobian): Jacobian
-  Jacobian.from_point(Jacobian.to_point(p))
+ECDSA.Jacobian.normalizeZ(p: ECDSA.Jacobian): ECDSA.Jacobian
+  ECDSA.Jacobian.from_point(ECDSA.Jacobian.to_point(p))
 
-Jacobian.normalizeZ_batch(p: List(Jacobian)): List(Jacobian)
-  List.map<,>(Jacobian.from_point, Jacobian.to_pointBatch(p))
+ECDSA.Jacobian.normalizeZ_batch(p: List(ECDSA.Jacobian)): List(ECDSA.Jacobian)
+  List.map<,>(ECDSA.Jacobian.from_point, ECDSA.Jacobian.to_pointBatch(p))
 
-Jacobian.negate(p: Jacobian): Jacobian
+ECDSA.Jacobian.negate(p: ECDSA.Jacobian): ECDSA.Jacobian
   get p.x p.y p.z = p
-  Jacobian.new(p.x, ECDSA.negate(p.y), p.z)
+  ECDSA.Jacobian.new(p.x, ECDSA.negate(p.y), p.z)
 
-Jacobian.double(p: Jacobian): Jacobian
+ECDSA.Jacobian.double(p: ECDSA.Jacobian): ECDSA.Jacobian
   get p.x p.y p.z = p
   let A = Nat.square(p.x)
   let B = Nat.square(p.y)
@@ -248,9 +249,9 @@ Jacobian.double(p: Jacobian): Jacobian
   let x = ECDSA.sub(F, Nat.mul(2, D))
   let y = ECDSA.sub(Nat.mul(E, ECDSA.sub(D, x)), Nat.mul(8, C))
   let z = ECDSA.mod(Nat.mulVar(3, 2, p.y, p.z))
-  Jacobian.new(x, y, z)
+  ECDSA.Jacobian.new(x, y, z)
 
-Jacobian.add(p: Jacobian, q: Jacobian): Jacobian
+ECDSA.Jacobian.add(p: ECDSA.Jacobian, q: ECDSA.Jacobian): ECDSA.Jacobian
   get p.x p.y p.z = p
   case Bool.or(Nat.eql(p.x, 0), Nat.eql(p.y, 0)):
   | q;
@@ -268,40 +269,46 @@ Jacobian.add(p: Jacobian, q: Jacobian): Jacobian
       // H = 0 meaning it's the same point.
       case Nat.eql(H, 0):
       | case Nat.eql(r, 0):
-        | Jacobian.double(p);
-        | Jacobian.0;;
+        | ECDSA.Jacobian.double(p);
+        | ECDSA.Jacobian.0;;
       | let HH = ECDSA.mod(Nat.square(H))
         let HHH = ECDSA.mod(Nat.mul(H, HH))
         let V = Nat.mul(U1, HH)
         let x = ECDSA.sub(ECDSA.sub(Nat.square(r), HHH), Nat.mul(2, V))
         let y = ECDSA.sub(Nat.mul(r, ECDSA.sub(V, x)), Nat.mul(S1, HHH))
         let z = ECDSA.mod(Nat.mulVar(3, p.z, q.z, H))
-        Jacobian.new(x, y, z);;;
+        ECDSA.Jacobian.new(x, y, z);;;
 
 // Non-constant-time multiplication. Uses double-and-add algorithm.
 // It's faster, but should only be used when you don't care about
 // an exposed private key e.g. sig verification.
-Jacobian.mul_unsafe(d: Jacobian, scalar: Nat): Jacobian
-  let n = Nat.mod(scalar, CURVE.n)
+ECDSA.Jacobian.mul_unsafe(d: ECDSA.Jacobian, scalar: Nat): ECDSA.Jacobian
+  let n = Nat.mod(scalar, ECDSA.CURVE.n)
   get k1 k2 = ECDSA.split_scalar(n)
   get k1neg k1 = Int.toNat(k1)
   get k2neg k2 = Int.toNat(k2)
-  get k1p k2p = Jacobian.mul_unsafe_aux(d, Jacobian.0, Jacobian.0, k1, k2)
-  let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
-  let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
+  get k1p k2p = ECDSA.Jacobian.mul_unsafe_aux(d, ECDSA.Jacobian.0, ECDSA.Jacobian.0, k1, k2)
+  let k1p = Bool.if<>(k1neg, ECDSA.Jacobian.negate(k1p), k1p)
+  let k2p = Bool.if<>(k2neg, ECDSA.Jacobian.negate(k2p), k2p)
   let k2p = get k2p.x k2p.y k2p.z = k2p
-    Jacobian.new(ECDSA.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
-  Jacobian.add(k1p, k2p)
+    ECDSA.Jacobian.new(ECDSA.mod(Nat.mul(k2p.x, ECDSA.CURVE.beta)), k2p.y, k2p.z)
+  ECDSA.Jacobian.add(k1p, k2p)
 
-Jacobian.mul_unsafe_aux(d: Jacobian, k1p: Jacobian, k2p: Jacobian, k1: Nat, k2: Nat): Pair(Jacobian, Jacobian)
+ECDSA.Jacobian.mul_unsafe_aux(
+  d: ECDSA.Jacobian,
+  k1p: ECDSA.Jacobian,
+  k2p: ECDSA.Jacobian,
+  k1: Nat,
+  k2: Nat)
+: Pair(ECDSA.Jacobian, ECDSA.Jacobian)
   case Bool.or(Nat.gtn(k1, 0), Nat.gtn(k2, 0)):
-  | let k1p = Bool.if<>(Nat.odd(k1), Jacobian.add(k1p, d), k1p)
-    let k2p = Bool.if<>(Nat.odd(k2), Jacobian.add(k2p, d), k2p)
-    let d = Jacobian.double(d)
+  | let k1p = Bool.if<>(Nat.odd(k1), ECDSA.Jacobian.add(k1p, d), k1p)
+    let k2p = Bool.if<>(Nat.odd(k2), ECDSA.Jacobian.add(k2p, d), k2p)
+    let d = ECDSA.Jacobian.double(d)
     let k1 = Nat.div(k1, 2)
     let k2 = Nat.div(k2, 2)
-    Jacobian.mul_unsafe_aux(d, k1p, k2p, k1, k2);
-  | Pair.new<Jacobian, Jacobian>(k1p, k2p);
+    ECDSA.Jacobian.mul_unsafe_aux(d, k1p, k2p, k1, k2);
+  | Pair.new<ECDSA.Jacobian, ECDSA.Jacobian>(k1p, k2p);
 
 ECDSA.window(n: Nat): Nat
   case ECDSA.USE_ENDOMORPHISM:
@@ -311,24 +318,32 @@ ECDSA.window(n: Nat): Nat
 ECDSA.size(n: Nat): Nat
   Nat.mul(ECDSA.window(n), Nat.pow(2, Nat.pred(n)))
 
-//Jacobian.precompute_window: Jacobian -> (w: Nat) -> Vector(Jacobian, ECDSA.size(w))
-Jacobian.precompute_window(p: Jacobian, w: Nat): List(Jacobian)
+//ECDSA.Jacobian.precompute_window: ECDSA.Jacobian -> (w: Nat) -> Vector(ECDSA.Jacobian, ECDSA.size(w))
+ECDSA.Jacobian.precompute_window(p: ECDSA.Jacobian, w: Nat): List(ECDSA.Jacobian)
   let windows = ECDSA.window(w)
-  let points = Concat.empty<Jacobian>
+  let points = List.Builder.new<ECDSA.Jacobian>
   let size = Nat.pow(2, Nat.pred(w))
-  Concat.to_list<>(Jacobian.precompute_window.aux(p, windows, points, 0, Jacobian.0, size, 0))
+  List.run_builder<>(ECDSA.Jacobian.precompute_window.aux(p, windows, points, 0, ECDSA.Jacobian.0, size, 0))
 
-Jacobian.precompute_window.aux(p: Jacobian, windows: Nat, points: Concat(Jacobian), window: Nat, base: Jacobian, size: Nat, i: Nat): Concat(Jacobian)
+ECDSA.Jacobian.precompute_window.aux(
+  p: ECDSA.Jacobian,
+  windows: Nat,
+  points: List.Builder(ECDSA.Jacobian),
+  window: Nat,
+  base: ECDSA.Jacobian,
+  size: Nat,
+  i: Nat)
+: List.Builder(ECDSA.Jacobian)
   case Nat.ltn(window, windows):
   | case Nat.ltn(i, size):
-    | let base = Jacobian.add(base, p)
-      let points = Concat.push<Jacobian>(base, points)
-      Jacobian.precompute_window.aux(p, windows, points, window, base, size, Nat.succ(i));
-    | let p = Jacobian.double(base)
-      Jacobian.precompute_window.aux(p, windows, points, Nat.succ(window), Jacobian.0, size, 0);;
+    | let base = ECDSA.Jacobian.add(base, p)
+      let points = List.Builder.snoc<ECDSA.Jacobian>(base, points)
+      ECDSA.Jacobian.precompute_window.aux(p, windows, points, window, base, size, Nat.succ(i));
+    | let p = ECDSA.Jacobian.double(base)
+      ECDSA.Jacobian.precompute_window.aux(p, windows, points, Nat.succ(window), ECDSA.Jacobian.0, size, 0);;
   | points;
 
-Jacobian.wNAF(W: Nat, precomputes: List(Jacobian), n: Nat): Pair(Jacobian, Jacobian)
+ECDSA.Jacobian.wNAF(W: Nat, precomputes: List(ECDSA.Jacobian), n: Nat): Pair(ECDSA.Jacobian, ECDSA.Jacobian)
   let windows = ECDSA.window(W)
   let windowSize = Nat.pow(2, Nat.pred(W))
   let maxNumber = Nat.pow(2, W)
@@ -337,12 +352,23 @@ Jacobian.wNAF(W: Nat, precomputes: List(Jacobian), n: Nat): Pair(Jacobian, Jacob
   let mask = Nat.pred(Nat.pow(2, W))
 
   // real and fake points
-  let p = Jacobian.0
-  let f = Jacobian.0
+  let p = ECDSA.Jacobian.0
+  let f = ECDSA.Jacobian.0
 
-  Jacobian.wNAF.aux(precomputes, p, f, n, W, 0, windows, windowSize, mask, maxNumber)
+  ECDSA.Jacobian.wNAF.aux(precomputes, p, f, n, W, 0, windows, windowSize, mask, maxNumber)
 
-Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat, W: Nat, window: Nat, windows: Nat, windowSize: Nat, mask: Nat, maxNumber: Nat): Pair(Jacobian, Jacobian)
+ECDSA.Jacobian.wNAF.aux(
+  precomputes: List(ECDSA.Jacobian),
+  p: ECDSA.Jacobian,
+  f: ECDSA.Jacobian,
+  n: Nat,
+  W: Nat,
+  window: Nat,
+  windows: Nat,
+  windowSize: Nat,
+  mask: Nat,
+  maxNumber: Nat)
+: Pair(ECDSA.Jacobian, ECDSA.Jacobian)
   case Nat.ltn(window, windows):
   | let offset = Nat.mul(window, windowSize)
 
@@ -363,56 +389,58 @@ Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat,
     // Add random point inside current window to f.
     case Int.eql(wbits, Int.0):
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
-      let q = Maybe.extract<>(List.at<>(precomputes, offset), Jacobian.0)
-      let f = Jacobian.add(f, Bool.if<>(Nat.odd(window), Jacobian.negate(q), q))
+      let q = Maybe.extract<>(List.at<>(precomputes, offset), ECDSA.Jacobian.0)
+      let f = ECDSA.Jacobian.add(f, Bool.if<>(Nat.odd(window), ECDSA.Jacobian.negate(q), q))
       let window = Nat.succ(window)
-      Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
+      ECDSA.Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber) ;
     | // List.at should not return none. TODO: Use vector with known size instead of list for precomputes
       get neg wbits = Int.toNat(wbits)
-      let cached = Maybe.extract<>(List.at<>(precomputes, Nat.pred(Nat.add(offset, wbits))), Jacobian.0)
-      let cached = Bool.if<>(neg, Jacobian.negate(cached), cached)
-      let p = Jacobian.add(p, cached)
+      let cached = Maybe.extract<>(List.at<>(precomputes, Nat.pred(Nat.add(offset, wbits))), ECDSA.Jacobian.0)
+      let cached = Bool.if<>(neg, ECDSA.Jacobian.negate(cached), cached)
+      let p = ECDSA.Jacobian.add(p, cached)
       let window = Nat.succ(window)
-      Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
-  | Pair.new<Jacobian, Jacobian>(p, f);
+      ECDSA.Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
+  | Pair.new<ECDSA.Jacobian, ECDSA.Jacobian>(p, f);
 
-Jacobian.mul_pre(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
-  let n = Nat.mod(scalar, CURVE.n)
-  get k1 k2 = ECDSA.split_scalar(n)
-  get k1neg k1 = Int.toNat(k1)
-  get k2neg k2 = Int.toNat(k2)
-  get k1p f1p = Jacobian.wNAF(w, precomputes, k1)
-  get k2p f2p = Jacobian.wNAF(w, precomputes, k2)
-  let k1p = Bool.if<>(k1neg, Jacobian.negate(k1p), k1p)
-  let k2p = Bool.if<>(k2neg, Jacobian.negate(k2p), k2p)
-  let k2p = get k2p.x k2p.y k2p.z = k2p
-    Jacobian.new(ECDSA.mod(Nat.mul(k2p.x, CURVE.beta)), k2p.y, k2p.z)
-  let point = Jacobian.add(k1p, k2p)
-  let fake  = Jacobian.add(f1p, f2p)
-  get _ _ _ = fake // This is used to force the computation of the fake point, to achieve constant time
-  Jacobian.normalizeZ(point)
+ECDSA.Jacobian.mul_pre(scalar: Nat, w: Nat, precomputes: List(ECDSA.Jacobian)): ECDSA.Jacobian
+  ECDSA.Jacobian.mul_pre(scalar, w, precomputes)
+// ECDSA.Jacobian.mul_pre(scalar: Nat, w: Nat, precomputes: List(ECDSA.Jacobian)): ECDSA.Jacobian
+//   let n = Nat.mod(scalar, ECDSA.CURVE.n)
+//   get k1 k2 = ECDSA.split_scalar(n)
+//   get k1neg k1 = Int.toNat(k1)
+//   get k2neg k2 = Int.toNat(k2)
+//   get k1p f1p = ECDSA.Jacobian.wNAF(w, precomputes, k1)
+//   get k2p f2p = ECDSA.Jacobian.wNAF(w, precomputes, k2)
+//   let k1p = Bool.if<>(k1neg, ECDSA.Jacobian.negate(k1p), k1p)
+//   let k2p = Bool.if<>(k2neg, ECDSA.Jacobian.negate(k2p), k2p)
+//   let k2p = get k2p.x k2p.y k2p.z = k2p
+//     ECDSA.Jacobian.new(ECDSA.mod(Nat.mul(k2p.x, ECDSA.CURVE.beta)), k2p.y, k2p.z)
+//   let point = ECDSA.Jacobian.add(k1p, k2p)
+//   let fake  = ECDSA.Jacobian.add(f1p, f2p)
+//   get _ _ _ = fake // This is used to force the computation of the fake point, to achieve constant time
+//   ECDSA.Jacobian.normalizeZ(point)
 
-Jacobian.mul(p: Jacobian, n: Nat): Jacobian
-  let precomputes = Jacobian.normalizeZ_batch(Jacobian.precompute_window(p, 8))
-  Jacobian.mul_pre(n, 8, precomputes)
+ECDSA.Jacobian.mul(p: ECDSA.Jacobian, n: Nat): ECDSA.Jacobian
+  let precomputes = ECDSA.Jacobian.normalizeZ_batch(ECDSA.Jacobian.precompute_window(p, 8))
+  ECDSA.Jacobian.mul_pre(n, 8, precomputes)
 
-// Point works in default coordinates. Public keys are represented by points.
-T Point
-| Point.new(x: Nat, y: Nat);
+// ECDSA.Point works in default coordinates. Public keys are represented by points.
+T ECDSA.Point
+| ECDSA.Point.new(x: Nat, y: Nat);
 
-Point.base: Point
-  Point.new(CURVE.Gx, CURVE.Gy)
+ECDSA.Point.base: ECDSA.Point
+  ECDSA.Point.new(ECDSA.CURVE.Gx, ECDSA.CURVE.Gy)
 
-Point.base.mul(n: Nat): Point
-  Jacobian.to_point(Jacobian.base.mul(n))
+ECDSA.Point.base.mul(n: Nat): ECDSA.Point
+  ECDSA.Jacobian.to_point(ECDSA.Jacobian.base.mul(n))
 
-Point.mul(p: Point, n: Nat): Point
-  Jacobian.to_point(Jacobian.mul(Jacobian.from_point(p), n))
+ECDSA.Point.mul(p: ECDSA.Point, n: Nat): ECDSA.Point
+  ECDSA.Jacobian.to_point(ECDSA.Jacobian.mul(ECDSA.Jacobian.from_point(p), n))
 
-Point.mul_unsafe(p: Point, n: Nat): Point
-  Jacobian.to_point(Jacobian.mul_unsafe(Jacobian.from_point(p), n))
+ECDSA.Point.mul_unsafe(p: ECDSA.Point, n: Nat): ECDSA.Point
+  ECDSA.Jacobian.to_point(ECDSA.Jacobian.mul_unsafe(ECDSA.Jacobian.from_point(p), n))
 
-Point.valid_point(p: Point): ECDSA.Error(Point)
+ECDSA.Point.valid_point(p: ECDSA.Point): ECDSA.Error(ECDSA.Point)
   get x y = p
   case Bool.or(Nat.eql(x, 0), Nat.eql(y, 0)):
   | ECDSA.Error.err<>(ECDSA.ErrorTypes.point_not_in_curve);
@@ -420,7 +448,7 @@ Point.valid_point(p: Point): ECDSA.Error(Point)
     | ECDSA.Error.ok<>(p);
     | ECDSA.Error.err<>(ECDSA.ErrorTypes.point_not_in_curve);;
 
-Point.from_compressed_bytes(bytes: U8_Vector(33)): ECDSA.Error(Point)
+ECDSA.Point.from_compressed_bytes(bytes: U8_Vector(33)): ECDSA.Error(ECDSA.Point)
   get head tail = Vector.extract<U8, 32>(bytes)
   let head = U8.to_nat(head)
   let x = U8_Vector.to_number<32>(tail)
@@ -429,18 +457,18 @@ Point.from_compressed_bytes(bytes: U8_Vector(33)): ECDSA.Error(Point)
   let is_head_odd = Nat.odd(head)
   let is_y_odd = Nat.odd(y)
   let y = Bool.if<>(Bool.eql(is_head_odd, is_y_odd), y, ECDSA.negate(y))
-  let point = Point.new(x, y)
-  Point.valid_point(point)
+  let point = ECDSA.Point.new(x, y)
+  ECDSA.Point.valid_point(point)
 
-Point.from_uncompressed_bytes(bytes: U8_Vector(65)): ECDSA.Error(Point)
+ECDSA.Point.from_uncompressed_bytes(bytes: U8_Vector(65)): ECDSA.Error(ECDSA.Point)
   get head tail = Vector.extract<U8, 64>(bytes)
   get x y = Vector.split_at<U8, 64>(tail, 32)
   let x = U8_Vector.to_number<32>(x)
   let y = U8_Vector.to_number<32>(y)
-  let point = Point.new(x, y)
-  Point.valid_point(point)
+  let point = ECDSA.Point.new(x, y)
+  ECDSA.Point.valid_point(point)
 
-Point.to_bytes(p: Point, compressed: Bool): U8_Vector(Bool.if<Nat>(compressed, 33, 65))
+ECDSA.Point.to_bytes(p: ECDSA.Point, compressed: Bool): U8_Vector(Bool.if<Nat>(compressed, 33, 65))
  get p.x p.y = p
  let x = U8_Vector.from_nat(32, p.x)
  case compressed:
@@ -452,98 +480,100 @@ Point.to_bytes(p: Point, compressed: Bool): U8_Vector(Bool.if<Nat>(compressed, 3
    Vector.ext<U8, 64>(uncompressed_byte, uncompressed_vec);
  : U8_Vector(Bool.if<Nat>(compressed.self, 33, 65));
 
-Point.from_hex(str: String): ECDSA.Error(Point)
+ECDSA.Point.from_hex(str: String): ECDSA.Error(ECDSA.Point)
   get len bytes = U8_Vector.from_hex(str)
   case Nat.equal(33, len):
   | case self.value as eq:
     with bytes : U8_Vector(eq.b) = bytes;
-    | Point.from_compressed_bytes(bytes);;
+    | ECDSA.Point.from_compressed_bytes(bytes);;
   | case Nat.equal(65, len):
     | case self.value as eq:
       with bytes : U8_Vector(eq.b) = bytes;
-      | Point.from_uncompressed_bytes(bytes);;
+      | ECDSA.Point.from_uncompressed_bytes(bytes);;
     | ECDSA.Error.err<>(ECDSA.ErrorTypes.invalid_public_key_hex);;
 
-Point.to_hex(p: Point, compressed: Bool): String
+ECDSA.Point.to_hex(p: ECDSA.Point, compressed: Bool): String
   def size = Bool.if<>(compressed, 33, 65)
-  U8_Vector.to_hex<size>(Point.to_bytes(p, compressed))
+  U8_Vector.to_hex<size>(ECDSA.Point.to_bytes(p, compressed))
 
-Point.from_SignResult(msgHash: String, sign: SignResult, recovery: Nat): ECDSA.Error(Point)
+ECDSA.Point.from.SignResult(msgHash: String, sign: ECDSA.SignResult, recovery: Nat): ECDSA.Error(ECDSA.Point)
   get r s = sign
   case Bool.or(Nat.eql(r, 0), Nat.eql(s, 0)):
   | ECDSA.Error.err<>(ECDSA.ErrorTypes.invalid_signature_hex);
-  | let rinv = ECDSA.invert(r, CURVE.n)
+  | let rinv = ECDSA.invert(r, ECDSA.CURVE.n)
     let h = Nat.parse_hex(msgHash)
     let header = U8.from_nat(Nat.add(2, Nat.bitwise_and(recovery, 1)))
     let bytes = Vector.ext<U8, 32>(header, U8_Vector.from_nat(32, r))
-    use P_ = ECDSA.Error.bind<,>(Point.from_compressed_bytes(bytes))
-    let sP = Jacobian.mul_unsafe(Jacobian.from_point(P_), s)
-    let hG = Jacobian.negate(Jacobian.base.mul(h))
-    let Q = Jacobian.mul_unsafe(Jacobian.add(sP, hG), rinv)
-    let point = Jacobian.to_point(Q)
-    Point.valid_point(point);
+    use P_ = ECDSA.Error.bind<,>(ECDSA.Point.from_compressed_bytes(bytes))
+    let sP = ECDSA.Jacobian.mul_unsafe(ECDSA.Jacobian.from_point(P_), s)
+    let hG = ECDSA.Jacobian.negate(ECDSA.Jacobian.base.mul(h))
+    let Q = ECDSA.Jacobian.mul_unsafe(ECDSA.Jacobian.add(sP, hG), rinv)
+    let point = ECDSA.Jacobian.to_point(Q)
+    ECDSA.Point.valid_point(point);
 
-Point.from_PrivateKey(n: Nat): Point
-  Point.base.mul(n)
+ECDSA.Point.from_PrivateKey(n: Nat): ECDSA.Point
+  ECDSA.Point.base.mul(n)
 
-Point.get_shared_secret(privateA: Nat, publicB: Point): ECDSA.Error(String)
-  case Point.valid_point(publicB):
+ECDSA.Point.get_shared_secret(privateA: Nat, publicB: ECDSA.Point): ECDSA.Error(String)
+  case ECDSA.Point.valid_point(publicB):
   | ECDSA.Error.err<>(ECDSA.ErrorTypes.invalid_public_key);
-  | let shared = Point.mul(publicB, privateA)
-    ECDSA.Error.ok<>(Point.to_hex(shared, Bool.false));
+  | let shared = ECDSA.Point.mul(publicB, privateA)
+    ECDSA.Error.ok<>(ECDSA.Point.to_hex(shared, Bool.false));
 
-PrivateKey.is_valid(n: Nat): Bool
-  Bool.and(Nat.gtn(0, n), Nat.gtn(n, CURVE.n))
+ECDSA.PrivateKey.is_valid(n: Nat): Bool
+  Bool.and(Nat.gtn(0, n), Nat.gtn(n, ECDSA.CURVE.n))
 
-PublicKey.from_PrivateKey(priv: Nat, compressed: Bool): U8_Vector(Bool.if<Nat>(compressed, 33, 65))
-    let point = Point.from_PrivateKey(priv)
-    Point.to_bytes(point, compressed)
+ECDSA.PublicKey.from_PrivateKey(priv: Nat, compressed: Bool): U8_Vector(Bool.if<Nat>(compressed, 33, 65))
+    let point = ECDSA.Point.from_PrivateKey(priv)
+    ECDSA.Point.to_bytes(point, compressed)
 
-PublicKey.recover(msgHash: String, signature: SignResult, recovery: Nat): ECDSA.Error(String)
-  let point = Point.from_SignResult(msgHash, signature, recovery)
-  ECDSA.Error.map<,>((p) Point.to_hex(p, Bool.false), point)
+ECDSA.PublicKey.recover(msgHash: String, signature: ECDSA.SignResult, recovery: Nat): ECDSA.Error(String)
+  let point = ECDSA.Point.from.SignResult(msgHash, signature, recovery)
+  ECDSA.Error.map<,>((p) ECDSA.Point.to_hex(p, Bool.false), point)
 
-T SignResult
-| SignResult.new(r: Nat, s: Nat);
+T ECDSA.SignResult
+| ECDSA.SignResult.new(r: Nat, s: Nat);
 
-SignResult.from_hex(str: String): ECDSA.Error(SignResult)
-  def bind = ECDSA.Error.bind
-  def from_maybe = ECDSA.Error.from_maybe<Pair(String, String)>(ECDSA.ErrorTypes.invalid_signature_hex)
-  use pair = bind<,>(from_maybe(String.take_n(2, str)))
-  get str check1 = pair
+ECDSA.SignResult.from_hex(str: String): ECDSA.Error(ECDSA.SignResult)
+  ECDSA.SignResult.from_hex(str)
+// ECDSA.SignResult.from_hex(str: String): ECDSA.Error(ECDSA.SignResult)
+//   def bind = ECDSA.Error.bind
+//   def from_maybe = ECDSA.Error.from_maybe<Pair(String, String)>(ECDSA.ErrorTypes.invalid_signature_hex)
+//   use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//   get str check1 = pair
 
-  use pair = bind<,>(from_maybe(String.take_n(2, str)))
-  get length str = pair
-  let length = ECDSA.parse_byte(length)
+//   use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//   get length str = pair
+//   let length = ECDSA.parse_byte(length)
 
-  use pair = bind<,>(from_maybe(String.take_n(2, str)))
-  get check2 str = pair
-  case Bool.orVar(3)(
-    String.eql(check1, "30"),
-    Nat.eql(length, Nat.sub(String.length(str), 4)),
-    String.eql(check2, "02")):
-  | ECDSA.Error.err<SignResult>(ECDSA.ErrorTypes.invalid_signature_hex);
-  | // r
-    use pair = bind<,>(from_maybe(String.take_n(2, str)))
-    get rLen str = pair
-    let rLen = ECDSA.parse_byte(rLen)
-    use pair = bind<,>(from_maybe(String.take_n(rLen, str)))
-    get r str = pair
-    let r = Nat.parse_hex(r)
-    // s
-    use pair = bind<,>(from_maybe(String.take_n(2, str)))
-    get check3 str = pair
-    case String.eql(check3, "02"):
-    | ECDSA.Error.err<SignResult>(ECDSA.ErrorTypes.invalid_signature_hex);
-    | use pair = bind<,>(from_maybe(String.take_n(2, str)))
-      get sLen str = pair
-      let sLen = ECDSA.parse_byte(sLen)
-      use pair = bind<,>(from_maybe(String.take_n(sLen, str)))
-      get s str = pair
-      let s = Nat.parse_hex(s)
-      ECDSA.Error.ok<SignResult>(SignResult.new(r, s));;
+//   use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//   get check2 str = pair
+//   case Bool.orVar(3)(
+//     String.eql(check1, "30"),
+//     Nat.eql(length, Nat.sub(String.length(str), 4)),
+//     String.eql(check2, "02")):
+//   | ECDSA.Error.err<ECDSA.SignResult>(ECDSA.ErrorTypes.invalid_signature_hex);
+//   | // r
+//     use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//     get rLen str = pair
+//     let rLen = ECDSA.parse_byte(rLen)
+//     use pair = bind<,>(from_maybe(String.take_n(rLen, str)))
+//     get r str = pair
+//     let r = Nat.parse_hex(r)
+//     // s
+//     use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//     get check3 str = pair
+//     case String.eql(check3, "02"):
+//     | ECDSA.Error.err<ECDSA.SignResult>(ECDSA.ErrorTypes.invalid_signature_hex);
+//     | use pair = bind<,>(from_maybe(String.take_n(2, str)))
+//       get sLen str = pair
+//       let sLen = ECDSA.parse_byte(sLen)
+//       use pair = bind<,>(from_maybe(String.take_n(sLen, str)))
+//       get s str = pair
+//       let s = Nat.parse_hex(s)
+//       ECDSA.Error.ok<ECDSA.SignResult>(ECDSA.SignResult.new(r, s));;
 
-SignResult.to_hex(sig: SignResult, compressed: Bool): String
+ECDSA.SignResult.to_hex(sig: ECDSA.SignResult, compressed: Bool): String
   get sig.r sig.s = sig
   let s_hex = ECDSA.number_to_hex(sig.s)
   case compressed:
@@ -601,47 +631,47 @@ U8_Vector.concat<n: Nat, m: Nat>(as: U8_Vector(n), bs: U8_Vector(m)): U8_Vector(
   Vector.concat<U8, n, m>(as, bs)
 
 ECDSA.is_valid_private_key(priv_key: Nat): Bool
-  Bool.and(Nat.ltn(0, priv_key), Nat.ltn(priv_key, CURVE.n))
+  Bool.and(Nat.ltn(0, priv_key), Nat.ltn(priv_key, ECDSA.CURVE.n))
 
-T QRS
-| QRS.new(p: Point, r: Nat, s: Nat);
+T ECDSA.QRS
+| ECDSA.QRS.new(p: ECDSA.Point, r: Nat, s: Nat);
 
-QRS.from_k(k: Nat, msg: Nat, priv: Nat): ECDSA.Error(QRS)
-  case PrivateKey.is_valid(k):
-  | let max = CURVE.n
-    let q = Point.base.mul(k)
+ECDSA.QRS.from_k(k: Nat, msg: Nat, priv: Nat): ECDSA.Error(ECDSA.QRS)
+  case ECDSA.PrivateKey.is_valid(k):
+  | let max = ECDSA.CURVE.n
+    let q = ECDSA.Point.base.mul(k)
     get q.x q.y = q
     let r = Nat.mod(q.x, max)
     let s = Nat.mod(Nat.mul(ECDSA.invert(k, max), (Nat.add(msg, Nat.mul(r, priv)))), max)
     case Bool.or(Nat.eql(r, 0), Nat.eql(s, 0)):
     | ECDSA.Error.err<>(ECDSA.ErrorTypes.invalid_k);
-    | ECDSA.Error.ok<>(QRS.new(q, r, s));;
+    | ECDSA.Error.ok<>(ECDSA.QRS.new(q, r, s));;
   | ECDSA.Error.err<>(ECDSA.ErrorTypes.invalid_k);
 
-ECDSA.sign_qrs(priv: Nat, qrs: QRS): String
+ECDSA.sign_qrs(priv: Nat, qrs: ECDSA.QRS): String
   get q r s = qrs
-  let max = Nat.div(CURVE.n, 2)
-  let adjustedS = Bool.if<>(Nat.gtn(s, max), Nat.sub(CURVE.n, s), CURVE.n)
-  let sig = SignResult.new(r, adjustedS)
-  SignResult.to_hex(sig, Bool.false)
+  let max = Nat.div(ECDSA.CURVE.n, 2)
+  let adjustedS = Bool.if<>(Nat.gtn(s, max), Nat.sub(ECDSA.CURVE.n, s), ECDSA.CURVE.n)
+  let sig = ECDSA.SignResult.new(r, adjustedS)
+  ECDSA.SignResult.to_hex(sig, Bool.false)
 
 ECDSA.sign_with_k(msgHash: String, priv: Nat, k: Nat): ECDSA.Error(String)
   let msg = Nat.parse_hex(msgHash)
-  use qrs = ECDSA.Error.bind<,>(QRS.from_k(k, msg, priv))
+  use qrs = ECDSA.Error.bind<,>(ECDSA.QRS.from_k(k, msg, priv))
   ECDSA.Error.ok<>(ECDSA.sign_qrs(priv, qrs))
 
 ECDSA.sign(msgHash: String, priv: Nat): ECDSA.Error(String)
   use qrs = ECDSA.Error.bind<,>(ECDSA.get_QRS_RFC6979(msgHash, priv))
   ECDSA.Error.ok<>(ECDSA.sign_qrs(priv, qrs))
 
-ECDSA.verify(signature: SignResult, msgHash: String, pubkey: Point): Bool
+ECDSA.verify(signature: ECDSA.SignResult, msgHash: String, pubkey: ECDSA.Point): Bool
   let h = ECDSA.truncate_hash(msgHash)
   get r s = signature
-  let pubkey = Jacobian.from_point(pubkey)
-  let s1 = ECDSA.invert(s, CURVE.n)
-  let Ghs1 = Jacobian.base.mul(Nat.mod(Nat.mul(h, s1), CURVE.n))
-  let Prs1 = Jacobian.mul_unsafe(pubkey, Nat.mod(Nat.mul(r, s1), CURVE.n))
-  get res.x _ = Jacobian.to_point(Jacobian.add(Ghs1, Prs1))
+  let pubkey = ECDSA.Jacobian.from_point(pubkey)
+  let s1 = ECDSA.invert(s, ECDSA.CURVE.n)
+  let Ghs1 = ECDSA.Jacobian.base.mul(Nat.mod(Nat.mul(h, s1), ECDSA.CURVE.n))
+  let Prs1 = ECDSA.Jacobian.mul_unsafe(pubkey, Nat.mod(Nat.mul(r, s1), ECDSA.CURVE.n))
+  get res.x _ = ECDSA.Jacobian.to_point(ECDSA.Jacobian.add(Ghs1, Prs1))
   Nat.eql(res.x, r)
 
 ECDSA.hmacSha256<klen: Nat, mlen: Nat>(key: U8_Vector(klen), msg: U8_Vector(mlen)): U8_Vector(32)
@@ -651,7 +681,7 @@ ECDSA.hmacSha256<klen: Nat, mlen: Nat>(key: U8_Vector(klen), msg: U8_Vector(mlen
 // Deterministic k generation as per RFC6979.
 // Generates k, and then calculates Q & Signature {r, s} based on it.
 // https://tools.ietf.org/html/rfc6979#section-3.1
-ECDSA.get_QRS_RFC6979(msgHash: String, priv: Nat): ECDSA.Error(QRS)
+ECDSA.get_QRS_RFC6979(msgHash: String, priv: Nat): ECDSA.Error(ECDSA.QRS)
   // Step A is ignored, since we already provide hash instead of msg
   let num = Nat.parse_hex(msgHash)
   let h1 = U8_Vector.from_nat(32, num)
@@ -682,16 +712,16 @@ ECDSA.get_QRS_RFC6979(msgHash: String, priv: Nat): ECDSA.Error(QRS)
 
   ECDSA.get_QRS_RFC6979.aux(priv, k, v, h1n, 0)
 
-ECDSA.get_QRS_RFC6979.aux(priv: Nat, k: U8_Vector(32), v: U8_Vector(32), h1n: Nat, i: Nat): ECDSA.Error(QRS)
+ECDSA.get_QRS_RFC6979.aux(priv: Nat, k: U8_Vector(32), v: U8_Vector(32), h1n: Nat, i: Nat): ECDSA.Error(ECDSA.QRS)
   // Step H3, repeat until 1 < T < n - 1
   case Nat.ltn(i, 1000):
   | let v = ECDSA.hmacSha256<32, 32>(k, v)
     let T = U8_Vector.to_number<32>(v)
-    case QRS.from_k(T, h1n, priv) as m:
+    case ECDSA.QRS.from_k(T, h1n, priv) as m:
     | let b0 = U8_Vector.fill(1, U8.parse_hex("0"))
       let vec = U8_Vector.concat<1, 32>(b0, v)
       let k = ECDSA.hmacSha256<32, 33>(k, vec)
       let v = ECDSA.hmacSha256<32, 32>(k, v)
       ECDSA.get_QRS_RFC6979.aux(priv, k, v, h1n, Nat.succ(i));
-    | ECDSA.Error.ok<QRS>(m.value);;
-  | ECDSA.Error.err<QRS>(ECDSA.ErrorTypes.could_not_find_k);
+    | ECDSA.Error.ok<ECDSA.QRS>(m.value);;
+  | ECDSA.Error.err<ECDSA.QRS>(ECDSA.ErrorTypes.could_not_find_k);
