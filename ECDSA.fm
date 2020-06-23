@@ -124,7 +124,7 @@ ecdsa.number_to_hex(num: Nat): String
 ecdsa.parse_byte(str: String): Nat
   Nat.mul(2, Nat.parse_hex(str))
 
-ecdsa.truncateHash(hash: String): Nat
+ecdsa.truncate_hash(hash: String): Nat
   let msg = Nat.parse_hex(hash)
   let delta = Nat.sub(Nat.mul(Nat.div(String.length(hash), 2), 8), ecdsa.PRIME_SIZE)
   let msg = Bool.if<>(Nat.gtn(delta, 0), Nat.div(msg, Nat.pow(2, delta)), msg)
@@ -148,7 +148,7 @@ Jacobian.base.precomputes: List(Jacobian)
   Jacobian.normalizeZ_batch(Jacobian.precompute_window(Jacobian.base, Jacobian.base.window_size))
 
 Jacobian.base.mul(n: Nat): Jacobian
-  Jacobian.mul(n, Jacobian.base.window_size, Jacobian.base.precomputes)
+  Jacobian.mul_pre(n, Jacobian.base.window_size, Jacobian.base.precomputes)
 
 Jacobian.base.mul_unsafe(n: Nat): Jacobian
   Jacobian.mul_unsafe(Jacobian.base, n)
@@ -343,7 +343,7 @@ Jacobian.wNAF.aux(precomputes: List(Jacobian), p: Jacobian, f: Jacobian, n: Nat,
       Jacobian.wNAF.aux(precomputes, p, f, n, W, window, windows, windowSize, mask, maxNumber);;
   | Pair.new<Jacobian, Jacobian>(p, f);
 
-Jacobian.mul(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
+Jacobian.mul_pre(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
   let n = Nat.mod(scalar, CURVE.n)
   get k1 k2 = ecdsa.split_scalar(n)
   get k1neg k1 = Int.toNat(k1)
@@ -359,6 +359,10 @@ Jacobian.mul(scalar: Nat, w: Nat, precomputes: List(Jacobian)): Jacobian
   get _ _ _ = fake // This is used to force the computation of the fake point, to achieve constant time
   Jacobian.normalizeZ(point)
 
+Jacobian.mul(p: Jacobian, n: Nat): Jacobian
+  let precomputes = Jacobian.normalizeZ_batch(Jacobian.precompute_window(p, 8))
+  Jacobian.mul_pre(n, 8, precomputes)
+
 // Point works in default coordinates. Public keys are represented by points.
 T Point
 | Point.new(x: Nat, y: Nat);
@@ -368,6 +372,9 @@ Point.base: Point
 
 Point.base.mul(n: Nat): Point
   Jacobian.to_point(Jacobian.base.mul(n))
+
+Point.mul(p: Point, n: Nat): Point
+  Jacobian.to_point(Jacobian.mul(Jacobian.from_point(p), n))
 
 Point.mul_unsafe(p: Point, n: Nat): Point
   Jacobian.to_point(Jacobian.mul_unsafe(Jacobian.from_point(p), n))
@@ -445,6 +452,12 @@ Point.from_SignResult(msgHash: String, sign: SignResult, recovery: Nat): Maybe(P
 
 Point.from_PrivateKey(n: Nat): Point
   Point.base.mul(n)
+
+Point.get_shared_secret(privateA: Nat, publicB: Point): Maybe(String)
+  case Point.valid_point(publicB):
+  | Maybe.none<>;
+  | let shared = Point.mul(publicB, privateA)
+    Maybe.some<>(Point.to_hex(shared, Bool.false));
 
 PrivateKey.is_valid(n: Nat): Bool
   Bool.and(Nat.gtn(0, n), Nat.gtn(n, CURVE.n))
@@ -558,3 +571,22 @@ QRS.from_k(k: Nat, msg: Nat, priv: Nat): Maybe(QRS)
   case Bool.or(Nat.eql(r, 0), Nat.eql(s, 0)):
   | Maybe.none<>;
   | Maybe.some<>(QRS.new(q, r, s));
+
+ecdsa.sign_with_k(msgHash: String, priv: Nat, k: Nat): Maybe(String)
+  let msg = Nat.parse_hex(msgHash)
+  use qrs = Maybe.bind<,>(QRS.from_k(k, msg, priv))
+  get q r s = qrs
+  let max = Nat.div(CURVE.n, 2)
+  let adjustedS = Bool.if<>(Nat.gtn(s, max), Nat.sub(CURVE.n, s), CURVE.n)
+  let sig = SignResult.new(r, adjustedS)
+  Maybe.some<>(SignResult.to_hex(sig, Bool.false))
+
+ecdsa.verify(signature: SignResult, msgHash: String, pubkey: Point): Bool
+  let h = ecdsa.truncate_hash(msgHash)
+  get r s = signature
+  let pubkey = Jacobian.from_point(pubkey)
+  let s1 = ecdsa.invert(s, CURVE.n)
+  let Ghs1 = Jacobian.base.mul(Nat.mod(Nat.mul(h, s1), CURVE.n))
+  let Prs1 = Jacobian.mul_unsafe(pubkey, Nat.mod(Nat.mul(r, s1), CURVE.n))
+  get res.x _ = Jacobian.to_point(Jacobian.add(Ghs1, Prs1))
+  Nat.eql(res.x, r)
