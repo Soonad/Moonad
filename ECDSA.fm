@@ -412,6 +412,36 @@ Point.to_bytes(p: Point, compressed: Bool): Vector(U8, Bool.if<Nat>(compressed, 
    Vector.ext<U8, 64>(uncompressed_byte, uncompressed_vec);
  : Vector(U8, Bool.if<Nat>(compressed.self, 33, 65));
 
+Point.from_hex(str: String): Maybe(Point)
+  get len bytes = U8_Vector.from_hex(str)
+  case Nat.equal(33, len):
+  | case self.value as eq:
+    with bytes : Vector(U8, eq.b) = bytes;
+    | Point.from_compressed_bytes(bytes);;
+  | case Nat.equal(65, len):
+    | case self.value as eq:
+      with bytes : Vector(U8, eq.b) = bytes;
+      | Point.from_uncompressed_bytes(bytes);;
+    | Maybe.none<>;;
+
+Point.to_hex(p: Point, compressed: Bool): String
+  def size = Bool.if<>(compressed, 33, 65)
+  U8_Vector.to_hex<size>(Point.to_bytes(p, compressed))
+
+Point.from_SignResult(msgHash: String, sign: SignResult, recovery: Nat): Maybe(Point)
+  get r s = sign
+  case Bool.or(Nat.eql(r, 0), Nat.eql(s, 0)):
+  | Maybe.none<>;
+  | let rinv = ecdsa.invert(r, CURVE.n)
+    let h = Nat.parse_hex(msgHash)
+    let header = U8.from_nat(Nat.add(2, Nat.bitwise_and(recovery, 1)))
+    let bytes = Vector.ext<U8, 32>(header, U8_Vector.from_nat(32, r))
+    use P_ = Maybe.bind<,>(Point.from_compressed_bytes(bytes))
+    let sP = Jacobian.mul_unsafe(Jacobian.from_point(P_), s)
+    let hG = Jacobian.negate(Jacobian.base.mul(h))
+    let Q = Jacobian.mul_unsafe(Jacobian.add(sP, hG), rinv)
+    let point = Jacobian.to_point(Q)
+    Point.valid_point(point);
 
 Point.from_PrivateKey(n: Nat): Point
   Point.base.mul(n)
@@ -422,6 +452,10 @@ PrivateKey.is_valid(n: Nat): Bool
 PublicKey.from_PrivateKey(priv: Nat, compressed: Bool): Vector(U8, Bool.if<Nat>(compressed, 33, 65))
     let point = Point.from_PrivateKey(priv)
     Point.to_bytes(point, compressed)
+
+PublicKey.recover(msgHash: String, signature: SignResult, recovery: Nat): Maybe(String)
+  let point = Point.from_SignResult(msgHash, signature, recovery)
+  Maybe.map<,>((p) Point.to_hex(p, Bool.false), point)
 
 T SignResult
 | SignResult.new(r: Nat, s: Nat);
@@ -497,6 +531,17 @@ U8_Vector.to_hex<n: Nat>(bytes: Vector(U8, n)): String
   | String.nil;
   | String.concat(ecdsa.number_to_hex(U8.to_nat(bytes.head)), U8_Vector.to_hex<bytes.size>(bytes.tail));
 
+U8_Vector.from_hex(hex: String): Sigma(Nat, Vector(U8))
+  case hex:
+  | Sigma.new<Nat,Vector(U8)>(0, Vector.nil<U8>);
+  | case hex.tail:
+    | let b = ecdsa.parse_byte(String.consVar(1, hex.head))
+      let vec = Vector.ext<U8,0>(U8.from_nat(b), Vector.nil<U8>)
+      Sigma.new<Nat, Vector(U8)>(1, vec);
+    | let b = ecdsa.parse_byte(String.consVar(2, hex.head, hex.tail.head))
+      get len vec = U8_Vector.from_hex(hex.tail.tail)
+      let vec = Vector.ext<U8,len>(U8.from_nat(b), vec)
+      Sigma.new<Nat, Vector(U8)>(Nat.succ(len), vec);;
 
 ecdsa.is_valid_private_key(priv_key: Nat): Bool
   Bool.and(Nat.ltn(0, priv_key), Nat.ltn(priv_key, CURVE.n))
