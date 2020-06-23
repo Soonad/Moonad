@@ -54,3 +54,9 @@ Vector.concat<A: Type, n: Nat, m: Nat>(as: Vector(A, n), bs: Vector(A, m)): Vect
   | bs;
   | Vector.ext<A, Nat.add(as.size, m)>(as.head, Vector.concat<A, as.size, m>(as.tail, bs));
   : Vector(A, Nat.add(as.size, m));
+
+Vector.fill<A: Type>(n: Nat, a: A): Vector(A, n)
+  case n:
+  | Vector.nil<A>;
+  | Vector.ext<A, n.pred>(a, Vector.fill<A>(n.pred, a));
+  : Vector(A, n.self);
