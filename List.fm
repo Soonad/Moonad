@@ -147,6 +147,19 @@ List.subsequences.go<A: Type>(xs: List(A)): List(List(A))
     | List.pure<>(xs.head);
     | List.foldr<,>(List.nil<>,f,List.subsequences.go<>(xs.tail));;
 
+// List transformation proofs
+// ==========================
+
+// Proof that List.cons(f(x)) & List.map(f, xs) commute
+List.commute_cons_map<A: Type, B: Type>(a :A, ls: List(A), f: A -> B)
+  : Equal(List(B),
+          List.cons<B>(f(a), List.map<A, B>(f, ls)),
+          List.map<A, B>(f, List.cons<A>(a, ls)))
+  case ls:
+  | _;
+  | _;
+  : Equal(_, List.cons<>(f(a), List.map<,>(f, ls.self)), List.map<,>(f, List.cons<>(a, ls.self)));
+
 // Reducing Lists
 // ==============
 
@@ -235,9 +248,45 @@ List.product.go(xs: List(Nat), n: Nat) : Nat
 List.show<A: Type>(f: A -> String, xs: List(A)): String
   String.flatten(["[",String.intercalate(",", List.map<,>(f,xs)),"]"])
 
+// List functor
+// ============
+
+// The functor instance for list
+List.functor: Functor(List)
+  Functor.new<List>(List.map)
+
+// Proof that List.functor conforms to the functor laws
+List.functor.verified: VerifiedFunctor(List, List.functor)
+  VerifiedFunctor.new<List, List.functor>(List.map.id, List.map.comp)
+
+List.map.id<A: Type>(ls: List(A)): Equal(List(A), List.map<A, A>(Function.id<A>, ls), ls)
+  case ls:
+  | Equal.to<_, List.map<,>(Function.id<>, List.nil<>)>;
+  | let tail_eq = List.map.id<>(ls.tail)
+    Equal.apply<_, _,
+                List.map<,>(Function.id<>, ls.tail),
+                ls.tail,
+                List.cons<>(ls.head)>(tail_eq);
+  : Equal(_, List.map<,>(Function.id<>, ls.self), ls.self);
+
+List.map.comp<A: Type, B: Type, C: Type>(ls: List(A), g: (B -> C), h: (A -> B))
+  : Equal(List(C),
+          List.map<A, C>(Function.comp<A, B, C>(g, h), ls),
+          Function.comp<List(A), List(B), List(C)>(List.map<B, C>(g), List.map<A, B>(h))(ls))
+  case ls:
+  | Equal.to<_, List.map<,>(Function.comp<,,>(g, h), List.nil<>)>;
+  | let tail_eq = List.map.comp<,,>(ls.tail, g, h)
+    Equal.apply<_, _,
+                List.map<,>(Function.comp<,,>(g, h), ls.tail),
+                Function.comp<,,>(List.map<,>(g), List.map<,>(h), ls.tail), List.cons<>(Function.comp<,,>(g, h, ls.head))>(tail_eq);
+  : Equal(_, List.map<,>(Function.comp<,,>(g, h), ls.self), Function.comp<,,>(List.map<,>(g), List.map<,>(h))(ls.self));
 
 // List monad
 // ==========
+
+// The monad instance for list
+List.monad: Monad(List)
+  Monad.new<List>(List.bind, List.pure)
 
 // A list with only one element.
 List.pure<A : Type>(x : A) : List(A)
