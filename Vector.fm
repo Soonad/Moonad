@@ -1,4 +1,4 @@
-T Vector <A: Type>                         ~ (size: Nat)
+T Vector <A: Type>                                ~ (size: Nat)
 | Vector.nil                                      ~ (Nat.zero);
 | Vector.ext<size: Nat>(x: A, xs: Vector(A,size)) ~ (Nat.succ(size));
 
@@ -14,3 +14,5 @@ Vector.size_0_is_nil(vec: Vector(Nat, Nat.zero)) : Equal()(vec)(Vector.nil<Nat>)
     let x0 = Equal.rewrite<><vec.size,Nat.zero,P0>(e, vec.self)
     let x1 = Equal.rewrite<><vec.size,Nat.zero,P1>(e, Vector.nil<Nat>)
     Equal()(x0)(x1);
+
+

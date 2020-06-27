@@ -208,9 +208,10 @@ Parser.parse<A: Type>(p: Parser(A), s: String): Parser.type(A, Parser.run<A>(p,s
 
 Parser.Item.show(e: Parser.Item): String
   case e:
-  | String.flatten(["tokens(",String.pure('"'),e.xs,String.pure('"'),")"]);
-  | String.flatten(["label(",String.pure('"'),e.xs,String.pure('"'),")"]);
+  | String.flatten(["tokens(","\"",e.xs,"\"",")"]);
+  | String.flatten(["label(","\"",e.xs,"\"",")"]);
   | "end_of_input";
+  : String;
 
 Parser.Error.show(e: Parser.Error): String
   case e:
