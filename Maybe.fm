@@ -30,6 +30,23 @@ Maybe.map<A: Type, B: Type>(f: A -> B, m: Maybe(A)): Maybe(B)
   | Maybe.none<B>;
   | Maybe.some<B>(f(m.value));
 
+Maybe.IsSome(A: Type,x: Maybe(A)): Type
+  case x:
+  | Empty;
+  | A;
+
+Maybe.some_isnt_none<A: Type>(x: A) : Not(Equal(Maybe(A),Maybe.some<A>(x),Maybe.none<A>))
+  def P = ((x) case x: | Empty; | Unit;) :: Maybe(A) -> Type
+  (e) Equal.rewrite<Maybe(A), Maybe.some<A>(x), Maybe.none<A>,P>(e, Unit.new)
+
+Maybe.is_some<A: Type>(x: A): Maybe.IsSome(A,Maybe.some<A>(x))
+  def y = Maybe.some<A>(x)
+  case y:
+  with e : Equal(Maybe(A),y,y.self) = Equal.to<Maybe(A),y>;
+  | Empty.absurd<>(Maybe.some_isnt_none<A>(x,e));
+  | y.value;
+
+
 // Maybe functor
 // =============
 
