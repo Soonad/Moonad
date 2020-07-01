@@ -1,4 +1,4 @@
-T Vector <A: Type>                         ~ (size: Nat)
+T Vector <A: Type>                                ~ (size: Nat)
 | Vector.nil                                      ~ (Nat.zero);
 | Vector.ext<size: Nat>(head: A, tail: Vector(A,size)) ~ (Nat.succ(size));
 

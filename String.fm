@@ -190,10 +190,11 @@ String.flatten(xs: List(String)): String
   case xs:
   | String.nil;
   | String.concat(xs.head, String.flatten(xs.tail));
+  : String;
 
 // Print a string
 String.show(xs: String): String
-  String.Builder.cons('"',String.to_builder(xs))(String.pure('"'))
+  String.flatten(["\"",xs,"\""])
 
 // String monad
 // ==========

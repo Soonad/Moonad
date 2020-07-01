@@ -1,6 +1,6 @@
 Module: Type
   Map(Export)
-  
+
 Module.new: Module
   Map.new<Export>
 
@@ -21,10 +21,14 @@ Module.set(key: String, val: Export, mod: Module): Module
   Map.set<Export>(String.to_bits(key), val, mod)
 
 Module.from(defs: List(Pair(String, Export))): Module
-  case defs:
-  | Module.new;
-  | case defs.head:
-    | def key = defs.head.fst 
-      def val = defs.head.snd
-      def mod = Module.from(defs.tail)
-      Module.set(key, val, mod);;
+  Map.from_list<,>(String.to_bits,defs)
+
+Module.to_list(m : Module) : List(Pair(Bits,Type))
+  def f  = ((p) get x y = p Pair.new<Bits,Type>(x,Export.T(y)))
+          :: Pair(Bits,Export) -> Pair(Bits,Type)
+  List.map<,>(f, Map.to_list<>(m))
+
+Module.Row(field: String, T: Type, m: Module) : Type
+  case Map.get<Export>(String.to_bits(field),m) as got:
+  | Empty;
+  | Equal(Type,T,Export.T(got.value));
