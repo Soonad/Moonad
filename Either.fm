@@ -5,7 +5,7 @@ T Either<A: Type, B: Type>
 
 Either.bind<A: Type, B: Type, C: Type>(e: Either(A,B), f: B -> Either(A,C)): Either(A,C)
   case e:
-  | Either.left<A><C>(e.value);
+  | Either.left<A, C>(e.value);
   | f(e.value);
 
 // Either(A) functor

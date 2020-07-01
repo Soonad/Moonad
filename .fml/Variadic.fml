@@ -1,0 +1,3 @@
+Variadic: (n: Nat) -> (A: Type) -> (B: Type) -> Type
+  (n) (A) (B) n<(n.self) Type>(B)((n.pred) A -> Variadic(n.pred)(A)(B))
+

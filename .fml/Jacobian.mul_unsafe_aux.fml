@@ -1,0 +1,3 @@
+Jacobian.mul_unsafe_aux: (d: Jacobian) -> (k1p: Jacobian) -> (k2p: Jacobian) -> (k1: Nat) -> (k2: Nat) -> Pair(Jacobian)(Jacobian)
+  (d) (k1p) (k2p) (k1) (k2) Bool.or(Nat.gtn(k1)(0))(Nat.gtn(k2)(0))<(self.self) Pair(Jacobian)(Jacobian)>(let k1p = Bool.if<Jacobian>(Nat.odd(k1))(Jacobian.add(k1p)(d))(k1p); let k2p = Bool.if<Jacobian>(Nat.odd(k2))(Jacobian.add(k2p)(d))(k2p); let d = Jacobian.double(d); let k1 = Nat.div(k1)(2); let k2 = Nat.div(k2)(2); Jacobian.mul_unsafe_aux(d)(k1p)(k2p)(k1)(k2))(Pair.new<Jacobian><Jacobian>(k1p)(k2p))
+

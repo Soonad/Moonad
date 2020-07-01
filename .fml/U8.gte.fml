@@ -1,0 +1,3 @@
+U8.gte: (a: U8) -> (b: U8) -> Bool
+  (a) (b) a<(x) Bool>((a_val) b<(x) Bool>((b_val) Word.gte<8>(a_val)(b_val)))
+

@@ -1,0 +1,3 @@
+Acc: (A: Type) -> (B: Type) -> (stop: A -> Bool) -> (a: A) -> Type
+  (A) (B) (stop) (a) stop(a)<(self.self) Type>(B)((a: A) -> Acc(A)(B)(stop)(a))
+

@@ -1,0 +1,3 @@
+Acc.foldl: <A: Type> -> <B: Type> -> (stop: A -> Bool) -> (acc: B -> A -> B) -> (b: B) -> (a: A) -> Acc(A)(B)(stop)(a)
+  <A> <B> (stop) (acc) (b) (a) stop(a)<(t.self) (eq: Equal(Bool)(t.self)(stop(a))) -> Acc(A)(B)(stop)(a)>((eq) Equal.rewrite<Bool><Bool.true><stop(a)><(X) X<(X.self) Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)(b))((eq) Equal.rewrite<Bool><Bool.false><stop(a)><(X) X<(X.self) Type>(B)((a: A) -> Acc(A)(B)(stop)(a))>(eq)(Acc.foldl<A><B>(stop)(acc)(acc(b)(a))))(Equal.to<Bool><stop(a)>)
+

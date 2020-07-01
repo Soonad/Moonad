@@ -1,0 +1,3 @@
+Jacobian.normalizeZ: (p: Jacobian) -> Jacobian
+  (p) Jacobian.from_point(Jacobian.to_point(p))
+

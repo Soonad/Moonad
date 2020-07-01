@@ -23,11 +23,16 @@ Nat.mul(n: Nat, m: Nat): Nat
 
 // Nat subtraction
 Nat.sub(n: Nat, m: Nat): Nat
-  case m:
-  | n;
-  | case n:
-    | Nat.zero;
+  case n:
+  | 0;
+  | case m:
+    | n;
     | Nat.sub(n.pred, m.pred);;
+  // case m:
+  // | n;
+  // | case n:
+  //   | Nat.zero;
+  //   | Nat.sub(n.pred, m.pred);;
 
 // Nat subtraction and remainder
 Nat.sub_rem(n: Nat, m: Nat): Either(Nat, Nat)
@@ -234,3 +239,89 @@ Nat.add_succ_theorem(n: Nat, m: Nat): Equal(Nat, Nat.add(n, Nat.succ(m)), Nat.su
     let e1 = Equal.apply<Nat, Nat, Nat.add(n.pred, Nat.succ(m)), Nat.succ(Nat.add(n.pred, m)), Nat.succ>(e0)
     e1;
   : Equal(Nat, Nat.add(n.self, Nat.succ(m)), Nat.add(Nat.succ(n.self), m));
+
+Nat.succ_not_zero(a: Nat): Not(Nat.succ(a) == 0)
+  (eq)
+  def P = (x) case x: | Empty; | Unit;
+  Equal.rewrite<Nat, Nat.succ(a), 0, P>(eq, Unit.new)
+
+Nat.zero_not_succ(a: Nat): Not(0 == Nat.succ(a))
+  (eq)
+  def P = (x) case x: | Unit; | Empty;
+  Equal.rewrite<Nat, 0, Nat.succ(a), P>(eq, Unit.new)
+
+Nat.succ_inj(a: Nat, b: Nat, eq: Nat.succ(a) == Nat.succ(b)): a == b
+  Equal.apply<Nat, Nat, Nat.succ(a), Nat.succ(b), Nat.pred>(eq)
+
+Nat.equal(a: Nat, b: Nat): Either(a == b, Not(a == b))
+  case a:
+  | case b:
+    | Either.left<,>(Equal.to<Nat,0>);
+    | Either.right<,>(Nat.zero_not_succ(b.pred));
+    : Either(0 == b.self, Not(0 == b.self));;
+  | case b:
+    | Either.right<,>(Nat.succ_not_zero(a.pred));
+    | case Nat.equal(a.pred, b.pred) as rec:
+      | Either.left<,>(Equal.apply<Nat, Nat, a.pred, b.pred, Nat.succ>(rec.value));
+      | Either.right<,>((eq) rec.value(Nat.succ_inj(a.pred, b.pred, eq)));
+      : Either(Nat.succ(a.pred) == Nat.succ(b.pred), Not(Nat.succ(a.pred) == Nat.succ(b.pred)));;
+    : Either(Nat.succ(a.pred) == b.self, Not(Nat.succ(a.pred) == b.self));;
+  : Either(a.self == b, Not(a.self == b));
+
+Nat.addVar: (n: Nat) -> Variadic(n, Nat, Nat)
+  Variadic.foldr<,>(Nat.add, 0)
+
+Nat.addAcc: (n: Nat) -> Acc(Nat, Nat, Nat.eql(0), n)
+  Acc.foldl<,>(Nat.eql(0), Nat.add, 0)
+
+Nat.mulAcc: (n: Nat) -> Acc(Nat, Nat, Nat.eql(1), n)
+  Acc.foldl<,>(Nat.eql(1), Nat.mul, 1)
+
+Nat.mulVar: (n: Nat) -> Variadic(n, Nat, Nat)
+  Variadic.foldr<,>(Nat.mul, 1)
+
+Nat.parse_hex(str: String): Nat
+  Nat.parse_hex.go(str, Nat.zero)
+
+Nat.parse_hex.go(str: String, res: Nat): Nat
+  case str:
+  | res;
+  | let dig = Char.hex_value(str.head)
+    let res = Nat.add(dig, Nat.mul(16, res))
+    Nat.parse_hex.go(str.tail, res);
+
+Nat.square(a: Nat): Nat
+  Nat.mul(a, a)
+
+// Extended Euclidian algorithm. Given natural numbers a, b, computes GCD(a,b) and
+// Bezout's coefficients; that is, integers x, y such that a*x + b*y = GCD(a,b)
+Nat.egcd(a: Nat, b: Nat): Pair(Nat, Pair(Int, Int))
+   Nat.egcd.aux(a, b, Int.0, Int.1, Int.1, Int.0)
+
+Nat.egcd.aux(a: Nat, b: Nat, x: Int, y: Int, u: Int, v: Int): Pair(Nat, Pair(Int, Int))
+  case a:
+  | Pair.new<,>(b, Pair.new<,>(x, y));
+  | let q = Nat.div(b, a)
+    let r = Nat.mod(b, a)
+    let m = Int.sub(x, Int.mul(u, Int.fromNat(q)))
+    let n = Int.sub(y, Int.mul(v, Int.fromNat(q)))
+    Nat.egcd.aux(r, a, u, v, m, n);
+
+Nat.bitwise_and(a: Nat, b: Nat): Nat
+  case Bool.or(Nat.eql(a, 0), Nat.eql(a, 0)):
+  | 0;
+  | let bit = Bool.if<Nat>(Bool.or(Nat.eql(Nat.mod(a, 2), 0), Nat.eql(Nat.mod(b, 2), 0)), 0, 1)
+    let a = Nat.div(a, 2)
+    let b = Nat.div(b, 2)
+    Nat.add(bit, Nat.mul(2, Nat.bitwise_and(a, b)));
+
+Nat.odd(n: Nat): Bool
+  Nat.eql(Nat.mod(n, 2), 1)
+
+Nat.min(a: Nat): Nat -> Nat
+  case a:
+  | (b) 0;
+  | (b)
+    case b:
+    | 0;
+    | Nat.succ(Nat.min(a.pred, b.pred));;

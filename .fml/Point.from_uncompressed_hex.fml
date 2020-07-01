@@ -1,0 +1,3 @@
+Point.from_uncompressed_hex: (bytes: Vector(U8)(65)) -> Maybe(Point)
+  (bytes) Vector.extract<U8><64>(bytes)<(x) Maybe(Point)>((head) (tail) Vector.split_at<U8><64>(tail)(32)<(x) Maybe(Point)>((x) (y) let x = U8_Vector.to_number<32>(x); let y = U8_Vector.to_number<32>(y); let point = Point.new(x)(y); Point.valid_point(point)<(self.self) Maybe(Point)>(Maybe.some<Point>(point))(Maybe.none<Point>)))
+

@@ -1,0 +1,3 @@
+U8: Type
+  self_U8<P: (self: U8) -> Type> -> (new: (a: Word(8)) -> P(U8.new(a))) -> P(self_U8)
+

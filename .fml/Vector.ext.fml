@@ -1,0 +1,3 @@
+Vector.ext: <A: Type> -> <len: Nat> -> (head: A) -> (tail: Vector(A)(len)) -> Vector(A)(Nat.succ(len))
+  <A> <len> (head) (tail) <P> (nil) (ext) ext<len>(head)(tail)
+

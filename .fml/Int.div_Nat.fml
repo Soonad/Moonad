@@ -1,0 +1,3 @@
+Int.div_Nat: (a: Int) -> (n: Nat) -> Int
+  (a) (n) a<(a.) Int>((a.x) (a.y) Int.new(Nat.div(a.x)(n))(Nat.div(a.y)(n)))
+

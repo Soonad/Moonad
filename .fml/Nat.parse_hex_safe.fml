@@ -1,0 +1,3 @@
+Nat.parse_hex_safe: String -> Maybe(Nat)
+  (str) Nat.parse_hex_safe.go(str)(Nat.zero)
+

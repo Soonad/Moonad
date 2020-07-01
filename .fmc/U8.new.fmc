@@ -1,0 +1,2 @@
+U8.new: Π(a:(Word 8)) U8
+  λa ΛP λU8.new (U8.new a)

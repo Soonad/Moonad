@@ -1,0 +1,3 @@
+Jacobian.to_point: (p: Jacobian) -> Point
+  (p) p<(self) Point>((p.x) (p.y) (p.z) Jacobian.to_point.aux(p)(ecdsa.invert(p.z)(CURVE.P)))
+

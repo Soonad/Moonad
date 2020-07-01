@@ -1,0 +1,3 @@
+Nat.addAcc: (n: Nat) -> Acc(Nat)(Nat)(Nat.eql(0))(n)
+  Acc.foldl<Nat><Nat>(Nat.eql(0))(Nat.add)(0)
+

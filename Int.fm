@@ -1,0 +1,91 @@
+// An integer is a pair of nats quotiented by `(suc x, suc y) ~ (x, y)`
+Int: Type
+  int<P: Int -> Type> ->
+  (new: (x: Nat) -> (y: Nat) -> P(Int.new(x, y))) ->
+  P(int)
+
+Int.new(x: Nat, y: Nat): Int
+  <P> (new)
+  case x:
+  | new(Nat.zero, y);
+  | case y:
+    | new(Nat.succ(x.pred), Nat.zero);
+    | Int.new(Nat.sub(x.pred, y.pred), Nat.sub(y.pred, x.pred))<P>(new);
+    : P(Int.new(Nat.succ(x.pred), y.self));;
+  : P(Int.new(x.self, y));
+
+Int.fromNat(n: Nat): Int
+  Int.new(n, 0)
+
+// true is negative, false otherwise
+Int.toNat(a: Int): Pair(Bool, Nat)
+  get a.x a.y = a
+  case a.y:
+  | Pair.new<,>(Bool.false, a.x);
+  | Pair.new<,>(Bool.true, a.y);
+
+Int.0: Int
+  Int.fromNat(0)
+
+Int.1: Int
+  Int.fromNat(1)
+
+Int.add(a: Int, b: Int): Int
+  get a.x a.y = a
+  case b:
+  | Int.new(Nat.add(a.x, b.x), Nat.add(a.y, b.y));
+
+Int.neg(a: Int): Int
+  get a.x a.y = a
+  Int.new(a.y, a.x)
+
+Int.sub(a: Int, b: Int): Int
+  Int.add(a, Int.neg(b))
+
+Int.mul(a: Int, b: Int): Int
+  get a.x a.y = a
+  case b:
+  | Int.new(Nat.add(Nat.mul(a.x, b.x), Nat.mul(a.y, b.y)), Nat.add(Nat.mul(a.x, b.y), Nat.mul(a.y, b.x)));
+
+Int.div_Nat(a: Int, n: Nat): Int
+  get a.x a.y = a
+  Int.new(Nat.div(a.x, n), Nat.div(a.y, n))
+
+Int.mod_Nat(a: Int, n: Nat): Nat
+  get a.x a.y = a
+  let b = Nat.mod(a.y, n)
+  let sum = Nat.add(a.x, Nat.sub(n, b))
+  Nat.mod(sum, n)
+
+Int.cmp(a: Int, b: Int): Cmp
+  get a.x a.y = a
+  case b:
+  | Nat.cmp(Nat.add(a.x, b.y), Nat.add(b.x, a.y));
+
+Int.eql(a: Int, b: Int): Bool
+  case Int.cmp(a, b):
+  | Bool.false;
+  | Bool.true;
+  | Bool.false;
+
+Int.parse_decimal(str: String): Int
+  case str:
+  | Int.0;
+  | U16.eql(str.head, Char.parse("-"))<() Int>
+    | Int.new(0, Nat.parse_decimal(str.tail));
+    | Int.new(Nat.parse_decimal(String.cons(str.head, str.tail)), 0);;
+
+Int.parse_hex(str: String): Int
+  case str:
+  | Int.0;
+  | case U16.eql(str.head, Char.parse("-")):
+    | let b = Nat.parse_hex(str.tail)
+      Int.new(0, b);
+    | let a = Nat.parse_hex(String.cons(str.head, str.tail))
+      Int.new(a, 0);;
+
+Int.to_string_base(base: Nat, a: Int): String
+  get a.x a.y = a
+  case a.y:
+  | Nat.to_string_base(base, a.x);
+  | String.cons(Char.parse("-"), Nat.to_string_base(base, a.y));

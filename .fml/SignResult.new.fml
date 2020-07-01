@@ -1,0 +1,3 @@
+SignResult.new: (r: Nat) -> (s: Nat) -> SignResult
+  (r) (s) <P> (new) new(r)(s)
+
