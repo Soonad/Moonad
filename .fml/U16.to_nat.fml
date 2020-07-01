@@ -1,0 +1,3 @@
+U16.to_nat: (a: U16) -> Nat
+  (a) a<(x) Nat>((a_val) Word.to_nat<16>(a_val))
+

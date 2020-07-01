@@ -1,0 +1,3 @@
+Int.mul: (a: Int) -> (b: Int) -> Int
+  (a) (b) a<(a.) Int>((a.x) (a.y) b<(b.) Int>((b.x) (b.y) Int.new(Nat.add(Nat.mul(a.x)(b.x))(Nat.mul(a.y)(b.y)))(Nat.add(Nat.mul(a.x)(b.y))(Nat.mul(a.y)(b.x)))))
+

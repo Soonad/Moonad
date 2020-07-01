@@ -1,0 +1,3 @@
+U8.gtn: (a: U8) -> (b: U8) -> Bool
+  (a) (b) a<(x) Bool>((a_val) b<(x) Bool>((b_val) Word.gtn<8>(a_val)(b_val)))
+

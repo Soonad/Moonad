@@ -1,0 +1,3 @@
+Nat.parse_hex: (str: String) -> Nat.parse_hex_safe(str)<() Type>(Unit)(() Nat)
+  (str) Nat.parse_hex_safe(str)<(m) m<() Type>(Unit)(() Nat)>(Unit.new)((val) val)
+

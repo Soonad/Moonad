@@ -106,3 +106,9 @@ Bool.double_negation_theorem(b: Bool): Equal(Bool, Bool.not(Bool.not(b)), b)
   | Equal.to<_, Bool.true>;
   | Equal.to<_, Bool.false>;
   : Equal(Bool, Bool.not(Bool.not(b.self)), b.self);
+
+Bool.andVar: (n: Nat) -> Variadic(n)(Bool)(Bool)
+  Variadic.foldr<Bool><Bool>(Bool.and)(Bool.true)
+
+Bool.orVar: (n: Nat) -> Variadic(n)(Bool)(Bool)
+  Variadic.foldr<Bool><Bool>(Bool.or)(Bool.false)

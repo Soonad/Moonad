@@ -1,0 +1,3 @@
+Vector.extract: <A: Type> -> <n: Nat> -> (xs: Vector(A)(Nat.succ(n))) -> Pair(A)(Vector(A)(n))
+  <A> <n> (xs) xs<(xs.len) (xs.self) Bool.if<Type>(Nat.eql(0)(xs.len))(Unit)(Pair(A)(Vector(A)(Nat.pred(xs.len))))>(Unit.new)(<xs.len> (xs.head) (xs.tail) Pair.new<A><Vector(A)(xs.len)>(xs.head)(xs.tail))
+

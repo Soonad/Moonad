@@ -1,0 +1,3 @@
+Jacobian.precompute_window: (p: Jacobian) -> (w: Nat) -> List(Jacobian)
+  (p) (w) let windows = ecdsa.window(w); let points = Concat.empty<Jacobian>; let size = Nat.pow(2)(Nat.pred(w)); Concat.to_list<Jacobian>(Jacobian.precompute_window.aux(p)(windows)(points)(0)(Jacobian.0)(size)(0))
+

@@ -1,0 +1,3 @@
+Jacobian: Type
+  self_Jacobian<P: (self: Jacobian) -> Type> -> (new: (x: Nat) -> (y: Nat) -> (z: Nat) -> P(Jacobian.new(x)(y)(z))) -> P(self_Jacobian)
+

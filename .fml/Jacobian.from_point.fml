@@ -1,0 +1,3 @@
+Jacobian.from_point: (p: Point) -> Jacobian
+  (p) p<(x) Jacobian>((p.x) (p.y) Jacobian.new(p.x)(p.y)(1))
+

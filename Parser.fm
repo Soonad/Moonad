@@ -46,6 +46,9 @@ Parser.State.merge(x: Parser.State, y: Parser.State): Parser.State
   | Parser.State.make(x.pos, x.str, List.concat<>(x.errs,y.errs));
   | x;;;
 
+Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
+  p(Parser.State.new(s))
+
 // auto-backtracks when erroring
 Parser.token<A: Type>(f: Char -> Maybe(A), es: List(Parser.Item)) : Parser(A)
   (s1) get pos str errs = s1
@@ -193,9 +196,6 @@ Parser.peek<A: Type>(p: Parser(A)): Parser(A)
   (s1) case p(s1):
   | Parser.Reply.val<>(s1,self.value);
   | Parser.Reply.err<>(self.state,self.error);
-
-Parser.run<A: Type>(p: Parser(A), s: String): Parser.Reply(A)
-  p(Parser.State.new(s))
 
 Parser.type(A: Type, r: Parser.Reply(A)) : Type
   case r: | A; | Parser.Error;

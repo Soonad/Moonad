@@ -1,0 +1,3 @@
+Jacobian.negate: (p: Jacobian) -> Jacobian
+  (p) p<(self) Jacobian>((p.x) (p.y) (p.z) Jacobian.new(p.x)(ecdsa.negate(p.y))(p.z))
+

@@ -1,0 +1,3 @@
+Vector: (A: Type) -> (len: Nat) -> Type
+  (A) (len) self_Vector<P: (len: Nat) -> (self: Vector(A)(len)) -> Type> -> (nil: P(Nat.zero)(Vector.nil<A>)) -> (ext: <len: Nat> -> (head: A) -> (tail: Vector(A)(len)) -> P(Nat.succ(len))(Vector.ext<A><len>(head)(tail))) -> P(len)(self_Vector)
+

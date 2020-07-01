@@ -1,0 +1,3 @@
+Point: Type
+  self_Point<P: (self: Point) -> Type> -> (new: (x: Nat) -> (y: Nat) -> P(Point.new(x)(y))) -> P(self_Point)
+

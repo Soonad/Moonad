@@ -61,6 +61,14 @@ String.concat(as: String, bs: String): String
   | bs;
   | String.cons(as.head, String.concat(as.tail,bs));
 
+// Concatenate any number of strings
+String.concatVar: (n: Nat) -> Variadic(n, String, String)
+  Variadic.foldr<,>(String.concat, String.nil)
+
+// Concatenate any number of chars
+String.consVar: (n: Nat) -> Variadic(n, Char, String)
+  Variadic.foldr<,>(String.cons, String.nil)
+
 // Get the head of a nonempty string
 String.head(xs: String, not_empty: String.not_empty(xs)) : Char
   case xs:
@@ -246,6 +254,21 @@ String.take(n: Nat, xs: String): String
     | String.nil;
     | String.cons(xs.head,String.take(n.pred, xs.tail));;
 
+String.take_n(n: Nat, str: String): Maybe(Pair(String, String))
+  case String.take_n.aux(n, String.nil, str) as m:
+  | Maybe.none<Pair(String, String)>;
+  | get x y = m.value
+    Maybe.some<>(Pair.new<,>(String.reverse(x), y));
+
+String.take_n.aux(n: Nat, str: String, res: String): Maybe(Pair(String, String))
+  case res:
+  | case n:
+    | Maybe.some<>(Pair.new<,>(str, String.nil));
+    | Maybe.none<Pair(String, String)>;;
+  | case n:
+    | Maybe.some<>(Pair.new<String, String>(str, res));
+    | String.take_n.aux(n.pred, String.cons(res.head, str), res.tail);;
+
 String.split_at(n : Nat, xs: String) : Pair(String,String)
   Pair.new<,>(String.take(n,xs),String.drop(n,xs))
 
@@ -287,4 +310,3 @@ String.to_builder.go(string: String, lb: String.Builder) : String.Builder
   case string:
   | lb;
   | String.to_builder.go(string.tail)(String.Builder.snoc(string.head, lb));
-

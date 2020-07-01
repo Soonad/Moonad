@@ -1,0 +1,3 @@
+ecdsa.pow_mod.aux: (a: Nat) -> (b: Nat) -> (modulo: Nat) -> (res: Nat) -> Nat
+  (a) (b) (modulo) (res) Nat.eql(b)(0)<(self.self) Nat>(res)(let res = Bool.if<Nat>(Nat.odd(b))(Nat.mod(Nat.mul(res)(a))(modulo))(res); let b = Nat.div(b)(2); let a = Nat.mod(Nat.mul(a)(a))(modulo); ecdsa.pow_mod.aux(a)(b)(modulo)(res))
+

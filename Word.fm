@@ -182,7 +182,27 @@ Word.shift_right: <size: Nat> -> Nat -> Word(size) -> Word(size)
   Word.shift_right
 
 Word.sub: <size: Nat> -> Word(size) -> Word(size) -> Word(size)
-  Word.sub
+  <size> (a) (b) Word.add<size>(a, Word.neg<size>(b))
+
+Word.neg: <size: Nat> -> Word(size) -> Word(size)
+  <size> (word)
+  word<(size) () Word(size)>
+  | Word.nil;
+  | <size> (pred) Word.0<size>(Word.neg.aux<size>(pred, Bool.true));
+  | <size> (pred) Word.1<size>(Word.neg.aux<size>(pred, Bool.false));
+
+Word.neg.aux: <size: Nat> -> Word(size) -> Bool -> Word(size)
+  <size> (word) (inc)
+  word<(size) () Word(size)>
+  | Word.nil;
+  | <size> (pred)
+    inc<() Word(Nat.succ(size))>
+    | Word.0<size>(Word.neg.aux<size>(pred, Bool.true));
+    | Word.1<size>(Word.neg.aux<size>(pred, Bool.false));;
+  | <size> (pred)
+    inc<() Word(Nat.succ(size))>
+    | Word.1<size>(Word.neg.aux<size>(pred, Bool.false));
+    | Word.0<size>(Word.neg.aux<size>(pred, Bool.false));;
 
 Word.to_bits: <size: Nat> -> Word(size) -> Bits
   <size> (a)

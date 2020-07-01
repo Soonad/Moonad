@@ -1,0 +1,3 @@
+Int.to_string_decimal: (a: Int) -> String
+  (a) a<(a.) String>((a.x) (a.y) a.y<(a.y.self) String>(Nat.to_string_decimal(a.x))((a.y.pred) String.cons(Char.parse("-"))(Nat.to_string_decimal(a.y))))
+

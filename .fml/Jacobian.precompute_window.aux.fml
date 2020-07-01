@@ -1,0 +1,3 @@
+Jacobian.precompute_window.aux: (p: Jacobian) -> (windows: Nat) -> (points: Concat(Jacobian)) -> (window: Nat) -> (base: Jacobian) -> (size: Nat) -> (i: Nat) -> Concat(Jacobian)
+  (p) (windows) (points) (window) (base) (size) (i) Nat.ltn(window)(windows)<(self.self) Concat(Jacobian)>(Nat.ltn(i)(size)<(self.self) Concat(Jacobian)>(let base = Jacobian.add(base)(p); let points = Concat.push<Jacobian>(base)(points); Jacobian.precompute_window.aux(p)(windows)(points)(window)(base)(size)(Nat.succ(i)))(let p = Jacobian.double(base); Jacobian.precompute_window.aux(p)(windows)(points)(Nat.succ(window))(Jacobian.0)(size)(0)))(points)
+

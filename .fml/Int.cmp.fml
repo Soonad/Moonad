@@ -1,0 +1,3 @@
+Int.cmp: (a: Int) -> (b: Int) -> Cmp
+  (a) (b) a<(a.) Cmp>((a.x) (a.y) b<(b.) Cmp>((b.x) (b.y) Nat.cmp(Nat.add(a.x)(b.y))(Nat.add(b.x)(a.y))))
+

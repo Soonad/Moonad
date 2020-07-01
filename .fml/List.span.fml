@@ -1,0 +1,3 @@
+List.span: <A: Type> -> (f: A -> Bool) -> (xs: List(A)) -> Pair(List(A))(List(A))
+  <A> (f) (xs) xs<(xs.self) Pair(List(A))(List(A))>(Pair.new<List(A)><List(A)>([A;])([A;]))((xs.head) (xs.tail) f(xs.head)<(self.self) Pair(List(A))(List(A))>(List.span<A>(f)(xs.tail)<(x) Pair(List(A))(List(A))>((y) (z) Pair.new<List(A)><List(A)>(List.cons<A>(xs.head)(y))(z)))(Pair.new<List(A)><List(A)>([A;])(xs)))
+

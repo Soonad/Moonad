@@ -1,0 +1,3 @@
+U16.mul: (a: U16) -> (b: U16) -> U16
+  (a) (b) a<(x) U16>((a_val) b<(x) U16>((b_val) U16.new(Word.mul<16>(a_val)(b_val))))
+

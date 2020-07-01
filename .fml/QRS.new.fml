@@ -1,0 +1,3 @@
+QRS.new: (p: Point) -> (r: Nat) -> (s: Nat) -> QRS
+  (p) (r) (s) <P> (new) new(p)(r)(s)
+

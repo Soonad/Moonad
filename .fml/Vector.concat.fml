@@ -1,0 +1,3 @@
+Vector.concat: <A: Type> -> <n: Nat> -> <m: Nat> -> (as: Vector(A)(n)) -> (bs: Vector(A)(m)) -> Vector(A)(Nat.add(n)(m))
+  <A> <n> <m> (as) (bs) as<(as.len) (as.self) Vector(A)(Nat.add(as.len)(m))>(bs)(<as.len> (as.head) (as.tail) Vector.ext<A><Nat.add(as.len)(m)>(as.head)(Vector.concat<A><as.len><m>(as.tail)(bs)))
+

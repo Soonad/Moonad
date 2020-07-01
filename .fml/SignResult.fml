@@ -1,0 +1,3 @@
+SignResult: Type
+  self_SignResult<P: (self: SignResult) -> Type> -> (new: (r: Nat) -> (s: Nat) -> P(SignResult.new(r)(s))) -> P(self_SignResult)
+
